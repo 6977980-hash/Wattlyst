@@ -1,0 +1,273 @@
+{
+ "id": "D10",
+ "status": "publish",
+ "template": "tool",
+ "h1": "Net Billing Calculator",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "calc": "net_billing",
+ "fields": [
+  {
+   "name": "import_units",
+   "label": "Units imported from the grid",
+   "unit": "units",
+   "default": 400,
+   "hint": "Units taken from the grid in the month, from your bill (the import or consumption reading)."
+  },
+  {
+   "name": "export_units",
+   "label": "Units exported to the grid",
+   "unit": "units",
+   "default": 300,
+   "hint": "Units your solar system sent to the grid in the month, from the export reading on the bill."
+  },
+  {
+   "name": "buyback_rs",
+   "label": "Buyback rate",
+   "unit": "Rs per unit",
+   "default": "@data.tariff.net_billing.buyback_rs_per_unit_default",
+   "hint": "Rs per exported unit under net billing; not yet confirmed on a NEPRA page, change it when your DISCO tells you the rate."
+  },
+  {
+   "name": "sanctioned_kw",
+   "label": "Sanctioned load",
+   "unit": "kW",
+   "default": 4,
+   "hint": "From your bill; 5 kW and above is billed on a ToU meter which this tool does not cover."
+  },
+  {
+   "name": "protected",
+   "label": "Protected consumer (all of the last six months under the protected limit)",
+   "type": "checkbox",
+   "default": false,
+   "hint": "Tick only if every one of your last six bills was within the protected unit limit."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "net_energy_rs",
+   "label": "Net bill under net billing, energy only",
+   "spec": "rs"
+  },
+  {
+   "key": "export_credit_rs",
+   "label": "Credit for exported units",
+   "spec": "rs"
+  },
+  {
+   "key": "net_metering_rs",
+   "label": "Same month under old net metering",
+   "spec": "rs"
+  },
+  {
+   "key": "extra_vs_net_metering_rs",
+   "label": "Extra you pay under net billing",
+   "spec": "rs"
+  }
+ ],
+ "answer": "A home that imports {{in.import_units|int}} units and exports {{in.export_units|int}} units pays about {{out.net_energy_rs|rs}} in energy charges under net billing, against {{out.net_metering_rs|rs}} under old net metering, so net billing costs {{out.extra_vs_net_metering_rs|rs}} more that month. Net bill = imported units × slab rate − exported units × buyback rate of Rs {{out.buyback_rs|2}}.",
+ "how": "Import: {{out.import_units|int}} units at the slab rate of Rs {{out.import_rate|2}} = {{out.import_energy_rs|rs}}. Export credit: {{out.export_units|int}} units × Rs {{out.buyback_rs|2}} = {{out.export_credit_rs|rs}}. Net billing energy charge = {{out.import_energy_rs|rs}} − {{out.export_credit_rs|rs}} = {{out.net_energy_rs|rs}}; any credit above the import bill carries forward ({{out.carry_forward_rs|rs}} here). Old net metering: {{out.import_units|int}} − {{out.export_units|int}} = {{out.net_metering_units|int}} net units billed at Rs {{out.net_metering_rate|2}} = {{out.net_metering_rs|rs}}. Difference = {{out.extra_vs_net_metering_rs|rs}}. Fixed charges, FC surcharge, QTA, FPA and GST are added on top; use the bill calculator for the full bill.",
+ "key_facts": [
+  "Under net billing the imported units are billed at the normal slab rate (Rs {{out.import_rate|2}} per unit for {{out.import_units|int}} units) and exported units are bought back at a flat rate, Rs {{out.buyback_rs|2}} per unit by default, which is not yet confirmed on a NEPRA page.",
+  "Under old net metering exported units cancelled imported units one for one, so a home importing {{out.import_units|int}} and exporting {{out.export_units|int}} units paid for only {{out.net_metering_units|int}} units, at the lower slab those units reach (Rs {{out.net_metering_rate|2}}).",
+  "For the same {{out.import_units|int}} imported and {{out.export_units|int}} exported units, net billing charges {{out.net_energy_rs|rs}} and old net metering {{out.net_metering_rs|rs}}: a difference of {{out.extra_vs_net_metering_rs|rs}} a month in energy charges alone.",
+  "The net billing figure is energy charges only; the fixed charge per sanctioned kW, FC surcharge, QTA, FPA and GST are added on the real bill."
+ ],
+ "formula": {
+  "text": "Net billing Rs = max(0, import × slab rate − export × buyback); old net metering Rs = max(0, import − export) × slab rate of the net units",
+  "lines": [
+   "import = units taken from the grid in the month",
+   "export = units sent to the grid in the month",
+   "slab rate = unprotected (or protected) A-1 rate of the band the units reach",
+   "buyback = flat Rs per exported unit under net billing",
+   "Credit larger than the import bill carries forward to the next month",
+   "Extra = net billing Rs − old net metering Rs, never below zero"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "Net metering calculator vs net billing: what changed in 2026?",
+   "p": [
+    "Under the old net metering rules a bidirectional meter counted units in and units out, and the DISCO billed only the difference. Every exported unit cancelled an imported unit at the same slab rate, and if you exported more than you imported the spare units carried forward to the next month.",
+    "Under the NEPRA Prosumer Regulations notified in 2026, new solar connections are on net billing. Imports are billed at the normal slab rate of the band your imported units reach, and exports are bought at a flat buyback rate that is far below the slab rate. The two numbers are worked out separately and then set against each other, which is why the same month costs more under net billing.",
+    "Existing net-metering contracts are reported to stay on the old rules until they expire, but this is not yet confirmed on a NEPRA page. Ask your DISCO which regime your connection is on."
+   ]
+  },
+  {
+   "h2": "How is a net metering bill calculated in Pakistan?",
+   "p": [
+    "Old rules: net units = imported − exported. If the result is positive, those net units are billed at the slab they reach, exactly like a home without solar. If the result is negative, the bill for energy is zero and the spare units are credited to the next month. For the default month above that gives {{out.net_metering_units|int}} net units at Rs {{out.net_metering_rate|2}} = {{out.net_metering_rs|rs}}.",
+    "New rules (net billing): imported units × slab rate gives the import bill, {{out.import_energy_rs|rs}} for {{out.import_units|int}} units here. Exported units × buyback rate gives the credit, {{out.export_credit_rs|rs}} for {{out.export_units|int}} units. Bill = import bill − credit = {{out.net_energy_rs|rs}}. Because all imported units are charged at the slab their total reaches, exporting does not pull you into a lower slab any more."
+   ]
+  },
+  {
+   "h2": "What is the net billing rate for solar exports in Pakistan?",
+   "p": [
+    "The calculator uses Rs {{out.buyback_rs|2}} per exported unit, the figure most reported for the new rules. NEPRA has said the rate will be set from the national average power purchase price and revised over time, and the exact number has not been confirmed on a NEPRA page at the time of writing. Change the buyback field to the rate on your own bill or DISCO notice and the result updates.",
+    "Compare that with the import rate of Rs {{out.import_rate|2}} per unit for {{out.import_units|int}} units: a unit you export is worth a fraction of a unit you import. Using your own solar power in the day, running the water pump, washing machine and AC while the sun is up, is worth more than exporting it."
+   ]
+  },
+  {
+   "h2": "Does excess export still carry forward?",
+   "p": [
+    "Yes, in rupees rather than units. If the export credit for the month is larger than the import bill, the bill for energy is zero and the spare credit carries forward to the next month. The calculator shows the carry-forward amount instead of a negative bill. Under old net metering it was spare units that carried forward."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {},
+   "title": "Import {{in.import_units|int}} units, export {{in.export_units|int}} units",
+   "text": "Import bill {{out.import_units|int}} × Rs {{out.import_rate|2}} = {{out.import_energy_rs|rs}}; export credit {{out.export_units|int}} × Rs {{out.buyback_rs|2}} = {{out.export_credit_rs|rs}}; net billing charge {{out.net_energy_rs|rs}}. Old net metering billed {{out.net_metering_units|int}} net units at Rs {{out.net_metering_rate|2}} = {{out.net_metering_rs|rs}}, so net billing costs {{out.extra_vs_net_metering_rs|rs}} more."
+  },
+  {
+   "inputs": {
+    "import_units": 200,
+    "export_units": 500
+   },
+   "title": "Export more than you import: {{in.import_units|int}} in, {{in.export_units|int}} out",
+   "text": "Import bill {{out.import_energy_rs|rs}} at Rs {{out.import_rate|2}} a unit; export credit {{out.export_credit_rs|rs}}. Net billing still leaves {{out.net_energy_rs|rs}} to pay, because the credit per exported unit is lower than the cost per imported unit. Under old net metering the energy bill was {{out.net_metering_rs|rs}} and {{out.net_metering_carry_units|int}} units carried forward."
+  },
+  {
+   "inputs": {
+    "import_units": 100,
+    "export_units": 300
+   },
+   "title": "Credit larger than the import bill: {{in.import_units|int}} in, {{in.export_units|int}} out",
+   "text": "Import bill {{out.import_energy_rs|rs}}; export credit {{out.export_credit_rs|rs}}. The energy charge is {{out.net_energy_rs|rs}} and {{out.carry_forward_rs|rs}} of credit carries forward to next month. Under old net metering {{out.net_metering_carry_units|int}} spare units would have carried forward instead."
+  },
+  {
+   "inputs": {
+    "import_units": 600,
+    "export_units": 100
+   },
+   "title": "Heavy user: {{in.import_units|int}} in, {{in.export_units|int}} out",
+   "text": "Import bill {{out.import_units|int}} × Rs {{out.import_rate|2}} = {{out.import_energy_rs|rs}}; export credit {{out.export_credit_rs|rs}}; net billing charge {{out.net_energy_rs|rs}}. Old net metering billed {{out.net_metering_units|int}} units at Rs {{out.net_metering_rate|2}} = {{out.net_metering_rs|rs}}. The extra is {{out.extra_vs_net_metering_rs|rs}}, smaller than in the first example because the exports were small."
+  },
+  {
+   "inputs": {
+    "import_units": 150,
+    "export_units": 100,
+    "protected": true
+   },
+   "title": "Protected consumer: {{in.import_units|int}} in, {{in.export_units|int}} out",
+   "text": "A protected home is billed slab-wise at the protected rates, so the import bill is {{out.import_energy_rs|rs}}. The export credit is {{out.export_credit_rs|rs}} and the net billing charge {{out.net_energy_rs|rs}}, against {{out.net_metering_rs|rs}} for {{out.net_metering_units|int}} net units under old net metering: {{out.extra_vs_net_metering_rs|rs}} more. The gap is small because protected rates are close to the buyback rate."
+  }
+ ],
+ "table": {
+  "caption": "Energy charges for the same month under net billing and old net metering, unprotected A-1 tariff, buyback Rs {{out.buyback_rs|2}} per unit",
+  "rows": [
+   {
+    "import_units": 100,
+    "export_units": 300
+   },
+   {
+    "import_units": 200,
+    "export_units": 500
+   },
+   {
+    "import_units": 300,
+    "export_units": 300
+   },
+   {
+    "import_units": 400,
+    "export_units": 300
+   },
+   {
+    "import_units": 500,
+    "export_units": 200
+   },
+   {
+    "import_units": 600,
+    "export_units": 100
+   },
+   {
+    "import_units": 800,
+    "export_units": 400
+   }
+  ],
+  "columns": [
+   {
+    "label": "Import",
+    "tpl": "{{in.import_units|int}} units"
+   },
+   {
+    "label": "Export",
+    "tpl": "{{in.export_units|int}} units"
+   },
+   {
+    "label": "Net billing",
+    "tpl": "{{out.net_energy_rs|rs}}"
+   },
+   {
+    "label": "Old net metering",
+    "tpl": "{{out.net_metering_rs|rs}}"
+   },
+   {
+    "label": "Extra under net billing",
+    "tpl": "{{out.extra_vs_net_metering_rs|rs}}"
+   }
+  ]
+ },
+ "mistakes": [
+  "Subtracting exports from imports first. Under net billing all imported units are billed at the slab their total reaches; only the rupee credit is subtracted afterwards.",
+  "Treating this as the full bill. The result is the energy charge only; the fixed charge, FC surcharge, QTA, FPA and GST come on top and are worked out by the bill calculator.",
+  "Using the buyback rate as a fixed fact. It is an estimate until NEPRA or your DISCO publishes it; enter the rate from your own bill.",
+  "Ticking protected when a single month in the last six went over the limit. One high month moves you to unprotected rates for every unit."
+ ],
+ "safety": "Only a DISCO-approved installer and a licensed electrician may connect a solar system for export, and the bidirectional meter is installed by the DISCO; never bypass the meter or back-feed the grid through a plug socket.",
+ "faq": [
+  {
+   "q": "What is the net billing calculation for a solar home?",
+   "a": "Imported units × the slab rate they reach, minus exported units × the buyback rate. For {{out.import_units|int}} imported and {{out.export_units|int}} exported units that is {{out.import_energy_rs|rs}} − {{out.export_credit_rs|rs}} = {{out.net_energy_rs|rs}} in energy charges."
+  },
+  {
+   "q": "What is the solar export rate in Pakistan?",
+   "a": "Reports put the net billing buyback rate at about Rs {{out.buyback_rs|2}} per unit, but it is not yet confirmed on a NEPRA page. Under old net metering there was no export rate: each exported unit simply cancelled an imported one."
+  },
+  {
+   "q": "How much does a solar home save under net metering compared with net billing?",
+   "a": "For the default month, old net metering charged {{out.net_metering_rs|rs}} and net billing charges {{out.net_energy_rs|rs}}, so net metering saved {{out.extra_vs_net_metering_rs|rs}} more. Savings against having no solar at all are larger under both, because every unit you use in the day is not bought at all."
+  },
+  {
+   "q": "Is there a solar payback calculator for Pakistan?",
+   "a": "Payback in years is the system price divided by the yearly saving. The saving is the bill you would have paid without solar minus the net billing bill, over twelve months. A payback tool that combines your quote with this calculator is planned; until then use this page for the monthly saving and your installer's quote for the price."
+  },
+  {
+   "q": "Does the buyback rate for solar change?",
+   "a": "Yes. NEPRA has said the rate will track the national average power purchase price and can be revised. Enter the rate shown on your own bill in the buyback field; the default is only the figure most reported so far."
+  },
+  {
+   "q": "How are net metering units calculated on the bill?",
+   "a": "The bidirectional meter has an import reading and an export reading. Under old net metering the DISCO billed import minus export; under net billing the two readings are priced separately and set against each other in rupees. This calculator accepts both readings and shows both results."
+  },
+  {
+   "q": "Can I still apply for net metering in 2026?",
+   "a": "New connections under the Prosumer Regulations are on net billing. Whether existing net-metering agreements stay on the old rules until they expire is widely reported but not yet confirmed on a NEPRA page; check with your DISCO."
+  }
+ ],
+ "related": [
+  "D8",
+  "D5",
+  "F1",
+  "F2",
+  "F12"
+ ],
+ "next": "F1",
+ "literal_numbers": [
+  "2026",
+  "A-1",
+  "5 kW"
+ ],
+ "sources": [
+  {
+   "label": "NEPRA tariff decision and SRO for A-1 domestic consumers (tariff PDF)",
+   "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}
