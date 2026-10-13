@@ -485,7 +485,7 @@ export async function build() {
     site: { brand: site.brand, url: site.url, tagline: site.tagline, contact_email: site.contact_email, logo: site.logo, og_image: site.og_image, twitter_image: site.twitter_image, ads: site.ads, people: site.people, reviewer: site.reviewer.status === 'signed_off'
       ? { status: 'signed_off', name: site.reviewer.name, credential: site.reviewer.credential, same_as: site.reviewer.same_as || [], signed_off: site.reviewer.signed_off }
       : { status: site.reviewer.status } },
-    data: { defaults: inp.data.defaults, tariff: inp.data.tariff, cities: inp.data.cities },
+    data: { defaults: inp.data.defaults, tariff: inp.data.tariff, cities: inp.data.cities, cables: inp.cables },
     pages: rows.map(({ id, type, url, h1, title, meta, status, live, parent, children, related, next, wave }) => ({ id, type, url, h1, title, meta, status, live, parent, children, related, next, wave })),
     nav: rows.filter((r) => r.nav_label).sort((a, b) => a.nav_order - b.nav_order).map((r) => ({ id: r.id, label: r.nav_label, url: r.url })),
     website_schema: websiteSchema(site, pluginUrl),

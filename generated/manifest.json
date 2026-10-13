@@ -309,6 +309,187 @@
     "psh": 5.7,
     "yield": 4.4
    }
+  },
+  "cables": {
+   "_meta": {
+    "source": "IEC 60364-5-52:2009 Table B.52.4 (PVC insulated copper, two loaded conductors, 30 C ambient): columns B1 (cables in conduit in a wall) and C (clipped direct). Pakistani n/d sizes converted with formulas.md section W (A = n x pi x (d x 25.4 / 2)^2) and rated as the IEC size they are sold as when their real area is at least 90% of it, else the next smaller IEC size (conservative).",
+    "checked": "2026-10-13",
+    "status": "Engineer to confirm against the IEC table and Pakistan Cables / Fast Cables datasheets before launch. Ratings are for single-phase or three-phase circuits of one cable in free air or conduit at 30 C; grouping and hot roof spaces need derating by an electrician.",
+    "engineer_confirm": [
+     "ampacity",
+     "pk_sizes.rated_as_mm2",
+     "mcb_curves",
+     "min_area_mm2",
+     "breaker_margin_load_types"
+    ],
+    "fields": "cables: area_mm2 nominal conductor size; ampacity_a per installation method. pk_sizes: strands, strand diameter in inches, real area, rated_as_mm2 = the row of cables used for its ampacity. breaker_margin_load_types: load types whose MCB is chosen at I_b x margin (continuous motor-type loads), so a 1.5 ton AC gets a 16 A MCB on 2.5 mm2 rather than 10 A on 1 mm2."
+   },
+   "methods": {
+    "B1": "In conduit in an insulated wall (most Pakistani house wiring)",
+    "C": "Clipped direct to a wall or surface"
+   },
+   "cables": [
+    {
+     "area_mm2": 1,
+     "ampacity_a": {
+      "B1": 13.5,
+      "C": 15.5
+     }
+    },
+    {
+     "area_mm2": 1.5,
+     "ampacity_a": {
+      "B1": 17.5,
+      "C": 19.5
+     }
+    },
+    {
+     "area_mm2": 2.5,
+     "ampacity_a": {
+      "B1": 24,
+      "C": 27
+     }
+    },
+    {
+     "area_mm2": 4,
+     "ampacity_a": {
+      "B1": 32,
+      "C": 36
+     }
+    },
+    {
+     "area_mm2": 6,
+     "ampacity_a": {
+      "B1": 41,
+      "C": 46
+     }
+    },
+    {
+     "area_mm2": 10,
+     "ampacity_a": {
+      "B1": 57,
+      "C": 63
+     }
+    },
+    {
+     "area_mm2": 16,
+     "ampacity_a": {
+      "B1": 76,
+      "C": 85
+     }
+    },
+    {
+     "area_mm2": 25,
+     "ampacity_a": {
+      "B1": 101,
+      "C": 112
+     }
+    },
+    {
+     "area_mm2": 35,
+     "ampacity_a": {
+      "B1": 125,
+      "C": 138
+     }
+    }
+   ],
+   "pk_sizes": [
+    {
+     "name": "3/29",
+     "strands": 3,
+     "strand_in": 0.029,
+     "area_mm2": 1.28,
+     "rated_as_mm2": 1
+    },
+    {
+     "name": "7/29",
+     "strands": 7,
+     "strand_in": 0.029,
+     "area_mm2": 2.98,
+     "rated_as_mm2": 2.5
+    },
+    {
+     "name": "7/36",
+     "strands": 7,
+     "strand_in": 0.036,
+     "area_mm2": 4.6,
+     "rated_as_mm2": 4
+    },
+    {
+     "name": "7/44",
+     "strands": 7,
+     "strand_in": 0.044,
+     "area_mm2": 6.87,
+     "rated_as_mm2": 6
+    },
+    {
+     "name": "7/52",
+     "strands": 7,
+     "strand_in": 0.052,
+     "area_mm2": 9.59,
+     "rated_as_mm2": 10
+    },
+    {
+     "name": "7/64",
+     "strands": 7,
+     "strand_in": 0.064,
+     "area_mm2": 14.53,
+     "rated_as_mm2": 16
+    },
+    {
+     "name": "19/44",
+     "strands": 19,
+     "strand_in": 0.044,
+     "area_mm2": 18.64,
+     "rated_as_mm2": 16
+    },
+    {
+     "name": "19/52",
+     "strands": 19,
+     "strand_in": 0.052,
+     "area_mm2": 26.03,
+     "rated_as_mm2": 25
+    }
+   ],
+   "mcb_curves": {
+    "_source": "IEC 60898-1 instantaneous tripping ranges: B 3-5 x In, C 5-10 x In, D 10-20 x In",
+    "B": {
+     "trip_min": 3,
+     "trip_max": 5,
+     "use": "lighting, sockets and resistive loads (heaters, irons, geysers)"
+    },
+    "C": {
+     "trip_min": 5,
+     "trip_max": 10,
+     "use": "air conditioners, fridges, motors, water pumps and mixed socket circuits"
+    },
+    "D": {
+     "trip_min": 10,
+     "trip_max": 20,
+     "use": "transformers, welding machines and large motors with heavy inrush"
+    }
+   },
+   "curve_by_load": {
+    "lighting": "B",
+    "resistive": "B",
+    "electronic": "B",
+    "sockets": "C",
+    "inverter_compressor": "C",
+    "compressor": "C",
+    "motor": "C",
+    "high_inrush": "D"
+   },
+   "min_area_mm2": {
+    "_source": "IEC 60364-5-52 Table 52.2 minimum conductor sizes and common Pakistani practice (3/29 for lighting points, 7/29 for sockets and air conditioners); engineer to confirm",
+    "lighting": 1,
+    "other": 2.5
+   },
+   "breaker_margin_load_types": [
+    "motor",
+    "compressor",
+    "inverter_compressor",
+    "high_inrush"
+   ]
   }
  },
  "pages": [
