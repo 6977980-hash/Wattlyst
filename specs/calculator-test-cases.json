@@ -2049,5 +2049,88 @@
     },
     "tolerance": 0,
     "note": "edge case"
+  },
+  {
+    "calc": "units",
+    "name": "Amps mode: 2A at 230V for 2h, PF 1",
+    "inputs": {
+      "input": "amps",
+      "mode": "ac1",
+      "amps": 2,
+      "volts": 230,
+      "pf": 1,
+      "hours": 2
+    },
+    "expected": {
+      "watts": 460.0,
+      "units": 0.92
+    },
+    "tolerance": 0.0001,
+    "note": "owner-approved E6 amps mode"
+  },
+  {
+    "calc": "units",
+    "name": "Amps mode: 2A at 230V for 2h, PF 0.8 motor load",
+    "inputs": {
+      "input": "amps",
+      "mode": "ac1",
+      "amps": 2,
+      "volts": 230,
+      "pf": 0.8,
+      "hours": 2
+    },
+    "expected": {
+      "units": 0.736
+    },
+    "tolerance": 0.0001,
+    "note": "real power needs PF on AC"
+  },
+  {
+    "calc": "units",
+    "name": "Amps mode: 12V DC 5A for 10h, 30 days",
+    "inputs": {
+      "input": "amps",
+      "mode": "dc",
+      "amps": 5,
+      "volts": 12,
+      "hours": 10,
+      "days": 30
+    },
+    "expected": {
+      "units": 18.0
+    },
+    "tolerance": 0.0001,
+    "note": ""
+  },
+  {
+    "calc": "units",
+    "name": "Amps mode: 3-phase 400V 10A PF0.9 for 1h",
+    "inputs": {
+      "input": "amps",
+      "mode": "ac3",
+      "amps": 10,
+      "volts": 400,
+      "pf": 0.9,
+      "hours": 1
+    },
+    "expected": {
+      "units": 6.235383
+    },
+    "tolerance": 0.0001,
+    "note": ""
+  },
+  {
+    "calc": "units",
+    "name": "Ah mode: 200Ah at 12V = 2.4 units",
+    "inputs": {
+      "input": "ah",
+      "ah": 200,
+      "volts": 12
+    },
+    "expected": {
+      "units": 2.4
+    },
+    "tolerance": 0.0001,
+    "note": ""
   }
 ]

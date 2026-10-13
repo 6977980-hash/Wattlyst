@@ -79,12 +79,32 @@ export const kwh_to_ah = calculator((i) => {
   return { kwh, volts, ah: (kwh * 1000) / volts };
 });
 
-/** 1 unit = 1 kWh. units = W × hours × days / 1000. */
-export const units = calculator((i) => {
-  const watts = nonneg(i, 'watts');
+/**
+ * 1 unit = 1 kWh. Input modes (E6 unit calculator):
+ *  watts: units = W × hours × days / 1000
+ *  amps:  units = V × A × PF × hours × days / 1000 (PF 1 for DC; AC default pf_mixed, editable)
+ *  ah:    units = Ah × V / 1000 (energy stored in / drawn from a battery)
+ */
+export const units = calculator((i, d) => {
+  const input = pick(i, 'input', ['watts', 'amps', 'ah'], i.amps !== undefined ? 'amps' : i.ah !== undefined ? 'ah' : 'watts');
+  if (input === 'ah') {
+    const ah = nonneg(i, 'ah');
+    const volts = pos(i, 'volts');
+    return { input, ah, volts, units: (ah * volts) / 1000 };
+  }
   const hours = nonneg(i, 'hours');
   const days = nonneg(i, 'days', 1);
-  return { watts, hours, days, units: (watts * hours * days) / 1000 };
+  let watts;
+  const out = { input, hours, days };
+  if (input === 'amps') {
+    const { mode, volts, pf, k } = circuit(i, d);
+    const amps = nonneg(i, 'amps');
+    watts = k * volts * amps * pf;
+    Object.assign(out, { mode, volts, pf, amps });
+  } else {
+    watts = nonneg(i, 'watts');
+  }
+  return { ...out, watts, units: (watts * hours * days) / 1000 };
 });
 
 /** 1 HP = 745.7 W of shaft power; electrical input = shaft / motor efficiency. */

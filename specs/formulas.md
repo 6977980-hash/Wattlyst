@@ -24,6 +24,7 @@ Engineer review required before launch (see engineer-reviewer.md). Units are SI 
 - kW = W / 1000. `kW = kVA × PF`; `W = VA × PF` (UPS VA ratings: line-interactive often PF 0.6, online 0.8–1.0; read the label)
 - `Wh = Ah × V`; `Ah = Wh / V`; usable Wh = Wh × DoD
 - 1 unit = 1 kWh. `units = W × hours / 1000`
+- Units from amps (E6 "Amps" mode, owner-approved 13 Oct 2026, same page, no separate URL): `units = V × A × PF × hours / 1000` (DC: PF = 1; AC 1-phase default V 230 / 120 US, PF editable; 3-phase adds √3). From amp-hours: `units = Ah × V / 1000`. Keywords "amps to kwh", "amps to units", "amp hours to units" are supporting keywords of E6.
 - 1 HP = 745.7 W (motor input watts ≈ HP × 745.7 / motor efficiency; default motor eff 0.8)
 
 ## B. Battery / UPS
