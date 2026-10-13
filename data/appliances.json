@@ -1,0 +1,1859 @@
+{
+ "_meta": {
+  "source": "Virginia Tech Extension 2901-9014 (DOE appliance wattage table) https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html; Murdoch's generator wattage chart https://www.murdochs.com/learning-center/power-equipment/how-to-choose-a-generator/; Gree GS-18PITH11G datasheet (Japan Electronics PK) https://japanelectronics.com.pk/products/gree-ac-split-inverter-1-5-ton-gs-18pith11g-aaa; PowerHouse Express PK: AC watts https://powerhouseexpress.com.pk/blogs/news/how-many-watts-does-an-air-conditioner-use; PowerHouse Express PK: 6kW solar load guide https://powerhouseexpress.com.pk/blogs/news/how-many-ac-can-run-on-6kw-solar-system; ARY News: inverter fan watts https://arynews.tv/do-inverter-fans-really-consume-only-30-watts-unveiling-the-truth/; Haier HSU-18 non-inverter listing (Star Tech) https://startech.com.bd/haier-1-5-ton-non-inverter-ac",
+  "checked": "2026-10-13",
+  "status": "Typical values for planning; real appliances vary, the calculators let users enter their own label watts. Starting watts marked as estimates need PEC engineer confirmation.",
+  "fields": "running_w typical rated input power W; starting_w surge W; typical_hours_per_day planning default; starting_w_basis 'source' when the surge figure comes from the cited source, 'estimate' otherwise (rule of thumb: ~3x running for compressors/motors, equal to running for resistive/electronic/lighting, max rated input for inverter compressors); source 'Wattlyst estimate, engineer to confirm' with source_url null marks engineering estimates; note optional caveat shown on the page. Pump/motor running watts are never below hp x 745.7 / motor efficiency (formulas.md A).",
+  "reviewed": "2026-10-13 Engineer Reviewer (AI) pass: heat pump, window AC, pump motors, fridge, laser printer, dispenser, air compressor corrected; still needs PEC engineer confirmation."
+ },
+ "items": [
+  {
+   "id": "ceiling-fan-ac",
+   "name": "Ceiling fan (AC, 56 inch)",
+   "category": "cooling",
+   "running_w": 80,
+   "running_w_range": [
+    65,
+    120
+   ],
+   "starting_w": 120,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 12,
+   "load_type": "motor",
+   "pk_brands": [
+    "GFC",
+    "Pak Fan",
+    "Royal",
+    "Younas",
+    "Super Asia"
+   ],
+   "source": "ARY News: inverter fan watts",
+   "source_url": "https://arynews.tv/do-inverter-fans-really-consume-only-30-watts-unveiling-the-truth/"
+  },
+  {
+   "id": "ceiling-fan-dc-inverter",
+   "name": "Ceiling fan (DC / inverter BLDC)",
+   "category": "cooling",
+   "running_w": 35,
+   "running_w_range": [
+    28,
+    50
+   ],
+   "starting_w": 35,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 12,
+   "load_type": "electronic",
+   "pk_brands": [
+    "GFC",
+    "Pak Fan",
+    "Royal",
+    "Younas",
+    "Super Asia"
+   ],
+   "source": "ARY News: inverter fan watts",
+   "source_url": "https://arynews.tv/do-inverter-fans-really-consume-only-30-watts-unveiling-the-truth/"
+  },
+  {
+   "id": "pedestal-fan",
+   "name": "Pedestal fan (AC)",
+   "category": "cooling",
+   "running_w": 75,
+   "running_w_range": [
+    55,
+    120
+   ],
+   "starting_w": 110,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 8,
+   "load_type": "motor",
+   "pk_brands": [
+    "GFC",
+    "Pak Fan",
+    "Royal",
+    "Younas",
+    "Super Asia"
+   ],
+   "source": "Virginia Tech Extension 2901-9014 (DOE appliance wattage table)",
+   "source_url": "https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html"
+  },
+  {
+   "id": "pedestal-fan-dc",
+   "name": "Pedestal fan (DC / inverter)",
+   "category": "cooling",
+   "running_w": 30,
+   "running_w_range": [
+    14,
+    45
+   ],
+   "starting_w": 30,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 8,
+   "load_type": "electronic",
+   "pk_brands": [
+    "GFC",
+    "Pak Fan",
+    "Royal",
+    "Younas",
+    "Super Asia"
+   ],
+   "source": "ARY News: inverter fan watts",
+   "source_url": "https://arynews.tv/do-inverter-fans-really-consume-only-30-watts-unveiling-the-truth/"
+  },
+  {
+   "id": "bracket-fan",
+   "name": "Bracket / wall fan",
+   "category": "cooling",
+   "running_w": 70,
+   "running_w_range": [
+    50,
+    100
+   ],
+   "starting_w": 100,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 8,
+   "load_type": "motor",
+   "pk_brands": [
+    "GFC",
+    "Pak Fan",
+    "Royal",
+    "Younas",
+    "Super Asia"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "exhaust-fan",
+   "name": "Exhaust fan (10-12 inch)",
+   "category": "cooling",
+   "running_w": 40,
+   "running_w_range": [
+    25,
+    60
+   ],
+   "starting_w": 60,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 4,
+   "load_type": "motor",
+   "pk_brands": [
+    "GFC",
+    "Pak Fan",
+    "Royal",
+    "Younas"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "air-cooler",
+   "name": "Room air cooler (evaporative)",
+   "category": "cooling",
+   "running_w": 200,
+   "running_w_range": [
+    120,
+    350
+   ],
+   "starting_w": 300,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 8,
+   "load_type": "motor",
+   "pk_brands": [
+    "Super Asia",
+    "Boss",
+    "Sabro",
+    "GFC"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "ac-split-1ton-inverter",
+   "name": "Split AC 1 ton inverter",
+   "category": "cooling",
+   "running_w": 900,
+   "running_w_range": [
+    300,
+    1200
+   ],
+   "starting_w": 1200,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 8,
+   "load_type": "inverter_compressor",
+   "pk_brands": [
+    "Gree",
+    "Haier",
+    "Dawlance",
+    "Orient",
+    "Kenwood"
+   ],
+   "source": "PowerHouse Express PK: 6kW solar load guide",
+   "source_url": "https://powerhouseexpress.com.pk/blogs/news/how-many-ac-can-run-on-6kw-solar-system"
+  },
+  {
+   "id": "ac-split-1ton-non-inverter",
+   "name": "Split AC 1 ton non-inverter",
+   "category": "cooling",
+   "running_w": 1200,
+   "running_w_range": [
+    1000,
+    1400
+   ],
+   "starting_w": 3600,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 8,
+   "load_type": "compressor",
+   "pk_brands": [
+    "Gree",
+    "Haier",
+    "Dawlance",
+    "Orient",
+    "Kenwood"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "ac-split-1-5ton-inverter",
+   "name": "Split AC 1.5 ton inverter",
+   "category": "cooling",
+   "running_w": 1450,
+   "running_w_range": [
+    350,
+    1900
+   ],
+   "starting_w": 1900,
+   "starting_w_basis": "source",
+   "typical_hours_per_day": 8,
+   "load_type": "inverter_compressor",
+   "pk_brands": [
+    "Gree",
+    "Haier",
+    "Dawlance",
+    "Orient",
+    "Kenwood"
+   ],
+   "source": "Gree GS-18PITH11G datasheet (Japan Electronics PK)",
+   "source_url": "https://japanelectronics.com.pk/products/gree-ac-split-inverter-1-5-ton-gs-18pith11g-aaa"
+  },
+  {
+   "id": "ac-split-1-5ton-non-inverter",
+   "name": "Split AC 1.5 ton non-inverter",
+   "category": "cooling",
+   "running_w": 1800,
+   "running_w_range": [
+    1600,
+    2300
+   ],
+   "starting_w": 5400,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 8,
+   "load_type": "compressor",
+   "pk_brands": [
+    "Gree",
+    "Haier",
+    "Dawlance",
+    "Orient",
+    "Kenwood"
+   ],
+   "source": "Haier HSU-18 non-inverter listing (Star Tech)",
+   "source_url": "https://startech.com.bd/haier-1-5-ton-non-inverter-ac"
+  },
+  {
+   "id": "ac-split-2ton-inverter",
+   "name": "Split AC 2 ton inverter",
+   "category": "cooling",
+   "running_w": 1900,
+   "running_w_range": [
+    500,
+    2500
+   ],
+   "starting_w": 2500,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 8,
+   "load_type": "inverter_compressor",
+   "pk_brands": [
+    "Gree",
+    "Haier",
+    "Dawlance",
+    "Orient",
+    "Kenwood"
+   ],
+   "source": "PowerHouse Express PK: AC watts",
+   "source_url": "https://powerhouseexpress.com.pk/blogs/news/how-many-watts-does-an-air-conditioner-use"
+  },
+  {
+   "id": "ac-split-2ton-non-inverter",
+   "name": "Split AC 2 ton non-inverter",
+   "category": "cooling",
+   "running_w": 2400,
+   "running_w_range": [
+    2100,
+    2800
+   ],
+   "starting_w": 7200,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 8,
+   "load_type": "compressor",
+   "pk_brands": [
+    "Gree",
+    "Haier",
+    "Dawlance",
+    "Orient",
+    "Kenwood"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "ac-window-1ton",
+   "name": "Window AC (about 1 ton / 12-13k BTU)",
+   "category": "cooling",
+   "running_w": 1350,
+   "running_w_range": [
+    1100,
+    1700
+   ],
+   "starting_w": 4000,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 8,
+   "load_type": "compressor",
+   "pk_brands": [
+    "General",
+    "Gree",
+    "Haier"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "ac-floor-standing-4ton",
+   "name": "Floor-standing AC (4 ton)",
+   "category": "cooling",
+   "running_w": 4500,
+   "running_w_range": [
+    3500,
+    5500
+   ],
+   "starting_w": 13500,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 8,
+   "load_type": "compressor",
+   "pk_brands": [
+    "Gree",
+    "Haier",
+    "Orient"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "heat-pump-3ton",
+   "name": "Heat pump / central AC 3 ton",
+   "category": "cooling",
+   "running_w": 3400,
+   "running_w_range": [
+    3000,
+    5400
+   ],
+   "starting_w": 10200,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 8,
+   "load_type": "compressor",
+   "pk_brands": [],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "dehumidifier",
+   "name": "Dehumidifier",
+   "category": "cooling",
+   "running_w": 785,
+   "running_w_range": [
+    300,
+    785
+   ],
+   "starting_w": 1600,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 8,
+   "load_type": "compressor",
+   "pk_brands": [],
+   "source": "Virginia Tech Extension 2901-9014 (DOE appliance wattage table)",
+   "source_url": "https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html"
+  },
+  {
+   "id": "refrigerator-non-inverter",
+   "name": "Refrigerator (non-inverter, 12-16 cu ft)",
+   "category": "kitchen",
+   "running_w": 200,
+   "running_w_range": [
+    100,
+    350
+   ],
+   "starting_w": 1200,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 8,
+   "load_type": "compressor",
+   "pk_brands": [
+    "Dawlance",
+    "Haier",
+    "PEL",
+    "Orient",
+    "Gree"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "refrigerator-inverter",
+   "name": "Refrigerator (inverter)",
+   "category": "kitchen",
+   "running_w": 120,
+   "running_w_range": [
+    60,
+    200
+   ],
+   "starting_w": 200,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 10,
+   "load_type": "inverter_compressor",
+   "pk_brands": [
+    "Dawlance",
+    "Haier",
+    "PEL",
+    "Orient",
+    "Gree"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "deep-freezer",
+   "name": "Deep freezer (chest)",
+   "category": "kitchen",
+   "running_w": 200,
+   "running_w_range": [
+    150,
+    300
+   ],
+   "starting_w": 1200,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 10,
+   "load_type": "compressor",
+   "pk_brands": [
+    "Dawlance",
+    "Haier",
+    "Waves",
+    "Varioline"
+   ],
+   "source": "PowerHouse Express PK: 6kW solar load guide",
+   "source_url": "https://powerhouseexpress.com.pk/blogs/news/how-many-ac-can-run-on-6kw-solar-system"
+  },
+  {
+   "id": "water-dispenser",
+   "name": "Water dispenser (hot and cold)",
+   "category": "kitchen",
+   "running_w": 500,
+   "running_w_range": [
+    85,
+    600
+   ],
+   "starting_w": 900,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 6,
+   "load_type": "compressor",
+   "pk_brands": [
+    "Homage",
+    "Orient",
+    "Gree",
+    "Dawlance"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "electric-geyser-storage",
+   "name": "Electric geyser (storage, 40-gallon class)",
+   "category": "heating",
+   "running_w": 3000,
+   "running_w_range": [
+    1500,
+    5500
+   ],
+   "starting_w": 3000,
+   "starting_w_basis": "source",
+   "typical_hours_per_day": 3,
+   "load_type": "resistive",
+   "pk_brands": [
+    "Nasgas",
+    "Canon",
+    "Super Asia",
+    "Fischer"
+   ],
+   "source": "Virginia Tech Extension 2901-9014 (DOE appliance wattage table)",
+   "source_url": "https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html"
+  },
+  {
+   "id": "instant-water-heater",
+   "name": "Instant electric water heater",
+   "category": "heating",
+   "running_w": 3500,
+   "running_w_range": [
+    3000,
+    6000
+   ],
+   "starting_w": 3500,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 1,
+   "load_type": "resistive",
+   "pk_brands": [
+    "Canon",
+    "Nasgas",
+    "Fischer"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "room-heater-oil-filled",
+   "name": "Room heater (oil-filled radiator)",
+   "category": "heating",
+   "running_w": 1500,
+   "running_w_range": [
+    750,
+    2500
+   ],
+   "starting_w": 1500,
+   "starting_w_basis": "source",
+   "typical_hours_per_day": 6,
+   "load_type": "resistive",
+   "pk_brands": [
+    "Anex",
+    "West Point",
+    "Westinghouse"
+   ],
+   "source": "Virginia Tech Extension 2901-9014 (DOE appliance wattage table)",
+   "source_url": "https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html"
+  },
+  {
+   "id": "room-heater-fan",
+   "name": "Room heater (fan heater)",
+   "category": "heating",
+   "running_w": 2000,
+   "running_w_range": [
+    750,
+    2000
+   ],
+   "starting_w": 2000,
+   "starting_w_basis": "source",
+   "typical_hours_per_day": 4,
+   "load_type": "resistive",
+   "pk_brands": [
+    "Anex",
+    "West Point",
+    "Westinghouse"
+   ],
+   "source": "Virginia Tech Extension 2901-9014 (DOE appliance wattage table)",
+   "source_url": "https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html"
+  },
+  {
+   "id": "room-heater-halogen",
+   "name": "Room heater (halogen / quartz rod)",
+   "category": "heating",
+   "running_w": 1200,
+   "running_w_range": [
+    400,
+    1600
+   ],
+   "starting_w": 1200,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 4,
+   "load_type": "resistive",
+   "pk_brands": [
+    "Anex",
+    "West Point"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "electric-blanket",
+   "name": "Electric blanket (double)",
+   "category": "heating",
+   "running_w": 100,
+   "running_w_range": [
+    60,
+    100
+   ],
+   "starting_w": 100,
+   "starting_w_basis": "source",
+   "typical_hours_per_day": 6,
+   "load_type": "resistive",
+   "pk_brands": [],
+   "source": "Virginia Tech Extension 2901-9014 (DOE appliance wattage table)",
+   "source_url": "https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html"
+  },
+  {
+   "id": "electric-iron",
+   "name": "Electric iron (dry / steam)",
+   "category": "laundry",
+   "running_w": 1000,
+   "running_w_range": [
+    1000,
+    2400
+   ],
+   "starting_w": 1000,
+   "starting_w_basis": "source",
+   "typical_hours_per_day": 0.5,
+   "load_type": "resistive",
+   "pk_brands": [
+    "Philips",
+    "Anex",
+    "Panasonic",
+    "National"
+   ],
+   "source": "Virginia Tech Extension 2901-9014 (DOE appliance wattage table)",
+   "source_url": "https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html"
+  },
+  {
+   "id": "washing-machine-twin-tub",
+   "name": "Washing machine (twin tub, semi-automatic)",
+   "category": "laundry",
+   "running_w": 400,
+   "running_w_range": [
+    350,
+    500
+   ],
+   "starting_w": 1200,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 1,
+   "load_type": "motor",
+   "pk_brands": [
+    "Super Asia",
+    "Haier",
+    "Dawlance",
+    "Kenwood"
+   ],
+   "source": "Virginia Tech Extension 2901-9014 (DOE appliance wattage table)",
+   "source_url": "https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html"
+  },
+  {
+   "id": "washing-machine-automatic",
+   "name": "Washing machine (automatic, top/front load, no heater)",
+   "category": "laundry",
+   "running_w": 500,
+   "running_w_range": [
+    350,
+    1150
+   ],
+   "starting_w": 2250,
+   "starting_w_basis": "source",
+   "typical_hours_per_day": 1,
+   "load_type": "motor",
+   "pk_brands": [
+    "Haier",
+    "Dawlance",
+    "Samsung",
+    "LG",
+    "Super Asia"
+   ],
+   "source": "Murdoch's generator wattage chart",
+   "source_url": "https://www.murdochs.com/learning-center/power-equipment/how-to-choose-a-generator/"
+  },
+  {
+   "id": "clothes-dryer",
+   "name": "Clothes dryer (electric)",
+   "category": "laundry",
+   "running_w": 3000,
+   "running_w_range": [
+    1800,
+    5400
+   ],
+   "starting_w": 3500,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 1,
+   "load_type": "resistive",
+   "pk_brands": [
+    "Haier",
+    "Samsung",
+    "LG"
+   ],
+   "source": "Virginia Tech Extension 2901-9014 (DOE appliance wattage table)",
+   "source_url": "https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html"
+  },
+  {
+   "id": "microwave-oven",
+   "name": "Microwave oven",
+   "category": "kitchen",
+   "running_w": 1100,
+   "running_w_range": [
+    750,
+    1500
+   ],
+   "starting_w": 1100,
+   "starting_w_basis": "source",
+   "typical_hours_per_day": 0.3,
+   "load_type": "electronic",
+   "pk_brands": [
+    "Dawlance",
+    "Haier",
+    "Panasonic",
+    "Samsung",
+    "Anex"
+   ],
+   "source": "Virginia Tech Extension 2901-9014 (DOE appliance wattage table)",
+   "source_url": "https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html"
+  },
+  {
+   "id": "electric-oven",
+   "name": "Electric oven (baking / toaster oven, large)",
+   "category": "kitchen",
+   "running_w": 1500,
+   "running_w_range": [
+    1225,
+    2500
+   ],
+   "starting_w": 1500,
+   "starting_w_basis": "source",
+   "typical_hours_per_day": 0.5,
+   "load_type": "resistive",
+   "pk_brands": [
+    "Westpoint",
+    "Anex",
+    "Dawlance",
+    "Kenwood"
+   ],
+   "source": "Virginia Tech Extension 2901-9014 (DOE appliance wattage table)",
+   "source_url": "https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html"
+  },
+  {
+   "id": "air-fryer",
+   "name": "Air fryer",
+   "category": "kitchen",
+   "running_w": 1500,
+   "running_w_range": [
+    1200,
+    1800
+   ],
+   "starting_w": 1500,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 0.5,
+   "load_type": "resistive",
+   "pk_brands": [
+    "Philips",
+    "Anex",
+    "West Point",
+    "Sonifer"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "electric-kettle",
+   "name": "Electric kettle",
+   "category": "kitchen",
+   "running_w": 2000,
+   "running_w_range": [
+    1500,
+    2200
+   ],
+   "starting_w": 2000,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 0.3,
+   "load_type": "resistive",
+   "pk_brands": [
+    "Anex",
+    "West Point",
+    "Philips",
+    "National"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "toaster",
+   "name": "Toaster",
+   "category": "kitchen",
+   "running_w": 1000,
+   "running_w_range": [
+    800,
+    1400
+   ],
+   "starting_w": 1000,
+   "starting_w_basis": "source",
+   "typical_hours_per_day": 0.2,
+   "load_type": "resistive",
+   "pk_brands": [
+    "Anex",
+    "West Point",
+    "Philips"
+   ],
+   "source": "Virginia Tech Extension 2901-9014 (DOE appliance wattage table)",
+   "source_url": "https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html"
+  },
+  {
+   "id": "sandwich-maker",
+   "name": "Sandwich maker",
+   "category": "kitchen",
+   "running_w": 750,
+   "running_w_range": [
+    600,
+    900
+   ],
+   "starting_w": 750,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 0.2,
+   "load_type": "resistive",
+   "pk_brands": [
+    "Anex",
+    "West Point"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "blender-juicer",
+   "name": "Blender / juicer",
+   "category": "kitchen",
+   "running_w": 300,
+   "running_w_range": [
+    300,
+    800
+   ],
+   "starting_w": 650,
+   "starting_w_basis": "source",
+   "typical_hours_per_day": 0.2,
+   "load_type": "motor",
+   "pk_brands": [
+    "Anex",
+    "Kenwood",
+    "Philips",
+    "National",
+    "West Point"
+   ],
+   "source": "Murdoch's generator wattage chart",
+   "source_url": "https://www.murdochs.com/learning-center/power-equipment/how-to-choose-a-generator/"
+  },
+  {
+   "id": "food-processor",
+   "name": "Food processor",
+   "category": "kitchen",
+   "running_w": 600,
+   "running_w_range": [
+    400,
+    1000
+   ],
+   "starting_w": 1200,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 0.2,
+   "load_type": "motor",
+   "pk_brands": [
+    "Kenwood",
+    "Anex",
+    "Philips",
+    "Moulinex"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "rice-cooker",
+   "name": "Rice cooker",
+   "category": "kitchen",
+   "running_w": 700,
+   "running_w_range": [
+    400,
+    1000
+   ],
+   "starting_w": 700,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 0.5,
+   "load_type": "resistive",
+   "pk_brands": [
+    "Anex",
+    "West Point",
+    "Panasonic"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "slow-cooker",
+   "name": "Slow cooker",
+   "category": "kitchen",
+   "running_w": 200,
+   "running_w_range": [
+    150,
+    300
+   ],
+   "starting_w": 200,
+   "starting_w_basis": "source",
+   "typical_hours_per_day": 4,
+   "load_type": "resistive",
+   "pk_brands": [],
+   "source": "Murdoch's generator wattage chart",
+   "source_url": "https://www.murdochs.com/learning-center/power-equipment/how-to-choose-a-generator/"
+  },
+  {
+   "id": "coffee-maker",
+   "name": "Coffee maker",
+   "category": "kitchen",
+   "running_w": 1000,
+   "running_w_range": [
+    900,
+    1500
+   ],
+   "starting_w": 1000,
+   "starting_w_basis": "source",
+   "typical_hours_per_day": 0.3,
+   "load_type": "resistive",
+   "pk_brands": [
+    "Philips",
+    "Anex",
+    "De'Longhi"
+   ],
+   "source": "Virginia Tech Extension 2901-9014 (DOE appliance wattage table)",
+   "source_url": "https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html"
+  },
+  {
+   "id": "induction-cooker",
+   "name": "Induction cooker (single zone)",
+   "category": "kitchen",
+   "running_w": 1800,
+   "running_w_range": [
+    1200,
+    2200
+   ],
+   "starting_w": 1800,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 1,
+   "load_type": "electronic",
+   "pk_brands": [
+    "Anex",
+    "West Point",
+    "Philips",
+    "Midea"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "hot-plate",
+   "name": "Electric stove / hot plate (single)",
+   "category": "kitchen",
+   "running_w": 1500,
+   "running_w_range": [
+    1000,
+    2000
+   ],
+   "starting_w": 1500,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 1,
+   "load_type": "resistive",
+   "pk_brands": [
+    "Anex",
+    "West Point"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "electric-grill",
+   "name": "Electric grill",
+   "category": "kitchen",
+   "running_w": 1650,
+   "running_w_range": [
+    1200,
+    2000
+   ],
+   "starting_w": 1650,
+   "starting_w_basis": "source",
+   "typical_hours_per_day": 0.5,
+   "load_type": "resistive",
+   "pk_brands": [
+    "Anex",
+    "West Point"
+   ],
+   "source": "Murdoch's generator wattage chart",
+   "source_url": "https://www.murdochs.com/learning-center/power-equipment/how-to-choose-a-generator/"
+  },
+  {
+   "id": "dishwasher",
+   "name": "Dishwasher (with drying)",
+   "category": "kitchen",
+   "running_w": 1800,
+   "running_w_range": [
+    1200,
+    2400
+   ],
+   "starting_w": 1800,
+   "starting_w_basis": "source",
+   "typical_hours_per_day": 1,
+   "load_type": "resistive",
+   "pk_brands": [
+    "Haier",
+    "Dawlance",
+    "Samsung",
+    "Bosch"
+   ],
+   "source": "Virginia Tech Extension 2901-9014 (DOE appliance wattage table)",
+   "source_url": "https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html"
+  },
+  {
+   "id": "water-motor-0-5hp",
+   "name": "Water pump / donkey motor 0.5 hp",
+   "category": "water",
+   "running_w": 600,
+   "running_w_range": [
+    500,
+    750
+   ],
+   "starting_w": 1800,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 1,
+   "load_type": "motor",
+   "pk_brands": [
+    "Golden",
+    "Pedrollo",
+    "Grundfos",
+    "Shahzad"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "water-motor-1hp",
+   "name": "Water pump / donkey motor 1 hp",
+   "category": "water",
+   "running_w": 1000,
+   "running_w_range": [
+    900,
+    1200
+   ],
+   "starting_w": 2800,
+   "starting_w_basis": "source",
+   "typical_hours_per_day": 1,
+   "load_type": "motor",
+   "pk_brands": [
+    "Golden",
+    "Pedrollo",
+    "Grundfos",
+    "Shahzad"
+   ],
+   "source": "Murdoch's generator wattage chart",
+   "source_url": "https://www.murdochs.com/learning-center/power-equipment/how-to-choose-a-generator/"
+  },
+  {
+   "id": "water-motor-1-5hp",
+   "name": "Water pump 1.5 hp",
+   "category": "water",
+   "running_w": 1500,
+   "running_w_range": [
+    1400,
+    1800
+   ],
+   "starting_w": 4500,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 1,
+   "load_type": "motor",
+   "pk_brands": [
+    "Golden",
+    "Pedrollo",
+    "Grundfos",
+    "Shahzad"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "water-motor-2hp",
+   "name": "Water pump 2 hp",
+   "category": "water",
+   "running_w": 2000,
+   "running_w_range": [
+    1870,
+    2400
+   ],
+   "starting_w": 6000,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 1,
+   "load_type": "motor",
+   "pk_brands": [
+    "Golden",
+    "Pedrollo",
+    "Grundfos",
+    "Shahzad"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "submersible-pump-1hp",
+   "name": "Submersible / deep-well pump 1 hp",
+   "category": "water",
+   "running_w": 1100,
+   "running_w_range": [
+    900,
+    1300
+   ],
+   "starting_w": 3300,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 2,
+   "load_type": "motor",
+   "pk_brands": [
+    "Pedrollo",
+    "Grundfos",
+    "Golden",
+    "Shahzad"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "tubewell-submersible-5hp",
+   "name": "Tubewell submersible pump 5 hp",
+   "category": "water",
+   "running_w": 4800,
+   "running_w_range": [
+    4700,
+    5600
+   ],
+   "starting_w": 14400,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 4,
+   "load_type": "motor",
+   "pk_brands": [
+    "Pedrollo",
+    "Grundfos",
+    "Golden"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null,
+   "note": "Usually a 3-phase 400 V motor; use the 3-phase option for amps and wiring."
+  },
+  {
+   "id": "led-bulb",
+   "name": "LED bulb (9-12 W)",
+   "category": "lighting",
+   "running_w": 12,
+   "running_w_range": [
+    5,
+    20
+   ],
+   "starting_w": 12,
+   "starting_w_basis": "source",
+   "typical_hours_per_day": 6,
+   "load_type": "lighting",
+   "pk_brands": [
+    "Philips",
+    "Osaka",
+    "Super Star",
+    "Pak Fan"
+   ],
+   "source": "PowerHouse Express PK: 6kW solar load guide",
+   "source_url": "https://powerhouseexpress.com.pk/blogs/news/how-many-ac-can-run-on-6kw-solar-system"
+  },
+  {
+   "id": "led-tube-light",
+   "name": "LED tube light (4 ft)",
+   "category": "lighting",
+   "running_w": 20,
+   "running_w_range": [
+    18,
+    24
+   ],
+   "starting_w": 20,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 6,
+   "load_type": "lighting",
+   "pk_brands": [
+    "Philips",
+    "Osaka",
+    "Super Star",
+    "Pak Fan"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "cfl-energy-saver",
+   "name": "Energy saver (CFL)",
+   "category": "lighting",
+   "running_w": 25,
+   "running_w_range": [
+    15,
+    40
+   ],
+   "starting_w": 25,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 6,
+   "load_type": "lighting",
+   "pk_brands": [
+    "Philips",
+    "Osaka"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "fluorescent-tube-40w",
+   "name": "Fluorescent tube light (40 W, magnetic choke)",
+   "category": "lighting",
+   "running_w": 50,
+   "running_w_range": [
+    40,
+    55
+   ],
+   "starting_w": 50,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 6,
+   "load_type": "lighting",
+   "pk_brands": [
+    "Philips"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "led-tv-32",
+   "name": "LED TV 32 inch",
+   "category": "electronics",
+   "running_w": 40,
+   "running_w_range": [
+    30,
+    60
+   ],
+   "starting_w": 40,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 6,
+   "load_type": "electronic",
+   "pk_brands": [
+    "Samsung",
+    "TCL",
+    "Haier",
+    "Sony",
+    "Ecostar"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "led-tv-43",
+   "name": "LED TV 43 inch",
+   "category": "electronics",
+   "running_w": 75,
+   "running_w_range": [
+    55,
+    100
+   ],
+   "starting_w": 75,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 6,
+   "load_type": "electronic",
+   "pk_brands": [
+    "Samsung",
+    "TCL",
+    "Haier",
+    "Sony",
+    "Ecostar"
+   ],
+   "source": "PowerHouse Express PK: 6kW solar load guide",
+   "source_url": "https://powerhouseexpress.com.pk/blogs/news/how-many-ac-can-run-on-6kw-solar-system"
+  },
+  {
+   "id": "led-tv-55",
+   "name": "LED TV 55 inch",
+   "category": "electronics",
+   "running_w": 120,
+   "running_w_range": [
+    90,
+    150
+   ],
+   "starting_w": 120,
+   "starting_w_basis": "source",
+   "typical_hours_per_day": 6,
+   "load_type": "electronic",
+   "pk_brands": [
+    "Samsung",
+    "TCL",
+    "Haier",
+    "Sony",
+    "Ecostar"
+   ],
+   "source": "PowerHouse Express PK: 6kW solar load guide",
+   "source_url": "https://powerhouseexpress.com.pk/blogs/news/how-many-ac-can-run-on-6kw-solar-system"
+  },
+  {
+   "id": "laptop",
+   "name": "Laptop",
+   "category": "electronics",
+   "running_w": 50,
+   "running_w_range": [
+    30,
+    100
+   ],
+   "starting_w": 50,
+   "starting_w_basis": "source",
+   "typical_hours_per_day": 6,
+   "load_type": "electronic",
+   "pk_brands": [
+    "Dell",
+    "HP",
+    "Lenovo",
+    "Apple"
+   ],
+   "source": "Virginia Tech Extension 2901-9014 (DOE appliance wattage table)",
+   "source_url": "https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html"
+  },
+  {
+   "id": "desktop-pc",
+   "name": "Desktop PC (CPU only)",
+   "category": "electronics",
+   "running_w": 120,
+   "running_w_range": [
+    60,
+    300
+   ],
+   "starting_w": 120,
+   "starting_w_basis": "source",
+   "typical_hours_per_day": 6,
+   "load_type": "electronic",
+   "pk_brands": [
+    "Dell",
+    "HP",
+    "Lenovo"
+   ],
+   "source": "Virginia Tech Extension 2901-9014 (DOE appliance wattage table)",
+   "source_url": "https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html"
+  },
+  {
+   "id": "gaming-pc",
+   "name": "Gaming PC (CPU + GPU, under load)",
+   "category": "electronics",
+   "running_w": 400,
+   "running_w_range": [
+    250,
+    700
+   ],
+   "starting_w": 400,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 4,
+   "load_type": "electronic",
+   "pk_brands": [],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "monitor",
+   "name": "Computer monitor (LED, 24 inch)",
+   "category": "electronics",
+   "running_w": 30,
+   "running_w_range": [
+    20,
+    150
+   ],
+   "starting_w": 30,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 6,
+   "load_type": "electronic",
+   "pk_brands": [
+    "Dell",
+    "Samsung",
+    "HP",
+    "LG"
+   ],
+   "source": "Virginia Tech Extension 2901-9014 (DOE appliance wattage table)",
+   "source_url": "https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html"
+  },
+  {
+   "id": "wifi-router",
+   "name": "WiFi router / modem",
+   "category": "electronics",
+   "running_w": 10,
+   "running_w_range": [
+    5,
+    20
+   ],
+   "starting_w": 10,
+   "starting_w_basis": "source",
+   "typical_hours_per_day": 24,
+   "load_type": "electronic",
+   "pk_brands": [
+    "TP-Link",
+    "Tenda",
+    "Huawei",
+    "ZTE"
+   ],
+   "source": "Murdoch's generator wattage chart",
+   "source_url": "https://www.murdochs.com/learning-center/power-equipment/how-to-choose-a-generator/"
+  },
+  {
+   "id": "phone-charger",
+   "name": "Phone charger (fast charge, while charging)",
+   "category": "electronics",
+   "running_w": 15,
+   "running_w_range": [
+    5,
+    30
+   ],
+   "starting_w": 15,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 3,
+   "load_type": "electronic",
+   "pk_brands": [
+    "Samsung",
+    "Anker",
+    "Xiaomi",
+    "Infinix"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "printer-laser",
+   "name": "Printer (laser, printing)",
+   "category": "electronics",
+   "running_w": 400,
+   "running_w_range": [
+    300,
+    600
+   ],
+   "starting_w": 1000,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 0.3,
+   "load_type": "electronic",
+   "pk_brands": [
+    "HP",
+    "Canon"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "printer-inkjet",
+   "name": "Printer (inkjet)",
+   "category": "electronics",
+   "running_w": 25,
+   "running_w_range": [
+    15,
+    40
+   ],
+   "starting_w": 25,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 0.3,
+   "load_type": "electronic",
+   "pk_brands": [
+    "HP",
+    "Canon",
+    "Epson"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "ups-idle",
+   "name": "UPS / home inverter idle draw (no load)",
+   "category": "electronics",
+   "running_w": 30,
+   "running_w_range": [
+    15,
+    60
+   ],
+   "starting_w": 30,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 24,
+   "load_type": "electronic",
+   "pk_brands": [
+    "Homage",
+    "Inverex",
+    "Fronus",
+    "Crown"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "cctv-dvr-4cam",
+   "name": "CCTV DVR + 4 cameras",
+   "category": "electronics",
+   "running_w": 40,
+   "running_w_range": [
+    25,
+    60
+   ],
+   "starting_w": 40,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 24,
+   "load_type": "electronic",
+   "pk_brands": [
+    "Hikvision",
+    "Dahua"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "gaming-console",
+   "name": "Gaming console (PS5 / Xbox Series X)",
+   "category": "electronics",
+   "running_w": 200,
+   "running_w_range": [
+    100,
+    220
+   ],
+   "starting_w": 200,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 3,
+   "load_type": "electronic",
+   "pk_brands": [
+    "Sony",
+    "Microsoft"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "sound-system",
+   "name": "Sound system / stereo",
+   "category": "electronics",
+   "running_w": 100,
+   "running_w_range": [
+    70,
+    400
+   ],
+   "starting_w": 100,
+   "starting_w_basis": "source",
+   "typical_hours_per_day": 3,
+   "load_type": "electronic",
+   "pk_brands": [
+    "Audionic",
+    "Sony",
+    "JBL"
+   ],
+   "source": "Virginia Tech Extension 2901-9014 (DOE appliance wattage table)",
+   "source_url": "https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html"
+  },
+  {
+   "id": "set-top-box",
+   "name": "Set-top box / Android TV box",
+   "category": "electronics",
+   "running_w": 10,
+   "running_w_range": [
+    5,
+    20
+   ],
+   "starting_w": 10,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 6,
+   "load_type": "electronic",
+   "pk_brands": [],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "vacuum-cleaner",
+   "name": "Vacuum cleaner",
+   "category": "other",
+   "running_w": 1200,
+   "running_w_range": [
+    1000,
+    1440
+   ],
+   "starting_w": 1800,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 0.3,
+   "load_type": "motor",
+   "pk_brands": [
+    "Philips",
+    "Anex",
+    "West Point",
+    "Kenwood"
+   ],
+   "source": "Virginia Tech Extension 2901-9014 (DOE appliance wattage table)",
+   "source_url": "https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html"
+  },
+  {
+   "id": "hair-dryer",
+   "name": "Hair dryer",
+   "category": "personal-care",
+   "running_w": 1500,
+   "running_w_range": [
+    1200,
+    1875
+   ],
+   "starting_w": 1500,
+   "starting_w_basis": "source",
+   "typical_hours_per_day": 0.2,
+   "load_type": "resistive",
+   "pk_brands": [
+    "Philips",
+    "Remington",
+    "Anex",
+    "Panasonic"
+   ],
+   "source": "Virginia Tech Extension 2901-9014 (DOE appliance wattage table)",
+   "source_url": "https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html"
+  },
+  {
+   "id": "hair-straightener",
+   "name": "Hair straightener",
+   "category": "personal-care",
+   "running_w": 50,
+   "running_w_range": [
+    30,
+    80
+   ],
+   "starting_w": 50,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 0.3,
+   "load_type": "resistive",
+   "pk_brands": [
+    "Philips",
+    "Remington",
+    "Dingling"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "trimmer-shaver",
+   "name": "Trimmer / shaver (charging)",
+   "category": "personal-care",
+   "running_w": 5,
+   "running_w_range": [
+    3,
+    10
+   ],
+   "starting_w": 5,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 1,
+   "load_type": "electronic",
+   "pk_brands": [
+    "Philips",
+    "Kemei",
+    "Panasonic"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "sewing-machine",
+   "name": "Sewing machine (electric)",
+   "category": "other",
+   "running_w": 100,
+   "running_w_range": [
+    70,
+    150
+   ],
+   "starting_w": 200,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 2,
+   "load_type": "motor",
+   "pk_brands": [
+    "Singer",
+    "Butterfly",
+    "Juki"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "aquarium",
+   "name": "Aquarium (pump, light, heater)",
+   "category": "other",
+   "running_w": 100,
+   "running_w_range": [
+    50,
+    300
+   ],
+   "starting_w": 100,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 24,
+   "load_type": "electronic",
+   "pk_brands": [],
+   "source": "Virginia Tech Extension 2901-9014 (DOE appliance wattage table)",
+   "source_url": "https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html"
+  },
+  {
+   "id": "treadmill",
+   "name": "Treadmill",
+   "category": "other",
+   "running_w": 1000,
+   "running_w_range": [
+    600,
+    2000
+   ],
+   "starting_w": 2000,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 1,
+   "load_type": "motor",
+   "pk_brands": [],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "drill",
+   "name": "Electric drill / grinder (hand)",
+   "category": "workshop",
+   "running_w": 600,
+   "running_w_range": [
+    500,
+    900
+   ],
+   "starting_w": 900,
+   "starting_w_basis": "source",
+   "typical_hours_per_day": 0.3,
+   "load_type": "motor",
+   "pk_brands": [
+    "Bosch",
+    "Makita",
+    "Total",
+    "Ingco"
+   ],
+   "source": "Murdoch's generator wattage chart",
+   "source_url": "https://www.murdochs.com/learning-center/power-equipment/how-to-choose-a-generator/"
+  },
+  {
+   "id": "angle-grinder",
+   "name": "Angle grinder (4-5 inch)",
+   "category": "workshop",
+   "running_w": 900,
+   "running_w_range": [
+    700,
+    1200
+   ],
+   "starting_w": 1800,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 0.3,
+   "load_type": "motor",
+   "pk_brands": [
+    "Bosch",
+    "Makita",
+    "Total",
+    "Ingco"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "circular-saw",
+   "name": "Circular saw",
+   "category": "workshop",
+   "running_w": 1200,
+   "running_w_range": [
+    1000,
+    1500
+   ],
+   "starting_w": 2000,
+   "starting_w_basis": "source",
+   "typical_hours_per_day": 0.3,
+   "load_type": "motor",
+   "pk_brands": [
+    "Bosch",
+    "Makita",
+    "Total"
+   ],
+   "source": "Murdoch's generator wattage chart",
+   "source_url": "https://www.murdochs.com/learning-center/power-equipment/how-to-choose-a-generator/"
+  },
+  {
+   "id": "air-compressor-1hp",
+   "name": "Air compressor 1 hp",
+   "category": "workshop",
+   "running_w": 1100,
+   "running_w_range": [
+    1000,
+    1800
+   ],
+   "starting_w": 4500,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 1,
+   "load_type": "motor",
+   "pk_brands": [
+    "Total",
+    "Ingco"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "pressure-washer",
+   "name": "Pressure washer",
+   "category": "workshop",
+   "running_w": 1200,
+   "running_w_range": [
+    1200,
+    2000
+   ],
+   "starting_w": 2400,
+   "starting_w_basis": "source",
+   "typical_hours_per_day": 0.5,
+   "load_type": "motor",
+   "pk_brands": [
+    "Total",
+    "Ingco",
+    "Karcher"
+   ],
+   "source": "Murdoch's generator wattage chart",
+   "source_url": "https://www.murdochs.com/learning-center/power-equipment/how-to-choose-a-generator/"
+  },
+  {
+   "id": "welding-machine-small",
+   "name": "Welding machine (small inverter, 160-200 A)",
+   "category": "workshop",
+   "running_w": 4000,
+   "running_w_range": [
+    3000,
+    6000
+   ],
+   "starting_w": 4000,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 1,
+   "load_type": "electronic",
+   "pk_brands": [
+    "Total",
+    "Ingco",
+    "Riland"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "ebike-charger",
+   "name": "E-bike / e-scooter charger",
+   "category": "transport",
+   "running_w": 250,
+   "running_w_range": [
+    150,
+    400
+   ],
+   "starting_w": 250,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 4,
+   "load_type": "electronic",
+   "pk_brands": [
+    "Jolta",
+    "Yadea",
+    "Evee"
+   ],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  },
+  {
+   "id": "ev-charger-level2",
+   "name": "EV charger level 2 (7.4 kW, single phase)",
+   "category": "transport",
+   "running_w": 7400,
+   "running_w_range": [
+    3700,
+    7400
+   ],
+   "starting_w": 7400,
+   "starting_w_basis": "estimate",
+   "typical_hours_per_day": 4,
+   "load_type": "electronic",
+   "pk_brands": [],
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
+  }
+ ]
+}

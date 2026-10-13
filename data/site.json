@@ -1,5 +1,9 @@
 {
- "_meta": {"source": "Owner (Ali Ahmad), project chat 2026-10-13", "checked": "2026-10-13", "use": "Single source for brand, contact and people on About/Contact/author box and Organization/Person schema (seo-rules.md 6-7)."},
+ "_meta": {
+  "source": "Owner (Ali Ahmad), project chat 2026-10-13",
+  "checked": "2026-10-13",
+  "use": "Single source for brand, contact and people on About/Contact/author box and Organization/Person schema (seo-rules.md 6-7)."
+ },
  "brand": "Wattlyst",
  "url": "https://wattlyst.com/",
  "tagline": "Electricity math, done right.",
@@ -9,9 +13,41 @@
   {
    "id": "ali-ahmad",
    "name": "Ali Ahmad",
-   "roles": ["Founder", "Author"],
-   "same_as": ["https://www.linkedin.com/in/ali-ahmad-chaudhry-12777486/"]
+   "roles": [
+    "Founder",
+    "Author"
+   ],
+   "same_as": [
+    "https://www.linkedin.com/in/ali-ahmad-chaudhry-12777486/"
+   ]
   }
  ],
- "reviewer": {"status": "pending", "note": "Technical reviewer must be a real PEC-registered electrical engineer before launch (engineer-reviewer.md). Do not show a reviewer name until one has signed off."}
+ "reviewer": {
+  "status": "pending",
+  "name": null,
+  "credential": null,
+  "pec_registration": null,
+  "same_as": [],
+  "signed_off": null,
+  "note": "Technical reviewer must be a real PEC-registered electrical engineer before launch (engineer-reviewer.md). Fill name, credential (e.g. 'BSc Electrical Engineering, PEC-registered engineer'), pec_registration, same_as (LinkedIn/PEC profile) and signed_off date, then set status to signed_off. Until then no reviewer name is shown anywhere."
+ },
+ "founded": 2026,
+ "logo": "assets/brand/logo-512.png",
+ "og_image": "assets/brand/og-default.png",
+ "analytics": {
+  "enabled": true,
+  "provider": "Google Analytics 4",
+  "note": "Installed through Google Site Kit (build-plan Phase 0). Set enabled false if analytics is removed; the privacy policy text follows this flag."
+ },
+ "ads": {
+  "enabled": false,
+  "adsense_pub_id": null,
+  "note": "Stays false until AdSense approves the site (seo-rules.md 8). When approved: set adsense_pub_id (pub-...) so /ads.txt is served, then enabled true."
+ },
+ "consent": {
+  "cmp": null,
+  "note": "Name of the Google-certified CMP once installed (seo-rules.md 8); shown in the privacy policy."
+ },
+ "organization_same_as_note": "Add brand profile URLs (YouTube, Facebook, X, LinkedIn page) to organization_same_as as each one goes live; they appear in Organization schema sameAs.",
+ "twitter_image": "assets/brand/twitter-card.png"
 }
