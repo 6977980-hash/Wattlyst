@@ -6,7 +6,7 @@ Anything pushed to `main` goes live, so keep `main` working. Work on branches, m
 
 Reading rule (owner's instruction): read the full build plan and all phases once, at the start of the project. After that, each session reads only `PROGRESS.md` and the section of the CURRENT phase in `specs/build-plan.md` (plus the specs that phase names). Do not re-read the whole plan or all specs every session; it wastes time.
 Run `node tools/build.js` then `npm test` (Node 20+, no install needed) before every push; CI runs the tests, `build.js --check` and a Lighthouse job on every PR.
-Staging: once the owner has created the Hostinger staging site (deploys branch `staging`), merge into `staging` first, check it, then merge `staging` into `main`. Until then, check changes on a local WordPress copy (`tools/wp-test-site.sh`).
+No staging site (owner decision): before merging to `main`, check changes on a local WordPress copy (`tools/wp-test-site.sh`); CI must be green.
 
 ## Non-negotiable rules
 1. Math lives only in `engine/` as pure functions (no DOM, no WordPress). UI code calls the engine; it never re-implements a formula.

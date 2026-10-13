@@ -9,8 +9,7 @@
 | 2026-10-13 | B1 battery backup time: content drafted as the tool template reference (status draft, not live) | draft | PR phase-2 |
 
 ## Owner to do (Phase 2)
-- hPanel: create the Hostinger staging site and point its Git deploy at branch `staging` (then every change goes staging -> main).
-- WordPress: delete "Sample Page" and "Hello world"; Settings > Reading keep "Discourage search engines" OFF on live; Customizer > Site Identity: optional (plugin already shows logo + favicon).
+- WordPress: Settings > Reading keep "Discourage search engines" OFF on live; Customizer > Site Identity: optional (plugin already shows logo + favicon).
 - LiteSpeed Cache + Cloudflare (speed stack in build-plan Phase 2); Google Search Console + Bing Webmaster Tools: submit https://wattlyst.com/wp-sitemap.xml (or the Rank Math sitemap).
 - Brand profiles (YouTube, Facebook, X, LinkedIn page) -> data/site.json organization_same_as. PEC engineer details -> data/site.json reviewer.
 - After AdSense approval: ads.adsense_pub_id + a Google-certified CMP name in data/site.json.
