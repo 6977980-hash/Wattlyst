@@ -12,6 +12,7 @@ const isNum = (v) => typeof v === 'number' && Number.isFinite(v);
 
 /** Sanity cap on any single input (1e12 = 1 TW / 1 TWh); beyond this no home or shop calculation is meaningful. */
 const MAX_INPUT = 1e12;
+const MIN_FRACTION = 0.05;
 
 /** Checkbox/toggle from a form: true, 'true', 'on', 'yes', '1', 1 → true. */
 export const bool = (v) => v === true || v === 1 || (typeof v === 'string' && ['true', 'on', 'yes', '1'].includes(v.trim().toLowerCase()));
@@ -39,10 +40,15 @@ export function num(inputs, key, opts = {}) {
   return v;
 }
 
-export const pos = (inputs, key, def, code) => num(inputs, key, { def, gt: 0, code });
+export const pos = (inputs, key, def, code) => {
+  const v = num(inputs, key, { def, gt: 0, code });
+  // Voltages below 1 V are not a real supply or battery (smallest cell is 1.2 V).
+  if (['volts', 'v', 'battery_v'].includes(key) && v < 1) throw new CalcError(code || `${key}_too_small`, key);
+  return v;
+};
 export const nonneg = (inputs, key, def, code) => num(inputs, key, { def, min: 0, code });
-/** Fractions such as power factor, efficiency, DoD: 0 < x <= 1. */
-export const frac = (inputs, key, def, code) => num(inputs, key, { def, gt: 0, max: 1, code });
+/** Fractions such as power factor, efficiency, DoD: MIN_FRACTION <= x <= 1 (below 0.05 nothing real exists). */
+export const frac = (inputs, key, def, code) => num(inputs, key, { def, min: MIN_FRACTION, max: 1, code });
 
 export function pick(inputs, key, allowed, def) {
   const v = inputs?.[key] ?? def;

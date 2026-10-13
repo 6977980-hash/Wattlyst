@@ -27,6 +27,7 @@ const EXACT = {
 };
 
 const PATTERNS = [
+  [/^history_(\d+)_invalid$/, (m) => `Month ${m[1]}: enter the units as a number (0 or more).`],
   [/^load_(\d+)_start_below_run$/, (m) => `Appliance ${Number(m[1]) + 1}: starting watts cannot be lower than running watts.`],
   [/^load_(\d+)_\w+_invalid$/, (m) => `Appliance ${Number(m[1]) + 1}: enter a valid number.`],
   [/^(\w+)_required$/, (m, f) => `Enter ${f(m[1])}.`],

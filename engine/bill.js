@@ -84,12 +84,16 @@ export const bill_tou = calculator((i, d) => {
 export const bill_total = calculator((i, d) => {
   const base = bill_energy.raw(i, d);
   const a = tariffOf(d).addons_secondary || {};
-  const fc = nonneg(i, 'fc_surcharge_per_unit', a.fc_surcharge_per_unit?.value ?? 0);
-  const qtaDefault = has(i, 'period') ? a.qta_per_unit?.[i.period] : undefined;
-  if (has(i, 'period') && qtaDefault === undefined) throw new CalcError('period_unknown', 'period');
+  // Lifeline: FC surcharge and GST defaults are 0 until confirmed on a lifeline bill [VERIFY]; the user can still enter them.
+  const life = base.category === 'lifeline';
+  const fc = nonneg(i, 'fc_surcharge_per_unit', life ? 0 : a.fc_surcharge_per_unit?.value ?? 0);
+  const period = has(i, 'period') ? String(i.period) : null;
+  const qtaTable = a.qta_per_unit || {};
+  const qtaDefault = period && /^\d{4}-\d{2}\.\.\d{4}-\d{2}$/.test(period) && Object.hasOwn(qtaTable, period) ? qtaTable[period] : undefined;
+  if (period && typeof qtaDefault !== 'number') throw new CalcError('period_unknown', 'period');
   const qta = num(i, 'qta_per_unit', { def: qtaDefault ?? 0 });
   const fpa = num(i, 'fpa_per_unit', { def: a.fpa_per_unit?.value ?? 0 });
-  const gst_pct = num(i, 'gst_pct', { def: a.gst_pct?.value ?? 0, min: 0, max: 100 });
+  const gst_pct = num(i, 'gst_pct', { def: life ? 0 : a.gst_pct?.value ?? 0, min: 0, max: 100 });
   const fc_rs = fc * base.units;
   const qta_rs = base.category === 'lifeline' ? 0 : qta * base.units;
   const fpa_rs = fpa * base.units;
@@ -104,7 +108,7 @@ export const protected_check = calculator((i, d) => {
   const months = dflt(d, 'protected_months');
   const limit = dflt(d, 'protected_max_units');
   if (!Array.isArray(h) || h.length !== months) throw new CalcError(`history_needs_${months}_months`, 'history');
-  h.forEach((u, idx) => num({ history: u }, 'history', { min: 0, code: `history_${idx}_invalid` }));
+  h.forEach((u, idx) => num({ history: u }, 'history', { min: 0, code: `history_${idx + 1}_invalid` }));
   const sanctioned_kw = pos(i, 'sanctioned_kw', dflt(d, 'default_sanctioned_kw'));
   const tou = bool(i.tou) || sanctioned_kw >= dflt(d, 'tou_threshold_kw');
   const max_month = Math.max(...h);

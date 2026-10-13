@@ -2416,5 +2416,83 @@
     },
     "tolerance": 0,
     "note": "reviewer fix 13 Oct"
+  },
+  {
+    "calc": "bill_total",
+    "name": "lifeline blank add-ons: no FC/GST by default [VERIFY]",
+    "inputs": {
+      "units": 40,
+      "lifeline": true
+    },
+    "expected": {
+      "fc_rs": 0.0,
+      "gst_rs": 0.0,
+      "total_rs": 158.0
+    },
+    "tolerance": 0.01,
+    "note": "reviewer re-check 13 Oct"
+  },
+  {
+    "calc": "bill_total",
+    "name": "tariff-file key is not a quarter",
+    "inputs": {
+      "units": 100,
+      "sanctioned_kw": 1,
+      "period": "excludes"
+    },
+    "expected": {
+      "error": "period_unknown"
+    },
+    "tolerance": 0,
+    "note": "reviewer re-check 13 Oct"
+  },
+  {
+    "calc": "protected_check",
+    "name": "bad 6th month named month 6",
+    "inputs": {
+      "history": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        -5
+      ],
+      "sanctioned_kw": 1
+    },
+    "expected": {
+      "error": "history_6_invalid"
+    },
+    "tolerance": 0,
+    "note": "reviewer re-check 13 Oct"
+  },
+  {
+    "calc": "watts_to_amps",
+    "name": "voltage below 1 V rejected",
+    "inputs": {
+      "mode": "dc",
+      "watts": 10,
+      "volts": 0.001
+    },
+    "expected": {
+      "error": "volts_too_small"
+    },
+    "tolerance": 0,
+    "note": "reviewer re-check 13 Oct"
+  },
+  {
+    "calc": "watts_to_amps",
+    "name": "PF below 0.05 rejected",
+    "inputs": {
+      "mode": "ac1",
+      "watts": 10,
+      "volts": 230,
+      "pf": 0.001
+    },
+    "expected": {
+      "error": "pf_too_small"
+    },
+    "tolerance": 0,
+    "note": "reviewer re-check 13 Oct"
   }
 ]
