@@ -69,7 +69,7 @@
    {
     "h2": "What home wiring does a new AC need?",
     "p": [
-     "A dedicated circuit from the distribution board: its own copper cable of at least 2.5 mm² (7/29 in Pakistani sizes), its own MCB and a proper earth. Never run an AC from a socket circuit shared with other appliances. The smallest MCB that covers the running current of a Split AC 1.5 ton inverter is 10 A; the AC wire size page linked below sizes the cable and breaker at the AC's maximum input with a safety margin and checks the voltage drop over your cable run, so use that for the final sizes.",
+     "A dedicated circuit from the distribution board: its own copper cable of at least 2.5 mm² (7/29 in Pakistani sizes), its own MCB and a proper earth. Never run an AC from a socket circuit shared with other appliances. For a Split AC 1.5 ton inverter that is a 16 A type C MCB on 2.5 mm² (7/29) cable; the AC wire size page linked below sizes the cable and breaker at the AC's maximum input with a safety margin and checks the voltage drop over your cable run, so use that for the final sizes.",
      "If the house is older and the main cable or distribution board is already warm or discoloured, have an electrician check it before adding the AC, whatever this calculator says."
     ]
    },
@@ -99,7 +99,7 @@
    },
    {
     "q": "What size breaker and wire does the AC circuit need?",
-    "a": "The AC's own circuit carries 7.9 A for a Split AC 1.5 ton inverter, so the smallest standard MCB is 10 A on a copper cable of at least 2.5 mm² (7/29). The AC wire size page sizes both at the AC's maximum input with a margin and checks your cable length."
+    "a": "A Split AC 1.5 ton inverter is designed at 1,900 W, its maximum input, which is 10.3 A; with the motor margin that needs a 16 A type C MCB on 2.5 mm² (7/29) copper cable. The AC wire size page uses the same rule and also checks your cable length."
    },
    {
     "q": "Will adding an AC change my tariff slab?",
@@ -114,7 +114,7 @@
    "A Split AC 1.5 ton inverter adds about 1,450 W of running load and up to 1,900 W at full speed; a non-inverter AC of the same size adds a starting surge of about three times its running watts for a second or two.",
    "Current after adding an AC = (load running now + the AC's running watts) ÷ (volts × power factor): the default home goes from 8.2 A to 16 A at 230 V.",
    "If the new total in kW is above the sanctioned load on the bill, apply to the DISCO for a higher sanctioned load before the AC is installed; at 5 kW or more a domestic connection moves to time-of-use billing.",
-   "Every AC needs its own circuit from the distribution board, with a copper cable of at least 2.5 mm² (7/29) and its own MCB; the smallest standard MCB that covers a Split AC 1.5 ton inverter's running current is 10 A, and the AC wire size page sizes the final cable and breaker at the AC's maximum input with a safety margin."
+   "Every AC needs its own circuit from the distribution board, with a copper cable of at least 2.5 mm² (7/29) and its own MCB; a Split AC 1.5 ton inverter needs a 16 A type C MCB on 2.5 mm² (7/29) cable, sized at the AC's maximum input with a safety margin; the AC wire size page also checks your cable length."
   ],
   "mistakes": [
    "Using the AC's average draw for the check. The average is for the bill; for the load use the running watts, because on a hot afternoon an inverter AC runs near its rated input for long periods.",
@@ -307,12 +307,12 @@
      "label": "MCB for the AC's own circuit",
      "spec": "int",
      "unit": "A",
-     "value": "10"
+     "value": "16"
     }
    ],
    "how": {
     "tpl": "{{in.current_w|int}} W running now + {{out.ac_run_w|int}} W for the {{out.ac_name|raw}} = {{out.new_total_w|int}} W. {{out.new_total_w|int}} W ÷ ({{out.volts|int}} V × {{out.pf|2}} power factor) = {{out.amps_after|1}} A, up from {{out.amps_now|1}} A today. {{out.new_total_kw|2}} kW ÷ {{out.sanctioned_kw|int}} kW sanctioned = {{out.load_pct|int}}% of the sanctioned load. For a moment at compressor start or full speed the load is {{in.current_w|int}} W + {{out.ac_start_w|int}} W = {{out.peak_w|int}} W ({{out.peak_amps|1}} A). The AC's own circuit carries {{out.ac_run_w|int}} W ÷ ({{out.volts|int}} V × {{out.pf|2}}) = {{out.ac_ib_a|1}} A, so the next standard MCB is {{out.ac_breaker_a|int}} A on a cable rated at least {{out.ac_cable_a|1}} A.",
-    "text": "1,500 W running now + 1,450 W for the Split AC 1.5 ton inverter = 2,950 W. 2,950 W ÷ (230 V × 0.8 power factor) = 16 A, up from 8.2 A today. 2.95 kW ÷ 2 kW sanctioned = 148% of the sanctioned load. For a moment at compressor start or full speed the load is 1,500 W + 1,900 W = 3,400 W (18.5 A). The AC's own circuit carries 1,450 W ÷ (230 V × 0.8) = 7.9 A, so the next standard MCB is 10 A on a cable rated at least 10 A."
+    "text": "1,500 W running now + 1,450 W for the Split AC 1.5 ton inverter = 2,950 W. 2,950 W ÷ (230 V × 0.8 power factor) = 16 A, up from 8.2 A today. 2.95 kW ÷ 2 kW sanctioned = 148% of the sanctioned load. For a moment at compressor start or full speed the load is 1,500 W + 1,900 W = 3,400 W (18.5 A). The AC's own circuit carries 1,450 W ÷ (230 V × 0.8) = 10.3 A, so the next standard MCB is 16 A on a cable rated at least 16 A."
    },
    "submit": "Calculate",
    "data_checked": [
@@ -331,7 +331,7 @@
   "examples": [
    {
     "title": "1,500 W home adds a Split AC 1.5 ton inverter on a 2 kW connection",
-    "text": "1,500 W + 1,450 W = 2,950 W, or 16 A. That is 148% of the 2 kW sanctioned load, so this connection is overloaded: apply for a higher sanctioned load first. The AC's own circuit needs a 10 A MCB."
+    "text": "1,500 W + 1,450 W = 2,950 W, or 16 A. That is 148% of the 2 kW sanctioned load, so this connection is overloaded: apply for a higher sanctioned load first. The AC's own circuit needs a 16 A type C MCB on 2.5 mm² cable."
    },
    {
     "title": "The same AC on a 5 kW connection",
@@ -339,7 +339,7 @@
    },
    {
     "title": "Small home adds a Split AC 1 ton inverter",
-    "text": "800 W of fans, lights and a fridge + 900 W = 1,700 W, or 9.2 A. At 85% of a 2 kW sanctioned load this fits, with 0.3 kW to spare. The AC circuit needs a 6 A MCB on a cable rated at least 6.1 A."
+    "text": "800 W of fans, lights and a fridge + 900 W = 1,700 W, or 9.2 A. At 85% of a 2 kW sanctioned load this fits, with 0.3 kW to spare. The AC circuit needs a 10 A type C MCB on a cable rated at least 10 A (2.5 mm²)."
    },
    {
     "title": "Split AC 1.5 ton non-inverter on a 3 kW connection",
@@ -397,7 +397,7 @@
     ]
    ]
   },
-  "answer": "Adding a Split AC 1.5 ton inverter (1,450 W running) to a home already drawing 1,500 W gives a new total of 2,950 W, or 16 A at 230 V. That is 148% of a 2 kW sanctioned load, so this meter needs a higher sanctioned load before the AC goes in. New total = current watts + the AC's running watts.",
+  "answer": "Adding a Split AC 1.5 ton inverter (1,450 W running) to a home drawing 1,500 W gives a new total of 2,950 W, or 16 A at 230 V. That is 148% of a 2 kW sanctioned load, so this meter needs a higher sanctioned load first. New total = current watts + the AC's running watts.",
   "formula": {
    "text": "P_new = P_now + P_ac; I = P_new ÷ (V × PF); load % = P_new ÷ (sanctioned kW × 1000) × 100",
    "lines": [
@@ -524,7 +524,7 @@
       "name": "What size breaker and wire does the AC circuit need?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "The AC's own circuit carries 7.9 A for a Split AC 1.5 ton inverter, so the smallest standard MCB is 10 A on a copper cable of at least 2.5 mm² (7/29). The AC wire size page sizes both at the AC's maximum input with a margin and checks your cable length."
+       "text": "A Split AC 1.5 ton inverter is designed at 1,900 W, its maximum input, which is 10.3 A; with the motor margin that needs a 16 A type C MCB on 2.5 mm² (7/29) copper cable. The AC wire size page uses the same rule and also checks your cable length."
       }
      },
      {

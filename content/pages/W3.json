@@ -1,0 +1,354 @@
+{
+ "id": "W3",
+ "status": "publish",
+ "template": "tool",
+ "h1": "MCB Size Calculator",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "calc": "breaker_size",
+ "fields": [
+  {
+   "name": "watts",
+   "label": "Load on the circuit",
+   "unit": "W",
+   "default": 2000,
+   "hint": "Total watts the breaker will protect: one appliance, or everything on the circuit at once."
+  },
+  {
+   "name": "load_type",
+   "label": "Type of load",
+   "type": "select",
+   "default": "sockets",
+   "options": [
+    [
+     "sockets",
+     "Sockets / mixed"
+    ],
+    [
+     "lighting",
+     "Lighting"
+    ],
+    [
+     "resistive",
+     "Heater, geyser, iron"
+    ],
+    [
+     "motor",
+     "Motor or pump"
+    ],
+    [
+     "compressor",
+     "AC or fridge (non-inverter)"
+    ],
+    [
+     "inverter_compressor",
+     "Inverter AC"
+    ],
+    [
+     "high_inrush",
+     "Welder, transformer"
+    ]
+   ],
+   "hint": "Sets the trip curve (B, C or D) and whether the breaker gets a margin for a motor-type load."
+  },
+  {
+   "name": "mode",
+   "label": "Supply",
+   "type": "select",
+   "default": "ac1",
+   "options": [
+    [
+     "ac1",
+     "Single phase 230 V"
+    ],
+    [
+     "ac3",
+     "Three phase 400 V"
+    ]
+   ]
+  },
+  {
+   "name": "volts",
+   "label": "Voltage",
+   "unit": "V",
+   "placeholder": "Auto by phase",
+   "advanced": true,
+   "hint": "Leave blank for the standard single or three-phase voltage."
+  },
+  {
+   "name": "pf",
+   "label": "Power factor",
+   "unit": "0 to 1",
+   "default": "@pf_mixed",
+   "advanced": true,
+   "hint": "Mixed loads about 0.8; heaters and lights 1.0; inverter ACs about 0.9."
+  },
+  {
+   "name": "margin",
+   "label": "Safety margin",
+   "unit": "×",
+   "default": "@margin",
+   "advanced": true,
+   "hint": "Applied to the breaker for motor-type loads and to the cable for every load."
+  },
+  {
+   "name": "method",
+   "label": "How the cable is installed",
+   "type": "select",
+   "default": "B1",
+   "advanced": true,
+   "options": [
+    [
+     "B1",
+     "In conduit inside the wall"
+    ],
+    [
+     "C",
+     "Clipped on the surface"
+    ]
+   ]
+  }
+ ],
+ "outputs": [
+  {
+   "key": "breaker_a",
+   "label": "MCB rating",
+   "spec": "int",
+   "unit": "A"
+  },
+  {
+   "key": "curve",
+   "label": "Curve",
+   "spec": "raw"
+  },
+  {
+   "key": "area_mm2",
+   "label": "Minimum cable",
+   "spec": "1",
+   "unit": "mm²"
+  },
+  {
+   "key": "ib_a",
+   "label": "Design current",
+   "spec": "1",
+   "unit": "A"
+  }
+ ],
+ "answer": "A {{in.watts|int}} W socket circuit on {{out.volts|int}} V draws {{out.ib_a|1}} A, so the MCB is the next standard size up: {{out.breaker_a|int}} A, type {{out.curve|raw}}, on at least {{out.area_mm2|1}} mm² ({{out.pk_size|raw}}) copper cable. MCB rating = next standard size above watts ÷ (volts × power factor); motor-type loads add a {{out.margin|2}} × margin, and the curve follows the load type.",
+ "how": "Design current = {{out.watts|int}} W ÷ ({{out.k|2}} × {{out.volts|int}} V × {{out.pf|2}} power factor) = {{out.ib_a|1}} A (the first factor is one for single phase, root three for three phase). Breaker design current = {{out.breaker_design_a|1}} A (× {{out.margin|2}} only for motors, compressors, ACs and welders). Next standard MCB = {{out.breaker_a|int}} A, type {{out.curve|raw}}, which trips instantly between {{out.trip_min_a|int}} A and {{out.trip_max_a|int}} A. The cable must be rated at least {{out.min_cable_a|1}} A and be at least {{out.min_mm2|1}} mm²: {{out.area_mm2|1}} mm² ({{out.pk_size|raw}}), rated {{out.ampacity_a|int}} A for this installation.",
+ "key_facts": [
+  "MCB rating = the next standard size above the design current (watts ÷ volts ÷ power factor); standard domestic MCBs run from {{d.standard_breaker_a.0|int}} A to {{d.standard_breaker_a.8|int}} A.",
+  "Type B trips instantly at three to five times its rating, type C at five to ten times, type D at ten to twenty times (IEC 60898-1): a {{out.breaker_a|int}} A type {{out.curve|raw}} trips instantly between {{out.trip_min_a|int}} A and {{out.trip_max_a|int}} A.",
+  "Motors, compressors and inverter ACs get an MCB chosen at design current × {{d.margin|2}} so it does not trip on long full-load running; a 1.5 ton inverter AC therefore gets a {{ex.0.out.breaker_a|int}} A type {{ex.0.out.curve|raw}} on {{ex.0.out.area_mm2|1}} mm² cable.",
+  "The cable must always be rated above the MCB, so the MCB protects the cable: minimum {{d.standard_breaker_a.0|int}} A MCB on 1 mm² (3/29) for lighting and {{out.area_mm2|1}} mm² (7/29) for sockets and ACs."
+ ],
+ "formula": {
+  "text": "I_b = P ÷ (k × V × PF); I_n = next standard ≥ I_b (≥ I_b × margin for motor loads); I_z ≥ max(I_b × margin, I_n)",
+  "lines": [
+   "I_b = design current; k = 1 single phase, √3 three phase",
+   "I_n = MCB rating from the standard series; curve B, C or D by load type",
+   "I_z = cable current rating for the installation method, never below I_n",
+   "Instant trip range = curve multiple × I_n (B 3-5, C 5-10, D 10-20)"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "How does this breaker size calculator choose the MCB rating?",
+   "p": [
+    "It starts with the design current: the circuit's watts divided by volts × power factor ({{out.watts|int}} W ÷ ({{out.volts|int}} V × {{out.pf|1}}) = {{out.ib_a|1}} A for the default). For a motor, compressor, AC or welder it multiplies by {{out.margin|2}}, because those loads run near full current for long periods and a breaker chosen right at the design current heats up and trips. Then it takes the next standard MCB size above that, {{out.breaker_a|int}} A here, and picks the curve from the type of load.",
+    "Finally it checks the cable. The MCB must never be rated above the cable it protects, so the result also shows the smallest copper size whose rating covers the design current × {{out.margin|2}} and the MCB: {{out.area_mm2|1}} mm² ({{out.pk_size|raw}}). The wire size calculator linked below adds the voltage drop over your run."
+   ]
+  },
+  {
+   "h2": "Which breaker for an AC?",
+   "p": [
+    "A type C MCB, because a compressor starts with a surge that trips a type B. A 1.5 ton inverter AC at its {{ex.0.in.watts|int}} W maximum input draws {{ex.0.out.ib_a|1}} A; with the margin that is {{ex.0.out.breaker_design_a|1}} A, so a {{ex.0.out.breaker_a|int}} A type {{ex.0.out.curve|raw}} on {{ex.0.out.area_mm2|1}} mm² ({{ex.0.out.pk_size|raw}}) cable on its own circuit. A non-inverter 1.5 ton lands on the same rating; a 1 ton inverter drops to the next size down. Pick Inverter AC or AC (non-inverter) above and enter the AC's rated input from its label."
+   ]
+  },
+  {
+   "h2": "C curve vs B curve: which should I use?",
+   "p": [
+    "The curve sets how much current makes the MCB trip instantly on a short circuit or a start surge, as a multiple of its rating. Type B trips at three to five times: a {{ex.1.out.breaker_a|int}} A type B trips instantly between {{ex.1.out.trip_min_a|int}} A and {{ex.1.out.trip_max_a|int}} A. Type C trips at five to ten times: a {{out.breaker_a|int}} A type C between {{out.trip_min_a|int}} A and {{out.trip_max_a|int}} A. Type D trips at ten to twenty times and is for welders, transformers and big motors.",
+    "Use B for lighting, heaters, geysers and irons, where there is no surge and the lower trip point protects thin cables better. Use C for ACs, fridges, water pumps and socket circuits that may feed a motor. Both protect against overload in the same way; the curve only changes the instant-trip point."
+   ]
+  },
+  {
+   "h2": "What load can a {{ex.4.out.breaker_a|int}} A MCB take?",
+   "p": [
+    "A socket circuit of {{ex.4.in.watts|int}} W at {{ex.4.out.volts|int}} V draws {{ex.4.out.ib_a|1}} A and takes a {{ex.4.out.breaker_a|int}} A type {{ex.4.out.curve|raw}} MCB; that is close to the most a {{ex.4.out.breaker_a|int}} A breaker should carry continuously. The cable has to be rated {{ex.4.out.min_cable_a|1}} A, so it needs {{ex.4.out.area_mm2|1}} mm² ({{ex.4.out.pk_size|raw}}); 7/36 at {{ex.4.out.breaker_a|int}} A would be rated exactly at the breaker with no margin. A {{ex.4.out.breaker_a|int}} A MCB is a common choice for a kitchen, a geyser-plus-sockets circuit or a small sub-main."
+   ]
+  },
+  {
+   "h2": "What main breaker size for a house?",
+   "p": [
+    "Add the running watts of everything that is on at the same time, not every appliance in the house: the home load calculator does this with a diversity factor. Enter the total as a mixed load; the main MCB is the next standard size above the current, and the service cable must be rated above the MCB. A home whose appliances come to {{ex.4.in.watts|int}} W at once draws {{ex.4.out.ib_a|1}} A and gets a {{ex.4.out.breaker_a|int}} A main MCB on at least {{ex.4.out.area_mm2|1}} mm² cable.",
+    "The main breaker should also match the sanctioned load on your bill. If the current comes out above the largest listed MCB ({{d.standard_breaker_a.8|int}} A), the home needs a three-phase connection or a moulded-case breaker; ask an electrician and the DISCO rather than fitting a bigger single-phase breaker."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "watts": 1900,
+    "load_type": "inverter_compressor",
+    "pf": 0.9
+   },
+   "title": "1.5 ton inverter AC, {{out.watts|int}} W maximum input",
+   "text": "{{out.watts|int}} W ÷ ({{out.volts|int}} V × {{out.pf|1}}) = {{out.ib_a|1}} A; × {{out.margin|2}} for a compressor = {{out.breaker_design_a|1}} A, so a {{out.breaker_a|int}} A type {{out.curve|raw}} MCB (instant trip {{out.trip_min_a|int}} to {{out.trip_max_a|int}} A) on {{out.area_mm2|1}} mm² ({{out.pk_size|raw}}) cable."
+  },
+  {
+   "inputs": {
+    "watts": 3000,
+    "load_type": "resistive",
+    "pf": 1
+   },
+   "title": "{{out.watts|int}} W electric geyser",
+   "text": "{{out.watts|int}} W ÷ ({{out.volts|int}} V × {{out.pf|1}}) = {{out.ib_a|1}} A, so a {{out.breaker_a|int}} A type {{out.curve|raw}} MCB: no surge, so the B curve's lower instant trip ({{out.trip_min_a|int}} to {{out.trip_max_a|int}} A) protects the cable better. Cable rated at least {{out.min_cable_a|1}} A: {{out.area_mm2|1}} mm² ({{out.pk_size|raw}})."
+  },
+  {
+   "inputs": {
+    "watts": 400,
+    "load_type": "lighting",
+    "pf": 1
+   },
+   "title": "Lighting circuit of {{out.watts|int}} W",
+   "text": "{{out.watts|int}} W ÷ {{out.volts|int}} V = {{out.ib_a|1}} A, so the smallest MCB, {{out.breaker_a|int}} A type {{out.curve|raw}}, on {{out.area_mm2|1}} mm² ({{out.pk_size|raw}}) cable, the usual lighting size. The breaker could feed several more lights on this circuit."
+  },
+  {
+   "inputs": {
+    "watts": 1900,
+    "load_type": "motor"
+   },
+   "title": "Two hp water pump, about {{out.watts|int}} W input",
+   "text": "{{out.watts|int}} W ÷ ({{out.volts|int}} V × {{out.pf|1}}) = {{out.ib_a|1}} A; × {{out.margin|2}} for a motor = {{out.breaker_design_a|1}} A, so a {{out.breaker_a|int}} A type {{out.curve|raw}} MCB that rides through the start surge, on {{out.area_mm2|1}} mm² ({{out.pk_size|raw}}) cable. A pump far from the board also needs the voltage drop checked on the wire size page."
+  },
+  {
+   "inputs": {
+    "watts": 5500,
+    "load_type": "sockets"
+   },
+   "title": "Kitchen socket circuit of {{out.watts|int}} W",
+   "text": "{{out.watts|int}} W ÷ ({{out.volts|int}} V × {{out.pf|1}}) = {{out.ib_a|1}} A, so a {{out.breaker_a|int}} A type {{out.curve|raw}} MCB. The cable must be rated {{out.min_cable_a|1}} A, which takes {{out.area_mm2|1}} mm² ({{out.pk_size|raw}}) at {{out.ampacity_a|int}} A."
+  }
+ ],
+ "table": {
+  "caption": "MCB rating, curve and minimum cable for single-phase socket circuits at {{out.volts|int}} V, power factor {{out.pf|1}}, cable in conduit",
+  "rows": [
+   {
+    "watts": 500
+   },
+   {
+    "watts": 1000
+   },
+   {
+    "watts": 2000
+   },
+   {
+    "watts": 3000
+   },
+   {
+    "watts": 4000
+   },
+   {
+    "watts": 5000
+   },
+   {
+    "watts": 6000
+   },
+   {
+    "watts": 7000
+   }
+  ],
+  "columns": [
+   {
+    "label": "Load",
+    "tpl": "{{out.watts|int}} W"
+   },
+   {
+    "label": "Design current",
+    "tpl": "{{out.ib_a|1}} A"
+   },
+   {
+    "label": "MCB",
+    "tpl": "{{out.breaker_a|int}} A"
+   },
+   {
+    "label": "Curve",
+    "tpl": "{{out.curve|raw}}"
+   },
+   {
+    "label": "Minimum cable",
+    "tpl": "{{out.area_mm2|1}} mm² ({{out.pk_size|raw}})"
+   }
+  ]
+ },
+ "mistakes": [
+  "Fitting a bigger MCB to stop tripping. The MCB protects the cable; a breaker rated above the cable lets the wire overheat before it trips. Find the overload or fault instead.",
+  "Using a type B for an AC or pump. The start surge trips it; compressors and motors need type C.",
+  "Using type D for ordinary circuits. Its high instant-trip point may not clear a short circuit quickly on a thin house cable.",
+  "Sizing from the appliance's average watts. Use the rated input on the label; for an inverter AC that is the maximum input, not the average the bill is based on.",
+  "Forgetting three phase. On a {{d.v_3ph|int}} V three-phase supply the current per phase is divided by root three × the line voltage, so the same kW takes a much smaller MCB than on single phase."
+ ],
+ "safety": "These ratings are planning values; a licensed electrician must confirm the MCB, the curve and the cable on site, check the earth and fit an RCD or RCCB for sockets and wet areas.",
+ "faq": [
+  {
+   "q": "What size MCB for a 1.5 ton AC?",
+   "a": "{{ex.0.out.breaker_a|int}} A type {{ex.0.out.curve|raw}} on its own circuit with at least {{ex.0.out.area_mm2|1}} mm² ({{ex.0.out.pk_size|raw}}) copper cable, for both inverter and non-inverter 1.5 ton units."
+  },
+  {
+   "q": "What MCB for a {{ex.1.in.watts|int}} W geyser?",
+   "a": "{{ex.1.out.breaker_a|int}} A type {{ex.1.out.curve|raw}}: the geyser draws {{ex.1.out.ib_a|1}} A with no surge, on {{ex.1.out.area_mm2|1}} mm² ({{ex.1.out.pk_size|raw}}) cable."
+  },
+  {
+   "q": "What is the MCB rating for lights?",
+   "a": "Usually {{ex.2.out.breaker_a|int}} A type {{ex.2.out.curve|raw}} on {{ex.2.out.area_mm2|1}} mm² ({{ex.2.out.pk_size|raw}}) cable; a {{ex.2.in.watts|int}} W lighting circuit draws only {{ex.2.out.ib_a|1}} A."
+  },
+  {
+   "q": "Which MCB for a water motor or pump?",
+   "a": "A type {{ex.3.out.curve|raw}} at the next size above the motor's current × {{ex.3.out.margin|2}}: a two hp pump of about {{ex.3.in.watts|int}} W input draws {{ex.3.out.ib_a|1}} A, the margin takes it to {{ex.3.out.breaker_design_a|1}} A, so a {{ex.3.out.breaker_a|int}} A MCB on {{ex.3.out.area_mm2|1}} mm² cable. A one hp motor needs about half the watts; enter its rated input above."
+  },
+  {
+   "q": "Can I replace a {{out.breaker_a|int}} A MCB with a bigger one to stop tripping?",
+   "a": "Not unless the cable is rated for the bigger breaker. The MCB exists to protect the cable; repeated tripping means an overload or a fault on the circuit, which is what to fix."
+  },
+  {
+   "q": "What is the difference between an MCB and an RCD?",
+   "a": "An MCB trips on overload and short circuit to protect the cable. An RCD or RCCB trips on earth leakage to protect people from shock. A home needs both: MCBs per circuit and an RCD on sockets and wet areas."
+  },
+  {
+   "q": "Does a three-phase load need a smaller MCB?",
+   "a": "Yes. On a {{d.v_3ph|int}} V three-phase supply the current is shared by three phases and divided by root three × the line voltage, so a ten kW motor takes a smaller MCB per phase than a five kW single-phase load. Choose Three phase above to see it."
+  }
+ ],
+ "related": [
+  "W1",
+  "W2",
+  "C5",
+  "E3"
+ ],
+ "next": "W2",
+ "literal_numbers": [
+  "IEC 60898-1",
+  "1.5 ton",
+  "1 ton",
+  "1 mm²",
+  "3/29",
+  "7/29",
+  "7/36"
+ ],
+ "sources": [
+  {
+   "label": "IEC 60364-5-52: selection and erection of wiring systems (cable current ratings)",
+   "url": "https://webstore.iec.ch/publication/1878"
+  },
+  {
+   "label": "IEC 60898-1: circuit-breakers for overcurrent protection (B, C and D tripping curves)",
+   "url": "https://webstore.iec.ch/publication/1878"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

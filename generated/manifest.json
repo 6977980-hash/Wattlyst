@@ -447,7 +447,8 @@
     "B3",
     "B5",
     "H9",
-    "D4"
+    "D4",
+    "P-G"
    ],
    "next": "D4",
    "wave": 1
@@ -516,7 +517,8 @@
     "B1",
     "B2",
     "H9",
-    "D4"
+    "D4",
+    "P-G"
    ],
    "next": "B1",
    "wave": 1
@@ -1156,12 +1158,19 @@
    "id": "W1",
    "type": "tool",
    "url": "/wiring/wire-size-for-1-5-ton-ac/",
-   "h1": "Wire Size For 1.5 Ton Ac",
+   "h1": "Wire Size for 1.5 Ton AC",
    "title": "Wire Size for 1.5 Ton AC (mm² & 7/29) + Breaker | Wattlyst",
    "meta": "Which wire and breaker for a 1.5 ton inverter or non-inverter AC? mm² and 3/29, 7/29 sizes, run length and safety margin, explained.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-W",
+   "related": [
+    "W2",
+    "W3",
+    "E4",
+    "C6"
+   ],
+   "next": "W3",
    "wave": 1
   },
   {
@@ -1171,21 +1180,35 @@
    "h1": "Wire Size Calculator Pakistan",
    "title": "Wire Size Calculator Pakistan (mm², 3/29, 7/29) | Wattlyst",
    "meta": "Find the right copper wire size for any load and length. Shows mm² and Pakistani 3/29, 7/29, 7/36 sizes with ampere ratings and voltage drop.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-W",
+   "related": [
+    "W1",
+    "W3",
+    "E3",
+    "C5"
+   ],
+   "next": "W3",
    "wave": 1
   },
   {
    "id": "W3",
    "type": "tool",
    "url": "/wiring/breaker-size-calculator/",
-   "h1": "Mcb Size Calculator",
+   "h1": "MCB Size Calculator",
    "title": "MCB / Breaker Size Calculator (Amps & Curve) | Wattlyst",
    "meta": "Pick the right MCB size and curve (B, C, D) for lights, sockets, ACs and motors from load watts. Wire and breaker matched safely.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-W",
+   "related": [
+    "W1",
+    "W2",
+    "C5",
+    "E3"
+   ],
+   "next": "W2",
    "wave": 1
   },
   {
@@ -1698,9 +1721,13 @@
    "title": "Wire, Cable and Breaker Size Calculators | Wattlyst",
    "meta": "Wiring calculators for wire size, MCB breaker size, solar DC cable and voltage drop. Always confirm final wiring with a licensed electrician.",
    "status": "auto",
-   "live": false,
+   "live": true,
    "parent": null,
-   "children": [],
+   "children": [
+    "W1",
+    "W2",
+    "W3"
+   ],
    "wave": 0
   },
   {

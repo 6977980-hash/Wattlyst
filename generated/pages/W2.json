@@ -8,21 +8,419 @@
  "meta": "Find the right copper wire size for any load and length. Shows mm² and Pakistani 3/29, 7/29, 7/36 sizes with ampere ratings and voltage drop.",
  "primary_keyword": "wire size calculator pakistan",
  "wave": 1,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-13",
+ "published": "2026-10-13",
  "author": "ali-ahmad",
+ "related": [
+  "W1",
+  "W3",
+  "E3",
+  "C5"
+ ],
+ "next": "W3",
  "parent": "P-W",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
    "url": "/"
   },
   {
+   "name": "Wiring Calculators",
+   "url": "/wiring/"
+  },
+  {
    "name": "Wire Size Calculator Pakistan",
    "url": "/wiring/wire-size-calculator/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "How does this wire gauge and cable size calculator pick a size?",
+    "p": [
+     "It works the way an electrician does, in three steps. First the design current: watts ÷ (volts × power factor), or ÷ (root three × volts × power factor) on three phase. Second the MCB: the next standard size above the design current, with a 1.25 margin first for motors, compressors and ACs. Third the cable: the smallest copper size whose rating for the installation method covers the design current × 1.25 and the MCB, and whose voltage drop over your run stays under the limit.",
+     "For the default 3,000 W at 20 m that is 16.3 A, a 20 A MCB and a 2.5 mm² cable (7/29) rated 24 A, with a 2.6% drop. The MCB is always rated at or below the cable, so the breaker protects the cable."
+    ]
+   },
+   {
+    "h2": "What is the 7/29 wire ampere rating (2.5 mm² wire amps)?",
+    "p": [
+     "7/29 copper wire is rated as a 2.5 mm² cable here and carries 24 A in conduit inside a wall, a little more when clipped on the surface. With the 1.25 safety margin that means a design current of about 16.3 A, the default 3,000 W load, fits on 7/29 with a 20 A MCB and room to spare (20.4 A needed against 24 A).",
+     "A 4,400 W load on the same supply draws 23.9 A and needs a cable rated 29.9 A, above what 7/29 can carry, so the calculator moves to 7/36 (4 mm²), rated 32 A, with a 25 A MCB. 7/29 is also the minimum size for any socket or AC circuit."
+    ]
+   },
+   {
+    "h2": "How many amps can 4 mm² wire carry?",
+    "p": [
+     "4 mm² copper, sold as 7/36 in Pakistan, carries 32 A in conduit. It is the usual choice for a kitchen socket ring, a geyser plus sockets, or an AC on a long run. In the example below a 4,400 W load at 10 m gets 7/36 with a 25 A MCB and a 1.2% drop. The next size, 7/44 (6 mm²), carries 41 A."
+    ]
+   },
+   {
+    "h2": "What is copper wire ampacity and why does the installation method matter?",
+    "p": [
+     "Ampacity is the current a cable can carry continuously without its insulation getting too hot. The ratings here are for PVC-insulated copper from IEC 60364-5-52: method B1 is a cable in conduit inside a wall, which is most Pakistani house wiring and traps heat, so it is rated lower than method C, a cable clipped to a surface in free air. Pick the method that matches your installation.",
+     "Several cables in one conduit, a roof space that bakes in summer or an aluminium conductor all reduce the rating further. The calculator uses one cable at normal room temperature; an electrician derates for the rest."
+    ]
+   },
+   {
+    "h2": "Is there a cable size chart for Pakistani wire sizes?",
+    "p": [
+     "The table below is one: common single-phase loads at 20 m with the mm² size, the Pakistani name, the current rating, the MCB and the voltage drop. The names count the strands and their diameter in thousandths of an inch: 3/29 is three strands and is rated as 1 mm² for lighting points, 7/29 is seven strands rated as 2.5 mm² for sockets and ACs, 7/36 as 4 mm², 7/44 as 6 mm², 7/52 as 10 mm² and 7/64 as 16 mm² for main feeds.",
+     "A 7/29 is actually a little larger than 2.5 mm², but it is rated as 2.5 mm² here to stay on the safe side. Always buy cable with the size printed on the sheath from a known maker; thin or copper-clad wire sold as 7/29 does not carry 7/29 current."
+    ]
+   },
+   {
+    "h2": "What wire size for a 5 kW load?",
+    "p": [
+     "On single phase at 230 V a 5,000 W mixed load draws 27.2 A, so it needs a 32 A MCB and a 6 mm² cable (7/44) rated 41 A, with a 1.8% drop over 20 m. This is the size of a typical main feed for a small home or a sub-main to a floor. The same five kW on three phase splits over three live wires and needs a smaller cable."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "Does this wire size calculator use Pakistani wire sizes?",
+    "a": "Yes. Every result shows the mm² size and the Pakistani name (3/29, 7/29, 7/36, 7/44 and up), using the copper current ratings of IEC 60364-5-52 for cable in conduit or clipped on a surface."
+   },
+   {
+    "q": "What is the maximum load on 7/29 wire?",
+    "a": "7/29 carries 24 A in conduit. With the 1.25 planning margin a 3,000 W single-phase load (16.3 A) fits with a 20 A MCB; a 4,400 W load (23.9 A) does not and moves up to 7/36."
+   },
+   {
+    "q": "What size wire for a five kW load at 230 V?",
+    "a": "6 mm² copper (7/44) with a 32 A MCB: the load draws 27.2 A and the cable is rated 41 A."
+   },
+   {
+    "q": "Which wire for a 32 A MCB?",
+    "a": "At least 6 mm² (7/44), rated 41 A in conduit, so that the cable rating stays above the breaker and the breaker protects the cable."
+   },
+   {
+    "q": "Does cable length change the wire size?",
+    "a": "Yes, through voltage drop. 3,000 W at 60 m needs 4 mm² to keep the drop at 4.8%, under the 5% limit, while the same load at 20 m fits on 2.5 mm²."
+   },
+   {
+    "q": "What cable for a three-phase motor?",
+    "a": "The current divides over three phases: a ten kW motor at 400 V draws 17 A per phase and takes a 25 A MCB on 4 mm² (7/36) cable."
+   },
+   {
+    "q": "Which wire between the battery and the inverter?",
+    "a": "DC current is high because the voltage is low: 3,000 W at 48 V is 62.5 A, needing 25 mm² (19/52) over a 3 m run with a DC-rated breaker or fuse. Keep battery cables as short as possible."
+   },
+   {
+    "q": "What do 3/29, 7/29 and 7/36 mean?",
+    "a": "The number of copper strands and each strand's diameter in thousandths of an inch: 7/29 is seven strands of twenty-nine thousandths of an inch. The calculator converts each to its area in mm² and rates it as the IEC size it is sold as."
+   }
+  ],
+  "key_facts": [
+   "Wire size = the smallest copper cable whose current rating covers the design current × 1.25 (and the MCB) and whose voltage drop over the run stays under 5% for power circuits or 3% for lighting.",
+   "Pakistani wire sizes are strands/diameter: 7/29 is rated as a 2.5 mm² cable and carries 24 A in conduit; 7/36 as 4 mm² at 32 A; 7/44 as 6 mm² at 41 A (IEC 60364-5-52, PVC copper, in conduit).",
+   "A 3,000 W load at 230 V draws 16.3 A and fits on 7/29 with a 20 A MCB; a 5,000 W load draws 27.2 A and needs 6 mm² (7/44) with a 32 A MCB.",
+   "Long runs are sized by voltage drop, not current: 3,000 W over 60 m needs 4 mm² although 2.5 mm² would carry the current."
+  ],
+  "mistakes": [
+   "Sizing the cable to the load alone. The cable must also be rated above the MCB that protects it, otherwise the breaker lets the cable overheat before it trips.",
+   "Measuring the run across the room. Cable follows walls, ceilings and the distribution board, so the real run and the voltage drop are longer than the straight line.",
+   "Ignoring voltage drop on long runs. A cable that carries the current comfortably can still lose too much voltage over 60 m; motors and compressors suffer most.",
+   "Treating copper-clad or aluminium wire as copper. Both need a larger size and different terminals; the ratings here are for copper only.",
+   "Trusting the name on the roll. A cheap 7/29 with thin strands is not 2.5 mm²; buy from a known maker with the size printed on the sheath."
+  ],
+  "sources": [
+   {
+    "label": "IEC 60364-5-52: selection and erection of wiring systems (Table B.52.4 current ratings, voltage drop)",
+    "url": "https://webstore.iec.ch/publication/1878"
+   },
+   {
+    "label": "Wattlyst methodology and default values",
+    "url": "/methodology/"
+   }
+  ],
+  "tool": {
+   "calc": "wire_size",
+   "module": "wiring.js",
+   "data_keys": [
+    "cables"
+   ],
+   "appliances": {},
+   "fields": [
+    {
+     "name": "watts",
+     "label": "Load",
+     "unit": "W",
+     "default": 3000,
+     "hint": "Total watts the cable will carry, from the appliance labels or the home load calculator."
+    },
+    {
+     "name": "length_m",
+     "label": "Cable run",
+     "unit": "m",
+     "default": 20,
+     "hint": "One-way length from the distribution board to the load, following the walls."
+    },
+    {
+     "name": "mode",
+     "label": "Supply",
+     "type": "select",
+     "default": "ac1",
+     "options": [
+      [
+       "ac1",
+       "Single phase 230 V"
+      ],
+      [
+       "ac3",
+       "Three phase 400 V"
+      ],
+      [
+       "dc",
+       "DC"
+      ]
+     ]
+    },
+    {
+     "name": "volts",
+     "label": "Voltage",
+     "unit": "V",
+     "placeholder": "Auto by phase",
+     "advanced": true,
+     "hint": "Leave blank for the standard single or three-phase voltage. Enter the battery voltage for a DC cable."
+    },
+    {
+     "name": "load_type",
+     "label": "Type of load",
+     "type": "select",
+     "default": "sockets",
+     "options": [
+      [
+       "sockets",
+       "Sockets / mixed"
+      ],
+      [
+       "lighting",
+       "Lighting"
+      ],
+      [
+       "resistive",
+       "Heater, geyser, iron"
+      ],
+      [
+       "motor",
+       "Motor or pump"
+      ],
+      [
+       "compressor",
+       "AC or fridge (non-inverter)"
+      ],
+      [
+       "inverter_compressor",
+       "Inverter AC"
+      ]
+     ],
+     "hint": "Motors, compressors and ACs get a breaker with a margin because they run near full current for long periods."
+    },
+    {
+     "name": "circuit",
+     "label": "Circuit",
+     "type": "select",
+     "default": "other",
+     "options": [
+      [
+       "other",
+       "Power / sockets / AC"
+      ],
+      [
+       "lighting",
+       "Lighting (3% drop limit)"
+      ]
+     ]
+    },
+    {
+     "name": "method",
+     "label": "How the cable is installed",
+     "type": "select",
+     "default": "B1",
+     "options": [
+      [
+       "B1",
+       "In conduit inside the wall"
+      ],
+      [
+       "C",
+       "Clipped on the surface"
+      ]
+     ]
+    },
+    {
+     "name": "pf",
+     "label": "Power factor",
+     "unit": "0 to 1",
+     "default": 0.8,
+     "advanced": true,
+     "hint": "Mixed loads about 0.8; heaters 1.0; inverter ACs about 0.9. Ignored for DC."
+    },
+    {
+     "name": "margin",
+     "label": "Safety margin",
+     "unit": "×",
+     "default": 1.25,
+     "advanced": true,
+     "hint": "The cable is rated for the design current times this margin."
+    }
+   ],
+   "fixed_inputs": {},
+   "outputs": [
+    {
+     "key": "area_mm2",
+     "label": "Cable size",
+     "spec": "1",
+     "unit": "mm²",
+     "value": "2.5"
+    },
+    {
+     "key": "pk_size",
+     "label": "Pakistani size",
+     "spec": "raw",
+     "value": "7/29"
+    },
+    {
+     "key": "ampacity_a",
+     "label": "Cable rating",
+     "spec": "int",
+     "unit": "A",
+     "value": "24"
+    },
+    {
+     "key": "breaker_a",
+     "label": "MCB",
+     "spec": "int",
+     "unit": "A",
+     "value": "20"
+    },
+    {
+     "key": "drop_pct",
+     "label": "Voltage drop",
+     "spec": "1",
+     "unit": "%",
+     "value": "2.6"
+    }
+   ],
+   "how": {
+    "tpl": "Design current = {{out.watts|int}} W ÷ ({{out.k|2}} × {{out.volts|int}} V × {{out.pf|2}} power factor) = {{out.ib_a|1}} A (the first factor is one for single phase and DC, root three for three phase). MCB = next standard size above {{out.breaker_design_a|1}} A = {{out.breaker_a|int}} A. The cable must be rated at least {{out.min_cable_a|1}} A, the larger of {{out.ib_a|1}} A × {{out.margin|2}} and the MCB, and be at least {{out.min_mm2|1}} mm² for this circuit type: {{out.area_mm2|1}} mm² ({{out.pk_size|raw}}) is rated {{out.ampacity_a|int}} A. Voltage drop over the {{in.length_m|int}} m run = {{out.drop_v|1}} V, which is {{out.drop_pct|1}}% of {{out.volts|int}} V, within the {{out.limit_pct|int}}% limit.",
+    "text": "Design current = 3,000 W ÷ (1 × 230 V × 0.8 power factor) = 16.3 A (the first factor is one for single phase and DC, root three for three phase). MCB = next standard size above 16.3 A = 20 A. The cable must be rated at least 20.4 A, the larger of 16.3 A × 1.25 and the MCB, and be at least 2.5 mm² for this circuit type: 2.5 mm² (7/29) is rated 24 A. Voltage drop over the 20 m run = 5.9 V, which is 2.6% of 230 V, within the 5% limit."
+   },
+   "submit": "Calculate",
+   "data_checked": [
+    {
+     "label": "Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)",
+     "url": "https://webstore.iec.ch/publication/1878",
+     "checked": "2026-10-13"
+    }
+   ]
+  },
+  "examples": [
+   {
+    "title": "Five kW mixed load, 20 m, single phase",
+    "text": "5,000 W ÷ (230 V × 0.8) = 27.2 A, so a 32 A MCB. The cable must be rated 34 A: 6 mm² (7/44) at 41 A. Voltage drop 4.1 V, or 1.8%."
+   },
+   {
+    "title": "Long 60 m run: voltage drop decides",
+    "text": "3,000 W draws 16.3 A and 2.5 mm² would carry it, but over 60 m the drop would pass the 5% limit, so the calculator moves to 4 mm² (7/36), which drops 11 V, or 4.8%. MCB 20 A."
+   },
+   {
+    "title": "Ten kW three-phase motor, 20 m",
+    "text": "10,000 W ÷ (root three × 400 V × 0.85) = 17 A per phase. Motor loads take the margin on the breaker: 21.2 A, so a 25 A MCB. Cable 4 mm² (7/36) rated 32 A per core; drop 0.8%."
+   },
+   {
+    "title": "48 V battery to inverter cable, 3,000 W, 3 m",
+    "text": "DC has no power factor: 3,000 W ÷ 48 V = 62.5 A. The cable must be rated 78.1 A, so 25 mm² (19/52) at 101 A, protected by a 63 A DC-rated breaker or fuse. Even at 3 m the drop is 0.7%, which is why battery cables are kept short and thick."
+   },
+   {
+    "title": "4,400 W socket circuit, 10 m",
+    "text": "4,400 W ÷ (230 V × 0.8) = 23.9 A, so a 25 A MCB. With the 1.25 margin the cable must be rated 29.9 A, above 7/29, so 4 mm² (7/36) at 32 A. Voltage drop 1.2%."
+   }
+  ],
+  "table": {
+   "caption": "Cable size chart: single-phase loads at 230 V over 20 m in conduit, power factor 0.8",
+   "head": [
+    "Load",
+    "Design current",
+    "Cable",
+    "Pakistani size",
+    "Cable rating",
+    "MCB",
+    "Voltage drop"
+   ],
+   "rows": [
+    [
+     "1,000 W",
+     "5.4 A",
+     "2.5 mm²",
+     "7/29",
+     "24 A",
+     "6 A",
+     "0.9%"
+    ],
+    [
+     "2,000 W",
+     "10.9 A",
+     "2.5 mm²",
+     "7/29",
+     "24 A",
+     "16 A",
+     "1.7%"
+    ],
+    [
+     "3,000 W",
+     "16.3 A",
+     "2.5 mm²",
+     "7/29",
+     "24 A",
+     "20 A",
+     "2.6%"
+    ],
+    [
+     "5,000 W",
+     "27.2 A",
+     "6 mm²",
+     "7/44",
+     "41 A",
+     "32 A",
+     "1.8%"
+    ],
+    [
+     "7,000 W",
+     "38 A",
+     "10 mm²",
+     "7/52",
+     "57 A",
+     "40 A",
+     "1.5%"
+    ],
+    [
+     "10,000 W",
+     "54.3 A",
+     "16 mm²",
+     "7/64",
+     "76 A",
+     "63 A",
+     "1.3%"
+    ]
+   ]
+  },
+  "answer": "A 3,000 W single-phase load over a 20 m run in conduit needs a 2.5 mm² copper cable (7/29 in Pakistani sizes), rated 24 A, on a 20 A MCB, with a 2.6% voltage drop. The cable must carry the design current of 16.3 A times a 1.25 safety margin and keep the drop under 5%.",
+  "formula": {
+   "text": "I_b = P ÷ (k × V × PF); I_n = next standard ≥ I_b; I_z ≥ max(I_b × margin, I_n); ΔV% = k_v × L × I_b × ρ ÷ A ÷ V × 100",
+   "lines": [
+    "I_b = design current; k = 1 for single phase and DC, √3 for three phase",
+    "I_n = MCB rating; I_z = cable current rating for the installation method",
+    "k_v = 2 for single phase and DC (there and back), √3 for three phase",
+    "L = one-way run in metres; ρ = resistivity of copper; A = cable area in mm²",
+    "Minimum sizes: lighting circuits and power circuits each have a floor whatever the current"
+   ]
+  },
+  "safety": "These sizes are planning values for one copper cable at normal room temperature; a licensed electrician must confirm the cable, MCB and earth on site and derate for grouped cables, hot roof spaces and long runs."
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -39,6 +437,12 @@
      {
       "@type": "ListItem",
       "position": 2,
+      "name": "Wiring Calculators",
+      "item": "https://wattlyst.com/wiring/"
+     },
+     {
+      "@type": "ListItem",
+      "position": 3,
       "name": "Wire Size Calculator Pakistan",
       "item": "https://wattlyst.com/wiring/wire-size-calculator/"
      }
@@ -56,7 +460,9 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/wiring/wire-size-calculator/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-13",
+    "lastReviewed": "2026-10-13"
    },
    {
     "@type": "WebApplication",
@@ -88,6 +494,76 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/wiring/wire-size-calculator/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "Does this wire size calculator use Pakistani wire sizes?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Yes. Every result shows the mm² size and the Pakistani name (3/29, 7/29, 7/36, 7/44 and up), using the copper current ratings of IEC 60364-5-52 for cable in conduit or clipped on a surface."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What is the maximum load on 7/29 wire?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "7/29 carries 24 A in conduit. With the 1.25 planning margin a 3,000 W single-phase load (16.3 A) fits with a 20 A MCB; a 4,400 W load (23.9 A) does not and moves up to 7/36."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What size wire for a five kW load at 230 V?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "6 mm² copper (7/44) with a 32 A MCB: the load draws 27.2 A and the cable is rated 41 A."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Which wire for a 32 A MCB?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "At least 6 mm² (7/44), rated 41 A in conduit, so that the cable rating stays above the breaker and the breaker protects the cable."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Does cable length change the wire size?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Yes, through voltage drop. 3,000 W at 60 m needs 4 mm² to keep the drop at 4.8%, under the 5% limit, while the same load at 20 m fits on 2.5 mm²."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What cable for a three-phase motor?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "The current divides over three phases: a ten kW motor at 400 V draws 17 A per phase and takes a 25 A MCB on 4 mm² (7/36) cable."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Which wire between the battery and the inverter?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "DC current is high because the voltage is low: 3,000 W at 48 V is 62.5 A, needing 25 mm² (19/52) over a 3 m run with a DC-rated breaker or fuse. Keep battery cables as short as possible."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What do 3/29, 7/29 and 7/36 mean?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "The number of copper strands and each strand's diameter in thousandths of an inch: 7/29 is seven strands of twenty-nine thousandths of an inch. The calculator converts each to its area in mm² and rates it as the IEC size it is sold as."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

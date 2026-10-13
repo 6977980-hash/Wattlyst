@@ -2958,12 +2958,14 @@
       "within_sanctioned": false,
       "load_pct": 147.5,
       "headroom_kw": 0,
-      "ac_ib_a": 7.8804,
-      "ac_breaker_a": 10,
-      "ac_cable_a": 10
+      "ac_ib_a": 10.3261,
+      "ac_breaker_a": 16,
+      "ac_cable_a": 16,
+      "ac_cable_mm2": 2.5,
+      "ac_curve": "C"
     },
     "tolerance": 0.01,
-    "note": "Phase 3"
+    "note": "AC circuit sized like the wiring pages: inverter AC at max input 1900 W, motor margin -> 16 A type C on 2.5 mm2"
   },
   {
     "calc": "add_ac_check",

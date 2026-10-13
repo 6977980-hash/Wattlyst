@@ -1,7 +1,7 @@
 // E. Load, AC, units (specs/formulas.md section E) and load/cost tools from section G.
 import { calculator, CalcError, has, pos, frac, nonneg, num, dflt, appliance } from './core.js';
 import { sumLoads, loadRows } from './sizing.js';
-import { design_current } from './wiring.js';
+import { breaker_size } from './wiring.js';
 
 /**
  * E5: units_day = avg_kW × hours; monthly = daily × days.
@@ -60,7 +60,7 @@ export const home_load = calculator((i, d) => {
 
 /**
  * E4: can the home take another AC? New total = current running W + the AC's running W; peak adds its
- * starting step; amps = W / (V × PF); checked against the sanctioned load; breaker/cable for the AC's own circuit (formulas.md W).
+ * starting step; amps = W / (V × PF); checked against the sanctioned load; MCB and cable for the AC's own circuit from breaker_size (formulas.md W).
  */
 export const add_ac_check = calculator((i, d) => {
   const current_w = nonneg(i, 'current_w');
@@ -70,12 +70,13 @@ export const add_ac_check = calculator((i, d) => {
   const pf = frac(i, 'pf', dflt(d, 'pf_mixed'));
   const new_total_w = current_w + ac.running_w;
   const peak_w = current_w + ac.starting_w;
-  const circuit = design_current.raw({ watts: ac.running_w, volts, pf, margin: i.margin }, d);
+  // The AC's own circuit follows the wiring pages' rule (formulas.md W): inverter AC at its maximum input, motor-type margin on the MCB.
+  const circuit = breaker_size.raw({ appliance: i.ac, volts, pf, margin: i.margin }, d);
   return {
     current_w, ac: i.ac.trim(), ac_name: ac.name, ac_run_w: ac.running_w, ac_start_w: ac.starting_w, sanctioned_kw, volts, pf,
     new_total_w, new_total_kw: new_total_w / 1000, peak_w, amps_now: current_w / (volts * pf), amps_after: new_total_w / (volts * pf), peak_amps: peak_w / (volts * pf),
     within_sanctioned: new_total_w / 1000 <= sanctioned_kw, load_pct: (new_total_w / 1000 / sanctioned_kw) * 100, headroom_kw: Math.max(0, sanctioned_kw - new_total_w / 1000),
-    ac_ib_a: circuit.ib_a, ac_breaker_a: circuit.min_breaker_a ?? 0, ac_cable_a: circuit.min_cable_a, ac_above_standard_sizes: circuit.above_standard_sizes,
+    ac_run_amps: ac.running_w / (volts * pf), ac_ib_a: circuit.ib_a, ac_design_w: circuit.watts, ac_breaker_a: circuit.breaker_a, ac_curve: circuit.curve, ac_cable_a: circuit.min_cable_a, ac_cable_mm2: circuit.area_mm2, ac_pk_size: circuit.pk_size,
   };
 });
 

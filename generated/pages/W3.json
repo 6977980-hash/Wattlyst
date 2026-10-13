@@ -3,26 +3,387 @@
  "type": "tool",
  "silo": "W",
  "url": "/wiring/breaker-size-calculator/",
- "h1": "Mcb Size Calculator",
+ "h1": "MCB Size Calculator",
  "title": "MCB / Breaker Size Calculator (Amps & Curve) | Wattlyst",
  "meta": "Pick the right MCB size and curve (B, C, D) for lights, sockets, ACs and motors from load watts. Wire and breaker matched safely.",
  "primary_keyword": "mcb size calculator",
  "wave": 1,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-13",
+ "published": "2026-10-13",
  "author": "ali-ahmad",
+ "related": [
+  "W1",
+  "W2",
+  "C5",
+  "E3"
+ ],
+ "next": "W2",
  "parent": "P-W",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
    "url": "/"
   },
   {
-   "name": "Mcb Size Calculator",
+   "name": "Wiring Calculators",
+   "url": "/wiring/"
+  },
+  {
+   "name": "MCB Size Calculator",
    "url": "/wiring/breaker-size-calculator/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "How does this breaker size calculator choose the MCB rating?",
+    "p": [
+     "It starts with the design current: the circuit's watts divided by volts × power factor (2,000 W ÷ (230 V × 0.8) = 10.9 A for the default). For a motor, compressor, AC or welder it multiplies by 1.25, because those loads run near full current for long periods and a breaker chosen right at the design current heats up and trips. Then it takes the next standard MCB size above that, 16 A here, and picks the curve from the type of load.",
+     "Finally it checks the cable. The MCB must never be rated above the cable it protects, so the result also shows the smallest copper size whose rating covers the design current × 1.25 and the MCB: 2.5 mm² (7/29). The wire size calculator linked below adds the voltage drop over your run."
+    ]
+   },
+   {
+    "h2": "Which breaker for an AC?",
+    "p": [
+     "A type C MCB, because a compressor starts with a surge that trips a type B. A 1.5 ton inverter AC at its 1,900 W maximum input draws 9.2 A; with the margin that is 11.5 A, so a 16 A type C on 2.5 mm² (7/29) cable on its own circuit. A non-inverter 1.5 ton lands on the same rating; a 1 ton inverter drops to the next size down. Pick Inverter AC or AC (non-inverter) above and enter the AC's rated input from its label."
+    ]
+   },
+   {
+    "h2": "C curve vs B curve: which should I use?",
+    "p": [
+     "The curve sets how much current makes the MCB trip instantly on a short circuit or a start surge, as a multiple of its rating. Type B trips at three to five times: a 16 A type B trips instantly between 48 A and 80 A. Type C trips at five to ten times: a 16 A type C between 80 A and 160 A. Type D trips at ten to twenty times and is for welders, transformers and big motors.",
+     "Use B for lighting, heaters, geysers and irons, where there is no surge and the lower trip point protects thin cables better. Use C for ACs, fridges, water pumps and socket circuits that may feed a motor. Both protect against overload in the same way; the curve only changes the instant-trip point."
+    ]
+   },
+   {
+    "h2": "What load can a 32 A MCB take?",
+    "p": [
+     "A socket circuit of 5,500 W at 230 V draws 29.9 A and takes a 32 A type C MCB; that is close to the most a 32 A breaker should carry continuously. The cable has to be rated 37.4 A, so it needs 6 mm² (7/44); 7/36 at 32 A would be rated exactly at the breaker with no margin. A 32 A MCB is a common choice for a kitchen, a geyser-plus-sockets circuit or a small sub-main."
+    ]
+   },
+   {
+    "h2": "What main breaker size for a house?",
+    "p": [
+     "Add the running watts of everything that is on at the same time, not every appliance in the house: the home load calculator does this with a diversity factor. Enter the total as a mixed load; the main MCB is the next standard size above the current, and the service cable must be rated above the MCB. A home whose appliances come to 5,500 W at once draws 29.9 A and gets a 32 A main MCB on at least 6 mm² cable.",
+     "The main breaker should also match the sanctioned load on your bill. If the current comes out above the largest listed MCB (63 A), the home needs a three-phase connection or a moulded-case breaker; ask an electrician and the DISCO rather than fitting a bigger single-phase breaker."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "What size MCB for a 1.5 ton AC?",
+    "a": "16 A type C on its own circuit with at least 2.5 mm² (7/29) copper cable, for both inverter and non-inverter 1.5 ton units."
+   },
+   {
+    "q": "What MCB for a 3,000 W geyser?",
+    "a": "16 A type B: the geyser draws 13 A with no surge, on 2.5 mm² (7/29) cable."
+   },
+   {
+    "q": "What is the MCB rating for lights?",
+    "a": "Usually 6 A type B on 1 mm² (3/29) cable; a 400 W lighting circuit draws only 1.7 A."
+   },
+   {
+    "q": "Which MCB for a water motor or pump?",
+    "a": "A type C at the next size above the motor's current × 1.25: a two hp pump of about 1,900 W input draws 10.3 A, the margin takes it to 12.9 A, so a 16 A MCB on 2.5 mm² cable. A one hp motor needs about half the watts; enter its rated input above."
+   },
+   {
+    "q": "Can I replace a 16 A MCB with a bigger one to stop tripping?",
+    "a": "Not unless the cable is rated for the bigger breaker. The MCB exists to protect the cable; repeated tripping means an overload or a fault on the circuit, which is what to fix."
+   },
+   {
+    "q": "What is the difference between an MCB and an RCD?",
+    "a": "An MCB trips on overload and short circuit to protect the cable. An RCD or RCCB trips on earth leakage to protect people from shock. A home needs both: MCBs per circuit and an RCD on sockets and wet areas."
+   },
+   {
+    "q": "Does a three-phase load need a smaller MCB?",
+    "a": "Yes. On a 400 V three-phase supply the current is shared by three phases and divided by root three × the line voltage, so a ten kW motor takes a smaller MCB per phase than a five kW single-phase load. Choose Three phase above to see it."
+   }
+  ],
+  "key_facts": [
+   "MCB rating = the next standard size above the design current (watts ÷ volts ÷ power factor); standard domestic MCBs run from 6 A to 63 A.",
+   "Type B trips instantly at three to five times its rating, type C at five to ten times, type D at ten to twenty times (IEC 60898-1): a 16 A type C trips instantly between 80 A and 160 A.",
+   "Motors, compressors and inverter ACs get an MCB chosen at design current × 1.25 so it does not trip on long full-load running; a 1.5 ton inverter AC therefore gets a 16 A type C on 2.5 mm² cable.",
+   "The cable must always be rated above the MCB, so the MCB protects the cable: minimum 6 A MCB on 1 mm² (3/29) for lighting and 2.5 mm² (7/29) for sockets and ACs."
+  ],
+  "mistakes": [
+   "Fitting a bigger MCB to stop tripping. The MCB protects the cable; a breaker rated above the cable lets the wire overheat before it trips. Find the overload or fault instead.",
+   "Using a type B for an AC or pump. The start surge trips it; compressors and motors need type C.",
+   "Using type D for ordinary circuits. Its high instant-trip point may not clear a short circuit quickly on a thin house cable.",
+   "Sizing from the appliance's average watts. Use the rated input on the label; for an inverter AC that is the maximum input, not the average the bill is based on.",
+   "Forgetting three phase. On a 400 V three-phase supply the current per phase is divided by root three × the line voltage, so the same kW takes a much smaller MCB than on single phase."
+  ],
+  "sources": [
+   {
+    "label": "IEC 60364-5-52: selection and erection of wiring systems (cable current ratings)",
+    "url": "https://webstore.iec.ch/publication/1878"
+   },
+   {
+    "label": "IEC 60898-1: circuit-breakers for overcurrent protection (B, C and D tripping curves)",
+    "url": "https://webstore.iec.ch/publication/1878"
+   },
+   {
+    "label": "Wattlyst methodology and default values",
+    "url": "/methodology/"
+   }
+  ],
+  "tool": {
+   "calc": "breaker_size",
+   "module": "wiring.js",
+   "data_keys": [
+    "cables"
+   ],
+   "appliances": {},
+   "fields": [
+    {
+     "name": "watts",
+     "label": "Load on the circuit",
+     "unit": "W",
+     "default": 2000,
+     "hint": "Total watts the breaker will protect: one appliance, or everything on the circuit at once."
+    },
+    {
+     "name": "load_type",
+     "label": "Type of load",
+     "type": "select",
+     "default": "sockets",
+     "options": [
+      [
+       "sockets",
+       "Sockets / mixed"
+      ],
+      [
+       "lighting",
+       "Lighting"
+      ],
+      [
+       "resistive",
+       "Heater, geyser, iron"
+      ],
+      [
+       "motor",
+       "Motor or pump"
+      ],
+      [
+       "compressor",
+       "AC or fridge (non-inverter)"
+      ],
+      [
+       "inverter_compressor",
+       "Inverter AC"
+      ],
+      [
+       "high_inrush",
+       "Welder, transformer"
+      ]
+     ],
+     "hint": "Sets the trip curve (B, C or D) and whether the breaker gets a margin for a motor-type load."
+    },
+    {
+     "name": "mode",
+     "label": "Supply",
+     "type": "select",
+     "default": "ac1",
+     "options": [
+      [
+       "ac1",
+       "Single phase 230 V"
+      ],
+      [
+       "ac3",
+       "Three phase 400 V"
+      ]
+     ]
+    },
+    {
+     "name": "volts",
+     "label": "Voltage",
+     "unit": "V",
+     "placeholder": "Auto by phase",
+     "advanced": true,
+     "hint": "Leave blank for the standard single or three-phase voltage."
+    },
+    {
+     "name": "pf",
+     "label": "Power factor",
+     "unit": "0 to 1",
+     "default": 0.8,
+     "advanced": true,
+     "hint": "Mixed loads about 0.8; heaters and lights 1.0; inverter ACs about 0.9."
+    },
+    {
+     "name": "margin",
+     "label": "Safety margin",
+     "unit": "×",
+     "default": 1.25,
+     "advanced": true,
+     "hint": "Applied to the breaker for motor-type loads and to the cable for every load."
+    },
+    {
+     "name": "method",
+     "label": "How the cable is installed",
+     "type": "select",
+     "default": "B1",
+     "advanced": true,
+     "options": [
+      [
+       "B1",
+       "In conduit inside the wall"
+      ],
+      [
+       "C",
+       "Clipped on the surface"
+      ]
+     ]
+    }
+   ],
+   "fixed_inputs": {},
+   "outputs": [
+    {
+     "key": "breaker_a",
+     "label": "MCB rating",
+     "spec": "int",
+     "unit": "A",
+     "value": "16"
+    },
+    {
+     "key": "curve",
+     "label": "Curve",
+     "spec": "raw",
+     "value": "C"
+    },
+    {
+     "key": "area_mm2",
+     "label": "Minimum cable",
+     "spec": "1",
+     "unit": "mm²",
+     "value": "2.5"
+    },
+    {
+     "key": "ib_a",
+     "label": "Design current",
+     "spec": "1",
+     "unit": "A",
+     "value": "10.9"
+    }
+   ],
+   "how": {
+    "tpl": "Design current = {{out.watts|int}} W ÷ ({{out.k|2}} × {{out.volts|int}} V × {{out.pf|2}} power factor) = {{out.ib_a|1}} A (the first factor is one for single phase, root three for three phase). Breaker design current = {{out.breaker_design_a|1}} A (× {{out.margin|2}} only for motors, compressors, ACs and welders). Next standard MCB = {{out.breaker_a|int}} A, type {{out.curve|raw}}, which trips instantly between {{out.trip_min_a|int}} A and {{out.trip_max_a|int}} A. The cable must be rated at least {{out.min_cable_a|1}} A and be at least {{out.min_mm2|1}} mm²: {{out.area_mm2|1}} mm² ({{out.pk_size|raw}}), rated {{out.ampacity_a|int}} A for this installation.",
+    "text": "Design current = 2,000 W ÷ (1 × 230 V × 0.8 power factor) = 10.9 A (the first factor is one for single phase, root three for three phase). Breaker design current = 10.9 A (× 1.25 only for motors, compressors, ACs and welders). Next standard MCB = 16 A, type C, which trips instantly between 80 A and 160 A. The cable must be rated at least 16 A and be at least 2.5 mm²: 2.5 mm² (7/29), rated 24 A for this installation."
+   },
+   "submit": "Calculate",
+   "data_checked": [
+    {
+     "label": "Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)",
+     "url": "https://webstore.iec.ch/publication/1878",
+     "checked": "2026-10-13"
+    }
+   ]
+  },
+  "examples": [
+   {
+    "title": "1.5 ton inverter AC, 1,900 W maximum input",
+    "text": "1,900 W ÷ (230 V × 0.9) = 9.2 A; × 1.25 for a compressor = 11.5 A, so a 16 A type C MCB (instant trip 80 to 160 A) on 2.5 mm² (7/29) cable."
+   },
+   {
+    "title": "3,000 W electric geyser",
+    "text": "3,000 W ÷ (230 V × 1) = 13 A, so a 16 A type B MCB: no surge, so the B curve's lower instant trip (48 to 80 A) protects the cable better. Cable rated at least 16.3 A: 2.5 mm² (7/29)."
+   },
+   {
+    "title": "Lighting circuit of 400 W",
+    "text": "400 W ÷ 230 V = 1.7 A, so the smallest MCB, 6 A type B, on 1 mm² (3/29) cable, the usual lighting size. The breaker could feed several more lights on this circuit."
+   },
+   {
+    "title": "Two hp water pump, about 1,900 W input",
+    "text": "1,900 W ÷ (230 V × 0.8) = 10.3 A; × 1.25 for a motor = 12.9 A, so a 16 A type C MCB that rides through the start surge, on 2.5 mm² (7/29) cable. A pump far from the board also needs the voltage drop checked on the wire size page."
+   },
+   {
+    "title": "Kitchen socket circuit of 5,500 W",
+    "text": "5,500 W ÷ (230 V × 0.8) = 29.9 A, so a 32 A type C MCB. The cable must be rated 37.4 A, which takes 6 mm² (7/44) at 41 A."
+   }
+  ],
+  "table": {
+   "caption": "MCB rating, curve and minimum cable for single-phase socket circuits at 230 V, power factor 0.8, cable in conduit",
+   "head": [
+    "Load",
+    "Design current",
+    "MCB",
+    "Curve",
+    "Minimum cable"
+   ],
+   "rows": [
+    [
+     "500 W",
+     "2.7 A",
+     "6 A",
+     "C",
+     "2.5 mm² (7/29)"
+    ],
+    [
+     "1,000 W",
+     "5.4 A",
+     "6 A",
+     "C",
+     "2.5 mm² (7/29)"
+    ],
+    [
+     "2,000 W",
+     "10.9 A",
+     "16 A",
+     "C",
+     "2.5 mm² (7/29)"
+    ],
+    [
+     "3,000 W",
+     "16.3 A",
+     "20 A",
+     "C",
+     "2.5 mm² (7/29)"
+    ],
+    [
+     "4,000 W",
+     "21.7 A",
+     "25 A",
+     "C",
+     "4 mm² (7/36)"
+    ],
+    [
+     "5,000 W",
+     "27.2 A",
+     "32 A",
+     "C",
+     "6 mm² (7/44)"
+    ],
+    [
+     "6,000 W",
+     "32.6 A",
+     "40 A",
+     "C",
+     "6 mm² (7/44)"
+    ],
+    [
+     "7,000 W",
+     "38 A",
+     "40 A",
+     "C",
+     "10 mm² (7/52)"
+    ]
+   ]
+  },
+  "answer": "A 2,000 W socket circuit on 230 V draws 10.9 A, so the MCB is the next standard size up: 16 A, type C, on at least 2.5 mm² (7/29) copper cable. MCB rating = next standard size above watts ÷ (volts × power factor); motor-type loads add a 1.25 × margin, and the curve follows the load type.",
+  "formula": {
+   "text": "I_b = P ÷ (k × V × PF); I_n = next standard ≥ I_b (≥ I_b × margin for motor loads); I_z ≥ max(I_b × margin, I_n)",
+   "lines": [
+    "I_b = design current; k = 1 single phase, √3 three phase",
+    "I_n = MCB rating from the standard series; curve B, C or D by load type",
+    "I_z = cable current rating for the installation method, never below I_n",
+    "Instant trip range = curve multiple × I_n (B 3-5, C 5-10, D 10-20)"
+   ]
+  },
+  "safety": "These ratings are planning values; a licensed electrician must confirm the MCB, the curve and the cable on site, check the earth and fit an RCD or RCCB for sockets and wet areas."
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -39,7 +400,13 @@
      {
       "@type": "ListItem",
       "position": 2,
-      "name": "Mcb Size Calculator",
+      "name": "Wiring Calculators",
+      "item": "https://wattlyst.com/wiring/"
+     },
+     {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "MCB Size Calculator",
       "item": "https://wattlyst.com/wiring/breaker-size-calculator/"
      }
     ]
@@ -56,12 +423,14 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/wiring/breaker-size-calculator/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-13",
+    "lastReviewed": "2026-10-13"
    },
    {
     "@type": "WebApplication",
     "@id": "https://wattlyst.com/wiring/breaker-size-calculator/#app",
-    "name": "Mcb Size Calculator",
+    "name": "MCB Size Calculator",
     "url": "https://wattlyst.com/wiring/breaker-size-calculator/",
     "description": "Pick the right MCB size and curve (B, C, D) for lights, sockets, ACs and motors from load watts. Wire and breaker matched safely.",
     "applicationCategory": "UtilitiesApplication",
@@ -88,6 +457,68 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/wiring/breaker-size-calculator/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "What size MCB for a 1.5 ton AC?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "16 A type C on its own circuit with at least 2.5 mm² (7/29) copper cable, for both inverter and non-inverter 1.5 ton units."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What MCB for a 3,000 W geyser?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "16 A type B: the geyser draws 13 A with no surge, on 2.5 mm² (7/29) cable."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What is the MCB rating for lights?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Usually 6 A type B on 1 mm² (3/29) cable; a 400 W lighting circuit draws only 1.7 A."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Which MCB for a water motor or pump?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "A type C at the next size above the motor's current × 1.25: a two hp pump of about 1,900 W input draws 10.3 A, the margin takes it to 12.9 A, so a 16 A MCB on 2.5 mm² cable. A one hp motor needs about half the watts; enter its rated input above."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Can I replace a 16 A MCB with a bigger one to stop tripping?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Not unless the cable is rated for the bigger breaker. The MCB exists to protect the cable; repeated tripping means an overload or a fault on the circuit, which is what to fix."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What is the difference between an MCB and an RCD?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "An MCB trips on overload and short circuit to protect the cable. An RCD or RCCB trips on earth leakage to protect people from shock. A home needs both: MCBs per circuit and an RCD on sockets and wet areas."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Does a three-phase load need a smaller MCB?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Yes. On a 400 V three-phase supply the current is shared by three phases and divided by root three × the line voltage, so a ten kW motor takes a smaller MCB per phase than a five kW single-phase load. Choose Three phase above to see it."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

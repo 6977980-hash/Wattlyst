@@ -1,0 +1,313 @@
+{
+ "id": "W1",
+ "status": "publish",
+ "template": "tool",
+ "h1": "Wire Size for 1.5 Ton AC",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "calc": "wire_size",
+ "fixed_inputs": {
+  "circuit": "other"
+ },
+ "fields": [
+  {
+   "name": "appliance",
+   "label": "Air conditioner",
+   "type": "appliance",
+   "default": "ac-split-1-5ton-inverter",
+   "options": [
+    "ac-split-1-5ton-inverter",
+    "ac-split-1-5ton-non-inverter",
+    "ac-split-1ton-inverter",
+    "ac-split-1ton-non-inverter",
+    "ac-split-2ton-inverter",
+    "ac-split-2ton-non-inverter"
+   ],
+   "hint": "An inverter AC is sized at its maximum input; a non-inverter at its running watts with a C-curve MCB for the start."
+  },
+  {
+   "name": "length_m",
+   "label": "Cable run",
+   "unit": "m",
+   "default": 15,
+   "hint": "One-way length of the cable from the distribution board to the AC, following the walls, not a straight line."
+  },
+  {
+   "name": "method",
+   "label": "How the cable is installed",
+   "type": "select",
+   "default": "B1",
+   "options": [
+    [
+     "B1",
+     "In conduit inside the wall"
+    ],
+    [
+     "C",
+     "Clipped on the surface"
+    ]
+   ]
+  },
+  {
+   "name": "pf",
+   "label": "Power factor",
+   "unit": "0 to 1",
+   "default": 0.9,
+   "advanced": true,
+   "hint": "Inverter ACs are about 0.9; use 0.8 for an old non-inverter unit."
+  },
+  {
+   "name": "volts",
+   "label": "Supply voltage",
+   "unit": "V",
+   "default": "@v_1ph",
+   "advanced": true,
+   "hint": "Single-phase supply voltage."
+  },
+  {
+   "name": "margin",
+   "label": "Safety margin",
+   "unit": "×",
+   "default": "@margin",
+   "advanced": true,
+   "hint": "The MCB and cable are chosen for the AC's current times this margin."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "area_mm2",
+   "label": "Cable size",
+   "spec": "1",
+   "unit": "mm²"
+  },
+  {
+   "key": "pk_size",
+   "label": "Pakistani size",
+   "spec": "raw"
+  },
+  {
+   "key": "breaker_a",
+   "label": "MCB",
+   "spec": "int",
+   "unit": "A"
+  },
+  {
+   "key": "drop_pct",
+   "label": "Voltage drop",
+   "spec": "1",
+   "unit": "%"
+  }
+ ],
+ "answer": "A 1.5 ton inverter AC needs a {{out.area_mm2|1}} mm² copper cable ({{out.pk_size|raw}} in Pakistani sizes) on its own {{out.breaker_a|int}} A MCB (type C for compressors) for a {{in.length_m|int}} m run in conduit. It is sized at the AC's maximum input of {{out.watts|int}} W: {{out.ib_a|1}} A design current with a {{out.margin|2}} × margin, and the voltage drop is only {{out.drop_pct|1}}%.",
+ "how": "Design current = {{out.watts|int}} W ÷ ({{out.volts|int}} V × {{out.pf|2}} power factor) = {{out.ib_a|1}} A. Compressor loads apply the margin to the breaker: {{out.ib_a|1}} A × {{out.margin|2}} = {{out.breaker_design_a|1}} A, so the next standard MCB is {{out.breaker_a|int}} A. The cable must be rated at least {{out.min_cable_a|1}} A and be at least {{out.min_mm2|1}} mm² for an AC circuit: {{out.area_mm2|1}} mm² ({{out.pk_size|raw}}) is rated {{out.ampacity_a|int}} A for this installation. Voltage drop over the {{in.length_m|int}} m run (there and back) = {{out.drop_v|1}} V, which is {{out.drop_pct|1}}% of {{out.volts|int}} V, within the {{out.limit_pct|int}}% limit.",
+ "key_facts": [
+  "For a 1.5 ton inverter AC on a {{in.length_m|int}} m run the cable is {{out.area_mm2|1}} mm² copper ({{out.pk_size|raw}}) and the breaker is a {{out.breaker_a|int}} A type C MCB on a dedicated circuit.",
+  "An inverter AC is sized at its maximum input ({{out.watts|int}} W for a 1.5 ton), not its average draw, because on a hot afternoon it runs at full speed for long periods.",
+  "A 1.5 ton non-inverter AC runs at about {{ex.1.out.watts|int}} W but its compressor start surge is several times that, so it gets a C-curve MCB of {{ex.1.out.breaker_a|int}} A on the same {{ex.1.out.area_mm2|1}} mm² cable.",
+  "The minimum cable for any AC circuit is {{out.min_mm2|1}} mm² ({{out.pk_size|raw}}); longer runs need a thicker cable to keep the voltage drop under {{out.limit_pct|int}}%."
+ ],
+ "formula": {
+  "text": "I_b = P ÷ (V × PF); I_n ≥ I_b × margin; I_z ≥ max(I_b × margin, I_n); ΔV% = 2 × L × I_b × ρ ÷ A ÷ V × 100",
+  "lines": [
+   "I_b = design current; P = the AC's maximum input (inverter) or running watts (non-inverter)",
+   "I_n = MCB rating, the next standard size; I_z = cable current rating for the installation method",
+   "L = one-way cable run in metres; ρ = resistivity of copper; A = cable area in mm²",
+   "ΔV% must stay under the limit for power circuits; minimum 2.5 mm² for an AC circuit"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "What breaker size for a 1.5 ton AC?",
+   "p": [
+    "A {{out.breaker_a|int}} A type C MCB for both the inverter and the non-inverter 1.5 ton. The inverter's design current is {{out.ib_a|1}} A at its {{out.watts|int}} W maximum input; a compressor runs near full current for hours, so the breaker is chosen at {{out.ib_a|1}} A × {{out.margin|2}} = {{out.breaker_design_a|1}} A, which rounds up to {{out.breaker_a|int}} A. A smaller MCB would run close to its limit on a hot day and trip for no fault.",
+    "The non-inverter 1.5 ton draws {{ex.1.out.ib_a|1}} A while running and several times that for a moment at every compressor start. A type C curve tolerates that surge; a type B of the same rating may trip on the start. For a 1 ton inverter the MCB drops to {{ex.3.out.breaker_a|int}} A."
+   ]
+  },
+  {
+   "h2": "What wire size for a 1 ton AC?",
+   "p": [
+    "{{ex.3.out.area_mm2|1}} mm² copper ({{ex.3.out.pk_size|raw}}), the minimum for any AC circuit, with a {{ex.3.out.breaker_a|int}} A type C MCB. A 1 ton inverter has a maximum input of {{ex.3.out.watts|int}} W and a design current of {{ex.3.out.ib_a|1}} A, so a {{ex.3.in.length_m|int}} m run drops only {{ex.3.out.drop_pct|1}}%. Do not go down to 3/29 to save money: it is a lighting size and below the minimum for an AC."
+   ]
+  },
+  {
+   "h2": "What wire size for a 2 ton AC?",
+   "p": [
+    "Still {{ex.2.out.area_mm2|1}} mm² ({{ex.2.out.pk_size|raw}}) for most homes, with a {{ex.2.out.breaker_a|int}} A type C MCB. A 2 ton inverter has a maximum input of {{ex.2.out.watts|int}} W, a design current of {{ex.2.out.ib_a|1}} A, and even over a {{ex.2.in.length_m|int}} m run the voltage drop is {{ex.2.out.drop_pct|1}}%, within the {{out.limit_pct|int}}% limit. The 2 ton non-inverter at {{in.length_m|int}} m is in the table below; on very long runs, or where several cables share a hot roof conduit, move up to the next size."
+   ]
+  },
+  {
+   "h2": "Is 7/29 wire enough for an AC?",
+   "p": [
+    "Yes for every split AC up to 2 ton on a normal run. 7/29 is seven copper strands and is rated here as a {{out.area_mm2|1}} mm² cable, able to carry {{out.ampacity_a|int}} A in conduit, well above the {{out.min_cable_a|1}} A a 1.5 ton inverter circuit needs. It is also the minimum size allowed for an AC circuit, so nothing smaller is acceptable whatever the AC.",
+    "7/29 stops being enough when the run is long enough for the voltage drop to pass {{out.limit_pct|int}}%, or when the cable is derated for grouping or heat. Enter your own run length above; the calculator moves to 7/36 when it has to."
+   ]
+  },
+  {
+   "h2": "Which wire should I use for an AC: 3/29, 7/29 or 7/36?",
+   "p": [
+    "Use copper only, never aluminium or copper-clad wire for an AC. 3/29 is a lighting size and is never used for an AC circuit. 7/29 ({{out.area_mm2|1}} mm²) is the standard AC wire for 1 ton, 1.5 ton and 2 ton units on ordinary runs. 7/36 is the next size up for long runs, hot roof spaces or cables grouped in one conduit, and costs little more.",
+    "Whatever the size, run it as a dedicated circuit from the distribution board with its own MCB and an earth wire of the same size, and fit a socket or isolator rated for the current. Buy cable from a known maker with the size printed on the sheath."
+   ]
+  },
+  {
+   "h2": "Why does the run length change the AC wiring size in mm²?",
+   "p": [
+    "Every metre of cable has resistance, so some voltage is lost on the way to the AC and back. At {{in.length_m|int}} m a 1.5 ton inverter loses {{out.drop_v|1}} V ({{out.drop_pct|1}}%); at {{ex.2.in.length_m|int}} m the 2 ton inverter loses {{ex.2.out.drop_pct|1}}%. The limit for a power circuit is {{out.limit_pct|int}}%: above it the compressor runs hot, starts badly and wastes energy, so the calculator picks the next cable size that brings the drop back under the limit.",
+    "Measure the run along the walls and ceiling, not across the room, and include the drop from the ceiling to the indoor unit and the run to the outdoor unit if it is fed from the same cable."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "appliance": "ac-split-1-5ton-inverter",
+    "length_m": 15
+   },
+   "title": "{{out.appliance_name|raw}}, {{in.length_m|int}} m in conduit",
+   "text": "Maximum input {{out.watts|int}} W ÷ ({{out.volts|int}} V × {{out.pf|1}}) = {{out.ib_a|1}} A; × {{out.margin|2}} = {{out.breaker_design_a|1}} A, so a {{out.breaker_a|int}} A type C MCB. Cable: {{out.area_mm2|1}} mm² ({{out.pk_size|raw}}), rated {{out.ampacity_a|int}} A. Voltage drop {{out.drop_pct|1}}%."
+  },
+  {
+   "inputs": {
+    "appliance": "ac-split-1-5ton-non-inverter",
+    "length_m": 15
+   },
+   "title": "{{out.appliance_name|raw}}, {{in.length_m|int}} m in conduit",
+   "text": "Running {{out.watts|int}} W ÷ ({{out.volts|int}} V × {{out.pf|1}}) = {{out.ib_a|1}} A; × {{out.margin|2}} = {{out.breaker_design_a|1}} A, so a {{out.breaker_a|int}} A type C MCB that rides through the compressor start. Cable: {{out.area_mm2|1}} mm² ({{out.pk_size|raw}}), rated {{out.ampacity_a|int}} A. Voltage drop {{out.drop_pct|1}}%."
+  },
+  {
+   "inputs": {
+    "appliance": "ac-split-2ton-inverter",
+    "length_m": 30
+   },
+   "title": "{{out.appliance_name|raw}} on a long {{in.length_m|int}} m run",
+   "text": "Maximum input {{out.watts|int}} W gives {{out.ib_a|1}} A and a {{out.breaker_a|int}} A type C MCB. {{out.area_mm2|1}} mm² ({{out.pk_size|raw}}) still works: the drop over {{in.length_m|int}} m is {{out.drop_v|1}} V, or {{out.drop_pct|1}}%, under the {{out.limit_pct|int}}% limit."
+  },
+  {
+   "inputs": {
+    "appliance": "ac-split-1ton-inverter",
+    "length_m": 10
+   },
+   "title": "{{out.appliance_name|raw}}, {{in.length_m|int}} m in conduit",
+   "text": "Maximum input {{out.watts|int}} W gives {{out.ib_a|1}} A; × {{out.margin|2}} = {{out.breaker_design_a|1}} A, so a {{out.breaker_a|int}} A type C MCB. The cable stays at the AC minimum of {{out.area_mm2|1}} mm² ({{out.pk_size|raw}}); voltage drop {{out.drop_pct|1}}%."
+  }
+ ],
+ "table": {
+  "caption": "Wire and MCB for split ACs on a {{in.length_m|int}} m run in conduit at {{out.volts|int}} V, power factor {{out.pf|1}}",
+  "rows": [
+   {
+    "appliance": "ac-split-1ton-inverter"
+   },
+   {
+    "appliance": "ac-split-1ton-non-inverter"
+   },
+   {
+    "appliance": "ac-split-1-5ton-inverter"
+   },
+   {
+    "appliance": "ac-split-1-5ton-non-inverter"
+   },
+   {
+    "appliance": "ac-split-2ton-inverter"
+   },
+   {
+    "appliance": "ac-split-2ton-non-inverter"
+   }
+  ],
+  "columns": [
+   {
+    "label": "AC",
+    "tpl": "{{out.appliance_name|raw}}"
+   },
+   {
+    "label": "Design watts",
+    "tpl": "{{out.watts|int}} W"
+   },
+   {
+    "label": "Cable",
+    "tpl": "{{out.area_mm2|1}} mm²"
+   },
+   {
+    "label": "Pakistani size",
+    "tpl": "{{out.pk_size|raw}}"
+   },
+   {
+    "label": "MCB (type C)",
+    "tpl": "{{out.breaker_a|int}} A"
+   },
+   {
+    "label": "Voltage drop",
+    "tpl": "{{out.drop_pct|1}}%"
+   }
+  ]
+ },
+ "mistakes": [
+  "Sizing an inverter AC at its average draw. The average is for the bill; the cable and MCB must carry the maximum input of {{out.watts|int}} W for hours on a hot day.",
+  "Using 3/29 or aluminium wire. 3/29 is a lighting size below the {{out.min_mm2|1}} mm² minimum for an AC circuit, and aluminium needs a larger size and special terminals.",
+  "Sharing the circuit. An AC on a socket circuit with other loads overloads the cable and trips the MCB; every AC gets its own cable and MCB from the distribution board.",
+  "Measuring the run in a straight line. Cable follows the walls and ceiling, so the real run, and the voltage drop, is often half as long again.",
+  "Ignoring heat and grouping. Several cables in one hot roof conduit carry less current than the table value; an electrician derates them or moves up a size."
+ ],
+ "safety": "These sizes are planning values for one cable at normal room temperature; a licensed electrician must confirm the cable, the earth and the MCB on site, derate for grouped cables and hot roof spaces, and connect the AC to a dedicated circuit.",
+ "faq": [
+  {
+   "q": "Which wire is best for a 1.5 ton inverter AC?",
+   "a": "{{out.area_mm2|1}} mm² copper, sold as {{out.pk_size|raw}} in Pakistan, on a dedicated circuit with a {{out.breaker_a|int}} A type C MCB. It carries {{out.ampacity_a|int}} A in conduit against the {{out.min_cable_a|1}} A the circuit needs."
+  },
+  {
+   "q": "Can I use 7/29 wire for a 2 ton AC?",
+   "a": "Yes on a normal run: a 2 ton inverter needs {{ex.2.out.area_mm2|1}} mm² ({{ex.2.out.pk_size|raw}}) with a {{ex.2.out.breaker_a|int}} A type C MCB even over {{ex.2.in.length_m|int}} m, with a {{ex.2.out.drop_pct|1}}% drop. Go up to 7/36 for very long runs or grouped cables in hot spaces."
+  },
+  {
+   "q": "What breaker for an inverter AC?",
+   "a": "A type C MCB at the next standard size above the design current times {{out.margin|2}}: {{out.breaker_a|int}} A for a 1.5 ton inverter, {{ex.3.out.breaker_a|int}} A for a 1 ton inverter and {{ex.2.out.breaker_a|int}} A for a 2 ton inverter."
+  },
+  {
+   "q": "Does an inverter AC need a thinner wire than a non-inverter?",
+   "a": "No. Both 1.5 ton types get {{out.area_mm2|1}} mm² and a {{out.breaker_a|int}} A type C MCB. The inverter's maximum input of {{out.watts|int}} W is actually a little above the non-inverter's {{ex.1.out.watts|int}} W running load; the non-inverter's extra is a short start surge the C curve handles."
+  },
+  {
+   "q": "Is a lighting wire (3/29) enough for a small AC?",
+   "a": "No. The minimum for any AC circuit is {{out.min_mm2|1}} mm², which is 7/29. 3/29 is rated as 1 mm² and is for lighting points only."
+  },
+  {
+   "q": "How far can the AC be from the distribution board on 7/29?",
+   "a": "Far enough for most homes: the 2 ton inverter example at {{ex.2.in.length_m|int}} m drops {{ex.2.out.drop_pct|1}}% against a {{out.limit_pct|int}}% limit. Enter your own run length and the calculator moves to the next size when the drop goes over the limit."
+  },
+  {
+   "q": "Do I need a separate breaker for each AC?",
+   "a": "Yes. Each AC gets its own cable from the distribution board and its own type C MCB, so a fault on one AC does not cut the others and the cable is protected by a breaker sized for it."
+  }
+ ],
+ "related": [
+  "W2",
+  "W3",
+  "E4",
+  "C6"
+ ],
+ "next": "W3",
+ "literal_numbers": [
+  "1.5 ton",
+  "1 ton",
+  "2 ton",
+  "2.5 mm²",
+  "1 mm²",
+  "7/29",
+  "7/36",
+  "3/29"
+ ],
+ "sources": [
+  {
+   "label": "IEC 60364-5-52: selection and erection of wiring systems (cable current ratings and voltage drop)",
+   "url": "https://webstore.iec.ch/publication/1878"
+  },
+  {
+   "label": "Gree 1.5 ton inverter AC datasheet (rated input)",
+   "url": "https://japanelectronics.com.pk/products/gree-ac-split-inverter-1-5-ton-gs-18pith11g-aaa"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}
