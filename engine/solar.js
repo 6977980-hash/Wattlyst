@@ -1,5 +1,6 @@
 // D. Solar (specs/formulas.md section D) and solar tools from section G.
-import { calculator, CalcError, has, pos, frac, nonneg, ceilSafe, dflt, num } from './core.js';
+import { calculator, CalcError, has, pos, frac, nonneg, ceilSafe, dflt, num, appliance } from './core.js';
+import { sumLoads, loadRows } from './sizing.js';
 
 /** Specific yield (kWh/kWp/day): explicit input > city from data/cities-pk.json > PSH × PR. */
 function yieldFor(i, d) {
@@ -56,9 +57,77 @@ export const panel_for_12v = calculator((i, d) => {
   const sizes = dflt(d, 'standard_panel_w');
   const standard_panel_w = sizes.find((s) => s >= panel_w - 1e-9) ?? null;
   const out = { ah, volts, dod, psh, pr, charge_eff, panel_w };
-  if (standard_panel_w !== null) out.standard_panel_w = standard_panel_w;
-  else out.panels_of_largest = ceilSafe(panel_w / sizes[sizes.length - 1]);
+  let fitted_w;
+  if (standard_panel_w !== null) {
+    out.standard_panel_w = standard_panel_w;
+    fitted_w = standard_panel_w;
+  } else {
+    out.panels_of_largest = ceilSafe(panel_w / sizes[sizes.length - 1]);
+    fitted_w = out.panels_of_largest * sizes[sizes.length - 1];
+  }
+  // Charging time with the fitted panel on a sunny day, and the MPPT controller it needs (formulas.md D).
+  out.fitted_panel_w = fitted_w;
+  out.charge_hours = (ah * volts * dod) / charge_eff / (fitted_w * pr);
+  out.charge_days = out.charge_hours / psh;
+  const margin = num(i, 'margin', { def: dflt(d, 'margin'), min: 1 });
+  out.controller_a = (fitted_w / volts) * margin;
+  const controllers = dflt(d, 'standard_controller_a');
+  const standard_controller_a = controllers.find((s) => s >= out.controller_a - 1e-9);
+  if (standard_controller_a !== undefined) out.standard_controller_a = standard_controller_a;
+  else out.controller_above_standard_sizes = true;
   return out;
+});
+
+/** Panels, inverter and (optional) night battery for a daily energy and a running/starting load. */
+function solarSystem(daily_kwh, running_w, surge_w, i, d) {
+  const y = yieldFor(i, d);
+  const panel_w = pos(i, 'panel_w', dflt(d, 'panel_w'));
+  const pr = frac(i, 'pr', dflt(d, 'pr'));
+  const margin = num(i, 'margin', { def: dflt(d, 'margin'), min: 1 });
+  // Energy: the array must make the day's kWh. Power: at midday it must also carry the running load (kWp × PR ≥ P_run).
+  const kw_energy = daily_kwh / y.yield_kwh_per_kwp_day;
+  const kw_power = running_w / 1000 / pr;
+  const kw = Math.max(kw_energy, kw_power);
+  const panels = ceilSafe((kw * 1000) / panel_w);
+  const installed_kw = (panels * panel_w) / 1000;
+  const out = {
+    daily_kwh, running_w, surge_w, ...y, pr, panel_w, margin, kw_energy, kw_power, kw, panels, installed_kw,
+    roof_m2: panels * dflt(d, 'panel_area_m2'),
+    monthly_kwh_estimate: installed_kw * y.yield_kwh_per_kwp_day * dflt(d, 'days_per_month'),
+    inverter_w: running_w * margin,
+    inverter_kw: (running_w * margin) / 1000,
+    inverter_surge_w: surge_w,
+    limited_by: kw_power > kw_energy ? 'power' : 'energy',
+  };
+  const night_hours = nonneg(i, 'night_hours', 0);
+  if (night_hours > 0) {
+    const night_kwh = (running_w * night_hours) / 1000;
+    const volts = pos(i, 'battery_v', dflt(d, 'battery_v_default'));
+    const bat = solar_battery.raw({ night_kwh, volts, dod: i.dod, inverter_eff: i.inverter_eff }, d);
+    Object.assign(out, { night_hours, night_kwh, battery_v: volts, battery_dod: bat.dod, battery_ah: bat.ah, battery_kwh: bat.kwh });
+  }
+  return out;
+}
+
+/**
+ * D5: solar to run an air conditioner. Daily kWh = average draw (avg_w, else running watts) × hours;
+ * array = max(energy-based, power-based) so the AC runs on sun alone at midday; inverter ≥ running × margin, surge ≥ starting.
+ */
+export const solar_for_ac = calculator((i, d) => {
+  const ac = appliance(d, i.ac, 'ac');
+  const hours = nonneg(i, 'hours', ac.typical_hours_per_day ?? 0);
+  const avg_w = ac.avg_w ?? ac.running_w;
+  const daily_kwh = (avg_w * hours) / 1000;
+  return { ac: i.ac.trim(), ac_name: ac.name, ac_run_w: ac.running_w, ac_start_w: ac.starting_w, ac_avg_w: avg_w, hours, ...solarSystem(daily_kwh, ac.running_w, ac.starting_w, i, d) };
+});
+
+/** D8: solar system from an appliance list (same rows as home_load): daily kWh and running load → panels, inverter, battery. */
+export const solar_from_loads = calculator((i, d) => {
+  const rows = loadRows(i.loads, d);
+  const { running_w, surge_w } = sumLoads(rows);
+  const daily_kwh = rows.reduce((s, r) => s + r.energy_w * r.qty * r.hours, 0) / 1000;
+  if (!(daily_kwh > 0)) throw new CalcError('hours_required', 'loads');
+  return { appliances: rows.length, ...solarSystem(daily_kwh, running_w, surge_w, i, d) };
 });
 
 /** MPPT: A = P_array / V_battery × margin. PWM: A = Isc × N_parallel × margin. */

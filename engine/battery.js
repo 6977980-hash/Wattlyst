@@ -79,6 +79,17 @@ export const ups_capacity = calculator((i, d) => {
   return out;
 });
 
+/**
+ * B5: UPS backup = capacity check (P_max = VA × PF, load must fit) + runtime of its battery through the inverter.
+ * The load is rejected when it exceeds the UPS rating, because the UPS would trip, not run shorter.
+ */
+export const ups_backup = calculator((i, d) => {
+  const cap = ups_capacity.raw(i, d);
+  if (!cap.can_run) throw new CalcError(cap.surge_ok === false ? 'surge_exceeds_ups_rating' : 'load_exceeds_ups_rating', 'load_w');
+  const run = battery_runtime.raw(i, d);
+  return { ...cap, ...run };
+});
+
 /** N11: V_total = n_series × V; Ah_total = n_parallel × Ah; kWh = V_total × Ah_total / 1000. Identical batteries only. */
 export const series_parallel = calculator((i) => {
   const n_series = num(i, 'n_series', { min: 1 });

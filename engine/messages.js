@@ -23,12 +23,23 @@ const EXACT = {
   period_unknown: 'We do not have the QTA rate for that quarter. Enter the QTA from your bill.',
   surge_w_required: 'Enter the starting (surge) watts of your load, or leave both surge fields blank.',
   surge_rating_w_required: 'Enter the UPS surge rating from its label, or leave both surge fields blank.',
+  appliance_unknown: 'Pick an appliance from the list, or choose Custom and enter its watts.',
+  load_exceeds_ups_rating: 'This load is more than the UPS can deliver (VA × power factor). Choose a bigger UPS or reduce the load.',
+  surge_exceeds_ups_rating: 'The starting surge is above the UPS surge rating. Choose a bigger UPS or remove the motor load.',
+  other_start_below_run: 'Starting watts of the other loads cannot be lower than their running watts.',
+  hours_required: 'Enter hours per day for at least one appliance.',
+  cable_data_missing: 'Cable data could not be loaded. Please refresh the page.',
+  cable_size_unknown: 'Pick a standard cable size.',
+  load_above_standard_breakers: 'This load needs more than the largest single-phase MCB. Split it into separate circuits or ask a licensed electrician about a three-phase connection.',
+  load_above_cable_table: 'This load is above the largest cable in our table. Split it into separate circuits and consult a licensed electrician.',
+  run_too_long_for_table: 'This run is too long for the cables in our table: the voltage drop would exceed the limit. Shorten the run, split the load or consult a licensed electrician.',
   internal_non_finite: 'These numbers are outside a realistic range. Please check your inputs.',
 };
 
 const PATTERNS = [
   [/^history_(\d+)_invalid$/, (m) => `Month ${m[1]}: enter the units as a number (0 or more).`],
   [/^load_(\d+)_start_below_run$/, (m) => `Appliance ${Number(m[1]) + 1}: starting watts cannot be lower than running watts.`],
+  [/^load_(\d+)_watts_required$/, (m) => `Appliance ${Number(m[1]) + 1}: enter its watts.`],
   [/^load_(\d+)_\w+_invalid$/, (m) => `Appliance ${Number(m[1]) + 1}: enter a valid number.`],
   [/^(\w+)_required$/, (m, f) => `Enter ${f(m[1])}.`],
   [/^(\w+)_invalid$/, (m, f) => `Enter a valid number for ${f(m[1])}.`],

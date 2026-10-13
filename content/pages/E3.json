@@ -1,0 +1,267 @@
+{
+ "id": "E3",
+ "status": "publish",
+ "template": "tool",
+ "h1": "Single Phase Load Calculator",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "calc": "load_check",
+ "fields": [
+  {
+   "name": "total_w",
+   "label": "Total load",
+   "unit": "W",
+   "default": 3000,
+   "hint": "Everything that runs at the same time, in watts. Take it from the home load calculator or add up your appliance labels."
+  },
+  {
+   "name": "sanctioned_kw",
+   "label": "Sanctioned load",
+   "unit": "kW",
+   "default": 2,
+   "hint": "The kW printed on your electricity bill. Most Pakistani homes have one to five kW."
+  },
+  {
+   "name": "volts",
+   "label": "Supply voltage",
+   "unit": "V",
+   "type": "select",
+   "default": "@v_1ph",
+   "options": [
+    [
+     "@v_1ph",
+     "230 V (Pakistan, UK, EU)"
+    ],
+    [
+     "@v_1ph_us",
+     "120 V (US)"
+    ]
+   ]
+  },
+  {
+   "name": "pf",
+   "label": "Power factor",
+   "unit": "0 to 1",
+   "default": "@pf_mixed",
+   "advanced": true,
+   "hint": "Mixed home loads with fans and motors are about 0.8; heaters and irons alone are 1.0."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "amps",
+   "label": "Current",
+   "spec": "1",
+   "unit": "A"
+  },
+  {
+   "key": "total_kw",
+   "label": "Total load",
+   "spec": "2",
+   "unit": "kW"
+  },
+  {
+   "key": "load_pct",
+   "label": "Of sanctioned load",
+   "spec": "int",
+   "unit": "%"
+  }
+ ],
+ "answer": "A {{in.total_w|int}} W single-phase load at {{in.volts|int}} V draws about {{out.amps|1}} A with a {{in.pf|1}} power factor. That is {{out.total_kw|1}} kW, or {{out.load_pct|int}}% of a {{in.sanctioned_kw|int}} kW sanctioned load, so this connection is overloaded and needs a higher sanctioned load or less load running together. Amps = watts ÷ (volts × power factor).",
+ "how": "{{in.total_w|int}} W ÷ ({{in.volts|int}} V × {{in.pf|2}} power factor) = {{out.amps|1}} A. {{in.total_w|int}} W ÷ 1,000 = {{out.total_kw|2}} kW. {{out.total_kw|2}} kW ÷ {{in.sanctioned_kw|int}} kW sanctioned load = {{out.load_pct|int}}% of the sanctioned load. Anything above the full sanctioned load means the connection is overloaded.",
+ "key_facts": [
+  "Single-phase current in amps = watts ÷ (volts × power factor); a {{in.total_kw|1}} kW mixed home load at {{d.v_1ph|int}} V and a {{d.pf_mixed|1}} power factor draws about {{out.amps|1}} A.",
+  "The load check compares the total kW with the sanctioned kW on the bill: {{in.total_kw|1}} kW on a {{in.sanctioned_kw|int}} kW connection is {{out.load_pct|int}}% of the sanctioned load, so it is over the limit.",
+  "In Pakistan a domestic connection of {{d.tou_threshold_kw|int}} kW or more is billed on a time-of-use tariff, and DISCOs commonly ask for a three-phase connection for loads above that.",
+  "The sanctioned load is also what the fixed charge on the bill is based on (a rate per kW a month), so apply for the kW you need rather than the maximum."
+ ],
+ "formula": {
+  "text": "I = P ÷ (V × PF); load % = (P ÷ 1000) ÷ sanctioned kW × 100",
+  "lines": [
+   "I = current in amps",
+   "P = total load in watts (everything running at once)",
+   "V = single-phase supply voltage",
+   "PF = power factor of the mixed load",
+   "sanctioned kW = the load the DISCO has approved for the connection"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "What is a single phase load?",
+   "p": [
+    "A single-phase load is everything that draws power from the one live wire and the neutral of a normal house connection at the same moment. In Pakistan that supply is {{d.v_1ph|int}} V; in the US it is {{d.v_1ph_us|int}} V. Fans, lights, the fridge, the TV, the water pump and the ACs that are on together make up the load; appliances that are switched off do not count.",
+    "The number to plan with is the running load in watts, not the sum of every appliance in the house. The home load calculator (linked below) adds your appliances up and gives you the watts to enter here."
+   ]
+  },
+  {
+   "h2": "How do I convert single phase kW to amps?",
+   "p": [
+    "Amps = kW × 1,000 ÷ (volts × power factor). For the default load: {{out.total_kw|1}} kW × 1,000 ÷ ({{in.volts|int}} V × {{in.pf|1}}) = {{out.amps|1}} A. The power factor matters because fans, motors and compressors draw more current than their watts alone suggest; {{d.pf_mixed|1}} is a fair planning value for a mixed home load, and {{d.pf_resistive|1}} for heaters and irons only.",
+    "At the lower US supply voltage the same kW needs more current: {{ex.3.out.total_kw|1}} kW at {{ex.3.in.volts|int}} V is {{ex.3.out.amps|1}} A, against {{ex.1.out.amps|1}} A for {{ex.1.out.total_kw|1}} kW at {{ex.1.in.volts|int}} V."
+   ]
+  },
+  {
+   "h2": "How much load can a single phase connection carry?",
+   "p": [
+    "Your connection is approved for the sanctioned load printed on the bill, in kW. A total running load up to that figure is within the connection; above it the DISCO can revise your sanctioned load and fixed charges, and the main breaker and service cable may run hot or trip.",
+    "The check is simple: total watts ÷ 1,000 against the sanctioned kW. {{ex.1.in.total_w|int}} W on a {{ex.1.in.sanctioned_kw|int}} kW connection is {{ex.1.out.load_pct|int}}% of the sanctioned load and fine; {{in.total_w|int}} W on the same connection is {{out.load_pct|int}}% and overloaded."
+   ]
+  },
+  {
+   "h2": "What is the maximum load on a single phase supply?",
+   "p": [
+    "Three things set the limit: the sanctioned kW the DISCO approved, the rating of the main breaker at your meter, and the size of the service cable that feeds the house. Whichever is smallest is your real maximum. A bigger breaker does not raise the limit if the cable or the sanctioned load stays the same.",
+    "In Pakistan a domestic connection of {{d.tou_threshold_kw|int}} kW or more is put on a time-of-use (ToU) meter, and for larger loads DISCOs usually give a three-phase connection, which spreads the current over three live wires. If your running load is near {{d.tou_threshold_kw|int}} kW, plan the upgrade before adding another AC."
+   ]
+  },
+  {
+   "h2": "How is a 1 phase load calculation done step by step?",
+   "p": [
+    "List every appliance that can be on at the same time and take the running watts from its label or from the appliance list. Add them up to get the total watts. Divide by volts × power factor for amps. Divide the watts by 1,000 for kW and compare with the sanctioned load on the bill.",
+    "Non-inverter ACs, fridges and water pumps draw several times their running watts for a moment when they start. That surge does not change the kW check, but it is what trips an undersized main breaker, so leave room above the running load."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "total_w": 3000,
+    "sanctioned_kw": 2
+   },
+   "title": "{{out.total_kw|int}} kW of appliances on a {{in.sanctioned_kw|int}} kW connection",
+   "text": "{{in.total_w|int}} W ÷ ({{in.volts|int}} V × {{in.pf|1}}) = {{out.amps|1}} A. {{out.total_kw|1}} kW is {{out.load_pct|int}}% of the {{in.sanctioned_kw|int}} kW sanctioned load, so this is over the limit: run fewer loads together or apply to the DISCO for a higher sanctioned load."
+  },
+  {
+   "inputs": {
+    "total_w": 1500,
+    "sanctioned_kw": 2
+   },
+   "title": "Fans, lights and a fridge on a {{in.sanctioned_kw|int}} kW connection",
+   "text": "{{in.total_w|int}} W ÷ ({{in.volts|int}} V × {{in.pf|1}}) = {{out.amps|1}} A. {{out.total_kw|1}} kW is {{out.load_pct|int}}% of the {{in.sanctioned_kw|int}} kW sanctioned load, so the connection has room for a small extra load but not for a 1.5 ton AC."
+  },
+  {
+   "inputs": {
+    "total_w": 4500,
+    "sanctioned_kw": 5
+   },
+   "title": "Two ACs and a water pump on a {{in.sanctioned_kw|int}} kW connection",
+   "text": "{{in.total_w|int}} W ÷ ({{in.volts|int}} V × {{in.pf|1}}) = {{out.amps|1}} A. {{out.total_kw|1}} kW is {{out.load_pct|int}}% of the {{in.sanctioned_kw|int}} kW sanctioned load: within the limit, but with little headroom, and at {{d.tou_threshold_kw|int}} kW this connection is already on the time-of-use tariff."
+  },
+  {
+   "inputs": {
+    "total_w": 2000,
+    "sanctioned_kw": 2,
+    "volts": 120
+   },
+   "title": "{{out.total_kw|int}} kW at {{in.volts|int}} V (US supply)",
+   "text": "{{in.total_w|int}} W ÷ ({{in.volts|int}} V × {{in.pf|1}}) = {{out.amps|1}} A, about twice the current the same load draws at {{d.v_1ph|int}} V. {{out.total_kw|1}} kW on a {{in.sanctioned_kw|int}} kW connection is {{out.load_pct|int}}%: right at the limit, with no room for anything else."
+  }
+ ],
+ "table": {
+  "caption": "Single-phase loads of one to seven kW at {{in.volts|int}} V with a {{in.pf|1}} power factor, and the smallest sanctioned load that covers each",
+  "rows": [
+   {
+    "total_w": 1000,
+    "sanctioned_kw": 1
+   },
+   {
+    "total_w": 2000,
+    "sanctioned_kw": 2
+   },
+   {
+    "total_w": 3000,
+    "sanctioned_kw": 3
+   },
+   {
+    "total_w": 4000,
+    "sanctioned_kw": 4
+   },
+   {
+    "total_w": 5000,
+    "sanctioned_kw": 5
+   },
+   {
+    "total_w": 6000,
+    "sanctioned_kw": 6
+   },
+   {
+    "total_w": 7000,
+    "sanctioned_kw": 7
+   }
+  ],
+  "columns": [
+   {
+    "label": "Load",
+    "tpl": "{{out.total_kw|int}} kW ({{in.total_w|int}} W)"
+   },
+   {
+    "label": "Current",
+    "tpl": "{{out.amps|1}} A"
+   },
+   {
+    "label": "Sanctioned load needed",
+    "tpl": "{{in.sanctioned_kw|int}} kW"
+   }
+  ]
+ },
+ "mistakes": [
+  "Dividing watts by volts only. Fans, motors and compressors need the power factor in the formula; leaving it out understates the current by about a fifth for a mixed home load.",
+  "Comparing the connected load with the sanctioned load. Everything wired in the house is not on at once; count what actually runs together, otherwise every home looks overloaded.",
+  "Forgetting starting surges. A non-inverter AC or a water pump draws about three times its running watts for a second or two, which is what trips a main breaker that is already near its limit.",
+  "Treating the sanctioned kW as a switch. The meter keeps recording above it; the risk is a revised sanctioned load and fixed charge from the DISCO, or an overheated service cable and breaker."
+ ],
+ "safety": "If your load is above the sanctioned load or near the main breaker rating, do not add more; ask your DISCO for a higher sanctioned load and have a licensed electrician check the main cable and breaker.",
+ "faq": [
+  {
+   "q": "How many amps is {{out.total_kw|int}} kW on single phase?",
+   "a": "At {{in.volts|int}} V with a {{in.pf|1}} power factor, {{in.total_w|int}} W is {{out.amps|1}} A. With heaters only (power factor {{d.pf_resistive|1}}) the same watts draw a little less current."
+  },
+  {
+   "q": "Can a single phase connection run a 1.5 ton AC?",
+   "a": "Yes. A 1.5 ton inverter AC draws about {{d.ac_inverter_avg_kw_1_5_ton|1}} kW on average and more at full speed, so it fits a {{in.sanctioned_kw|int}} kW connection only if the rest of the running load is small. Check the total with the add-an-AC calculator linked below."
+  },
+  {
+   "q": "What is the sanctioned load and where do I find it?",
+   "a": "It is the load in kW the DISCO approved when the connection was given, printed on every bill near the meter details. It sets the fixed charge per kW and, at {{d.tou_threshold_kw|int}} kW or more, moves the connection to time-of-use billing."
+  },
+  {
+   "q": "Does the power factor matter for a home?",
+   "a": "For the kW check, no: the sanctioned load is compared in kW. For amps, yes: at a {{d.pf_mixed|1}} power factor the current is about a quarter higher than watts ÷ volts, and that is what the breaker and cable carry."
+  },
+  {
+   "q": "What happens if my load is more than the sanctioned load?",
+   "a": "The meter still records the units, but the DISCO can raise your sanctioned load and fixed charges after a load survey, and the main breaker or service cable may trip or overheat. Apply for a higher sanctioned load before the load grows."
+  },
+  {
+   "q": "Is {{d.tou_threshold_kw|int}} kW the single phase limit in Pakistan?",
+   "a": "It is the point where domestic connections move to a time-of-use tariff under the NEPRA tariff rules. Many DISCOs provide a three-phase connection for larger loads; ask your DISCO office what they allow on single phase."
+  },
+  {
+   "q": "How do I work out the single phase load of a new house?",
+   "a": "Add the fans and lights of each room, one AC per room you plan to cool, the kitchen appliances and the water pump, then use the home load calculator to total the watts and this page to check them against the sanctioned load you will apply for."
+  }
+ ],
+ "related": [
+  "E1",
+  "E4",
+  "W2",
+  "W3"
+ ],
+ "next": "E4",
+ "literal_numbers": [
+  "1,000",
+  "1.5 ton",
+  "1 phase"
+ ],
+ "sources": [
+  {
+   "label": "NEPRA tariff notification for Ex-WAPDA DISCOs (sanctioned load, fixed charges and time-of-use rules)",
+   "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

@@ -46,7 +46,8 @@
      "soiling_cap",
      "gas_heater_eff",
      "gas_cv_mj_m3",
-     "start_factors"
+     "start_factors",
+     "standard_generator_kva"
     ]
    },
    "v_1ph": 230,
@@ -139,7 +140,22 @@
    "ebike_charger_eff": 0.85,
    "ac_inverter_avg_kw_1_5_ton": 1,
    "ac_noninverter_kw_1_5_ton": 1.8,
-   "ac_noninverter_duty": 0.8
+   "ac_noninverter_duty": 0.8,
+   "standard_generator_kva": [
+    2.5,
+    3,
+    3.5,
+    5,
+    6.5,
+    7.5,
+    10,
+    12.5,
+    15,
+    20,
+    25,
+    30
+   ],
+   "battery_v_default": 24
   },
   "tariff": {
    "_meta": {
@@ -259,7 +275,19 @@
     "regulation": "NEPRA (Prosumer) Regulations 2026, notified 9 Feb 2026",
     "buyback_rs_per_unit_default": 11,
     "buyback_verified": false,
-    "note": "news reports Rs10-11 (one report Rs8.13); keep editable. Size capped at sanctioned load. Existing net-metering contracts likely valid until expiry (unconfirmed on NEPRA page)."
+    "note": "news reports Rs10-11 (one report Rs8.13); keep editable. Size capped at sanctioned load. Existing net-metering contracts likely valid until expiry (unconfirmed on NEPRA page).",
+    "buyback_sources_secondary": [
+     {
+      "label": "Express Tribune, 10 Feb 2026: Rs 11/unit discussed with stakeholders, not yet notified",
+      "url": "https://tribune.com.pk/story/2591628/1"
+     },
+     {
+      "label": "Nukta: revised buyback rate yet to be formally notified",
+      "url": "https://nukta.com/pakistan-solar-ends-net-metering"
+     }
+    ],
+    "buyback_checked": "2026-10-13",
+    "buyback_status": "No NEPRA notification of the buyback rate found on 2026-10-13 (searched nepra.org.pk); re-check monthly and replace these links with the NEPRA page when it exists."
    }
   },
   "cities": {
@@ -293,6 +321,194 @@
     "psh": 5.7,
     "yield": 4.4
    }
+  },
+  "cables": {
+   "_meta": {
+    "source": "IEC 60364-5-52:2009 Table B.52.4 (PVC insulated copper, two loaded conductors, 30 C ambient): columns B1 (insulated conductors in conduit on or in a masonry wall; NOT A1, conduit in a thermally insulated wall, which is rated lower) and C (clipped direct). The 1 mm2 row is not in Table B.52.4 (it starts at 1.5 mm2); its values are the same-basis BS 7671 Table 4D1A figures (methods B and C). Pakistani n/d sizes converted with formulas.md section W (A = n x pi x (d x 25.4 / 2)^2) and rated as the IEC size they are sold as when their real area is at least 90% of it, else the next smaller IEC size (conservative).",
+    "checked": "2026-10-13",
+    "status": "Engineer to confirm against the IEC table and Pakistan Cables / Fast Cables datasheets before launch. Ratings are for single-phase or three-phase circuits of one cable in free air or conduit at 30 C; grouping and hot roof spaces need derating by an electrician.",
+    "engineer_confirm": [
+     "ampacity",
+     "pk_sizes.rated_as_mm2",
+     "mcb_curves",
+     "min_area_mm2",
+     "breaker_margin_load_types"
+    ],
+    "fields": "cables: area_mm2 nominal conductor size; ampacity_a per installation method. pk_sizes: strands, strand diameter in inches, real area, rated_as_mm2 = the row of cables used for its ampacity. breaker_margin_load_types: load types whose MCB is chosen at I_b x margin (continuous motor-type loads), so a 1.5 ton AC gets a 16 A MCB on 2.5 mm2 rather than 10 A on 1 mm2."
+   },
+   "methods": {
+    "B1": "In conduit in a brick or plastered (masonry) wall, most Pakistani house wiring; a conduit buried in thermal insulation is method A1 and is rated lower",
+    "C": "Clipped direct to a wall or surface"
+   },
+   "cables": [
+    {
+     "area_mm2": 1,
+     "ampacity_a": {
+      "B1": 13.5,
+      "C": 15.5
+     }
+    },
+    {
+     "area_mm2": 1.5,
+     "ampacity_a": {
+      "B1": 17.5,
+      "C": 19.5
+     }
+    },
+    {
+     "area_mm2": 2.5,
+     "ampacity_a": {
+      "B1": 24,
+      "C": 27
+     }
+    },
+    {
+     "area_mm2": 4,
+     "ampacity_a": {
+      "B1": 32,
+      "C": 36
+     }
+    },
+    {
+     "area_mm2": 6,
+     "ampacity_a": {
+      "B1": 41,
+      "C": 46
+     }
+    },
+    {
+     "area_mm2": 10,
+     "ampacity_a": {
+      "B1": 57,
+      "C": 63
+     }
+    },
+    {
+     "area_mm2": 16,
+     "ampacity_a": {
+      "B1": 76,
+      "C": 85
+     }
+    },
+    {
+     "area_mm2": 25,
+     "ampacity_a": {
+      "B1": 101,
+      "C": 112
+     }
+    },
+    {
+     "area_mm2": 35,
+     "ampacity_a": {
+      "B1": 125,
+      "C": 138
+     }
+    }
+   ],
+   "pk_sizes": [
+    {
+     "name": "3/29",
+     "strands": 3,
+     "strand_in": 0.029,
+     "area_mm2": 1.28,
+     "rated_as_mm2": 1
+    },
+    {
+     "name": "7/29",
+     "strands": 7,
+     "strand_in": 0.029,
+     "area_mm2": 2.98,
+     "rated_as_mm2": 2.5
+    },
+    {
+     "name": "7/36",
+     "strands": 7,
+     "strand_in": 0.036,
+     "area_mm2": 4.6,
+     "rated_as_mm2": 4
+    },
+    {
+     "name": "7/44",
+     "strands": 7,
+     "strand_in": 0.044,
+     "area_mm2": 6.87,
+     "rated_as_mm2": 6
+    },
+    {
+     "name": "7/52",
+     "strands": 7,
+     "strand_in": 0.052,
+     "area_mm2": 9.59,
+     "rated_as_mm2": 10
+    },
+    {
+     "name": "7/64",
+     "strands": 7,
+     "strand_in": 0.064,
+     "area_mm2": 14.53,
+     "rated_as_mm2": 16
+    },
+    {
+     "name": "19/44",
+     "strands": 19,
+     "strand_in": 0.044,
+     "area_mm2": 18.64,
+     "rated_as_mm2": 16
+    },
+    {
+     "name": "19/52",
+     "strands": 19,
+     "strand_in": 0.052,
+     "area_mm2": 26.03,
+     "rated_as_mm2": 25
+    },
+    {
+     "name": "19/64",
+     "strands": 19,
+     "strand_in": 0.064,
+     "area_mm2": 39.43,
+     "rated_as_mm2": 35
+    }
+   ],
+   "mcb_curves": {
+    "_source": "IEC 60898-1 instantaneous tripping ranges: B 3-5 x In, C 5-10 x In, D 10-20 x In",
+    "B": {
+     "trip_min": 3,
+     "trip_max": 5,
+     "use": "lighting, sockets and resistive loads (heaters, irons, geysers)"
+    },
+    "C": {
+     "trip_min": 5,
+     "trip_max": 10,
+     "use": "air conditioners, fridges, motors, water pumps and mixed socket circuits"
+    },
+    "D": {
+     "trip_min": 10,
+     "trip_max": 20,
+     "use": "transformers, welding machines and large motors with heavy inrush"
+    }
+   },
+   "curve_by_load": {
+    "lighting": "B",
+    "resistive": "B",
+    "electronic": "B",
+    "sockets": "C",
+    "inverter_compressor": "C",
+    "compressor": "C",
+    "motor": "C",
+    "high_inrush": "D"
+   },
+   "min_area_mm2": {
+    "_source": "IEC 60364-5-52 Table 52.2 minimum conductor sizes and common Pakistani practice (3/29 for lighting points, 7/29 for sockets and air conditioners); engineer to confirm",
+    "lighting": 1,
+    "other": 2.5
+   },
+   "breaker_margin_load_types": [
+    "motor",
+    "compressor",
+    "inverter_compressor",
+    "high_inrush"
+   ]
   }
  },
  "pages": [
@@ -423,40 +639,56 @@
    "h1": "Battery Backup Time Calculator for Home",
    "title": "Battery Backup Time Calculator for Home (UPS) | Wattlyst",
    "meta": "How long will your home UPS battery last? Enter load, battery Ah and type (tubular or lithium) to get backup time with inverter losses included.",
-   "status": "draft",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-B",
    "related": [
     "B2",
     "B3",
     "B5",
-    "D4"
+    "H9",
+    "D4",
+    "P-G"
    ],
-   "next": "B4",
+   "next": "D4",
    "wave": 1
   },
   {
    "id": "B2",
    "type": "tool",
    "url": "/battery/12v-battery-runtime-calculator/",
-   "h1": "12v Battery Runtime Calculator",
+   "h1": "12V Battery Runtime Calculator",
    "title": "12V Battery Runtime Calculator (100Ah to 200Ah) | Wattlyst",
    "meta": "Find how long a 12V battery runs your load. Works for 100Ah, 150Ah and 200Ah, lead-acid or lithium, with DC and inverter loads.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-B",
+   "related": [
+    "B1",
+    "B3",
+    "D6",
+    "B5"
+   ],
+   "next": "D6",
    "wave": 1
   },
   {
    "id": "B3",
    "type": "tool",
    "url": "/battery/200ah-battery-backup-time-calculator/",
-   "h1": "200ah Battery Backup Time Calculator",
+   "h1": "200Ah Battery Backup Time Calculator",
    "title": "200Ah Battery Backup Time Calculator | Wattlyst",
    "meta": "See how many hours a 200Ah battery runs fans, lights, a fridge or a PC. Tubular and lithium, 12V or 24V, with a ready backup time table.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-B",
+   "related": [
+    "B1",
+    "B2",
+    "B5",
+    "D4"
+   ],
+   "next": "D4",
    "wave": 1
   },
   {
@@ -475,12 +707,20 @@
    "id": "B5",
    "type": "tool",
    "url": "/battery/ups-backup-time-calculator/",
-   "h1": "Ups Backup Time Calculator",
+   "h1": "UPS Backup Time Calculator",
    "title": "UPS Backup Time Calculator (PC, Router, CCTV) | Wattlyst",
    "meta": "Estimate UPS runtime for a PC, router or CCTV from VA rating, battery Ah and load. Includes power factor and real inverter efficiency.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-B",
+   "related": [
+    "B1",
+    "B2",
+    "H9",
+    "D4",
+    "P-G"
+   ],
+   "next": "B1",
    "wave": 1
   },
   {
@@ -535,24 +775,38 @@
    "id": "C5",
    "type": "tool",
    "url": "/generator/generator-for-well-pump/",
-   "h1": "Generator Size For Well Pump",
+   "h1": "Generator Size for Well Pump",
    "title": "Generator Size for Well Pump (HP to kVA) | Wattlyst",
    "meta": "Find the generator size for a 0.5 to 5 HP well or water pump. Converts HP to watts, adds motor starting surge and gives kVA at PF 0.8.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-C",
+   "related": [
+    "C6",
+    "D4",
+    "W3",
+    "E1"
+   ],
+   "next": "W3",
    "wave": 1
   },
   {
    "id": "C6",
    "type": "tool",
    "url": "/generator/generator-for-1-5-ton-ac/",
-   "h1": "Generator Size For 1.5 Ton Ac",
+   "h1": "Generator Size for 1.5 Ton AC",
    "title": "Generator Size for 1.5 Ton AC (kVA Guide) | Wattlyst",
    "meta": "What kVA generator runs a 1.5 ton inverter or non-inverter AC? Running and starting watts, kVA at PF 0.8, and home load examples.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-C",
+   "related": [
+    "C5",
+    "D4",
+    "E5",
+    "W1"
+   ],
+   "next": "W1",
    "wave": 1
   },
   {
@@ -619,36 +873,60 @@
    "id": "D4",
    "type": "tool",
    "url": "/solar/inverter-size-calculator/",
-   "h1": "Inverter Size Calculator For Home Appliances",
+   "h1": "Inverter Size Calculator for Home Appliances",
    "title": "Inverter Size Calculator for Home Appliances | Wattlyst",
    "meta": "Find the inverter or UPS size in watts and kVA for your appliances, including AC and motor starting surge. Can a UPS run a 1 ton AC?",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-D",
+   "related": [
+    "E1",
+    "B1",
+    "C6",
+    "H9",
+    "D5",
+    "H2"
+   ],
+   "next": "B1",
    "wave": 1
   },
   {
    "id": "D5",
    "type": "tool",
    "url": "/solar/solar-panels-to-run-ac/",
-   "h1": "How Many Solar Panels Do I Need To Run An Ac",
+   "h1": "How Many Solar Panels Do I Need to Run an AC?",
    "title": "How Many Solar Panels to Run an AC? (1 & 1.5 Ton) | Wattlyst",
    "meta": "Find the solar panels, inverter and battery to run a 1 or 1.5 ton inverter AC in Pakistan. Uses your city's sun hours and real AC watts.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-D",
+   "related": [
+    "E5",
+    "D8",
+    "D4",
+    "D10",
+    "D6"
+   ],
+   "next": "D10",
    "wave": 1
   },
   {
    "id": "D6",
    "type": "tool",
    "url": "/solar/solar-panel-for-12v-battery/",
-   "h1": "Solar Panel Calculator For 12v Battery",
+   "h1": "Solar Panel Calculator for 12V Battery",
    "title": "Solar Panel Size for 12V Battery Calculator | Wattlyst",
    "meta": "What size solar panel charges a 100Ah or 200Ah 12V battery? Includes charge controller type, sun hours and charging losses.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-D",
+   "related": [
+    "B2",
+    "D5",
+    "D8",
+    "B1"
+   ],
+   "next": "B2",
    "wave": 1
   },
   {
@@ -667,12 +945,20 @@
    "id": "D8",
    "type": "tool",
    "url": "/solar/solar-system-for-5-marla-house/",
-   "h1": "Solar System For 5 Marla House",
+   "h1": "Solar System for 5 Marla House",
    "title": "Solar System for 5 Marla House: kW & Cost | Wattlyst",
    "meta": "How many kW solar does a 5 marla house need? Typical load, panels, inverter, battery and cost, plus a calculator for your own bill.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-D",
+   "related": [
+    "E1",
+    "D5",
+    "D10",
+    "D4",
+    "D6"
+   ],
+   "next": "D10",
    "wave": 1
   },
   {
@@ -694,9 +980,17 @@
    "h1": "Net Billing Calculator",
    "title": "Net Billing Calculator Pakistan 2026 (Old vs New) | Wattlyst",
    "meta": "Compare your bill under old net metering and the 2026 net billing rules. Enter solar kW, units used and exported; see savings in PKR.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-D",
+   "related": [
+    "D8",
+    "D5",
+    "F1",
+    "F2",
+    "F12"
+   ],
+   "next": "F1",
    "wave": 1
   },
   {
@@ -778,9 +1072,17 @@
    "h1": "Home Electrical Load Calculator",
    "title": "Home Electrical Load Calculator (Watts, kW, Amps) | Wattlyst",
    "meta": "Add your home appliances to get total watts, peak load, amps and daily units. Pakistani and US appliance lists, then size your UPS or solar.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-E",
+   "related": [
+    "E3",
+    "E4",
+    "D4",
+    "H2",
+    "F1"
+   ],
+   "next": "D4",
    "wave": 1
   },
   {
@@ -802,33 +1104,55 @@
    "h1": "Single Phase Load Calculator",
    "title": "Single Phase Load Calculator (230V, kW to Amps) | Wattlyst",
    "meta": "Check if your single-phase 230V connection can handle your load. Total kW, amps, diversity factor and sanctioned load check.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-E",
+   "related": [
+    "E1",
+    "E4",
+    "W2",
+    "W3"
+   ],
+   "next": "E4",
    "wave": 1
   },
   {
    "id": "E4",
    "type": "tool",
    "url": "/load/load-before-adding-ac/",
-   "h1": "Home Load Calculator Before Adding Ac",
+   "h1": "Home Load Calculator Before Adding an AC",
    "title": "Can My Home Handle Another AC? Load Calculator | Wattlyst",
    "meta": "Check your current load, meter and wiring before adding a 1 or 1.5 ton AC. Shows new total amps, sanctioned load and wire size needed.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-E",
+   "related": [
+    "E1",
+    "E3",
+    "W1",
+    "E5"
+   ],
+   "next": "W1",
    "wave": 1
   },
   {
    "id": "E5",
    "type": "tool",
    "url": "/load/ac-units-calculator/",
-   "h1": "1.5 Ton Inverter Ac Unit Consumption Per Hour In Pakistan",
+   "h1": "1.5 Ton Inverter AC Unit Consumption per Hour in Pakistan",
    "title": "1.5 Ton Inverter AC Unit Consumption per Hour | Wattlyst",
    "meta": "How many units does a 1.5 ton inverter AC use per hour in Pakistan? See unit consumption per hour, per day and the monthly AC bill in PKR.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-E",
+   "related": [
+    "F1",
+    "D5",
+    "E4",
+    "C6",
+    "H2"
+   ],
+   "next": "F1",
    "wave": 1
   },
   {
@@ -850,21 +1174,34 @@
    "h1": "Electricity Bill Calculator Pakistan",
    "title": "Electricity Bill Calculator Pakistan 2026 | Wattlyst",
    "meta": "Calculate your electricity bill with the latest NEPRA tariff, taxes and FPA. Protected consumer check, slab warning and all DISCOs.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-F",
+   "related": [
+    "F2",
+    "F12",
+    "E5",
+    "D10"
+   ],
+   "next": "E5",
    "wave": 1
   },
   {
    "id": "F2",
    "type": "tool",
    "url": "/bill/lesco-bill-calculator/",
-   "h1": "Lesco Bill Calculator",
+   "h1": "LESCO Bill Calculator",
    "title": "LESCO Bill Calculator 2026 (Latest Tariff) | Wattlyst",
    "meta": "Estimate your LESCO bill from units with the current tariff, FPA and all taxes. Protected and non-protected slabs explained.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-F",
+   "related": [
+    "F1",
+    "F12",
+    "E5"
+   ],
+   "next": "F1",
    "wave": 1
   },
   {
@@ -979,12 +1316,18 @@
    "id": "F12",
    "type": "tool",
    "url": "/bill/k-electric-bill-calculator/",
-   "h1": "K Electric Bill Calculator",
+   "h1": "K-Electric Bill Calculator",
    "title": "K-Electric Bill Calculator 2026 (Karachi Tariff) | Wattlyst",
    "meta": "Estimate your K-Electric bill from units with the current tariff, FCA and taxes. Protected and non-protected slabs explained.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-F",
+   "related": [
+    "F1",
+    "F2",
+    "E5"
+   ],
+   "next": "F1",
    "wave": 1
   },
   {
@@ -1015,12 +1358,19 @@
    "id": "W1",
    "type": "tool",
    "url": "/wiring/wire-size-for-1-5-ton-ac/",
-   "h1": "Wire Size For 1.5 Ton Ac",
+   "h1": "Wire Size for 1.5 Ton AC",
    "title": "Wire Size for 1.5 Ton AC (mm² & 7/29) + Breaker | Wattlyst",
    "meta": "Which wire and breaker for a 1.5 ton inverter or non-inverter AC? mm² and 3/29, 7/29 sizes, run length and safety margin, explained.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-W",
+   "related": [
+    "W2",
+    "W3",
+    "E4",
+    "C6"
+   ],
+   "next": "W3",
    "wave": 1
   },
   {
@@ -1030,21 +1380,35 @@
    "h1": "Wire Size Calculator Pakistan",
    "title": "Wire Size Calculator Pakistan (mm², 3/29, 7/29) | Wattlyst",
    "meta": "Find the right copper wire size for any load and length. Shows mm² and Pakistani 3/29, 7/29, 7/36 sizes with ampere ratings and voltage drop.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-W",
+   "related": [
+    "W1",
+    "W3",
+    "E3",
+    "C5"
+   ],
+   "next": "W3",
    "wave": 1
   },
   {
    "id": "W3",
    "type": "tool",
    "url": "/wiring/breaker-size-calculator/",
-   "h1": "Mcb Size Calculator",
+   "h1": "MCB Size Calculator",
    "title": "MCB / Breaker Size Calculator (Amps & Curve) | Wattlyst",
    "meta": "Pick the right MCB size and curve (B, C, D) for lights, sockets, ACs and motors from load watts. Wire and breaker matched safely.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-W",
+   "related": [
+    "W1",
+    "W2",
+    "C5",
+    "E3"
+   ],
+   "next": "W2",
    "wave": 1
   },
   {
@@ -1075,25 +1439,34 @@
    "id": "H1",
    "type": "home",
    "url": "/",
-   "h1": "Home Power Planner (Brand)",
+   "h1": "Home Power Planner: Free Electricity Calculators",
    "title": "Wattlyst Home Power Planner: Electricity Calculators",
    "meta": "Plan your home power with free calculators for load, battery backup, solar size, generators, wiring and bills. Every formula is shown.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": null,
+   "related": [],
+   "next": null,
    "wave": 1
   },
   {
    "id": "H2",
    "type": "pillar",
    "url": "/appliances/",
-   "h1": "Appliance Wattage List",
+   "h1": "Appliance Wattage List: Watts and Units per Hour",
    "title": "Appliance Wattage & Units List (Pakistan + US) | Wattlyst",
    "meta": "Running watts, starting watts and units per hour for 60+ home appliances: ACs, fans, fridges, motors, irons, geysers and more.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": null,
    "children": [],
+   "related": [
+    "E1",
+    "E5",
+    "D4",
+    "B1"
+   ],
+   "next": "E1",
    "wave": 1
   },
   {
@@ -1172,12 +1545,19 @@
    "id": "H9",
    "type": "guide",
    "url": "/guides/inverter-vs-ups/",
-   "h1": "Inverter Vs Ups",
+   "h1": "Inverter vs UPS: Which One for Your Home?",
    "title": "Inverter vs UPS: Which One for Your Home? | Wattlyst",
    "meta": "The real difference between a UPS, an inverter and a hybrid solar inverter, with switching time, efficiency and which loads each can run.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-G",
+   "related": [
+    "B1",
+    "B5",
+    "D4",
+    "B2"
+   ],
+   "next": "B1",
    "wave": 1
   },
   {
@@ -1453,9 +1833,14 @@
    "title": "Battery and UPS Backup Calculators | Wattlyst",
    "meta": "Battery and UPS calculators for homes: backup time, battery bank size and runtime for 12V, 24V and 48V systems, with tubular and lithium battery options.",
    "status": "auto",
-   "live": false,
+   "live": true,
    "parent": null,
-   "children": [],
+   "children": [
+    "B1",
+    "B2",
+    "B3",
+    "B5"
+   ],
    "wave": 0
   },
   {
@@ -1466,9 +1851,12 @@
    "title": "Generator Sizing Calculators | Wattlyst",
    "meta": "Generator calculators for home and appliances: running and starting watts, kVA size, AC and water pump loads, and fuel use, with each step shown.",
    "status": "auto",
-   "live": false,
+   "live": true,
    "parent": null,
-   "children": [],
+   "children": [
+    "C5",
+    "C6"
+   ],
    "wave": 0
   },
   {
@@ -1479,9 +1867,15 @@
    "title": "Solar Panel, Battery and Inverter Calculators | Wattlyst",
    "meta": "Solar calculators for homes: system size, panels, batteries, inverter, charge controller and net billing, using real sun hours for cities in Pakistan.",
    "status": "auto",
-   "live": false,
+   "live": true,
    "parent": null,
-   "children": [],
+   "children": [
+    "D4",
+    "D5",
+    "D6",
+    "D8",
+    "D10"
+   ],
    "wave": 0
   },
   {
@@ -1492,9 +1886,14 @@
    "title": "Home Electrical Load Calculators | Wattlyst",
    "meta": "Load calculators for homes: total watts, single phase load, AC units per hour, monthly units and running cost, to plan before adding new appliances.",
    "status": "auto",
-   "live": false,
+   "live": true,
    "parent": null,
-   "children": [],
+   "children": [
+    "E1",
+    "E3",
+    "E4",
+    "E5"
+   ],
    "wave": 0
   },
   {
@@ -1505,9 +1904,13 @@
    "title": "Electricity Bill Calculators Pakistan 2026 | Wattlyst",
    "meta": "Electricity bill calculators for LESCO, IESCO, MEPCO, K-Electric and every DISCO in Pakistan, using 2026 tariff slabs, taxes and fixed charges with dates.",
    "status": "auto",
-   "live": false,
+   "live": true,
    "parent": null,
-   "children": [],
+   "children": [
+    "F1",
+    "F2",
+    "F12"
+   ],
    "wave": 0
   },
   {
@@ -1518,9 +1921,13 @@
    "title": "Wire, Cable and Breaker Size Calculators | Wattlyst",
    "meta": "Wiring calculators for wire size, MCB breaker size, solar DC cable and voltage drop. Always confirm final wiring with a licensed electrician.",
    "status": "auto",
-   "live": false,
+   "live": true,
    "parent": null,
-   "children": [],
+   "children": [
+    "W1",
+    "W2",
+    "W3"
+   ],
    "wave": 0
   },
   {
@@ -1531,9 +1938,11 @@
    "title": "Electricity Guides for Home and Solar | Wattlyst",
    "meta": "Plain-English electricity guides: net billing in Pakistan, peak hours, FPA charges, lithium vs tubular batteries and inverter vs UPS explained.",
    "status": "auto",
-   "live": false,
+   "live": true,
    "parent": null,
-   "children": [],
+   "children": [
+    "H9"
+   ],
    "wave": 0
   },
   {

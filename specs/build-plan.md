@@ -1,7 +1,8 @@
 # Wattlyst build plan for Claude Code
 
-Read this whole file once at the start of the project. After that, each session reads PROGRESS.md and only the current phase's section (when a phase is done, read just the next phase). Don't re-read everything. Work one phase at a time,
+Read this whole file once at the start of the project. After that, each session reads PROGRESS.md (its "Handoff for next phase" section first) and only the current phase's section (when a phase is done, read just the next phase). Don't re-read everything. Work one phase at a time,
 one page per PR. Never start the next phase until the current gate is green.
+Handoff rule (owner, 13 Oct 2026): the thread that finishes a phase rewrites the "Handoff for next phase" section of PROGRESS.md (what is where, what not to touch, open to-dos; never formulas or numbers, which live only in specs/formulas.md, data/ and engine/) and keeps the code map in CLAUDE.md current. The next phase's thread reads that note first instead of the whole codebase.
 
 ## Non-negotiable rules (copy into the repo's CLAUDE.md)
 1. Math lives only in `engine/` as pure functions (no DOM, no WordPress). UI code calls the engine; it never re-implements a formula.

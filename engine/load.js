@@ -1,15 +1,83 @@
 // E. Load, AC, units (specs/formulas.md section E) and load/cost tools from section G.
-import { calculator, CalcError, has, pos, frac, nonneg, num, dflt } from './core.js';
+import { calculator, CalcError, has, pos, frac, nonneg, num, dflt, appliance } from './core.js';
+import { sumLoads, loadRows } from './sizing.js';
+import { breaker_size } from './wiring.js';
 
-/** units_day = avg_kW × hours; monthly = daily × days. */
+/**
+ * E5: units_day = avg_kW × hours; monthly = daily × days.
+ * `ac` = an air conditioner id from data/appliances.json (its avg_w is the planning average, formulas.md E)
+ * or "custom" (then avg_kw is required).
+ */
 export const ac_units = calculator((i, d) => {
-  const avg_kw = pos(i, 'avg_kw');
+  const out = {};
+  let avg_kw;
+  if (has(i, 'ac') && String(i.ac).trim() !== 'custom') {
+    const ac = appliance(d, i.ac, 'ac');
+    if (!(ac.avg_w > 0)) throw new CalcError('appliance_unknown', 'ac');
+    avg_kw = ac.avg_w / 1000;
+    Object.assign(out, { ac: String(i.ac).trim(), ac_name: ac.name, ac_rated_w: ac.running_w });
+  } else {
+    avg_kw = pos(i, 'avg_kw');
+  }
   const hours = nonneg(i, 'hours');
   const days = nonneg(i, 'days', dflt(d, 'days_per_month'));
   const daily_units = avg_kw * hours;
-  const out = { avg_kw, hours, days, daily_units, monthly_units: daily_units * days };
-  if (has(i, 'tariff')) out.monthly_rs = out.monthly_units * nonneg(i, 'tariff');
+  Object.assign(out, { avg_kw, hours, days, daily_units, monthly_units: daily_units * days });
+  if (has(i, 'tariff')) {
+    const tariff = nonneg(i, 'tariff');
+    Object.assign(out, { tariff, hourly_rs: avg_kw * tariff, daily_rs: daily_units * tariff, monthly_rs: out.monthly_units * tariff });
+  }
   return out;
+});
+
+/**
+ * E1: home load from an appliance list. Running W = Σ run × qty; peak W adds the largest starting step
+ * (formulas.md C); amps = W / (V × PF); daily units = Σ run × qty × hours / 1000; monthly = daily × days.
+ */
+export const home_load = calculator((i, d) => {
+  const rows = loadRows(i.loads, d);
+  const { running_w, surge_w } = sumLoads(rows);
+  const volts = pos(i, 'volts', dflt(d, 'v_1ph'));
+  const pf = frac(i, 'pf', dflt(d, 'pf_mixed'));
+  const days = nonneg(i, 'days', dflt(d, 'days_per_month'));
+  const daily_kwh = rows.reduce((s, r) => s + r.energy_w * r.qty * r.hours, 0) / 1000;
+  const out = {
+    appliances: rows.length, items: rows.reduce((s, r) => s + r.qty, 0), running_w, running_kw: running_w / 1000, peak_w: surge_w, volts, pf,
+    amps: running_w / (volts * pf), peak_amps: surge_w / (volts * pf), days, daily_kwh, monthly_units: daily_kwh * days,
+    largest_w: Math.max(...rows.map((r) => r.run)),
+  };
+  if (has(i, 'tariff')) {
+    out.tariff = nonneg(i, 'tariff');
+    out.monthly_rs = out.monthly_units * out.tariff;
+  }
+  if (has(i, 'sanctioned_kw')) {
+    out.sanctioned_kw = pos(i, 'sanctioned_kw');
+    out.within_sanctioned = running_w / 1000 <= out.sanctioned_kw;
+    out.load_pct = (running_w / 1000 / out.sanctioned_kw) * 100;
+  }
+  return out;
+});
+
+/**
+ * E4: can the home take another AC? New total = current running W + the AC's running W; peak adds its
+ * starting step; amps = W / (V × PF); checked against the sanctioned load; MCB and cable for the AC's own circuit from breaker_size (formulas.md W).
+ */
+export const add_ac_check = calculator((i, d) => {
+  const current_w = nonneg(i, 'current_w');
+  const ac = appliance(d, i.ac, 'ac');
+  const sanctioned_kw = pos(i, 'sanctioned_kw', dflt(d, 'default_sanctioned_kw'));
+  const volts = pos(i, 'volts', dflt(d, 'v_1ph'));
+  const pf = frac(i, 'pf', dflt(d, 'pf_mixed'));
+  const new_total_w = current_w + ac.running_w;
+  const peak_w = current_w + ac.starting_w;
+  // The AC's own circuit follows the wiring pages' rule (formulas.md W): inverter AC at its maximum input, motor-type margin on the MCB.
+  const circuit = breaker_size.raw({ appliance: i.ac, volts, pf, margin: i.margin }, d);
+  return {
+    current_w, ac: i.ac.trim(), ac_name: ac.name, ac_run_w: ac.running_w, ac_start_w: ac.starting_w, sanctioned_kw, volts, pf,
+    new_total_w, new_total_kw: new_total_w / 1000, peak_w, amps_now: current_w / (volts * pf), amps_after: new_total_w / (volts * pf), peak_amps: peak_w / (volts * pf),
+    within_sanctioned: new_total_w / 1000 <= sanctioned_kw, load_pct: (new_total_w / 1000 / sanctioned_kw) * 100, headroom_kw: Math.max(0, sanctioned_kw - new_total_w / 1000),
+    ac_run_amps: ac.running_w / (volts * pf), ac_ib_a: circuit.ib_a, ac_design_w: circuit.watts, ac_breaker_a: circuit.breaker_a, ac_curve: circuit.curve, ac_cable_a: circuit.min_cable_a, ac_cable_mm2: circuit.area_mm2, ac_pk_size: circuit.pk_size,
+  };
 });
 
 /**

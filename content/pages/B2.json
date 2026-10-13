@@ -1,0 +1,293 @@
+{
+ "id": "B2",
+ "status": "publish",
+ "template": "tool",
+ "h1": "12V Battery Runtime Calculator",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "calc": "battery_runtime",
+ "fields": [
+  {
+   "name": "ah",
+   "label": "Battery capacity",
+   "unit": "Ah",
+   "default": 100,
+   "hint": "From the battery label. Common sizes are 100, 150 and 200 Ah."
+  },
+  {
+   "name": "volts",
+   "label": "Battery voltage",
+   "unit": "V",
+   "type": "select",
+   "default": 12,
+   "options": [
+    [
+     12,
+     "12 V lead-acid / AGM / gel"
+    ],
+    [
+     12.8,
+     "12.8 V lithium (LiFePO4)"
+    ]
+   ]
+  },
+  {
+   "name": "chemistry",
+   "label": "Battery type",
+   "type": "select",
+   "default": "lead_acid",
+   "options": [
+    [
+     "lead_acid",
+     "Flooded lead-acid / deep cycle"
+    ],
+    [
+     "tubular",
+     "Tubular"
+    ],
+    [
+     "agm",
+     "AGM / dry"
+    ],
+    [
+     "gel",
+     "Gel"
+    ],
+    [
+     "lifepo4",
+     "Lithium (LiFePO4)"
+    ]
+   ]
+  },
+  {
+   "name": "load_w",
+   "label": "Load",
+   "unit": "W",
+   "default": 100,
+   "hint": "Total watts the battery is powering. For a fridge or cooler use its average draw, not the peak."
+  },
+  {
+   "name": "inverter_eff",
+   "label": "Inverter efficiency",
+   "unit": "0 to 1",
+   "default": "@inverter_eff_ups",
+   "advanced": true,
+   "hint": "As a decimal. Enter 1 for a DC load wired straight to the battery."
+  },
+  {
+   "name": "dod",
+   "label": "Usable depth of discharge",
+   "unit": "0 to 1",
+   "placeholder": "Auto by battery type",
+   "advanced": true,
+   "hint": "As a decimal: 0.5 means half the battery. Leave blank to use the value for your battery type."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "hours",
+   "label": "Runtime",
+   "spec": "hm"
+  },
+  {
+   "key": "usable_wh",
+   "label": "Usable energy",
+   "spec": "int",
+   "unit": "Wh"
+  }
+ ],
+ "answer": "A {{in.ah|int}} Ah, {{in.volts|int}} V lead-acid battery runs a {{in.load_w|int}} W load through an inverter for about {{out.hours|hm}}, using only the {{out.dod|pct}} of its capacity that is safe to use. Runtime in hours equals Ah × volts × usable depth of discharge × inverter efficiency ÷ load watts; for a DC load set the efficiency to one.",
+ "how": "{{in.ah|int}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable × {{out.inverter_eff|pct}} inverter efficiency = {{out.usable_wh|int}} Wh usable. {{out.usable_wh|int}} Wh ÷ {{in.load_w|int}} W = {{out.hours|2}} hours, about {{out.hours|hm}}.",
+ "key_facts": [
+  "Runtime of a {{in.volts|int}} V battery in hours = Ah × {{in.volts|int}} V × usable depth of discharge × inverter efficiency ÷ load in watts.",
+  "A {{in.ah|int}} Ah, {{in.volts|int}} V lead-acid battery stores about {{out.usable_wh|int}} Wh of usable energy through an inverter, which runs a {{in.load_w|int}} W load for about {{out.hours|hm}} or a {{ex.1.in.load_w|int}} W load for about {{ex.1.out.hours|hm}}.",
+  "Lead-acid, AGM and gel batteries should be used to about {{d.dod_lead_acid|pct}} of their rating; lithium (LiFePO4) batteries to about {{d.dod_lifepo4|pct}}, so a lithium battery of the same Ah runs almost twice as long.",
+  "An inverter running at about {{d.inverter_eff_ups|pct}} efficiency turns the rest of the battery energy into heat; a DC load wired straight to the battery has no inverter loss."
+ ],
+ "formula": {
+  "text": "t = (Ah × V × DoD × η) ÷ P",
+  "lines": [
+   "t = runtime in hours",
+   "Ah = battery capacity in amp hours",
+   "V = battery voltage (nominal)",
+   "DoD = usable depth of discharge",
+   "η = inverter efficiency (1 for a DC load)",
+   "P = load in watts"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "How long will a {{in.volts|int}} V battery run a {{in.load_w|int}} W load?",
+   "p": [
+    "A {{in.ah|int}} Ah, {{in.volts|int}} V lead-acid battery runs a {{in.load_w|int}} W AC load for about {{out.hours|hm}} through an inverter. The same load wired as DC, with no inverter, runs about one sixth longer because the inverter loss of about {{d.inverter_eff_ups|pct}} efficiency disappears. A {{ex.2.in.ah|int}} Ah lithium battery at {{ex.2.in.volts|1}} V stores about {{ex.2.out.usable_wh|int}} Wh usable, so it runs the same {{in.load_w|int}} W load for roughly twice as long.",
+    "The result does not depend on your mains voltage. Whether the inverter puts out {{d.v_1ph|int}} V as in Pakistan, the UK and Europe, or {{d.v_1ph_us|int}} V as in the US and Canada, the battery side is the same {{in.volts|int}} V and the watts drawn are the same."
+   ]
+  },
+  {
+   "h2": "{{in.ah|int}} Ah battery runtime calculator: lead-acid against lithium",
+   "p": [
+    "The label Ah is not the usable Ah. A {{in.ah|int}} Ah lead-acid, AGM or gel battery should only be taken to about {{d.dod_lead_acid|pct}} of its rating, so only half the energy counts. A {{in.ah|int}} Ah lithium (LiFePO4) battery can safely use about {{d.dod_lifepo4|pct}}, and sits at {{ex.2.in.volts|1}} V instead of {{in.volts|int}} V, which is why the lithium example below gives about {{ex.2.out.hours|hm}} at {{ex.2.in.load_w|int}} W while a lead-acid battery of the same Ah gives much less.",
+    "Lead-acid batteries also lose capacity when they are drained fast. The label Ah is measured over about twenty hours; at a load that empties the battery in an hour the real capacity can be a quarter lower. The calculator does not apply this drop, so treat results under about two hours as optimistic."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "ah": 100,
+    "volts": 12,
+    "load_w": 100
+   },
+   "title": "{{in.ah|int}} Ah battery with a {{in.load_w|int}} W load through an inverter",
+   "text": "{{in.ah|int}} Ah × {{in.volts|int}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}} = {{out.usable_wh|int}} Wh usable. {{out.usable_wh|int}} Wh ÷ {{in.load_w|int}} W = about {{out.hours|hm}}."
+  },
+  {
+   "inputs": {
+    "ah": 100,
+    "volts": 12,
+    "load_w": 1000
+   },
+   "title": "{{in.ah|int}} Ah battery with a {{in.load_w|int}} W load (microwave or kettle)",
+   "text": "The same {{out.usable_wh|int}} Wh ÷ {{in.load_w|int}} W = about {{out.hours|hm}}. At this rate the inverter pulls well over eighty amps from the battery, and a lead-acid battery drained this fast gives less than its label Ah, so expect even less in practice."
+  },
+  {
+   "inputs": {
+    "ah": 100,
+    "volts": 12.8,
+    "chemistry": "lifepo4",
+    "load_w": 300
+   },
+   "title": "{{in.ah|int}} Ah lithium battery with a {{in.load_w|int}} W load",
+   "text": "{{in.ah|int}} Ah × {{in.volts|1}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}} = {{out.usable_wh|int}} Wh usable, which runs {{in.load_w|int}} W (a TV with a few fans, or a small compressor fridge at full duty) for about {{out.hours|hm}}."
+  },
+  {
+   "inputs": {
+    "ah": 100,
+    "volts": 12,
+    "load_w": 60,
+    "inverter_eff": 1
+   },
+   "title": "{{in.volts|int}} V compressor fridge, {{in.load_w|int}} W average, wired as DC",
+   "text": "A {{in.volts|int}} V camping or car fridge draws more when the compressor runs and nothing when it rests; its average over a day is about {{in.load_w|int}} W. With inverter efficiency set to one: {{in.ah|int}} Ah × {{in.volts|int}} V × {{out.dod|pct}} = {{out.usable_wh|int}} Wh, ÷ {{in.load_w|int}} W = about {{out.hours|hm}}."
+  },
+  {
+   "inputs": {
+    "ah": 200,
+    "volts": 12,
+    "load_w": 500
+   },
+   "title": "{{in.ah|int}} Ah deep cycle battery with a {{in.load_w|int}} W load",
+   "text": "{{in.ah|int}} Ah × {{in.volts|int}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}} = {{out.usable_wh|int}} Wh usable. {{out.usable_wh|int}} Wh ÷ {{in.load_w|int}} W = about {{out.hours|hm}}."
+  }
+ ],
+ "table": {
+  "caption": "Runtime of a {{in.volts|int}} V lead-acid battery through an inverter ({{d.dod_lead_acid|pct}} usable, {{d.inverter_eff_ups|pct}} inverter efficiency)",
+  "rows": [
+   {
+    "ah": 100,
+    "load_w": 50
+   },
+   {
+    "ah": 100,
+    "load_w": 100
+   },
+   {
+    "ah": 100,
+    "load_w": 300
+   },
+   {
+    "ah": 100,
+    "load_w": 1000
+   },
+   {
+    "ah": 150,
+    "load_w": 300
+   },
+   {
+    "ah": 150,
+    "load_w": 500
+   },
+   {
+    "ah": 200,
+    "load_w": 500
+   },
+   {
+    "ah": 200,
+    "load_w": 1000
+   }
+  ],
+  "columns": [
+   {
+    "label": "Battery",
+    "tpl": "{{in.ah|int}} Ah"
+   },
+   {
+    "label": "Load",
+    "tpl": "{{in.load_w|int}} W"
+   },
+   {
+    "label": "Usable energy",
+    "tpl": "{{out.usable_wh|int}} Wh"
+   },
+   {
+    "label": "Runtime",
+    "tpl": "{{out.hours|hm}}"
+   }
+  ]
+ },
+ "mistakes": [
+  "Using the full Ah. A lead-acid battery taken below about {{d.dod_lead_acid|pct}} loses cycles quickly, so only that part counts as usable.",
+  "Forgetting the inverter. An inverter turns about {{d.inverter_eff_ups|pct}} of the battery energy into AC; leave the efficiency at one only for a true DC load.",
+  "Using the fridge's peak watts. A fridge compressor cycles on and off; use the average draw over a day or the runtime will look far too short.",
+  "Trusting the label Ah at high loads. Lead-acid capacity is rated over about twenty hours; a load that empties the battery in an hour or two gets noticeably less.",
+  "Mixing up a car battery with a deep cycle battery. A car starting battery is built for short bursts and is damaged by deep discharge, so set a smaller depth of discharge for it."
+ ],
+ "safety": "Fuse the battery cable close to the battery, size the cable for the inverter current, keep lead-acid batteries ventilated, and have a licensed electrician connect any inverter to house wiring.",
+ "faq": [
+  {
+   "q": "How long will a {{in.volts|int}} V battery last?",
+   "a": "Divide the usable watt-hours by the load watts. A {{in.ah|int}} Ah lead-acid battery has about {{out.usable_wh|int}} Wh usable through an inverter, so it lasts about {{out.hours|hm}} at {{in.load_w|int}} W, about {{ex.4.out.hours|hm}} at {{ex.4.in.load_w|int}} W if it is a {{ex.4.in.ah|int}} Ah battery, and about {{ex.1.out.hours|hm}} at {{ex.1.in.load_w|int}} W."
+  },
+  {
+   "q": "A {{in.ah|int}} Ah battery gives how many hours?",
+   "a": "About {{out.hours|hm}} at {{in.load_w|int}} W through an inverter, or about {{ex.2.out.hours|hm}} at {{ex.2.in.load_w|int}} W if it is a {{ex.2.in.volts|1}} V lithium battery. The hours fall in proportion as the load rises."
+  },
+  {
+   "q": "Can a {{in.volts|int}} V {{in.ah|int}} Ah battery run a {{ex.1.in.load_w|int}} W load?",
+   "a": "Only briefly: about {{ex.1.out.hours|hm}} on paper, and less in practice because a lead-acid battery drained that fast delivers less than its label Ah. You also need an inverter rated for the load and a thick, fused battery cable for the high current."
+  },
+  {
+   "q": "Is this a {{in.volts|int}} V battery life calculator?",
+   "a": "It calculates runtime on one charge, not the life of the battery in years. Battery life depends on how deep and how often you discharge; staying within about {{d.dod_lead_acid|pct}} for lead-acid and about {{d.dod_lifepo4|pct}} for lithium is what makes a battery last."
+  },
+  {
+   "q": "How long will a {{in.volts|int}} V battery run a fridge?",
+   "a": "Use the fridge's average draw, not its peak. A {{ex.3.in.volts|int}} V compressor fridge averaging about {{ex.3.in.load_w|int}} W runs about {{ex.3.out.hours|hm}} on a {{ex.3.in.ah|int}} Ah lead-acid battery wired as DC. A mains fridge through an inverter draws more and also pays the inverter loss."
+  },
+  {
+   "q": "What is the runtime of a {{in.volts|int}} V deep cycle battery?",
+   "a": "The same formula applies; deep cycle batteries are simply built to be taken to about {{d.dod_lead_acid|pct}} repeatedly. A {{ex.4.in.ah|int}} Ah deep cycle battery runs a {{ex.4.in.load_w|int}} W load for about {{ex.4.out.hours|hm}} through an inverter."
+  },
+  {
+   "q": "How do I work out the discharge time of a {{in.volts|int}} V battery?",
+   "a": "Discharge time in hours = Ah × {{in.volts|int}} V × usable depth of discharge × inverter efficiency ÷ load watts. For a DC load drop the inverter efficiency; for a quick check, usable Wh ÷ watts gives the hours and Ah × depth of discharge ÷ amps gives the same answer."
+  }
+ ],
+ "related": [
+  "B1",
+  "B3",
+  "D6",
+  "B5"
+ ],
+ "next": "D6",
+ "literal_numbers": [
+  "LiFePO4"
+ ],
+ "sources": [
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

@@ -8,7 +8,7 @@ import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync, rmSync
 import { join, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parseCsv } from './lib/csv.js';
-import { render, fmt, placeholders, isSpec } from '../engine/format.js';
+import { render, fmt, placeholders, isSpec, lookup } from '../engine/format.js';
 import { errorMessage } from '../engine/messages.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -16,14 +16,17 @@ const read = (p) => readFileSync(join(root, p), 'utf8');
 const readJson = (p) => JSON.parse(read(p));
 
 const ENGINE_MODULES = ['conversions', 'battery', 'sizing', 'solar', 'bill', 'load', 'wiring'];
-/** Data each engine module needs in the browser (keeps page weight down). */
-const MODULE_DATA = { bill: ['tariff'], solar: ['cities'] };
+/** Data each engine module needs in the browser (keeps page weight down). Appliances are added per page, only the ones its fields use. */
+const MODULE_DATA = { bill: ['tariff'], solar: ['cities'], wiring: ['cables'], load: ['cables'] };
+/** Appliance fields the browser engine and the loads picker need. */
+const APPLIANCE_KEYS = ['name', 'running_w', 'starting_w', 'typical_hours_per_day', 'avg_w', 'load_type'];
 
 export async function loadInputs() {
   const site = readJson('data/site.json');
   const { _meta: citiesMeta, ...cities } = readJson('data/cities-pk.json');
-  const data = { defaults: readJson('data/defaults.json'), tariff: readJson('data/tariff-pk-2026.json'), cities };
   const appliances = readJson('data/appliances.json');
+  const cables = readJson('data/cable-ampacity.json');
+  const data = { defaults: readJson('data/defaults.json'), tariff: readJson('data/tariff-pk-2026.json'), cities, appliances: Object.fromEntries(appliances.items.map((a) => [a.id, a])), cables };
   const modules = {};
   for (const m of ENGINE_MODULES) modules[m] = await import(pathToFileURL(join(root, 'engine', `${m}.js`)).href);
   const keywordRows = parseCsv(read('specs/keyword-map.csv'));
@@ -37,7 +40,7 @@ export async function loadInputs() {
   for (const f of readdirSync(join(root, 'content/trust')).filter((x) => x.endsWith('.html')).sort()) {
     trustHtml[f.replace(/\.html$/, '')] = read(`content/trust/${f}`);
   }
-  return { site, data, citiesMeta, appliances, modules, keywordRows, siteRows, content, trustHtml };
+  return { site, data, citiesMeta, appliances, cables, modules, keywordRows, siteRows, content, trustHtml };
 }
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -55,13 +58,48 @@ function fail(msg) {
   throw new Error(`build: ${msg}`);
 }
 
-/** Resolve "@key" (data/defaults.json) and "@appliance.key" in field defaults. */
+/** Resolve "@key" (data/defaults.json), "@appliance.key" and "@data.tariff.unprotected.3.rate" in field defaults. */
 function resolveDefault(v, ctx) {
   if (typeof v !== 'string' || !v.startsWith('@')) return v;
   const path = v.slice(1);
-  const val = path.startsWith('appliance.') ? ctx.appliance?.[path.slice(10)] : ctx.data.defaults[path];
+  const val = path.startsWith('appliance.') ? ctx.appliance?.[path.slice(10)]
+    : path.startsWith('data.') ? lookup(ctx.data, path.slice(5))
+    : ctx.data.defaults[path];
   if (val === undefined) fail(`${ctx.id}: default ${v} not found`);
   return val;
+}
+
+const title = (s) => String(s).replace(/\b\w/g, (m) => m.toUpperCase());
+
+/** Expand a field's option list: literal [[value, label]], or options_from "cities" | "qta_periods" | "appliances". */
+function fieldOptions(f, ctx) {
+  if (f.options_from === 'cities') return Object.keys(ctx.data.cities).map((c) => [c, title(c)]);
+  if (f.options_from === 'qta_periods') {
+    return Object.keys(ctx.data.tariff.addons_secondary?.qta_per_unit || {}).filter((k) => /^\d{4}-\d{2}\.\.\d{4}-\d{2}$/.test(k)).map((k) => [k, `${k.replace('..', ' to ')}`]);
+  }
+  if (f.type === 'appliance') {
+    const ids = f.options || [];
+    const opts = ids.map((id) => {
+      const a = ctx.data.appliances[id];
+      if (!a) fail(`${ctx.id}: field ${f.name} lists unknown appliance ${id}`);
+      return [id, a.name];
+    });
+    if (f.custom) opts.push(['custom', f.custom === true ? 'Custom (enter watts)' : f.custom]);
+    return opts;
+  }
+  return (f.options || []).map(([v, l]) => [resolveDefault(v, ctx), l]);
+}
+
+/** Trimmed appliance records the page needs in the browser (its selects and loads picker). */
+function pageAppliances(fields, ctx) {
+  const ids = new Set();
+  for (const f of fields) {
+    if (f.type === 'appliance') for (const [v] of f.options) if (v !== 'custom') ids.add(v);
+    if (f.type === 'loads') for (const a of f.catalog) ids.add(a.id);
+  }
+  const out = {};
+  for (const id of ids) out[id] = Object.fromEntries(APPLIANCE_KEYS.filter((k) => ctx.data.appliances[id][k] !== undefined).map((k) => [k, ctx.data.appliances[id][k]]));
+  return out;
 }
 
 function findModule(modules, calc) {
@@ -87,12 +125,26 @@ function text(ctx, tpl, scope, what) {
 /** Build the rendered content of one page. Every number comes from the engine or data/. */
 function buildContent(c, ctx) {
   const out = { intro: '', sections: [], faq: [], key_facts: [], mistakes: [], sources: c.sources || [] };
-  const scope = { d: ctx.data.defaults, site: ctx.site, appliance: ctx.appliance };
+  const scope = { d: ctx.data.defaults, a: ctx.data.appliances, site: ctx.site, appliance: ctx.appliance };
   if (c.calc) {
     const module = findModule(ctx.modules, c.calc);
     if (!module) fail(`${c.id}: unknown calc ${c.calc}`);
     Object.assign(ctx, { calc: c.calc, module });
-    const fields = (c.fields || []).map((f) => ({ ...f, default: resolveDefault(f.default, ctx) }));
+    const fields = (c.fields || []).map((f) => {
+      const out = { ...f, default: resolveDefault(f.default, ctx) };
+      if (f.options || f.options_from || f.type === 'appliance') out.options = fieldOptions(f, ctx);
+      if (f.type === 'loads') {
+        const ids = f.catalog === 'all' ? ctx.appliances.items.map((a) => a.id) : f.catalog || [];
+        out.catalog = ids.map((id) => {
+          const a = ctx.data.appliances[id];
+          if (!a) fail(`${ctx.id}: loads catalog lists unknown appliance ${id}`);
+          return { id, name: a.name, category: a.category };
+        });
+        for (const row of out.default || []) if (row.id && row.id !== 'custom' && !ctx.data.appliances[row.id]) fail(`${ctx.id}: default row uses unknown appliance ${row.id}`);
+      }
+      if (out.options && out.default !== undefined && !out.options.some(([v]) => String(v) === String(out.default))) fail(`${ctx.id}: field ${f.name} default ${out.default} is not one of its options`);
+      return out;
+    });
     const defaults = Object.fromEntries(fields.filter((f) => f.default !== undefined).map((f) => [f.name, f.default]));
     const fixed = c.fixed_inputs || {};
     const inputs = { ...fixed, ...defaults };
@@ -108,6 +160,7 @@ function buildContent(c, ctx) {
       calc: c.calc,
       module: `${module}.js`,
       data_keys: MODULE_DATA[module] || [],
+      appliances: pageAppliances(fields, ctx),
       fields,
       fixed_inputs: fixed,
       outputs: (c.outputs || []).map((o) => {
@@ -118,7 +171,7 @@ function buildContent(c, ctx) {
       }),
       how: c.how ? { tpl: c.how, text: text(ctx, c.how, scope, 'how') } : null,
       submit: c.submit || 'Calculate',
-      data_checked: dataChecked(module, ctx),
+      data_checked: dataChecked(module, { ...ctx, usesAppliances: fields.some((f) => f.type === 'appliance' || f.type === 'loads') }),
     };
     out.examples = (c.examples || []).map((ex, n) => ({
       title: text(ctx, ex.title, { ...scope, ...scope.ex[n] }, `example ${n + 1} title`),
@@ -132,6 +185,7 @@ function buildContent(c, ctx) {
       out.table = { caption: text(ctx, c.table.caption, scope, 'table caption'), head: c.table.columns.map((col) => col.label), rows };
     }
   }
+  if (c.appliance_table) out.tables = applianceTables(ctx);
   out.answer = text(ctx, c.answer, scope, 'answer');
   out.intro = text(ctx, c.intro, scope, 'intro');
   out.key_facts = (c.key_facts || []).map((k, n) => text(ctx, k, scope, `key fact ${n + 1}`));
@@ -146,11 +200,28 @@ function buildContent(c, ctx) {
   return out;
 }
 
+/** H2: one table per category of data/appliances.json, units per hour and per typical day from the engine (conversions.units). */
+function applianceTables(ctx) {
+  const units = ctx.modules.conversions.units;
+  const cats = [...new Set(ctx.appliances.items.map((a) => a.category))];
+  return cats.map((cat) => {
+    const rows = ctx.appliances.items.filter((a) => a.category === cat).map((a) => {
+      const perHour = units({ watts: a.running_w, hours: 1 }, ctx.data);
+      const perDay = units({ watts: a.running_w, hours: a.typical_hours_per_day }, ctx.data);
+      if (!perHour.ok || !perDay.ok) fail(`appliance table: ${a.id} gives ${perHour.error || perDay.error}`);
+      return [a.name, `${fmt(a.running_w, 'int')} W`, `${fmt(a.starting_w, 'int')} W`, fmt(perHour.units, '3'), `${fmt(a.typical_hours_per_day, '1')} h`, fmt(perDay.units, '2')];
+    });
+    return { caption: `${title(cat.replace(/-/g, ' '))} appliances: watts and units`, head: ['Appliance', 'Running watts', 'Starting watts', 'Units per hour', 'Typical hours a day', 'Units per day'], rows };
+  });
+}
+
 /** "Last checked" lines for the data a tool depends on, so a data refresh re-dates the page. */
 function dataChecked(module, ctx) {
   const out = [];
   if (module === 'bill') out.push({ label: 'Pakistan electricity tariff (NEPRA notification)', url: ctx.data.tariff._meta.source_url || null, checked: ctx.data.tariff._meta.checked });
   if (module === 'solar') out.push({ label: 'Peak sun hours by city (Global Solar Atlas)', url: 'https://globalsolaratlas.info/', checked: ctx.citiesMeta.checked });
+  if (module === 'wiring' || module === 'load') out.push({ label: 'Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)', url: 'https://webstore.iec.ch/publication/1878', checked: ctx.cables._meta.checked });
+  if (ctx.usesAppliances) out.push({ label: 'Appliance running and starting watts (Wattlyst appliance data, sources listed on the appliance list page)', url: `${ctx.site.url.replace(/\/$/, '')}/appliances/`, checked: ctx.appliances._meta.checked });
   if (ctx.appliance) out.push({ label: `Typical wattage of ${ctx.appliance.name} (${ctx.appliance.source})`, url: ctx.appliance.source_url || null, checked: ctx.appliances._meta.checked });
   return out;
 }
@@ -229,6 +300,7 @@ function schemaFor(page, built, ctx) {
       ...(site.reviewer.status === 'signed_off' ? { reviewedBy: { '@id': `${site.url}#/person/reviewer` } } : {}),
     });
   }
+  if (page.type === 'home') graph.push({ '@type': 'WebSite', '@id': `${site.url}#website`, url: site.url, name: site.brand, description: site.tagline, inLanguage: 'en', publisher: { '@id': `${site.url}#organization` } });
   if (needsPerson) graph.push(person(site, page.author));
   if (site.reviewer.status === 'signed_off') {
     graph.push({ '@type': 'Person', '@id': `${site.url}#/person/reviewer`, name: site.reviewer.name, jobTitle: site.reviewer.credential, sameAs: site.reviewer.same_as || [] });
@@ -325,6 +397,8 @@ function llmsTxt(pages, ctx) {
   const out = [`# ${site.brand}`, '', `> ${site.brand} (${site.url}) makes free electricity calculators for homes: watts and amps conversions, battery and UPS backup, generator sizing, solar systems, home load and Pakistan electricity bills. ${site.tagline} Every result shows its formula and assumptions; all calculators run in the browser.`, ''];
   const pillars = live.filter((p) => p.type === 'pillar');
   if (pillars.length) out.push('## Sections', '', ...pillars.map(line), '');
+  const home = live.find((p) => p.type === 'home');
+  if (home) out.push(`## Start here`, '', line(home), '');
   const tools = live.filter((p) => p.type === 'tool' || p.type === 'appliance');
   if (tools.length) out.push('## Calculators', '', ...tools.map(line), '');
   const guides = live.filter((p) => p.type === 'guide');
@@ -342,7 +416,7 @@ export async function build() {
   const inp = await loadInputs();
   const { site, keywordRows, siteRows, content } = inp;
   const pluginUrl = `${site.url}wp-content/plugins/wattlyst-tools/`;
-  const ctxBase = { site, data: inp.data, modules: inp.modules, appliances: inp.appliances, citiesMeta: inp.citiesMeta, pluginUrl };
+  const ctxBase = { site, data: inp.data, modules: inp.modules, appliances: inp.appliances, cables: inp.cables, citiesMeta: inp.citiesMeta, pluginUrl };
 
   const rows = [
     ...keywordRows.map((r) => ({ id: r.id, type: typeOf(r), silo: r.silo, url: r.url, h1: '', title: r.title, meta: r.meta_description, primary_keyword: r.primary_keyword, wave: Number(r.wave), status: 'planned' })),
@@ -387,6 +461,9 @@ export async function build() {
     if (r.url !== '/') r.breadcrumb.push({ name: r.h1, url: r.url });
   }
 
+  for (const r of rows.filter((x) => x.type === 'home')) {
+    r.cards = rows.filter((x) => x.type === 'pillar' && x.live).sort((a, b) => (a.nav_order ?? 99) - (b.nav_order ?? 99)).map((p) => ({ id: p.id, url: p.url, h1: p.h1, label: p.nav_label || (p.primary_keyword ? title(p.primary_keyword) : p.h1), meta: p.meta, children: p.children.map((cid) => ({ id: cid, url: byId.get(cid).url, h1: byId.get(cid).h1 })) }));
+  }
   const files = {};
   for (const r of rows) {
     const c = content[r.id];
@@ -408,7 +485,7 @@ export async function build() {
     site: { brand: site.brand, url: site.url, tagline: site.tagline, contact_email: site.contact_email, logo: site.logo, og_image: site.og_image, twitter_image: site.twitter_image, ads: site.ads, people: site.people, reviewer: site.reviewer.status === 'signed_off'
       ? { status: 'signed_off', name: site.reviewer.name, credential: site.reviewer.credential, same_as: site.reviewer.same_as || [], signed_off: site.reviewer.signed_off }
       : { status: site.reviewer.status } },
-    data: { defaults: inp.data.defaults, tariff: inp.data.tariff, cities: inp.data.cities },
+    data: { defaults: inp.data.defaults, tariff: inp.data.tariff, cities: inp.data.cities, cables: inp.cables },
     pages: rows.map(({ id, type, url, h1, title, meta, status, live, parent, children, related, next, wave }) => ({ id, type, url, h1, title, meta, status, live, parent, children, related, next, wave })),
     nav: rows.filter((r) => r.nav_label).sort((a, b) => a.nav_order - b.nav_order).map((r) => ({ id: r.id, label: r.nav_label, url: r.url })),
     website_schema: websiteSchema(site, pluginUrl),

@@ -59,6 +59,14 @@ export function pick(inputs, key, allowed, def) {
 /** ceil that ignores floating-point dust: 3.0000000000004 -> 3, not 4. */
 export const ceilSafe = (x) => Math.ceil(x - 1e-9);
 
+/** Look up an appliance from data/appliances.json (data.appliances = { id: item }). */
+export function appliance(data, id, field = 'appliance') {
+  const key = typeof id === 'string' ? id.trim() : '';
+  const item = key ? data?.appliances?.[key] : undefined;
+  if (!item || !(item.running_w > 0)) throw new CalcError('appliance_unknown', field);
+  return item;
+}
+
 /** Read a value from data/defaults.json; a missing default is a bug, not user error. */
 export function dflt(data, path) {
   const v = path.split('.').reduce((o, k) => (o == null ? undefined : o[k]), data?.defaults);

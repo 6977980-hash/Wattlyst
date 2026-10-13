@@ -1,0 +1,55 @@
+{
+ "id": "H1",
+ "status": "publish",
+ "template": "home",
+ "h1": "Home Power Planner: Free Electricity Calculators",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "answer": "Wattlyst answers the electricity questions a home owner actually has: how long a battery will last, what size inverter, generator or solar system to buy, which wire and breaker to use, and what the bill will be. Pick a task below. Every calculator shows its formula and assumptions, and the defaults fit Pakistan's {{d.v_1ph|int}} V supply.",
+ "key_facts": [
+  "Every Wattlyst result shows the formula it used with your numbers, so you can check it or change an assumption.",
+  "Default values (inverter efficiency {{d.inverter_eff_ups|pct}}, usable battery capacity {{d.dod_lead_acid|pct}} for tubular and {{d.dod_lifepo4|pct}} for lithium, power factor {{d.pf_mixed|2}}, safety margin {{d.margin|2}} ×) are listed on the methodology page and can be edited in each calculator.",
+  "Pakistan electricity tariff slabs, peak sun hours by city and appliance wattages live in dated data files; the date each was last checked is printed on the pages that use it.",
+  "Results are planning estimates, not an official bill or an engineer's design; wiring and solar work must be confirmed by a licensed electrician."
+ ],
+ "sections": [
+  {
+   "h2": "How to use the calculators",
+   "p": [
+    "Start with the task, not the jargon. If the lights go out during loadshedding, start with the battery and UPS tools. If the bill is the problem, start with the bill calculators and the AC consumption tool. If you are planning solar, add up your home load first, then size the system.",
+    "Each result page ends with a Next step link to the tool that naturally follows, so a battery backup time leads to inverter sizing, a home load leads to solar sizing, and a wire size leads to the breaker to pair with it."
+   ]
+  },
+  {
+   "h2": "Why the numbers can be trusted",
+   "p": [
+    "The calculators share one engine with one set of formulas and one set of constants. The same formula produces the live result, the worked examples, the reference tables and the FAQ answers on every page, so no two pages can disagree.",
+    "The formulas follow standard electrical practice (IEC and NEPRA performance standards for a {{d.v_1ph|int}} V, {{d.v_3ph|int}} V three-phase, fifty hertz supply). Assumptions that depend on judgement are marked and editable, and a review by a PEC-registered electrical engineer is in progress."
+   ]
+  }
+ ],
+ "faq": [
+  {
+   "q": "Are the calculators free?",
+   "a": "Yes. Every tool runs in your browser, needs no sign-up and stores nothing about you. You can share a result by copying the page link after you press Calculate."
+  },
+  {
+   "q": "Do the tools work outside Pakistan?",
+   "a": "Yes. The defaults are set for Pakistan ({{d.v_1ph|int}} V single phase, rupees, local tariff slabs), and the converters, battery, solar and wiring tools let you switch to {{d.v_1ph_us|int}} V or enter your own voltage and prices."
+  },
+  {
+   "q": "How accurate are the results?",
+   "a": "They are planning estimates built on typical values. Real backup time, bills and solar output depend on battery age, weather, the exact appliance and the tariff of the month, so expect the real number to land near the estimate, not exactly on it."
+  },
+  {
+   "q": "Who writes and checks the tools?",
+   "a": "Wattlyst is written by its founder, Ali Ahmad, with formulas documented on the methodology page. Technical review by a PEC-registered electrical engineer is in progress and will be named on each page once complete."
+  }
+ ],
+ "related": [],
+ "literal_numbers": [],
+ "sources": [
+  {"label": "Wattlyst methodology and default values", "url": "/methodology/"}
+ ]
+}

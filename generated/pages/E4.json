@@ -3,26 +3,412 @@
  "type": "tool",
  "silo": "E",
  "url": "/load/load-before-adding-ac/",
- "h1": "Home Load Calculator Before Adding Ac",
+ "h1": "Home Load Calculator Before Adding an AC",
  "title": "Can My Home Handle Another AC? Load Calculator | Wattlyst",
  "meta": "Check your current load, meter and wiring before adding a 1 or 1.5 ton AC. Shows new total amps, sanctioned load and wire size needed.",
  "primary_keyword": "home load calculator before adding ac",
  "wave": 1,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-13",
+ "published": "2026-10-13",
  "author": "ali-ahmad",
+ "related": [
+  "E1",
+  "E3",
+  "W1",
+  "E5"
+ ],
+ "next": "W1",
  "parent": "P-E",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
    "url": "/"
   },
   {
-   "name": "Home Load Calculator Before Adding Ac",
+   "name": "Home Load Calculators",
+   "url": "/load/"
+  },
+  {
+   "name": "Home Load Calculator Before Adding an AC",
    "url": "/load/load-before-adding-ac/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "Can my meter handle another AC?",
+    "p": [
+     "The meter itself only records units; what limits you is the sanctioned load in kW on your bill, the main breaker at the meter and the service cable into the house. Add the AC's running watts to what already runs together and compare the new total with the sanctioned kW. In the default case 1,500 W plus a Split AC 1.5 ton inverter makes 2,950 W, which is 148% of a 2 kW connection: too much.",
+     "On a 5 kW connection the same home is at 59% with 2.05 kW of headroom, so the answer depends on the sanctioned load far more than on the meter. Also check that the main breaker rating is above the new current of 16 A."
+    ]
+   },
+   {
+    "h2": "How do I add an AC to my house load?",
+    "p": [
+     "First find the load running now: use the home load calculator with only the appliances that are on at the same time on a summer evening, or add up their labels. Then pick the AC. The calculator adds the AC's running watts, which is the right number for the check because on a hot afternoon an inverter AC runs near its rated input for long stretches; its lower average draw is for the electricity bill, not for the load.",
+     "The result shows the new total in watts and amps, how much of the sanctioned load it uses, and the MCB rating for the AC's own circuit. If you plan a second AC, run the calculator again with the first result as the load running now."
+    ]
+   },
+   {
+    "h2": "What sanctioned load do I need for an AC?",
+    "p": [
+     "The sanctioned load must be at least the new total in kW, rounded up to a whole kW. With 1,500 W of other load and a Split AC 1.5 ton inverter the new total is 2.95 kW, so a 2 kW connection is not enough and the next whole kW above 2.95 kW is the minimum to apply for. A small home with 800 W of fans, lights and a fridge can add a Split AC 1 ton inverter on 2 kW at 85%.",
+     "Apply for a little more than the minimum if you expect to add appliances, but remember the fixed charge on the bill is per sanctioned kW, and that 5 kW or more puts the connection on the time-of-use tariff."
+    ]
+   },
+   {
+    "h2": "What is the AC load on a single phase supply in amps?",
+    "p": [
+     "An AC's own current is its running watts ÷ (volts × power factor). At 230 V and a 0.8 power factor a Split AC 1 ton inverter draws about 4.9 A, a Split AC 1.5 ton inverter about 7.9 A and a Split AC 1.5 ton non-inverter about 9.8 A while running.",
+     "The non-inverter compressor is the one to watch: its start surge of 5,400 W pushes the whole house to 40.2 A for a moment in the example below, which is what trips a main breaker that is already near its rating."
+    ]
+   },
+   {
+    "h2": "What home wiring does a new AC need?",
+    "p": [
+     "A dedicated circuit from the distribution board: its own copper cable of at least 2.5 mm² (7/29 in Pakistani sizes), its own MCB and a proper earth. Never run an AC from a socket circuit shared with other appliances. For a Split AC 1.5 ton inverter that is a 16 A type C MCB on 2.5 mm² (7/29) cable; the AC wire size page linked below sizes the cable and breaker at the AC's maximum input with a safety margin and checks the voltage drop over your cable run, so use that for the final sizes.",
+     "If the house is older and the main cable or distribution board is already warm or discoloured, have an electrician check it before adding the AC, whatever this calculator says."
+    ]
+   },
+   {
+    "h2": "Can my meter take two ACs?",
+    "p": [
+     "Run the check twice. The 1,500 W home above reaches 2,950 W with the first Split AC 1.5 ton inverter; a second one on top takes it to 4,400 W and 23.9 A, which is 88% of a 5 kW connection. Two 1.5 ton ACs plus normal household load therefore need a 5 kW sanctioned load in practice, and each AC needs its own circuit and MCB."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "Can my meter handle a 1.5 ton AC?",
+    "a": "If the load running now plus the AC's 1,450 W stays within the sanctioned kW on your bill and the main breaker rating, yes. With 1,500 W already running you need more than a 2 kW sanctioned load; with 5 kW it fits at 59%."
+   },
+   {
+    "q": "What sanctioned load is needed for two ACs?",
+    "a": "Two 1.5 ton inverter ACs with normal household load come to about 4,400 W, which is 88% of a 5 kW sanctioned load, so 5 kW is the practical minimum, and that connection is billed on the time-of-use tariff."
+   },
+   {
+    "q": "Does an inverter AC need less sanctioned load than a non-inverter?",
+    "a": "A little: a 1.5 ton inverter runs at about 1,450 W against 1,800 W for a non-inverter, and it has no start surge, while the non-inverter draws 5,400 W for a moment at every start. The inverter is also much cheaper to run."
+   },
+   {
+    "q": "Can I run an AC on a 1 kW connection?",
+    "a": "A Split AC 1.5 ton inverter alone is 1,450 W running, already above 1 kW, so no. A Split AC 1 ton inverter at 900 W leaves almost nothing for fans and lights. Apply for a higher sanctioned load first."
+   },
+   {
+    "q": "What size breaker and wire does the AC circuit need?",
+    "a": "A Split AC 1.5 ton inverter is designed at 1,900 W, its maximum input, which is 10.3 A; with the motor margin that needs a 16 A type C MCB on 2.5 mm² (7/29) copper cable. The AC wire size page uses the same rule and also checks your cable length."
+   },
+   {
+    "q": "Will adding an AC change my tariff slab?",
+    "a": "The slab depends on units used, not on load. An AC adds units every month it runs and can push the whole bill into a higher slab; the AC units calculator linked below shows how many units and rupees to expect."
+   },
+   {
+    "q": "Does the main breaker need to change for the new AC?",
+    "a": "Only if the new current is close to its rating: the default home draws 16 A with the AC on and 18.5 A at full speed. An electrician should confirm the main breaker and service cable rating before the AC is connected."
+   }
+  ],
+  "key_facts": [
+   "A Split AC 1.5 ton inverter adds about 1,450 W of running load and up to 1,900 W at full speed; a non-inverter AC of the same size adds a starting surge of about three times its running watts for a second or two.",
+   "Current after adding an AC = (load running now + the AC's running watts) ÷ (volts × power factor): the default home goes from 8.2 A to 16 A at 230 V.",
+   "If the new total in kW is above the sanctioned load on the bill, apply to the DISCO for a higher sanctioned load before the AC is installed; at 5 kW or more a domestic connection moves to time-of-use billing.",
+   "Every AC needs its own circuit from the distribution board, with a copper cable of at least 2.5 mm² (7/29) and its own MCB; a Split AC 1.5 ton inverter needs a 16 A type C MCB on 2.5 mm² (7/29) cable, sized at the AC's maximum input with a safety margin; the AC wire size page also checks your cable length."
+  ],
+  "mistakes": [
+   "Using the AC's average draw for the check. The average is for the bill; for the load use the running watts, because on a hot afternoon an inverter AC runs near its rated input for long periods.",
+   "Forgetting the non-inverter start surge. A Split AC 1.5 ton non-inverter draws 5,400 W for a moment at every compressor start, several times its 1,800 W running load.",
+   "Running the new AC from an existing socket circuit. An AC needs its own cable and MCB from the distribution board; a shared circuit already carrying other loads will overheat or trip.",
+   "Ignoring the sanctioned load because the meter does not trip. The DISCO can raise the sanctioned load and fixed charges after a load survey, and a service cable running above its rating is a fire risk."
+  ],
+  "sources": [
+   {
+    "label": "NEPRA tariff notification for Ex-WAPDA DISCOs (sanctioned load, fixed charges and time-of-use rules)",
+    "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf"
+   },
+   {
+    "label": "Gree 1.5 ton inverter AC datasheet (rated input)",
+    "url": "https://japanelectronics.com.pk/products/gree-ac-split-inverter-1-5-ton-gs-18pith11g-aaa"
+   },
+   {
+    "label": "IEC 60364-5-52 (cable sizing)",
+    "url": "https://webstore.iec.ch/publication/1878"
+   },
+   {
+    "label": "Wattlyst methodology and default values",
+    "url": "/methodology/"
+   }
+  ],
+  "tool": {
+   "calc": "add_ac_check",
+   "module": "load.js",
+   "data_keys": [
+    "cables"
+   ],
+   "appliances": {
+    "ac-split-1ton-inverter": {
+     "name": "Split AC 1 ton inverter",
+     "running_w": 900,
+     "starting_w": 1200,
+     "typical_hours_per_day": 8,
+     "avg_w": 650,
+     "load_type": "inverter_compressor"
+    },
+    "ac-split-1-5ton-inverter": {
+     "name": "Split AC 1.5 ton inverter",
+     "running_w": 1450,
+     "starting_w": 1900,
+     "typical_hours_per_day": 8,
+     "avg_w": 1000,
+     "load_type": "inverter_compressor"
+    },
+    "ac-split-2ton-inverter": {
+     "name": "Split AC 2 ton inverter",
+     "running_w": 1900,
+     "starting_w": 2500,
+     "typical_hours_per_day": 8,
+     "avg_w": 1300,
+     "load_type": "inverter_compressor"
+    },
+    "ac-split-1ton-non-inverter": {
+     "name": "Split AC 1 ton non-inverter",
+     "running_w": 1200,
+     "starting_w": 3600,
+     "typical_hours_per_day": 8,
+     "avg_w": 960,
+     "load_type": "compressor"
+    },
+    "ac-split-1-5ton-non-inverter": {
+     "name": "Split AC 1.5 ton non-inverter",
+     "running_w": 1800,
+     "starting_w": 5400,
+     "typical_hours_per_day": 8,
+     "avg_w": 1440,
+     "load_type": "compressor"
+    },
+    "ac-split-2ton-non-inverter": {
+     "name": "Split AC 2 ton non-inverter",
+     "running_w": 2400,
+     "starting_w": 7200,
+     "typical_hours_per_day": 8,
+     "avg_w": 1920,
+     "load_type": "compressor"
+    }
+   },
+   "fields": [
+    {
+     "name": "current_w",
+     "label": "Load running now",
+     "unit": "W",
+     "default": 1500,
+     "hint": "Everything that runs at the same time today, in watts, from the home load calculator or your appliance labels."
+    },
+    {
+     "name": "ac",
+     "label": "AC you want to add",
+     "type": "appliance",
+     "default": "ac-split-1-5ton-inverter",
+     "options": [
+      [
+       "ac-split-1ton-inverter",
+       "Split AC 1 ton inverter"
+      ],
+      [
+       "ac-split-1-5ton-inverter",
+       "Split AC 1.5 ton inverter"
+      ],
+      [
+       "ac-split-2ton-inverter",
+       "Split AC 2 ton inverter"
+      ],
+      [
+       "ac-split-1ton-non-inverter",
+       "Split AC 1 ton non-inverter"
+      ],
+      [
+       "ac-split-1-5ton-non-inverter",
+       "Split AC 1.5 ton non-inverter"
+      ],
+      [
+       "ac-split-2ton-non-inverter",
+       "Split AC 2 ton non-inverter"
+      ]
+     ],
+     "hint": "Pick the size and type. The check uses the AC's running watts, not its lower average draw."
+    },
+    {
+     "name": "sanctioned_kw",
+     "label": "Sanctioned load",
+     "unit": "kW",
+     "default": 2,
+     "hint": "The kW printed on your electricity bill."
+    },
+    {
+     "name": "volts",
+     "label": "Supply voltage",
+     "unit": "V",
+     "type": "select",
+     "default": 230,
+     "advanced": true,
+     "options": [
+      [
+       230,
+       "230 V (Pakistan, UK, EU)"
+      ],
+      [
+       120,
+       "120 V (US)"
+      ]
+     ]
+    },
+    {
+     "name": "pf",
+     "label": "Power factor",
+     "unit": "0 to 1",
+     "default": 0.8,
+     "advanced": true,
+     "hint": "Mixed home loads with fans and compressors are about 0.8."
+    },
+    {
+     "name": "margin",
+     "label": "Cable safety margin",
+     "unit": "×",
+     "default": 1.25,
+     "advanced": true,
+     "hint": "The AC's cable is rated for its current times this margin. Leave at the default unless an electrician says otherwise."
+    }
+   ],
+   "fixed_inputs": {},
+   "outputs": [
+    {
+     "key": "new_total_w",
+     "label": "New total load",
+     "spec": "int",
+     "unit": "W",
+     "value": "2,950"
+    },
+    {
+     "key": "amps_after",
+     "label": "Current with the AC on",
+     "spec": "1",
+     "unit": "A",
+     "value": "16"
+    },
+    {
+     "key": "load_pct",
+     "label": "Of sanctioned load",
+     "spec": "int",
+     "unit": "%",
+     "value": "148"
+    },
+    {
+     "key": "ac_breaker_a",
+     "label": "MCB for the AC's own circuit",
+     "spec": "int",
+     "unit": "A",
+     "value": "16"
+    }
+   ],
+   "how": {
+    "tpl": "{{in.current_w|int}} W running now + {{out.ac_run_w|int}} W for the {{out.ac_name|raw}} = {{out.new_total_w|int}} W. {{out.new_total_w|int}} W ÷ ({{out.volts|int}} V × {{out.pf|2}} power factor) = {{out.amps_after|1}} A, up from {{out.amps_now|1}} A today. {{out.new_total_kw|2}} kW ÷ {{out.sanctioned_kw|int}} kW sanctioned = {{out.load_pct|int}}% of the sanctioned load. For a moment at compressor start or full speed the load is {{in.current_w|int}} W + {{out.ac_start_w|int}} W = {{out.peak_w|int}} W ({{out.peak_amps|1}} A). The AC's own circuit is designed at the AC's maximum input: {{out.ac_design_w|int}} W ÷ ({{out.volts|int}} V × {{out.pf|2}}) = {{out.ac_ib_a|1}} A; with the margin a compressor load gets, the next standard MCB is {{out.ac_breaker_a|int}} A type {{out.ac_curve|raw}} on a cable rated at least {{out.ac_cable_a|1}} A ({{out.ac_cable_mm2|1}} mm²).",
+    "text": "1,500 W running now + 1,450 W for the Split AC 1.5 ton inverter = 2,950 W. 2,950 W ÷ (230 V × 0.8 power factor) = 16 A, up from 8.2 A today. 2.95 kW ÷ 2 kW sanctioned = 148% of the sanctioned load. For a moment at compressor start or full speed the load is 1,500 W + 1,900 W = 3,400 W (18.5 A). The AC's own circuit is designed at the AC's maximum input: 1,900 W ÷ (230 V × 0.8) = 10.3 A; with the margin a compressor load gets, the next standard MCB is 16 A type C on a cable rated at least 16 A (2.5 mm²)."
+   },
+   "submit": "Calculate",
+   "data_checked": [
+    {
+     "label": "Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)",
+     "url": "https://webstore.iec.ch/publication/1878",
+     "checked": "2026-10-13"
+    },
+    {
+     "label": "Appliance running and starting watts (Wattlyst appliance data, sources listed on the appliance list page)",
+     "url": "https://wattlyst.com/appliances/",
+     "checked": "2026-10-13"
+    }
+   ]
+  },
+  "examples": [
+   {
+    "title": "1,500 W home adds a Split AC 1.5 ton inverter on a 2 kW connection",
+    "text": "1,500 W + 1,450 W = 2,950 W, or 16 A. That is 148% of the 2 kW sanctioned load, so this connection is overloaded: apply for a higher sanctioned load first. The AC's own circuit needs a 16 A type C MCB on 2.5 mm² cable."
+   },
+   {
+    "title": "The same AC on a 5 kW connection",
+    "text": "1,500 W + 1,450 W = 2,950 W, or 16 A, which is 59% of 5 kW with 2.05 kW of headroom. This connection can take the AC and still has room for another one."
+   },
+   {
+    "title": "Small home adds a Split AC 1 ton inverter",
+    "text": "800 W of fans, lights and a fridge + 900 W = 1,700 W, or 9.2 A. At 85% of a 2 kW sanctioned load this fits, with 0.3 kW to spare. The AC circuit needs a 10 A type C MCB on a cable rated at least 10 A (2.5 mm²)."
+   },
+   {
+    "title": "Split AC 1.5 ton non-inverter on a 3 kW connection",
+    "text": "2,000 W + 1,800 W = 3,800 W, or 20.7 A, which is 127% of 3 kW: over the limit. Worse, the compressor start of 5,400 W pushes the peak to 7,400 W, or 40.2 A for a moment. An inverter AC or a higher sanctioned load is the fix."
+   },
+   {
+    "title": "Second Split AC 1.5 ton inverter in a home that already runs one",
+    "text": "2,950 W including the first AC + 1,450 W = 4,400 W, or 23.9 A. That is 88% of a 5 kW sanctioned load, so two ACs fit on 5 kW with 0.6 kW left."
+   }
+  ],
+  "table": {
+   "caption": "Adding a Split AC 1.5 ton inverter to different loads running now, checked against a 2 kW sanctioned load at 230 V",
+   "head": [
+    "Load running now",
+    "New total",
+    "Current",
+    "Sanctioned load needed (at least)",
+    "Of the sanctioned load"
+   ],
+   "rows": [
+    [
+     "500 W",
+     "1,950 W",
+     "10.6 A",
+     "1.95 kW",
+     "98%"
+    ],
+    [
+     "1,000 W",
+     "2,450 W",
+     "13.3 A",
+     "2.45 kW",
+     "123%"
+    ],
+    [
+     "1,500 W",
+     "2,950 W",
+     "16 A",
+     "2.95 kW",
+     "148%"
+    ],
+    [
+     "2,000 W",
+     "3,450 W",
+     "18.8 A",
+     "3.45 kW",
+     "173%"
+    ],
+    [
+     "3,000 W",
+     "4,450 W",
+     "24.2 A",
+     "4.45 kW",
+     "223%"
+    ]
+   ]
+  },
+  "answer": "Adding a Split AC 1.5 ton inverter (1,450 W running) to a home drawing 1,500 W gives a new total of 2,950 W, or 16 A at 230 V. That is 148% of a 2 kW sanctioned load, so this meter needs a higher sanctioned load first. New total = current watts + the AC's running watts.",
+  "formula": {
+   "text": "P_new = P_now + P_ac; I = P_new ÷ (V × PF); load % = P_new ÷ (sanctioned kW × 1000) × 100",
+   "lines": [
+    "P_now = watts running at the same time today",
+    "P_ac = the AC's running watts (its starting watts give the momentary peak)",
+    "I = current in amps, V = supply voltage, PF = power factor",
+    "AC circuit: I_ac = P_ac,max ÷ (V × PF) with P_ac,max = the AC's maximum input; MCB = next standard size ≥ I_ac × margin (compressor load); cable rated ≥ the MCB and ≥ I_ac × margin"
+   ]
+  },
+  "safety": "An AC must be on its own circuit with a correctly sized cable, MCB and earth; have a licensed electrician install it and check the main breaker and service cable before you add the load."
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -39,7 +425,13 @@
      {
       "@type": "ListItem",
       "position": 2,
-      "name": "Home Load Calculator Before Adding Ac",
+      "name": "Home Load Calculators",
+      "item": "https://wattlyst.com/load/"
+     },
+     {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Home Load Calculator Before Adding an AC",
       "item": "https://wattlyst.com/load/load-before-adding-ac/"
      }
     ]
@@ -56,12 +448,14 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/load/load-before-adding-ac/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-13",
+    "lastReviewed": "2026-10-13"
    },
    {
     "@type": "WebApplication",
     "@id": "https://wattlyst.com/load/load-before-adding-ac/#app",
-    "name": "Home Load Calculator Before Adding Ac",
+    "name": "Home Load Calculator Before Adding an AC",
     "url": "https://wattlyst.com/load/load-before-adding-ac/",
     "description": "Check your current load, meter and wiring before adding a 1 or 1.5 ton AC. Shows new total amps, sanctioned load and wire size needed.",
     "applicationCategory": "UtilitiesApplication",
@@ -88,6 +482,68 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/load/load-before-adding-ac/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "Can my meter handle a 1.5 ton AC?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "If the load running now plus the AC's 1,450 W stays within the sanctioned kW on your bill and the main breaker rating, yes. With 1,500 W already running you need more than a 2 kW sanctioned load; with 5 kW it fits at 59%."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What sanctioned load is needed for two ACs?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Two 1.5 ton inverter ACs with normal household load come to about 4,400 W, which is 88% of a 5 kW sanctioned load, so 5 kW is the practical minimum, and that connection is billed on the time-of-use tariff."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Does an inverter AC need less sanctioned load than a non-inverter?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "A little: a 1.5 ton inverter runs at about 1,450 W against 1,800 W for a non-inverter, and it has no start surge, while the non-inverter draws 5,400 W for a moment at every start. The inverter is also much cheaper to run."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Can I run an AC on a 1 kW connection?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "A Split AC 1.5 ton inverter alone is 1,450 W running, already above 1 kW, so no. A Split AC 1 ton inverter at 900 W leaves almost nothing for fans and lights. Apply for a higher sanctioned load first."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What size breaker and wire does the AC circuit need?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "A Split AC 1.5 ton inverter is designed at 1,900 W, its maximum input, which is 10.3 A; with the motor margin that needs a 16 A type C MCB on 2.5 mm² (7/29) copper cable. The AC wire size page uses the same rule and also checks your cable length."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Will adding an AC change my tariff slab?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "The slab depends on units used, not on load. An AC adds units every month it runs and can push the whole bill into a higher slab; the AC units calculator linked below shows how many units and rupees to expect."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Does the main breaker need to change for the new AC?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Only if the new current is close to its rating: the default home draws 16 A with the AC on and 18.5 A at full speed. An electrician should confirm the main breaker and service cable rating before the AC is connected."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

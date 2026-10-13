@@ -1,5 +1,5 @@
 // C. Inverter & generator sizing (specs/formulas.md section C), sanctioned load (G, N4).
-import { calculator, CalcError, num, pos, frac, nonneg, ceilSafe, dflt } from './core.js';
+import { calculator, CalcError, num, pos, frac, nonneg, ceilSafe, dflt, appliance, has } from './core.js';
 
 /**
  * loads: [{ name, run, start, qty }] for appliances ON AT THE SAME TIME. start defaults to run.
@@ -21,22 +21,95 @@ export function sumLoads(loads) {
   return { running_w: running, surge_w: running + maxStep };
 }
 
+/**
+ * Appliance rows for the load, inverter, generator and solar tools: [{ id, watts, qty, hours }] (or plain { run, start, qty } rows). `id` picks running/starting watts and the
+ * typical hours from data/appliances.json ("custom" or blank = the watts entered); `watts` overrides the
+ * running watts (starting watts scale with it); qty defaults to 1; hours per day defaults to the appliance's typical hours.
+ */
+export function loadRows(loads, d) {
+  if (!Array.isArray(loads) || loads.length === 0) throw new CalcError('loads_required', 'loads');
+  try {
+    return loads.map((row, idx) => rowOf(row, idx, d));
+  } catch (e) {
+    if (e instanceof CalcError) throw new CalcError(e.code, 'loads'); // the UI points at the list, not a field name
+    throw e;
+  }
+}
+
+function rowOf(row, idx, d) {
+  {
+    const id = typeof row?.id === 'string' ? row.id.trim() : '';
+    const item = id && id !== 'custom' ? appliance(d, id, 'loads') : null;
+    const qty = num(row, 'qty', { def: 1, min: 0, code: `load_${idx}_qty_invalid` });
+    let run;
+    if (has(row, 'run') && !has(row, 'watts')) run = num(row, 'run', { min: 0, code: `load_${idx}_run_invalid` });
+    else if (has(row, 'watts') || !item) run = num(row, 'watts', { min: 0, code: item ? `load_${idx}_watts_invalid` : `load_${idx}_watts_required` });
+    else run = item.running_w;
+    let start = item ? (item.starting_w * run) / item.running_w : run;
+    if (has(row, 'start')) start = num(row, 'start', { min: 0, code: `load_${idx}_start_invalid` });
+    if (start < run) throw new CalcError(`load_${idx}_start_below_run`, 'loads');
+    // Energy uses the average draw where one is known (inverter ACs cycle well below their rated input, formulas.md E).
+    const energy_w = item?.avg_w ? (item.avg_w * run) / item.running_w : run;
+    const hours = num(row, 'hours', { def: item?.typical_hours_per_day ?? 0, min: 0, max: 24, code: `load_${idx}_hours_invalid` });
+    return { id: item ? id : 'custom', name: item?.name ?? 'Custom load', run, start, energy_w, qty, hours };
+  }
+}
+
 /** Inverter: continuous ≥ P_run × margin; surge ≥ P_surge; kVA = P_run × margin / PF / 1000. */
 export const inverter_size = calculator((i, d) => {
-  const { running_w, surge_w } = sumLoads(i.loads);
+  const rows = loadRows(i.loads, d);
+  const { running_w, surge_w } = sumLoads(rows);
   const margin = num(i, 'margin', { def: dflt(d, 'margin'), min: 1 });
   const pf = frac(i, 'pf', dflt(d, 'pf_mixed'));
   const continuous_w = running_w * margin;
-  return { running_w, surge_w, margin, pf, continuous_w, kva: continuous_w / pf / 1000 };
+  return { appliances: rows.length, items: rows.reduce((t, r) => t + r.qty, 0), running_w, surge_w, margin, pf, continuous_w, kva: continuous_w / pf / 1000 };
 });
 
-/** Generator: kVA = max(P_run × margin, P_surge) / PF / 1000. PF 0.8 nameplate convention. */
-export const generator_size = calculator((i, d) => {
-  const { running_w, surge_w } = sumLoads(i.loads);
+/** Generator: kVA = max(P_run × margin, P_surge) / PF / 1000. PF 0.8 nameplate convention; next standard size from data/defaults.json. */
+function generatorFor(loads, i, d) {
+  const { running_w, surge_w } = sumLoads(loads);
   const margin = num(i, 'margin', { def: dflt(d, 'margin'), min: 1 });
   const pf = frac(i, 'pf', dflt(d, 'pf_generator'));
   const sized_w = Math.max(running_w * margin, surge_w);
-  return { running_w, peak_w: surge_w, margin, pf, sized_w, recommended_kva: sized_w / pf / 1000, recommended_kw: sized_w / 1000 };
+  const recommended_kva = sized_w / pf / 1000;
+  const sizes = dflt(d, 'standard_generator_kva');
+  const standard_kva = sizes.find((s) => s >= recommended_kva - 1e-9);
+  const out = { running_w, peak_w: surge_w, margin, pf, sized_w, recommended_kva, recommended_kw: sized_w / 1000, above_standard_sizes: standard_kva === undefined };
+  if (standard_kva !== undefined) out.standard_kva = standard_kva;
+  return out;
+}
+
+export const generator_size = calculator((i, d) => generatorFor(loadRows(i.loads, d), i, d));
+
+/** Other loads running at the same time as the main appliance: run watts and (optional) starting watts. */
+function otherLoads(i) {
+  const other_w = nonneg(i, 'other_w', 0);
+  const other_start_w = nonneg(i, 'other_start_w', other_w);
+  if (other_start_w < other_w) throw new CalcError('other_start_below_run', 'other_start_w');
+  return other_w > 0 ? [{ name: 'other', run: other_w, start: other_start_w }] : [];
+}
+
+/** C6: generator for an air conditioner (data/appliances.json running/starting watts) plus other loads. */
+export const generator_for_ac = calculator((i, d) => {
+  const ac = appliance(d, i.ac, 'ac');
+  const loads = [{ name: ac.name, run: ac.running_w, start: ac.starting_w }, ...otherLoads(i)];
+  const other_w = loads[1]?.run ?? 0;
+  return { ac: i.ac.trim(), ac_name: ac.name, ac_run_w: ac.running_w, ac_start_w: ac.starting_w, other_w, ...generatorFor(loads, i, d) };
+});
+
+/**
+ * C5: generator for a pump motor. Running input W = HP × 745.7 / motor efficiency (formulas.md A);
+ * starting W = running × start factor (defaults start_factors.motor, engineer to confirm).
+ */
+export const generator_for_pump = calculator((i, d) => {
+  const hp = pos(i, 'hp');
+  const motor_eff = frac(i, 'motor_eff', dflt(d, 'motor_eff'));
+  const start_factor = num(i, 'start_factor', { def: dflt(d, 'start_factors').motor, min: 1 });
+  const shaft_w = hp * dflt(d, 'w_per_hp');
+  const pump_run_w = shaft_w / motor_eff;
+  const pump_start_w = pump_run_w * start_factor;
+  const loads = [{ name: 'pump', run: pump_run_w, start: pump_start_w }, ...otherLoads(i)];
+  return { hp, motor_eff, start_factor, shaft_w, pump_run_w, pump_start_w, other_w: loads[1]?.run ?? 0, ...generatorFor(loads, i, d) };
 });
 
 /**

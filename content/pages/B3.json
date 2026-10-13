@@ -1,0 +1,299 @@
+{
+ "id": "B3",
+ "status": "publish",
+ "template": "tool",
+ "h1": "200Ah Battery Backup Time Calculator",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "calc": "battery_runtime",
+ "fields": [
+  {
+   "name": "ah",
+   "label": "Battery capacity",
+   "unit": "Ah",
+   "default": 200,
+   "hint": "150 Ah and 200 Ah are the common Pakistani tubular sizes. Enter the Ah of one battery, not the total of a bank."
+  },
+  {
+   "name": "volts",
+   "label": "Battery bank voltage",
+   "unit": "V",
+   "type": "select",
+   "default": 12,
+   "options": [
+    [
+     12,
+     "12 V (one battery)"
+    ],
+    [
+     24,
+     "24 V (two in series)"
+    ],
+    [
+     12.8,
+     "12.8 V lithium (LiFePO4)"
+    ],
+    [
+     25.6,
+     "25.6 V lithium (LiFePO4)"
+    ]
+   ]
+  },
+  {
+   "name": "chemistry",
+   "label": "Battery type",
+   "type": "select",
+   "default": "tubular",
+   "options": [
+    [
+     "tubular",
+     "Tubular / lead-acid"
+    ],
+    [
+     "agm",
+     "AGM / dry"
+    ],
+    [
+     "gel",
+     "Gel"
+    ],
+    [
+     "lifepo4",
+     "Lithium (LiFePO4)"
+    ]
+   ]
+  },
+  {
+   "name": "load_w",
+   "label": "Load",
+   "unit": "W",
+   "default": 300,
+   "hint": "Total watts on backup. A ceiling fan is under a hundred watts; a fridge, TV and several fans together are a few hundred."
+  },
+  {
+   "name": "inverter_eff",
+   "label": "Inverter efficiency",
+   "unit": "0 to 1",
+   "default": "@inverter_eff_ups",
+   "advanced": true,
+   "hint": "As a decimal. A basic home UPS is about 0.85; a good hybrid inverter about 0.9."
+  },
+  {
+   "name": "dod",
+   "label": "Usable depth of discharge",
+   "unit": "0 to 1",
+   "placeholder": "Auto by battery type",
+   "advanced": true,
+   "hint": "As a decimal: 0.5 means half the battery. Leave blank to use the value for your battery type."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "hours",
+   "label": "Backup time",
+   "spec": "hm"
+  },
+  {
+   "key": "usable_wh",
+   "label": "Usable energy",
+   "spec": "int",
+   "unit": "Wh"
+  }
+ ],
+ "answer": "A {{in.ah|int}} Ah, {{in.volts|int}} V tubular battery gives about {{out.hours|hm}} of backup for a {{in.load_w|int}} W load (a fan, lights and a TV) through a home UPS, using the safe {{out.dod|pct}} of its capacity. Backup hours = Ah × volts × usable depth of discharge × inverter efficiency ÷ load watts; the chart below shows common loads.",
+ "how": "{{in.ah|int}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable × {{out.inverter_eff|pct}} inverter efficiency = {{out.usable_wh|int}} Wh usable. {{out.usable_wh|int}} Wh ÷ {{in.load_w|int}} W = {{out.hours|2}} hours, about {{out.hours|hm}}.",
+ "key_facts": [
+  "A {{in.ah|int}} Ah, {{in.volts|int}} V tubular battery stores about {{out.usable_wh|int}} Wh of usable energy for a UPS when used to the recommended {{d.dod_lead_acid|pct}} of its rating.",
+  "That {{out.usable_wh|int}} Wh runs one ceiling fan ({{ex.0.in.load_w|int}} W) for about {{ex.0.out.hours|hm}}, two fans with lights ({{ex.1.in.load_w|int}} W) for about {{ex.1.out.hours|hm}}, and a {{ex.2.in.load_w|int}} W load for only about {{ex.2.out.hours|hm}}.",
+  "A {{ex.3.in.ah|int}} Ah lithium (LiFePO4) battery at {{ex.3.in.volts|1}} V gives about {{ex.3.out.hours|hm}} at {{ex.3.in.load_w|int}} W, almost twice the tubular figure, because it can use about {{d.dod_lifepo4|pct}} of its capacity.",
+  "A {{ex.4.in.ah|int}} Ah tubular battery gives three quarters of the backup of a {{in.ah|int}} Ah battery at the same load: about {{ex.4.out.hours|hm}} at {{ex.4.in.load_w|int}} W."
+ ],
+ "formula": {
+  "text": "t = (Ah × V × DoD × η) ÷ P",
+  "lines": [
+   "t = backup time in hours",
+   "Ah = battery capacity in amp hours",
+   "V = battery bank voltage",
+   "DoD = usable depth of discharge",
+   "η = inverter efficiency",
+   "P = load in watts"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "How to read the {{in.ah|int}} Ah battery backup chart",
+   "p": [
+    "The chart below uses the loads most Pakistani homes put on a UPS. One ceiling fan is about {{ex.0.in.load_w|int}} W; two fans with LED lights about {{ex.1.in.load_w|int}} W; a fan, lights and a TV about {{in.load_w|int}} W; a fridge with fans a few hundred watts more; and {{ex.2.in.load_w|int}} W is the kind of load an iron, a microwave or a water motor adds. Each row is a {{in.volts|int}} V tubular battery through a UPS at about {{d.inverter_eff_ups|pct}} efficiency, using {{d.dod_lead_acid|pct}} of the battery.",
+    "Every doubling of the load halves the backup. To stretch a {{in.ah|int}} Ah battery through a long outage, keep the TV and fridge off the UPS and run only fans and lights; the backup climbs from about {{out.hours|hm}} to about {{ex.1.out.hours|hm}}."
+   ]
+  },
+  {
+   "h2": "{{ex.4.in.ah|int}} Ah battery backup time",
+   "p": [
+    "A {{ex.4.in.ah|int}} Ah tubular battery at {{ex.4.in.volts|int}} V holds about {{ex.4.out.usable_wh|int}} Wh of usable energy through a UPS. That is about {{ex.4.out.hours|hm}} at {{ex.4.in.load_w|int}} W (two fans and lights); at {{in.load_w|int}} W with a TV added it drops to about three quarters of the {{in.ah|int}} Ah figure of {{out.hours|hm}}. The {{ex.4.in.ah|int}} Ah rows in the chart give the exact hours for each load.",
+    "If a {{ex.4.in.ah|int}} Ah battery is not enough, a second battery in series on a {{d.battery_v_default|int}} V UPS doubles the energy, but you must change the bank voltage to {{d.battery_v_default|int}} V in the calculator rather than entering the Ah twice."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "ah": 200,
+    "volts": 12,
+    "load_w": 80
+   },
+   "title": "{{in.ah|int}} Ah battery backup time for one fan",
+   "text": "One ceiling fan at {{in.load_w|int}} W: {{in.ah|int}} Ah × {{in.volts|int}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}} = {{out.usable_wh|int}} Wh, ÷ {{in.load_w|int}} W = about {{out.hours|hm}}, a whole night."
+  },
+  {
+   "inputs": {
+    "ah": 200,
+    "volts": 12,
+    "load_w": 200
+   },
+   "title": "{{in.ah|int}} Ah battery for two fans and lights",
+   "text": "Two fans with a few LED bulbs are about {{in.load_w|int}} W. {{out.usable_wh|int}} Wh ÷ {{in.load_w|int}} W = about {{out.hours|hm}} on a {{in.volts|int}} V tubular battery."
+  },
+  {
+   "inputs": {
+    "ah": 200,
+    "volts": 12,
+    "load_w": 1000
+   },
+   "title": "{{in.ah|int}} Ah battery for a {{in.load_w|int}} W load",
+   "text": "{{out.usable_wh|int}} Wh ÷ {{in.load_w|int}} W = about {{out.hours|hm}}. The UPS draws about a hundred amps from the battery at this load, and a tubular battery drained this fast gives less than its label Ah, so the real figure is shorter."
+  },
+  {
+   "inputs": {
+    "ah": 200,
+    "volts": 12.8,
+    "chemistry": "lifepo4",
+    "load_w": 300
+   },
+   "title": "{{in.ah|int}} Ah lithium battery backup",
+   "text": "{{in.ah|int}} Ah × {{in.volts|1}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}} = {{out.usable_wh|int}} Wh usable. At {{in.load_w|int}} W that is about {{out.hours|hm}}, roughly double the tubular figure for the same load in the chart."
+  },
+  {
+   "inputs": {
+    "ah": 150,
+    "volts": 12,
+    "load_w": 200
+   },
+   "title": "{{in.ah|int}} Ah battery for two fans and lights",
+   "text": "{{in.ah|int}} Ah × {{in.volts|int}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}} = {{out.usable_wh|int}} Wh, ÷ {{in.load_w|int}} W = about {{out.hours|hm}}."
+  }
+ ],
+ "table": {
+  "caption": "{{in.ah|int}} Ah and {{ex.4.in.ah|int}} Ah tubular battery backup chart ({{in.volts|int}} V, through a UPS)",
+  "rows": [
+   {
+    "ah": 200,
+    "load_w": 80
+   },
+   {
+    "ah": 200,
+    "load_w": 200
+   },
+   {
+    "ah": 200,
+    "load_w": 300
+   },
+   {
+    "ah": 200,
+    "load_w": 500
+   },
+   {
+    "ah": 200,
+    "load_w": 1000
+   },
+   {
+    "ah": 150,
+    "load_w": 80
+   },
+   {
+    "ah": 150,
+    "load_w": 200
+   },
+   {
+    "ah": 150,
+    "load_w": 500
+   }
+  ],
+  "columns": [
+   {
+    "label": "Battery",
+    "tpl": "{{in.ah|int}} Ah"
+   },
+   {
+    "label": "Load",
+    "tpl": "{{in.load_w|int}} W"
+   },
+   {
+    "label": "Usable energy",
+    "tpl": "{{out.usable_wh|int}} Wh"
+   },
+   {
+    "label": "Backup time",
+    "tpl": "{{out.hours|hm}}"
+   }
+  ]
+ },
+ "mistakes": [
+  "Counting the full {{in.ah|int}} Ah. A tubular battery should only be taken to about {{d.dod_lead_acid|pct}}; going deeper every day cuts its life to a year or two.",
+  "Entering the Ah of two batteries added together. Two batteries in series on a {{d.battery_v_default|int}} V UPS keep the same Ah and double the volts; set the bank voltage instead.",
+  "Forgetting the inverter loss. The UPS turns only about {{d.inverter_eff_ups|pct}} of the battery energy into AC power.",
+  "Expecting the chart figure at a {{ex.2.in.load_w|int}} W load. The label Ah is rated over about twenty hours; drained in an hour a tubular battery gives noticeably less."
+ ],
+ "safety": "Keep tubular batteries in a ventilated place away from sparks, use cables and fuses rated for the UPS current, and have a licensed electrician connect the UPS to house wiring.",
+ "faq": [
+  {
+   "q": "What is the {{in.ah|int}} Ah battery backup time for one fan?",
+   "a": "About {{ex.0.out.hours|hm}} for one ceiling fan of about {{ex.0.in.load_w|int}} W on a {{in.volts|int}} V tubular battery through a UPS. An inverter fan or a DC fan draws less and runs longer."
+  },
+  {
+   "q": "A {{in.ah|int}} Ah battery gives how many hours?",
+   "a": "About {{out.hours|hm}} at {{in.load_w|int}} W, about {{ex.1.out.hours|hm}} at {{ex.1.in.load_w|int}} W and about {{ex.0.out.hours|hm}} at {{ex.0.in.load_w|int}} W. The usable energy is fixed at about {{out.usable_wh|int}} Wh; the hours depend on the load."
+  },
+  {
+   "q": "How much backup does a {{in.ah|int}} Ah tubular battery give?",
+   "a": "The calculator uses {{d.dod_lead_acid|pct}} of the rating and a UPS at about {{d.inverter_eff_ups|pct}} efficiency, giving about {{out.usable_wh|int}} Wh and {{out.hours|hm}} at {{in.load_w|int}} W. Many UPS units run the battery lower than that, which gives more hours but a shorter battery life."
+  },
+  {
+   "q": "What is the backup of a {{in.ah|int}} Ah lithium battery?",
+   "a": "About {{ex.3.out.hours|hm}} at {{ex.3.in.load_w|int}} W for a {{ex.3.in.volts|1}} V LiFePO4 battery, nearly double the tubular figure, because lithium can use about {{d.dod_lifepo4|pct}} of its capacity. Switch the battery type to lithium above to see other loads."
+  },
+  {
+   "q": "Can a {{in.ah|int}} Ah battery run a {{ex.2.in.load_w|int}} W load?",
+   "a": "Only for about {{ex.2.out.hours|hm}}, and less in practice because of the fast-discharge drop. The UPS must also be rated for {{ex.2.in.load_w|int}} W or more; a typical home UPS of about a kVA cannot deliver it."
+  },
+  {
+   "q": "Is there an inverter battery {{in.ah|int}} Ah backup chart?",
+   "a": "Yes, the chart above lists one fan, two fans with lights, fan with lights and TV, fridge with fans and a {{ex.2.in.load_w|int}} W load for {{in.ah|int}} Ah and {{ex.4.in.ah|int}} Ah tubular batteries. Change the inputs for any other combination."
+  },
+  {
+   "q": "How long does a {{in.ah|int}} Ah battery run two fans and lights?",
+   "a": "About {{ex.1.out.hours|hm}} for a {{ex.1.in.load_w|int}} W load on a {{in.volts|int}} V tubular battery, which covers an evening of loadshedding with margin to spare."
+  },
+  {
+   "q": "What is the backup time of a {{ex.4.in.ah|int}} Ah battery?",
+   "a": "About {{ex.4.out.hours|hm}} for two fans and lights ({{ex.4.in.load_w|int}} W), from about {{ex.4.out.usable_wh|int}} Wh usable. For a fan, lights and TV expect three quarters of the {{out.hours|hm}} that a {{in.ah|int}} Ah battery gives."
+  }
+ ],
+ "related": [
+  "B1",
+  "B2",
+  "B5",
+  "D4"
+ ],
+ "next": "D4",
+ "literal_numbers": [
+  "LiFePO4"
+ ],
+ "sources": [
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

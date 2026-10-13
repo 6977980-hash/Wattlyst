@@ -1,0 +1,288 @@
+{
+ "id": "F2",
+ "status": "publish",
+ "template": "tool",
+ "h1": "LESCO Bill Calculator",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "calc": "bill_total",
+ "fields": [
+  {
+   "name": "units",
+   "label": "Units on the LESCO bill",
+   "unit": "units",
+   "default": 300,
+   "hint": "Units (kWh) for the month, from the bill or from this and last month's meter readings."
+  },
+  {
+   "name": "sanctioned_kw",
+   "label": "Sanctioned load",
+   "unit": "kW",
+   "default": "@default_sanctioned_kw",
+   "hint": "The kW printed on the bill; most Lahore homes are one to five. It sets the fixed charge."
+  },
+  {
+   "name": "protected",
+   "label": "Protected consumer",
+   "type": "checkbox",
+   "default": false,
+   "hint": "Tick if every one of your last six LESCO bills was within the protected unit limit; the bill prints the category."
+  },
+  {
+   "name": "lifeline",
+   "label": "Lifeline consumer (up to one hundred units)",
+   "type": "checkbox",
+   "default": false,
+   "advanced": true,
+   "hint": "Only for very small consumers whose bill shows the lifeline category."
+  },
+  {
+   "name": "period",
+   "label": "Billing quarter for QTA",
+   "type": "select",
+   "options_from": "qta_periods",
+   "default": "2026-09..2026-11",
+   "advanced": true,
+   "hint": "The quarterly tariff adjustment depends on the quarter the bill falls in."
+  },
+  {
+   "name": "fc_surcharge_per_unit",
+   "label": "FC surcharge",
+   "unit": "Rs per unit",
+   "default": "@data.tariff.addons_secondary.fc_surcharge_per_unit.value",
+   "advanced": true,
+   "hint": "Financing cost surcharge per unit, from the bill. Secondary-source default."
+  },
+  {
+   "name": "fpa_per_unit",
+   "label": "FPA",
+   "unit": "Rs per unit",
+   "placeholder": "From your bill (FPA / FCA)",
+   "advanced": true,
+   "hint": "Monthly fuel price adjustment from the bill, positive or negative. Leave blank if unknown."
+  },
+  {
+   "name": "gst_pct",
+   "label": "GST",
+   "unit": "%",
+   "default": "@data.tariff.addons_secondary.gst_pct.value",
+   "advanced": true,
+   "hint": "Sales tax applied to the bill subtotal."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "total_rs",
+   "label": "Estimated bill",
+   "spec": "rs"
+  },
+  {
+   "key": "energy_rs",
+   "label": "Energy charge",
+   "spec": "rs"
+  },
+  {
+   "key": "fixed_rs",
+   "label": "Fixed charge",
+   "spec": "rs"
+  },
+  {
+   "key": "fc_rs",
+   "label": "FC surcharge",
+   "spec": "rs"
+  },
+  {
+   "key": "qta_rs",
+   "label": "QTA",
+   "spec": "rs"
+  },
+  {
+   "key": "gst_rs",
+   "label": "GST",
+   "spec": "rs"
+  }
+ ],
+ "answer": "A LESCO home using {{in.units|int}} units a month as an unprotected consumer on a {{in.sanctioned_kw|int}} kW connection pays about {{out.total_rs|rs}}, of which {{out.energy_rs|rs}} is the energy charge at Rs {{out.rate|2}} per unit and the rest is fixed charge, FC surcharge, QTA and GST. LESCO bill = units × slab rate + fixed charge + surcharges + GST.",
+ "how": "{{out.units|int}} units × Rs {{out.rate|2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge {{out.sanctioned_kw|int}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct|int}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
+ "key_facts": [
+  "LESCO charges the NEPRA uniform A-1 domestic tariff for 2026, so a LESCO bill for a given number of units is the same as any other DISCO's; only the monthly FPA line differs.",
+  "The LESCO per unit rate for an unprotected home using {{out.units|int}} units is Rs {{out.rate|2}} on every unit, which gives {{out.energy_rs|rs}} before the fixed charge, surcharges and GST.",
+  "LESCO protected units: a home stays protected only while every one of its last {{d.protected_months|int}} bills is at or under {{d.protected_max_units|int}} units; protected bills are worked out slab-wise at much lower rates.",
+  "GST at {{out.gst_pct|int}}% is charged on energy, fixed charge and surcharges together, adding {{out.gst_rs|rs}} to a {{out.units|int}} unit LESCO bill; the surcharge and GST values are secondary-source figures that change monthly."
+ ],
+ "formula": {
+  "text": "Bill = units × slab rate + fixed Rs/kW × sanctioned kW + (FC + QTA + FPA) × units, then + GST",
+  "lines": [
+   "slab rate = rate of the band the month's units reach (unprotected) or slab-wise (protected)",
+   "fixed = Rs per kW of the band reached × sanctioned kW",
+   "FC, QTA, FPA = per-unit surcharges printed on the bill",
+   "GST = percentage of the subtotal"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "What is the LESCO per unit rate in 2026?",
+   "p": [
+    "LESCO, the Lahore Electric Supply Company, does not set its own rates. It bills the uniform A-1 domestic tariff that NEPRA determined and the Government notified for 2026, the same slabs as every other DISCO. For an unprotected home the rate of the slab the month's units reach applies to every unit: {{out.units|int}} units are all billed at Rs {{out.rate|2}}, the top slab is the most expensive, and the first hundred units are the cheapest.",
+    "The worked examples below print the rate for the protected, the three-hundred-unit, the five-hundred-unit and the lifeline cases, and the table lists the rate for each slab. Add the FPA from your bill for the month's exact figure."
+   ]
+  },
+  {
+   "h2": "What are LESCO protected units?",
+   "p": [
+    "LESCO marks a domestic consumer as protected when all of the last {{d.protected_months|int}} bills were at or under {{d.protected_max_units|int}} units and the connection is below {{d.tou_threshold_kw|int}} kW. Protected bills use two low slabs and are billed slab-wise, with the first hundred units at the first rate and the rest at the second.",
+    "A single month above {{d.protected_max_units|int}} units, including one stretched by a long reading cycle, moves the home to unprotected rates for every unit. Tick the protected box only when the bill itself says protected."
+   ]
+  },
+  {
+   "h2": "LESCO bill check: estimate here, confirm on the LESCO site",
+   "p": [
+    "This page is a LESCO bill estimate from your units. The official bill, with the reference number, due date, arrears and the exact FPA, is on the LESCO website; use it to pay and to see the printed lines. Use this calculator to understand what each line should be, to plan next month's bill, or to check a bill that looks too high against the slab it should fall in.",
+    "For the full version of this tool with every DISCO and a longer explanation of the slabs, see the electricity bill calculator for Pakistan linked below."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "units": 200,
+    "protected": true
+   },
+   "title": "{{in.units|int}} units, LESCO protected consumer",
+   "text": "Energy charge {{out.energy_rs|rs}} slab-wise at protected rates, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated LESCO bill {{out.total_rs|rs}}."
+  },
+  {
+   "inputs": {
+    "units": 300
+   },
+   "title": "{{in.units|int}} units, unprotected",
+   "text": "{{out.units|int}} × Rs {{out.rate|2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated LESCO bill {{out.total_rs|rs}}."
+  },
+  {
+   "inputs": {
+    "units": 500,
+    "sanctioned_kw": 2
+   },
+   "title": "{{in.units|int}} units with an AC, {{in.sanctioned_kw|int}} kW connection",
+   "text": "{{out.units|int}} × Rs {{out.rate|2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated LESCO bill {{out.total_rs|rs}}."
+  },
+  {
+   "inputs": {
+    "units": 90,
+    "lifeline": true,
+    "fc_surcharge_per_unit": "",
+    "gst_pct": ""
+   },
+   "title": "{{in.units|int}} units, lifeline consumer",
+   "text": "{{out.units|int}} units at the lifeline rate of Rs {{out.rate|2}} = {{out.energy_rs|rs}}, no fixed charge and no QTA. With the FC surcharge and GST fields blank the estimate assumes neither applies to lifeline bills (still being verified): {{out.total_rs|rs}}."
+  }
+ ],
+ "table": {
+  "caption": "Estimated LESCO bill by units on a {{in.sanctioned_kw|int}} kW connection with the default surcharges and GST; unprotected unless marked",
+  "rows": [
+   {
+    "units": 100
+   },
+   {
+    "units": 150,
+    "protected": true
+   },
+   {
+    "units": 200,
+    "protected": true
+   },
+   {
+    "units": 200
+   },
+   {
+    "units": 300
+   },
+   {
+    "units": 400
+   },
+   {
+    "units": 600
+   }
+  ],
+  "columns": [
+   {
+    "label": "Units",
+    "tpl": "{{out.units|int}} ({{out.category}})"
+   },
+   {
+    "label": "Per unit rate",
+    "tpl": "Rs {{out.rate|2}}"
+   },
+   {
+    "label": "Energy",
+    "tpl": "{{out.energy_rs|rs}}"
+   },
+   {
+    "label": "Fixed",
+    "tpl": "{{out.fixed_rs|rs}}"
+   },
+   {
+    "label": "Estimated bill",
+    "tpl": "{{out.total_rs|rs}}"
+   }
+  ]
+ },
+ "mistakes": [
+  "Looking for a separate LESCO tariff. LESCO bills the uniform NEPRA domestic tariff; the slab rates are the same across Pakistan.",
+  "Assuming last month's protected status still holds. One bill over {{d.protected_max_units|int}} units moves you to unprotected rates for every unit.",
+  "Leaving the FPA blank when the bill shows one. The fuel adjustment line can swing the total either way; copy it into the advanced field.",
+  "Dividing the total bill by units to get a per unit rate. The fixed charge, surcharges and GST are mixed in; the slab rate is the energy charge divided by units."
+ ],
+ "faq": [
+  {
+   "q": "How do I get a LESCO bill estimate from my units?",
+   "a": "Enter the units and the sanctioned load from your bill, tick protected only if the bill says so, and the estimate shows energy, fixed charge, FC surcharge, QTA and GST. For {{out.units|int}} units the estimate is {{out.total_rs|rs}}."
+  },
+  {
+   "q": "What is the LESCO per unit price?",
+   "a": "It is the NEPRA domestic slab rate for the slab your month reaches. An unprotected home using {{out.units|int}} units pays Rs {{out.rate|2}} per unit; the table above gives the rate for each slab, and protected homes pay far less."
+  },
+  {
+   "q": "Is the LESCO unit price the same as other DISCOs?",
+   "a": "Yes. The 2026 tariff is uniform for all ex-WAPDA DISCOs and K-Electric. The only line that differs from one DISCO to another is the monthly FPA."
+  },
+  {
+   "q": "What is the LESCO tariff for 2026?",
+   "a": "The uniform A-1 domestic tariff notified as SRO 279(I)/2026: lifeline slabs up to one hundred units, protected slabs up to {{d.protected_max_units|int}} units and unprotected slabs of a hundred units each up to seven hundred, then an open-ended top slab; connections of {{d.tou_threshold_kw|int}} kW and above are billed on ToU rates."
+  },
+  {
+   "q": "How do I check my LESCO bill online?",
+   "a": "The official LESCO bill check is on the LESCO website, where the reference number on your bill brings up the current bill and payment status. This calculator estimates the bill from units; it does not fetch your bill."
+  },
+  {
+   "q": "How many units keep a LESCO consumer protected?",
+   "a": "At or under {{d.protected_max_units|int}} units in every one of the last {{d.protected_months|int}} months, on a connection below {{d.tou_threshold_kw|int}} kW. Cross the limit once and the next bills are unprotected until six months under the limit have passed again."
+  }
+ ],
+ "related": [
+  "F1",
+  "F12",
+  "E5"
+ ],
+ "next": "F1",
+ "literal_numbers": [
+  "SRO 279(I)/2026",
+  "2026",
+  "A-1"
+ ],
+ "sources": [
+  {
+   "label": "NEPRA tariff decision and SRO for A-1 domestic consumers (tariff PDF)",
+   "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf"
+  },
+  {
+   "label": "LESCO official website (bill check)",
+   "url": "https://www.lesco.gov.pk/"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

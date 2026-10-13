@@ -117,9 +117,30 @@ final class Wattlyst_Pages {
 				$this->ensure( $row );
 			}
 		}
+		foreach ( $this->plugin->manifest()['pages'] as $row ) {
+			if ( ! empty( $row['live'] ) && 'home' === $row['type'] ) {
+				$this->ensure_home( $row );
+			}
+		}
 		$privacy = get_page_by_path( 'privacy-policy', OBJECT, 'page' );
 		if ( $privacy instanceof WP_Post && 'privacy-policy' === get_post_meta( $privacy->ID, self::META_ID, true ) ) {
 			update_option( 'wp_page_for_privacy_policy', $privacy->ID );
+		}
+	}
+
+	/**
+	 * The home page: a page at /home/ shown as the static front page, but only while the site still shows
+	 * the default "latest posts" (or already shows our page). A front page the owner chose is left alone.
+	 */
+	private function ensure_home( array $row ): void {
+		$id = $this->ensure( array_merge( $row, array( 'url' => '/home/' ) ) );
+		if ( ! $id ) {
+			return;
+		}
+		$front = (int) get_option( 'page_on_front' );
+		if ( 'page' !== get_option( 'show_on_front' ) || $front === $id || ! $front ) {
+			update_option( 'show_on_front', 'page' );
+			update_option( 'page_on_front', $id );
 		}
 	}
 

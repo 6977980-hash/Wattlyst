@@ -1,0 +1,437 @@
+{
+ "id": "E1",
+ "status": "publish",
+ "template": "tool",
+ "h1": "Home Electrical Load Calculator",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "calc": "home_load",
+ "fields": [
+  {
+   "name": "loads",
+   "label": "Appliances that run at the same time",
+   "type": "loads",
+   "catalog": "all",
+   "default": [
+    {
+     "id": "ceiling-fan-ac",
+     "qty": 4
+    },
+    {
+     "id": "led-bulb",
+     "qty": 10,
+     "hours": 6
+    },
+    {
+     "id": "refrigerator-inverter",
+     "qty": 1
+    },
+    {
+     "id": "led-tv-43",
+     "qty": 1,
+     "hours": 5
+    },
+    {
+     "id": "ac-split-1-5ton-inverter",
+     "qty": 1,
+     "hours": 8
+    },
+    {
+     "id": "water-motor-1hp",
+     "qty": 1,
+     "hours": 1
+    }
+   ],
+   "hint": "Pick each appliance, check the watts against its label, and set how many hours a day it runs. Add every load that can be on at once."
+  },
+  {
+   "name": "volts",
+   "label": "Supply voltage",
+   "unit": "V",
+   "type": "select",
+   "default": "@v_1ph",
+   "options": [
+    [
+     "@v_1ph",
+     "230 V (Pakistan, UK, EU)"
+    ],
+    [
+     "@v_1ph_us",
+     "120 V (US, Canada)"
+    ]
+   ]
+  },
+  {
+   "name": "sanctioned_kw",
+   "label": "Sanctioned load",
+   "unit": "kW",
+   "placeholder": "Optional, from your bill",
+   "hint": "The kW printed on your electricity bill. Leave blank if you do not know it."
+  },
+  {
+   "name": "tariff",
+   "label": "Electricity rate",
+   "unit": "Rs per unit",
+   "default": "@data.tariff.unprotected.3.rate",
+   "advanced": true,
+   "hint": "Energy rate of your slab. The default is the Pakistan unprotected rate for 301 to 400 units a month."
+  },
+  {
+   "name": "pf",
+   "label": "Power factor",
+   "unit": "0 to 1",
+   "default": "@pf_mixed",
+   "advanced": true,
+   "hint": "Mixed home loads with fans and motors are about 0.8; pure heaters are 1.0."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "running_w",
+   "label": "Total running load",
+   "spec": "int",
+   "unit": "W"
+  },
+  {
+   "key": "peak_w",
+   "label": "Peak with the largest motor starting",
+   "spec": "int",
+   "unit": "W"
+  },
+  {
+   "key": "amps",
+   "label": "Current at full load",
+   "spec": "1",
+   "unit": "A"
+  },
+  {
+   "key": "daily_kwh",
+   "label": "Energy a day",
+   "spec": "1",
+   "unit": "units"
+  },
+  {
+   "key": "monthly_units",
+   "label": "Units a month",
+   "spec": "int"
+  },
+  {
+   "key": "monthly_rs",
+   "label": "Estimated energy cost a month",
+   "spec": "rs"
+  }
+ ],
+ "answer": "A typical home with {{out.items|int}} appliances running together (fans, lights, a fridge, a TV, a 1.5 ton inverter AC and a water pump) draws about {{out.running_w|int}} W, or {{out.amps|1}} A at {{out.volts|int}} V, and uses about {{out.monthly_units|int}} units a month. Add your own appliances below to get your total watts, peak load, amps and monthly units.",
+ "how": "Running load = the watts of every appliance × its quantity, added up = {{out.running_w|int}} W. Peak load adds the starting surge of the largest motor = {{out.peak_w|int}} W. Current = {{out.running_w|int}} W ÷ ({{out.volts|int}} V × {{out.pf|2}} power factor) = {{out.amps|1}} A. Energy = each appliance's watts × hours a day (an inverter AC counts at its average draw, below its rated watts), added up = {{out.daily_kwh|1}} units a day, × {{out.days|int}} days = {{out.monthly_units|int}} units a month; × Rs {{out.tariff|2}} per unit = {{out.monthly_rs|rs}} before fixed charges and taxes.",
+ "key_facts": [
+  "Home electrical load in watts = the sum of the running watts of every appliance that is on at the same time; divide by volts × power factor to get amps.",
+  "Peak load adds the starting surge of the largest motor or compressor only once, because two motors rarely start in the same instant.",
+  "Monthly units (kWh) = watts × hours a day ÷ 1,000 × {{d.days_per_month|int}} days, added over every appliance; this is the number your electricity bill is based on.",
+  "The default example home above ({{out.items|int}} appliances of {{out.appliances|int}} kinds) draws {{out.running_w|int}} W running, {{out.peak_w|int}} W at peak and uses about {{out.monthly_units|int}} units a month."
+ ],
+ "formula": {
+  "text": "P = Σ (W × qty); I = P ÷ (V × PF); units/day = Σ (W × qty × h) ÷ 1000",
+  "lines": [
+   "P = total running load in watts",
+   "W = running watts of one appliance, qty = how many",
+   "I = current in amps, V = supply voltage, PF = power factor",
+   "h = hours a day the appliance runs",
+   "Peak = P + the largest (starting watts − running watts) of any motor"
+  ]
+ },
+ "examples": [
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 3
+     },
+     {
+      "id": "led-bulb",
+      "qty": 8,
+      "hours": 6
+     },
+     {
+      "id": "led-tv-43",
+      "hours": 4
+     },
+     {
+      "id": "refrigerator-non-inverter"
+     }
+    ],
+    "sanctioned_kw": 1
+   },
+   "title": "Small home: {{out.appliances|int}} kinds of appliance, no AC",
+   "text": "Three fans, eight LED bulbs, a TV and a fridge total {{out.running_w|int}} W running and {{out.peak_w|int}} W when the fridge compressor starts, which is {{out.amps|1}} A at {{out.volts|int}} V. They use about {{out.daily_kwh|1}} units a day and {{out.monthly_units|int}} units a month, within a {{out.sanctioned_kw|int}} kW sanctioned load."
+  },
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 5
+     },
+     {
+      "id": "led-bulb",
+      "qty": 12,
+      "hours": 6
+     },
+     {
+      "id": "refrigerator-inverter"
+     },
+     {
+      "id": "ac-split-1-5ton-inverter",
+      "qty": 2,
+      "hours": 8
+     },
+     {
+      "id": "electric-iron",
+      "hours": 0.5
+     },
+     {
+      "id": "water-motor-1hp",
+      "hours": 1
+     }
+    ],
+    "sanctioned_kw": 5
+   },
+   "title": "Family home with two inverter ACs",
+   "text": "Five fans, twelve bulbs, a fridge, two 1.5 ton inverter ACs, an iron and a water pump come to {{out.running_w|int}} W running and {{out.peak_w|int}} W at peak, or {{out.amps|1}} A. Expect about {{out.monthly_units|int}} units a month, about {{out.monthly_rs|rs}} in energy charges at the default rate, using {{out.load_pct|int}}% of a {{out.sanctioned_kw|int}} kW sanctioned load."
+  },
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 4
+     },
+     {
+      "id": "led-bulb",
+      "qty": 10,
+      "hours": 6
+     },
+     {
+      "id": "refrigerator-non-inverter"
+     },
+     {
+      "id": "ac-split-1-5ton-non-inverter",
+      "hours": 8
+     },
+     {
+      "id": "electric-geyser-storage",
+      "hours": 2
+     }
+    ],
+    "sanctioned_kw": 2
+   },
+   "title": "Non-inverter AC plus an electric geyser on a {{out.sanctioned_kw|int}} kW connection",
+   "text": "The running load is {{out.running_w|int}} W, but the non-inverter compressor pushes the peak to {{out.peak_w|int}} W, or {{out.peak_amps|1}} A for a moment. At {{out.load_pct|int}}% of the sanctioned load this connection is overloaded; a higher sanctioned load or an inverter AC is the fix."
+  }
+ ],
+ "table": {
+  "caption": "Typical running load and monthly units for common homes",
+  "rows": [
+   {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 2
+     },
+     {
+      "id": "led-bulb",
+      "qty": 6,
+      "hours": 6
+     },
+     {
+      "id": "led-tv-32",
+      "hours": 4
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 3
+     },
+     {
+      "id": "led-bulb",
+      "qty": 8,
+      "hours": 6
+     },
+     {
+      "id": "led-tv-43",
+      "hours": 4
+     },
+     {
+      "id": "refrigerator-non-inverter"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 4
+     },
+     {
+      "id": "led-bulb",
+      "qty": 10,
+      "hours": 6
+     },
+     {
+      "id": "refrigerator-inverter"
+     },
+     {
+      "id": "led-tv-43",
+      "hours": 5
+     },
+     {
+      "id": "ac-split-1-5ton-inverter",
+      "hours": 8
+     },
+     {
+      "id": "water-motor-1hp",
+      "hours": 1
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 5
+     },
+     {
+      "id": "led-bulb",
+      "qty": 12,
+      "hours": 6
+     },
+     {
+      "id": "refrigerator-inverter"
+     },
+     {
+      "id": "ac-split-1-5ton-inverter",
+      "qty": 2,
+      "hours": 8
+     },
+     {
+      "id": "electric-iron",
+      "hours": 0.5
+     },
+     {
+      "id": "water-motor-1hp",
+      "hours": 1
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 6
+     },
+     {
+      "id": "led-bulb",
+      "qty": 15,
+      "hours": 6
+     },
+     {
+      "id": "refrigerator-inverter"
+     },
+     {
+      "id": "deep-freezer"
+     },
+     {
+      "id": "ac-split-1-5ton-inverter",
+      "qty": 3,
+      "hours": 8
+     },
+     {
+      "id": "electric-geyser-storage",
+      "hours": 2
+     },
+     {
+      "id": "water-motor-1hp",
+      "hours": 1
+     }
+    ]
+   }
+  ],
+  "columns": [
+   {
+    "label": "Home",
+    "tpl": "{{out.items|int}} appliances, {{out.appliances|int}} kinds"
+   },
+   {
+    "label": "Running load",
+    "tpl": "{{out.running_w|int}} W"
+   },
+   {
+    "label": "Peak load",
+    "tpl": "{{out.peak_w|int}} W"
+   },
+   {
+    "label": "Current",
+    "tpl": "{{out.amps|1}} A"
+   },
+   {
+    "label": "Units a month",
+    "tpl": "{{out.monthly_units|int}}"
+   }
+  ]
+ },
+ "mistakes": [
+  "Adding every appliance in the house. Only count what runs at the same time; an iron used for half an hour matters for the monthly units but rarely for the peak load.",
+  "Using the AC's rated input as its average draw. An inverter AC's input varies with the room temperature; the watts here are a planning average, and the rated maximum is used for wire and breaker sizing.",
+  "Ignoring starting surge. A non-inverter AC or a water pump draws about three times its running watts for a second or two, which is what trips an undersized breaker or inverter.",
+  "Confusing watts with units. Watts are the rate of use right now; units (kWh) are watts × hours ÷ 1,000 and are what the bill charges for."
+ ],
+ "safety": "If the running load is close to your sanctioned load or your main breaker rating, do not add more; ask your DISCO for a higher sanctioned load and have a licensed electrician check the main cable and breaker.",
+ "faq": [
+  {
+   "q": "How do I calculate the electrical load of my house?",
+   "a": "List every appliance that can run at the same time, take the running watts from its label or the appliance list, multiply by how many you have and add them up. Divide the total by volts × power factor ({{d.v_1ph|int}} V × {{d.pf_mixed|2}} in Pakistan) for amps."
+  },
+  {
+   "q": "What is the total load of a house in kW?",
+   "a": "Most Pakistani homes without an AC run at well under one kilowatt; a home with one inverter AC, fans, lights and a fridge runs at about {{out.running_kw|1}} kW, and each extra inverter AC adds about {{d.ac_inverter_avg_kw_1_5_ton|1}} kW on average and more at full speed."
+  },
+  {
+   "q": "What is a connected load and how is it different from running load?",
+   "a": "Connected load is the sum of everything wired in the house; running load is what is on at the same moment. Bills and sanctioned loads are set against expected demand, so the running load is the number to plan with."
+  },
+  {
+   "q": "How many units does this load use per month?",
+   "a": "Each appliance's watts × hours a day ÷ 1,000 gives its units a day; add them and multiply by {{d.days_per_month|int}}. The default home above uses about {{out.daily_kwh|1}} units a day and {{out.monthly_units|int}} a month."
+  },
+  {
+   "q": "Can I use this load to size a UPS, inverter or solar system?",
+   "a": "Yes. The running watts are the continuous rating your inverter or UPS needs (plus a safety margin), the peak watts are its surge rating, and the daily units are what a solar system must produce. The next-step links below take your numbers to those calculators."
+  },
+  {
+   "q": "What is the electrical load estimation for a new house?",
+   "a": "Add the rooms' lights and fans, one AC per bedroom you plan to cool, the kitchen appliances and the water pump, then apply a diversity factor because not everything runs together; the sanctioned-load calculator does this and recommends the kW to apply for."
+  }
+ ],
+ "related": [
+  "E3",
+  "E4",
+  "D4",
+  "H2",
+  "F1"
+ ],
+ "next": "D4",
+ "literal_numbers": [
+  "1,000",
+  "1.5 ton"
+ ],
+ "sources": [
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

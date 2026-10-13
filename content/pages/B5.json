@@ -1,0 +1,298 @@
+{
+ "id": "B5",
+ "status": "publish",
+ "template": "tool",
+ "h1": "UPS Backup Time Calculator",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "calc": "ups_backup",
+ "fields": [
+  {
+   "name": "va",
+   "label": "UPS rating",
+   "unit": "VA",
+   "default": 1000,
+   "hint": "From the UPS label or box, for example the VA or kVA figure. One kVA is a thousand VA."
+  },
+  {
+   "name": "ah",
+   "label": "Battery capacity",
+   "unit": "Ah",
+   "default": 150,
+   "hint": "From the battery label. Small computer UPS units have a built-in battery of a few Ah; home UPS units use an external tubular battery."
+  },
+  {
+   "name": "volts",
+   "label": "Battery bank voltage",
+   "unit": "V",
+   "type": "select",
+   "default": 12,
+   "options": [
+    [
+     12,
+     "12 V (one battery)"
+    ],
+    [
+     24,
+     "24 V (two in series)"
+    ]
+   ]
+  },
+  {
+   "name": "chemistry",
+   "label": "Battery type",
+   "type": "select",
+   "default": "tubular",
+   "options": [
+    [
+     "tubular",
+     "Tubular / lead-acid"
+    ],
+    [
+     "agm",
+     "AGM / dry (sealed)"
+    ],
+    [
+     "gel",
+     "Gel"
+    ],
+    [
+     "lifepo4",
+     "Lithium (LiFePO4)"
+    ]
+   ]
+  },
+  {
+   "name": "load_w",
+   "label": "Load",
+   "unit": "W",
+   "default": 300,
+   "hint": "Total watts on the UPS. A desktop PC with a monitor is a few hundred watts, a router or fibre modem about ten, a small CCTV setup a few tens."
+  },
+  {
+   "name": "pf",
+   "label": "UPS power factor",
+   "unit": "0 to 1",
+   "default": "@pf_ups_line_interactive",
+   "advanced": true,
+   "hint": "Line-interactive home UPS units are about 0.6; online UPS units about 0.8 to 1. Max watts = VA × power factor."
+  },
+  {
+   "name": "inverter_eff",
+   "label": "Inverter efficiency",
+   "unit": "0 to 1",
+   "default": "@inverter_eff_ups",
+   "advanced": true,
+   "hint": "As a decimal. A typical home UPS is about 0.85."
+  },
+  {
+   "name": "dod",
+   "label": "Usable depth of discharge",
+   "unit": "0 to 1",
+   "placeholder": "Auto by battery type",
+   "advanced": true,
+   "hint": "As a decimal: 0.5 means half the battery. Leave blank to use the value for your battery type."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "hours",
+   "label": "Backup time",
+   "spec": "hm"
+  },
+  {
+   "key": "max_w",
+   "label": "UPS can deliver",
+   "spec": "int",
+   "unit": "W"
+  },
+  {
+   "key": "load_pct",
+   "label": "Load on the UPS",
+   "spec": "int",
+   "unit": "%"
+  },
+  {
+   "key": "usable_wh",
+   "label": "Usable battery energy",
+   "spec": "int",
+   "unit": "Wh"
+  }
+ ],
+ "answer": "A {{in.va|int}} VA UPS with a {{in.ah|int}} Ah, {{in.volts|int}} V tubular battery runs a {{in.load_w|int}} W desktop PC for about {{out.hours|hm}}. The UPS can deliver at most {{out.max_w|int}} W ({{in.va|int}} VA × {{out.pf|2}} power factor), so this load uses {{out.load_pct|int}}% of it. Backup hours = Ah × volts × usable depth × inverter efficiency ÷ load watts.",
+ "how": "Capacity check: {{in.va|int}} VA × {{out.pf|2}} power factor = {{out.max_w|int}} W, and {{in.load_w|int}} W is {{out.load_pct|int}}% of that, so the UPS can run it. Backup: {{in.ah|int}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable × {{out.inverter_eff|pct}} inverter efficiency = {{out.usable_wh|int}} Wh; {{out.usable_wh|int}} Wh ÷ {{in.load_w|int}} W = {{out.hours|2}} hours, about {{out.hours|hm}}.",
+ "key_facts": [
+  "UPS backup time in hours = battery Ah × battery volts × usable depth of discharge × inverter efficiency ÷ load in watts; the VA rating sets how big a load the UPS can carry, not how long it runs.",
+  "A line-interactive home UPS delivers about {{d.pf_ups_line_interactive|2}} W per VA, so a {{in.va|int}} VA (one kVA) UPS can run loads up to about {{out.max_w|int}} W; an online UPS delivers closer to one W per VA.",
+  "A {{in.va|int}} VA UPS on a {{in.ah|int}} Ah, {{in.volts|int}} V tubular battery gives about {{out.hours|hm}} at {{in.load_w|int}} W (a desktop PC), about {{ex.3.out.hours|hm}} at {{ex.3.in.load_w|int}} W, and about {{ex.1.out.hours|hm}} for a {{ex.1.in.load_w|int}} W router and CCTV load on a {{ex.1.in.ah|int}} Ah battery.",
+  "The calculator refuses a load above VA × power factor instead of showing a shorter backup, because a real UPS trips on overload rather than running the load for less time."
+ ],
+ "formula": {
+  "text": "P_max = VA × PF (load must be ≤ P_max); t = (Ah × V × DoD × η) ÷ P",
+  "lines": [
+   "P_max = the most watts the UPS can deliver",
+   "VA = UPS rating in volt-amperes, PF = UPS power factor",
+   "t = backup time in hours",
+   "Ah = battery capacity, V = battery bank voltage",
+   "DoD = usable depth of discharge, η = inverter efficiency",
+   "P = load in watts"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "UPS backup time for a PC",
+   "p": [
+    "A desktop PC with a monitor is about {{in.load_w|int}} W when working and more when gaming, so on a {{in.va|int}} VA UPS with a {{in.ah|int}} Ah tubular battery you get about {{out.hours|hm}}, enough to ride through a normal loadshedding slot or to save and shut down. A small office UPS with its built-in sealed battery of a few Ah gives only minutes; enter its Ah to see how few.",
+    "A gaming PC at {{ex.2.in.load_w|int}} W needs a bigger UPS, not just a bigger battery: a {{in.va|int}} VA line-interactive unit can only deliver about {{out.max_w|int}} W. A {{ex.2.in.va|int}} VA UPS delivers about {{ex.2.out.max_w|int}} W, and on two {{ex.2.in.ah|int}} Ah batteries at {{ex.2.in.volts|int}} V it runs the gaming PC for about {{ex.2.out.hours|hm}}."
+   ]
+  },
+  {
+   "h2": "Why the load must fit the UPS rating first",
+   "p": [
+    "A UPS has two limits. The VA rating with its power factor sets the largest load it can carry at any moment; the battery sets how long it can carry it. This tool checks the first limit before the second: if the load is more than VA × power factor, it shows an error instead of a backup time, because the UPS would trip on overload and run the load for no time at all.",
+    "Line-interactive home UPS units (the usual square-wave or modified sine wave units in Pakistan) are built for a power factor of about {{d.pf_ups_line_interactive|2}}, so a {{in.va|int}} VA unit delivers about {{out.max_w|int}} W. Online and better pure sine wave units manage closer to one W per VA. Change the power factor under Advanced to match the label on your UPS."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "va": 1000,
+    "ah": 150,
+    "volts": 12,
+    "load_w": 300
+   },
+   "title": "Desktop PC and monitor ({{in.load_w|int}} W) on a {{in.va|int}} VA UPS",
+   "text": "{{in.va|int}} VA × {{out.pf|2}} = {{out.max_w|int}} W, so the PC uses {{out.load_pct|int}}% of the UPS. {{in.ah|int}} Ah × {{in.volts|int}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}} = {{out.usable_wh|int}} Wh, ÷ {{in.load_w|int}} W = about {{out.hours|hm}}."
+  },
+  {
+   "inputs": {
+    "va": 650,
+    "ah": 100,
+    "volts": 12,
+    "load_w": 60
+   },
+   "title": "Wi-Fi router and CCTV ({{in.load_w|int}} W) on a {{in.va|int}} VA UPS with a {{in.ah|int}} Ah battery",
+   "text": "{{in.va|int}} VA × {{out.pf|2}} = {{out.max_w|int}} W, and the router with a small CCTV recorder is only {{out.load_pct|int}}% of that. {{in.ah|int}} Ah × {{in.volts|int}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}} = {{out.usable_wh|int}} Wh, ÷ {{in.load_w|int}} W = about {{out.hours|hm}}, enough for several loadshedding slots in a day."
+  },
+  {
+   "inputs": {
+    "va": 1500,
+    "ah": 200,
+    "volts": 24,
+    "load_w": 600
+   },
+   "title": "Gaming PC ({{in.load_w|int}} W) on a {{in.va|int}} VA UPS with two {{in.ah|int}} Ah batteries",
+   "text": "{{in.va|int}} VA × {{out.pf|2}} = {{out.max_w|int}} W, so the gaming PC is {{out.load_pct|int}}% of the UPS. Two {{in.ah|int}} Ah batteries in series make a {{in.volts|int}} V bank: {{in.ah|int}} Ah × {{in.volts|int}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}} = {{out.usable_wh|int}} Wh, ÷ {{in.load_w|int}} W = about {{out.hours|hm}}."
+  },
+  {
+   "inputs": {
+    "va": 1000,
+    "ah": 150,
+    "volts": 12,
+    "load_w": 400
+   },
+   "title": "One kVA UPS with a {{in.ah|int}} Ah battery at {{in.load_w|int}} W",
+   "text": "A PC, monitor and a fan come to about {{in.load_w|int}} W, which is {{out.load_pct|int}}% of the {{out.max_w|int}} W the UPS can deliver. {{out.usable_wh|int}} Wh ÷ {{in.load_w|int}} W = about {{out.hours|hm}}."
+  }
+ ],
+ "table": {
+  "caption": "UPS backup time for common loads on a {{in.va|int}} VA UPS with a {{in.ah|int}} Ah, {{in.volts|int}} V tubular battery",
+  "rows": [
+   {
+    "load_w": 10
+   },
+   {
+    "load_w": 60
+   },
+   {
+    "load_w": 100
+   },
+   {
+    "load_w": 150
+   },
+   {
+    "load_w": 250
+   },
+   {
+    "load_w": 300
+   },
+   {
+    "load_w": 400
+   },
+   {
+    "load_w": 600
+   }
+  ],
+  "columns": [
+   {
+    "label": "Load",
+    "tpl": "{{in.load_w|int}} W"
+   },
+   {
+    "label": "Share of UPS",
+    "tpl": "{{out.load_pct|int}}%"
+   },
+   {
+    "label": "Backup time",
+    "tpl": "{{out.hours|hm}}"
+   }
+  ]
+ },
+ "mistakes": [
+  "Reading VA as watts. A {{in.va|int}} VA line-interactive UPS delivers only about {{out.max_w|int}} W; a load above VA × power factor trips the UPS, and this tool rejects it for that reason.",
+  "Expecting hours from a small office UPS. Its built-in sealed battery holds a few Ah, so backup is minutes; long backup needs an external tubular or lithium battery.",
+  "Entering the PC's power supply rating as the load. A PC with a supply rated for several hundred watts usually draws far less; use a plug-in meter or the appliance load calculator.",
+  "Draining the battery fully. Tubular batteries should be used to about {{d.dod_lead_acid|pct}}; many UPS units cut off later than that, which gives longer backup but a shorter battery life.",
+  "Adding the Ah of batteries in series. Two batteries in series on a {{d.battery_v_default|int}} V UPS double the volts, not the Ah."
+ ],
+ "safety": "Fit the battery with a fuse and correctly sized cable, keep lead-acid batteries ventilated, and have a licensed electrician connect a UPS to the house wiring.",
+ "faq": [
+  {
+   "q": "Which UPS do I need for a desktop computer?",
+   "a": "A desktop PC with a monitor is about {{in.load_w|int}} W, so a {{in.va|int}} VA line-interactive UPS ({{out.max_w|int}} W) runs it at {{out.load_pct|int}}% load. For long loadshedding backup pair it with an external tubular battery; a {{in.ah|int}} Ah battery gives about {{out.hours|hm}}."
+  },
+  {
+   "q": "How long will a UPS last for a PC?",
+   "a": "About {{out.hours|hm}} for a {{in.load_w|int}} W PC on a {{in.ah|int}} Ah, {{in.volts|int}} V tubular battery, and about {{ex.3.out.hours|hm}} at {{ex.3.in.load_w|int}} W with a fan added. A small office UPS with its own sealed battery lasts only minutes at this load."
+  },
+  {
+   "q": "What is the UPS backup time for a Wi-Fi router during loadshedding?",
+   "a": "A router or fibre modem is about ten watts, so almost any UPS carries it; the battery decides the hours. A router with a small CCTV recorder, about {{ex.1.in.load_w|int}} W, runs about {{ex.1.out.hours|hm}} on a {{ex.1.in.ah|int}} Ah battery, and a router alone runs several times longer."
+  },
+  {
+   "q": "How much backup does a UPS give for CCTV?",
+   "a": "A DVR with a few cameras is a few tens of watts. On the {{ex.1.in.va|int}} VA UPS with a {{ex.1.in.ah|int}} Ah battery in the example, {{ex.1.in.load_w|int}} W of router and CCTV gives about {{ex.1.out.hours|hm}}; enter your own camera count and watts for an exact figure."
+  },
+  {
+   "q": "What is the backup time of a {{in.va|int}} VA (one kVA) UPS?",
+   "a": "It depends on the battery and the load, not the VA. With a {{in.ah|int}} Ah tubular battery a one kVA UPS gives about {{out.hours|hm}} at {{in.load_w|int}} W and about {{ex.3.out.hours|hm}} at {{ex.3.in.load_w|int}} W. The {{in.va|int}} VA rating only limits the load to about {{out.max_w|int}} W."
+  },
+  {
+   "q": "What is the UPS battery backup calculation formula?",
+   "a": "Backup hours = battery Ah × battery volts × usable depth of discharge × inverter efficiency ÷ load watts, after checking that the load is no more than VA × power factor. For a tubular battery use about {{d.dod_lead_acid|pct}} usable and about {{d.inverter_eff_ups|pct}} efficiency; for lithium about {{d.dod_lifepo4|pct}} usable."
+  },
+  {
+   "q": "Which UPS is right for a gaming PC?",
+   "a": "A gaming PC can draw {{ex.2.in.load_w|int}} W or more, which is beyond a {{in.va|int}} VA line-interactive UPS. A {{ex.2.in.va|int}} VA unit delivers about {{ex.2.out.max_w|int}} W, and with two {{ex.2.in.ah|int}} Ah batteries at {{ex.2.in.volts|int}} V it gives about {{ex.2.out.hours|hm}}. Choose a pure sine wave model for a PC power supply."
+  }
+ ],
+ "related": [
+  "B1",
+  "B2",
+  "H9",
+  "D4",
+  "P-G"
+ ],
+ "next": "B1",
+ "literal_numbers": [
+  "LiFePO4"
+ ],
+ "sources": [
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

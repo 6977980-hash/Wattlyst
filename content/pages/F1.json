@@ -1,0 +1,317 @@
+{
+ "id": "F1",
+ "status": "publish",
+ "template": "tool",
+ "h1": "Electricity Bill Calculator Pakistan",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "calc": "bill_total",
+ "fields": [
+  {
+   "name": "units",
+   "label": "Units used in the month",
+   "unit": "units",
+   "default": 300,
+   "hint": "The units (kWh) on your bill, or the difference between this month's and last month's meter reading."
+  },
+  {
+   "name": "sanctioned_kw",
+   "label": "Sanctioned load",
+   "unit": "kW",
+   "default": "@default_sanctioned_kw",
+   "hint": "The kW printed on the bill; most homes are one to five. It sets the fixed charge."
+  },
+  {
+   "name": "protected",
+   "label": "Protected consumer",
+   "type": "checkbox",
+   "default": false,
+   "hint": "Tick if every one of your last six bills was within the protected unit limit; the bill usually prints the category."
+  },
+  {
+   "name": "lifeline",
+   "label": "Lifeline consumer (up to one hundred units)",
+   "type": "checkbox",
+   "default": false,
+   "advanced": true,
+   "hint": "Lifeline rates apply only to very small consumers whose bill shows the lifeline category."
+  },
+  {
+   "name": "period",
+   "label": "Billing quarter for QTA",
+   "type": "select",
+   "options_from": "qta_periods",
+   "default": "2026-09..2026-11",
+   "advanced": true,
+   "hint": "The quarterly tariff adjustment depends on the quarter the bill falls in."
+  },
+  {
+   "name": "fc_surcharge_per_unit",
+   "label": "FC surcharge",
+   "unit": "Rs per unit",
+   "default": "@data.tariff.addons_secondary.fc_surcharge_per_unit.value",
+   "advanced": true,
+   "hint": "Financing cost surcharge per unit, from your bill. Secondary-source default; change it if your bill differs."
+  },
+  {
+   "name": "fpa_per_unit",
+   "label": "FPA / FCA",
+   "unit": "Rs per unit",
+   "placeholder": "From your bill (FPA / FCA)",
+   "advanced": true,
+   "hint": "Monthly fuel price adjustment, positive or negative, from the bill. Leave blank if you do not know it."
+  },
+  {
+   "name": "gst_pct",
+   "label": "GST",
+   "unit": "%",
+   "default": "@data.tariff.addons_secondary.gst_pct.value",
+   "advanced": true,
+   "hint": "Sales tax applied to the bill subtotal."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "total_rs",
+   "label": "Estimated bill",
+   "spec": "rs"
+  },
+  {
+   "key": "energy_rs",
+   "label": "Energy charge",
+   "spec": "rs"
+  },
+  {
+   "key": "fixed_rs",
+   "label": "Fixed charge",
+   "spec": "rs"
+  },
+  {
+   "key": "fc_rs",
+   "label": "FC surcharge",
+   "spec": "rs"
+  },
+  {
+   "key": "qta_rs",
+   "label": "QTA",
+   "spec": "rs"
+  },
+  {
+   "key": "gst_rs",
+   "label": "GST",
+   "spec": "rs"
+  }
+ ],
+ "answer": "An unprotected home using {{in.units|int}} units a month on a {{in.sanctioned_kw|int}} kW connection pays about {{out.total_rs|rs}}: {{out.energy_rs|rs}} in energy charges at Rs {{out.rate|2}} per unit, plus the fixed charge, FC surcharge, QTA and {{out.gst_pct|int}}% GST. Bill = units × slab rate + fixed charge + surcharges, then GST on the subtotal.",
+ "how": "Energy: {{out.units|int}} units × Rs {{out.rate|2}} (the {{out.category}} rate of the slab reached) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw|int}} kW = {{out.fixed_rs|rs}}. FC surcharge = {{out.fc_rs|rs}}, QTA = {{out.qta_rs|rs}}, FPA = {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}}; GST at {{out.gst_pct|int}}% = {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}.",
+ "key_facts": [
+  "An unprotected consumer pays the rate of the slab the monthly total reaches on every unit: {{out.units|int}} units are all charged at Rs {{out.rate|2}}, giving {{out.energy_rs|rs}} in energy charges.",
+  "A protected consumer is billed slab-wise with the benefit of the lower slab, and the category needs every one of the last {{d.protected_months|int}} months at or under {{d.protected_max_units|int}} units.",
+  "The fixed charge is Rs per kW of sanctioned load and rises with the slab; a {{out.sanctioned_kw|int}} kW connection using {{out.units|int}} units pays {{out.fixed_rs|rs}} a month before using a single unit.",
+  "GST at {{out.gst_pct|int}}% is applied to the subtotal of energy, fixed charge and surcharges, which adds {{out.gst_rs|rs}} to a {{out.units|int}} unit bill; the surcharge and GST figures are from secondary sources and change monthly.",
+  "Lifeline rates apply only up to one hundred units, with no fixed charge, and a connection of {{d.tou_threshold_kw|int}} kW or more is billed on a peak and off-peak (ToU) meter instead of slabs."
+ ],
+ "formula": {
+  "text": "Bill = units × slab rate + fixed Rs/kW × sanctioned kW + (FC + QTA + FPA) × units, then + GST",
+  "lines": [
+   "slab rate = unprotected: rate of the band the total reaches, on every unit",
+   "protected: units in each band at that band's rate (slab-wise)",
+   "fixed = Rs per kW for the band reached × sanctioned kW",
+   "FC = financing cost surcharge per unit; QTA = quarterly adjustment per unit; FPA = monthly fuel adjustment per unit",
+   "GST = percentage of the subtotal; lifeline has no fixed charge and no QTA"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "How does this electricity bill calculator work?",
+   "p": [
+    "The calculator applies the NEPRA uniform A-1 domestic tariff for 2026, notified by the Government as SRO 279(I)/2026, which every DISCO (LESCO, IESCO, GEPCO, FESCO, MEPCO, PESCO, HESCO, SEPCO, QESCO, TESCO) and K-Electric charges. Enter your units, the sanctioned load from your bill and your category, and it shows the energy charge, fixed charge, FC surcharge, QTA and GST as separate lines, the way the bill prints them.",
+    "The energy and fixed rates were verified from the NEPRA tariff PDF. The FC surcharge, QTA, FPA and GST are from secondary sources, change monthly or quarterly, and whether GST and the FC surcharge apply to lifeline and protected bills in exactly this way is still being verified; copy those lines from your own bill into the advanced fields for a closer match."
+   ]
+  },
+  {
+   "h2": "Who is a protected consumer?",
+   "p": [
+    "A protected consumer is a domestic consumer whose consumption stayed at or under {{d.protected_max_units|int}} units in every one of the last {{d.protected_months|int}} months, on a non-ToU connection below {{d.tou_threshold_kw|int}} kW. Protected rates are much lower and are applied slab-wise: the first hundred units at the first protected rate and the rest at the second.",
+    "The protected status is printed on the bill. The moment one month goes over the limit, the next bills are at the unprotected rates for every unit until a fresh run of six months under the limit."
+   ]
+  },
+  {
+   "h2": "Protected vs unprotected consumer check",
+   "p": [
+    "Take your last six bills. If every one shows {{d.protected_max_units|int}} units or fewer and the connection is under {{d.tou_threshold_kw|int}} kW, tick the protected box; otherwise leave it clear. The difference is large: the worked examples below show the same {{d.protected_max_units|int}} units billed both ways.",
+    "A long billing cycle can push a normally protected home over the limit in one month. If your bill covers more than a month of days, check the reading dates before you accept the unprotected rate."
+   ]
+  },
+  {
+   "h2": "What is the bill for 200 units (LESCO or any DISCO)?",
+   "p": [
+    "A {{d.protected_max_units|int}} unit bill depends almost entirely on the category. Protected, the units are billed slab-wise at the two protected rates; unprotected, all of them are at the second unprotected slab rate. The two worked examples below give both totals with the same fixed charge, surcharges and GST, and the reference table lists them side by side."
+   ]
+  },
+  {
+   "h2": "What is the bill for 300 units?",
+   "p": [
+    "{{out.units|int}} units is the default above: all units at Rs {{out.rate|2}} = {{out.energy_rs|rs}}, plus {{out.fixed_rs|rs}} fixed charge for {{out.sanctioned_kw|int}} kW, {{out.fc_rs|rs}} FC surcharge, {{out.qta_rs|rs}} QTA and {{out.gst_rs|rs}} GST, for about {{out.total_rs|rs}}. One unit over three hundred moves every unit to the next slab, so {{out.units|int}} units is a line worth staying under."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "units": 200,
+    "protected": true
+   },
+   "title": "{{in.units|int}} units, protected consumer",
+   "text": "Energy charge {{out.energy_rs|rs}} billed slab-wise at protected rates, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}."
+  },
+  {
+   "inputs": {
+    "units": 200,
+    "protected": false
+   },
+   "title": "{{in.units|int}} units, unprotected consumer",
+   "text": "The same {{out.units|int}} units at the unprotected rate of Rs {{out.rate|2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}, about double the protected bill."
+  },
+  {
+   "inputs": {
+    "units": 300
+   },
+   "title": "{{in.units|int}} units, unprotected",
+   "text": "{{out.units|int}} units × Rs {{out.rate|2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}."
+  },
+  {
+   "inputs": {
+    "units": 500,
+    "sanctioned_kw": 2
+   },
+   "title": "{{in.units|int}} units on a {{in.sanctioned_kw|int}} kW connection",
+   "text": "A summer bill with an AC: {{out.units|int}} units × Rs {{out.rate|2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}."
+  },
+  {
+   "inputs": {
+    "units": 100,
+    "lifeline": true,
+    "fc_surcharge_per_unit": "",
+    "gst_pct": ""
+   },
+   "title": "{{in.units|int}} units, lifeline consumer",
+   "text": "A lifeline consumer using {{out.units|int}} units pays Rs {{out.rate|2}} per unit = {{out.energy_rs|rs}} with no fixed charge and no QTA. With the FC surcharge and GST fields left blank the calculator assumes neither applies to lifeline bills, which is still being verified, so the estimated bill is {{out.total_rs|rs}}."
+  }
+ ],
+ "table": {
+  "caption": "Estimated monthly bill by units for a {{in.sanctioned_kw|int}} kW connection with the default FC surcharge, QTA and GST (unprotected unless marked)",
+  "rows": [
+   {
+    "units": 100
+   },
+   {
+    "units": 200,
+    "protected": true
+   },
+   {
+    "units": 200
+   },
+   {
+    "units": 300
+   },
+   {
+    "units": 400
+   },
+   {
+    "units": 500
+   },
+   {
+    "units": 700
+   }
+  ],
+  "columns": [
+   {
+    "label": "Units",
+    "tpl": "{{out.units|int}} ({{out.category}})"
+   },
+   {
+    "label": "Rate",
+    "tpl": "Rs {{out.rate|2}}"
+   },
+   {
+    "label": "Energy",
+    "tpl": "{{out.energy_rs|rs}}"
+   },
+   {
+    "label": "Fixed",
+    "tpl": "{{out.fixed_rs|rs}}"
+   },
+   {
+    "label": "Estimated bill",
+    "tpl": "{{out.total_rs|rs}}"
+   }
+  ]
+ },
+ "mistakes": [
+  "Billing slab-wise as an unprotected consumer. Unprotected bills charge every unit at the rate of the slab the total reaches, so one extra unit can raise the whole bill.",
+  "Ticking protected because this month is low. Protection needs all of the last six months under the limit; the bill prints the category.",
+  "Leaving out the FPA. The monthly fuel adjustment can be a large positive or negative line; copy it from the bill into the advanced field.",
+  "Using an old fixed charge. The fixed charge is per kW of sanctioned load and steps up with the slab, so a higher-usage month also pays a higher fixed charge.",
+  "Reading the estimate as the exact bill. Surcharge, QTA, FPA and tax values change monthly and some are from secondary sources; the estimate is for planning and for checking a bill that looks wrong."
+ ],
+ "faq": [
+  {
+   "q": "Is this electricity bill calculator updated for 2026?",
+   "a": "Yes. The slab rates and fixed charges are the uniform A-1 domestic tariff NEPRA set for 2026, verified from the NEPRA tariff PDF. The FC surcharge, QTA, FPA and GST are secondary-source values that change monthly, so copy them from your bill."
+  },
+  {
+   "q": "Does this bill calculator work for every DISCO in Pakistan?",
+   "a": "Yes. LESCO, IESCO, GEPCO, FESCO, MEPCO, PESCO, HESCO, SEPCO, QESCO, TESCO and K-Electric all charge the same uniform domestic tariff; only the monthly FPA line can differ, and you can enter it."
+  },
+  {
+   "q": "Is there a WAPDA bill calculator?",
+   "a": "WAPDA no longer bills homes; its distribution side became the DISCOs, which all use the same NEPRA tariff. This calculator gives the same estimate people mean by a WAPDA bill calculator."
+  },
+  {
+   "q": "What is the per unit rate of electricity in Pakistan?",
+   "a": "It depends on the slab and category. An unprotected home using {{out.units|int}} units pays Rs {{out.rate|2}} per unit on every unit; lower slabs pay less and the top slab pays the most. Protected and lifeline consumers pay far lower rates. The reference table above lists the rate for each slab."
+  },
+  {
+   "q": "What are the electricity slab rates in Pakistan?",
+   "a": "The unprotected domestic tariff has slabs of a hundred units up to seven hundred, then one open-ended slab, each with its own rate and fixed charge. Protected consumers have two slabs up to {{d.protected_max_units|int}} units and lifeline consumers two slabs up to one hundred units. The table above shows each slab's rate from the tariff file."
+  },
+  {
+   "q": "What does protected consumer mean on my bill?",
+   "a": "It means your last {{d.protected_months|int}} months were all at or under {{d.protected_max_units|int}} units, so you are billed at the protected slab-wise rates. It is a status the DISCO works out from your history, not something you apply for."
+  },
+  {
+   "q": "What is a non-protected consumer?",
+   "a": "A domestic consumer who used more than {{d.protected_max_units|int}} units in any of the last {{d.protected_months|int}} months, or has a ToU meter. Every unit is billed at the rate of the slab the monthly total reaches, with a higher fixed charge."
+  },
+  {
+   "q": "Why is my actual bill different from this estimate?",
+   "a": "The FPA line, the exact FC surcharge and QTA for the month, TV fee or other local items, arrears and the number of days in the cycle all change the total. Enter the FPA and surcharge from your bill in the advanced fields for a closer estimate."
+  }
+ ],
+ "related": [
+  "F2",
+  "F12",
+  "E5",
+  "D10"
+ ],
+ "next": "E5",
+ "literal_numbers": [
+  "SRO 279(I)/2026",
+  "2026",
+  "A-1",
+  "200 units",
+  "300 units"
+ ],
+ "sources": [
+  {
+   "label": "NEPRA tariff decision and SRO for A-1 domestic consumers (tariff PDF)",
+   "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

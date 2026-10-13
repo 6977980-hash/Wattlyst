@@ -1,0 +1,287 @@
+{
+ "id": "E5",
+ "status": "publish",
+ "template": "tool",
+ "h1": "1.5 Ton Inverter AC Unit Consumption per Hour in Pakistan",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "calc": "ac_units",
+ "fields": [
+  {
+   "name": "ac",
+   "label": "Air conditioner",
+   "type": "appliance",
+   "default": "ac-split-1-5ton-inverter",
+   "custom": "Custom (enter average kW)",
+   "options": [
+    "ac-split-1ton-inverter",
+    "ac-split-1-5ton-inverter",
+    "ac-split-2ton-inverter",
+    "ac-split-1ton-non-inverter",
+    "ac-split-1-5ton-non-inverter",
+    "ac-split-2ton-non-inverter"
+   ],
+   "hint": "Pick your AC size and type. Each preset uses a planning average draw, below the rated input."
+  },
+  {
+   "name": "avg_kw",
+   "label": "Average draw",
+   "unit": "kW",
+   "placeholder": "Only for Custom",
+   "hint": "Used only with Custom: the average kW your AC draws over an hour, for example from an energy meter."
+  },
+  {
+   "name": "hours",
+   "label": "Hours a day",
+   "unit": "h",
+   "default": 8,
+   "hint": "How many hours the AC runs on a typical day."
+  },
+  {
+   "name": "days",
+   "label": "Days a month",
+   "unit": "days",
+   "default": "@days_per_month",
+   "advanced": true,
+   "hint": "Days the AC runs in the billing month."
+  },
+  {
+   "name": "tariff",
+   "label": "Electricity rate",
+   "unit": "Rs per unit",
+   "default": "@data.tariff.unprotected.3.rate",
+   "hint": "Your slab rate per unit from the bill. The default is the Pakistan unprotected rate for the slab most AC homes reach."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "daily_units",
+   "label": "Units a day",
+   "spec": "1"
+  },
+  {
+   "key": "monthly_units",
+   "label": "Units a month",
+   "spec": "int"
+  },
+  {
+   "key": "hourly_rs",
+   "label": "Cost per hour",
+   "spec": "rs"
+  },
+  {
+   "key": "monthly_rs",
+   "label": "AC bill a month",
+   "spec": "rs"
+  }
+ ],
+ "answer": "A {{out.ac_name|raw}} uses about {{out.avg_kw|1}} unit (kWh) per hour on average in Pakistan, so {{in.hours|int}} hours a day is about {{out.daily_units|1}} units a day and {{out.monthly_units|int}} units a month, costing about {{out.monthly_rs|rs}} at Rs {{out.tariff|2}} per unit. Units = average kW × hours; an inverter AC's average is well below its {{out.ac_rated_w|int}} W rated input.",
+ "how": "{{out.avg_kw|2}} kW average draw × {{in.hours|int}} hours = {{out.daily_units|1}} units a day. {{out.daily_units|1}} units × {{out.days|int}} days = {{out.monthly_units|int}} units a month. Cost: {{out.avg_kw|2}} kW × Rs {{out.tariff|2}} = {{out.hourly_rs|rs}} per hour; {{out.monthly_units|int}} units × Rs {{out.tariff|2}} = {{out.monthly_rs|rs}} a month in energy charges, before fixed charges, surcharges and taxes.",
+ "key_facts": [
+  "A 1.5 ton inverter AC uses about {{out.avg_kw|1}} unit (kWh) per hour on average: its rated input is {{out.ac_rated_w|int}} W, but once the room is cool the compressor slows down and the draw falls to a few hundred watts.",
+  "Running {{in.hours|int}} hours a day, a 1.5 ton inverter AC uses about {{out.daily_units|1}} units a day and {{out.monthly_units|int}} units a month.",
+  "At Rs {{out.tariff|2}} per unit the AC alone costs about {{out.hourly_rs|rs}} an hour and {{out.monthly_rs|rs}} a month in energy charges; the slab rate rises as the whole home's units go up.",
+  "A 1.5 ton non-inverter AC uses about {{ex.1.out.avg_kw|2}} units per hour, because its {{ex.1.out.ac_rated_w|int}} W compressor runs at full power about {{d.ac_noninverter_duty|pct}} of the time, so its monthly bill is {{ex.1.out.monthly_rs|rs}} for the same hours."
+ ],
+ "formula": {
+  "text": "units/day = kW_avg × h; units/month = units/day × days; Rs = units × tariff",
+  "lines": [
+   "kW_avg = the AC's average draw over an hour (preset per AC, or your own figure with Custom)",
+   "h = hours a day the AC runs",
+   "days = days in the billing month",
+   "tariff = your slab rate in Rs per unit (one unit = one kWh)"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "How many units does a 1.5 ton inverter AC consume per hour?",
+   "p": [
+    "About {{out.avg_kw|1}} unit per hour on average. The rated input on the label of a 1.5 ton inverter AC is around {{out.ac_rated_w|int}} W, and that is what it draws in the first half hour while it pulls a hot room down. After that the inverter slows the compressor and the draw falls, often to a few hundred watts, and the hourly average over an evening lands near {{out.avg_kw|1}} kW.",
+    "That average is a planning value between the AC's lowest setting and full speed. A small, well-sealed room at a moderate set point will use less; a sunny room at a low set point on a hot afternoon will use more, close to the rated input for hours. Treat {{out.daily_units|1}} units for {{in.hours|int}} hours as a central estimate, not a promise."
+   ]
+  },
+  {
+   "h2": "How does this AC bill calculator for Pakistan work?",
+   "p": [
+    "It multiplies the average kW by the hours a day and the days in the month to get the AC's units, then by your slab rate: {{out.monthly_units|int}} units × Rs {{out.tariff|2}} = {{out.monthly_rs|rs}}. That is the energy charge of the AC on its own. Your real bill adds the rest of the home, fixed charges per sanctioned kW, surcharges and taxes.",
+    "On the unprotected domestic tariff all units are charged at the rate of the slab the whole home reaches, so an AC that pushes your monthly total into a higher slab raises the rate on every unit, not just its own. Enter the rate from your own bill for the closest estimate, and use the full bill calculator linked below for the total."
+   ]
+  },
+  {
+   "h2": "How many units does a 1 ton inverter AC use per hour?",
+   "p": [
+    "About {{ex.2.out.avg_kw|2}} units per hour on average, with a rated input of {{ex.2.out.ac_rated_w|int}} W. Running {{ex.2.in.hours|int}} hours a day it uses about {{ex.2.out.daily_units|1}} units a day and {{ex.2.out.monthly_units|int}} units a month, about {{ex.2.out.monthly_rs|rs}} at the default rate. A 1 ton AC suits a small bedroom; in a large room it runs at full speed for longer and the saving over a 1.5 ton shrinks."
+   ]
+  },
+  {
+   "h2": "How many units does a 2 ton AC use?",
+   "p": [
+    "A 2 ton inverter AC averages about {{ex.3.out.avg_kw|1}} units per hour against a rated input of {{ex.3.out.ac_rated_w|int}} W; at {{ex.3.in.hours|int}} hours a day that is {{ex.3.out.daily_units|1}} units a day and {{ex.3.out.monthly_units|int}} units a month, about {{ex.3.out.monthly_rs|rs}}. A 2 ton non-inverter uses considerably more; the table below lists both at the same hours."
+   ]
+  },
+  {
+   "h2": "How many units does a non-inverter AC use per hour?",
+   "p": [
+    "A 1.5 ton non-inverter AC averages about {{ex.1.out.avg_kw|2}} units per hour. Its compressor has one speed: it runs at the full {{ex.1.out.ac_rated_w|int}} W until the room reaches the set temperature, switches off, then starts again. Over an hour it is on about {{d.ac_noninverter_duty|pct}} of the time, which gives the average used here.",
+    "For {{ex.1.in.hours|int}} hours a day that is {{ex.1.out.daily_units|1}} units a day and {{ex.1.out.monthly_units|int}} units a month, about {{ex.1.out.monthly_rs|rs}}, against {{out.monthly_rs|rs}} for a 1.5 ton inverter at the same hours. The difference over a summer is usually what pays for the inverter model."
+   ]
+  },
+  {
+   "h2": "What is the real DC inverter AC consumption?",
+   "p": [
+    "It depends on the room size, how much sun it gets, how well the doors and windows seal, the set temperature and the outdoor temperature. The presets here are averages from manufacturer input ratings and typical duty; your own AC can sit above or below them. The only exact figure is a measured one: a plug-in energy meter or the daily reading on a smart meter over a few days.",
+    "Each degree you raise the set point saves roughly {{d.ac_saving_per_degree|pct}} of the AC's units, so a moderate set point with the fan on does more for the bill than any difference between brands."
+   ]
+  },
+  {
+   "h2": "How do I use this as an AC power consumption calculator for any AC?",
+   "p": [
+    "Choose Custom and enter the average kW. For a non-inverter AC, take the rated input in watts from the label, multiply by about {{d.ac_noninverter_duty|pct}} and divide by a thousand. For an inverter AC the presets use roughly two thirds of the rated input; a measured average from an energy meter is better. The calculator then gives units per day and month and the cost at your rate."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "ac": "ac-split-1-5ton-inverter",
+    "hours": 8
+   },
+   "title": "{{out.ac_name|raw}}, {{in.hours|int}} hours a night",
+   "text": "{{out.avg_kw|2}} kW average × {{in.hours|int}} h = {{out.daily_units|1}} units a day and {{out.monthly_units|int}} units a month. At Rs {{out.tariff|2}} per unit that is {{out.hourly_rs|rs}} per hour and about {{out.monthly_rs|rs}} a month."
+  },
+  {
+   "inputs": {
+    "ac": "ac-split-1-5ton-non-inverter",
+    "hours": 8
+   },
+   "title": "{{out.ac_name|raw}}, {{in.hours|int}} hours a night",
+   "text": "{{out.avg_kw|2}} kW average × {{in.hours|int}} h = {{out.daily_units|1}} units a day and {{out.monthly_units|int}} units a month, about {{out.monthly_rs|rs}} at Rs {{out.tariff|2}} per unit ({{out.hourly_rs|rs}} per hour). The compressor runs at its full {{out.ac_rated_w|int}} W about {{d.ac_noninverter_duty|pct}} of the time."
+  },
+  {
+   "inputs": {
+    "ac": "ac-split-1ton-inverter",
+    "hours": 10
+   },
+   "title": "{{out.ac_name|raw}} in a small bedroom, {{in.hours|int}} hours",
+   "text": "{{out.avg_kw|2}} kW average × {{in.hours|int}} h = {{out.daily_units|1}} units a day and {{out.monthly_units|int}} units a month, about {{out.monthly_rs|rs}} at Rs {{out.tariff|2}} per unit ({{out.hourly_rs|rs}} per hour)."
+  },
+  {
+   "inputs": {
+    "ac": "ac-split-2ton-inverter",
+    "hours": 6
+   },
+   "title": "{{out.ac_name|raw}} in a lounge, {{in.hours|int}} hours",
+   "text": "{{out.avg_kw|2}} kW average × {{in.hours|int}} h = {{out.daily_units|1}} units a day and {{out.monthly_units|int}} units a month, about {{out.monthly_rs|rs}} at Rs {{out.tariff|2}} per unit ({{out.hourly_rs|rs}} per hour)."
+  }
+ ],
+ "table": {
+  "caption": "Units and energy cost of common split ACs running {{in.hours|int}} hours a day, {{out.days|int}} days a month, at Rs {{out.tariff|2}} per unit",
+  "rows": [
+   {
+    "ac": "ac-split-1ton-inverter"
+   },
+   {
+    "ac": "ac-split-1-5ton-inverter"
+   },
+   {
+    "ac": "ac-split-2ton-inverter"
+   },
+   {
+    "ac": "ac-split-1ton-non-inverter"
+   },
+   {
+    "ac": "ac-split-1-5ton-non-inverter"
+   },
+   {
+    "ac": "ac-split-2ton-non-inverter"
+   }
+  ],
+  "columns": [
+   {
+    "label": "AC",
+    "tpl": "{{out.ac_name|raw}}"
+   },
+   {
+    "label": "Units per hour",
+    "tpl": "{{out.avg_kw|2}}"
+   },
+   {
+    "label": "Units a day",
+    "tpl": "{{out.daily_units|1}}"
+   },
+   {
+    "label": "Units a month",
+    "tpl": "{{out.monthly_units|int}}"
+   },
+   {
+    "label": "Cost a month",
+    "tpl": "{{out.monthly_rs|rs}}"
+   }
+  ]
+ },
+ "mistakes": [
+  "Multiplying the rated watts by the hours. For an inverter AC that overstates the units by about half, because the compressor slows down once the room is cool; use the average draw.",
+  "Thinking 1.5 ton means one and a half kilowatts. The ton is cooling capacity, not electrical input; the input of a 1.5 ton inverter is about {{out.ac_rated_w|int}} W at full speed and {{out.avg_kw|1}} kW on average.",
+  "Forgetting the slab. On the unprotected tariff the AC's extra units can lift the whole bill into a higher slab, so the real cost of the AC is often more than units × your old rate.",
+  "Taking the AC's cost as the whole bill. Fixed charges per sanctioned kW, surcharges and taxes are added on top of the energy charge shown here.",
+  "Setting the lowest temperature. Each degree lower adds roughly {{d.ac_saving_per_degree|pct}} to the AC's units; a moderate set point with the fan on cools almost as well."
+ ],
+ "faq": [
+  {
+   "q": "How many units does a 1.5 ton inverter AC use in {{in.hours|int}} hours?",
+   "a": "About {{out.daily_units|1}} units, from an average draw of {{out.avg_kw|1}} kW. Over a {{out.days|int}} day month that is {{out.monthly_units|int}} units."
+  },
+  {
+   "q": "What is the AC bill per month for a 1.5 ton inverter AC?",
+   "a": "About {{out.monthly_rs|rs}} in energy charges for {{in.hours|int}} hours a day at Rs {{out.tariff|2}} per unit, before fixed charges and taxes. Fewer hours or a higher set point bring it down; a non-inverter model of the same size costs about {{ex.1.out.monthly_rs|rs}}."
+  },
+  {
+   "q": "What is the AC electricity cost per hour?",
+   "a": "A 1.5 ton inverter costs about {{out.hourly_rs|rs}} an hour at Rs {{out.tariff|2}} per unit; a 1.5 ton non-inverter about {{ex.1.out.hourly_rs|rs}}; a 1 ton inverter about {{ex.2.out.hourly_rs|rs}}."
+  },
+  {
+   "q": "Does an inverter AC really use less electricity?",
+   "a": "Yes, once the room is cool. For {{in.hours|int}} hours a day a 1.5 ton inverter uses about {{out.monthly_units|int}} units a month against about {{ex.1.out.monthly_units|int}} for a non-inverter, because the inverter slows the compressor instead of switching it on and off at full power."
+  },
+  {
+   "q": "How many units does a 1 ton AC use per hour?",
+   "a": "A 1 ton inverter averages about {{ex.2.out.avg_kw|2}} units per hour; the 1 ton non-inverter in the table above uses more because its compressor runs at full power whenever it is on."
+  },
+  {
+   "q": "How many units does the AC use at full speed?",
+   "a": "At full speed a 1.5 ton inverter draws its rated input of {{out.ac_rated_w|int}} W, almost one and a half units an hour. It runs like that while cooling a hot room down, which is why the first hour costs more than the rest of the night."
+  },
+  {
+   "q": "Why is my AC using more units than this calculator?",
+   "a": "A large or sunny room, poor sealing, a low set point, a dirty filter or a very hot day keeps the compressor at full speed for longer, so the average rises towards the rated input. Measure with an energy meter and enter your own average under Custom."
+  }
+ ],
+ "related": [
+  "F1",
+  "D5",
+  "E4",
+  "C6",
+  "H2"
+ ],
+ "next": "F1",
+ "literal_numbers": [
+  "1.5 ton",
+  "1 ton",
+  "2 ton"
+ ],
+ "sources": [
+  {
+   "label": "Gree 1.5 ton inverter AC datasheet (rated input)",
+   "url": "https://japanelectronics.com.pk/products/gree-ac-split-inverter-1-5-ton-gs-18pith11g-aaa"
+  },
+  {
+   "label": "NEPRA tariff notification for Ex-WAPDA DISCOs (domestic slab rates)",
+   "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}
