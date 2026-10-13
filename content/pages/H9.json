@@ -1,0 +1,119 @@
+{
+ "id": "H9",
+ "status": "publish",
+ "template": "guide",
+ "h1": "Inverter vs UPS: Which One for Your Home?",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "answer": "A UPS switches to battery within a few milliseconds so computers never notice the cut; an inverter switches a little slower but runs bigger loads, and a hybrid solar inverter also charges from solar panels. In Pakistan the words overlap: most home UPS units are really inverters with a built-in charger. Choose by what you need to run and for how long.",
+ "key_facts": [
+  "A UPS and an inverter do the same job on backup, turning DC battery power into AC; the difference is switching speed, size, waveform and whether it charges from solar.",
+  "A basic home UPS or inverter converts battery energy to AC at about {{d.inverter_eff_ups|pct}} efficiency; a good hybrid solar inverter reaches about {{d.inverter_eff_hybrid|pct}}, so it gives more backup from the same battery.",
+  "A line-interactive home UPS is rated for a power factor of about {{d.pf_ups_line_interactive|2}}, so its usable watts are about six tenths of its VA rating; inverters are usually sold in watts or kVA with a power factor closer to one.",
+  "Tubular batteries should be used to about {{d.dod_lead_acid|pct}} of their capacity and lithium (LiFePO4) batteries to about {{d.dod_lifepo4|pct}}; the battery, not the UPS or inverter, decides how long the backup lasts.",
+  "Any unit that keeps charging a battery all day draws standby power; a lithium battery with a hybrid inverter wastes the least, a tubular battery on a cheap charger the most."
+ ],
+ "sections": [
+  {
+   "h2": "What is a UPS?",
+   "p": [
+    "UPS stands for uninterruptible power supply. In the strict sense it is a unit built to keep sensitive equipment, mainly computers, servers and network gear, running through a cut without a flicker. It has a charger, a battery and an inverter in one box, and a transfer switch that moves the load to battery within a few milliseconds, faster than a computer power supply can notice.",
+    "There are two main kinds. A line-interactive (offline or standby) UPS passes mains power straight through and only switches to the inverter when the mains fails; it is cheap and common for PCs. An online (double-conversion) UPS runs the load from the inverter all the time, so there is no switch at all; it costs more, wastes more power as heat and is used where even a few milliseconds matter.",
+    "In Pakistan the word UPS is also used for the ordinary home backup unit that runs fans and lights from a tubular battery. Technically that is an inverter with a charger, and the sections below treat it that way."
+   ]
+  },
+  {
+   "h2": "What is an inverter?",
+   "p": [
+    "An inverter turns DC from a battery (or solar panels) into {{d.v_1ph|int}} V AC. A home inverter for backup includes a charger to refill the battery from the mains and a changeover relay, which is why it looks and behaves much like a UPS. It is sized in watts or kVA, carries larger loads than a computer UPS, and is meant to work with external batteries of a hundred Ah or more.",
+    "Inverters come in square wave, modified sine wave and pure sine wave versions. Square and modified sine wave units are cheaper and fine for fans and lights but make motors hum and can upset electronics. A pure sine wave inverter gives mains-quality power and is the right choice for fridges, TVs, computers and anything with a motor."
+   ]
+  },
+  {
+   "h2": "Hybrid solar inverter vs UPS",
+   "p": [
+    "A hybrid solar inverter is an inverter with a built-in solar charge controller. It can run the house from solar during the day, charge the battery from solar or the mains, and switch to battery when the grid fails. It does everything a home UPS does, plus solar, and most models convert at about {{d.inverter_eff_hybrid|pct}} against about {{d.inverter_eff_ups|pct}} for a basic UPS, so the same battery lasts longer.",
+    "The trade-off is price and complexity. A hybrid inverter costs several times a basic UPS of the same size and needs panels, cabling and a licensed installer to earn its keep. If you have no plan for solar panels, a plain inverter or UPS plus a good battery is the cheaper route; if solar is on your list, buy the hybrid once rather than a UPS now and an inverter later."
+   ]
+  },
+  {
+   "h2": "UPS switching time: does the gap matter?",
+   "p": [
+    "A computer UPS switches in a few milliseconds, under a cycle of the mains, so PCs, routers and CCTV recorders never reboot. A typical home inverter or UPS for fans and lights takes a little longer; you may see a flicker, and a desktop PC without its own small UPS can restart. An online UPS has no switching gap at all because the load is always on the inverter.",
+    "For fans, lights, a fridge and a TV the gap does not matter. For a desktop PC, a server, a fibre modem or a CCTV recorder it does; either use a computer UPS for those loads or choose a home inverter whose label gives a fast transfer time and a pure sine wave output."
+   ]
+  },
+  {
+   "h2": "Efficiency and standby drain",
+   "p": [
+    "On backup, a basic UPS or inverter turns about {{d.inverter_eff_ups|pct}} of the battery energy into AC and loses the rest as heat; a good hybrid inverter manages about {{d.inverter_eff_hybrid|pct}}. On a {{d.dod_lead_acid|pct}} usable tubular battery that difference is worth a noticeable slice of backup time, and it also means less heat in the cupboard.",
+    "When the mains is on, every unit still draws a little power to run its electronics and keep the battery topped up. Cheap chargers and old tubular batteries that need constant trickle charging add units to the bill every month; a lithium battery with a modern inverter sits almost idle once full. The battery backup calculator shows how much of your stored energy actually reaches the load."
+   ]
+  },
+  {
+   "h2": "Which loads can each one run?",
+   "p": [
+    "A small computer UPS with its built-in battery runs a PC, monitor, router and a CCTV recorder for minutes, long enough to save work and shut down. It cannot run fans and lights for an evening; its battery is a few Ah.",
+    "A home UPS or inverter with an external tubular or lithium battery runs fans, LED lights, a TV, a laptop charger and a router for hours; a bigger pure sine wave unit with a {{d.battery_v_default|int}} V bank adds a fridge or a small inverter AC. Line-interactive UPS units deliver only about {{d.pf_ups_line_interactive|2}} W per VA, so check watts, not VA, before adding a load.",
+    "A hybrid solar inverter in the right size runs the whole house, including ACs and the water motor, from solar by day and from the battery at night. Use the inverter size calculator to add up your appliances with their starting surge before you buy any of the three."
+   ]
+  },
+  {
+   "h2": "Price and which to buy for a Pakistani home",
+   "p": [
+    "For a PC, router and CCTV that must never drop out, buy a small line-interactive computer UPS and keep it on those loads only. For fans, lights and a TV through loadshedding, buy a home UPS or inverter sized for your watts with margin, pure sine wave if a fridge or electronics will be on it, and spend the saving on the battery, because the battery sets the backup hours. For a home that will add solar, buy a hybrid solar inverter once; it replaces the UPS and saves the daytime bill.",
+    "Whatever you choose, the battery matters more than the box. A tubular battery used to about {{d.dod_lead_acid|pct}} lasts a few years; a lithium battery used to about {{d.dod_lifepo4|pct}} costs more up front, gives nearly double the backup for the same Ah and recharges faster between cuts. Run your numbers through the battery backup time calculator before deciding on either."
+   ]
+  }
+ ],
+ "mistakes": [
+  "Buying by VA instead of watts. A line-interactive UPS delivers only about {{d.pf_ups_line_interactive|2}} W per VA, so a unit that looks big enough on the label may trip on the real load.",
+  "Running a fridge or PC on a square wave UPS. Motors hum and run hot, and electronics can fail early; a pure sine wave unit is the right choice for anything beyond fans and lights.",
+  "Expecting the UPS to decide backup time. The battery Ah, its usable depth of discharge and the load in watts set the hours; a bigger UPS with the same battery gives no more backup.",
+  "Buying a basic UPS now and a hybrid inverter a year later. If solar is planned, one hybrid unit does both jobs and the UPS becomes dead money."
+ ],
+ "safety": "Have a licensed electrician fit any UPS, inverter or hybrid inverter to the house wiring with a proper changeover and earth, and keep lead-acid batteries in a ventilated spot away from living areas.",
+ "faq": [
+  {
+   "q": "What is the difference between a UPS and an inverter?",
+   "a": "Both turn battery DC into AC on a power cut. A UPS in the strict sense switches within a few milliseconds and is built for computers; an inverter is a larger unit for fans, lights and appliances, sold in watts or kVA and used with external batteries. In Pakistan a home UPS is really an inverter with a charger."
+  },
+  {
+   "q": "Hybrid inverter vs UPS: which is better?",
+   "a": "A hybrid solar inverter does everything a home UPS does, converts more efficiently (about {{d.inverter_eff_hybrid|pct}} against about {{d.inverter_eff_ups|pct}}) and charges from solar panels. It is better if you plan solar; if not, a plain UPS or inverter with a good battery costs far less for the same backup."
+  },
+  {
+   "q": "Which is better for a home, a UPS or an inverter?",
+   "a": "For a PC, router and CCTV, a small computer UPS because of its fast switch. For fans, lights, a TV and a fridge through loadshedding, a pure sine wave home inverter or UPS with a tubular or lithium battery, sized in watts with margin. Many homes end up with both: a small UPS on the PC and a home inverter on the rest."
+  },
+  {
+   "q": "What is UPS switching time and why does it matter?",
+   "a": "It is the gap between the mains failing and the inverter taking over. A computer UPS switches in a few milliseconds, under one mains cycle, so PCs stay on; a home inverter can be slower and may let a desktop PC reboot. An online UPS has no gap because the load is always on the inverter."
+  },
+  {
+   "q": "Online UPS vs offline UPS: what is the difference?",
+   "a": "An offline (line-interactive or standby) UPS passes mains power through and switches to its inverter only on a cut, so it is cheap and efficient. An online UPS runs the load from the inverter all the time, so there is no switch and the output is always clean, at the cost of price and a few percent of power lost as heat."
+  },
+  {
+   "q": "How long will a UPS or inverter give backup?",
+   "a": "That depends on the battery and the load, not on the unit. Backup hours = battery Ah × volts × usable depth of discharge (about {{d.dod_lead_acid|pct}} for tubular, about {{d.dod_lifepo4|pct}} for lithium) × inverter efficiency ÷ load watts. The battery backup time calculator works it out for your numbers."
+  }
+ ],
+ "related": [
+  "B1",
+  "B5",
+  "D4",
+  "B2"
+ ],
+ "next": "B1",
+ "literal_numbers": [
+  "LiFePO4"
+ ],
+ "sources": [
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

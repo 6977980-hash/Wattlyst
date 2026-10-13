@@ -1,6 +1,6 @@
 {
  "id": "B1",
- "status": "draft",
+ "status": "publish",
  "template": "tool",
  "h1": "Battery Backup Time Calculator for Home",
  "author": "ali-ahmad",
@@ -85,7 +85,7 @@
    "unit": "0 to 1",
    "default": "@inverter_eff_ups",
    "advanced": true,
-   "hint": "As a decimal: 0.85 means 85%."
+   "hint": "As a decimal: 0.85 means 85%. Enter 1 for a DC load wired straight to the battery."
   },
   {
    "name": "dod",
@@ -114,7 +114,8 @@
  "key_facts": [
   "Backup time (hours) = battery Ah × battery volts × usable depth of discharge × inverter efficiency ÷ load in watts.",
   "Tubular and lead-acid batteries should be used to about {{d.dod_lead_acid|pct}} of their capacity; lithium (LiFePO4) batteries to about {{d.dod_lifepo4|pct}}.",
-  "A typical home UPS converts battery power to AC at about {{d.inverter_eff_ups|pct}} efficiency, so part of the stored energy is lost as heat."
+  "A typical home UPS converts battery power to AC at about {{d.inverter_eff_ups|pct}} efficiency, so part of the stored energy is lost as heat.",
+  "A {{in.ah|int}} Ah, {{in.volts|1}} V tubular battery holds about {{out.usable_wh|int}} Wh of usable energy for a UPS, which gives about {{out.hours|hm}} at {{in.load_w|int}} W or about {{ex.3.out.hours|hm}} at {{ex.3.in.load_w|int}} W on a {{ex.3.in.ah|int}} Ah battery."
  ],
  "formula": {
   "text": "t = (Ah × V × DoD × η) ÷ P",
@@ -127,6 +128,22 @@
    "P = load in watts"
   ]
  },
+ "sections": [
+  {
+   "h2": "Inverter battery backup calculator: the same formula for every inverter",
+   "p": [
+    "A home UPS, an inverter and a hybrid solar inverter all do the same job on backup: they turn DC battery power into AC for your fans, lights and TV. So the inverter battery backup calculation is the same as the UPS one. What changes is the efficiency figure: a basic home UPS is about {{d.inverter_eff_ups|pct}} efficient, while a good hybrid inverter is closer to {{d.inverter_eff_hybrid|pct}}. Change the inverter efficiency under Advanced to match your unit.",
+    "The battery bank voltage matters as much as the Ah. Two {{in.ah|int}} Ah batteries in series on a {{d.battery_v_default|int}} V inverter store twice the energy of one, but the Ah stays {{in.ah|int}}; the volts double. Enter the bank voltage, not the voltage of a single battery, and the Ah of a single battery, not the sum."
+   ]
+  },
+  {
+   "h2": "Loadshedding UPS calculator: backup hours during loadshedding",
+   "p": [
+    "To plan for loadshedding, compare the backup hours with the length of your longest outage. With the default {{in.ah|int}} Ah battery and a {{in.load_w|int}} W load you get about {{out.hours|hm}}, enough for a typical outage of one to two hours but not for a long evening cut. If the backup is short, the cheapest fix is a smaller load: switch the TV off and keep only fans and lights, and the backup roughly doubles for every halving of the watts.",
+    "Backup is only half the story. The battery must also recharge before the next cut. A tubular battery that has given a full backup needs several hours of grid power to refill, so on days with several outages the second and third backups are shorter than the first. Lithium batteries recharge faster and can use more of their capacity, which is why they suit frequent loadshedding better."
+   ]
+  }
+ ],
  "examples": [
   {
    "inputs": {
@@ -155,6 +172,15 @@
    },
    "title": "{{in.ah|int}} Ah lithium battery",
    "text": "{{in.ah|int}} Ah × {{in.volts|1}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}} = {{out.usable_wh|int}} Wh. At {{in.load_w|int}} W the backup is {{out.hours|hm}}."
+  },
+  {
+   "inputs": {
+    "ah": 150,
+    "volts": 12,
+    "load_w": 100
+   },
+   "title": "One fan and a few LED lights on a {{in.ah|int}} Ah battery",
+   "text": "A ceiling fan with a few LED bulbs is about {{in.load_w|int}} W. {{in.ah|int}} Ah × {{in.volts|1}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}} = {{out.usable_wh|int}} Wh, so the backup is about {{out.hours|hm}}."
   }
  ],
  "table": {
@@ -209,33 +235,46 @@
  "safety": "Keep batteries in a ventilated place, use correctly rated cables and fuses, and have a licensed electrician connect a UPS to house wiring.",
  "faq": [
   {
-   "q": "How long will a {{in.ah|int}} Ah battery last?",
-   "a": "On a {{in.volts|1}} V tubular battery with a {{in.load_w|int}} W load through a UPS, about {{out.hours|hm}}. Halve the load and the backup roughly doubles."
+   "q": "How long will my UPS battery last?",
+   "a": "On a {{in.ah|int}} Ah, {{in.volts|1}} V tubular battery with a {{in.load_w|int}} W load, about {{out.hours|hm}}. Halve the load and the backup roughly doubles; an old or hot battery gives less."
+  },
+  {
+   "q": "What is the backup time of a {{ex.0.in.ah|int}} Ah battery?",
+   "a": "A {{ex.0.in.ah|int}} Ah, {{ex.0.in.volts|1}} V tubular battery holds about {{ex.0.out.usable_wh|int}} Wh of usable energy through a UPS. That is about {{ex.0.out.hours|hm}} at {{ex.0.in.load_w|int}} W (fans and lights) or about {{ex.3.out.hours|hm}} at {{ex.3.in.load_w|int}} W."
+  },
+  {
+   "q": "How many hours of backup does a tubular battery give?",
+   "a": "It depends on the load. A tubular battery should only be used to about {{d.dod_lead_acid|pct}} of its rating, so a {{in.ah|int}} Ah battery gives about {{out.hours|hm}} at {{in.load_w|int}} W, and a {{ex.0.in.ah|int}} Ah battery about {{ex.0.out.hours|hm}} at {{ex.0.in.load_w|int}} W."
+  },
+  {
+   "q": "What is the backup time of a lithium battery?",
+   "a": "Longer than a tubular battery of the same Ah, because lithium (LiFePO4) can safely use about {{d.dod_lifepo4|pct}} of its capacity against about {{d.dod_lead_acid|pct}} for tubular. A {{ex.2.in.ah|int}} Ah, {{ex.2.in.volts|1}} V lithium battery gives about {{ex.2.out.hours|hm}} at {{ex.2.in.load_w|int}} W."
+  },
+  {
+   "q": "How many hours of battery backup for a fan and lights?",
+   "a": "One ceiling fan with a few LED lights is about {{ex.3.in.load_w|int}} W. On a {{ex.3.in.ah|int}} Ah tubular battery that is about {{ex.3.out.hours|hm}}; two fans with lights, about {{ex.0.in.load_w|int}} W, give about {{ex.0.out.hours|hm}}."
+  },
+  {
+   "q": "What is the battery backup formula in hours?",
+   "a": "Backup hours = battery Ah × battery volts × usable depth of discharge × inverter efficiency ÷ load in watts. For a tubular battery use about {{d.dod_lead_acid|pct}} usable and about {{d.inverter_eff_ups|pct}} inverter efficiency; for lithium use about {{d.dod_lifepo4|pct}} usable."
   },
   {
    "q": "Why is my real backup different from the calculator?",
    "a": "The calculator shows backup while using only the recommended part of the battery. Many UPS units keep running until the battery is nearly empty, which gives longer backup but shortens battery life. Old batteries, heat and a higher real load give shorter backup."
   },
   {
-   "q": "Does a lithium battery give more backup?",
-   "a": "Yes for the same Ah and volts, because lithium can safely use about {{d.dod_lifepo4|pct}} of its capacity against about {{d.dod_lead_acid|pct}} for tubular batteries."
-  },
-  {
    "q": "Is backup time the same for AC and DC loads?",
    "a": "No. DC loads run straight from the battery without inverter loss. Set inverter efficiency to one for a DC load."
-  },
-  {
-   "q": "How do I find my load in watts?",
-   "a": "Add the watts on each appliance label, or use the appliance load calculator. Fans and LED lights are small loads; irons, heaters and ACs are large."
   }
  ],
  "related": [
   "B2",
   "B3",
   "B5",
+  "H9",
   "D4"
  ],
- "next": "B4",
+ "next": "D4",
  "literal_numbers": [
   "LiFePO4"
  ],
