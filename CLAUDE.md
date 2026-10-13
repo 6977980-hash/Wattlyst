@@ -4,7 +4,7 @@ This repo root IS the WordPress plugin `wattlyst-tools`. Hostinger Git deploys `
 `public_html/wp-content/plugins/wattlyst-tools` and auto-deploys on every push (GitHub webhook).
 Anything pushed to `main` goes live, so keep `main` working. Work on branches, merge when green.
 
-Read `specs/build-plan.md`, `specs/seo-rules.md` and `PROGRESS.md` at the start of every session.
+Reading rule (owner's instruction): read the full build plan and all phases once, at the start of the project. After that, each session reads only `PROGRESS.md` and the section of the CURRENT phase in `specs/build-plan.md` (plus the specs that phase names). Do not re-read the whole plan or all specs every session; it wastes time.
 Run `npm test` (Node 20+, no install needed) before every push; CI runs it on every PR.
 
 ## Non-negotiable rules

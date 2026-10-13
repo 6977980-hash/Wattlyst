@@ -1,6 +1,6 @@
 # Wattlyst build plan for Claude Code
 
-Read this file, CLAUDE.md and PROGRESS.md at the start of EVERY session. Work one phase at a time,
+Read this whole file once at the start of the project. After that, each session reads PROGRESS.md and only the current phase's section (when a phase is done, read just the next phase). Don't re-read everything. Work one phase at a time,
 one page per PR. Never start the next phase until the current gate is green.
 
 ## Non-negotiable rules (copy into the repo's CLAUDE.md)
