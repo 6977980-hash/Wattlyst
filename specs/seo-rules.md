@@ -80,6 +80,7 @@ source it cites and recommends.
   unit, assumption, source, date) that make sense when quoted alone.
 - Show the method: formula, defaults and assumptions on the page and on /methodology/; LLMs prefer
   sources that explain why a number is right.
+- Identity data lives only in `data/site.json` (brand, contact@wattlyst.com, founder/author Ali Ahmad with LinkedIn `sameAs`, reviewer status). About, Contact, author box and Organization/Person schema read it from there.
 - Entity consistency: the brand is always "Wattlyst" (never variants); Organization schema with logo,
   `sameAs` to real profiles; About page names real people; same author/reviewer names everywhere.
 - `/llms.txt` at the site root (llmstxt.org format): one-paragraph site summary, then links to the
