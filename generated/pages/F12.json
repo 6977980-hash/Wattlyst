@@ -3,15 +3,23 @@
  "type": "tool",
  "silo": "F",
  "url": "/bill/k-electric-bill-calculator/",
- "h1": "K Electric Bill Calculator",
+ "h1": "K-Electric Bill Calculator",
  "title": "K-Electric Bill Calculator 2026 (Karachi Tariff) | Wattlyst",
  "meta": "Estimate your K-Electric bill from units with the current tariff, FCA and taxes. Protected and non-protected slabs explained.",
  "primary_keyword": "k electric bill calculator",
  "wave": 1,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-13",
+ "published": "2026-10-13",
  "author": "ali-ahmad",
+ "related": [
+  "F1",
+  "F2",
+  "E5"
+ ],
+ "next": "F1",
  "parent": "P-F",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
@@ -22,11 +30,315 @@
    "url": "/bill/"
   },
   {
-   "name": "K Electric Bill Calculator",
+   "name": "K-Electric Bill Calculator",
    "url": "/bill/k-electric-bill-calculator/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "What is the K-Electric per unit rate?",
+    "p": [
+     "K-Electric used to have its own tariff schedule, but NEPRA's 2026 determination rationalised it to the uniform A-1 domestic rates charged across Pakistan. An unprotected Karachi home is billed the rate of the slab its monthly units reach on every unit: 300 units at Rs 33.1 here, less for the lower slabs and most for the open-ended top slab. Protected and lifeline consumers have their own low rates.",
+     "The examples and table below print the rate for each slab from the tariff file. The month's FCA, which K-Electric adds or subtracts per unit, is the one line that is not in the uniform tariff; take it from your bill."
+    ]
+   },
+   {
+    "h2": "What is the K-Electric tariff for 2026?",
+    "p": [
+     "The tariff is the uniform domestic schedule notified as SRO 279(I)/2026: two lifeline slabs up to one hundred units, two protected slabs up to 200 units, unprotected slabs of a hundred units each up to seven hundred and one open-ended slab above. Each slab carries its own fixed charge per kW of sanctioned load, and connections of 5 kW and above are billed on peak and off-peak ToU rates instead.",
+     "On top of the energy and fixed charges, the bill adds the FC surcharge, the quarterly tariff adjustment, the monthly FCA and GST. The surcharge, QTA and GST defaults here come from secondary sources and change over time, and how GST and the FC surcharge apply to lifeline bills is still being verified, so copy those lines from your bill."
+    ]
+   },
+   {
+    "h2": "KE bill calculator vs the official K-Electric bill",
+    "p": [
+     "This KE bill calculator estimates the bill from your units and category. It cannot see your account, arrears, the exact FCA for the month or any local charge, so treat the result as a planning estimate and as a check on the slab you were billed in. Your official bill, duplicate bill and payment status are on the K-Electric website.",
+     "The full electricity bill calculator for Pakistan, linked below, explains the slabs and the protected check in more depth; the maths is the same."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "How do I get a K-Electric bill estimate from my units?",
+    "a": "Enter the units and sanctioned load from the bill, tick protected only if the bill says so, and add the FCA from the bill in the advanced fields. For 300 units the estimate is Rs 13,458 before FCA."
+   },
+   {
+    "q": "What is the K-Electric per unit rate for a home?",
+    "a": "The uniform NEPRA domestic slab rate for the slab your month reaches: Rs 33.1 per unit for an unprotected home using 300 units. The table above lists the rate for every slab; protected and lifeline consumers pay less."
+   },
+   {
+    "q": "Is the K-Electric tariff for 2026 higher than other DISCOs?",
+    "a": "No. The 2026 determination rationalised K-Electric's domestic tariff to the same uniform rates as the ex-WAPDA DISCOs. The monthly FCA can differ from the FPA other DISCOs charge, which is why a Karachi bill is not always identical."
+   },
+   {
+    "q": "Does this KE bill calculator include the FCA?",
+    "a": "Yes, as an input. The FCA changes every month and can be a credit, so there is no fixed default; copy the per-unit figure from your bill into the FCA field under advanced settings and the estimate includes it."
+   },
+   {
+    "q": "How many units keep a K-Electric consumer protected?",
+    "a": "At or under 200 units in every one of the last 6 months on a connection below 5 kW. One month over the limit moves the home to unprotected rates on every unit."
+   },
+   {
+    "q": "Where do I see my official K-Electric bill?",
+    "a": "On the K-Electric website, using the account or consumer number printed on the bill. This calculator does not fetch your bill; it estimates one from the units you enter."
+   }
+  ],
+  "key_facts": [
+   "K-Electric's domestic tariff was rationalised to the same uniform NEPRA A-1 rates as the ex-WAPDA DISCOs in the 2026 determination, so a Karachi bill for a given number of units matches a Lahore or Islamabad bill apart from the monthly fuel adjustment.",
+   "The K-Electric per unit rate for an unprotected home using 300 units is Rs 33.1 on every unit, giving Rs 9,930 in energy charges before the fixed charge, surcharges, FCA and GST.",
+   "FCA is K-Electric's name for the monthly fuel charge adjustment that other DISCOs print as FPA; it changes every month, can be a credit, and is the field to copy from your bill.",
+   "A K-Electric protected consumer is one whose last 6 bills were all at or under 200 units on a connection below 5 kW; such bills are worked out slab-wise at the low protected rates."
+  ],
+  "mistakes": [
+   "Expecting a separate K-Electric rate. Since the 2026 rationalisation the slab rates are the uniform NEPRA domestic rates; only the FCA is K-Electric's own monthly figure.",
+   "Ignoring the FCA. In Karachi the fuel charge adjustment is often the line that makes two months with the same units cost different amounts; enter it from the bill.",
+   "Ticking protected on a low month. Protection needs all of the last six months under the limit, and a Karachi summer bill with an AC usually breaks the run.",
+   "Dividing the bill total by units to find the rate. Fixed charge, surcharges and GST are inside the total; the slab rate is the energy line divided by units."
+  ],
+  "sources": [
+   {
+    "label": "NEPRA tariff decision and SRO for A-1 domestic consumers, including K-Electric rationalisation (tariff PDF)",
+    "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf"
+   },
+   {
+    "label": "K-Electric official website (bill and account)",
+    "url": "https://www.ke.com.pk/"
+   },
+   {
+    "label": "Wattlyst methodology and default values",
+    "url": "/methodology/"
+   }
+  ],
+  "tool": {
+   "calc": "bill_total",
+   "module": "bill.js",
+   "data_keys": [
+    "tariff"
+   ],
+   "appliances": {},
+   "fields": [
+    {
+     "name": "units",
+     "label": "Units on the K-Electric bill",
+     "unit": "units",
+     "default": 300,
+     "hint": "Units (kWh) for the month, from the bill or from this and last month's meter readings."
+    },
+    {
+     "name": "sanctioned_kw",
+     "label": "Sanctioned load",
+     "unit": "kW",
+     "default": 1,
+     "hint": "The kW printed on the bill; most Karachi homes are one to five. It sets the fixed charge."
+    },
+    {
+     "name": "protected",
+     "label": "Protected consumer",
+     "type": "checkbox",
+     "default": false,
+     "hint": "Tick if every one of your last six K-Electric bills was within the protected unit limit; the bill prints the category."
+    },
+    {
+     "name": "lifeline",
+     "label": "Lifeline consumer (up to one hundred units)",
+     "type": "checkbox",
+     "default": false,
+     "advanced": true,
+     "hint": "Only for very small consumers whose bill shows the lifeline category."
+    },
+    {
+     "name": "period",
+     "label": "Billing quarter for QTA",
+     "type": "select",
+     "options_from": "qta_periods",
+     "default": "2026-09..2026-11",
+     "advanced": true,
+     "hint": "The quarterly tariff adjustment depends on the quarter the bill falls in.",
+     "options": [
+      [
+       "2026-03..2026-05",
+       "2026-03 to 2026-05"
+      ],
+      [
+       "2026-06..2026-08",
+       "2026-06 to 2026-08"
+      ],
+      [
+       "2026-09..2026-11",
+       "2026-09 to 2026-11"
+      ]
+     ]
+    },
+    {
+     "name": "fc_surcharge_per_unit",
+     "label": "FC surcharge",
+     "unit": "Rs per unit",
+     "default": 3.23,
+     "advanced": true,
+     "hint": "Financing cost surcharge per unit, from the bill. Secondary-source default."
+    },
+    {
+     "name": "fpa_per_unit",
+     "label": "FCA (fuel charge adjustment)",
+     "unit": "Rs per unit",
+     "placeholder": "From your bill (FPA / FCA)",
+     "advanced": true,
+     "hint": "K-Electric's monthly fuel charge adjustment, positive or negative, from the bill. Leave blank if unknown."
+    },
+    {
+     "name": "gst_pct",
+     "label": "GST",
+     "unit": "%",
+     "default": 18,
+     "advanced": true,
+     "hint": "Sales tax applied to the bill subtotal."
+    }
+   ],
+   "fixed_inputs": {},
+   "outputs": [
+    {
+     "key": "total_rs",
+     "label": "Estimated bill",
+     "spec": "rs",
+     "value": "Rs 13,458"
+    },
+    {
+     "key": "energy_rs",
+     "label": "Energy charge",
+     "spec": "rs",
+     "value": "Rs 9,930"
+    },
+    {
+     "key": "fixed_rs",
+     "label": "Fixed charge",
+     "spec": "rs",
+     "value": "Rs 350"
+    },
+    {
+     "key": "fc_rs",
+     "label": "FC surcharge",
+     "spec": "rs",
+     "value": "Rs 969"
+    },
+    {
+     "key": "qta_rs",
+     "label": "QTA",
+     "spec": "rs",
+     "value": "Rs 156"
+    },
+    {
+     "key": "gst_rs",
+     "label": "GST",
+     "spec": "rs",
+     "value": "Rs 2,053"
+    }
+   ],
+   "how": {
+    "tpl": "{{out.units|int}} units × Rs {{out.rate|2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw|int}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, FCA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}}; GST {{out.gst_pct|int}}% = {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}.",
+    "text": "300 units × Rs 33.1 (unprotected slab rate) = Rs 9,930. Fixed charge for 1 kW = Rs 350. FC surcharge Rs 969, QTA Rs 156, FCA Rs 0. Subtotal Rs 11,405; GST 18% = Rs 2,053. Estimated bill Rs 13,458."
+   },
+   "submit": "Calculate",
+   "data_checked": [
+    {
+     "label": "Pakistan electricity tariff (NEPRA notification)",
+     "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf",
+     "checked": "2026-10-13"
+    }
+   ]
+  },
+  "examples": [
+   {
+    "title": "200 units, K-Electric protected consumer",
+    "text": "Energy charge Rs 2,355 slab-wise at protected rates, fixed charge Rs 300 for 1 kW, FC surcharge Rs 646, QTA Rs 104, GST Rs 613. Estimated bill Rs 4,018 before FCA."
+   },
+   {
+    "title": "350 units, unprotected",
+    "text": "350 units all at Rs 36.46 = Rs 12,761, fixed charge Rs 400, FC surcharge Rs 1,131, QTA Rs 182, GST Rs 2,605. Estimated bill Rs 17,078 before FCA."
+   },
+   {
+    "title": "600 units in a Karachi summer, 3 kW connection",
+    "text": "Two ACs running most of the day: 600 units × Rs 40.22 = Rs 24,132, fixed charge Rs 2,025 for 3 kW, FC surcharge Rs 1,938, QTA Rs 312, GST Rs 5,113. Estimated bill Rs 33,520 before FCA."
+   },
+   {
+    "title": "100 units, lifeline consumer",
+    "text": "100 units at the lifeline rate of Rs 7.74 = Rs 774, with no fixed charge and no QTA. With the FC surcharge and GST fields blank the estimate assumes neither applies to lifeline bills (still being verified): Rs 774."
+   }
+  ],
+  "table": {
+   "caption": "Estimated K-Electric bill by units on a 1 kW connection with the default surcharges and GST, before FCA; unprotected unless marked",
+   "head": [
+    "Units",
+    "Per unit rate",
+    "Energy",
+    "Fixed",
+    "Estimated bill"
+   ],
+   "rows": [
+    [
+     "100 (unprotected)",
+     "Rs 22.44",
+     "Rs 2,244",
+     "Rs 275",
+     "Rs 3,415"
+    ],
+    [
+     "200 (protected)",
+     "Rs 13.01",
+     "Rs 2,355",
+     "Rs 300",
+     "Rs 4,018"
+    ],
+    [
+     "200 (unprotected)",
+     "Rs 28.91",
+     "Rs 5,782",
+     "Rs 300",
+     "Rs 8,062"
+    ],
+    [
+     "300 (unprotected)",
+     "Rs 33.1",
+     "Rs 9,930",
+     "Rs 350",
+     "Rs 13,458"
+    ],
+    [
+     "400 (unprotected)",
+     "Rs 36.46",
+     "Rs 14,584",
+     "Rs 400",
+     "Rs 19,451"
+    ],
+    [
+     "500 (unprotected)",
+     "Rs 38.95",
+     "Rs 19,475",
+     "Rs 500",
+     "Rs 25,783"
+    ],
+    [
+     "800 (unprotected)",
+     "Rs 47.2",
+     "Rs 37,760",
+     "Rs 675",
+     "Rs 48,893"
+    ]
+   ]
+  },
+  "answer": "A Karachi home on K-Electric using 300 units a month as an unprotected consumer with a 1 kW connection pays about Rs 13,458: Rs 9,930 energy charge at Rs 33.1 per unit, plus fixed charge, FC surcharge, QTA and GST, before the month's FCA. K-Electric bill = units × slab rate + fixed charge + adjustments + GST.",
+  "formula": {
+   "text": "Bill = units × slab rate + fixed Rs/kW × sanctioned kW + (FC + QTA + FCA) × units, then + GST",
+   "lines": [
+    "slab rate = rate of the band the month's units reach (unprotected) or slab-wise (protected)",
+    "fixed = Rs per kW of the band reached × sanctioned kW",
+    "FC = financing cost surcharge; QTA = quarterly adjustment; FCA = K-Electric's monthly fuel charge adjustment",
+    "GST = percentage of the subtotal"
+   ]
+  },
+  "safety": ""
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -49,7 +361,7 @@
      {
       "@type": "ListItem",
       "position": 3,
-      "name": "K Electric Bill Calculator",
+      "name": "K-Electric Bill Calculator",
       "item": "https://wattlyst.com/bill/k-electric-bill-calculator/"
      }
     ]
@@ -66,12 +378,14 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/bill/k-electric-bill-calculator/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-13",
+    "lastReviewed": "2026-10-13"
    },
    {
     "@type": "WebApplication",
     "@id": "https://wattlyst.com/bill/k-electric-bill-calculator/#app",
-    "name": "K Electric Bill Calculator",
+    "name": "K-Electric Bill Calculator",
     "url": "https://wattlyst.com/bill/k-electric-bill-calculator/",
     "description": "Estimate your K-Electric bill from units with the current tariff, FCA and taxes. Protected and non-protected slabs explained.",
     "applicationCategory": "UtilitiesApplication",
@@ -98,6 +412,60 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/bill/k-electric-bill-calculator/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "How do I get a K-Electric bill estimate from my units?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Enter the units and sanctioned load from the bill, tick protected only if the bill says so, and add the FCA from the bill in the advanced fields. For 300 units the estimate is Rs 13,458 before FCA."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What is the K-Electric per unit rate for a home?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "The uniform NEPRA domestic slab rate for the slab your month reaches: Rs 33.1 per unit for an unprotected home using 300 units. The table above lists the rate for every slab; protected and lifeline consumers pay less."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Is the K-Electric tariff for 2026 higher than other DISCOs?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "No. The 2026 determination rationalised K-Electric's domestic tariff to the same uniform rates as the ex-WAPDA DISCOs. The monthly FCA can differ from the FPA other DISCOs charge, which is why a Karachi bill is not always identical."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Does this KE bill calculator include the FCA?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Yes, as an input. The FCA changes every month and can be a credit, so there is no fixed default; copy the per-unit figure from your bill into the FCA field under advanced settings and the estimate includes it."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many units keep a K-Electric consumer protected?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "At or under 200 units in every one of the last 6 months on a connection below 5 kW. One month over the limit moves the home to unprotected rates on every unit."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Where do I see my official K-Electric bill?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "On the K-Electric website, using the account or consumer number printed on the bill. This calculator does not fetch your bill; it estimates one from the units you enter."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

@@ -3,15 +3,24 @@
  "type": "tool",
  "silo": "D",
  "url": "/solar/solar-panel-for-12v-battery/",
- "h1": "Solar Panel Calculator For 12v Battery",
+ "h1": "Solar Panel Calculator for 12V Battery",
  "title": "Solar Panel Size for 12V Battery Calculator | Wattlyst",
  "meta": "What size solar panel charges a 100Ah or 200Ah 12V battery? Includes charge controller type, sun hours and charging losses.",
  "primary_keyword": "solar panel calculator for 12v battery",
  "wave": 1,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-13",
+ "published": "2026-10-13",
  "author": "ali-ahmad",
+ "related": [
+  "B2",
+  "D5",
+  "D8",
+  "B1"
+ ],
+ "next": "B2",
  "parent": "P-D",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
@@ -22,11 +31,299 @@
    "url": "/solar/"
   },
   {
-   "name": "Solar Panel Calculator For 12v Battery",
+   "name": "Solar Panel Calculator for 12V Battery",
    "url": "/solar/solar-panel-for-12v-battery/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "What size solar panel do I need to charge a 12 V battery?",
+    "p": [
+     "Work out the energy to put back, then divide by what a panel really delivers. A 100 Ah 12 V lead-acid battery used to 50% needs 100 × 12 × 50% watt-hours, plus the charging loss (85% efficiency). Over 5 peak sun hours at a performance ratio of 0.78, that comes to 181 W, so the panel to buy is 200 W.",
+     "The calculator rounds up to the next panel size sold. If the rounding gives you a much bigger panel than the minimum, the charge simply finishes sooner: the time to a full charge is shown for the panel you buy, not for the minimum watts."
+    ]
+   },
+   {
+    "h2": "Solar panel for a 100 Ah battery and a 200 Ah battery",
+    "p": [
+     "For a 100 Ah 12 V lead-acid battery with 5 peak sun hours the minimum is 181 W, so a 200 W panel with a 30 A MPPT controller. For a 200 Ah battery the minimum is 362 W, so a 400 W panel and a 50 A controller.",
+     "These sizes refill a battery used to half each day. If you only use a quarter of the battery, lower the depth of discharge in the advanced options and the panel halves; if you want a day's charge back from a deeper discharge, raise it."
+    ]
+   },
+   {
+    "h2": "Which charge controller for a 12 V battery: MPPT or PWM?",
+    "p": [
+     "The controller current shown is for an MPPT controller: panel watts ÷ battery volts × a 1.25 margin, rounded up to the next size sold, 30 A for the 200 W panel on a 12 V battery. An MPPT controller converts the panel's higher voltage into charging current, so a higher-voltage panel still delivers its full watts.",
+     "A PWM controller is cheaper but wastes the difference between the panel voltage and the battery voltage, so it only works well with a panel made for the battery's voltage and delivers noticeably less than the calculator assumes. If you use PWM, buy a bigger panel or expect slower charging. The charge controller calculator covers PWM sizing by panel current."
+    ]
+   },
+   {
+    "h2": "Solar charging time calculator: how long to charge the battery?",
+    "p": [
+     "With the panel you buy, the battery refills in 4.5 hours of peak sun, which is 0.9 days at 5 peak sun hours a day. Peak sun hours are not daylight hours: a Pakistani summer day has far more daylight than its five to six peak sun hours, because morning and evening sun is weak.",
+     "Lead-acid batteries also slow down in the last part of the charge (the absorption stage), so the real time to a truly full battery is longer than this estimate. Treat it as the time to put back the day's energy, not as a stopwatch."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "What size solar panel do I need for a 100 Ah battery?",
+    "a": "A 100 Ah 12 V lead-acid battery used to half needs a 200 W panel (181 W minimum) with 5 peak sun hours a day, and refills in about 4.5 hours of peak sun."
+   },
+   {
+    "q": "What size solar panel for a 200 Ah battery?",
+    "a": "A 200 Ah 12 V lead-acid battery needs a 400 W panel (362 W minimum) and a 50 A MPPT charge controller to put back half its charge in 5 peak sun hours."
+   },
+   {
+    "q": "How many watts does it take to charge a 100 Ah battery?",
+    "a": "The energy is 100 Ah × 12 V × the share you used; at 50% with charging losses the panel must deliver about 181 W over 5 peak sun hours. Any panel from 200 W up does it; a bigger panel only charges faster, as long as the controller is rated for it."
+   },
+   {
+    "q": "Which charge controller do I need for a 12 V battery?",
+    "a": "An MPPT controller rated for the panel watts ÷ battery volts with a 1.25 margin: 30 A for a 200 W panel on a 12 V battery. Also check the controller's maximum panel voltage against the panel's open-circuit voltage."
+   },
+   {
+    "q": "How long does a solar panel take to charge a 12 V battery?",
+    "a": "The 200 W panel refills a 100 Ah battery used to 50% in about 4.5 hours of peak sun, roughly 0.9 sunny days. Cloud, a dirty panel or a PWM controller make it longer, and lead-acid batteries slow down near full."
+   },
+   {
+    "q": "Is the panel size different for a lithium battery?",
+    "a": "The formula is the same but the numbers differ: lithium charges at about 95% efficiency and is used to about 90%, so a 100 Ah lithium battery used fully each day needs a 300 W panel. Set the depth of discharge and charging efficiency in the advanced options."
+   },
+   {
+    "q": "Can I connect a solar panel straight to a 12 V battery?",
+    "a": "Not for daily use. Without a charge controller the panel keeps pushing current into a full battery and boils the electrolyte or damages the cells. Even a small panel should go through a controller."
+   }
+  ],
+  "key_facts": [
+   "A 100 Ah 12 V lead-acid battery used to 50% needs a 200 W solar panel (181 W minimum) to recharge in 5 peak sun hours.",
+   "A 200 Ah 12 V battery needs a 400 W panel and a 50 A MPPT controller under the same sun; doubling the Ah doubles the panel watts.",
+   "Solar panel watts to charge a battery = Ah × V × depth of discharge ÷ charging efficiency ÷ (peak sun hours × performance ratio); a panel rarely gives its label watts, so the 0.78 ratio matters.",
+   "Lead-acid batteries store about 85% of the energy sent in and should be refilled from about 50%; lithium stores about 95% and can be used to 90%, so a 100 Ah lithium battery needs a 300 W panel."
+  ],
+  "mistakes": [
+   "Using daylight hours instead of peak sun hours. A twelve-hour day gives only about five to six hours of full-strength sun, so a panel sized on daylight hours is far too small.",
+   "Expecting the label watts from the panel. Heat, dust, cable loss and the controller take their share; the calculator keeps only 78% of the rating.",
+   "Matching panel watts to battery Ah with no sun or depth figure. A battery used to a quarter and one drained every day need very different panels for the same Ah.",
+   "Using a PWM controller with a high-voltage panel. It clips the panel to the battery voltage and loses a large part of the watts; the controller current here is for MPPT.",
+   "Skipping the controller altogether. A panel wired straight to a battery overcharges it once it is full and shortens its life."
+  ],
+  "sources": [
+   {
+    "label": "Wattlyst methodology and default values",
+    "url": "/methodology/"
+   },
+   {
+    "label": "Global Solar Atlas (peak sun hours by location)",
+    "url": "https://globalsolaratlas.info/"
+   }
+  ],
+  "tool": {
+   "calc": "panel_for_12v",
+   "module": "solar.js",
+   "data_keys": [
+    "cities"
+   ],
+   "appliances": {},
+   "fields": [
+    {
+     "name": "ah",
+     "label": "Battery capacity",
+     "unit": "Ah",
+     "default": 100,
+     "hint": "From the battery label, for example 100, 150 or 200 Ah."
+    },
+    {
+     "name": "volts",
+     "label": "Battery voltage",
+     "unit": "V",
+     "type": "select",
+     "default": 12,
+     "options": [
+      [
+       12,
+       "12 V"
+      ],
+      [
+       24,
+       "24 V"
+      ]
+     ],
+     "hint": "A single battery is 12 V; two in series make 24 V."
+    },
+    {
+     "name": "psh",
+     "label": "Peak sun hours a day",
+     "unit": "h",
+     "default": 5,
+     "hint": "Hours of full-strength sun a day. Pakistani cities get about five to six on a clear day; use four for winter or a cloudy place."
+    },
+    {
+     "name": "dod",
+     "label": "Depth of discharge to refill",
+     "unit": "0 to 1",
+     "default": 0.5,
+     "advanced": true,
+     "hint": "How much of the battery is used each day and must be put back. As a decimal; half for lead-acid, most of it for lithium."
+    },
+    {
+     "name": "charge_eff",
+     "label": "Charging efficiency",
+     "unit": "0 to 1",
+     "default": 0.85,
+     "advanced": true,
+     "hint": "Share of the energy sent in that the battery stores. Lead-acid loses more than lithium. As a decimal."
+    },
+    {
+     "name": "pr",
+     "label": "Performance ratio",
+     "unit": "0 to 1",
+     "default": 0.78,
+     "advanced": true,
+     "hint": "Share of the panel's rated watts you really get after heat, dust, wiring and controller losses. As a decimal."
+    },
+    {
+     "name": "margin",
+     "label": "Charge controller margin",
+     "unit": "times",
+     "default": 1.25,
+     "advanced": true,
+     "hint": "Sizing margin on the controller current. A decimal like one point two five."
+    }
+   ],
+   "fixed_inputs": {},
+   "outputs": [
+    {
+     "key": "standard_panel_w",
+     "label": "Panel to buy",
+     "spec": "int",
+     "unit": "W",
+     "value": "200"
+    },
+    {
+     "key": "panel_w",
+     "label": "Minimum panel watts",
+     "spec": "int",
+     "unit": "W",
+     "value": "181"
+    },
+    {
+     "key": "charge_hours",
+     "label": "Full charge in peak sun",
+     "spec": "1",
+     "unit": "h",
+     "value": "4.5"
+    },
+    {
+     "key": "standard_controller_a",
+     "label": "MPPT charge controller",
+     "spec": "int",
+     "unit": "A",
+     "value": "30"
+    }
+   ],
+   "how": {
+    "tpl": "Energy to put back: {{in.ah|int}} Ah × {{in.volts|int}} V × {{out.dod|pct}} depth of discharge ÷ {{out.charge_eff|pct}} charging efficiency = the watt-hours the panel must deliver. Divided by {{in.psh|int}} peak sun hours × {{out.pr|2}} performance ratio = {{out.panel_w|int}} W minimum, rounded up to the next panel size sold, {{out.standard_panel_w|int}} W. That panel refills the battery in {{out.charge_hours|1}} hours of peak sun, about {{out.charge_days|1}} sunny days. Controller: {{out.standard_panel_w|int}} W ÷ {{in.volts|int}} V × {{d.margin|2}} margin = {{out.controller_a|1}} A, so a {{out.standard_controller_a|int}} A MPPT controller.",
+    "text": "Energy to put back: 100 Ah × 12 V × 50% depth of discharge ÷ 85% charging efficiency = the watt-hours the panel must deliver. Divided by 5 peak sun hours × 0.78 performance ratio = 181 W minimum, rounded up to the next panel size sold, 200 W. That panel refills the battery in 4.5 hours of peak sun, about 0.9 sunny days. Controller: 200 W ÷ 12 V × 1.25 margin = 20.8 A, so a 30 A MPPT controller."
+   },
+   "submit": "Calculate",
+   "data_checked": [
+    {
+     "label": "Peak sun hours by city (Global Solar Atlas)",
+     "url": "https://globalsolaratlas.info/",
+     "checked": "2026-10-13"
+    }
+   ]
+  },
+  "examples": [
+   {
+    "title": "100 Ah 12 V lead-acid battery",
+    "text": "100 Ah × 12 V × 50% ÷ 85% ÷ (5 h × 0.78) = 181 W minimum, so a 200 W panel. It refills the battery in 4.5 h of peak sun with a 30 A MPPT controller."
+   },
+   {
+    "title": "200 Ah 12 V lead-acid battery",
+    "text": "Twice the capacity needs twice the watts: 362 W minimum, so a 400 W panel. Full charge in 4.5 h of peak sun; the controller current is 41.7 A, so a 50 A MPPT controller."
+   },
+   {
+    "title": "150 Ah battery bank at 24 V",
+    "text": "Two batteries in series double the volts, so the energy to put back doubles: 543 W minimum, a 550 W panel. At 24 V the controller current stays modest, 28.6 A, so a 30 A MPPT controller; full charge in 4.9 h of peak sun."
+   },
+   {
+    "title": "100 Ah lithium (LiFePO4) battery used to 90%",
+    "text": "Lithium stores 95% of what goes in but is used much deeper, 90%, so there is more to put back: 291 W minimum, a 300 W panel, with a 40 A MPPT controller. Full charge in 4.9 h of peak sun."
+   }
+  ],
+  "table": {
+   "caption": "Solar panel and MPPT controller for lead-acid batteries used to 50% with 5 peak sun hours a day",
+   "head": [
+    "Battery",
+    "Minimum panel",
+    "Panel to buy",
+    "Full charge",
+    "MPPT controller"
+   ],
+   "rows": [
+    [
+     "50 Ah 12 V",
+     "90 W",
+     "100 W",
+     "4.5 h of peak sun",
+     "20 A"
+    ],
+    [
+     "100 Ah 12 V",
+     "181 W",
+     "200 W",
+     "4.5 h of peak sun",
+     "30 A"
+    ],
+    [
+     "150 Ah 12 V",
+     "271 W",
+     "300 W",
+     "4.5 h of peak sun",
+     "40 A"
+    ],
+    [
+     "200 Ah 12 V",
+     "362 W",
+     "400 W",
+     "4.5 h of peak sun",
+     "50 A"
+    ],
+    [
+     "100 Ah 24 V",
+     "362 W",
+     "400 W",
+     "4.5 h of peak sun",
+     "30 A"
+    ],
+    [
+     "150 Ah 24 V",
+     "543 W",
+     "550 W",
+     "4.9 h of peak sun",
+     "30 A"
+    ]
+   ]
+  },
+  "answer": "A 100 Ah 12 V lead-acid battery needs at least a 181 W solar panel to put back half its charge in 5 peak sun hours, so buy a 200 W panel with a 30 A MPPT charge controller. That panel refills the battery in about 4.5 hours of peak sun. Panel watts = Ah × V × depth of discharge ÷ charging efficiency ÷ (sun hours × performance ratio).",
+  "formula": {
+   "text": "W = (Ah × V × DoD ÷ η_chg) ÷ (PSH × PR); t = (Ah × V × DoD ÷ η_chg) ÷ (W_fitted × PR); A = W_fitted ÷ V × m",
+   "lines": [
+    "W = minimum panel watts; W_fitted = the next panel size sold",
+    "Ah, V = battery capacity and voltage",
+    "DoD = depth of discharge to put back each day",
+    "η_chg = charging efficiency of the battery",
+    "PSH = peak sun hours a day; PR = performance ratio",
+    "t = hours of peak sun to a full charge",
+    "A = MPPT controller current; m = margin"
+   ]
+  },
+  "safety": "Fuse the battery and the panel cable, use a charge controller rated for the panel, keep lead-acid batteries ventilated, and have a licensed electrician or certified installer wire any system that feeds house circuits."
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -49,7 +346,7 @@
      {
       "@type": "ListItem",
       "position": 3,
-      "name": "Solar Panel Calculator For 12v Battery",
+      "name": "Solar Panel Calculator for 12V Battery",
       "item": "https://wattlyst.com/solar/solar-panel-for-12v-battery/"
      }
     ]
@@ -66,12 +363,14 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/solar/solar-panel-for-12v-battery/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-13",
+    "lastReviewed": "2026-10-13"
    },
    {
     "@type": "WebApplication",
     "@id": "https://wattlyst.com/solar/solar-panel-for-12v-battery/#app",
-    "name": "Solar Panel Calculator For 12v Battery",
+    "name": "Solar Panel Calculator for 12V Battery",
     "url": "https://wattlyst.com/solar/solar-panel-for-12v-battery/",
     "description": "What size solar panel charges a 100Ah or 200Ah 12V battery? Includes charge controller type, sun hours and charging losses.",
     "applicationCategory": "UtilitiesApplication",
@@ -98,6 +397,68 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/solar/solar-panel-for-12v-battery/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "What size solar panel do I need for a 100 Ah battery?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "A 100 Ah 12 V lead-acid battery used to half needs a 200 W panel (181 W minimum) with 5 peak sun hours a day, and refills in about 4.5 hours of peak sun."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What size solar panel for a 200 Ah battery?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "A 200 Ah 12 V lead-acid battery needs a 400 W panel (362 W minimum) and a 50 A MPPT charge controller to put back half its charge in 5 peak sun hours."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many watts does it take to charge a 100 Ah battery?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "The energy is 100 Ah × 12 V × the share you used; at 50% with charging losses the panel must deliver about 181 W over 5 peak sun hours. Any panel from 200 W up does it; a bigger panel only charges faster, as long as the controller is rated for it."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Which charge controller do I need for a 12 V battery?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "An MPPT controller rated for the panel watts ÷ battery volts with a 1.25 margin: 30 A for a 200 W panel on a 12 V battery. Also check the controller's maximum panel voltage against the panel's open-circuit voltage."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How long does a solar panel take to charge a 12 V battery?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "The 200 W panel refills a 100 Ah battery used to 50% in about 4.5 hours of peak sun, roughly 0.9 sunny days. Cloud, a dirty panel or a PWM controller make it longer, and lead-acid batteries slow down near full."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Is the panel size different for a lithium battery?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "The formula is the same but the numbers differ: lithium charges at about 95% efficiency and is used to about 90%, so a 100 Ah lithium battery used fully each day needs a 300 W panel. Set the depth of discharge and charging efficiency in the advanced options."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Can I connect a solar panel straight to a 12 V battery?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Not for daily use. Without a charge controller the panel keeps pushing current into a full battery and boils the electrolyte or damages the cells. Even a small panel should go through a controller."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",
