@@ -1,6 +1,6 @@
 // E. Load, AC, units (specs/formulas.md section E) and load/cost tools from section G.
 import { calculator, CalcError, has, pos, frac, nonneg, num, dflt, appliance } from './core.js';
-import { sumLoads } from './sizing.js';
+import { sumLoads, loadRows } from './sizing.js';
 import { design_current } from './wiring.js';
 
 /**
@@ -29,37 +29,6 @@ export const ac_units = calculator((i, d) => {
   }
   return out;
 });
-
-/**
- * Appliance rows for the load tools: [{ id, watts, qty, hours }]. `id` picks running/starting watts and the
- * typical hours from data/appliances.json ("custom" or blank = the watts entered); `watts` overrides the
- * running watts (starting watts scale with it); qty defaults to 1; hours per day defaults to the appliance's typical hours.
- */
-export function loadRows(loads, d) {
-  if (!Array.isArray(loads) || loads.length === 0) throw new CalcError('loads_required', 'loads');
-  try {
-    return loads.map((row, idx) => rowOf(row, idx, d));
-  } catch (e) {
-    if (e instanceof CalcError) throw new CalcError(e.code, 'loads'); // the UI points at the list, not a field name
-    throw e;
-  }
-}
-
-function rowOf(row, idx, d) {
-  {
-    const id = typeof row?.id === 'string' ? row.id.trim() : '';
-    const item = id && id !== 'custom' ? appliance(d, id, 'loads') : null;
-    const qty = num(row, 'qty', { def: 1, min: 0, code: `load_${idx}_qty_invalid` });
-    let run;
-    if (has(row, 'watts') || !item) run = num(row, 'watts', { min: 0, code: item ? `load_${idx}_watts_invalid` : `load_${idx}_watts_required` });
-    else run = item.running_w;
-    const start = item ? (item.starting_w * run) / item.running_w : run;
-    // Energy uses the average draw where one is known (inverter ACs cycle well below their rated input, formulas.md E).
-    const energy_w = item?.avg_w ? (item.avg_w * run) / item.running_w : run;
-    const hours = num(row, 'hours', { def: item?.typical_hours_per_day ?? 0, min: 0, max: 24, code: `load_${idx}_hours_invalid` });
-    return { id: item ? id : 'custom', name: item?.name ?? 'Custom load', run, start, energy_w, qty, hours };
-  }
-}
 
 /**
  * E1: home load from an appliance list. Running W = Σ run × qty; peak W adds the largest starting step

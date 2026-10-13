@@ -1,7 +1,6 @@
 // D. Solar (specs/formulas.md section D) and solar tools from section G.
 import { calculator, CalcError, has, pos, frac, nonneg, ceilSafe, dflt, num, appliance } from './core.js';
-import { sumLoads } from './sizing.js';
-import { loadRows } from './load.js';
+import { sumLoads, loadRows } from './sizing.js';
 
 /** Specific yield (kWh/kWp/day): explicit input > city from data/cities-pk.json > PSH × PR. */
 function yieldFor(i, d) {

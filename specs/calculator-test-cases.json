@@ -3247,5 +3247,28 @@
     },
     "tolerance": 0,
     "note": "Phase 3"
+  },
+  {
+    "calc": "inverter_size",
+    "name": "appliance rows: 3 fans + 1 ton inverter AC",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ceiling-fan-ac",
+          "qty": 3
+        },
+        {
+          "id": "ac-split-1ton-inverter"
+        }
+      ]
+    },
+    "expected": {
+      "running_w": 1140,
+      "surge_w": 1440,
+      "continuous_w": 1425,
+      "kva": 1.78125
+    },
+    "tolerance": 0.01,
+    "note": "Phase 3: rows from data/appliances.json (240 + 900 W; AC start step 300 W)"
   }
 ]

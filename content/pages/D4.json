@@ -1,0 +1,409 @@
+{
+ "id": "D4",
+ "status": "publish",
+ "template": "tool",
+ "h1": "Inverter Size Calculator for Home Appliances",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "calc": "inverter_size",
+ "fields": [
+  {
+   "name": "loads",
+   "label": "Appliances the inverter must run at the same time",
+   "type": "loads",
+   "catalog": "all",
+   "default": [
+    {
+     "id": "ceiling-fan-ac",
+     "qty": 3
+    },
+    {
+     "id": "led-bulb",
+     "qty": 8,
+     "hours": 6
+    },
+    {
+     "id": "led-tv-43",
+     "qty": 1
+    },
+    {
+     "id": "refrigerator-inverter",
+     "qty": 1
+    },
+    {
+     "id": "ac-split-1ton-inverter",
+     "qty": 1,
+     "hours": 8
+    }
+   ],
+   "hint": "Pick each appliance, check the watts against its label and set how many you have. Only add what will run on the inverter at once; hours do not change the inverter size."
+  },
+  {
+   "name": "margin",
+   "label": "Safety margin",
+   "unit": "times",
+   "default": "@margin",
+   "advanced": true,
+   "hint": "Inverter continuous rating above the running watts, so it is never run flat out. A decimal like one point two five."
+  },
+  {
+   "name": "pf",
+   "label": "Power factor",
+   "unit": "0 to 1",
+   "default": "@pf_mixed",
+   "advanced": true,
+   "hint": "Converts watts to the VA or kVA rating on the inverter label. Mixed home loads with fans and motors are about this value."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "continuous_w",
+   "label": "Inverter continuous rating needed",
+   "spec": "int",
+   "unit": "W"
+  },
+  {
+   "key": "kva",
+   "label": "Inverter rating",
+   "spec": "2",
+   "unit": "kVA"
+  },
+  {
+   "key": "running_w",
+   "label": "Running load",
+   "spec": "int",
+   "unit": "W"
+  },
+  {
+   "key": "surge_w",
+   "label": "Surge rating needed",
+   "spec": "int",
+   "unit": "W"
+  }
+ ],
+ "answer": "Three fans, eight LED bulbs, a TV, an inverter fridge and a 1 ton inverter AC draw {{out.running_w|int}} W together, so the inverter needs a continuous rating of at least {{out.continuous_w|int}} W, about {{out.kva|2}} kVA, with a surge rating of {{out.surge_w|int}} W for the fridge compressor starting. Inverter watts = running load × margin; kVA = watts ÷ power factor ÷ 1,000.",
+ "how": "Running load = the running watts of every appliance × its quantity, added up = {{out.running_w|int}} W. Continuous rating = {{out.running_w|int}} W × {{out.margin|2}} margin = {{out.continuous_w|int}} W. kVA = {{out.continuous_w|int}} W ÷ {{out.pf|2}} power factor ÷ 1,000 = {{out.kva|2}} kVA. Surge = running load plus the extra starting watts of the largest motor or compressor = {{out.surge_w|int}} W, which the inverter's surge rating must cover.",
+ "key_facts": [
+  "Inverter size in watts = the running watts of everything that runs on it at once × a {{d.margin|2}} safety margin; kVA = watts ÷ a power factor of {{d.pf_mixed|2}} ÷ 1,000.",
+  "The surge rating must cover the running load plus the largest single starting step: a fridge compressor draws about {{d.start_factors.fridge|int}} times its running watts and a non-inverter AC or water pump about {{d.start_factors.compressor_non_inverter|int}} times for a second or two.",
+  "Fans and LED lights alone need a small inverter: {{ex.0.out.continuous_w|int}} W continuous ({{ex.0.out.kva|2}} kVA) for three fans and eight bulbs; adding a fridge and a 1 ton inverter AC takes it to {{ex.1.out.continuous_w|int}} W ({{ex.1.out.kva|2}} kVA).",
+  "A 1.5 ton non-inverter AC with a fridge needs an inverter with a surge rating of {{ex.2.out.surge_w|int}} W although the running load is only {{ex.2.out.running_w|int}} W; the surge, not the running watts, decides the size."
+ ],
+ "formula": {
+  "text": "P_run = Σ (W × qty); P_inv = P_run × m; kVA = P_inv ÷ PF ÷ 1000; P_surge = P_run + max(W_start − W)",
+  "lines": [
+   "P_run = total running watts of the appliances on at once",
+   "W = running watts of one appliance, qty = how many",
+   "m = safety margin on the running load",
+   "PF = power factor (converts watts to VA)",
+   "P_surge = surge the inverter must supply when the largest motor starts",
+   "W_start = starting watts of that motor or compressor"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "What size inverter do I need for my home?",
+   "p": [
+    "Add up the running watts of everything that will run on the inverter at the same time, multiply by a safety margin and that is the continuous rating to buy. For the default list of three fans, eight bulbs, a TV, an inverter fridge and a 1 ton inverter AC the running load is {{out.running_w|int}} W, the continuous rating {{out.continuous_w|int}} W and the label rating about {{out.kva|2}} kVA.",
+    "Then check the surge. Motors and compressors draw several times their running watts for a second or two when they start; the inverter's surge or peak rating must cover the running load plus that step. Here the inverter fridge is the largest step and the surge is {{out.surge_w|int}} W. Most inverters quote a surge of about twice their continuous rating, so check the figure on the datasheet, not only the headline kVA."
+   ]
+  },
+  {
+   "h2": "Can a UPS or inverter run a 1 ton AC?",
+   "p": [
+    "Yes, if it is sized for it. A 1 ton inverter AC runs at about {{ex.4.out.running_w|int}} W with two fans and has no hard compressor start, so it needs an inverter of about {{ex.4.out.continuous_w|int}} W continuous ({{ex.4.out.kva|2}} kVA) and a surge of {{ex.4.out.surge_w|int}} W. A small home UPS of around one kVA cannot do this; a hybrid or solar inverter of two kVA and up can, as long as its battery bank is big enough for the hours you want.",
+    "A 1 ton non-inverter AC is a different matter: its compressor starts at several times its running watts, and most UPS units cannot supply that surge. If the AC is non-inverter, size on the surge figure the calculator shows and expect a much larger inverter."
+   ]
+  },
+  {
+   "h2": "Inverter for an AC and a fridge together",
+   "p": [
+    "A fridge compressor starts at about {{d.start_factors.fridge|int}} times its running watts and a non-inverter AC compressor at about {{d.start_factors.compressor_non_inverter|int}} times, but only one of them starts in a given instant, so the calculator adds the largest single step, not both. A 1.5 ton non-inverter AC with a non-inverter fridge runs at {{ex.2.out.running_w|int}} W, needs {{ex.2.out.continuous_w|int}} W continuous ({{ex.2.out.kva|2}} kVA) and a surge rating of {{ex.2.out.surge_w|int}} W.",
+    "With the inverter models of both appliances the same pair needs far less, which is why a hybrid inverter paired with inverter appliances is the usual recommendation for a solar home."
+   ]
+  },
+  {
+   "h2": "How many kW of inverter for a home, and what about hybrid inverters?",
+   "p": [
+    "Fans, lights and a TV need under one kW. Add an inverter fridge and a 1 ton inverter AC and the home needs about {{out.kva|2}} kVA; each extra 1.5 ton inverter AC adds roughly one and a half kW of running load. Size for the appliances you will actually run on backup or solar, not for everything in the house, because the inverter cost and the battery it needs grow with the rating.",
+    "A hybrid inverter is sized the same way on its AC output side: continuous watts × the margin, with a surge rating for the largest motor. Its solar input side is sized separately from the panels; the solar system calculators cover that. Check that the hybrid inverter's battery voltage matches the battery bank you plan."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 3
+     },
+     {
+      "id": "led-bulb",
+      "qty": 8
+     }
+    ]
+   },
+   "title": "Fans and lights only",
+   "text": "Three fans and eight LED bulbs run at {{out.running_w|int}} W. × {{out.margin|2}} = {{out.continuous_w|int}} W continuous, {{out.kva|2}} kVA; the fan starting step takes the surge to {{out.surge_w|int}} W. A small home UPS covers this."
+  },
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 3
+     },
+     {
+      "id": "led-bulb",
+      "qty": 8
+     },
+     {
+      "id": "refrigerator-inverter"
+     },
+     {
+      "id": "ac-split-1ton-inverter"
+     }
+    ]
+   },
+   "title": "Fans, lights, an inverter fridge and a 1 ton inverter AC",
+   "text": "Running load {{out.running_w|int}} W, continuous rating {{out.continuous_w|int}} W ({{out.kva|2}} kVA). The inverter AC ramps up slowly, so the inverter fridge compressor is the largest step and the surge is {{out.surge_w|int}} W."
+  },
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "ac-split-1-5ton-non-inverter"
+     },
+     {
+      "id": "refrigerator-non-inverter"
+     }
+    ]
+   },
+   "title": "1.5 ton non-inverter AC and a non-inverter fridge: the surge decides",
+   "text": "The two run at only {{out.running_w|int}} W, so the continuous rating is {{out.continuous_w|int}} W ({{out.kva|2}} kVA), but the AC compressor start pushes the surge to {{out.surge_w|int}} W. An inverter must carry that peak or it will trip every time the compressor cycles on."
+  },
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "water-motor-1hp",
+      "qty": 1
+     },
+     {
+      "id": "led-bulb",
+      "qty": 6
+     }
+    ]
+   },
+   "title": "Water motor and lights",
+   "text": "A one hp water motor with six bulbs runs at {{out.running_w|int}} W, so the continuous rating is {{out.continuous_w|int}} W ({{out.kva|2}} kVA), but the motor starts at about {{d.start_factors.motor|int}} times its running watts and the surge is {{out.surge_w|int}} W. Pick an inverter whose peak rating covers it."
+  },
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "ac-split-1ton-inverter"
+     },
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 2
+     }
+    ]
+   },
+   "title": "UPS for a 1 ton inverter AC and two fans",
+   "text": "Running load {{out.running_w|int}} W, continuous rating {{out.continuous_w|int}} W, about {{out.kva|2}} kVA, with a surge of {{out.surge_w|int}} W when the AC reaches its maximum input. A two kVA hybrid inverter runs it; the battery bank sets how long."
+  }
+ ],
+ "table": {
+  "caption": "Inverter size for typical appliance sets, from the top: two fans and four bulbs; four fans, ten bulbs, a TV and a router; the same with a non-inverter fridge; three fans, eight bulbs, a TV, an inverter fridge and a 1 ton inverter AC; four fans, ten bulbs, an inverter fridge and a 1.5 ton inverter AC; six fans, twelve bulbs, a TV, an inverter fridge and two 1.5 ton inverter ACs",
+  "rows": [
+   {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 2
+     },
+     {
+      "id": "led-bulb",
+      "qty": 4
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 4
+     },
+     {
+      "id": "led-bulb",
+      "qty": 10
+     },
+     {
+      "id": "led-tv-43"
+     },
+     {
+      "id": "wifi-router"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 4
+     },
+     {
+      "id": "led-bulb",
+      "qty": 10
+     },
+     {
+      "id": "led-tv-43"
+     },
+     {
+      "id": "refrigerator-non-inverter"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 3
+     },
+     {
+      "id": "led-bulb",
+      "qty": 8
+     },
+     {
+      "id": "led-tv-43"
+     },
+     {
+      "id": "refrigerator-inverter"
+     },
+     {
+      "id": "ac-split-1ton-inverter"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 4
+     },
+     {
+      "id": "led-bulb",
+      "qty": 10
+     },
+     {
+      "id": "refrigerator-inverter"
+     },
+     {
+      "id": "ac-split-1-5ton-inverter"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 6
+     },
+     {
+      "id": "led-bulb",
+      "qty": 12
+     },
+     {
+      "id": "led-tv-43"
+     },
+     {
+      "id": "refrigerator-inverter"
+     },
+     {
+      "id": "ac-split-1-5ton-inverter",
+      "qty": 2
+     }
+    ]
+   }
+  ],
+  "columns": [
+   {
+    "label": "Running load",
+    "tpl": "{{out.running_w|int}} W"
+   },
+   {
+    "label": "Continuous rating",
+    "tpl": "{{out.continuous_w|int}} W"
+   },
+   {
+    "label": "Inverter rating",
+    "tpl": "{{out.kva|2}} kVA"
+   },
+   {
+    "label": "Surge rating",
+    "tpl": "{{out.surge_w|int}} W"
+   }
+  ]
+ },
+ "mistakes": [
+  "Adding every appliance in the house. Only what runs on the inverter at the same moment counts; an iron or microwave used for minutes is better kept off backup than sized for.",
+  "Ignoring the surge. A fridge compressor starts at about {{d.start_factors.fridge|int}} times its running watts and a water pump or non-inverter AC at about {{d.start_factors.compressor_non_inverter|int}} times; an inverter sized on running watts alone trips when they start.",
+  "Reading VA as watts. An inverter labelled in VA or kVA delivers fewer watts; the calculator converts with a power factor of {{d.pf_mixed|2}} for mixed home loads.",
+  "Running the inverter at its limit. The {{d.margin|2}} margin keeps it cool and leaves room for the phone chargers and extra lights people add later.",
+  "Forgetting the battery. The inverter rating sets what you can run; the battery Ah sets for how long. Size the battery with the backup time calculator after this."
+ ],
+ "safety": "Connect an inverter or UPS to house wiring only through a proper changeover so it can never back-feed the grid, use the cable and fuse sizes the maker specifies for the battery side, and have a licensed electrician do the installation.",
+ "faq": [
+  {
+   "q": "What size inverter do I need for fans, lights, a fridge and a 1 ton AC?",
+   "a": "About {{out.continuous_w|int}} W continuous, or {{out.kva|2}} kVA, with a surge rating of {{out.surge_w|int}} W for the default list on this page (three fans, eight bulbs, a TV, an inverter fridge and a 1 ton inverter AC). A non-inverter AC or fridge raises the surge a lot."
+  },
+  {
+   "q": "Can a UPS run a 1 ton AC?",
+   "a": "A hybrid inverter or large UPS of about two kVA can run a 1 ton inverter AC with a couple of fans ({{ex.4.out.continuous_w|int}} W continuous, {{ex.4.out.surge_w|int}} W surge). A one kVA home UPS cannot, and a non-inverter AC needs a much larger surge rating. The battery bank decides the hours."
+  },
+  {
+   "q": "How do I calculate inverter capacity from my load?",
+   "a": "Add the running watts of everything on at once, multiply by the {{d.margin|2}} margin for the continuous rating, divide by the {{d.pf_mixed|2}} power factor and by one thousand for kVA, then check that the inverter's surge rating covers the running load plus the largest motor's starting step. This calculator does all four steps."
+  },
+  {
+   "q": "What size inverter for an AC and a fridge?",
+   "a": "A 1.5 ton non-inverter AC with a non-inverter fridge runs at {{ex.2.out.running_w|int}} W but needs a surge rating of {{ex.2.out.surge_w|int}} W, so size on the surge. The inverter versions of both appliances run from a far smaller inverter; see the worked examples."
+  },
+  {
+   "q": "How many kW of inverter does a home need?",
+   "a": "Fans, lights and a TV alone need under one kW. One inverter AC with a fridge, fans and lights needs about {{out.kva|2}} kVA, and a home with two 1.5 ton inverter ACs about five to six kVA. Enter your own appliances for the exact figure."
+  },
+  {
+   "q": "Is a hybrid inverter sized differently?",
+   "a": "No. Its AC output is sized exactly as here: continuous watts × margin and a surge rating for the largest motor. Its solar input and battery voltage are chosen separately; the solar calculators on this site cover them."
+  },
+  {
+   "q": "Does the number of hours change the inverter size?",
+   "a": "No. Hours decide the battery capacity, not the inverter rating. The inverter must carry the watts whenever the load is on, for one minute or ten hours; the backup time calculator turns hours into battery Ah."
+  }
+ ],
+ "related": [
+  "E1",
+  "B1",
+  "C6",
+  "H9",
+  "D5",
+  "H2"
+ ],
+ "next": "B1",
+ "literal_numbers": [
+  "1,000",
+  "1 ton",
+  "1.5 ton"
+ ],
+ "sources": [
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

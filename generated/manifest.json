@@ -671,12 +671,21 @@
    "id": "D4",
    "type": "tool",
    "url": "/solar/inverter-size-calculator/",
-   "h1": "Inverter Size Calculator For Home Appliances",
+   "h1": "Inverter Size Calculator for Home Appliances",
    "title": "Inverter Size Calculator for Home Appliances | Wattlyst",
    "meta": "Find the inverter or UPS size in watts and kVA for your appliances, including AC and motor starting surge. Can a UPS run a 1 ton AC?",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-D",
+   "related": [
+    "E1",
+    "B1",
+    "C6",
+    "H9",
+    "D5",
+    "H2"
+   ],
+   "next": "B1",
    "wave": 1
   },
   {
@@ -909,24 +918,39 @@
    "id": "E4",
    "type": "tool",
    "url": "/load/load-before-adding-ac/",
-   "h1": "Home Load Calculator Before Adding Ac",
+   "h1": "Home Load Calculator Before Adding an AC",
    "title": "Can My Home Handle Another AC? Load Calculator | Wattlyst",
    "meta": "Check your current load, meter and wiring before adding a 1 or 1.5 ton AC. Shows new total amps, sanctioned load and wire size needed.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-E",
+   "related": [
+    "E1",
+    "E3",
+    "W1",
+    "E5"
+   ],
+   "next": "W1",
    "wave": 1
   },
   {
    "id": "E5",
    "type": "tool",
    "url": "/load/ac-units-calculator/",
-   "h1": "1.5 Ton Inverter Ac Unit Consumption Per Hour In Pakistan",
+   "h1": "1.5 Ton Inverter AC Unit Consumption per Hour in Pakistan",
    "title": "1.5 Ton Inverter AC Unit Consumption per Hour | Wattlyst",
    "meta": "How many units does a 1.5 ton inverter AC use per hour in Pakistan? See unit consumption per hour, per day and the monthly AC bill in PKR.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-E",
+   "related": [
+    "F1",
+    "D5",
+    "E4",
+    "C6",
+    "H2"
+   ],
+   "next": "F1",
    "wave": 1
   },
   {
@@ -1623,6 +1647,7 @@
    "live": true,
    "parent": null,
    "children": [
+    "D4",
     "D5",
     "D6",
     "D8",
@@ -1642,7 +1667,9 @@
    "parent": null,
    "children": [
     "E1",
-    "E3"
+    "E3",
+    "E4",
+    "E5"
    ],
    "wave": 0
   },

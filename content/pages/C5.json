@@ -1,0 +1,313 @@
+{
+ "id": "C5",
+ "status": "publish",
+ "template": "tool",
+ "h1": "Generator Size for Well Pump",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "calc": "generator_for_pump",
+ "fields": [
+  {
+   "name": "hp",
+   "label": "Pump motor size",
+   "unit": "hp",
+   "type": "select",
+   "default": 1,
+   "options": [
+    [
+     0.5,
+     "0.5 hp"
+    ],
+    [
+     0.75,
+     "0.75 hp"
+    ],
+    [
+     1,
+     "1 hp"
+    ],
+    [
+     1.5,
+     "1.5 hp"
+    ],
+    [
+     2,
+     "2 hp"
+    ],
+    [
+     3,
+     "3 hp"
+    ],
+    [
+     5,
+     "5 hp"
+    ]
+   ],
+   "hint": "From the motor nameplate. Most home donkey pumps are half to one hp; submersible and tubewell pumps are larger."
+  },
+  {
+   "name": "other_w",
+   "label": "Other load running with the pump",
+   "unit": "W",
+   "default": 0,
+   "hint": "Lights and fans that run with the pump. Leave zero if the generator runs the pump alone."
+  },
+  {
+   "name": "other_start_w",
+   "label": "Starting watts of the other load",
+   "unit": "W",
+   "placeholder": "Same as running watts",
+   "advanced": true,
+   "hint": "Only if the other load has a motor of its own (a fridge or a second pump). Leave blank for lights and fans."
+  },
+  {
+   "name": "motor_eff",
+   "label": "Motor efficiency",
+   "unit": "0 to 1",
+   "default": "@motor_eff",
+   "advanced": true,
+   "hint": "As a decimal. Small single-phase pump motors are about this efficient; a newer motor may be a little better."
+  },
+  {
+   "name": "start_factor",
+   "label": "Starting surge factor",
+   "unit": "times running watts",
+   "placeholder": "Auto (motor start factor)",
+   "advanced": true,
+   "hint": "How many times its running watts the pump draws while starting. Leave blank for the default motor value; a soft starter or VFD lowers it."
+  },
+  {
+   "name": "margin",
+   "label": "Safety margin on running load",
+   "unit": "times",
+   "default": "@margin",
+   "advanced": true,
+   "hint": "Keeps the generator below full load so it lasts. A decimal like one point two five."
+  },
+  {
+   "name": "pf",
+   "label": "Generator power factor",
+   "unit": "0 to 1",
+   "default": "@pf_generator",
+   "advanced": true,
+   "hint": "Generators are rated in kVA at this power factor. Leave the default unless the nameplate says otherwise."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "standard_kva",
+   "label": "Generator size to buy",
+   "spec": "1",
+   "unit": "kVA"
+  },
+  {
+   "key": "recommended_kva",
+   "label": "Calculated minimum",
+   "spec": "2",
+   "unit": "kVA"
+  },
+  {
+   "key": "pump_run_w",
+   "label": "Pump running watts",
+   "spec": "int",
+   "unit": "W"
+  },
+  {
+   "key": "pump_start_w",
+   "label": "Pump starting watts",
+   "spec": "int",
+   "unit": "W"
+  }
+ ],
+ "answer": "A {{in.hp|2}} hp well pump draws about {{out.pump_run_w|int}} W while running and about {{out.pump_start_w|int}} W for a second or two while it starts. That surge needs about {{out.recommended_kva|2}} kVA, so the generator to buy is the next standard size, {{out.standard_kva|1}} kVA. Generator kVA = the larger of running watts × margin or starting watts, ÷ power factor ÷ 1,000.",
+ "how": "{{in.hp|2}} hp × {{d.w_per_hp|1}} W per hp ÷ {{out.motor_eff|pct}} motor efficiency = {{out.pump_run_w|int}} W running. × {{out.start_factor|int}} start factor = {{out.pump_start_w|int}} W starting. Other loads add {{out.other_w|int}} W, so the total is {{out.running_w|int}} W running and {{out.peak_w|int}} W at the moment of starting. The larger of {{out.running_w|int}} W × {{out.margin|2}} margin and {{out.peak_w|int}} W is {{out.sized_w|int}} W; ÷ {{out.pf|2}} power factor ÷ 1,000 = {{out.recommended_kva|2}} kVA, rounded up to the next standard size, {{out.standard_kva|1}} kVA.",
+ "key_facts": [
+  "A {{in.hp|2}} hp water pump needs about {{out.pump_run_w|int}} W of electrical input while running ({{in.hp|2}} hp × {{d.w_per_hp|1}} W ÷ {{d.motor_eff|pct}} motor efficiency) and about {{out.pump_start_w|int}} W while starting.",
+  "Generator size in kVA = the larger of (running watts × {{d.margin|2}}) or (starting watts) ÷ {{d.pf_generator|2}} power factor ÷ 1,000, rounded up to the next standard generator size.",
+  "A pump motor draws about {{d.start_factors.motor|int}} times its running watts for a second or two when it starts, and that starting surge, not the running watts, usually decides the generator size.",
+  "A {{in.hp|2}} hp pump alone needs a {{out.standard_kva|1}} kVA generator; adding lights and fans raises the running load but rarely changes the size, because the starting surge still dominates."
+ ],
+ "formula": {
+  "text": "P_run = hp × 745.7 ÷ η; P_start = P_run × k; kVA = max(P_run × m, P_start) ÷ PF ÷ 1000",
+  "lines": [
+   "P_run = pump running watts (electrical input)",
+   "hp = motor size in horsepower; 745.7 W per hp",
+   "η = motor efficiency (default from the assumptions)",
+   "k = starting surge factor for a motor",
+   "m = safety margin on the running load",
+   "PF = generator power factor (nameplate convention)",
+   "kVA = generator size; the result is rounded up to the next standard size"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "What size generator do I need to run a water motor?",
+   "p": [
+    "Pick the motor size in hp from the pump nameplate, add any lights or fans that will run at the same time, and the calculator gives the generator size in kVA. A {{in.hp|2}} hp motor is the most common home size and needs a {{out.standard_kva|1}} kVA generator on its own.",
+    "The number that matters is the starting surge. A pump motor pulls about {{d.start_factors.motor|int}} times its running watts for a second or two as the rotor comes up to speed. A generator that is only big enough for the running watts will stall, trip or burn its windings every time the pump starts, so the sizing uses the starting watts whenever they are the larger number."
+   ]
+  },
+  {
+   "h2": "Why are pump starting watts so much higher than running watts?",
+   "p": [
+    "An induction motor at standstill is close to a short circuit until it spins up. The current it draws in that moment is several times the running current; the default here is {{d.start_factors.motor|int}} times, which suits a direct-on-line single-phase pump. Submersible pumps starting against a full column of water can be at the high end of that range.",
+    "If your pump has a soft starter or a variable frequency drive, the surge is much smaller and you can lower the starting factor in the advanced options. Only do this if you are sure the pump has one; most Pakistani donkey pumps and submersibles start direct-on-line."
+   ]
+  },
+  {
+   "h2": "Generator for a submersible pump or tubewell",
+   "p": [
+    "The same formula applies, but submersible and tubewell motors are larger. A {{ex.1.in.hp|2}} hp submersible with {{ex.1.in.other_w|int}} W of lights running needs a {{ex.1.out.standard_kva|1}} kVA generator, and a {{ex.2.in.hp|2}} hp tubewell pump needs {{ex.2.out.standard_kva|1}} kVA on its own because its starting surge is about {{ex.2.out.pump_start_w|int}} W.",
+    "Pumps larger than those listed here need a generator above {{d.standard_generator_kva.11|int}} kVA. For such a pump the calculator reports the kVA but no standard size, and a three-phase generator with a soft starter is the usual answer; have an engineer size it."
+   ]
+  },
+  {
+   "h2": "Generator size for a well pump: standard sizes and the margin",
+   "p": [
+    "Generators are sold in kVA at a power factor of {{d.pf_generator|2}}, so the watts are divided by {{d.pf_generator|2}} to get kVA. The calculated minimum for the {{in.hp|2}} hp pump is {{out.recommended_kva|2}} kVA, and the next size sold is {{out.standard_kva|1}} kVA. The {{d.margin|2}} margin on the running load keeps the engine from running flat out, which matters for fuel use and engine life.",
+    "The kVA needed does not change with supply voltage, so the result is the same for a {{d.v_1ph|int}} V pump in Pakistan and a {{d.v_1ph_us|int}} V pump in North America; only the amps differ."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "hp": 1
+   },
+   "title": "{{in.hp|2}} hp donkey pump on its own",
+   "text": "{{in.hp|2}} hp × {{d.w_per_hp|1}} W ÷ {{out.motor_eff|pct}} = {{out.pump_run_w|int}} W running; × {{out.start_factor|int}} = {{out.pump_start_w|int}} W starting. {{out.pump_start_w|int}} W ÷ {{out.pf|2}} ÷ 1,000 = {{out.recommended_kva|2}} kVA, so buy a {{out.standard_kva|1}} kVA generator."
+  },
+  {
+   "inputs": {
+    "hp": 1.5,
+    "other_w": 300
+   },
+   "title": "{{in.hp|2}} hp submersible pump with {{in.other_w|int}} W of lights",
+   "text": "The pump runs at {{out.pump_run_w|int}} W and starts at {{out.pump_start_w|int}} W. With {{in.other_w|int}} W of lights the total is {{out.running_w|int}} W running and {{out.peak_w|int}} W at the start, which is {{out.recommended_kva|2}} kVA; the next standard generator is {{out.standard_kva|1}} kVA."
+  },
+  {
+   "inputs": {
+    "hp": 3
+   },
+   "title": "{{in.hp|2}} hp tubewell pump",
+   "text": "A {{in.hp|2}} hp motor runs at {{out.pump_run_w|int}} W and starts at about {{out.pump_start_w|int}} W. That surge sets the size: {{out.recommended_kva|2}} kVA calculated, {{out.standard_kva|1}} kVA to buy."
+  },
+  {
+   "inputs": {
+    "hp": 0.5
+   },
+   "title": "{{in.hp|2}} hp small pump",
+   "text": "{{out.pump_run_w|int}} W running and {{out.pump_start_w|int}} W starting give {{out.recommended_kva|2}} kVA, so the smallest common generator, {{out.standard_kva|1}} kVA, is enough with room for lights and fans."
+  },
+  {
+   "inputs": {
+    "hp": 2
+   },
+   "title": "{{in.hp|2}} hp pump on its own",
+   "text": "A {{in.hp|2}} hp pump runs at {{out.pump_run_w|int}} W and starts at {{out.pump_start_w|int}} W, so it needs {{out.recommended_kva|2}} kVA, or a {{out.standard_kva|1}} kVA generator."
+  }
+ ],
+ "table": {
+  "caption": "Generator size for water pumps from half to five hp (pump alone, default motor efficiency and start factor)",
+  "rows": [
+   {
+    "hp": 0.5
+   },
+   {
+    "hp": 0.75
+   },
+   {
+    "hp": 1
+   },
+   {
+    "hp": 1.5
+   },
+   {
+    "hp": 2
+   },
+   {
+    "hp": 3
+   },
+   {
+    "hp": 5
+   }
+  ],
+  "columns": [
+   {
+    "label": "Pump",
+    "tpl": "{{in.hp|2}} hp"
+   },
+   {
+    "label": "Running watts",
+    "tpl": "{{out.pump_run_w|int}} W"
+   },
+   {
+    "label": "Starting watts",
+    "tpl": "{{out.pump_start_w|int}} W"
+   },
+   {
+    "label": "Calculated kVA",
+    "tpl": "{{out.recommended_kva|2}} kVA"
+   },
+   {
+    "label": "Generator to buy",
+    "tpl": "{{out.standard_kva|1}} kVA"
+   }
+  ]
+ },
+ "mistakes": [
+  "Sizing for the running watts only. The pump starts at about {{d.start_factors.motor|int}} times its running watts, and a generator that cannot supply that surge stalls or trips every time the pump starts.",
+  "Treating hp as electrical watts. One hp is {{d.w_per_hp|1}} W of shaft output; the motor draws more from the generator because of its efficiency.",
+  "Reading kVA as kW. A generator rated in kVA delivers only {{d.pf_generator|pct}} of that number in watts at the nameplate power factor.",
+  "Running the generator at full load. The {{d.margin|2}} margin on the running load is there for engine life and for the fridge or lights someone switches on while the pump runs.",
+  "Starting two motors together. If a second pump or a fridge compressor can start at the same moment, enter its starting watts under the other load; the calculator otherwise assumes only the pump starts at once."
+ ],
+ "safety": "Earth the generator, connect it to the house through a proper changeover switch so it can never back-feed the grid, and have a licensed electrician do the wiring.",
+ "faq": [
+  {
+   "q": "What size generator do I need for a {{ex.0.in.hp|2}} hp water pump?",
+   "a": "A {{ex.0.in.hp|2}} hp pump draws about {{ex.0.out.pump_run_w|int}} W running and {{ex.0.out.pump_start_w|int}} W starting, so it needs a {{ex.0.out.standard_kva|1}} kVA generator. That size also carries a few lights and fans."
+  },
+  {
+   "q": "What size generator runs a {{ex.4.in.hp|2}} hp pump?",
+   "a": "About {{ex.4.out.recommended_kva|2}} kVA calculated, so a {{ex.4.out.standard_kva|1}} kVA generator. The pump runs at {{ex.4.out.pump_run_w|int}} W but starts at about {{ex.4.out.pump_start_w|int}} W, and the starting surge sets the size."
+  },
+  {
+   "q": "How many kVA are required for a submersible pump?",
+   "a": "Use the hp on the motor nameplate. A {{ex.1.in.hp|2}} hp submersible needs about {{ex.1.out.standard_kva|1}} kVA with a few lights running, and a {{ex.2.in.hp|2}} hp tubewell pump about {{ex.2.out.standard_kva|1}} kVA. Deep submersibles that start against a full column of water can need the higher end, so do not cut the margin."
+  },
+  {
+   "q": "What are the starting watts of a water pump?",
+   "a": "About {{d.start_factors.motor|int}} times the running watts for a direct-on-line motor. A {{in.hp|2}} hp pump that runs at {{out.pump_run_w|int}} W starts at about {{out.pump_start_w|int}} W. A soft starter or VFD cuts this a lot."
+  },
+  {
+   "q": "Can a small generator run a well pump if I start it with nothing else on?",
+   "a": "Only if it can supply the starting surge. Switching off the lights lowers the running load a little, but the surge of the pump itself does not change, and that is what decides the generator size. A generator below the calculated kVA will stall or trip when the pump starts."
+  },
+  {
+   "q": "Is the generator size different at {{d.v_1ph_us|int}} V or {{d.v_1ph|int}} V?",
+   "a": "No. Watts and kVA are the same at any voltage; only the amps change. Make sure the generator outlet voltage and frequency match the pump motor nameplate."
+  },
+  {
+   "q": "Does the generator size for a well pump change with the depth of the well?",
+   "a": "Not directly. Depth and flow decide which motor hp the pump needs, and the hp decides the generator. A deeper well usually means a larger motor, which is why submersible pumps tend to need bigger generators than surface donkey pumps."
+  }
+ ],
+ "related": [
+  "C6",
+  "D4",
+  "W3",
+  "E1"
+ ],
+ "next": "W3",
+ "literal_numbers": [
+  "1,000"
+ ],
+ "sources": [
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}
