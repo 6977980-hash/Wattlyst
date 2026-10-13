@@ -24,7 +24,7 @@ export function fmt(value, spec = '2') {
     let h = Math.floor(v);
     let m = Math.round((v - h) * 60);
     if (m === 60) { h += 1; m = 0; }
-    if (h === 0 && m === 0) return v > 0 ? '< 1 min' : '0 min';
+    if (h === 0 && m === 0) return v > 0 ? `${sign ? '> -1' : '< 1'} min` : '0 min';
     if (h === 0) return `${sign}${m} min`;
     return m === 0 ? `${sign}${numberFormat(0).format(h)} h` : `${sign}${numberFormat(0).format(h)} h ${m} min`;
   }
