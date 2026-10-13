@@ -8,7 +8,7 @@
       "volts": 12
     },
     "expected": {
-      "amps": 10.0
+      "amps": 10
     },
     "tolerance": 0.001,
     "note": ""
@@ -83,7 +83,7 @@
       "pf": 0.9
     },
     "expected": {
-      "watts": 2070.0
+      "watts": 2070
     },
     "tolerance": 0.01,
     "note": ""
@@ -156,7 +156,7 @@
       "pf": 0.8
     },
     "expected": {
-      "kw": 4.0
+      "kw": 4
     },
     "tolerance": 0.001,
     "note": ""
@@ -169,7 +169,7 @@
       "pf": 0.6
     },
     "expected": {
-      "watts": 600.0
+      "watts": 600
     },
     "tolerance": 0.001,
     "note": "many line-interactive UPS are rated PF 0.6; online/pure sine 0.8-1.0"
@@ -182,7 +182,7 @@
       "volts": 12
     },
     "expected": {
-      "wh": 2400.0,
+      "wh": 2400,
       "kwh": 2.4
     },
     "tolerance": 0.001,
@@ -209,7 +209,7 @@
       "hours": 1
     },
     "expected": {
-      "units": 1.0
+      "units": 1
     },
     "tolerance": 0,
     "note": ""
@@ -223,7 +223,7 @@
       "days": 30
     },
     "expected": {
-      "units": 36.0
+      "units": 36
     },
     "tolerance": 0.001,
     "note": ""
@@ -270,7 +270,7 @@
       "volts": 12.8,
       "chemistry": "lifepo4",
       "dod": 0.9,
-      "inverter_eff": 1.0,
+      "inverter_eff": 1,
       "load_w": 100
     },
     "expected": {
@@ -374,7 +374,7 @@
       "load_w": 1300
     },
     "expected": {
-      "max_w": 1200.0,
+      "max_w": 1200,
       "can_run": false
     },
     "tolerance": 0,
@@ -462,7 +462,7 @@
     "inputs": {
       "monthly_units": 500,
       "city": "lahore",
-      "yield_kwh_per_kwp_day": 4.0,
+      "yield_kwh_per_kwp_day": 4,
       "panel_w": 585
     },
     "expected": {
@@ -547,7 +547,7 @@
     },
     "expected": {
       "daily_units": 8.8,
-      "monthly_units": 264.0
+      "monthly_units": 264
     },
     "tolerance": 0.001,
     "note": "avg_kw is an input/assumption; rated input from spec sheet is the max"
@@ -645,7 +645,7 @@
     },
     "expected": {
       "energy_rs": 1704.5,
-      "fixed_rs": 300.0
+      "fixed_rs": 300
     },
     "tolerance": 0.01,
     "note": "protected gets one-previous-slab benefit"
@@ -659,8 +659,8 @@
       "sanctioned_kw": 2
     },
     "expected": {
-      "energy_rs": 8275.0,
-      "fixed_rs": 700.0
+      "energy_rs": 8275,
+      "fixed_rs": 700
     },
     "tolerance": 0.01,
     "note": "unprotected: all units at the reached band rate"
@@ -675,7 +675,7 @@
     },
     "expected": {
       "energy_rs": 17527.5,
-      "fixed_rs": 1500.0
+      "fixed_rs": 1500
     },
     "tolerance": 0.01,
     "note": ""
@@ -690,7 +690,7 @@
     },
     "expected": {
       "energy_rs": 1795.2,
-      "fixed_rs": 275.0
+      "fixed_rs": 275
     },
     "tolerance": 0.01,
     "note": ""
@@ -768,12 +768,12 @@
       "protected": false
     },
     "expected": {
-      "import_energy_rs": 14584.0,
-      "export_credit_rs": 3300.0,
-      "net_energy_rs": 11284.0,
+      "import_energy_rs": 14584,
+      "export_credit_rs": 3300,
+      "net_energy_rs": 11284,
       "net_metering_units": 100,
-      "net_metering_rs": 2244.0,
-      "extra_vs_net_metering_rs": 9040.0
+      "net_metering_rs": 2244,
+      "extra_vs_net_metering_rs": 9040
     },
     "tolerance": 0.01,
     "note": "import billed at slab tariff; buyback rate is NOT verified on a NEPRA page, keep it an editable input with source note"
@@ -832,7 +832,7 @@
     },
     "expected": {
       "ac_rs_per_h": 26.6667,
-      "heater_rs_per_h": 80.0
+      "heater_rs_per_h": 80
     },
     "tolerance": 0.01,
     "note": ""
@@ -845,7 +845,7 @@
       "price": 600000
     },
     "expected": {
-      "rs_per_w": 120.0
+      "rs_per_w": 120
     },
     "tolerance": 0.001,
     "note": ""
@@ -879,7 +879,7 @@
     },
     "expected": {
       "saving_pct": 0.48,
-      "units_saved": 144.0
+      "units_saved": 144
     },
     "tolerance": 0.001,
     "note": "rule of thumb, engineer to confirm"
@@ -889,13 +889,13 @@
     "name": "1.8 vs 1.0 kWh/h, 1000 h/yr, Rs 40, price diff 60,000",
     "inputs": {
       "kw_noninv": 1.8,
-      "kw_inv": 1.0,
+      "kw_inv": 1,
       "hours_year": 1000,
       "tariff": 40,
       "price_diff": 60000
     },
     "expected": {
-      "annual_saving": 32000.0,
+      "annual_saving": 32000,
       "payback_months": 22.5
     },
     "tolerance": 0.01,
@@ -923,7 +923,7 @@
     "name": "5 kWp, yield 4.0, 10 days at 0.3%/day, Rs 40",
     "inputs": {
       "kwp": 5,
-      "yield": 4.0,
+      "yield": 4,
       "rate": 0.003,
       "days": 10,
       "tariff": 40
@@ -931,7 +931,7 @@
     "expected": {
       "soiling": 0.03,
       "loss_kwh_day": 0.6,
-      "rs_lost_day": 24.0
+      "rs_lost_day": 24
     },
     "tolerance": 0.001,
     "note": ""
@@ -961,7 +961,7 @@
       "pf": 0.8
     },
     "expected": {
-      "kva": 5.0
+      "kva": 5
     },
     "tolerance": 0.001,
     "note": ""
@@ -974,7 +974,7 @@
       "pf": 0.6
     },
     "expected": {
-      "va": 1000.0
+      "va": 1000
     },
     "tolerance": 0.001,
     "note": ""
@@ -987,7 +987,7 @@
       "volts": 12
     },
     "expected": {
-      "ah": 200.0
+      "ah": 200
     },
     "tolerance": 0.001,
     "note": ""
@@ -1003,9 +1003,9 @@
     },
     "expected": {
       "total_kw": 4.6,
-      "amps": 25.0,
+      "amps": 25,
       "within_sanctioned": false,
-      "load_pct": 115.0
+      "load_pct": 115
     },
     "tolerance": 0.01,
     "note": ""
@@ -1023,8 +1023,8 @@
       "gst_pct": 18
     },
     "expected": {
-      "energy_rs": 8275.0,
-      "fixed_rs": 700.0,
+      "energy_rs": 8275,
+      "fixed_rs": 700,
       "fc_rs": 807.5,
       "qta_rs": 129.85,
       "subtotal_rs": 9912.35,
@@ -1061,9 +1061,9 @@
       "qta_per_unit": 0.5194
     },
     "expected": {
-      "energy_rs": 158.0,
-      "fixed_rs": 0.0,
-      "qta_rs": 0.0
+      "energy_rs": 158,
+      "fixed_rs": 0,
+      "qta_rs": 0
     },
     "tolerance": 0.01,
     "note": ""
@@ -1078,9 +1078,9 @@
       "mdi_kw": 4
     },
     "expected": {
-      "energy_rs": 18497.0,
-      "billable_kw": 4.0,
-      "fixed_rs": 2700.0
+      "energy_rs": 18497,
+      "billable_kw": 4,
+      "fixed_rs": 2700
     },
     "tolerance": 0.01,
     "note": ""
@@ -1095,8 +1095,8 @@
       "mdi_kw": 3
     },
     "expected": {
-      "billable_kw": 5.0,
-      "fixed_rs": 3375.0
+      "billable_kw": 5,
+      "fixed_rs": 3375
     },
     "tolerance": 0.01,
     "note": ""
@@ -1113,9 +1113,9 @@
       "replacement_cost": 60000
     },
     "expected": {
-      "running_rs": 125000.0,
+      "running_rs": 125000,
       "replacements": 2,
-      "tco_rs": 545000.0
+      "tco_rs": 545000
     },
     "tolerance": 0.01,
     "note": ""
@@ -1216,7 +1216,7 @@
     "name": "very large: 1 GW at 230V",
     "inputs": {
       "mode": "ac1",
-      "watts": 1000000000.0,
+      "watts": 1000000000,
       "volts": 230,
       "pf": 1
     },
@@ -1235,7 +1235,7 @@
       "volts": 12
     },
     "expected": {
-      "amps": 125.0
+      "amps": 125
     },
     "tolerance": 0.001,
     "note": "edge case"
@@ -1264,7 +1264,7 @@
       "pf": 0.5
     },
     "expected": {
-      "watts": 120.0
+      "watts": 120
     },
     "tolerance": 0.001,
     "note": "edge case"
@@ -1277,7 +1277,7 @@
       "hours": 5
     },
     "expected": {
-      "units": 0.0
+      "units": 0
     },
     "tolerance": 0,
     "note": "edge case"
@@ -1408,7 +1408,7 @@
       "surge_rating_w": 1600
     },
     "expected": {
-      "max_w": 800.0,
+      "max_w": 800,
       "can_run": true,
       "surge_ok": true
     },
@@ -1639,7 +1639,7 @@
       "largest_start_kw": 1
     },
     "expected": {
-      "demand_kw": 3.0,
+      "demand_kw": 3,
       "recommended_kw": 3,
       "tou_warning": false
     },
@@ -1698,8 +1698,8 @@
       "sanctioned_kw": 1
     },
     "expected": {
-      "energy_rs": 5782.0,
-      "fixed_rs": 300.0
+      "energy_rs": 5782,
+      "fixed_rs": 300
     },
     "tolerance": 0.01,
     "note": "edge case"
@@ -1714,7 +1714,7 @@
     },
     "expected": {
       "energy_rs": 6653.1,
-      "fixed_rs": 350.0
+      "fixed_rs": 350
     },
     "tolerance": 0.01,
     "note": "edge case"
@@ -1728,8 +1728,8 @@
       "sanctioned_kw": 4
     },
     "expected": {
-      "energy_rs": 47200.0,
-      "fixed_rs": 2700.0
+      "energy_rs": 47200,
+      "fixed_rs": 2700
     },
     "tolerance": 0.01,
     "note": "edge case"
@@ -1743,8 +1743,8 @@
       "sanctioned_kw": 1
     },
     "expected": {
-      "energy_rs": 1054.0,
-      "fixed_rs": 200.0
+      "energy_rs": 1054,
+      "fixed_rs": 200
     },
     "tolerance": 0.01,
     "note": "edge case"
@@ -1757,8 +1757,8 @@
       "lifeline": true
     },
     "expected": {
-      "energy_rs": 158.0,
-      "fixed_rs": 0.0
+      "energy_rs": 158,
+      "fixed_rs": 0
     },
     "tolerance": 0.01,
     "note": "lifeline: all units at reached lifeline band (verify with DISCO bill)"
@@ -1805,14 +1805,14 @@
       "protected": false
     },
     "expected": {
-      "import_energy_rs": 2244.0,
-      "export_credit_rs": 3300.0,
-      "net_energy_rs": 0.0,
-      "carry_forward_rs": 1056.0,
+      "import_energy_rs": 2244,
+      "export_credit_rs": 3300,
+      "net_energy_rs": 0,
+      "carry_forward_rs": 1056,
       "net_metering_units": 0,
-      "net_metering_rs": 0.0,
+      "net_metering_rs": 0,
       "net_metering_carry_units": 200,
-      "extra_vs_net_metering_rs": 0.0
+      "extra_vs_net_metering_rs": 0
     },
     "tolerance": 0.01,
     "note": "edge case"
@@ -1827,7 +1827,7 @@
       "prev_year_units": 100
     },
     "expected": {
-      "billed_rs": 8313.0,
+      "billed_rs": 8313,
       "fair_rs": 7249.3,
       "extra_rs": 1063.7,
       "spike": true,
@@ -1845,7 +1845,7 @@
       "days": 30
     },
     "expected": {
-      "units_30": 180.0,
+      "units_30": 180,
       "slab_jump": false,
       "long_cycle": false
     },
@@ -1977,7 +1977,7 @@
     "expected": {
       "saving_pct": 0,
       "extra_pct": 0.12,
-      "extra_units": 36.0
+      "extra_units": 36
     },
     "tolerance": 0.001,
     "note": "edge case"
@@ -1986,7 +1986,7 @@
     "calc": "ac_payback",
     "name": "inverter AC using more is rejected",
     "inputs": {
-      "kw_noninv": 1.0,
+      "kw_noninv": 1,
       "kw_inv": 1.2,
       "hours_year": 1000,
       "tariff": 40,
@@ -2026,7 +2026,7 @@
     "expected": {
       "soiling": 0.25,
       "soiling_capped": true,
-      "loss_kwh_day": 5.0
+      "loss_kwh_day": 5
     },
     "tolerance": 0.001,
     "note": "edge case"
@@ -2077,7 +2077,7 @@
       "hours": 2
     },
     "expected": {
-      "watts": 460.0,
+      "watts": 460,
       "units": 0.92
     },
     "tolerance": 0.0001,
@@ -2112,7 +2112,7 @@
       "days": 30
     },
     "expected": {
-      "units": 18.0
+      "units": 18
     },
     "tolerance": 0.0001,
     "note": ""
@@ -2291,8 +2291,8 @@
       "mdi_kw": 0
     },
     "expected": {
-      "billable_kw": 4.0,
-      "fixed_rs": 2700.0
+      "billable_kw": 4,
+      "fixed_rs": 2700
     },
     "tolerance": 0.01,
     "note": "reviewer fix 13 Oct"
@@ -2370,7 +2370,7 @@
     },
     "expected": {
       "input": "watts",
-      "units": 1.0
+      "units": 1
     },
     "tolerance": 0.001,
     "note": "reviewer fix 13 Oct"
@@ -2383,7 +2383,7 @@
       "city": " Lahore "
     },
     "expected": {
-      "yield_kwh_per_kwp_day": 4.0
+      "yield_kwh_per_kwp_day": 4
     },
     "tolerance": 0.001,
     "note": "reviewer fix 13 Oct"
@@ -2420,7 +2420,7 @@
     "name": "unrealistic input above 1e12 rejected",
     "inputs": {
       "mode": "ac1",
-      "watts": 1000000000000000.0,
+      "watts": 1000000000000000,
       "volts": 230
     },
     "expected": {
@@ -2437,9 +2437,9 @@
       "lifeline": true
     },
     "expected": {
-      "fc_rs": 0.0,
-      "gst_rs": 0.0,
-      "total_rs": 158.0
+      "fc_rs": 0,
+      "gst_rs": 0,
+      "total_rs": 158
     },
     "tolerance": 0.01,
     "note": "reviewer re-check 13 Oct"
@@ -3006,7 +3006,7 @@
       "tariff": 36.46
     },
     "expected": {
-      "avg_kw": 1.0,
+      "avg_kw": 1,
       "ac_rated_w": 1450,
       "daily_units": 8,
       "monthly_units": 240,
@@ -3272,5 +3272,873 @@
     },
     "tolerance": 0.01,
     "note": "Phase 3: rows from data/appliances.json (240 + 900 W; AC start step 300 W)"
+  },
+  {
+    "calc": "generator_for_ac",
+    "name": "4 ton floor-standing AC alone: 13.5 kW surge, next size 20 kVA",
+    "inputs": {
+      "ac": "ac-floor-standing-4ton",
+      "other_w": 0
+    },
+    "expected": {
+      "running_w": 4500,
+      "peak_w": 13500,
+      "recommended_kva": 16.875,
+      "standard_kva": 20,
+      "above_standard_sizes": false
+    },
+    "tolerance": 0.01,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): very large; max(4500x1.25, 13500)/0.8/1000"
+  },
+  {
+    "calc": "generator_for_ac",
+    "name": "above the largest standard generator",
+    "inputs": {
+      "ac": "heat-pump-3ton",
+      "other_w": 20000
+    },
+    "expected": {
+      "running_w": 23400,
+      "peak_w": 30200,
+      "recommended_kva": 37.75,
+      "above_standard_sizes": true
+    },
+    "tolerance": 0.01,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): peak 23400 + (10200-3400); 30200/0.8 = 37.75 > 30 kVA list"
+  },
+  {
+    "calc": "generator_for_ac",
+    "name": "PF 1 and margin 1: kVA equals kW",
+    "inputs": {
+      "ac": "ac-split-1-5ton-inverter",
+      "other_w": 0,
+      "pf": 1,
+      "margin": 1
+    },
+    "expected": {
+      "recommended_kva": 1.9,
+      "recommended_kw": 1.9,
+      "standard_kva": 2.5
+    },
+    "tolerance": 0.001,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): unit switch; max(1450, 1900)/1"
+  },
+  {
+    "calc": "generator_for_pump",
+    "name": "start factor below 1 rejected",
+    "inputs": {
+      "hp": 1,
+      "start_factor": 0.5
+    },
+    "expected": {
+      "error": "start_factor_too_small"
+    },
+    "tolerance": 0,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): a motor never starts below its running watts"
+  },
+  {
+    "calc": "generator_for_pump",
+    "name": "20 hp tubewell at 90% efficiency is above the standard sizes",
+    "inputs": {
+      "hp": 20,
+      "motor_eff": 0.9
+    },
+    "expected": {
+      "shaft_w": 14914,
+      "pump_run_w": 16571.111,
+      "pump_start_w": 49713.333,
+      "recommended_kva": 62.1417,
+      "above_standard_sizes": true
+    },
+    "tolerance": 0.01,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): very large; 20 x 745.7 / 0.9 x 3 / 0.8 / 1000"
+  },
+  {
+    "calc": "generator_for_pump",
+    "name": "motor efficiency 1: running watts equal shaft watts",
+    "inputs": {
+      "hp": 1,
+      "motor_eff": 1
+    },
+    "expected": {
+      "pump_run_w": 745.7,
+      "pump_start_w": 2237.1,
+      "recommended_kva": 2.7964,
+      "standard_kva": 3
+    },
+    "tolerance": 0.01,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): unit check; 2237.1/0.8/1000"
+  },
+  {
+    "calc": "generator_for_pump",
+    "name": "soft starter (start factor 1): running x margin decides",
+    "inputs": {
+      "hp": 1,
+      "start_factor": 1
+    },
+    "expected": {
+      "pump_start_w": 932.125,
+      "sized_w": 1165.156,
+      "recommended_kva": 1.4564,
+      "standard_kva": 2.5
+    },
+    "tolerance": 0.01,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): 932.125 x 1.25 = 1165.16 > 932.125"
+  },
+  {
+    "calc": "ups_backup",
+    "name": "load exactly at VA x PF is allowed",
+    "inputs": {
+      "va": 1000,
+      "ah": 150,
+      "volts": 12,
+      "load_w": 600
+    },
+    "expected": {
+      "max_w": 600,
+      "load_pct": 100,
+      "can_run": true,
+      "hours": 1.275
+    },
+    "tolerance": 0.001,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): boundary; 765 Wh / 600 W"
+  },
+  {
+    "calc": "ups_backup",
+    "name": "5 kVA online UPS (PF 0.8) on a 48 V 200 Ah tubular bank",
+    "inputs": {
+      "va": 5000,
+      "pf": 0.8,
+      "ah": 200,
+      "volts": 48,
+      "load_w": 3000
+    },
+    "expected": {
+      "max_w": 4000,
+      "load_pct": 75,
+      "usable_wh": 4080,
+      "hours": 1.36
+    },
+    "tolerance": 0.001,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): large; 200 x 48 x 0.5 x 0.85 = 4080 Wh"
+  },
+  {
+    "calc": "ups_backup",
+    "name": "zero VA rejected",
+    "inputs": {
+      "va": 0,
+      "ah": 150,
+      "volts": 12,
+      "load_w": 300
+    },
+    "expected": {
+      "error": "va_must_be_positive"
+    },
+    "tolerance": 0,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): zero"
+  },
+  {
+    "calc": "ups_backup",
+    "name": "surge watts without the UPS surge rating",
+    "inputs": {
+      "va": 1000,
+      "ah": 150,
+      "volts": 12,
+      "load_w": 300,
+      "surge_w": 1500
+    },
+    "expected": {
+      "error": "surge_rating_w_required"
+    },
+    "tolerance": 0,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): one surge field filled needs the other"
+  },
+  {
+    "calc": "solar_for_ac",
+    "name": "zero daylight hours: the midday power rule alone sizes the array",
+    "inputs": {
+      "ac": "ac-split-1-5ton-inverter",
+      "city": "lahore",
+      "hours": 0
+    },
+    "expected": {
+      "daily_kwh": 0,
+      "kw_energy": 0,
+      "kw_power": 1.859,
+      "kw": 1.859,
+      "panels": 4,
+      "limited_by": "power"
+    },
+    "tolerance": 0.01,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): zero; 1450/0.78 = 1859 W -> 4 x 585"
+  },
+  {
+    "calc": "solar_for_ac",
+    "name": "peak sun hours and PR instead of a city",
+    "inputs": {
+      "ac": "ac-split-1ton-inverter",
+      "psh": 5,
+      "pr": 0.78,
+      "hours": 8
+    },
+    "expected": {
+      "yield_kwh_per_kwp_day": 3.9,
+      "yield_source": "psh",
+      "daily_kwh": 5.2,
+      "kw_energy": 1.3333,
+      "kw_power": 1.1538,
+      "kw": 1.3333,
+      "panels": 3,
+      "installed_kw": 1.755
+    },
+    "tolerance": 0.01,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): unit switch; 5.2 / (5 x 0.78)"
+  },
+  {
+    "calc": "solar_for_ac",
+    "name": "4 ton floor-standing AC in Karachi 12 h a day",
+    "inputs": {
+      "ac": "ac-floor-standing-4ton",
+      "city": "karachi",
+      "hours": 12
+    },
+    "expected": {
+      "daily_kwh": 43.2,
+      "kw_energy": 9.3913,
+      "kw_power": 5.7692,
+      "panels": 17,
+      "installed_kw": 9.945,
+      "inverter_w": 5625,
+      "inverter_surge_w": 13500
+    },
+    "tolerance": 0.01,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): very large; 3600 x 12 / 1000 / 4.6; 9391/585 = 16.05 -> 17"
+  },
+  {
+    "calc": "solar_for_ac",
+    "name": "400 W panels: exactly 5 panels, no float dust",
+    "inputs": {
+      "ac": "ac-split-1-5ton-inverter",
+      "city": "lahore",
+      "hours": 8,
+      "panel_w": 400
+    },
+    "expected": {
+      "kw": 2,
+      "panels": 5,
+      "installed_kw": 2
+    },
+    "tolerance": 0.001,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): 2000/400 = 5.0 must not round to 6"
+  },
+  {
+    "calc": "solar_from_loads",
+    "name": "custom row with an explicit yield",
+    "inputs": {
+      "loads": [
+        {
+          "watts": 500,
+          "hours": 10
+        }
+      ],
+      "yield_kwh_per_kwp_day": 5
+    },
+    "expected": {
+      "running_w": 500,
+      "daily_kwh": 5,
+      "kw_energy": 1,
+      "kw_power": 0.641,
+      "kw": 1,
+      "panels": 2,
+      "installed_kw": 1.17,
+      "inverter_w": 625,
+      "inverter_surge_w": 500,
+      "limited_by": "energy"
+    },
+    "tolerance": 0.01,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): yield input overrides city"
+  },
+  {
+    "calc": "solar_from_loads",
+    "name": "night battery at 48 V with explicit DoD and inverter efficiency",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ceiling-fan-ac",
+          "qty": 2,
+          "hours": 12
+        }
+      ],
+      "city": "lahore",
+      "night_hours": 10,
+      "battery_v": 48,
+      "dod": 0.8,
+      "inverter_eff": 0.95
+    },
+    "expected": {
+      "running_w": 160,
+      "daily_kwh": 1.92,
+      "kw": 0.48,
+      "panels": 1,
+      "night_kwh": 1.6,
+      "battery_v": 48,
+      "battery_dod": 0.8,
+      "battery_ah": 43.8596,
+      "battery_kwh": 2.1053
+    },
+    "tolerance": 0.01,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): 1600 Wh / (48 x 0.8 x 0.95)"
+  },
+  {
+    "calc": "solar_from_loads",
+    "name": "quantity zero on every row",
+    "inputs": {
+      "loads": [
+        {
+          "id": "led-bulb",
+          "qty": 0,
+          "hours": 6
+        }
+      ],
+      "city": "lahore"
+    },
+    "expected": {
+      "error": "load_must_be_positive"
+    },
+    "tolerance": 0,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): zero"
+  },
+  {
+    "calc": "solar_from_loads",
+    "name": "ten 2 ton non-inverter ACs (very large)",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ac-split-2ton-non-inverter",
+          "qty": 10,
+          "hours": 8
+        }
+      ],
+      "city": "lahore"
+    },
+    "expected": {
+      "running_w": 24000,
+      "surge_w": 28800,
+      "daily_kwh": 153.6,
+      "kw_energy": 38.4,
+      "kw_power": 30.7692,
+      "panels": 66,
+      "installed_kw": 38.61
+    },
+    "tolerance": 0.01,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): energy at avg 1920 W x 8 h x 10; only one compressor starts at once"
+  },
+  {
+    "calc": "home_load",
+    "name": "120 V resistive load at PF 1",
+    "inputs": {
+      "loads": [
+        {
+          "watts": 1200,
+          "hours": 2
+        }
+      ],
+      "volts": 120,
+      "pf": 1
+    },
+    "expected": {
+      "running_w": 1200,
+      "amps": 10,
+      "peak_amps": 10,
+      "daily_kwh": 2.4,
+      "monthly_units": 72
+    },
+    "tolerance": 0.001,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): unit switch"
+  },
+  {
+    "calc": "home_load",
+    "name": "zero hours and zero days give zero energy, not an error",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ceiling-fan-ac",
+          "qty": 2,
+          "hours": 0
+        }
+      ],
+      "days": 0
+    },
+    "expected": {
+      "running_w": 160,
+      "peak_w": 200,
+      "daily_kwh": 0,
+      "monthly_units": 0
+    },
+    "tolerance": 0.001,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): zero"
+  },
+  {
+    "calc": "home_load",
+    "name": "a thousand LED bulbs all day on a 5 kW connection",
+    "inputs": {
+      "loads": [
+        {
+          "id": "led-bulb",
+          "qty": 1000,
+          "hours": 24
+        }
+      ],
+      "sanctioned_kw": 5
+    },
+    "expected": {
+      "items": 1000,
+      "running_w": 12000,
+      "amps": 65.2174,
+      "daily_kwh": 288,
+      "monthly_units": 8640,
+      "within_sanctioned": false,
+      "load_pct": 240
+    },
+    "tolerance": 0.01,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): very large"
+  },
+  {
+    "calc": "home_load",
+    "name": "negative quantity rejected",
+    "inputs": {
+      "loads": [
+        {
+          "id": "led-bulb",
+          "qty": -1
+        }
+      ]
+    },
+    "expected": {
+      "error": "load_0_qty_invalid"
+    },
+    "tolerance": 0,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): "
+  },
+  {
+    "calc": "home_load",
+    "name": "starting watts below the watts override rejected",
+    "inputs": {
+      "loads": [
+        {
+          "watts": 500,
+          "start": 100,
+          "hours": 1
+        }
+      ]
+    },
+    "expected": {
+      "error": "load_0_start_below_run"
+    },
+    "tolerance": 0,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): "
+  },
+  {
+    "calc": "add_ac_check",
+    "name": "nothing running yet: 1 ton inverter AC on 1 kW",
+    "inputs": {
+      "current_w": 0,
+      "ac": "ac-split-1ton-inverter",
+      "sanctioned_kw": 1
+    },
+    "expected": {
+      "new_total_w": 900,
+      "new_total_kw": 0.9,
+      "peak_w": 1200,
+      "amps_now": 0,
+      "amps_after": 4.8913,
+      "within_sanctioned": true,
+      "load_pct": 90,
+      "headroom_kw": 0.1
+    },
+    "tolerance": 0.01,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): zero current load"
+  },
+  {
+    "calc": "add_ac_check",
+    "name": "120 V PF 1: non-inverter 1.5 ton AC on 3 kW",
+    "inputs": {
+      "current_w": 500,
+      "ac": "ac-split-1-5ton-non-inverter",
+      "sanctioned_kw": 3,
+      "volts": 120,
+      "pf": 1
+    },
+    "expected": {
+      "new_total_w": 2300,
+      "amps_after": 19.1667,
+      "peak_w": 5900,
+      "peak_amps": 49.1667,
+      "within_sanctioned": true,
+      "ac_design_w": 1800,
+      "ac_ib_a": 15,
+      "ac_breaker_a": 20,
+      "ac_cable_a": 20,
+      "ac_cable_mm2": 2.5,
+      "ac_curve": "C"
+    },
+    "tolerance": 0.01,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): unit switch; compressor at running 1800 W: 15 A x 1.25 = 18.75 -> 20 A on 2.5 mm2 (24 A)"
+  },
+  {
+    "calc": "add_ac_check",
+    "name": "4 ton floor-standing AC on 5 kW: 32 A MCB on 4 mm2",
+    "inputs": {
+      "current_w": 1000,
+      "ac": "ac-floor-standing-4ton",
+      "sanctioned_kw": 5
+    },
+    "expected": {
+      "new_total_w": 5500,
+      "within_sanctioned": false,
+      "load_pct": 110,
+      "ac_ib_a": 24.4565,
+      "ac_breaker_a": 32,
+      "ac_cable_a": 32,
+      "ac_cable_mm2": 4,
+      "ac_pk_size": "7/36"
+    },
+    "tolerance": 0.01,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): very large; 24.46 x 1.25 = 30.6 -> 32 A; 4 mm2 B1 = 32 A >= 32 A"
+  },
+  {
+    "calc": "add_ac_check",
+    "name": "negative load running now rejected",
+    "inputs": {
+      "current_w": -100,
+      "ac": "ac-split-1ton-inverter",
+      "sanctioned_kw": 2
+    },
+    "expected": {
+      "error": "current_w_too_small"
+    },
+    "tolerance": 0,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): "
+  },
+  {
+    "calc": "wire_size",
+    "name": "three-phase 30 A entered as amps, 50 m",
+    "inputs": {
+      "mode": "ac3",
+      "amps": 30,
+      "length_m": 50
+    },
+    "expected": {
+      "watts": 16627.69,
+      "ib_a": 30,
+      "breaker_a": 32,
+      "min_cable_a": 37.5,
+      "area_mm2": 6,
+      "ampacity_a": 41,
+      "pk_size": "7/44",
+      "drop_v": 9.7428,
+      "drop_pct": 2.4357,
+      "limited_by": "ampacity"
+    },
+    "tolerance": 0.01,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): unit switch; W = 30 x sqrt3 x 400 x 0.8; drop = sqrt3 x 50 x 30 x 0.0225 / 6"
+  },
+  {
+    "calc": "wire_size",
+    "name": "clipped direct (method C): 5 kW fits on 4 mm2",
+    "inputs": {
+      "watts": 5000,
+      "length_m": 20,
+      "method": "C"
+    },
+    "expected": {
+      "ib_a": 27.1739,
+      "breaker_a": 32,
+      "min_cable_a": 33.9674,
+      "area_mm2": 4,
+      "ampacity_a": 36,
+      "pk_size": "7/36",
+      "drop_v": 6.1141,
+      "drop_pct": 2.6583
+    },
+    "tolerance": 0.01,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): method switch; 4 mm2 is 36 A clipped direct but 32 A in conduit"
+  },
+  {
+    "calc": "wire_size",
+    "name": "100 W lighting point: minimum 1 mm2 and 6 A",
+    "inputs": {
+      "watts": 100,
+      "length_m": 5,
+      "load_type": "lighting",
+      "circuit": "lighting",
+      "pf": 1
+    },
+    "expected": {
+      "ib_a": 0.4348,
+      "breaker_a": 6,
+      "min_cable_a": 6,
+      "min_mm2": 1,
+      "area_mm2": 1,
+      "ampacity_a": 13.5,
+      "pk_size": "3/29",
+      "limit_pct": 3,
+      "drop_pct": 0.0425
+    },
+    "tolerance": 0.01,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): minimum size floor"
+  },
+  {
+    "calc": "wire_size",
+    "name": "zero cable length rejected",
+    "inputs": {
+      "watts": 3000,
+      "length_m": 0
+    },
+    "expected": {
+      "error": "length_m_must_be_positive"
+    },
+    "tolerance": 0,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): zero"
+  },
+  {
+    "calc": "wire_size",
+    "name": "5 kW over 250 m reaches 35 mm2 (19/64)",
+    "inputs": {
+      "watts": 5000,
+      "length_m": 250
+    },
+    "expected": {
+      "ampacity_only_mm2": 6,
+      "area_mm2": 35,
+      "pk_size": "19/64",
+      "drop_v": 8.7345,
+      "drop_pct": 3.7976,
+      "limited_by": "voltage_drop"
+    },
+    "tolerance": 0.01,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): very long run; 25 mm2 would drop 5.32%"
+  },
+  {
+    "calc": "breaker_size",
+    "name": "three-phase welding load entered as 20 A: type D with the motor margin",
+    "inputs": {
+      "mode": "ac3",
+      "amps": 20,
+      "load_type": "high_inrush"
+    },
+    "expected": {
+      "watts": 11085.13,
+      "ib_a": 20,
+      "breaker_design_a": 25,
+      "breaker_a": 25,
+      "curve": "D",
+      "trip_min_a": 250,
+      "trip_max_a": 500,
+      "area_mm2": 4
+    },
+    "tolerance": 0.01,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): unit switch; 20 x sqrt3 x 400 x 0.8 W"
+  },
+  {
+    "calc": "breaker_size",
+    "name": "DC 48 V inverter feed, 2.4 kW",
+    "inputs": {
+      "mode": "dc",
+      "volts": 48,
+      "watts": 2400
+    },
+    "expected": {
+      "ib_a": 50,
+      "breaker_a": 50,
+      "min_cable_a": 62.5,
+      "area_mm2": 16,
+      "ampacity_a": 76,
+      "pk_size": "7/64"
+    },
+    "tolerance": 0.01,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): PF forced to 1; 10 mm2 (57 A) is below 62.5 A"
+  },
+  {
+    "calc": "breaker_size",
+    "name": "14 kW single phase is above the MCB range",
+    "inputs": {
+      "watts": 14000
+    },
+    "expected": {
+      "error": "load_above_standard_breakers"
+    },
+    "tolerance": 0,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): very large; 76 A > 63 A"
+  },
+  {
+    "calc": "breaker_size",
+    "name": "geyser clipped direct still gets the 2.5 mm2 minimum",
+    "inputs": {
+      "watts": 3000,
+      "load_type": "resistive",
+      "pf": 1,
+      "method": "C"
+    },
+    "expected": {
+      "breaker_a": 16,
+      "curve": "B",
+      "min_cable_a": 16.3043,
+      "area_mm2": 2.5,
+      "ampacity_a": 27
+    },
+    "tolerance": 0.01,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): 1.5 mm2 clipped (19.5 A) would carry it but the floor is 2.5 mm2"
+  },
+  {
+    "calc": "breaker_size",
+    "name": "motor landing exactly on 20 A after the margin",
+    "inputs": {
+      "watts": 2944,
+      "load_type": "motor",
+      "pf": 0.8
+    },
+    "expected": {
+      "ib_a": 16,
+      "breaker_design_a": 20,
+      "breaker_a": 20,
+      "min_cable_a": 20,
+      "area_mm2": 2.5
+    },
+    "tolerance": 0.001,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): boundary: 16 x 1.25 = 20 must pick 20 A, not 25 A"
+  },
+  {
+    "calc": "cable_rating",
+    "name": "1 mm2 = 3/29",
+    "inputs": {
+      "area_mm2": 1
+    },
+    "expected": {
+      "ampacity_b1_a": 13.5,
+      "ampacity_c_a": 15.5,
+      "max_w_b1": 2484,
+      "max_w_c": 2852,
+      "pk_size": "3/29",
+      "pk_area_mm2": 1.28,
+      "pk_strand_mm": 0.7366
+    },
+    "tolerance": 0.01,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): 13.5 x 230 x 0.8"
+  },
+  {
+    "calc": "cable_rating",
+    "name": "16 mm2 at 400 V PF 1",
+    "inputs": {
+      "area_mm2": 16,
+      "volts": 400,
+      "pf": 1
+    },
+    "expected": {
+      "max_w_b1": 30400,
+      "max_w_c": 34000,
+      "pk_size": "7/64",
+      "pk_area_mm2": 14.53
+    },
+    "tolerance": 0.01,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): unit switch"
+  },
+  {
+    "calc": "cable_rating",
+    "name": "35 mm2 = 19/64",
+    "inputs": {
+      "area_mm2": 35
+    },
+    "expected": {
+      "ampacity_b1_a": 125,
+      "ampacity_c_a": 138,
+      "pk_size": "19/64",
+      "pk_area_mm2": 39.43,
+      "pk_strands": 19
+    },
+    "tolerance": 0.01,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): 19 x pi x (0.064 x 25.4 / 2)^2"
+  },
+  {
+    "calc": "load_check",
+    "name": "zero load rejected",
+    "inputs": {
+      "total_w": 0,
+      "sanctioned_kw": 2
+    },
+    "expected": {
+      "error": "load_must_be_positive"
+    },
+    "tolerance": 0,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): zero"
+  },
+  {
+    "calc": "load_check",
+    "name": "2 kW at 120 V PF 1 on 2 kW",
+    "inputs": {
+      "total_w": 2000,
+      "sanctioned_kw": 2,
+      "volts": 120,
+      "pf": 1
+    },
+    "expected": {
+      "amps": 16.6667,
+      "within_sanctioned": true,
+      "load_pct": 100
+    },
+    "tolerance": 0.01,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): unit switch"
+  },
+  {
+    "calc": "panel_for_12v",
+    "name": "2000 Ah 48 V bank: above the largest panel and controller",
+    "inputs": {
+      "ah": 2000,
+      "volts": 48,
+      "psh": 4
+    },
+    "expected": {
+      "panel_w": 18099.55,
+      "panels_of_largest": 31,
+      "fitted_panel_w": 18135,
+      "charge_hours": 3.9922,
+      "controller_a": 472.27,
+      "controller_above_standard_sizes": true
+    },
+    "tolerance": 0.01,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): very large; 56470.6 Wh / (4 x 0.78); 31 x 585 W"
+  },
+  {
+    "calc": "ac_units",
+    "name": "custom 2 kW all day for 31 days at Rs 10",
+    "inputs": {
+      "ac": "custom",
+      "avg_kw": 2,
+      "hours": 24,
+      "days": 31,
+      "tariff": 10
+    },
+    "expected": {
+      "daily_units": 48,
+      "monthly_units": 1488,
+      "hourly_rs": 20,
+      "monthly_rs": 14880
+    },
+    "tolerance": 0.001,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): days override"
+  },
+  {
+    "calc": "net_billing",
+    "name": "protected consumer importing more than 200 units rejected",
+    "inputs": {
+      "import_units": 250,
+      "export_units": 100,
+      "protected": true
+    },
+    "expected": {
+      "error": "protected_max_200_units"
+    },
+    "tolerance": 0,
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): protected cannot apply above 200 units"
   }
 ]

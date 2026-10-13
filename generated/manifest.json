@@ -275,7 +275,19 @@
     "regulation": "NEPRA (Prosumer) Regulations 2026, notified 9 Feb 2026",
     "buyback_rs_per_unit_default": 11,
     "buyback_verified": false,
-    "note": "news reports Rs10-11 (one report Rs8.13); keep editable. Size capped at sanctioned load. Existing net-metering contracts likely valid until expiry (unconfirmed on NEPRA page)."
+    "note": "news reports Rs10-11 (one report Rs8.13); keep editable. Size capped at sanctioned load. Existing net-metering contracts likely valid until expiry (unconfirmed on NEPRA page).",
+    "buyback_sources_secondary": [
+     {
+      "label": "Express Tribune, 10 Feb 2026: Rs 11/unit discussed with stakeholders, not yet notified",
+      "url": "https://tribune.com.pk/story/2591628/1"
+     },
+     {
+      "label": "Nukta: revised buyback rate yet to be formally notified",
+      "url": "https://nukta.com/pakistan-solar-ends-net-metering"
+     }
+    ],
+    "buyback_checked": "2026-10-13",
+    "buyback_status": "No NEPRA notification of the buyback rate found on 2026-10-13 (searched nepra.org.pk); re-check monthly and replace these links with the NEPRA page when it exists."
    }
   },
   "cities": {
@@ -312,7 +324,7 @@
   },
   "cables": {
    "_meta": {
-    "source": "IEC 60364-5-52:2009 Table B.52.4 (PVC insulated copper, two loaded conductors, 30 C ambient): columns B1 (cables in conduit in a wall) and C (clipped direct). Pakistani n/d sizes converted with formulas.md section W (A = n x pi x (d x 25.4 / 2)^2) and rated as the IEC size they are sold as when their real area is at least 90% of it, else the next smaller IEC size (conservative).",
+    "source": "IEC 60364-5-52:2009 Table B.52.4 (PVC insulated copper, two loaded conductors, 30 C ambient): columns B1 (insulated conductors in conduit on or in a masonry wall; NOT A1, conduit in a thermally insulated wall, which is rated lower) and C (clipped direct). The 1 mm2 row is not in Table B.52.4 (it starts at 1.5 mm2); its values are the same-basis BS 7671 Table 4D1A figures (methods B and C). Pakistani n/d sizes converted with formulas.md section W (A = n x pi x (d x 25.4 / 2)^2) and rated as the IEC size they are sold as when their real area is at least 90% of it, else the next smaller IEC size (conservative).",
     "checked": "2026-10-13",
     "status": "Engineer to confirm against the IEC table and Pakistan Cables / Fast Cables datasheets before launch. Ratings are for single-phase or three-phase circuits of one cable in free air or conduit at 30 C; grouping and hot roof spaces need derating by an electrician.",
     "engineer_confirm": [
@@ -325,7 +337,7 @@
     "fields": "cables: area_mm2 nominal conductor size; ampacity_a per installation method. pk_sizes: strands, strand diameter in inches, real area, rated_as_mm2 = the row of cables used for its ampacity. breaker_margin_load_types: load types whose MCB is chosen at I_b x margin (continuous motor-type loads), so a 1.5 ton AC gets a 16 A MCB on 2.5 mm2 rather than 10 A on 1 mm2."
    },
    "methods": {
-    "B1": "In conduit in an insulated wall (most Pakistani house wiring)",
+    "B1": "In conduit in a brick or plastered (masonry) wall, most Pakistani house wiring; a conduit buried in thermal insulation is method A1 and is rated lower",
     "C": "Clipped direct to a wall or surface"
    },
    "cables": [
@@ -449,6 +461,13 @@
      "strand_in": 0.052,
      "area_mm2": 26.03,
      "rated_as_mm2": 25
+    },
+    {
+     "name": "19/64",
+     "strands": 19,
+     "strand_in": 0.064,
+     "area_mm2": 39.43,
+     "rated_as_mm2": 35
     }
    ],
    "mcb_curves": {

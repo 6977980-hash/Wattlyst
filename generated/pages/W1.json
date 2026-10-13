@@ -42,7 +42,7 @@
     "h2": "What breaker size for a 1.5 ton AC?",
     "p": [
      "A 16 A type C MCB for both the inverter and the non-inverter 1.5 ton. The inverter's design current is 9.2 A at its 1,900 W maximum input; a compressor runs near full current for hours, so the breaker is chosen at 9.2 A × 1.25 = 11.5 A, which rounds up to 16 A. A smaller MCB would run close to its limit on a hot day and trip for no fault.",
-     "The non-inverter 1.5 ton draws 8.7 A while running and several times that for a moment at every compressor start. A type C curve tolerates that surge; a type B of the same rating may trip on the start. For a 1 ton inverter the MCB drops to 10 A."
+     "The non-inverter 1.5 ton draws 9.8 A while running and several times that for a moment at every compressor start. A type C curve tolerates that surge; a type B of the same rating may trip on the start. For a 1 ton inverter the MCB drops to 10 A."
     ]
    },
    {
@@ -331,7 +331,7 @@
    },
    {
     "title": "Split AC 1.5 ton non-inverter, 15 m in conduit",
-    "text": "Running 1,800 W ÷ (230 V × 0.9) = 8.7 A; × 1.25 = 10.9 A, so a 16 A type C MCB that rides through the compressor start. Cable: 2.5 mm² (7/29), rated 24 A. Voltage drop 1%."
+    "text": "Running 1,800 W ÷ (230 V × 0.8) = 9.8 A; × 1.25 = 12.2 A, so a 16 A type C MCB that rides through the compressor start. Cable: 2.5 mm² (7/29), rated 24 A. Voltage drop 1.1%."
    },
    {
     "title": "Split AC 2 ton inverter on a long 30 m run",
@@ -343,7 +343,7 @@
    }
   ],
   "table": {
-   "caption": "Wire and MCB for split ACs on a 15 m run in conduit at 230 V, power factor 0.9",
+   "caption": "Wire and MCB for split ACs on a 15 m run in conduit at 230 V, power factor 0.9 for inverter ACs and 0.8 for non-inverter ACs",
    "head": [
     "AC",
     "Design watts",
@@ -367,7 +367,7 @@
      "2.5 mm²",
      "7/29",
      "10 A",
-     "0.7%"
+     "0.8%"
     ],
     [
      "Split AC 1.5 ton inverter",
@@ -383,7 +383,7 @@
      "2.5 mm²",
      "7/29",
      "16 A",
-     "1%"
+     "1.1%"
     ],
     [
      "Split AC 2 ton inverter",
@@ -398,8 +398,8 @@
      "2,400 W",
      "2.5 mm²",
      "7/29",
-     "16 A",
-     "1.4%"
+     "20 A",
+     "1.5%"
     ]
    ]
   },

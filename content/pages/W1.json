@@ -170,7 +170,8 @@
   {
    "inputs": {
     "appliance": "ac-split-1-5ton-non-inverter",
-    "length_m": 15
+    "length_m": 15,
+    "pf": 0.8
    },
    "title": "{{out.appliance_name|raw}}, {{in.length_m|int}} m in conduit",
    "text": "Running {{out.watts|int}} W ÷ ({{out.volts|int}} V × {{out.pf|1}}) = {{out.ib_a|1}} A; × {{out.margin|2}} = {{out.breaker_design_a|1}} A, so a {{out.breaker_a|int}} A type C MCB that rides through the compressor start. Cable: {{out.area_mm2|1}} mm² ({{out.pk_size|raw}}), rated {{out.ampacity_a|int}} A. Voltage drop {{out.drop_pct|1}}%."
@@ -193,25 +194,28 @@
   }
  ],
  "table": {
-  "caption": "Wire and MCB for split ACs on a {{in.length_m|int}} m run in conduit at {{out.volts|int}} V, power factor {{out.pf|1}}",
+  "caption": "Wire and MCB for split ACs on a {{in.length_m|int}} m run in conduit at {{out.volts|int}} V, power factor {{out.pf|1}} for inverter ACs and {{ex.1.out.pf|1}} for non-inverter ACs",
   "rows": [
    {
     "appliance": "ac-split-1ton-inverter"
    },
    {
-    "appliance": "ac-split-1ton-non-inverter"
+    "appliance": "ac-split-1ton-non-inverter",
+    "pf": 0.8
    },
    {
     "appliance": "ac-split-1-5ton-inverter"
    },
    {
-    "appliance": "ac-split-1-5ton-non-inverter"
+    "appliance": "ac-split-1-5ton-non-inverter",
+    "pf": 0.8
    },
    {
     "appliance": "ac-split-2ton-inverter"
    },
    {
-    "appliance": "ac-split-2ton-non-inverter"
+    "appliance": "ac-split-2ton-non-inverter",
+    "pf": 0.8
    }
   ],
   "columns": [
