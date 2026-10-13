@@ -1,0 +1,56 @@
+// Number formatting and text templates shared by the build (server-rendered HTML) and the browser
+// (live results), so a number looks the same before and after JavaScript runs. Pure: no DOM.
+//
+// Template syntax: {{path}} or {{path|spec}}. path is dotted (in.load_w, out.hours, ex.0.out.hours).
+// spec: a digit = max decimals (default 2), "hm" = hours as "3 h 24 min", "int" = whole number,
+// "pct" = fraction as percent, "rs" = Pakistani rupees with no decimals, "raw" = value as is.
+
+const nf = new Map();
+function numberFormat(decimals) {
+  if (!nf.has(decimals)) nf.set(decimals, new Intl.NumberFormat('en-US', { maximumFractionDigits: decimals, minimumFractionDigits: 0, signDisplay: 'negative' }));
+  return nf.get(decimals);
+}
+
+export function fmt(value, spec = '2') {
+  if (typeof value === 'string') return value;
+  if (typeof value !== 'number' || !Number.isFinite(value)) return '';
+  if (spec === 'raw') return String(value);
+  if (spec === 'int') return numberFormat(0).format(Math.round(value));
+  if (spec === 'pct') return `${numberFormat(1).format(value * 100)}%`;
+  if (spec === 'rs') return `Rs ${numberFormat(0).format(Math.round(value))}`;
+  if (spec === 'hm') {
+    const sign = value < 0 ? '-' : '';
+    const v = Math.abs(value);
+    let h = Math.floor(v);
+    let m = Math.round((v - h) * 60);
+    if (m === 60) { h += 1; m = 0; }
+    if (h === 0 && m === 0) return v > 0 ? '< 1 min' : '0 min';
+    if (h === 0) return `${sign}${m} min`;
+    return m === 0 ? `${sign}${numberFormat(0).format(h)} h` : `${sign}${numberFormat(0).format(h)} h ${m} min`;
+  }
+  const d = /^\d$/.test(spec) ? Number(spec) : 2;
+  return numberFormat(d).format(value);
+}
+
+export const SPECS = ['raw', 'int', 'pct', 'rs', 'hm'];
+export const isSpec = (spec) => /^\d$/.test(spec) || SPECS.includes(spec);
+
+export function lookup(ctx, path) {
+  return path.split('.').reduce((o, k) => (o == null ? undefined : o[k]), ctx);
+}
+
+const TPL = /\{\{\s*([\w.]+)\s*(?:\|\s*(\w+)\s*)?\}\}/g;
+
+/** Fill a template. Returns null if any placeholder has no usable value, so callers never print a blank. */
+export function render(tpl, ctx) {
+  let missing = false;
+  const out = String(tpl).replace(TPL, (_, path, spec) => {
+    const v = lookup(ctx, path);
+    const s = fmt(v, spec || '2');
+    if (s === '') missing = true;
+    return s;
+  });
+  return missing ? null : out;
+}
+
+export const placeholders = (tpl) => [...String(tpl).matchAll(TPL)].map((m) => ({ path: m[1], spec: m[2] || '2' }));

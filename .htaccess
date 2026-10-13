@@ -2,7 +2,7 @@
 # Block web access to repo internals; WordPress loads PHP files directly, not over HTTP.
 <IfModule mod_rewrite.c>
 RewriteEngine On
-RewriteRule ^(\.git|specs|tests|node_modules)(/|$) - [F,L]
-RewriteRule \.(md|csv|lock|yml|yaml)$ - [F,L]
+RewriteRule ^(\.git|\.github|specs|tests|tools|content|generated|node_modules)(/|$) - [F,L]
+RewriteRule \.(md|csv|lock|yml|yaml|sh)$ - [F,L]
 RewriteRule ^(package(-lock)?\.json|composer\.json)$ - [F,L]
 </IfModule>

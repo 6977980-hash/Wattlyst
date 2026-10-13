@@ -1,0 +1,19 @@
+<p class="wl-answer">Every {{site.brand}} result comes from one tested calculation engine that uses standard electrical formulas, published data and the default values listed below. Each calculator shows its formula and the values it assumed, and lets you change the main ones, so you can see exactly how a number was produced.</p>
+<h2>How a calculation works</h2>
+<ol>
+<li><strong>Your inputs</strong> are checked first. Blank, negative or impossible values show a clear message instead of a wrong number.</li>
+<li><strong>The formula</strong> is applied exactly as written in our formula specification, for example amps = watts ÷ (volts × power factor) for single-phase AC.</li>
+<li><strong>Defaults</strong> fill any field you leave blank. They are listed below; most can be changed in each calculator's advanced settings, while physical constants and code limits are fixed.</li>
+<li><strong>The result</strong> is rounded only for display. Breaker and charge controller sizes are rounded up to the next standard size, and counts of panels and batteries are rounded up to whole units, because rounding down would undersize them. Other sizes, such as battery Ah, inverter watts and generator kVA, are shown as the minimum required: choose the next larger product.</li>
+</ol>
+<h2>Default values</h2>
+<!--block:defaults-table-->
+<h2>Data sources and update policy</h2>
+<!--block:data-sources-->
+<p>Values that change over time, such as tariffs and prices, carry a "last checked" date on the page. We re-check them at least monthly and whenever NEPRA, a DISCO or a manufacturer publishes a change. Electricity bill estimates follow the tariff checked on {{tariff_checked}}.</p>
+<h2>Testing</h2>
+<p>Before any change goes live, the engine runs an automated test suite: hand-worked cases for every calculator, checks that results are never blank, negative or infinite, and checks that page titles and descriptions follow our rules. A change that fails any test is not merged into the live site.</p>
+<h2>Technical review</h2>
+<!--block:reviewer-->
+<h2>Limits</h2>
+<p>Results are estimates for planning. Real appliances, batteries and panels differ from their labels, and bills include charges that change month to month. Read the <a href="/disclaimer/">disclaimer</a> before relying on a result for a purchase or installation.</p>

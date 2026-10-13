@@ -1,0 +1,402 @@
+{
+ "id": "B1",
+ "type": "tool",
+ "silo": "B",
+ "url": "/battery/battery-backup-time-calculator/",
+ "h1": "Battery Backup Time Calculator for Home",
+ "title": "Battery Backup Time Calculator for Home (UPS) | Wattlyst",
+ "meta": "How long will your home UPS battery last? Enter load, battery Ah and type (tubular or lithium) to get backup time with inverter losses included.",
+ "primary_keyword": "battery backup time calculator for home",
+ "wave": 1,
+ "status": "draft",
+ "reviewed": "2026-10-13",
+ "published": "2026-10-13",
+ "author": "ali-ahmad",
+ "related": [
+  "B2",
+  "B3",
+  "B5",
+  "D4"
+ ],
+ "next": "B4",
+ "parent": "P-B",
+ "live": false,
+ "breadcrumb": [
+  {
+   "name": "Home",
+   "url": "/"
+  },
+  {
+   "name": "Battery Backup Time Calculator for Home",
+   "url": "/battery/battery-backup-time-calculator/"
+  }
+ ],
+ "content": {
+  "intro": "",
+  "sections": [],
+  "faq": [
+   {
+    "q": "How long will a 200 Ah battery last?",
+    "a": "On a 12 V tubular battery with a 300 W load through a UPS, about 3 h 24 min. Halve the load and the backup roughly doubles."
+   },
+   {
+    "q": "Why is my real backup different from the calculator?",
+    "a": "The calculator shows backup while using only the recommended part of the battery. Many UPS units keep running until the battery is nearly empty, which gives longer backup but shortens battery life. Old batteries, heat and a higher real load give shorter backup."
+   },
+   {
+    "q": "Does a lithium battery give more backup?",
+    "a": "Yes for the same Ah and volts, because lithium can safely use about 90% of its capacity against about 50% for tubular batteries."
+   },
+   {
+    "q": "Is backup time the same for AC and DC loads?",
+    "a": "No. DC loads run straight from the battery without inverter loss. Set inverter efficiency to one for a DC load."
+   },
+   {
+    "q": "How do I find my load in watts?",
+    "a": "Add the watts on each appliance label, or use the appliance load calculator. Fans and LED lights are small loads; irons, heaters and ACs are large."
+   }
+  ],
+  "key_facts": [
+   "Backup time (hours) = battery Ah × battery volts × usable depth of discharge × inverter efficiency ÷ load in watts.",
+   "Tubular and lead-acid batteries should be used to about 50% of their capacity; lithium (LiFePO4) batteries to about 90%.",
+   "A typical home UPS converts battery power to AC at about 85% efficiency, so part of the stored energy is lost as heat."
+  ],
+  "mistakes": [
+   "Using the full Ah rating. Draining a tubular battery below about 50% shortens its life, so only that part counts as usable.",
+   "Forgetting the inverter loss. A UPS turns about 85% of battery energy into AC power.",
+   "Adding Ah of batteries in series. Two batteries in series double the volts, not the Ah.",
+   "Expecting the label Ah at high loads. Lead-acid batteries are rated over about twenty hours; drained in a few hours they deliver noticeably less, so keep a safety margin."
+  ],
+  "sources": [
+   {
+    "label": "Wattlyst methodology and default values",
+    "url": "/methodology/"
+   }
+  ],
+  "tool": {
+   "calc": "battery_runtime",
+   "module": "battery.js",
+   "data_keys": [],
+   "fields": [
+    {
+     "name": "ah",
+     "label": "Battery capacity",
+     "unit": "Ah",
+     "default": 200,
+     "hint": "From the battery label, for example 100, 150 or 200 Ah."
+    },
+    {
+     "name": "volts",
+     "label": "Battery bank voltage",
+     "unit": "V",
+     "type": "select",
+     "default": 12,
+     "options": [
+      [
+       12,
+       "12 V (one battery)"
+      ],
+      [
+       12.8,
+       "12.8 V lithium"
+      ],
+      [
+       24,
+       "24 V (two in series)"
+      ],
+      [
+       25.6,
+       "25.6 V lithium"
+      ],
+      [
+       48,
+       "48 V (four in series)"
+      ],
+      [
+       51.2,
+       "51.2 V lithium"
+      ]
+     ]
+    },
+    {
+     "name": "chemistry",
+     "label": "Battery type",
+     "type": "select",
+     "default": "tubular",
+     "options": [
+      [
+       "tubular",
+       "Tubular / lead-acid"
+      ],
+      [
+       "agm",
+       "AGM / dry"
+      ],
+      [
+       "gel",
+       "Gel"
+      ],
+      [
+       "lifepo4",
+       "Lithium (LiFePO4)"
+      ]
+     ]
+    },
+    {
+     "name": "load_w",
+     "label": "Load",
+     "unit": "W",
+     "default": 300,
+     "hint": "Total watts running on backup, for example fans + lights."
+    },
+    {
+     "name": "inverter_eff",
+     "label": "Inverter efficiency",
+     "unit": "0 to 1",
+     "default": 0.85,
+     "advanced": true,
+     "hint": "As a decimal: 0.85 means 85%."
+    },
+    {
+     "name": "dod",
+     "label": "Usable depth of discharge",
+     "unit": "0 to 1",
+     "placeholder": "Auto by battery type",
+     "advanced": true,
+     "hint": "As a decimal: 0.5 means half the battery. Leave blank to use the value for your battery type."
+    }
+   ],
+   "fixed_inputs": {},
+   "outputs": [
+    {
+     "key": "hours",
+     "label": "Backup time",
+     "spec": "hm",
+     "value": "3 h 24 min"
+    },
+    {
+     "key": "usable_wh",
+     "label": "Usable energy",
+     "spec": "int",
+     "unit": "Wh",
+     "value": "1,020"
+    }
+   ],
+   "how": {
+    "tpl": "{{in.ah|int}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable × {{out.inverter_eff|pct}} inverter efficiency = {{out.usable_wh|int}} Wh usable. {{out.usable_wh|int}} Wh ÷ {{in.load_w|int}} W = {{out.hours|2}} hours, about {{out.hours|hm}}.",
+    "text": "200 Ah × 12 V × 50% usable × 85% inverter efficiency = 1,020 Wh usable. 1,020 Wh ÷ 300 W = 3.4 hours, about 3 h 24 min."
+   },
+   "submit": "Calculate",
+   "data_checked": []
+  },
+  "examples": [
+   {
+    "title": "150 Ah battery with fans and lights",
+    "text": "150 Ah × 12 V × 50% × 85% = 765 Wh. At 200 W the backup is 3 h 50 min."
+   },
+   {
+    "title": "Two 200 Ah batteries on a 24 V UPS",
+    "text": "200 Ah × 24 V × 50% × 85% = 2,040 Wh. At 600 W the backup is 3 h 24 min."
+   },
+   {
+    "title": "100 Ah lithium battery",
+    "text": "100 Ah × 12.8 V × 90% × 85% = 979 Wh. At 300 W the backup is 3 h 16 min."
+   }
+  ],
+  "table": {
+   "caption": "Backup time of a 12 V tubular battery at common loads",
+   "head": [
+    "Battery",
+    "Load",
+    "Backup time"
+   ],
+   "rows": [
+    [
+     "100 Ah",
+     "100 W",
+     "5 h 6 min"
+    ],
+    [
+     "100 Ah",
+     "300 W",
+     "1 h 42 min"
+    ],
+    [
+     "150 Ah",
+     "200 W",
+     "3 h 50 min"
+    ],
+    [
+     "150 Ah",
+     "400 W",
+     "1 h 55 min"
+    ],
+    [
+     "200 Ah",
+     "300 W",
+     "3 h 24 min"
+    ],
+    [
+     "200 Ah",
+     "500 W",
+     "2 h 2 min"
+    ]
+   ]
+  },
+  "answer": "A 200 Ah, 12 V tubular battery runs a 300 W load for about 3 h 24 min through a UPS while using only the recommended 50% of its capacity. Backup time equals battery Ah × volts × usable depth of discharge × inverter efficiency ÷ load watts.",
+  "formula": {
+   "text": "t = (Ah × V × DoD × η) ÷ P",
+   "lines": [
+    "t = backup time in hours",
+    "Ah = battery capacity in amp hours",
+    "V = battery bank voltage",
+    "DoD = usable depth of discharge",
+    "η = inverter efficiency",
+    "P = load in watts"
+   ]
+  },
+  "safety": "Keep batteries in a ventilated place, use correctly rated cables and fuses, and have a licensed electrician connect a UPS to house wiring."
+ },
+ "schema": {
+  "@context": "https://schema.org",
+  "@graph": [
+   {
+    "@type": "BreadcrumbList",
+    "@id": "https://wattlyst.com/battery/battery-backup-time-calculator/#breadcrumb",
+    "itemListElement": [
+     {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://wattlyst.com/"
+     },
+     {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Battery Backup Time Calculator for Home",
+      "item": "https://wattlyst.com/battery/battery-backup-time-calculator/"
+     }
+    ]
+   },
+   {
+    "@type": "WebPage",
+    "@id": "https://wattlyst.com/battery/battery-backup-time-calculator/#webpage",
+    "url": "https://wattlyst.com/battery/battery-backup-time-calculator/",
+    "name": "Battery Backup Time Calculator for Home (UPS) | Wattlyst",
+    "description": "How long will your home UPS battery last? Enter load, battery Ah and type (tubular or lithium) to get backup time with inverter losses included.",
+    "inLanguage": "en",
+    "isPartOf": {
+     "@id": "https://wattlyst.com/#website"
+    },
+    "breadcrumb": {
+     "@id": "https://wattlyst.com/battery/battery-backup-time-calculator/#breadcrumb"
+    },
+    "dateModified": "2026-10-13",
+    "lastReviewed": "2026-10-13"
+   },
+   {
+    "@type": "WebApplication",
+    "@id": "https://wattlyst.com/battery/battery-backup-time-calculator/#app",
+    "name": "Battery Backup Time Calculator for Home",
+    "url": "https://wattlyst.com/battery/battery-backup-time-calculator/",
+    "description": "How long will your home UPS battery last? Enter load, battery Ah and type (tubular or lithium) to get backup time with inverter losses included.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript for live results",
+    "isAccessibleForFree": true,
+    "offers": {
+     "@type": "Offer",
+     "price": "0",
+     "priceCurrency": "USD"
+    },
+    "publisher": {
+     "@id": "https://wattlyst.com/#organization"
+    }
+   },
+   {
+    "@type": "Person",
+    "@id": "https://wattlyst.com/#/person/ali-ahmad",
+    "name": "Ali Ahmad",
+    "jobTitle": "Founder, Author",
+    "sameAs": [
+     "https://www.linkedin.com/in/ali-ahmad-chaudhry-12777486/"
+    ],
+    "worksFor": {
+     "@id": "https://wattlyst.com/#organization"
+    }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/battery/battery-backup-time-calculator/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "How long will a 200 Ah battery last?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "On a 12 V tubular battery with a 300 W load through a UPS, about 3 h 24 min. Halve the load and the backup roughly doubles."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Why is my real backup different from the calculator?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "The calculator shows backup while using only the recommended part of the battery. Many UPS units keep running until the battery is nearly empty, which gives longer backup but shortens battery life. Old batteries, heat and a higher real load give shorter backup."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Does a lithium battery give more backup?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Yes for the same Ah and volts, because lithium can safely use about 90% of its capacity against about 50% for tubular batteries."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Is backup time the same for AC and DC loads?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "No. DC loads run straight from the battery without inverter loss. Set inverter efficiency to one for a DC load."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How do I find my load in watts?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Add the watts on each appliance label, or use the appliance load calculator. Fans and LED lights are small loads; irons, heaters and ACs are large."
+      }
+     }
+    ]
+   },
+   {
+    "@type": "Organization",
+    "@id": "https://wattlyst.com/#organization",
+    "name": "Wattlyst",
+    "url": "https://wattlyst.com/",
+    "slogan": "Electricity math, done right.",
+    "logo": {
+     "@type": "ImageObject",
+     "url": "https://wattlyst.com/wp-content/plugins/wattlyst-tools/assets/brand/logo-512.png",
+     "width": 512,
+     "height": 512
+    },
+    "email": "contact@wattlyst.com",
+    "foundingDate": "2026",
+    "founder": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    },
+    "contactPoint": {
+     "@type": "ContactPoint",
+     "contactType": "customer support",
+     "email": "contact@wattlyst.com",
+     "availableLanguage": [
+      "en"
+     ]
+    }
+   }
+  ]
+ }
+}

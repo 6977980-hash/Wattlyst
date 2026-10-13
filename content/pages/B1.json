@@ -1,0 +1,248 @@
+{
+ "id": "B1",
+ "status": "draft",
+ "template": "tool",
+ "h1": "Battery Backup Time Calculator for Home",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "calc": "battery_runtime",
+ "fields": [
+  {
+   "name": "ah",
+   "label": "Battery capacity",
+   "unit": "Ah",
+   "default": 200,
+   "hint": "From the battery label, for example 100, 150 or 200 Ah."
+  },
+  {
+   "name": "volts",
+   "label": "Battery bank voltage",
+   "unit": "V",
+   "type": "select",
+   "default": 12,
+   "options": [
+    [
+     12,
+     "12 V (one battery)"
+    ],
+    [
+     12.8,
+     "12.8 V lithium"
+    ],
+    [
+     24,
+     "24 V (two in series)"
+    ],
+    [
+     25.6,
+     "25.6 V lithium"
+    ],
+    [
+     48,
+     "48 V (four in series)"
+    ],
+    [
+     51.2,
+     "51.2 V lithium"
+    ]
+   ]
+  },
+  {
+   "name": "chemistry",
+   "label": "Battery type",
+   "type": "select",
+   "default": "tubular",
+   "options": [
+    [
+     "tubular",
+     "Tubular / lead-acid"
+    ],
+    [
+     "agm",
+     "AGM / dry"
+    ],
+    [
+     "gel",
+     "Gel"
+    ],
+    [
+     "lifepo4",
+     "Lithium (LiFePO4)"
+    ]
+   ]
+  },
+  {
+   "name": "load_w",
+   "label": "Load",
+   "unit": "W",
+   "default": 300,
+   "hint": "Total watts running on backup, for example fans + lights."
+  },
+  {
+   "name": "inverter_eff",
+   "label": "Inverter efficiency",
+   "unit": "0 to 1",
+   "default": "@inverter_eff_ups",
+   "advanced": true,
+   "hint": "As a decimal: 0.85 means 85%."
+  },
+  {
+   "name": "dod",
+   "label": "Usable depth of discharge",
+   "unit": "0 to 1",
+   "placeholder": "Auto by battery type",
+   "advanced": true,
+   "hint": "As a decimal: 0.5 means half the battery. Leave blank to use the value for your battery type."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "hours",
+   "label": "Backup time",
+   "spec": "hm"
+  },
+  {
+   "key": "usable_wh",
+   "label": "Usable energy",
+   "spec": "int",
+   "unit": "Wh"
+  }
+ ],
+ "answer": "A {{in.ah|int}} Ah, {{in.volts|1}} V tubular battery runs a {{in.load_w|int}} W load for about {{out.hours|hm}} through a UPS while using only the recommended {{out.dod|pct}} of its capacity. Backup time equals battery Ah × volts × usable depth of discharge × inverter efficiency ÷ load watts.",
+ "how": "{{in.ah|int}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable × {{out.inverter_eff|pct}} inverter efficiency = {{out.usable_wh|int}} Wh usable. {{out.usable_wh|int}} Wh ÷ {{in.load_w|int}} W = {{out.hours|2}} hours, about {{out.hours|hm}}.",
+ "key_facts": [
+  "Backup time (hours) = battery Ah × battery volts × usable depth of discharge × inverter efficiency ÷ load in watts.",
+  "Tubular and lead-acid batteries should be used to about {{d.dod_lead_acid|pct}} of their capacity; lithium (LiFePO4) batteries to about {{d.dod_lifepo4|pct}}.",
+  "A typical home UPS converts battery power to AC at about {{d.inverter_eff_ups|pct}} efficiency, so part of the stored energy is lost as heat."
+ ],
+ "formula": {
+  "text": "t = (Ah × V × DoD × η) ÷ P",
+  "lines": [
+   "t = backup time in hours",
+   "Ah = battery capacity in amp hours",
+   "V = battery bank voltage",
+   "DoD = usable depth of discharge",
+   "η = inverter efficiency",
+   "P = load in watts"
+  ]
+ },
+ "examples": [
+  {
+   "inputs": {
+    "ah": 150,
+    "volts": 12,
+    "load_w": 200
+   },
+   "title": "{{in.ah|int}} Ah battery with fans and lights",
+   "text": "{{in.ah|int}} Ah × {{in.volts|1}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}} = {{out.usable_wh|int}} Wh. At {{in.load_w|int}} W the backup is {{out.hours|hm}}."
+  },
+  {
+   "inputs": {
+    "ah": 200,
+    "volts": 24,
+    "load_w": 600
+   },
+   "title": "Two {{in.ah|int}} Ah batteries on a {{in.volts|1}} V UPS",
+   "text": "{{in.ah|int}} Ah × {{in.volts|1}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}} = {{out.usable_wh|int}} Wh. At {{in.load_w|int}} W the backup is {{out.hours|hm}}."
+  },
+  {
+   "inputs": {
+    "ah": 100,
+    "volts": 12.8,
+    "chemistry": "lifepo4",
+    "load_w": 300
+   },
+   "title": "{{in.ah|int}} Ah lithium battery",
+   "text": "{{in.ah|int}} Ah × {{in.volts|1}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}} = {{out.usable_wh|int}} Wh. At {{in.load_w|int}} W the backup is {{out.hours|hm}}."
+  }
+ ],
+ "table": {
+  "caption": "Backup time of a {{in.volts|1}} V tubular battery at common loads",
+  "rows": [
+   {
+    "ah": 100,
+    "load_w": 100
+   },
+   {
+    "ah": 100,
+    "load_w": 300
+   },
+   {
+    "ah": 150,
+    "load_w": 200
+   },
+   {
+    "ah": 150,
+    "load_w": 400
+   },
+   {
+    "ah": 200,
+    "load_w": 300
+   },
+   {
+    "ah": 200,
+    "load_w": 500
+   }
+  ],
+  "columns": [
+   {
+    "label": "Battery",
+    "tpl": "{{in.ah|int}} Ah"
+   },
+   {
+    "label": "Load",
+    "tpl": "{{in.load_w|int}} W"
+   },
+   {
+    "label": "Backup time",
+    "tpl": "{{out.hours|hm}}"
+   }
+  ]
+ },
+ "mistakes": [
+  "Using the full Ah rating. Draining a tubular battery below about {{d.dod_lead_acid|pct}} shortens its life, so only that part counts as usable.",
+  "Forgetting the inverter loss. A UPS turns about {{d.inverter_eff_ups|pct}} of battery energy into AC power.",
+  "Adding Ah of batteries in series. Two batteries in series double the volts, not the Ah.",
+  "Expecting the label Ah at high loads. Lead-acid batteries are rated over about twenty hours; drained in a few hours they deliver noticeably less, so keep a safety margin."
+ ],
+ "safety": "Keep batteries in a ventilated place, use correctly rated cables and fuses, and have a licensed electrician connect a UPS to house wiring.",
+ "faq": [
+  {
+   "q": "How long will a {{in.ah|int}} Ah battery last?",
+   "a": "On a {{in.volts|1}} V tubular battery with a {{in.load_w|int}} W load through a UPS, about {{out.hours|hm}}. Halve the load and the backup roughly doubles."
+  },
+  {
+   "q": "Why is my real backup different from the calculator?",
+   "a": "The calculator shows backup while using only the recommended part of the battery. Many UPS units keep running until the battery is nearly empty, which gives longer backup but shortens battery life. Old batteries, heat and a higher real load give shorter backup."
+  },
+  {
+   "q": "Does a lithium battery give more backup?",
+   "a": "Yes for the same Ah and volts, because lithium can safely use about {{d.dod_lifepo4|pct}} of its capacity against about {{d.dod_lead_acid|pct}} for tubular batteries."
+  },
+  {
+   "q": "Is backup time the same for AC and DC loads?",
+   "a": "No. DC loads run straight from the battery without inverter loss. Set inverter efficiency to one for a DC load."
+  },
+  {
+   "q": "How do I find my load in watts?",
+   "a": "Add the watts on each appliance label, or use the appliance load calculator. Fans and LED lights are small loads; irons, heaters and ACs are large."
+  }
+ ],
+ "related": [
+  "B2",
+  "B3",
+  "B5",
+  "D4"
+ ],
+ "next": "B4",
+ "literal_numbers": [
+  "LiFePO4"
+ ],
+ "sources": [
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

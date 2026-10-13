@@ -1,0 +1,54 @@
+/* Wattlyst page styles. Inlined on Wattlyst pages only. Colours meet WCAG AA contrast. */
+.wl-page [hidden]{display:none!important}
+.wl-page{--wl-ink:#16211d;--wl-muted:#46534d;--wl-accent:#0b3d2e;--wl-accent-2:#0f6b4f;--wl-bg-soft:#f2f7f4;--wl-line:#cfdcd5;--wl-warn:#8a3b00;color:var(--wl-ink);line-height:1.6}
+.wl-page h2{font-size:1.35rem;font-weight:700;margin:2rem 0 .75rem}
+.wl-page h3{font-size:1.1rem;font-weight:600;margin:1.25rem 0 .4rem}
+.wl-h1{font-size:1.8rem;font-weight:700;line-height:1.25;margin:.25rem 0 .75rem}
+.wl-breadcrumb ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.25rem;font-size:.9rem;color:var(--wl-muted)}
+.wl-breadcrumb li+li::before{content:"\203A";margin-right:.25rem}
+.wl-breadcrumb a{color:var(--wl-accent-2)}
+.wl-answer{font-size:1.1rem;margin:0 0 1.25rem}
+.wl-tool{background:var(--wl-bg-soft);border:1px solid var(--wl-line);border-radius:10px;padding:1rem;margin:0 0 1.5rem}
+.wl-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr));gap:.9rem 1rem}
+.wl-field label{display:block;font-weight:600;margin-bottom:.25rem}
+.wl-field input[type=text],.wl-field select{width:100%;min-height:44px;font-size:1rem;padding:.5rem .65rem;border:1px solid #7d8c85;border-radius:6px;background:#fff;color:var(--wl-ink);box-sizing:border-box}
+.wl-field input:focus,.wl-field select:focus{outline:3px solid #ffbf47;outline-offset:1px}
+.wl-field [aria-invalid=true]{border-color:#b00020;border-width:2px}
+.wl-unit{font-weight:400;color:var(--wl-muted)}
+.wl-hint{font-size:.875rem;color:var(--wl-muted);margin:.25rem 0 0}
+.wl-check{display:flex;gap:.5rem;align-items:center}
+.wl-advanced{margin:1rem 0 0}
+.wl-advanced summary{cursor:pointer;font-weight:600;color:var(--wl-accent-2);min-height:44px;display:flex;align-items:center}
+.wl-advanced .wl-fields{margin-top:.5rem}
+.wl-btn{display:block;width:100%;min-height:48px;margin:1rem 0 0;font-size:1.05rem;font-weight:700;color:#fff;background:var(--wl-accent);border:0;border-radius:8px;cursor:pointer}
+.wl-btn:hover,.wl-btn:focus{background:var(--wl-accent-2)}
+.wl-error{margin:1rem 0 0;padding:.75rem;border-left:4px solid #b00020;background:#fff;color:#7a0016;font-weight:600}
+.wl-results{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,12rem),1fr));gap:.75rem;margin-top:1rem}
+.wl-result{background:#fff;border:1px solid var(--wl-line);border-radius:8px;padding:.75rem}
+.wl-result-label{display:block;font-size:.9rem;color:var(--wl-muted)}
+.wl-result output{display:block;font-size:1.5rem;font-weight:700;color:var(--wl-accent)}
+.wl-how,.wl-facts{border-left:4px solid var(--wl-accent-2);padding:.25rem 0 .25rem 1rem}
+.wl-eq code{font-size:1.05rem;background:var(--wl-bg-soft);padding:.25rem .5rem;border-radius:4px;color:var(--wl-ink)}
+.wl-table-wrap{overflow-x:auto}
+.wl-table{border-collapse:collapse;width:100%;font-size:.95rem}
+.wl-table caption{text-align:left;font-weight:600;padding:.5rem 0}
+.wl-table th,.wl-table td{border:1px solid var(--wl-line);padding:.5rem .6rem;text-align:left}
+.wl-table thead th{background:var(--wl-bg-soft)}
+.wl-safety{color:var(--wl-warn)}
+.wl-children{list-style:none;padding:0}
+.wl-children li{border-bottom:1px solid var(--wl-line);padding:.75rem 0}
+.wl-children a{font-weight:700;color:var(--wl-accent-2)}
+.wl-children p{margin:.25rem 0 0;color:var(--wl-muted)}
+.wl-author{margin:2rem 0 1rem;padding:1rem;background:var(--wl-bg-soft);border-radius:8px}
+.wl-author p{margin:0 0 .4rem}
+.wl-page a{color:var(--wl-accent-2);text-decoration:underline}
+.wl-dates{font-size:.9rem;color:var(--wl-muted)}
+.wl-ad{margin:2rem 0;text-align:center}
+.wl-ad-label{display:block;font-size:.75rem;color:var(--wl-muted);text-transform:uppercase;letter-spacing:.05em}
+.wl-ad-box{min-height:280px}
+.wl-footer-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:.25rem 1rem}
+.wl-footer-nav a{display:inline-block;padding:.5rem 0}
+.wl-copy{margin:.25rem 0 0}
+@media (min-width:768px){.wl-h1{font-size:2.2rem}}
+.wl-how,.wl-facts{margin:1.5rem 0}
+.wl-how h2,.wl-facts h2{margin-top:.25rem}
