@@ -1,0 +1,78 @@
+// Shared helpers for every calculator. Pure: no DOM, no WordPress, no globals.
+
+export class CalcError extends Error {
+  constructor(code, field) {
+    super(code);
+    this.code = code;
+    this.field = field;
+  }
+}
+
+const isNum = (v) => typeof v === 'number' && Number.isFinite(v);
+
+/**
+ * Read a numeric input. Strings like "12.5" are accepted (form fields); blanks fall back to def.
+ * opts: { def, min, max, gt, code }  gt = strictly greater than.
+ */
+export function num(inputs, key, opts = {}) {
+  let v = inputs?.[key];
+  if (v === undefined || v === null || v === '') v = opts.def;
+  if (typeof v === 'string') v = Number(v.trim());
+  if (v === undefined || v === null) throw new CalcError(opts.code || `${key}_required`, key);
+  if (!isNum(v)) throw new CalcError(opts.code || `${key}_invalid`, key);
+  if (opts.gt !== undefined && !(v > opts.gt)) throw new CalcError(opts.code || `${key}_must_be_positive`, key);
+  if (opts.min !== undefined && v < opts.min) throw new CalcError(opts.code || `${key}_too_small`, key);
+  if (opts.max !== undefined && v > opts.max) throw new CalcError(opts.code || `${key}_too_large`, key);
+  return v;
+}
+
+export const pos = (inputs, key, def, code) => num(inputs, key, { def, gt: 0, code });
+export const nonneg = (inputs, key, def, code) => num(inputs, key, { def, min: 0, code });
+/** Fractions such as power factor, efficiency, DoD: 0 < x <= 1. */
+export const frac = (inputs, key, def, code) => num(inputs, key, { def, gt: 0, max: 1, code });
+
+export function pick(inputs, key, allowed, def) {
+  const v = inputs?.[key] ?? def;
+  if (!allowed.includes(v)) throw new CalcError(`${key}_invalid`, key);
+  return v;
+}
+
+/** ceil that ignores floating-point dust: 3.0000000000004 -> 3, not 4. */
+export const ceilSafe = (x) => Math.ceil(x - 1e-9);
+
+/** Read a value from data/defaults.json; a missing default is a bug, not user error. */
+export function dflt(data, path) {
+  const v = path.split('.').reduce((o, k) => (o == null ? undefined : o[k]), data?.defaults);
+  if (v === undefined) throw new CalcError(`missing_default_${path}`, path);
+  return v;
+}
+
+function assertFinite(value, path, allowNegative) {
+  if (typeof value === 'number') {
+    if (!Number.isFinite(value)) throw new CalcError('internal_non_finite', path);
+    if (value < 0 && !allowNegative.includes(path)) throw new CalcError('internal_negative', path);
+  } else if (Array.isArray(value)) {
+    value.forEach((v, i) => assertFinite(v, `${path}[${i}]`, allowNegative));
+  } else if (value && typeof value === 'object') {
+    for (const [k, v] of Object.entries(value)) assertFinite(v, path ? `${path}.${k}` : k, allowNegative);
+  }
+}
+
+/**
+ * Wrap a calculator so it never throws and never returns NaN, Infinity or an unexpected negative.
+ * Result: { ok: true, ...values } or { ok: false, error: code, field }.
+ */
+export function calculator(fn, { allowNegative = [] } = {}) {
+  const wrapped = (inputs = {}, data = {}) => {
+    try {
+      const out = fn(inputs, data);
+      assertFinite(out, '', allowNegative);
+      return { ok: true, ...out };
+    } catch (e) {
+      if (e instanceof CalcError) return { ok: false, error: e.code, field: e.field };
+      return { ok: false, error: 'internal_error' };
+    }
+  };
+  wrapped.raw = fn;
+  return wrapped;
+}
