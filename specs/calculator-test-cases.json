@@ -1,0 +1,772 @@
+[
+ {
+  "calc": "watts_to_amps",
+  "name": "DC 12V 120W",
+  "inputs": {
+   "mode": "dc",
+   "watts": 120,
+   "volts": 12
+  },
+  "expected": {
+   "amps": 10.0
+  },
+  "tolerance": 0.001,
+  "note": ""
+ },
+ {
+  "calc": "watts_to_amps",
+  "name": "1-phase 230V 2000W PF1",
+  "inputs": {
+   "mode": "ac1",
+   "watts": 2000,
+   "volts": 230,
+   "pf": 1
+  },
+  "expected": {
+   "amps": 8.6957
+  },
+  "tolerance": 0.01,
+  "note": ""
+ },
+ {
+  "calc": "watts_to_amps",
+  "name": "1-phase 230V 1500W PF0.8",
+  "inputs": {
+   "mode": "ac1",
+   "watts": 1500,
+   "volts": 230,
+   "pf": 0.8
+  },
+  "expected": {
+   "amps": 8.1522
+  },
+  "tolerance": 0.01,
+  "note": ""
+ },
+ {
+  "calc": "watts_to_amps",
+  "name": "3-phase 400V 10kW PF0.85",
+  "inputs": {
+   "mode": "ac3",
+   "watts": 10000,
+   "volts": 400,
+   "pf": 0.85
+  },
+  "expected": {
+   "amps": 16.9809
+  },
+  "tolerance": 0.01,
+  "note": "V is line-to-line"
+ },
+ {
+  "calc": "watts_to_amps",
+  "name": "1-phase 120V 1500W PF1 (US)",
+  "inputs": {
+   "mode": "ac1",
+   "watts": 1500,
+   "volts": 120,
+   "pf": 1
+  },
+  "expected": {
+   "amps": 12.5
+  },
+  "tolerance": 0.001,
+  "note": ""
+ },
+ {
+  "calc": "amps_to_watts",
+  "name": "1-phase 230V 10A PF0.9",
+  "inputs": {
+   "mode": "ac1",
+   "amps": 10,
+   "volts": 230,
+   "pf": 0.9
+  },
+  "expected": {
+   "watts": 2070.0
+  },
+  "tolerance": 0.01,
+  "note": ""
+ },
+ {
+  "calc": "amps_to_watts",
+  "name": "3-phase 400V 20A PF0.8",
+  "inputs": {
+   "mode": "ac3",
+   "amps": 20,
+   "volts": 400,
+   "pf": 0.8
+  },
+  "expected": {
+   "watts": 11085.1252
+  },
+  "tolerance": 0.5,
+  "note": ""
+ },
+ {
+  "calc": "amps_to_watts",
+  "name": "ampstowatt 480V check: 3-phase 480V 10A PF0.9",
+  "inputs": {
+   "mode": "ac3",
+   "amps": 10,
+   "volts": 480,
+   "pf": 0.9
+  },
+  "expected": {
+   "watts": 7482.4595
+  },
+  "tolerance": 0.5,
+  "note": "competitor printed 7,478; correct is 7,482"
+ },
+ {
+  "calc": "amps_to_kw",
+  "name": "3-phase 400V 32A PF0.8",
+  "inputs": {
+   "mode": "ac3",
+   "amps": 32,
+   "volts": 400,
+   "pf": 0.8
+  },
+  "expected": {
+   "kw": 17.7362
+  },
+  "tolerance": 0.001,
+  "note": ""
+ },
+ {
+  "calc": "kw_to_amps",
+  "name": "1-phase 230V 5kW PF0.95",
+  "inputs": {
+   "mode": "ac1",
+   "kw": 5,
+   "volts": 230,
+   "pf": 0.95
+  },
+  "expected": {
+   "amps": 22.8833
+  },
+  "tolerance": 0.01,
+  "note": ""
+ },
+ {
+  "calc": "kva_to_kw",
+  "name": "5 kVA PF0.8",
+  "inputs": {
+   "kva": 5,
+   "pf": 0.8
+  },
+  "expected": {
+   "kw": 4.0
+  },
+  "tolerance": 0.001,
+  "note": ""
+ },
+ {
+  "calc": "va_to_watts",
+  "name": "1000VA UPS PF0.6",
+  "inputs": {
+   "va": 1000,
+   "pf": 0.6
+  },
+  "expected": {
+   "watts": 600.0
+  },
+  "tolerance": 0.001,
+  "note": "many line-interactive UPS are rated PF 0.6; online/pure sine 0.8-1.0"
+ },
+ {
+  "calc": "ah_to_wh",
+  "name": "200Ah 12V",
+  "inputs": {
+   "ah": 200,
+   "volts": 12
+  },
+  "expected": {
+   "wh": 2400.0,
+   "kwh": 2.4
+  },
+  "tolerance": 0.001,
+  "note": ""
+ },
+ {
+  "calc": "kwh_to_ah",
+  "name": "5 kWh at 51.2V",
+  "inputs": {
+   "kwh": 5,
+   "volts": 51.2
+  },
+  "expected": {
+   "ah": 97.6562
+  },
+  "tolerance": 0.01,
+  "note": ""
+ },
+ {
+  "calc": "units",
+  "name": "1 kWh = 1 unit",
+  "inputs": {
+   "watts": 1000,
+   "hours": 1
+  },
+  "expected": {
+   "units": 1.0
+  },
+  "tolerance": 0,
+  "note": ""
+ },
+ {
+  "calc": "units",
+  "name": "100W fan 12h/day 30 days",
+  "inputs": {
+   "watts": 100,
+   "hours": 12,
+   "days": 30
+  },
+  "expected": {
+   "units": 36.0
+  },
+  "tolerance": 0.001,
+  "note": ""
+ },
+ {
+  "calc": "battery_runtime",
+  "name": "200Ah 12V tubular 300W AC load",
+  "inputs": {
+   "ah": 200,
+   "volts": 12,
+   "chemistry": "tubular",
+   "dod": 0.5,
+   "inverter_eff": 0.85,
+   "load_w": 300
+  },
+  "expected": {
+   "hours": 3.4
+  },
+  "tolerance": 0.01,
+  "note": ""
+ },
+ {
+  "calc": "battery_runtime",
+  "name": "100Ah 12V lead-acid 100W AC load",
+  "inputs": {
+   "ah": 100,
+   "volts": 12,
+   "chemistry": "lead_acid",
+   "dod": 0.5,
+   "inverter_eff": 0.85,
+   "load_w": 100
+  },
+  "expected": {
+   "hours": 5.1
+  },
+  "tolerance": 0.01,
+  "note": ""
+ },
+ {
+  "calc": "battery_runtime",
+  "name": "100Ah 12V LiFePO4 100W DC load",
+  "inputs": {
+   "ah": 100,
+   "volts": 12.8,
+   "chemistry": "lifepo4",
+   "dod": 0.9,
+   "inverter_eff": 1.0,
+   "load_w": 100
+  },
+  "expected": {
+   "hours": 11.52
+  },
+  "tolerance": 0.01,
+  "note": "DC load: no inverter loss"
+ },
+ {
+  "calc": "battery_runtime",
+  "name": "2x150Ah 24V tubular 500W",
+  "inputs": {
+   "ah": 150,
+   "volts": 24,
+   "dod": 0.5,
+   "inverter_eff": 0.85,
+   "load_w": 500
+  },
+  "expected": {
+   "hours": 3.06
+  },
+  "tolerance": 0.01,
+  "note": "two 12V in series = 24V, same Ah"
+ },
+ {
+  "calc": "battery_runtime",
+  "name": "Zero load must not divide by zero",
+  "inputs": {
+   "ah": 200,
+   "volts": 12,
+   "dod": 0.5,
+   "inverter_eff": 0.85,
+   "load_w": 0
+  },
+  "expected": {
+   "error": "load_must_be_positive"
+  },
+  "tolerance": 0,
+  "note": ""
+ },
+ {
+  "calc": "battery_bank",
+  "name": "500W for 4h on 24V tubular",
+  "inputs": {
+   "load_w": 500,
+   "hours": 4,
+   "volts": 24,
+   "dod": 0.5,
+   "inverter_eff": 0.85
+  },
+  "expected": {
+   "ah_required": 196.0784,
+   "batteries_200ah_12v": 2
+  },
+  "tolerance": 0.1,
+  "note": "24V bank uses pairs of 12V; round up per string"
+ },
+ {
+  "calc": "battery_bank",
+  "name": "3kW inverter 2kW load 3h 48V lithium",
+  "inputs": {
+   "load_w": 2000,
+   "hours": 3,
+   "volts": 51.2,
+   "dod": 0.9,
+   "inverter_eff": 0.9
+  },
+  "expected": {
+   "ah_required": 144.6759
+  },
+  "tolerance": 0.1,
+  "note": ""
+ },
+ {
+  "calc": "loadshedding",
+  "name": "8h grid between 2h outages, 200Ah tubular, 15A charger",
+  "inputs": {
+   "ah": 200,
+   "dod": 0.5,
+   "charge_a": 15,
+   "charge_eff": 0.85,
+   "grid_hours_between": 8
+  },
+  "expected": {
+   "recharge_hours": 7.8431,
+   "fully_recharged": true
+  },
+  "tolerance": 0.01,
+  "note": "recharge_h = Ah*DoD/(I_charge*eff)"
+ },
+ {
+  "calc": "ups_capacity",
+  "name": "1500VA PF0.8 can run 1300W?",
+  "inputs": {
+   "va": 1500,
+   "pf": 0.8,
+   "load_w": 1300
+  },
+  "expected": {
+   "max_w": 1200.0,
+   "ok": false
+  },
+  "tolerance": 0,
+  "note": ""
+ },
+ {
+  "calc": "inverter_size",
+  "name": "AC+fridge+3 fans+6 LED",
+  "inputs": {
+   "loads": [
+    {
+     "name": "1.5 ton inverter AC",
+     "run": 1500,
+     "start": 1500
+    },
+    {
+     "name": "fridge",
+     "run": 150,
+     "start": 600
+    },
+    {
+     "name": "fans x3",
+     "run": 240,
+     "start": 240
+    },
+    {
+     "name": "LED x6",
+     "run": 60,
+     "start": 60
+    }
+   ],
+   "margin": 1.25,
+   "pf": 0.8
+  },
+  "expected": {
+   "running_w": 1950,
+   "continuous_w": 2437.5,
+   "surge_w": 2400,
+   "kva": 3.0469
+  },
+  "tolerance": 0.01,
+  "note": "inverter AC soft-starts, so start=run; fridge compressor ~4x"
+ },
+ {
+  "calc": "generator_size",
+  "name": "Non-inverter AC + fridge + 1HP motor + fans",
+  "inputs": {
+   "loads": [
+    {
+     "name": "1.5 ton non-inverter AC",
+     "run": 1800,
+     "start": 5400
+    },
+    {
+     "name": "fridge",
+     "run": 150,
+     "start": 600
+    },
+    {
+     "name": "1 HP motor",
+     "run": 750,
+     "start": 2250
+    },
+    {
+     "name": "fans+lights",
+     "run": 500,
+     "start": 500
+    }
+   ],
+   "margin": 1.25,
+   "pf": 0.8
+  },
+  "expected": {
+   "running_w": 3200,
+   "peak_w": 6800,
+   "recommended_kva": 8.5
+  },
+  "tolerance": 0.01,
+  "note": "recommended = max(running*margin, peak)/PF. Start factors 3x are typical, engineer to confirm"
+ },
+ {
+  "calc": "solar_size",
+  "name": "500 units/month Lahore, specific yield 4.0 kWh/kWp/day (Global Solar Atlas)",
+  "inputs": {
+   "monthly_units": 500,
+   "city": "lahore",
+   "yield_kwh_per_kwp_day": 4.0,
+   "panel_w": 585
+  },
+  "expected": {
+   "daily_kwh": 16.6667,
+   "kw": 4.1667,
+   "panels": 8
+  },
+  "tolerance": 0.01,
+  "note": "yield comes from data/cities.json; equivalent to PSH 5.1 x PR 0.78"
+ },
+ {
+  "calc": "solar_size",
+  "name": "10 kWh/day PSH 5 PR 0.8",
+  "inputs": {
+   "daily_kwh": 10,
+   "psh": 5,
+   "pr": 0.8,
+   "panel_w": 585
+  },
+  "expected": {
+   "kw": 2.5,
+   "panels": 5
+  },
+  "tolerance": 0.001,
+  "note": ""
+ },
+ {
+  "calc": "solar_battery",
+  "name": "Night load 3 kWh, 1 day, 48V LiFePO4",
+  "inputs": {
+   "night_kwh": 3,
+   "days": 1,
+   "volts": 51.2,
+   "dod": 0.9,
+   "inverter_eff": 0.9
+  },
+  "expected": {
+   "ah": 72.338
+  },
+  "tolerance": 0.1,
+  "note": ""
+ },
+ {
+  "calc": "panel_for_12v",
+  "name": "100Ah 12V lead-acid, 50% DoD, PSH 5, charge eff 0.85",
+  "inputs": {
+   "ah": 100,
+   "volts": 12,
+   "dod": 0.5,
+   "psh": 5,
+   "charge_eff": 0.85
+  },
+  "expected": {
+   "panel_w": 141.1765
+  },
+  "tolerance": 0.1,
+  "note": "round up to the next standard panel (150W)"
+ },
+ {
+  "calc": "charge_controller",
+  "name": "800W panels on 24V, MPPT, margin 1.25",
+  "inputs": {
+   "panel_w": 800,
+   "battery_v": 24,
+   "margin": 1.25,
+   "type": "mppt"
+  },
+  "expected": {
+   "amps": 41.6667
+  },
+  "tolerance": 0.01,
+  "note": "pick next standard size (50A)"
+ },
+ {
+  "calc": "ac_units",
+  "name": "1.5 ton inverter AC, avg 1.1 kW draw, 8h/day, 30 days",
+  "inputs": {
+   "avg_kw": 1.1,
+   "hours": 8,
+   "days": 30
+  },
+  "expected": {
+   "daily_units": 8.8,
+   "monthly_units": 264.0
+  },
+  "tolerance": 0.001,
+  "note": "avg_kw is an input/assumption; rated input from spec sheet is the max"
+ },
+ {
+  "calc": "voltage_drop",
+  "name": "2kW AC, 230V, 20m, 2.5mm2 copper",
+  "inputs": {
+   "watts": 2000,
+   "volts": 230,
+   "pf": 0.95,
+   "length_m": 20,
+   "area_mm2": 2.5,
+   "rho": 0.0225
+  },
+  "expected": {
+   "amps": 9.1533,
+   "drop_v": 3.2952,
+   "drop_pct": 1.4327
+  },
+  "tolerance": 0.01,
+  "note": "rho 0.0225 ohm*mm2/m = copper at ~70C; single phase uses 2L"
+ },
+ {
+  "calc": "pk_cable_area",
+  "name": "7/29 = 7 strands of 0.029 inch",
+  "inputs": {
+   "strands": 7,
+   "strand_in": 0.029
+  },
+  "expected": {
+   "area_mm2": 2.983
+  },
+  "tolerance": 0.01,
+  "note": "~2.96 mm2, sold as 2.5 mm2 equivalent"
+ },
+ {
+  "calc": "pk_cable_area",
+  "name": "3/29",
+  "inputs": {
+   "strands": 3,
+   "strand_in": 0.029
+  },
+  "expected": {
+   "area_mm2": 1.2784
+  },
+  "tolerance": 0.01,
+  "note": ""
+ },
+ {
+  "calc": "pk_cable_area",
+  "name": "7/36",
+  "inputs": {
+   "strands": 7,
+   "strand_in": 0.036
+  },
+  "expected": {
+   "area_mm2": 4.5969
+  },
+  "tolerance": 0.01,
+  "note": ""
+ },
+ {
+  "calc": "pk_cable_area",
+  "name": "7/44",
+  "inputs": {
+   "strands": 7,
+   "strand_in": 0.044
+  },
+  "expected": {
+   "area_mm2": 6.8669
+  },
+  "tolerance": 0.01,
+  "note": ""
+ },
+ {
+  "calc": "hp_to_kw",
+  "name": "1 HP motor",
+  "inputs": {
+   "hp": 1
+  },
+  "expected": {
+   "kw": 0.7457
+  },
+  "tolerance": 0.0001,
+  "note": ""
+ },
+ {
+  "calc": "bill_energy",
+  "name": "Protected 150 units, 1 kW sanctioned",
+  "inputs": {
+   "units": 150,
+   "protected": true,
+   "sanctioned_kw": 1
+  },
+  "expected": {
+   "energy_rs": 1704.5,
+   "fixed_rs": 300.0
+  },
+  "tolerance": 0.01,
+  "note": "protected gets one-previous-slab benefit"
+ },
+ {
+  "calc": "bill_energy",
+  "name": "Unprotected 250 units, 2 kW",
+  "inputs": {
+   "units": 250,
+   "protected": false,
+   "sanctioned_kw": 2
+  },
+  "expected": {
+   "energy_rs": 8275.0,
+   "fixed_rs": 700.0
+  },
+  "tolerance": 0.01,
+  "note": "unprotected: all units at the reached band rate"
+ },
+ {
+  "calc": "bill_energy",
+  "name": "Unprotected 450 units, 3 kW",
+  "inputs": {
+   "units": 450,
+   "protected": false,
+   "sanctioned_kw": 3
+  },
+  "expected": {
+   "energy_rs": 17527.5,
+   "fixed_rs": 1500.0
+  },
+  "tolerance": 0.01,
+  "note": ""
+ },
+ {
+  "calc": "bill_energy",
+  "name": "Unprotected 80 units, 1 kW",
+  "inputs": {
+   "units": 80,
+   "protected": false,
+   "sanctioned_kw": 1
+  },
+  "expected": {
+   "energy_rs": 1795.2,
+   "fixed_rs": 275.0
+  },
+  "tolerance": 0.01,
+  "note": ""
+ },
+ {
+  "calc": "protected_check",
+  "name": "6 months all <=200",
+  "inputs": {
+   "history": [
+    180,
+    190,
+    200,
+    150,
+    170,
+    199
+   ],
+   "sanctioned_kw": 3,
+   "tou": false
+  },
+  "expected": {
+   "protected": true
+  },
+  "tolerance": 0,
+  "note": ""
+ },
+ {
+  "calc": "protected_check",
+  "name": "one month 201",
+  "inputs": {
+   "history": [
+    180,
+    201,
+    200,
+    150,
+    170,
+    199
+   ],
+   "sanctioned_kw": 3,
+   "tou": false
+  },
+  "expected": {
+   "protected": false
+  },
+  "tolerance": 0,
+  "note": ""
+ },
+ {
+  "calc": "protected_check",
+  "name": "5 kW is ToU, never protected",
+  "inputs": {
+   "history": [
+    100,
+    100,
+    100,
+    100,
+    100,
+    100
+   ],
+   "sanctioned_kw": 5,
+   "tou": true
+  },
+  "expected": {
+   "protected": false
+  },
+  "tolerance": 0,
+  "note": ""
+ },
+ {
+  "calc": "net_billing",
+  "name": "Import 400, export 300 units, buyback 11 (editable)",
+  "inputs": {
+   "import_units": 400,
+   "export_units": 300,
+   "buyback_rs": 11,
+   "protected": false
+  },
+  "expected": {
+   "import_energy_rs": 14584.0,
+   "export_credit_rs": 3300.0,
+   "net_energy_rs": 11284.0
+  },
+  "tolerance": 0.01,
+  "note": "import billed at slab tariff; buyback rate is NOT verified on a NEPRA page, keep it an editable input with source note"
+ }
+]
