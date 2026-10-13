@@ -1,0 +1,116 @@
+// A. Conversions (specs/formulas.md section A).
+import { calculator, has, pos, frac, pick, nonneg, dflt } from './core.js';
+
+const MODES = ['dc', 'ac1', 'ac3'];
+
+/** Voltage factor k so that P = k × V × I × PF. dc: PF forced to 1. */
+function circuit(inputs, data) {
+  const mode = pick(inputs, 'mode', MODES, 'ac1');
+  const volts = pos(inputs, 'volts', mode === 'ac3' ? dflt(data, 'v_3ph') : dflt(data, 'v_1ph'));
+  const pf = mode === 'dc' ? 1 : frac(inputs, 'pf', dflt(data, 'pf_mixed'));
+  const k = mode === 'ac3' ? Math.sqrt(3) : 1;
+  return { mode, volts, pf, k };
+}
+
+export const watts_to_amps = calculator((i, d) => {
+  const { mode, volts, pf, k } = circuit(i, d);
+  const watts = nonneg(i, 'watts');
+  return { mode, volts, pf, watts, amps: watts / (k * volts * pf) };
+});
+
+export const amps_to_watts = calculator((i, d) => {
+  const { mode, volts, pf, k } = circuit(i, d);
+  const amps = nonneg(i, 'amps');
+  const watts = k * volts * amps * pf;
+  return { mode, volts, pf, amps, watts, kw: watts / 1000, va: k * volts * amps };
+});
+
+export const amps_to_kw = calculator((i, d) => {
+  const r = amps_to_watts.raw(i, d);
+  return { ...r, kw: r.watts / 1000 };
+});
+
+export const kw_to_amps = calculator((i, d) => {
+  const { mode, volts, pf, k } = circuit(i, d);
+  const kw = nonneg(i, 'kw');
+  return { mode, volts, pf, kw, amps: (kw * 1000) / (k * volts * pf) };
+});
+
+export const kva_to_kw = calculator((i, d) => {
+  const kva = nonneg(i, 'kva');
+  const pf = frac(i, 'pf', dflt(d, 'pf_mixed'));
+  return { kva, pf, kw: kva * pf };
+});
+
+export const kw_to_kva = calculator((i, d) => {
+  const kw = nonneg(i, 'kw');
+  const pf = frac(i, 'pf', dflt(d, 'pf_mixed'));
+  return { kw, pf, kva: kw / pf };
+});
+
+export const va_to_watts = calculator((i, d) => {
+  const va = nonneg(i, 'va');
+  const pf = frac(i, 'pf', dflt(d, 'pf_ups_line_interactive'));
+  return { va, pf, watts: va * pf };
+});
+
+export const watts_to_va = calculator((i, d) => {
+  const watts = nonneg(i, 'watts');
+  const pf = frac(i, 'pf', dflt(d, 'pf_ups_line_interactive'));
+  return { watts, pf, va: watts / pf };
+});
+
+export const ah_to_wh = calculator((i) => {
+  const ah = nonneg(i, 'ah');
+  const volts = pos(i, 'volts');
+  const wh = ah * volts;
+  return { ah, volts, wh, kwh: wh / 1000 };
+});
+
+export const wh_to_ah = calculator((i) => {
+  const wh = nonneg(i, 'wh');
+  const volts = pos(i, 'volts');
+  return { wh, volts, ah: wh / volts };
+});
+
+export const kwh_to_ah = calculator((i) => {
+  const kwh = nonneg(i, 'kwh');
+  const volts = pos(i, 'volts');
+  return { kwh, volts, ah: (kwh * 1000) / volts };
+});
+
+/**
+ * 1 unit = 1 kWh. Input modes (E6 unit calculator):
+ *  watts: units = W × hours × days / 1000
+ *  amps:  units = V × A × PF × hours × days / 1000 (PF 1 for DC; AC default pf_mixed, editable)
+ *  ah:    units = Ah × V / 1000 (energy stored in / drawn from a battery)
+ */
+export const units = calculator((i, d) => {
+  const input = pick(i, 'input', ['watts', 'amps', 'ah'], has(i, 'amps') ? 'amps' : has(i, 'ah') ? 'ah' : 'watts');
+  if (input === 'ah') {
+    const ah = nonneg(i, 'ah');
+    const volts = pos(i, 'volts');
+    return { input, ah, volts, units: (ah * volts) / 1000 };
+  }
+  const hours = nonneg(i, 'hours');
+  const days = nonneg(i, 'days', 1);
+  let watts;
+  const out = { input, hours, days };
+  if (input === 'amps') {
+    const { mode, volts, pf, k } = circuit(i, d);
+    const amps = nonneg(i, 'amps');
+    watts = k * volts * amps * pf;
+    Object.assign(out, { mode, volts, pf, amps });
+  } else {
+    watts = nonneg(i, 'watts');
+  }
+  return { ...out, watts, units: (watts * hours * days) / 1000 };
+});
+
+/** 1 HP = 745.7 W of shaft power; electrical input = shaft / motor efficiency. */
+export const hp_to_kw = calculator((i, d) => {
+  const hp = nonneg(i, 'hp');
+  const motor_eff = frac(i, 'motor_eff', dflt(d, 'motor_eff'));
+  const kw = (hp * dflt(d, 'w_per_hp')) / 1000;
+  return { hp, kw, motor_eff, input_kw: kw / motor_eff };
+});
