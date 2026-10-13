@@ -132,10 +132,16 @@ export const net_billing = calculator((i, d) => {
   const imp = energyCharge(t, import_units, categoryOf(i), sanctioned_kw);
   const export_credit_rs = export_units * buyback_rs;
   const diff = imp.energy_rs - export_credit_rs;
+  // Old net metering for comparison: units offset one-for-one, only the net import is billed (energy only).
+  const net_metering_units = Math.max(0, import_units - export_units);
+  const old = energyCharge(t, net_metering_units, categoryOf(i), sanctioned_kw);
+  const net_energy_rs = Math.max(0, diff);
   return {
     import_units, export_units, buyback_rs, import_rate: imp.rate,
     import_energy_rs: imp.energy_rs, export_credit_rs,
-    net_energy_rs: Math.max(0, diff), carry_forward_rs: Math.max(0, -diff),
+    net_energy_rs, carry_forward_rs: Math.max(0, -diff),
+    net_metering_units, net_metering_rate: old.rate, net_metering_rs: old.energy_rs, net_metering_carry_units: Math.max(0, export_units - import_units),
+    extra_vs_net_metering_rs: Math.max(0, net_energy_rs - old.energy_rs),
   };
 });
 

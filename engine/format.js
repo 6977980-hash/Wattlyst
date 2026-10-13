@@ -1,7 +1,7 @@
 // Number formatting and text templates shared by the build (server-rendered HTML) and the browser
 // (live results), so a number looks the same before and after JavaScript runs. Pure: no DOM.
 //
-// Template syntax: {{path}} or {{path|spec}}. path is dotted (in.load_w, out.hours, ex.0.out.hours).
+// Template syntax: {{path}} or {{path|spec}}. path is dotted (in.load_w, out.hours, a.ceiling-fan-ac.running_w).
 // spec: a digit = max decimals (default 2), "hm" = hours as "3 h 24 min", "int" = whole number,
 // "pct" = fraction as percent, "rs" = Pakistani rupees with no decimals, "raw" = value as is.
 
@@ -39,7 +39,7 @@ export function lookup(ctx, path) {
   return path.split('.').reduce((o, k) => (o == null ? undefined : o[k]), ctx);
 }
 
-const TPL = /\{\{\s*([\w.]+)\s*(?:\|\s*(\w+)\s*)?\}\}/g;
+const TPL = /\{\{\s*([\w.-]+)\s*(?:\|\s*(\w+)\s*)?\}\}/g;
 
 /** Fill a template. Returns null if any placeholder has no usable value, so callers never print a blank. */
 export function render(tpl, ctx) {

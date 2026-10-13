@@ -27,4 +27,4 @@ jobs:
           extensions: pdo_sqlite, sqlite3
       - run: tools/wp-test-site.sh "$RUNNER_TEMP/wp" 8080
       - run: npm install --no-save lighthouse@12.8.2
-      - run: node tools/lighthouse-check.js node_modules/.bin/lighthouse http://127.0.0.1:8080/tool-template/ http://127.0.0.1:8080/about/ http://127.0.0.1:8080/privacy-policy/
+      - run: node tools/lighthouse-check.js node_modules/.bin/lighthouse http://127.0.0.1:8080/ http://127.0.0.1:8080/battery/battery-backup-time-calculator/ http://127.0.0.1:8080/load/home-electrical-load-calculator/ http://127.0.0.1:8080/bill/electricity-bill-calculator-pakistan/ http://127.0.0.1:8080/appliances/ http://127.0.0.1:8080/about/

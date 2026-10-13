@@ -1,0 +1,60 @@
+{
+ "id": "H2",
+ "status": "publish",
+ "template": "pillar",
+ "h1": "Appliance Wattage List: Watts and Units per Hour",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "appliance_table": true,
+ "answer": "This appliance wattage list gives the typical running watts, starting (surge) watts and units per hour of common home appliances in Pakistan and the US: fans, air conditioners, fridges, water pumps, irons, geysers, lights and electronics. Units per hour equal watts divided by one thousand, so a {{a.water-motor-1hp.running_w|int}} W water pump uses about one unit an hour; the tables below are generated from our appliance data file.",
+ "key_facts": [
+  "Units per hour = running watts ÷ 1,000; an appliance rated at one kilowatt uses one unit (kWh) for every hour it runs.",
+  "Starting watts matter for inverters, UPS and generators: motors and non-inverter compressors draw about three times their running watts for a second or two when they start.",
+  "Inverter air conditioners draw far less than their rated input most of the time; the average draw used for unit estimates is listed separately on the AC consumption page.",
+  "The values here are typical planning figures from the sources listed at the bottom; the label on your own appliance always wins, and every calculator lets you enter it."
+ ],
+ "sections": [
+  {
+   "h2": "How to read this appliance power consumption list",
+   "p": [
+    "Running watts is the power the appliance draws while it works normally. Starting watts is the short surge when a motor or compressor starts; resistive loads such as heaters, irons and LED lights have no surge. Units per hour is the energy used in one hour of running at the running watts.",
+    "Typical hours a day is a planning default for how long the appliance runs; the units per day column multiplies the two. Change the hours to your own habit in the home load calculator for a real estimate."
+   ]
+  },
+  {
+   "h2": "Which appliances use the most electricity at home?",
+   "p": [
+    "Heating and cooling dominate: an electric geyser, an air conditioner, a room heater and a clothes dryer each use more in an hour than a dozen LED lights do in a day. Fridges use little power but run all day. Fans are cheap to run but a house full of them adds up over a hot summer."
+   ]
+  }
+ ],
+ "faq": [
+  {
+   "q": "How many watts does a ceiling fan use?",
+   "a": "A normal AC ceiling fan uses about {{a.ceiling-fan-ac.running_w|int}} W; a DC inverter fan uses less than half of that. The cooling table below lists both."
+  },
+  {
+   "q": "Where do these wattage figures come from?",
+   "a": "From published appliance wattage tables, manufacturer datasheets and Pakistani retailer specifications, listed in the sources at the bottom of the page. Figures marked as Wattlyst estimates in the data file are awaiting engineer confirmation."
+  },
+  {
+   "q": "Why is the starting wattage higher than the running wattage?",
+   "a": "Motors and compressors need extra current to get moving. The surge lasts a moment but an inverter, UPS or generator must be able to supply it, which is why sizing tools use the starting watts of the largest motor."
+  },
+  {
+   "q": "How do I turn watts into my monthly bill?",
+   "a": "Multiply watts by hours a day, divide by one thousand for units a day, multiply by the days in the month and then by your tariff rate. The home load calculator and the bill calculator do this for you."
+  }
+ ],
+ "related": ["E1", "E5", "D4", "B1"],
+ "next": "E1",
+ "literal_numbers": ["1,000"],
+ "sources": [
+  {"label": "Virginia Tech Extension: appliance wattage table (DOE)", "url": "https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html"},
+  {"label": "Murdoch's generator wattage chart", "url": "https://www.murdochs.com/learning-center/power-equipment/how-to-choose-a-generator/"},
+  {"label": "Gree 1.5 ton inverter AC datasheet (Japan Electronics)", "url": "https://japanelectronics.com.pk/products/gree-ac-split-inverter-1-5-ton-gs-18pith11g-aaa"},
+  {"label": "PowerHouse Express: air conditioner watts", "url": "https://powerhouseexpress.com.pk/blogs/news/how-many-watts-does-an-air-conditioner-use"},
+  {"label": "Wattlyst methodology and default values", "url": "/methodology/"}
+ ]
+}

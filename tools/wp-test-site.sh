@@ -27,8 +27,6 @@ $WP core install --url="http://127.0.0.1:$PORT" --title=Wattlyst --admin_user=ad
 $WP theme activate generatepress >/dev/null
 $WP rewrite structure '/%postname%/' >/dev/null
 $WP plugin activate wattlyst-tools >/dev/null
-# Template preview pages for content that is not live yet (one per template that has content).
-$WP post create --post_type=page --post_status=publish --post_title="Tool template" --post_name=tool-template --post_content='[wattlyst_page id="B1"]' >/dev/null
 (cd "$W" && nohup php -S "127.0.0.1:$PORT" "$DIR/router.php" > "$DIR/php.log" 2>&1 &)
 sleep 1
 curl -s "http://127.0.0.1:$PORT/" > /dev/null   # first request runs the page sync

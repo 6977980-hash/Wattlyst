@@ -3,7 +3,7 @@
   "source": "Virginia Tech Extension 2901-9014 (DOE appliance wattage table) https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html; Murdoch's generator wattage chart https://www.murdochs.com/learning-center/power-equipment/how-to-choose-a-generator/; Gree GS-18PITH11G datasheet (Japan Electronics PK) https://japanelectronics.com.pk/products/gree-ac-split-inverter-1-5-ton-gs-18pith11g-aaa; PowerHouse Express PK: AC watts https://powerhouseexpress.com.pk/blogs/news/how-many-watts-does-an-air-conditioner-use; PowerHouse Express PK: 6kW solar load guide https://powerhouseexpress.com.pk/blogs/news/how-many-ac-can-run-on-6kw-solar-system; ARY News: inverter fan watts https://arynews.tv/do-inverter-fans-really-consume-only-30-watts-unveiling-the-truth/; Haier HSU-18 non-inverter listing (Star Tech) https://startech.com.bd/haier-1-5-ton-non-inverter-ac",
   "checked": "2026-10-13",
   "status": "Typical values for planning; real appliances vary, the calculators let users enter their own label watts. Starting watts marked as estimates need PEC engineer confirmation.",
-  "fields": "running_w typical rated input power W; starting_w surge W; typical_hours_per_day planning default; starting_w_basis 'source' when the surge figure comes from the cited source, 'estimate' otherwise (rule of thumb: ~3x running for compressors/motors, equal to running for resistive/electronic/lighting, max rated input for inverter compressors); source 'Wattlyst estimate, engineer to confirm' with source_url null marks engineering estimates; note optional caveat shown on the page. Pump/motor running watts are never below hp x 745.7 / motor efficiency (formulas.md A).",
+  "fields": "running_w typical rated input power W; starting_w surge W; typical_hours_per_day planning default; starting_w_basis 'source' when the surge figure comes from the cited source, 'estimate' otherwise (rule of thumb: ~3x running for compressors/motors, equal to running for resistive/electronic/lighting, max rated input for inverter compressors); source 'Wattlyst estimate, engineer to confirm' with source_url null marks engineering estimates; note optional caveat shown on the page. Pump/motor running watts are never below hp x 745.7 / motor efficiency (formulas.md A). avg_w (air conditioners only): average electrical draw over an hour of normal use for unit-consumption estimates: inverter ACs from formulas.md E (1.0 kW for 1.5 ton, scaled by size), non-inverter = running_w x compressor duty 0.8 (defaults.json ac_noninverter_duty); engineer to confirm.",
   "reviewed": "2026-10-13 Engineer Reviewer (AI) pass: heat pump, window AC, pump motors, fridge, laser printer, dispenser, air compressor corrected; still needs PEC engineer confirmation."
  },
  "items": [
@@ -187,7 +187,8 @@
     "Kenwood"
    ],
    "source": "PowerHouse Express PK: 6kW solar load guide",
-   "source_url": "https://powerhouseexpress.com.pk/blogs/news/how-many-ac-can-run-on-6kw-solar-system"
+   "source_url": "https://powerhouseexpress.com.pk/blogs/news/how-many-ac-can-run-on-6kw-solar-system",
+   "avg_w": 650
   },
   {
    "id": "ac-split-1ton-non-inverter",
@@ -210,7 +211,8 @@
     "Kenwood"
    ],
    "source": "Wattlyst estimate, engineer to confirm",
-   "source_url": null
+   "source_url": null,
+   "avg_w": 960
   },
   {
    "id": "ac-split-1-5ton-inverter",
@@ -233,7 +235,8 @@
     "Kenwood"
    ],
    "source": "Gree GS-18PITH11G datasheet (Japan Electronics PK)",
-   "source_url": "https://japanelectronics.com.pk/products/gree-ac-split-inverter-1-5-ton-gs-18pith11g-aaa"
+   "source_url": "https://japanelectronics.com.pk/products/gree-ac-split-inverter-1-5-ton-gs-18pith11g-aaa",
+   "avg_w": 1000
   },
   {
    "id": "ac-split-1-5ton-non-inverter",
@@ -256,7 +259,8 @@
     "Kenwood"
    ],
    "source": "Haier HSU-18 non-inverter listing (Star Tech)",
-   "source_url": "https://startech.com.bd/haier-1-5-ton-non-inverter-ac"
+   "source_url": "https://startech.com.bd/haier-1-5-ton-non-inverter-ac",
+   "avg_w": 1440
   },
   {
    "id": "ac-split-2ton-inverter",
@@ -279,7 +283,8 @@
     "Kenwood"
    ],
    "source": "PowerHouse Express PK: AC watts",
-   "source_url": "https://powerhouseexpress.com.pk/blogs/news/how-many-watts-does-an-air-conditioner-use"
+   "source_url": "https://powerhouseexpress.com.pk/blogs/news/how-many-watts-does-an-air-conditioner-use",
+   "avg_w": 1300
   },
   {
    "id": "ac-split-2ton-non-inverter",
@@ -302,7 +307,8 @@
     "Kenwood"
    ],
    "source": "Wattlyst estimate, engineer to confirm",
-   "source_url": null
+   "source_url": null,
+   "avg_w": 1920
   },
   {
    "id": "ac-window-1ton",
@@ -323,7 +329,8 @@
     "Haier"
    ],
    "source": "Wattlyst estimate, engineer to confirm",
-   "source_url": null
+   "source_url": null,
+   "avg_w": 1080
   },
   {
    "id": "ac-floor-standing-4ton",
@@ -344,7 +351,8 @@
     "Orient"
    ],
    "source": "Wattlyst estimate, engineer to confirm",
-   "source_url": null
+   "source_url": null,
+   "avg_w": 3600
   },
   {
    "id": "heat-pump-3ton",
@@ -361,7 +369,8 @@
    "load_type": "compressor",
    "pk_brands": [],
    "source": "Wattlyst estimate, engineer to confirm",
-   "source_url": null
+   "source_url": null,
+   "avg_w": 2720
   },
   {
    "id": "dehumidifier",

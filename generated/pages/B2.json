@@ -3,26 +3,305 @@
  "type": "tool",
  "silo": "B",
  "url": "/battery/12v-battery-runtime-calculator/",
- "h1": "12v Battery Runtime Calculator",
+ "h1": "12V Battery Runtime Calculator",
  "title": "12V Battery Runtime Calculator (100Ah to 200Ah) | Wattlyst",
  "meta": "Find how long a 12V battery runs your load. Works for 100Ah, 150Ah and 200Ah, lead-acid or lithium, with DC and inverter loads.",
  "primary_keyword": "12v battery runtime calculator",
  "wave": 1,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-13",
+ "published": "2026-10-13",
  "author": "ali-ahmad",
+ "related": [
+  "B1",
+  "B3",
+  "D6",
+  "B5"
+ ],
+ "next": "D6",
  "parent": "P-B",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
    "url": "/"
   },
   {
-   "name": "12v Battery Runtime Calculator",
+   "name": "Battery and UPS Calculators",
+   "url": "/battery/"
+  },
+  {
+   "name": "12V Battery Runtime Calculator",
    "url": "/battery/12v-battery-runtime-calculator/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "How long will a 12 V battery run a 100 W load?",
+    "p": [
+     "A 100 Ah, 12 V lead-acid battery runs a 100 W AC load for about 5 h 6 min through an inverter. The same load wired as DC, with no inverter, runs about one sixth longer because the inverter loss of about 85% efficiency disappears. A 100 Ah lithium battery at 12.8 V stores about 979 Wh usable, so it runs the same 100 W load for roughly twice as long.",
+     "The result does not depend on your mains voltage. Whether the inverter puts out 230 V as in Pakistan, the UK and Europe, or 120 V as in the US and Canada, the battery side is the same 12 V and the watts drawn are the same."
+    ]
+   },
+   {
+    "h2": "100 Ah battery runtime calculator: lead-acid against lithium",
+    "p": [
+     "The label Ah is not the usable Ah. A 100 Ah lead-acid, AGM or gel battery should only be taken to about 50% of its rating, so only half the energy counts. A 100 Ah lithium (LiFePO4) battery can safely use about 90%, and sits at 12.8 V instead of 12 V, which is why the lithium example below gives about 3 h 16 min at 300 W while a lead-acid battery of the same Ah gives much less.",
+     "Lead-acid batteries also lose capacity when they are drained fast. The label Ah is measured over about twenty hours; at a load that empties the battery in an hour the real capacity can be a quarter lower. The calculator does not apply this drop, so treat results under about two hours as optimistic."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "How long will a 12 V battery last?",
+    "a": "Divide the usable watt-hours by the load watts. A 100 Ah lead-acid battery has about 510 Wh usable through an inverter, so it lasts about 5 h 6 min at 100 W, about 2 h 2 min at 500 W if it is a 200 Ah battery, and about 31 min at 1,000 W."
+   },
+   {
+    "q": "A 100 Ah battery gives how many hours?",
+    "a": "About 5 h 6 min at 100 W through an inverter, or about 3 h 16 min at 300 W if it is a 12.8 V lithium battery. The hours fall in proportion as the load rises."
+   },
+   {
+    "q": "Can a 12 V 100 Ah battery run a 1,000 W load?",
+    "a": "Only briefly: about 31 min on paper, and less in practice because a lead-acid battery drained that fast delivers less than its label Ah. You also need an inverter rated for the load and a thick, fused battery cable for the high current."
+   },
+   {
+    "q": "Is this a 12 V battery life calculator?",
+    "a": "It calculates runtime on one charge, not the life of the battery in years. Battery life depends on how deep and how often you discharge; staying within about 50% for lead-acid and about 90% for lithium is what makes a battery last."
+   },
+   {
+    "q": "How long will a 12 V battery run a fridge?",
+    "a": "Use the fridge's average draw, not its peak. A 12 V compressor fridge averaging about 60 W runs about 10 h on a 100 Ah lead-acid battery wired as DC. A mains fridge through an inverter draws more and also pays the inverter loss."
+   },
+   {
+    "q": "What is the runtime of a 12 V deep cycle battery?",
+    "a": "The same formula applies; deep cycle batteries are simply built to be taken to about 50% repeatedly. A 200 Ah deep cycle battery runs a 500 W load for about 2 h 2 min through an inverter."
+   },
+   {
+    "q": "How do I work out the discharge time of a 12 V battery?",
+    "a": "Discharge time in hours = Ah × 12 V × usable depth of discharge × inverter efficiency ÷ load watts. For a DC load drop the inverter efficiency; for a quick check, usable Wh ÷ watts gives the hours and Ah × depth of discharge ÷ amps gives the same answer."
+   }
+  ],
+  "key_facts": [
+   "Runtime of a 12 V battery in hours = Ah × 12 V × usable depth of discharge × inverter efficiency ÷ load in watts.",
+   "A 100 Ah, 12 V lead-acid battery stores about 510 Wh of usable energy through an inverter, which runs a 100 W load for about 5 h 6 min or a 1,000 W load for about 31 min.",
+   "Lead-acid, AGM and gel batteries should be used to about 50% of their rating; lithium (LiFePO4) batteries to about 90%, so a lithium battery of the same Ah runs almost twice as long.",
+   "An inverter running at about 85% efficiency turns the rest of the battery energy into heat; a DC load wired straight to the battery has no inverter loss."
+  ],
+  "mistakes": [
+   "Using the full Ah. A lead-acid battery taken below about 50% loses cycles quickly, so only that part counts as usable.",
+   "Forgetting the inverter. An inverter turns about 85% of the battery energy into AC; leave the efficiency at one only for a true DC load.",
+   "Using the fridge's peak watts. A fridge compressor cycles on and off; use the average draw over a day or the runtime will look far too short.",
+   "Trusting the label Ah at high loads. Lead-acid capacity is rated over about twenty hours; a load that empties the battery in an hour or two gets noticeably less.",
+   "Mixing up a car battery with a deep cycle battery. A car starting battery is built for short bursts and is damaged by deep discharge, so set a smaller depth of discharge for it."
+  ],
+  "sources": [
+   {
+    "label": "Wattlyst methodology and default values",
+    "url": "/methodology/"
+   }
+  ],
+  "tool": {
+   "calc": "battery_runtime",
+   "module": "battery.js",
+   "data_keys": [],
+   "appliances": {},
+   "fields": [
+    {
+     "name": "ah",
+     "label": "Battery capacity",
+     "unit": "Ah",
+     "default": 100,
+     "hint": "From the battery label. Common sizes are 100, 150 and 200 Ah."
+    },
+    {
+     "name": "volts",
+     "label": "Battery voltage",
+     "unit": "V",
+     "type": "select",
+     "default": 12,
+     "options": [
+      [
+       12,
+       "12 V lead-acid / AGM / gel"
+      ],
+      [
+       12.8,
+       "12.8 V lithium (LiFePO4)"
+      ]
+     ]
+    },
+    {
+     "name": "chemistry",
+     "label": "Battery type",
+     "type": "select",
+     "default": "lead_acid",
+     "options": [
+      [
+       "lead_acid",
+       "Flooded lead-acid / deep cycle"
+      ],
+      [
+       "tubular",
+       "Tubular"
+      ],
+      [
+       "agm",
+       "AGM / dry"
+      ],
+      [
+       "gel",
+       "Gel"
+      ],
+      [
+       "lifepo4",
+       "Lithium (LiFePO4)"
+      ]
+     ]
+    },
+    {
+     "name": "load_w",
+     "label": "Load",
+     "unit": "W",
+     "default": 100,
+     "hint": "Total watts the battery is powering. For a fridge or cooler use its average draw, not the peak."
+    },
+    {
+     "name": "inverter_eff",
+     "label": "Inverter efficiency",
+     "unit": "0 to 1",
+     "default": 0.85,
+     "advanced": true,
+     "hint": "As a decimal. Enter 1 for a DC load wired straight to the battery."
+    },
+    {
+     "name": "dod",
+     "label": "Usable depth of discharge",
+     "unit": "0 to 1",
+     "placeholder": "Auto by battery type",
+     "advanced": true,
+     "hint": "As a decimal: 0.5 means half the battery. Leave blank to use the value for your battery type."
+    }
+   ],
+   "fixed_inputs": {},
+   "outputs": [
+    {
+     "key": "hours",
+     "label": "Runtime",
+     "spec": "hm",
+     "value": "5 h 6 min"
+    },
+    {
+     "key": "usable_wh",
+     "label": "Usable energy",
+     "spec": "int",
+     "unit": "Wh",
+     "value": "510"
+    }
+   ],
+   "how": {
+    "tpl": "{{in.ah|int}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable × {{out.inverter_eff|pct}} inverter efficiency = {{out.usable_wh|int}} Wh usable. {{out.usable_wh|int}} Wh ÷ {{in.load_w|int}} W = {{out.hours|2}} hours, about {{out.hours|hm}}.",
+    "text": "100 Ah × 12 V × 50% usable × 85% inverter efficiency = 510 Wh usable. 510 Wh ÷ 100 W = 5.1 hours, about 5 h 6 min."
+   },
+   "submit": "Calculate",
+   "data_checked": []
+  },
+  "examples": [
+   {
+    "title": "100 Ah battery with a 100 W load through an inverter",
+    "text": "100 Ah × 12 V × 50% × 85% = 510 Wh usable. 510 Wh ÷ 100 W = about 5 h 6 min."
+   },
+   {
+    "title": "100 Ah battery with a 1,000 W load (microwave or kettle)",
+    "text": "The same 510 Wh ÷ 1,000 W = about 31 min. At this rate the inverter pulls well over eighty amps from the battery, and a lead-acid battery drained this fast gives less than its label Ah, so expect even less in practice."
+   },
+   {
+    "title": "100 Ah lithium battery with a 300 W load",
+    "text": "100 Ah × 12.8 V × 90% × 85% = 979 Wh usable, which runs 300 W (a TV with a few fans, or a small compressor fridge at full duty) for about 3 h 16 min."
+   },
+   {
+    "title": "12 V compressor fridge, 60 W average, wired as DC",
+    "text": "A 12 V camping or car fridge draws more when the compressor runs and nothing when it rests; its average over a day is about 60 W. With inverter efficiency set to one: 100 Ah × 12 V × 50% = 600 Wh, ÷ 60 W = about 10 h."
+   },
+   {
+    "title": "200 Ah deep cycle battery with a 500 W load",
+    "text": "200 Ah × 12 V × 50% × 85% = 1,020 Wh usable. 1,020 Wh ÷ 500 W = about 2 h 2 min."
+   }
+  ],
+  "table": {
+   "caption": "Runtime of a 12 V lead-acid battery through an inverter (50% usable, 85% inverter efficiency)",
+   "head": [
+    "Battery",
+    "Load",
+    "Usable energy",
+    "Runtime"
+   ],
+   "rows": [
+    [
+     "100 Ah",
+     "50 W",
+     "510 Wh",
+     "10 h 12 min"
+    ],
+    [
+     "100 Ah",
+     "100 W",
+     "510 Wh",
+     "5 h 6 min"
+    ],
+    [
+     "100 Ah",
+     "300 W",
+     "510 Wh",
+     "1 h 42 min"
+    ],
+    [
+     "100 Ah",
+     "1,000 W",
+     "510 Wh",
+     "31 min"
+    ],
+    [
+     "150 Ah",
+     "300 W",
+     "765 Wh",
+     "2 h 33 min"
+    ],
+    [
+     "150 Ah",
+     "500 W",
+     "765 Wh",
+     "1 h 32 min"
+    ],
+    [
+     "200 Ah",
+     "500 W",
+     "1,020 Wh",
+     "2 h 2 min"
+    ],
+    [
+     "200 Ah",
+     "1,000 W",
+     "1,020 Wh",
+     "1 h 1 min"
+    ]
+   ]
+  },
+  "answer": "A 100 Ah, 12 V lead-acid battery runs a 100 W load through an inverter for about 5 h 6 min, using only the 50% of its capacity that is safe to use. Runtime in hours equals Ah × volts × usable depth of discharge × inverter efficiency ÷ load watts; for a DC load set the efficiency to one.",
+  "formula": {
+   "text": "t = (Ah × V × DoD × η) ÷ P",
+   "lines": [
+    "t = runtime in hours",
+    "Ah = battery capacity in amp hours",
+    "V = battery voltage (nominal)",
+    "DoD = usable depth of discharge",
+    "η = inverter efficiency (1 for a DC load)",
+    "P = load in watts"
+   ]
+  },
+  "safety": "Fuse the battery cable close to the battery, size the cable for the inverter current, keep lead-acid batteries ventilated, and have a licensed electrician connect any inverter to house wiring."
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -39,7 +318,13 @@
      {
       "@type": "ListItem",
       "position": 2,
-      "name": "12v Battery Runtime Calculator",
+      "name": "Battery and UPS Calculators",
+      "item": "https://wattlyst.com/battery/"
+     },
+     {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "12V Battery Runtime Calculator",
       "item": "https://wattlyst.com/battery/12v-battery-runtime-calculator/"
      }
     ]
@@ -56,12 +341,14 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/battery/12v-battery-runtime-calculator/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-13",
+    "lastReviewed": "2026-10-13"
    },
    {
     "@type": "WebApplication",
     "@id": "https://wattlyst.com/battery/12v-battery-runtime-calculator/#app",
-    "name": "12v Battery Runtime Calculator",
+    "name": "12V Battery Runtime Calculator",
     "url": "https://wattlyst.com/battery/12v-battery-runtime-calculator/",
     "description": "Find how long a 12V battery runs your load. Works for 100Ah, 150Ah and 200Ah, lead-acid or lithium, with DC and inverter loads.",
     "applicationCategory": "UtilitiesApplication",
@@ -88,6 +375,68 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/battery/12v-battery-runtime-calculator/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "How long will a 12 V battery last?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Divide the usable watt-hours by the load watts. A 100 Ah lead-acid battery has about 510 Wh usable through an inverter, so it lasts about 5 h 6 min at 100 W, about 2 h 2 min at 500 W if it is a 200 Ah battery, and about 31 min at 1,000 W."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "A 100 Ah battery gives how many hours?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "About 5 h 6 min at 100 W through an inverter, or about 3 h 16 min at 300 W if it is a 12.8 V lithium battery. The hours fall in proportion as the load rises."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Can a 12 V 100 Ah battery run a 1,000 W load?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Only briefly: about 31 min on paper, and less in practice because a lead-acid battery drained that fast delivers less than its label Ah. You also need an inverter rated for the load and a thick, fused battery cable for the high current."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Is this a 12 V battery life calculator?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "It calculates runtime on one charge, not the life of the battery in years. Battery life depends on how deep and how often you discharge; staying within about 50% for lead-acid and about 90% for lithium is what makes a battery last."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How long will a 12 V battery run a fridge?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Use the fridge's average draw, not its peak. A 12 V compressor fridge averaging about 60 W runs about 10 h on a 100 Ah lead-acid battery wired as DC. A mains fridge through an inverter draws more and also pays the inverter loss."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What is the runtime of a 12 V deep cycle battery?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "The same formula applies; deep cycle batteries are simply built to be taken to about 50% repeatedly. A 200 Ah deep cycle battery runs a 500 W load for about 2 h 2 min through an inverter."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How do I work out the discharge time of a 12 V battery?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Discharge time in hours = Ah × 12 V × usable depth of discharge × inverter efficiency ÷ load watts. For a DC load drop the inverter efficiency; for a quick check, usable Wh ÷ watts gives the hours and Ah × depth of discharge ÷ amps gives the same answer."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

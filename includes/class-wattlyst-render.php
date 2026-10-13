@@ -28,12 +28,25 @@ final class Wattlyst_Render {
 		if ( 'trust' === $type ) {
 			$out .= wp_kses_post( $this->c['html'] ?? '' );
 			$out .= $this->dates();
-		} elseif ( 'pillar' === $type ) {
-			$out .= $this->answer( $this->c['intro'] ?: ( $this->c['answer'] ?? '' ) ?: $this->page['meta'] );
-			$out .= $this->children();
+		} elseif ( 'home' === $type ) {
+			$out .= $this->answer( $this->c['answer'] ?? $this->page['meta'] );
+			$out .= $this->cards();
 			$out .= $this->key_facts();
 			$out .= $this->sections();
 			$out .= $this->faq();
+			$out .= $this->author_box();
+			$out .= $this->dates();
+		} elseif ( 'pillar' === $type ) {
+			$out .= $this->answer( ( $this->c['answer'] ?? '' ) ?: ( $this->c['intro'] ?? '' ) ?: $this->page['meta'] );
+			$out .= $this->children();
+			$out .= $this->key_facts();
+			$out .= $this->sections();
+			$out .= $this->tables();
+			$out .= $this->faq();
+			if ( ! empty( $this->c['sections'] ) || ! empty( $this->c['tables'] ) ) {
+				$out .= $this->author_box();
+				$out .= $this->sources();
+			}
 		} else {
 			$out .= $this->answer( $this->c['answer'] ?? '' );
 			if ( ! empty( $this->c['tool'] ) ) {
@@ -46,6 +59,7 @@ final class Wattlyst_Render {
 			$out .= $this->sections();
 			$out .= $this->examples();
 			$out .= $this->table();
+			$out .= $this->tables();
 			$out .= $this->mistakes();
 			$out .= Wattlyst_Ads::slot( 'content-2', $this->plugin->site() );
 			$out .= $this->faq();
@@ -109,6 +123,7 @@ final class Wattlyst_Render {
 						'type'    => $f['type'] ?? 'number',
 						'options' => isset( $f['options'] ) ? array_map( static fn( $o ) => (string) $o[0], $f['options'] ) : null,
 						'default' => $f['default'] ?? null,
+						'catalog' => $f['catalog'] ?? null,
 					),
 					static fn( $v ) => null !== $v
 				),
@@ -117,7 +132,7 @@ final class Wattlyst_Render {
 			'fixed'   => (object) ( $t['fixed_inputs'] ?? array() ),
 			'outputs' => array_map( static fn( $o ) => array( 'key' => $o['key'], 'spec' => $o['spec'] ?? '2' ), $t['outputs'] ),
 			'how'     => $t['how']['tpl'] ?? '',
-			'data'    => $this->tool_data( $t['data_keys'] ?? array() ),
+			'data'    => $this->tool_data( $t['data_keys'] ?? array(), $t['appliances'] ?? array() ),
 		);
 		$form  = '<form class="wl-tool" id="' . esc_attr( $id ) . '" data-wl-tool novalidate>';
 		$form .= '<div class="wl-fields">' . $main . '</div>';
@@ -132,24 +147,67 @@ final class Wattlyst_Render {
 		return $form;
 	}
 
-	private function tool_data( array $keys ): array {
+	private function tool_data( array $keys, array $appliances ): array {
 		$data = array( 'defaults' => $this->plugin->manifest()['data']['defaults'] ?? array() );
 		foreach ( $keys as $k ) {
 			if ( isset( $this->plugin->manifest()['data'][ $k ] ) ) {
 				$data[ $k ] = $this->plugin->manifest()['data'][ $k ];
 			}
 		}
+		if ( $appliances ) {
+			$data['appliances'] = $appliances;
+		}
 		return $data;
 	}
 
+	/**
+	 * Appliance list: one row per load (appliance, watts, quantity, hours a day) with add/remove buttons.
+	 * Default rows are rendered server-side so the default result and the form agree before JavaScript runs.
+	 */
+	private function loads_field( string $prefix, array $f ): string {
+		$fid   = $prefix . '-' . $f['name'];
+		$hint  = isset( $f['hint'] ) ? '<p class="wl-hint" id="' . esc_attr( $fid ) . '-hint">' . esc_html( $f['hint'] ) . '</p>' : '';
+		$rows  = '';
+		foreach ( $f['default'] ?? array() as $n => $row ) {
+			$rows .= $this->loads_row( $fid, $f, (int) $n, $row );
+		}
+		$head  = '<tr><th scope="col">Appliance</th><th scope="col">Watts</th><th scope="col">Qty</th><th scope="col">Hours a day</th><th scope="col"><span class="screen-reader-text">Remove</span></th></tr>';
+		$tmpl  = '<template class="wl-loads-template">' . $this->loads_row( $fid, $f, -1, array() ) . '</template>';
+		return '<div class="wl-field wl-field-loads" data-wl-loads="' . esc_attr( $f['name'] ) . '"><span class="wl-label" id="' . esc_attr( $fid ) . '-label">' . esc_html( $f['label'] ?? 'Appliances' ) . '</span>' .
+			'<div class="wl-table-wrap"><table class="wl-table wl-loads" aria-labelledby="' . esc_attr( $fid ) . '-label"><thead>' . $head . '</thead><tbody>' . $rows . '</tbody></table></div>' .
+			'<button type="button" class="wl-btn-secondary wl-add-row">+ Add appliance</button>' . $hint . $tmpl . '</div>';
+	}
+
+	private function loads_row( string $fid, array $f, int $n, array $row ): string {
+		$a     = $this->page['content']['tool']['appliances'] ?? array();
+		$id    = (string) ( $row['id'] ?? '' );
+		$item  = $a[ $id ] ?? null;
+		$watts = isset( $row['watts'] ) ? (string) $row['watts'] : ( $item ? (string) $item['running_w'] : '' );
+		$qty   = (string) ( $row['qty'] ?? 1 );
+		$hours = isset( $row['hours'] ) ? (string) $row['hours'] : ( $item ? (string) $item['typical_hours_per_day'] : '' );
+		// Only the chosen option is rendered; the live script fills the full appliance list from the catalog
+		// (87 options per row would bloat the HTML, and without JavaScript the list cannot recalculate anyway).
+		$name  = 'custom' === $id || '' === $id ? 'Custom (enter watts)' : ( $item['name'] ?? $id );
+		$opts  = '<option value="' . esc_attr( '' === $id ? 'custom' : $id ) . '" selected>' . esc_html( $name ) . '</option>';
+		$r     = $n < 0 ? 'x' : (string) $n;
+		$cell  = static fn( string $k, string $v, string $label, string $extra = '' ) => '<td><label class="screen-reader-text" for="' . esc_attr( "$fid-$r-$k" ) . '">' . esc_html( $label ) . '</label><input type="text" inputmode="decimal" autocomplete="off" id="' . esc_attr( "$fid-$r-$k" ) . '" data-k="' . esc_attr( $k ) . '" value="' . esc_attr( $v ) . '"' . $extra . '></td>';
+		return '<tr class="wl-load-row">' .
+			'<td><label class="screen-reader-text" for="' . esc_attr( "$fid-$r-id" ) . '">Appliance</label><select id="' . esc_attr( "$fid-$r-id" ) . '" data-k="id">' . $opts . '</select></td>' .
+			$cell( 'watts', $watts, 'Watts' ) . $cell( 'qty', $qty, 'Quantity', ' size="3"' ) . $cell( 'hours', $hours, 'Hours a day', ' size="4"' ) .
+			'<td><button type="button" class="wl-remove-row" aria-label="Remove this appliance">&times;</button></td></tr>';
+	}
+
 	private function field( string $prefix, array $f ): string {
+		if ( 'loads' === ( $f['type'] ?? '' ) ) {
+			return $this->loads_field( $prefix, $f );
+		}
 		$fid   = $prefix . '-' . $f['name'];
 		$unit  = isset( $f['unit'] ) ? ' <span class="wl-unit">(' . esc_html( $f['unit'] ) . ')</span>' : '';
 		$hint  = isset( $f['hint'] ) ? '<p class="wl-hint" id="' . esc_attr( $fid ) . '-hint">' . esc_html( $f['hint'] ) . '</p>' : '';
 		$descr = isset( $f['hint'] ) ? ' aria-describedby="' . esc_attr( $fid ) . '-hint"' : '';
 		$label = '<label for="' . esc_attr( $fid ) . '">' . esc_html( $f['label'] ?? $f['name'] ) . $unit . '</label>';
 		$value = isset( $f['default'] ) ? (string) $f['default'] : '';
-		if ( 'select' === ( $f['type'] ?? '' ) ) {
+		if ( in_array( $f['type'] ?? '', array( 'select', 'appliance' ), true ) ) {
 			$opts = '';
 			foreach ( $f['options'] as $o ) {
 				$opts .= sprintf( '<option value="%s"%s>%s</option>', esc_attr( (string) $o[0] ), selected( (string) $o[0], $value, false ), esc_html( $o[1] ) );
@@ -223,6 +281,32 @@ final class Wattlyst_Render {
 			$rows .= '<tr>' . implode( '', array_map( static fn( $v ) => '<td>' . esc_html( $v ) . '</td>', $r ) ) . '</tr>';
 		}
 		return '<section class="wl-ref"><h2>' . esc_html( $t['caption'] ) . '</h2><div class="wl-table-wrap"><table class="wl-table"><thead><tr>' . $head . '</tr></thead><tbody>' . $rows . '</tbody></table></div></section>';
+	}
+
+	private function tables(): string {
+		$out = '';
+		foreach ( $this->c['tables'] ?? array() as $t ) {
+			$head = implode( '', array_map( static fn( $h ) => '<th scope="col">' . esc_html( $h ) . '</th>', $t['head'] ) );
+			$rows = '';
+			foreach ( $t['rows'] as $r ) {
+				$rows .= '<tr>' . implode( '', array_map( static fn( $v ) => '<td>' . esc_html( $v ) . '</td>', $r ) ) . '</tr>';
+			}
+			$out .= '<section class="wl-ref"><h2>' . esc_html( $t['caption'] ) . '</h2><div class="wl-table-wrap"><table class="wl-table"><thead><tr>' . $head . '</tr></thead><tbody>' . $rows . '</tbody></table></div></section>';
+		}
+		return $out;
+	}
+
+	/** Home page: "What do you want to do?" task cards, one per live hub, each listing its live tools. */
+	private function cards(): string {
+		$cards = '';
+		foreach ( $this->page['cards'] ?? array() as $card ) {
+			$links = '';
+			foreach ( $card['children'] as $ch ) {
+				$links .= '<li><a href="' . esc_url( Wattlyst_Tools::link( $ch['url'] ) ) . '">' . esc_html( $ch['h1'] ) . '</a></li>';
+			}
+			$cards .= '<div class="wl-card"><h2><a href="' . esc_url( Wattlyst_Tools::link( $card['url'] ) ) . '">' . esc_html( $card['label'] ) . '</a></h2><p>' . esc_html( $card['meta'] ) . '</p>' . ( $links ? '<ul>' . $links . '</ul>' : '' ) . '</div>';
+		}
+		return $cards ? '<section class="wl-cards" aria-label="Tools by task">' . $cards . '</section>' : '';
 	}
 
 	private function mistakes(): string {

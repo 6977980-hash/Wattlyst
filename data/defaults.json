@@ -3,7 +3,7 @@
   "source": "specs/formulas.md 'Global defaults' table and section notes; NEPRA Performance Standards (400/230 V, 50 Hz)",
   "checked": "2026-10-13",
   "status": "Engineering defaults, every one editable on the page. Items marked engineer_confirm need PEC engineer sign-off before launch.",
-  "engineer_confirm": ["diversity_home", "heat_pump_cop", "ac_saving_per_degree", "soiling_rate_per_day", "soiling_cap", "gas_heater_eff", "gas_cv_mj_m3", "start_factors"]
+  "engineer_confirm": ["diversity_home", "heat_pump_cop", "ac_saving_per_degree", "soiling_rate_per_day", "soiling_cap", "gas_heater_eff", "gas_cv_mj_m3", "start_factors", "standard_generator_kva"]
  },
  "v_1ph": 230,
  "v_3ph": 400,
@@ -51,5 +51,7 @@
  "ebike_charger_eff": 0.85,
  "ac_inverter_avg_kw_1_5_ton": 1.0,
  "ac_noninverter_kw_1_5_ton": 1.8,
- "ac_noninverter_duty": 0.8
+ "ac_noninverter_duty": 0.8,
+ "standard_generator_kva": [2.5, 3, 3.5, 5, 6.5, 7.5, 10, 12.5, 15, 20, 25, 30],
+ "battery_v_default": 24
 }

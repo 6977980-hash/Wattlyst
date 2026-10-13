@@ -3,27 +3,944 @@
  "type": "pillar",
  "silo": "H",
  "url": "/appliances/",
- "h1": "Appliance Wattage List",
+ "h1": "Appliance Wattage List: Watts and Units per Hour",
  "title": "Appliance Wattage & Units List (Pakistan + US) | Wattlyst",
  "meta": "Running watts, starting watts and units per hour for 60+ home appliances: ACs, fans, fridges, motors, irons, geysers and more.",
  "primary_keyword": "appliance wattage list",
  "wave": 1,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-13",
+ "published": "2026-10-13",
  "author": "ali-ahmad",
+ "related": [
+  "E1",
+  "E5",
+  "D4",
+  "B1"
+ ],
+ "next": "E1",
  "parent": null,
  "children": [],
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
    "url": "/"
   },
   {
-   "name": "Appliance Wattage List",
+   "name": "Appliance Wattage List: Watts and Units per Hour",
    "url": "/appliances/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "How to read this appliance power consumption list",
+    "p": [
+     "Running watts is the power the appliance draws while it works normally. Starting watts is the short surge when a motor or compressor starts; resistive loads such as heaters, irons and LED lights have no surge. Units per hour is the energy used in one hour of running at the running watts.",
+     "Typical hours a day is a planning default for how long the appliance runs; the units per day column multiplies the two. Change the hours to your own habit in the home load calculator for a real estimate."
+    ]
+   },
+   {
+    "h2": "Which appliances use the most electricity at home?",
+    "p": [
+     "Heating and cooling dominate: an electric geyser, an air conditioner, a room heater and a clothes dryer each use more in an hour than a dozen LED lights do in a day. Fridges use little power but run all day. Fans are cheap to run but a house full of them adds up over a hot summer."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "How many watts does a ceiling fan use?",
+    "a": "A normal AC ceiling fan uses about 80 W; a DC inverter fan uses less than half of that. The cooling table below lists both."
+   },
+   {
+    "q": "Where do these wattage figures come from?",
+    "a": "From published appliance wattage tables, manufacturer datasheets and Pakistani retailer specifications, listed in the sources at the bottom of the page. Figures marked as Wattlyst estimates in the data file are awaiting engineer confirmation."
+   },
+   {
+    "q": "Why is the starting wattage higher than the running wattage?",
+    "a": "Motors and compressors need extra current to get moving. The surge lasts a moment but an inverter, UPS or generator must be able to supply it, which is why sizing tools use the starting watts of the largest motor."
+   },
+   {
+    "q": "How do I turn watts into my monthly bill?",
+    "a": "Multiply watts by hours a day, divide by one thousand for units a day, multiply by the days in the month and then by your tariff rate. The home load calculator and the bill calculator do this for you."
+   }
+  ],
+  "key_facts": [
+   "Units per hour = running watts ÷ 1,000; an appliance rated at one kilowatt uses one unit (kWh) for every hour it runs.",
+   "Starting watts matter for inverters, UPS and generators: motors and non-inverter compressors draw about three times their running watts for a second or two when they start.",
+   "Inverter air conditioners draw far less than their rated input most of the time; the average draw used for unit estimates is listed separately on the AC consumption page.",
+   "The values here are typical planning figures from the sources listed at the bottom; the label on your own appliance always wins, and every calculator lets you enter it."
+  ],
+  "mistakes": [],
+  "sources": [
+   {
+    "label": "Virginia Tech Extension: appliance wattage table (DOE)",
+    "url": "https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html"
+   },
+   {
+    "label": "Murdoch's generator wattage chart",
+    "url": "https://www.murdochs.com/learning-center/power-equipment/how-to-choose-a-generator/"
+   },
+   {
+    "label": "Gree 1.5 ton inverter AC datasheet (Japan Electronics)",
+    "url": "https://japanelectronics.com.pk/products/gree-ac-split-inverter-1-5-ton-gs-18pith11g-aaa"
+   },
+   {
+    "label": "PowerHouse Express: air conditioner watts",
+    "url": "https://powerhouseexpress.com.pk/blogs/news/how-many-watts-does-an-air-conditioner-use"
+   },
+   {
+    "label": "Wattlyst methodology and default values",
+    "url": "/methodology/"
+   }
+  ],
+  "tables": [
+   {
+    "caption": "Cooling appliances: watts and units",
+    "head": [
+     "Appliance",
+     "Running watts",
+     "Starting watts",
+     "Units per hour",
+     "Typical hours a day",
+     "Units per day"
+    ],
+    "rows": [
+     [
+      "Ceiling fan (AC, 56 inch)",
+      "80 W",
+      "120 W",
+      "0.08",
+      "12 h",
+      "0.96"
+     ],
+     [
+      "Ceiling fan (DC / inverter BLDC)",
+      "35 W",
+      "35 W",
+      "0.035",
+      "12 h",
+      "0.42"
+     ],
+     [
+      "Pedestal fan (AC)",
+      "75 W",
+      "110 W",
+      "0.075",
+      "8 h",
+      "0.6"
+     ],
+     [
+      "Pedestal fan (DC / inverter)",
+      "30 W",
+      "30 W",
+      "0.03",
+      "8 h",
+      "0.24"
+     ],
+     [
+      "Bracket / wall fan",
+      "70 W",
+      "100 W",
+      "0.07",
+      "8 h",
+      "0.56"
+     ],
+     [
+      "Exhaust fan (10-12 inch)",
+      "40 W",
+      "60 W",
+      "0.04",
+      "4 h",
+      "0.16"
+     ],
+     [
+      "Room air cooler (evaporative)",
+      "200 W",
+      "300 W",
+      "0.2",
+      "8 h",
+      "1.6"
+     ],
+     [
+      "Split AC 1 ton inverter",
+      "900 W",
+      "1,200 W",
+      "0.9",
+      "8 h",
+      "7.2"
+     ],
+     [
+      "Split AC 1 ton non-inverter",
+      "1,200 W",
+      "3,600 W",
+      "1.2",
+      "8 h",
+      "9.6"
+     ],
+     [
+      "Split AC 1.5 ton inverter",
+      "1,450 W",
+      "1,900 W",
+      "1.45",
+      "8 h",
+      "11.6"
+     ],
+     [
+      "Split AC 1.5 ton non-inverter",
+      "1,800 W",
+      "5,400 W",
+      "1.8",
+      "8 h",
+      "14.4"
+     ],
+     [
+      "Split AC 2 ton inverter",
+      "1,900 W",
+      "2,500 W",
+      "1.9",
+      "8 h",
+      "15.2"
+     ],
+     [
+      "Split AC 2 ton non-inverter",
+      "2,400 W",
+      "7,200 W",
+      "2.4",
+      "8 h",
+      "19.2"
+     ],
+     [
+      "Window AC (about 1 ton / 12-13k BTU)",
+      "1,350 W",
+      "4,000 W",
+      "1.35",
+      "8 h",
+      "10.8"
+     ],
+     [
+      "Floor-standing AC (4 ton)",
+      "4,500 W",
+      "13,500 W",
+      "4.5",
+      "8 h",
+      "36"
+     ],
+     [
+      "Heat pump / central AC 3 ton",
+      "3,400 W",
+      "10,200 W",
+      "3.4",
+      "8 h",
+      "27.2"
+     ],
+     [
+      "Dehumidifier",
+      "785 W",
+      "1,600 W",
+      "0.785",
+      "8 h",
+      "6.28"
+     ]
+    ]
+   },
+   {
+    "caption": "Kitchen appliances: watts and units",
+    "head": [
+     "Appliance",
+     "Running watts",
+     "Starting watts",
+     "Units per hour",
+     "Typical hours a day",
+     "Units per day"
+    ],
+    "rows": [
+     [
+      "Refrigerator (non-inverter, 12-16 cu ft)",
+      "200 W",
+      "1,200 W",
+      "0.2",
+      "8 h",
+      "1.6"
+     ],
+     [
+      "Refrigerator (inverter)",
+      "120 W",
+      "200 W",
+      "0.12",
+      "10 h",
+      "1.2"
+     ],
+     [
+      "Deep freezer (chest)",
+      "200 W",
+      "1,200 W",
+      "0.2",
+      "10 h",
+      "2"
+     ],
+     [
+      "Water dispenser (hot and cold)",
+      "500 W",
+      "900 W",
+      "0.5",
+      "6 h",
+      "3"
+     ],
+     [
+      "Microwave oven",
+      "1,100 W",
+      "1,100 W",
+      "1.1",
+      "0.3 h",
+      "0.33"
+     ],
+     [
+      "Electric oven (baking / toaster oven, large)",
+      "1,500 W",
+      "1,500 W",
+      "1.5",
+      "0.5 h",
+      "0.75"
+     ],
+     [
+      "Air fryer",
+      "1,500 W",
+      "1,500 W",
+      "1.5",
+      "0.5 h",
+      "0.75"
+     ],
+     [
+      "Electric kettle",
+      "2,000 W",
+      "2,000 W",
+      "2",
+      "0.3 h",
+      "0.6"
+     ],
+     [
+      "Toaster",
+      "1,000 W",
+      "1,000 W",
+      "1",
+      "0.2 h",
+      "0.2"
+     ],
+     [
+      "Sandwich maker",
+      "750 W",
+      "750 W",
+      "0.75",
+      "0.2 h",
+      "0.15"
+     ],
+     [
+      "Blender / juicer",
+      "300 W",
+      "650 W",
+      "0.3",
+      "0.2 h",
+      "0.06"
+     ],
+     [
+      "Food processor",
+      "600 W",
+      "1,200 W",
+      "0.6",
+      "0.2 h",
+      "0.12"
+     ],
+     [
+      "Rice cooker",
+      "700 W",
+      "700 W",
+      "0.7",
+      "0.5 h",
+      "0.35"
+     ],
+     [
+      "Slow cooker",
+      "200 W",
+      "200 W",
+      "0.2",
+      "4 h",
+      "0.8"
+     ],
+     [
+      "Coffee maker",
+      "1,000 W",
+      "1,000 W",
+      "1",
+      "0.3 h",
+      "0.3"
+     ],
+     [
+      "Induction cooker (single zone)",
+      "1,800 W",
+      "1,800 W",
+      "1.8",
+      "1 h",
+      "1.8"
+     ],
+     [
+      "Electric stove / hot plate (single)",
+      "1,500 W",
+      "1,500 W",
+      "1.5",
+      "1 h",
+      "1.5"
+     ],
+     [
+      "Electric grill",
+      "1,650 W",
+      "1,650 W",
+      "1.65",
+      "0.5 h",
+      "0.83"
+     ],
+     [
+      "Dishwasher (with drying)",
+      "1,800 W",
+      "1,800 W",
+      "1.8",
+      "1 h",
+      "1.8"
+     ]
+    ]
+   },
+   {
+    "caption": "Heating appliances: watts and units",
+    "head": [
+     "Appliance",
+     "Running watts",
+     "Starting watts",
+     "Units per hour",
+     "Typical hours a day",
+     "Units per day"
+    ],
+    "rows": [
+     [
+      "Electric geyser (storage, 40-gallon class)",
+      "3,000 W",
+      "3,000 W",
+      "3",
+      "3 h",
+      "9"
+     ],
+     [
+      "Instant electric water heater",
+      "3,500 W",
+      "3,500 W",
+      "3.5",
+      "1 h",
+      "3.5"
+     ],
+     [
+      "Room heater (oil-filled radiator)",
+      "1,500 W",
+      "1,500 W",
+      "1.5",
+      "6 h",
+      "9"
+     ],
+     [
+      "Room heater (fan heater)",
+      "2,000 W",
+      "2,000 W",
+      "2",
+      "4 h",
+      "8"
+     ],
+     [
+      "Room heater (halogen / quartz rod)",
+      "1,200 W",
+      "1,200 W",
+      "1.2",
+      "4 h",
+      "4.8"
+     ],
+     [
+      "Electric blanket (double)",
+      "100 W",
+      "100 W",
+      "0.1",
+      "6 h",
+      "0.6"
+     ]
+    ]
+   },
+   {
+    "caption": "Laundry appliances: watts and units",
+    "head": [
+     "Appliance",
+     "Running watts",
+     "Starting watts",
+     "Units per hour",
+     "Typical hours a day",
+     "Units per day"
+    ],
+    "rows": [
+     [
+      "Electric iron (dry / steam)",
+      "1,000 W",
+      "1,000 W",
+      "1",
+      "0.5 h",
+      "0.5"
+     ],
+     [
+      "Washing machine (twin tub, semi-automatic)",
+      "400 W",
+      "1,200 W",
+      "0.4",
+      "1 h",
+      "0.4"
+     ],
+     [
+      "Washing machine (automatic, top/front load, no heater)",
+      "500 W",
+      "2,250 W",
+      "0.5",
+      "1 h",
+      "0.5"
+     ],
+     [
+      "Clothes dryer (electric)",
+      "3,000 W",
+      "3,500 W",
+      "3",
+      "1 h",
+      "3"
+     ]
+    ]
+   },
+   {
+    "caption": "Water appliances: watts and units",
+    "head": [
+     "Appliance",
+     "Running watts",
+     "Starting watts",
+     "Units per hour",
+     "Typical hours a day",
+     "Units per day"
+    ],
+    "rows": [
+     [
+      "Water pump / donkey motor 0.5 hp",
+      "600 W",
+      "1,800 W",
+      "0.6",
+      "1 h",
+      "0.6"
+     ],
+     [
+      "Water pump / donkey motor 1 hp",
+      "1,000 W",
+      "2,800 W",
+      "1",
+      "1 h",
+      "1"
+     ],
+     [
+      "Water pump 1.5 hp",
+      "1,500 W",
+      "4,500 W",
+      "1.5",
+      "1 h",
+      "1.5"
+     ],
+     [
+      "Water pump 2 hp",
+      "2,000 W",
+      "6,000 W",
+      "2",
+      "1 h",
+      "2"
+     ],
+     [
+      "Submersible / deep-well pump 1 hp",
+      "1,100 W",
+      "3,300 W",
+      "1.1",
+      "2 h",
+      "2.2"
+     ],
+     [
+      "Tubewell submersible pump 5 hp",
+      "4,800 W",
+      "14,400 W",
+      "4.8",
+      "4 h",
+      "19.2"
+     ]
+    ]
+   },
+   {
+    "caption": "Lighting appliances: watts and units",
+    "head": [
+     "Appliance",
+     "Running watts",
+     "Starting watts",
+     "Units per hour",
+     "Typical hours a day",
+     "Units per day"
+    ],
+    "rows": [
+     [
+      "LED bulb (9-12 W)",
+      "12 W",
+      "12 W",
+      "0.012",
+      "6 h",
+      "0.07"
+     ],
+     [
+      "LED tube light (4 ft)",
+      "20 W",
+      "20 W",
+      "0.02",
+      "6 h",
+      "0.12"
+     ],
+     [
+      "Energy saver (CFL)",
+      "25 W",
+      "25 W",
+      "0.025",
+      "6 h",
+      "0.15"
+     ],
+     [
+      "Fluorescent tube light (40 W, magnetic choke)",
+      "50 W",
+      "50 W",
+      "0.05",
+      "6 h",
+      "0.3"
+     ]
+    ]
+   },
+   {
+    "caption": "Electronics appliances: watts and units",
+    "head": [
+     "Appliance",
+     "Running watts",
+     "Starting watts",
+     "Units per hour",
+     "Typical hours a day",
+     "Units per day"
+    ],
+    "rows": [
+     [
+      "LED TV 32 inch",
+      "40 W",
+      "40 W",
+      "0.04",
+      "6 h",
+      "0.24"
+     ],
+     [
+      "LED TV 43 inch",
+      "75 W",
+      "75 W",
+      "0.075",
+      "6 h",
+      "0.45"
+     ],
+     [
+      "LED TV 55 inch",
+      "120 W",
+      "120 W",
+      "0.12",
+      "6 h",
+      "0.72"
+     ],
+     [
+      "Laptop",
+      "50 W",
+      "50 W",
+      "0.05",
+      "6 h",
+      "0.3"
+     ],
+     [
+      "Desktop PC (CPU only)",
+      "120 W",
+      "120 W",
+      "0.12",
+      "6 h",
+      "0.72"
+     ],
+     [
+      "Gaming PC (CPU + GPU, under load)",
+      "400 W",
+      "400 W",
+      "0.4",
+      "4 h",
+      "1.6"
+     ],
+     [
+      "Computer monitor (LED, 24 inch)",
+      "30 W",
+      "30 W",
+      "0.03",
+      "6 h",
+      "0.18"
+     ],
+     [
+      "WiFi router / modem",
+      "10 W",
+      "10 W",
+      "0.01",
+      "24 h",
+      "0.24"
+     ],
+     [
+      "Phone charger (fast charge, while charging)",
+      "15 W",
+      "15 W",
+      "0.015",
+      "3 h",
+      "0.05"
+     ],
+     [
+      "Printer (laser, printing)",
+      "400 W",
+      "1,000 W",
+      "0.4",
+      "0.3 h",
+      "0.12"
+     ],
+     [
+      "Printer (inkjet)",
+      "25 W",
+      "25 W",
+      "0.025",
+      "0.3 h",
+      "0.01"
+     ],
+     [
+      "UPS / home inverter idle draw (no load)",
+      "30 W",
+      "30 W",
+      "0.03",
+      "24 h",
+      "0.72"
+     ],
+     [
+      "CCTV DVR + 4 cameras",
+      "40 W",
+      "40 W",
+      "0.04",
+      "24 h",
+      "0.96"
+     ],
+     [
+      "Gaming console (PS5 / Xbox Series X)",
+      "200 W",
+      "200 W",
+      "0.2",
+      "3 h",
+      "0.6"
+     ],
+     [
+      "Sound system / stereo",
+      "100 W",
+      "100 W",
+      "0.1",
+      "3 h",
+      "0.3"
+     ],
+     [
+      "Set-top box / Android TV box",
+      "10 W",
+      "10 W",
+      "0.01",
+      "6 h",
+      "0.06"
+     ]
+    ]
+   },
+   {
+    "caption": "Other appliances: watts and units",
+    "head": [
+     "Appliance",
+     "Running watts",
+     "Starting watts",
+     "Units per hour",
+     "Typical hours a day",
+     "Units per day"
+    ],
+    "rows": [
+     [
+      "Vacuum cleaner",
+      "1,200 W",
+      "1,800 W",
+      "1.2",
+      "0.3 h",
+      "0.36"
+     ],
+     [
+      "Sewing machine (electric)",
+      "100 W",
+      "200 W",
+      "0.1",
+      "2 h",
+      "0.2"
+     ],
+     [
+      "Aquarium (pump, light, heater)",
+      "100 W",
+      "100 W",
+      "0.1",
+      "24 h",
+      "2.4"
+     ],
+     [
+      "Treadmill",
+      "1,000 W",
+      "2,000 W",
+      "1",
+      "1 h",
+      "1"
+     ]
+    ]
+   },
+   {
+    "caption": "Personal Care appliances: watts and units",
+    "head": [
+     "Appliance",
+     "Running watts",
+     "Starting watts",
+     "Units per hour",
+     "Typical hours a day",
+     "Units per day"
+    ],
+    "rows": [
+     [
+      "Hair dryer",
+      "1,500 W",
+      "1,500 W",
+      "1.5",
+      "0.2 h",
+      "0.3"
+     ],
+     [
+      "Hair straightener",
+      "50 W",
+      "50 W",
+      "0.05",
+      "0.3 h",
+      "0.02"
+     ],
+     [
+      "Trimmer / shaver (charging)",
+      "5 W",
+      "5 W",
+      "0.005",
+      "1 h",
+      "0.01"
+     ]
+    ]
+   },
+   {
+    "caption": "Workshop appliances: watts and units",
+    "head": [
+     "Appliance",
+     "Running watts",
+     "Starting watts",
+     "Units per hour",
+     "Typical hours a day",
+     "Units per day"
+    ],
+    "rows": [
+     [
+      "Electric drill / grinder (hand)",
+      "600 W",
+      "900 W",
+      "0.6",
+      "0.3 h",
+      "0.18"
+     ],
+     [
+      "Angle grinder (4-5 inch)",
+      "900 W",
+      "1,800 W",
+      "0.9",
+      "0.3 h",
+      "0.27"
+     ],
+     [
+      "Circular saw",
+      "1,200 W",
+      "2,000 W",
+      "1.2",
+      "0.3 h",
+      "0.36"
+     ],
+     [
+      "Air compressor 1 hp",
+      "1,100 W",
+      "4,500 W",
+      "1.1",
+      "1 h",
+      "1.1"
+     ],
+     [
+      "Pressure washer",
+      "1,200 W",
+      "2,400 W",
+      "1.2",
+      "0.5 h",
+      "0.6"
+     ],
+     [
+      "Welding machine (small inverter, 160-200 A)",
+      "4,000 W",
+      "4,000 W",
+      "4",
+      "1 h",
+      "4"
+     ]
+    ]
+   },
+   {
+    "caption": "Transport appliances: watts and units",
+    "head": [
+     "Appliance",
+     "Running watts",
+     "Starting watts",
+     "Units per hour",
+     "Typical hours a day",
+     "Units per day"
+    ],
+    "rows": [
+     [
+      "E-bike / e-scooter charger",
+      "250 W",
+      "250 W",
+      "0.25",
+      "4 h",
+      "1"
+     ],
+     [
+      "EV charger level 2 (7.4 kW, single phase)",
+      "7,400 W",
+      "7,400 W",
+      "7.4",
+      "4 h",
+      "29.6"
+     ]
+    ]
+   }
+  ],
+  "answer": "This appliance wattage list gives the typical running watts, starting (surge) watts and units per hour of common home appliances in Pakistan and the US: fans, air conditioners, fridges, water pumps, irons, geysers, lights and electronics. Units per hour equal watts divided by one thousand, so a 1,000 W water pump uses about one unit an hour; the tables below are generated from our appliance data file.",
+  "formula": null,
+  "safety": ""
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -40,7 +957,7 @@
      {
       "@type": "ListItem",
       "position": 2,
-      "name": "Appliance Wattage List",
+      "name": "Appliance Wattage List: Watts and Units per Hour",
       "item": "https://wattlyst.com/appliances/"
      }
     ]
@@ -57,7 +974,9 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/appliances/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-13",
+    "lastReviewed": "2026-10-13"
    },
    {
     "@type": "Person",
@@ -70,6 +989,44 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/appliances/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "How many watts does a ceiling fan use?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "A normal AC ceiling fan uses about 80 W; a DC inverter fan uses less than half of that. The cooling table below lists both."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Where do these wattage figures come from?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "From published appliance wattage tables, manufacturer datasheets and Pakistani retailer specifications, listed in the sources at the bottom of the page. Figures marked as Wattlyst estimates in the data file are awaiting engineer confirmation."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Why is the starting wattage higher than the running wattage?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Motors and compressors need extra current to get moving. The surge lasts a moment but an inverter, UPS or generator must be able to supply it, which is why sizing tools use the starting watts of the largest motor."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How do I turn watts into my monthly bill?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Multiply watts by hours a day, divide by one thousand for units a day, multiply by the days in the month and then by your tariff rate. The home load calculator and the bill calculator do this for you."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

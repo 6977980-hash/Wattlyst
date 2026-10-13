@@ -450,7 +450,8 @@
     "expected": {
       "running_w": 3200,
       "peak_w": 6800,
-      "recommended_kva": 8.5
+      "recommended_kva": 8.5,
+      "standard_kva": 10
     },
     "tolerance": 0.01,
     "note": "recommended = max(running*margin, peak)/PF. Start factors 3x are typical, engineer to confirm"
@@ -769,7 +770,10 @@
     "expected": {
       "import_energy_rs": 14584.0,
       "export_credit_rs": 3300.0,
-      "net_energy_rs": 11284.0
+      "net_energy_rs": 11284.0,
+      "net_metering_units": 100,
+      "net_metering_rs": 2244.0,
+      "extra_vs_net_metering_rs": 9040.0
     },
     "tolerance": 0.01,
     "note": "import billed at slab tariff; buyback rate is NOT verified on a NEPRA page, keep it an editable input with source note"
@@ -1501,7 +1505,8 @@
     "expected": {
       "running_w": 4000,
       "peak_w": 4000,
-      "recommended_kva": 6.25
+      "recommended_kva": 6.25,
+      "standard_kva": 6.5
     },
     "tolerance": 0.01,
     "note": "edge case"
@@ -1604,9 +1609,12 @@
       "charge_eff": 0.85
     },
     "expected": {
-      "standard_panel_w": 200
+      "standard_panel_w": 200,
+      "charge_hours": 4.5249,
+      "controller_a": 20.8333,
+      "standard_controller_a": 30
     },
-    "tolerance": 0,
+    "tolerance": 0.01,
     "note": "edge case"
   },
   {
@@ -1800,7 +1808,11 @@
       "import_energy_rs": 2244.0,
       "export_credit_rs": 3300.0,
       "net_energy_rs": 0.0,
-      "carry_forward_rs": 1056.0
+      "carry_forward_rs": 1056.0,
+      "net_metering_units": 0,
+      "net_metering_rs": 0.0,
+      "net_metering_carry_units": 200,
+      "extra_vs_net_metering_rs": 0.0
     },
     "tolerance": 0.01,
     "note": "edge case"
@@ -2494,5 +2506,746 @@
     },
     "tolerance": 0,
     "note": "reviewer re-check 13 Oct"
+  },
+  {
+    "calc": "generator_for_ac",
+    "name": "1.5 ton non-inverter AC + 500 W other",
+    "inputs": {
+      "ac": "ac-split-1-5ton-non-inverter",
+      "other_w": 500
+    },
+    "expected": {
+      "running_w": 2300,
+      "peak_w": 5900,
+      "recommended_kva": 7.375,
+      "standard_kva": 7.5
+    },
+    "tolerance": 0.01,
+    "note": "max(2300x1.25, 5900)/0.8; next standard 7.5 kVA"
+  },
+  {
+    "calc": "generator_for_ac",
+    "name": "1.5 ton inverter AC alone",
+    "inputs": {
+      "ac": "ac-split-1-5ton-inverter"
+    },
+    "expected": {
+      "running_w": 1450,
+      "peak_w": 1900,
+      "recommended_kva": 2.375,
+      "standard_kva": 2.5
+    },
+    "tolerance": 0.01,
+    "note": "inverter AC: max input 1900 W is the peak; 1450x1.25=1812.5 < 1900"
+  },
+  {
+    "calc": "generator_for_ac",
+    "name": "unknown appliance id",
+    "inputs": {
+      "ac": "nope"
+    },
+    "expected": {
+      "error": "appliance_unknown"
+    },
+    "tolerance": 0,
+    "note": "Phase 3"
+  },
+  {
+    "calc": "generator_for_ac",
+    "name": "other starting watts below running",
+    "inputs": {
+      "ac": "ac-split-1ton-inverter",
+      "other_w": 500,
+      "other_start_w": 100
+    },
+    "expected": {
+      "error": "other_start_below_run"
+    },
+    "tolerance": 0,
+    "note": "Phase 3"
+  },
+  {
+    "calc": "generator_for_pump",
+    "name": "1 HP pump, motor eff 0.8, start 3x",
+    "inputs": {
+      "hp": 1
+    },
+    "expected": {
+      "shaft_w": 745.7,
+      "pump_run_w": 932.125,
+      "pump_start_w": 2796.375,
+      "recommended_kva": 3.4955,
+      "standard_kva": 3.5
+    },
+    "tolerance": 0.01,
+    "note": "745.7/0.8 = 932.1 W; peak 2796 W wins over 932x1.25; /0.8 PF"
+  },
+  {
+    "calc": "generator_for_pump",
+    "name": "2 HP pump + 300 W other",
+    "inputs": {
+      "hp": 2,
+      "motor_eff": 0.8,
+      "start_factor": 3,
+      "other_w": 300
+    },
+    "expected": {
+      "running_w": 2164.25,
+      "peak_w": 5892.75,
+      "recommended_kva": 7.3659,
+      "standard_kva": 7.5
+    },
+    "tolerance": 0.01,
+    "note": "Phase 3"
+  },
+  {
+    "calc": "generator_for_pump",
+    "name": "zero HP rejected",
+    "inputs": {
+      "hp": 0
+    },
+    "expected": {
+      "error": "hp_must_be_positive"
+    },
+    "tolerance": 0,
+    "note": "Phase 3"
+  },
+  {
+    "calc": "ups_backup",
+    "name": "1000 VA UPS, 150 Ah 12 V tubular, 300 W",
+    "inputs": {
+      "va": 1000,
+      "ah": 150,
+      "volts": 12,
+      "load_w": 300
+    },
+    "expected": {
+      "max_w": 600,
+      "load_pct": 50,
+      "can_run": true,
+      "usable_wh": 765,
+      "hours": 2.55
+    },
+    "tolerance": 0.001,
+    "note": "PF 0.6 line-interactive default; 150x12x0.5x0.85/300"
+  },
+  {
+    "calc": "ups_backup",
+    "name": "700 W load on a 1000 VA UPS is rejected",
+    "inputs": {
+      "va": 1000,
+      "ah": 150,
+      "volts": 12,
+      "load_w": 700
+    },
+    "expected": {
+      "error": "load_exceeds_ups_rating"
+    },
+    "tolerance": 0,
+    "note": "Phase 3"
+  },
+  {
+    "calc": "ups_backup",
+    "name": "surge above the UPS surge rating",
+    "inputs": {
+      "va": 2000,
+      "pf": 0.8,
+      "ah": 150,
+      "volts": 12,
+      "load_w": 500,
+      "surge_w": 2000,
+      "surge_rating_w": 1500
+    },
+    "expected": {
+      "error": "surge_exceeds_ups_rating"
+    },
+    "tolerance": 0,
+    "note": "Phase 3"
+  },
+  {
+    "calc": "ups_backup",
+    "name": "lithium 100 Ah 12.8 V, 200 W DC load",
+    "inputs": {
+      "va": 1000,
+      "pf": 1,
+      "ah": 100,
+      "volts": 12.8,
+      "chemistry": "lifepo4",
+      "load_w": 200,
+      "inverter_eff": 1
+    },
+    "expected": {
+      "usable_wh": 1152,
+      "hours": 5.76
+    },
+    "tolerance": 0.001,
+    "note": "Phase 3"
+  },
+  {
+    "calc": "solar_for_ac",
+    "name": "1.5 ton inverter AC, Lahore, 8 h/day",
+    "inputs": {
+      "ac": "ac-split-1-5ton-inverter",
+      "city": "lahore",
+      "hours": 8
+    },
+    "expected": {
+      "daily_kwh": 8,
+      "kw_energy": 2,
+      "kw_power": 1.859,
+      "kw": 2,
+      "panels": 4,
+      "installed_kw": 2.34,
+      "inverter_w": 1812.5,
+      "inverter_surge_w": 1900,
+      "limited_by": "energy"
+    },
+    "tolerance": 0.01,
+    "note": "avg 1.0 kW x 8 h / 4.0 yield = 2 kWp; power 1450/0.78 = 1.86 kWp; 4 x 585 W"
+  },
+  {
+    "calc": "solar_for_ac",
+    "name": "with 4 night hours on a 24 V lithium battery",
+    "inputs": {
+      "ac": "ac-split-1-5ton-inverter",
+      "city": "lahore",
+      "hours": 8,
+      "night_hours": 4
+    },
+    "expected": {
+      "night_kwh": 5.8,
+      "battery_v": 24,
+      "battery_ah": 298.354
+    },
+    "tolerance": 0.01,
+    "note": "1450 W x 4 h / (24 x 0.9 x 0.9)"
+  },
+  {
+    "calc": "solar_for_ac",
+    "name": "2 ton non-inverter AC, Karachi: power sizing",
+    "inputs": {
+      "ac": "ac-split-2ton-non-inverter",
+      "city": "karachi",
+      "hours": 8
+    },
+    "expected": {
+      "daily_kwh": 15.36,
+      "kw_energy": 3.3391,
+      "kw_power": 3.0769,
+      "panels": 6,
+      "installed_kw": 3.51,
+      "inverter_surge_w": 7200
+    },
+    "tolerance": 0.01,
+    "note": "Phase 3"
+  },
+  {
+    "calc": "solar_for_ac",
+    "name": "unknown city",
+    "inputs": {
+      "ac": "ac-split-1ton-inverter",
+      "city": "mars"
+    },
+    "expected": {
+      "error": "city_unknown"
+    },
+    "tolerance": 0,
+    "note": "Phase 3"
+  },
+  {
+    "calc": "solar_for_ac",
+    "name": "unknown appliance",
+    "inputs": {
+      "ac": "kettle-x",
+      "city": "lahore"
+    },
+    "expected": {
+      "error": "appliance_unknown"
+    },
+    "tolerance": 0,
+    "note": "Phase 3"
+  },
+  {
+    "calc": "solar_from_loads",
+    "name": "4 fans 12 h + 1.5 ton inverter AC 8 h, Lahore",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ceiling-fan-ac",
+          "qty": 4
+        },
+        {
+          "id": "ac-split-1-5ton-inverter",
+          "hours": 8
+        }
+      ],
+      "city": "lahore"
+    },
+    "expected": {
+      "running_w": 1770,
+      "surge_w": 2220,
+      "daily_kwh": 11.84,
+      "kw": 2.96,
+      "panels": 6,
+      "installed_kw": 3.51,
+      "inverter_w": 2212.5
+    },
+    "tolerance": 0.01,
+    "note": "fans use typical 12 h/day from appliances.json; AC energy at avg_w"
+  },
+  {
+    "calc": "solar_from_loads",
+    "name": "no hours at all",
+    "inputs": {
+      "loads": [
+        {
+          "id": "led-bulb",
+          "hours": 0
+        }
+      ],
+      "city": "lahore"
+    },
+    "expected": {
+      "error": "hours_required"
+    },
+    "tolerance": 0,
+    "note": "Phase 3"
+  },
+  {
+    "calc": "home_load",
+    "name": "fans, LEDs, fridge and 1.5 ton AC",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ceiling-fan-ac",
+          "qty": 4
+        },
+        {
+          "id": "led-bulb",
+          "qty": 10,
+          "hours": 6
+        },
+        {
+          "id": "refrigerator-inverter"
+        },
+        {
+          "id": "ac-split-1-5ton-inverter",
+          "hours": 8
+        }
+      ],
+      "tariff": 36.46,
+      "sanctioned_kw": 2
+    },
+    "expected": {
+      "appliances": 4,
+      "items": 16,
+      "running_w": 2010,
+      "peak_w": 2460,
+      "amps": 10.9239,
+      "peak_amps": 13.3696,
+      "daily_kwh": 13.76,
+      "monthly_units": 412.8,
+      "monthly_rs": 15050.688,
+      "within_sanctioned": false,
+      "load_pct": 100.5,
+      "largest_w": 1450
+    },
+    "tolerance": 0.01,
+    "note": "peak adds the largest start step (AC 1900-1450 = 450); fridge typical 10 h; AC energy at avg_w 1000 (8 units/day), not rated 1450"
+  },
+  {
+    "calc": "home_load",
+    "name": "custom watts rows",
+    "inputs": {
+      "loads": [
+        {
+          "watts": 1000,
+          "qty": 2,
+          "hours": 5
+        },
+        {
+          "id": "custom",
+          "watts": 500,
+          "hours": 2
+        }
+      ]
+    },
+    "expected": {
+      "running_w": 2500,
+      "peak_w": 2500,
+      "daily_kwh": 11,
+      "amps": 13.587
+    },
+    "tolerance": 0.01,
+    "note": "Phase 3"
+  },
+  {
+    "calc": "home_load",
+    "name": "watts override scales the starting step",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ac-split-1-5ton-non-inverter",
+          "watts": 2000
+        }
+      ]
+    },
+    "expected": {
+      "running_w": 2000,
+      "peak_w": 6000
+    },
+    "tolerance": 0.01,
+    "note": "starting 5400 x 2000/1800"
+  },
+  {
+    "calc": "home_load",
+    "name": "custom row without watts",
+    "inputs": {
+      "loads": [
+        {
+          "id": "custom"
+        }
+      ]
+    },
+    "expected": {
+      "error": "load_0_watts_required"
+    },
+    "tolerance": 0,
+    "note": "Phase 3"
+  },
+  {
+    "calc": "home_load",
+    "name": "hours above 24",
+    "inputs": {
+      "loads": [
+        {
+          "id": "led-bulb",
+          "hours": 30
+        }
+      ]
+    },
+    "expected": {
+      "error": "load_0_hours_invalid"
+    },
+    "tolerance": 0,
+    "note": "Phase 3"
+  },
+  {
+    "calc": "home_load",
+    "name": "empty list",
+    "inputs": {
+      "loads": []
+    },
+    "expected": {
+      "error": "loads_required"
+    },
+    "tolerance": 0,
+    "note": "Phase 3"
+  },
+  {
+    "calc": "add_ac_check",
+    "name": "1.5 kW running, add 1.5 ton inverter AC on 2 kW sanctioned",
+    "inputs": {
+      "current_w": 1500,
+      "ac": "ac-split-1-5ton-inverter",
+      "sanctioned_kw": 2
+    },
+    "expected": {
+      "new_total_w": 2950,
+      "peak_w": 3400,
+      "amps_after": 16.0326,
+      "peak_amps": 18.4783,
+      "within_sanctioned": false,
+      "load_pct": 147.5,
+      "headroom_kw": 0,
+      "ac_ib_a": 7.8804,
+      "ac_breaker_a": 10,
+      "ac_cable_a": 10
+    },
+    "tolerance": 0.01,
+    "note": "Phase 3"
+  },
+  {
+    "calc": "add_ac_check",
+    "name": "same on 5 kW sanctioned",
+    "inputs": {
+      "current_w": 1500,
+      "ac": "ac-split-1-5ton-inverter",
+      "sanctioned_kw": 5
+    },
+    "expected": {
+      "within_sanctioned": true,
+      "headroom_kw": 2.05,
+      "load_pct": 59
+    },
+    "tolerance": 0.01,
+    "note": "Phase 3"
+  },
+  {
+    "calc": "add_ac_check",
+    "name": "unknown AC",
+    "inputs": {
+      "current_w": 1500,
+      "ac": "x",
+      "sanctioned_kw": 5
+    },
+    "expected": {
+      "error": "appliance_unknown"
+    },
+    "tolerance": 0,
+    "note": "Phase 3"
+  },
+  {
+    "calc": "ac_units",
+    "name": "1.5 ton inverter AC preset, 8 h, tariff 36.46",
+    "inputs": {
+      "ac": "ac-split-1-5ton-inverter",
+      "hours": 8,
+      "tariff": 36.46
+    },
+    "expected": {
+      "avg_kw": 1.0,
+      "ac_rated_w": 1450,
+      "daily_units": 8,
+      "monthly_units": 240,
+      "hourly_rs": 36.46,
+      "monthly_rs": 8750.4
+    },
+    "tolerance": 0.001,
+    "note": "avg_w 1000 from appliances.json (formulas.md E)"
+  },
+  {
+    "calc": "ac_units",
+    "name": "custom average kW",
+    "inputs": {
+      "ac": "custom",
+      "avg_kw": 1.1,
+      "hours": 8
+    },
+    "expected": {
+      "daily_units": 8.8
+    },
+    "tolerance": 0.001,
+    "note": "Phase 3"
+  },
+  {
+    "calc": "ac_units",
+    "name": "appliance without an average draw",
+    "inputs": {
+      "ac": "led-bulb",
+      "hours": 8
+    },
+    "expected": {
+      "error": "appliance_unknown"
+    },
+    "tolerance": 0,
+    "note": "Phase 3"
+  },
+  {
+    "calc": "wire_size",
+    "name": "1.5 ton inverter AC, 15 m in conduit",
+    "inputs": {
+      "appliance": "ac-split-1-5ton-inverter",
+      "length_m": 15,
+      "pf": 0.9
+    },
+    "expected": {
+      "watts": 1900,
+      "ib_a": 9.1787,
+      "breaker_a": 16,
+      "min_cable_a": 16,
+      "area_mm2": 2.5,
+      "ampacity_a": 24,
+      "pk_size": "7/29",
+      "drop_pct": 1.0775,
+      "limited_by": "ampacity"
+    },
+    "tolerance": 0.01,
+    "note": "inverter AC designed at max input 1900 W; motor-type load: breaker >= Ib x 1.25 -> 16 A; cable >= 16 A and >= 2.5 mm2 minimum"
+  },
+  {
+    "calc": "wire_size",
+    "name": "5 kW over 100 m: voltage drop decides",
+    "inputs": {
+      "watts": 5000,
+      "length_m": 100
+    },
+    "expected": {
+      "ib_a": 27.1739,
+      "breaker_a": 32,
+      "ampacity_only_mm2": 6,
+      "area_mm2": 16,
+      "drop_pct": 3.3229,
+      "limited_by": "voltage_drop",
+      "pk_size": "7/64"
+    },
+    "tolerance": 0.01,
+    "note": "6 mm2 (41 A) carries it but drops 8.9%; 16 mm2 keeps it under 5%"
+  },
+  {
+    "calc": "wire_size",
+    "name": "2 kW lighting circuit, 10 m",
+    "inputs": {
+      "watts": 2000,
+      "length_m": 10,
+      "load_type": "lighting",
+      "circuit": "lighting"
+    },
+    "expected": {
+      "breaker_a": 16,
+      "area_mm2": 1.5,
+      "ampacity_a": 17.5,
+      "drop_pct": 1.4178,
+      "limit_pct": 3
+    },
+    "tolerance": 0.01,
+    "note": "Phase 3"
+  },
+  {
+    "calc": "wire_size",
+    "name": "DC 24 V, 1 kW, 5 m",
+    "inputs": {
+      "mode": "dc",
+      "volts": 24,
+      "watts": 1000,
+      "length_m": 5
+    },
+    "expected": {
+      "ib_a": 41.6667,
+      "breaker_a": 50,
+      "min_cable_a": 52.0833,
+      "area_mm2": 10,
+      "drop_pct": 3.9063,
+      "pk_size": "7/52"
+    },
+    "tolerance": 0.01,
+    "note": "PF forced to 1 for DC"
+  },
+  {
+    "calc": "wire_size",
+    "name": "run too long for the table",
+    "inputs": {
+      "watts": 5000,
+      "length_m": 1000
+    },
+    "expected": {
+      "error": "run_too_long_for_table"
+    },
+    "tolerance": 0,
+    "note": "Phase 3"
+  },
+  {
+    "calc": "wire_size",
+    "name": "20 kW single phase is above 63 A",
+    "inputs": {
+      "watts": 20000,
+      "length_m": 10
+    },
+    "expected": {
+      "error": "load_above_standard_breakers"
+    },
+    "tolerance": 0,
+    "note": "Phase 3"
+  },
+  {
+    "calc": "breaker_size",
+    "name": "1.5 ton inverter AC: 16 A type C on 2.5 mm2",
+    "inputs": {
+      "appliance": "ac-split-1-5ton-inverter",
+      "pf": 0.9
+    },
+    "expected": {
+      "ib_a": 9.1787,
+      "breaker_a": 16,
+      "curve": "C",
+      "trip_min_a": 80,
+      "trip_max_a": 160,
+      "area_mm2": 2.5,
+      "pk_size": "7/29"
+    },
+    "tolerance": 0.01,
+    "note": "Phase 3"
+  },
+  {
+    "calc": "breaker_size",
+    "name": "3 kW geyser: 16 A type B",
+    "inputs": {
+      "watts": 3000,
+      "load_type": "resistive",
+      "pf": 1
+    },
+    "expected": {
+      "ib_a": 13.0435,
+      "breaker_a": 16,
+      "curve": "B",
+      "min_cable_a": 16.3043,
+      "area_mm2": 2.5
+    },
+    "tolerance": 0.01,
+    "note": "Phase 3"
+  },
+  {
+    "calc": "breaker_size",
+    "name": "400 W lighting: 6 A type B on 1 mm2",
+    "inputs": {
+      "watts": 400,
+      "load_type": "lighting",
+      "pf": 1
+    },
+    "expected": {
+      "breaker_a": 6,
+      "curve": "B",
+      "area_mm2": 1,
+      "pk_size": "3/29"
+    },
+    "tolerance": 0.01,
+    "note": "Phase 3"
+  },
+  {
+    "calc": "breaker_size",
+    "name": "three-phase 10 kW motor",
+    "inputs": {
+      "mode": "ac3",
+      "watts": 10000,
+      "volts": 400,
+      "pf": 0.85,
+      "load_type": "motor"
+    },
+    "expected": {
+      "ib_a": 16.9809,
+      "breaker_a": 25,
+      "curve": "C",
+      "area_mm2": 4
+    },
+    "tolerance": 0.01,
+    "note": "Ib x 1.25 = 21.2 -> 25 A; cable >= 25 A -> 4 mm2 (32 A)"
+  },
+  {
+    "calc": "cable_rating",
+    "name": "2.5 mm2 = 7/29",
+    "inputs": {
+      "area_mm2": 2.5
+    },
+    "expected": {
+      "ampacity_b1_a": 24,
+      "ampacity_c_a": 27,
+      "max_w_b1": 4416,
+      "pk_size": "7/29",
+      "pk_area_mm2": 2.98
+    },
+    "tolerance": 0.01,
+    "note": "Phase 3"
+  },
+  {
+    "calc": "cable_rating",
+    "name": "unknown size",
+    "inputs": {
+      "area_mm2": 3
+    },
+    "expected": {
+      "error": "cable_size_unknown"
+    },
+    "tolerance": 0,
+    "note": "Phase 3"
   }
 ]

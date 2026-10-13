@@ -8,21 +8,1357 @@
  "meta": "Add your home appliances to get total watts, peak load, amps and daily units. Pakistani and US appliance lists, then size your UPS or solar.",
  "primary_keyword": "home electrical load calculator",
  "wave": 1,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-13",
+ "published": "2026-10-13",
  "author": "ali-ahmad",
+ "related": [
+  "E3",
+  "E4",
+  "D4",
+  "H2",
+  "F1"
+ ],
+ "next": "D4",
  "parent": "P-E",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
    "url": "/"
   },
   {
+   "name": "Home Load Calculators",
+   "url": "/load/"
+  },
+  {
    "name": "Home Electrical Load Calculator",
    "url": "/load/home-electrical-load-calculator/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [],
+  "faq": [
+   {
+    "q": "How do I calculate the electrical load of my house?",
+    "a": "List every appliance that can run at the same time, take the running watts from its label or the appliance list, multiply by how many you have and add them up. Divide the total by volts × power factor (230 V × 0.8 in Pakistan) for amps."
+   },
+   {
+    "q": "What is the total load of a house in kW?",
+    "a": "Most Pakistani homes without an AC run at well under one kilowatt; a home with one inverter AC, fans, lights and a fridge runs at about 3.1 kW, and each extra inverter AC adds about 1 kW on average and more at full speed."
+   },
+   {
+    "q": "What is a connected load and how is it different from running load?",
+    "a": "Connected load is the sum of everything wired in the house; running load is what is on at the same moment. Bills and sanctioned loads are set against expected demand, so the running load is the number to plan with."
+   },
+   {
+    "q": "How many units does this load use per month?",
+    "a": "Each appliance's watts × hours a day ÷ 1,000 gives its units a day; add them and multiply by 30. The default home above uses about 15.1 units a day and 454 a month."
+   },
+   {
+    "q": "Can I use this load to size a UPS, inverter or solar system?",
+    "a": "Yes. The running watts are the continuous rating your inverter or UPS needs (plus a safety margin), the peak watts are its surge rating, and the daily units are what a solar system must produce. The next-step links below take your numbers to those calculators."
+   },
+   {
+    "q": "What is the electrical load estimation for a new house?",
+    "a": "Add the rooms' lights and fans, one AC per bedroom you plan to cool, the kitchen appliances and the water pump, then apply a diversity factor because not everything runs together; the sanctioned-load calculator does this and recommends the kW to apply for."
+   }
+  ],
+  "key_facts": [
+   "Home electrical load in watts = the sum of the running watts of every appliance that is on at the same time; divide by volts × power factor to get amps.",
+   "Peak load adds the starting surge of the largest motor or compressor only once, because two motors rarely start in the same instant.",
+   "Monthly units (kWh) = watts × hours a day ÷ 1,000 × 30 days, added over every appliance; this is the number your electricity bill is based on.",
+   "The default example home above (18 appliances of 6 kinds) draws 3,085 W running, 4,885 W at peak and uses about 454 units a month."
+  ],
+  "mistakes": [
+   "Adding every appliance in the house. Only count what runs at the same time; an iron used for half an hour matters for the monthly units but rarely for the peak load.",
+   "Using the AC's rated input as its average draw. An inverter AC's input varies with the room temperature; the watts here are a planning average, and the rated maximum is used for wire and breaker sizing.",
+   "Ignoring starting surge. A non-inverter AC or a water pump draws about three times its running watts for a second or two, which is what trips an undersized breaker or inverter.",
+   "Confusing watts with units. Watts are the rate of use right now; units (kWh) are watts × hours ÷ 1,000 and are what the bill charges for."
+  ],
+  "sources": [
+   {
+    "label": "Wattlyst methodology and default values",
+    "url": "/methodology/"
+   }
+  ],
+  "tool": {
+   "calc": "home_load",
+   "module": "load.js",
+   "data_keys": [
+    "cables"
+   ],
+   "appliances": {
+    "ceiling-fan-ac": {
+     "name": "Ceiling fan (AC, 56 inch)",
+     "running_w": 80,
+     "starting_w": 120,
+     "typical_hours_per_day": 12,
+     "load_type": "motor"
+    },
+    "ceiling-fan-dc-inverter": {
+     "name": "Ceiling fan (DC / inverter BLDC)",
+     "running_w": 35,
+     "starting_w": 35,
+     "typical_hours_per_day": 12,
+     "load_type": "electronic"
+    },
+    "pedestal-fan": {
+     "name": "Pedestal fan (AC)",
+     "running_w": 75,
+     "starting_w": 110,
+     "typical_hours_per_day": 8,
+     "load_type": "motor"
+    },
+    "pedestal-fan-dc": {
+     "name": "Pedestal fan (DC / inverter)",
+     "running_w": 30,
+     "starting_w": 30,
+     "typical_hours_per_day": 8,
+     "load_type": "electronic"
+    },
+    "bracket-fan": {
+     "name": "Bracket / wall fan",
+     "running_w": 70,
+     "starting_w": 100,
+     "typical_hours_per_day": 8,
+     "load_type": "motor"
+    },
+    "exhaust-fan": {
+     "name": "Exhaust fan (10-12 inch)",
+     "running_w": 40,
+     "starting_w": 60,
+     "typical_hours_per_day": 4,
+     "load_type": "motor"
+    },
+    "air-cooler": {
+     "name": "Room air cooler (evaporative)",
+     "running_w": 200,
+     "starting_w": 300,
+     "typical_hours_per_day": 8,
+     "load_type": "motor"
+    },
+    "ac-split-1ton-inverter": {
+     "name": "Split AC 1 ton inverter",
+     "running_w": 900,
+     "starting_w": 1200,
+     "typical_hours_per_day": 8,
+     "avg_w": 650,
+     "load_type": "inverter_compressor"
+    },
+    "ac-split-1ton-non-inverter": {
+     "name": "Split AC 1 ton non-inverter",
+     "running_w": 1200,
+     "starting_w": 3600,
+     "typical_hours_per_day": 8,
+     "avg_w": 960,
+     "load_type": "compressor"
+    },
+    "ac-split-1-5ton-inverter": {
+     "name": "Split AC 1.5 ton inverter",
+     "running_w": 1450,
+     "starting_w": 1900,
+     "typical_hours_per_day": 8,
+     "avg_w": 1000,
+     "load_type": "inverter_compressor"
+    },
+    "ac-split-1-5ton-non-inverter": {
+     "name": "Split AC 1.5 ton non-inverter",
+     "running_w": 1800,
+     "starting_w": 5400,
+     "typical_hours_per_day": 8,
+     "avg_w": 1440,
+     "load_type": "compressor"
+    },
+    "ac-split-2ton-inverter": {
+     "name": "Split AC 2 ton inverter",
+     "running_w": 1900,
+     "starting_w": 2500,
+     "typical_hours_per_day": 8,
+     "avg_w": 1300,
+     "load_type": "inverter_compressor"
+    },
+    "ac-split-2ton-non-inverter": {
+     "name": "Split AC 2 ton non-inverter",
+     "running_w": 2400,
+     "starting_w": 7200,
+     "typical_hours_per_day": 8,
+     "avg_w": 1920,
+     "load_type": "compressor"
+    },
+    "ac-window-1ton": {
+     "name": "Window AC (about 1 ton / 12-13k BTU)",
+     "running_w": 1350,
+     "starting_w": 4000,
+     "typical_hours_per_day": 8,
+     "avg_w": 1080,
+     "load_type": "compressor"
+    },
+    "ac-floor-standing-4ton": {
+     "name": "Floor-standing AC (4 ton)",
+     "running_w": 4500,
+     "starting_w": 13500,
+     "typical_hours_per_day": 8,
+     "avg_w": 3600,
+     "load_type": "compressor"
+    },
+    "heat-pump-3ton": {
+     "name": "Heat pump / central AC 3 ton",
+     "running_w": 3400,
+     "starting_w": 10200,
+     "typical_hours_per_day": 8,
+     "avg_w": 2720,
+     "load_type": "compressor"
+    },
+    "dehumidifier": {
+     "name": "Dehumidifier",
+     "running_w": 785,
+     "starting_w": 1600,
+     "typical_hours_per_day": 8,
+     "load_type": "compressor"
+    },
+    "refrigerator-non-inverter": {
+     "name": "Refrigerator (non-inverter, 12-16 cu ft)",
+     "running_w": 200,
+     "starting_w": 1200,
+     "typical_hours_per_day": 8,
+     "load_type": "compressor"
+    },
+    "refrigerator-inverter": {
+     "name": "Refrigerator (inverter)",
+     "running_w": 120,
+     "starting_w": 200,
+     "typical_hours_per_day": 10,
+     "load_type": "inverter_compressor"
+    },
+    "deep-freezer": {
+     "name": "Deep freezer (chest)",
+     "running_w": 200,
+     "starting_w": 1200,
+     "typical_hours_per_day": 10,
+     "load_type": "compressor"
+    },
+    "water-dispenser": {
+     "name": "Water dispenser (hot and cold)",
+     "running_w": 500,
+     "starting_w": 900,
+     "typical_hours_per_day": 6,
+     "load_type": "compressor"
+    },
+    "electric-geyser-storage": {
+     "name": "Electric geyser (storage, 40-gallon class)",
+     "running_w": 3000,
+     "starting_w": 3000,
+     "typical_hours_per_day": 3,
+     "load_type": "resistive"
+    },
+    "instant-water-heater": {
+     "name": "Instant electric water heater",
+     "running_w": 3500,
+     "starting_w": 3500,
+     "typical_hours_per_day": 1,
+     "load_type": "resistive"
+    },
+    "room-heater-oil-filled": {
+     "name": "Room heater (oil-filled radiator)",
+     "running_w": 1500,
+     "starting_w": 1500,
+     "typical_hours_per_day": 6,
+     "load_type": "resistive"
+    },
+    "room-heater-fan": {
+     "name": "Room heater (fan heater)",
+     "running_w": 2000,
+     "starting_w": 2000,
+     "typical_hours_per_day": 4,
+     "load_type": "resistive"
+    },
+    "room-heater-halogen": {
+     "name": "Room heater (halogen / quartz rod)",
+     "running_w": 1200,
+     "starting_w": 1200,
+     "typical_hours_per_day": 4,
+     "load_type": "resistive"
+    },
+    "electric-blanket": {
+     "name": "Electric blanket (double)",
+     "running_w": 100,
+     "starting_w": 100,
+     "typical_hours_per_day": 6,
+     "load_type": "resistive"
+    },
+    "electric-iron": {
+     "name": "Electric iron (dry / steam)",
+     "running_w": 1000,
+     "starting_w": 1000,
+     "typical_hours_per_day": 0.5,
+     "load_type": "resistive"
+    },
+    "washing-machine-twin-tub": {
+     "name": "Washing machine (twin tub, semi-automatic)",
+     "running_w": 400,
+     "starting_w": 1200,
+     "typical_hours_per_day": 1,
+     "load_type": "motor"
+    },
+    "washing-machine-automatic": {
+     "name": "Washing machine (automatic, top/front load, no heater)",
+     "running_w": 500,
+     "starting_w": 2250,
+     "typical_hours_per_day": 1,
+     "load_type": "motor"
+    },
+    "clothes-dryer": {
+     "name": "Clothes dryer (electric)",
+     "running_w": 3000,
+     "starting_w": 3500,
+     "typical_hours_per_day": 1,
+     "load_type": "resistive"
+    },
+    "microwave-oven": {
+     "name": "Microwave oven",
+     "running_w": 1100,
+     "starting_w": 1100,
+     "typical_hours_per_day": 0.3,
+     "load_type": "electronic"
+    },
+    "electric-oven": {
+     "name": "Electric oven (baking / toaster oven, large)",
+     "running_w": 1500,
+     "starting_w": 1500,
+     "typical_hours_per_day": 0.5,
+     "load_type": "resistive"
+    },
+    "air-fryer": {
+     "name": "Air fryer",
+     "running_w": 1500,
+     "starting_w": 1500,
+     "typical_hours_per_day": 0.5,
+     "load_type": "resistive"
+    },
+    "electric-kettle": {
+     "name": "Electric kettle",
+     "running_w": 2000,
+     "starting_w": 2000,
+     "typical_hours_per_day": 0.3,
+     "load_type": "resistive"
+    },
+    "toaster": {
+     "name": "Toaster",
+     "running_w": 1000,
+     "starting_w": 1000,
+     "typical_hours_per_day": 0.2,
+     "load_type": "resistive"
+    },
+    "sandwich-maker": {
+     "name": "Sandwich maker",
+     "running_w": 750,
+     "starting_w": 750,
+     "typical_hours_per_day": 0.2,
+     "load_type": "resistive"
+    },
+    "blender-juicer": {
+     "name": "Blender / juicer",
+     "running_w": 300,
+     "starting_w": 650,
+     "typical_hours_per_day": 0.2,
+     "load_type": "motor"
+    },
+    "food-processor": {
+     "name": "Food processor",
+     "running_w": 600,
+     "starting_w": 1200,
+     "typical_hours_per_day": 0.2,
+     "load_type": "motor"
+    },
+    "rice-cooker": {
+     "name": "Rice cooker",
+     "running_w": 700,
+     "starting_w": 700,
+     "typical_hours_per_day": 0.5,
+     "load_type": "resistive"
+    },
+    "slow-cooker": {
+     "name": "Slow cooker",
+     "running_w": 200,
+     "starting_w": 200,
+     "typical_hours_per_day": 4,
+     "load_type": "resistive"
+    },
+    "coffee-maker": {
+     "name": "Coffee maker",
+     "running_w": 1000,
+     "starting_w": 1000,
+     "typical_hours_per_day": 0.3,
+     "load_type": "resistive"
+    },
+    "induction-cooker": {
+     "name": "Induction cooker (single zone)",
+     "running_w": 1800,
+     "starting_w": 1800,
+     "typical_hours_per_day": 1,
+     "load_type": "electronic"
+    },
+    "hot-plate": {
+     "name": "Electric stove / hot plate (single)",
+     "running_w": 1500,
+     "starting_w": 1500,
+     "typical_hours_per_day": 1,
+     "load_type": "resistive"
+    },
+    "electric-grill": {
+     "name": "Electric grill",
+     "running_w": 1650,
+     "starting_w": 1650,
+     "typical_hours_per_day": 0.5,
+     "load_type": "resistive"
+    },
+    "dishwasher": {
+     "name": "Dishwasher (with drying)",
+     "running_w": 1800,
+     "starting_w": 1800,
+     "typical_hours_per_day": 1,
+     "load_type": "resistive"
+    },
+    "water-motor-0-5hp": {
+     "name": "Water pump / donkey motor 0.5 hp",
+     "running_w": 600,
+     "starting_w": 1800,
+     "typical_hours_per_day": 1,
+     "load_type": "motor"
+    },
+    "water-motor-1hp": {
+     "name": "Water pump / donkey motor 1 hp",
+     "running_w": 1000,
+     "starting_w": 2800,
+     "typical_hours_per_day": 1,
+     "load_type": "motor"
+    },
+    "water-motor-1-5hp": {
+     "name": "Water pump 1.5 hp",
+     "running_w": 1500,
+     "starting_w": 4500,
+     "typical_hours_per_day": 1,
+     "load_type": "motor"
+    },
+    "water-motor-2hp": {
+     "name": "Water pump 2 hp",
+     "running_w": 2000,
+     "starting_w": 6000,
+     "typical_hours_per_day": 1,
+     "load_type": "motor"
+    },
+    "submersible-pump-1hp": {
+     "name": "Submersible / deep-well pump 1 hp",
+     "running_w": 1100,
+     "starting_w": 3300,
+     "typical_hours_per_day": 2,
+     "load_type": "motor"
+    },
+    "tubewell-submersible-5hp": {
+     "name": "Tubewell submersible pump 5 hp",
+     "running_w": 4800,
+     "starting_w": 14400,
+     "typical_hours_per_day": 4,
+     "load_type": "motor"
+    },
+    "led-bulb": {
+     "name": "LED bulb (9-12 W)",
+     "running_w": 12,
+     "starting_w": 12,
+     "typical_hours_per_day": 6,
+     "load_type": "lighting"
+    },
+    "led-tube-light": {
+     "name": "LED tube light (4 ft)",
+     "running_w": 20,
+     "starting_w": 20,
+     "typical_hours_per_day": 6,
+     "load_type": "lighting"
+    },
+    "cfl-energy-saver": {
+     "name": "Energy saver (CFL)",
+     "running_w": 25,
+     "starting_w": 25,
+     "typical_hours_per_day": 6,
+     "load_type": "lighting"
+    },
+    "fluorescent-tube-40w": {
+     "name": "Fluorescent tube light (40 W, magnetic choke)",
+     "running_w": 50,
+     "starting_w": 50,
+     "typical_hours_per_day": 6,
+     "load_type": "lighting"
+    },
+    "led-tv-32": {
+     "name": "LED TV 32 inch",
+     "running_w": 40,
+     "starting_w": 40,
+     "typical_hours_per_day": 6,
+     "load_type": "electronic"
+    },
+    "led-tv-43": {
+     "name": "LED TV 43 inch",
+     "running_w": 75,
+     "starting_w": 75,
+     "typical_hours_per_day": 6,
+     "load_type": "electronic"
+    },
+    "led-tv-55": {
+     "name": "LED TV 55 inch",
+     "running_w": 120,
+     "starting_w": 120,
+     "typical_hours_per_day": 6,
+     "load_type": "electronic"
+    },
+    "laptop": {
+     "name": "Laptop",
+     "running_w": 50,
+     "starting_w": 50,
+     "typical_hours_per_day": 6,
+     "load_type": "electronic"
+    },
+    "desktop-pc": {
+     "name": "Desktop PC (CPU only)",
+     "running_w": 120,
+     "starting_w": 120,
+     "typical_hours_per_day": 6,
+     "load_type": "electronic"
+    },
+    "gaming-pc": {
+     "name": "Gaming PC (CPU + GPU, under load)",
+     "running_w": 400,
+     "starting_w": 400,
+     "typical_hours_per_day": 4,
+     "load_type": "electronic"
+    },
+    "monitor": {
+     "name": "Computer monitor (LED, 24 inch)",
+     "running_w": 30,
+     "starting_w": 30,
+     "typical_hours_per_day": 6,
+     "load_type": "electronic"
+    },
+    "wifi-router": {
+     "name": "WiFi router / modem",
+     "running_w": 10,
+     "starting_w": 10,
+     "typical_hours_per_day": 24,
+     "load_type": "electronic"
+    },
+    "phone-charger": {
+     "name": "Phone charger (fast charge, while charging)",
+     "running_w": 15,
+     "starting_w": 15,
+     "typical_hours_per_day": 3,
+     "load_type": "electronic"
+    },
+    "printer-laser": {
+     "name": "Printer (laser, printing)",
+     "running_w": 400,
+     "starting_w": 1000,
+     "typical_hours_per_day": 0.3,
+     "load_type": "electronic"
+    },
+    "printer-inkjet": {
+     "name": "Printer (inkjet)",
+     "running_w": 25,
+     "starting_w": 25,
+     "typical_hours_per_day": 0.3,
+     "load_type": "electronic"
+    },
+    "ups-idle": {
+     "name": "UPS / home inverter idle draw (no load)",
+     "running_w": 30,
+     "starting_w": 30,
+     "typical_hours_per_day": 24,
+     "load_type": "electronic"
+    },
+    "cctv-dvr-4cam": {
+     "name": "CCTV DVR + 4 cameras",
+     "running_w": 40,
+     "starting_w": 40,
+     "typical_hours_per_day": 24,
+     "load_type": "electronic"
+    },
+    "gaming-console": {
+     "name": "Gaming console (PS5 / Xbox Series X)",
+     "running_w": 200,
+     "starting_w": 200,
+     "typical_hours_per_day": 3,
+     "load_type": "electronic"
+    },
+    "sound-system": {
+     "name": "Sound system / stereo",
+     "running_w": 100,
+     "starting_w": 100,
+     "typical_hours_per_day": 3,
+     "load_type": "electronic"
+    },
+    "set-top-box": {
+     "name": "Set-top box / Android TV box",
+     "running_w": 10,
+     "starting_w": 10,
+     "typical_hours_per_day": 6,
+     "load_type": "electronic"
+    },
+    "vacuum-cleaner": {
+     "name": "Vacuum cleaner",
+     "running_w": 1200,
+     "starting_w": 1800,
+     "typical_hours_per_day": 0.3,
+     "load_type": "motor"
+    },
+    "hair-dryer": {
+     "name": "Hair dryer",
+     "running_w": 1500,
+     "starting_w": 1500,
+     "typical_hours_per_day": 0.2,
+     "load_type": "resistive"
+    },
+    "hair-straightener": {
+     "name": "Hair straightener",
+     "running_w": 50,
+     "starting_w": 50,
+     "typical_hours_per_day": 0.3,
+     "load_type": "resistive"
+    },
+    "trimmer-shaver": {
+     "name": "Trimmer / shaver (charging)",
+     "running_w": 5,
+     "starting_w": 5,
+     "typical_hours_per_day": 1,
+     "load_type": "electronic"
+    },
+    "sewing-machine": {
+     "name": "Sewing machine (electric)",
+     "running_w": 100,
+     "starting_w": 200,
+     "typical_hours_per_day": 2,
+     "load_type": "motor"
+    },
+    "aquarium": {
+     "name": "Aquarium (pump, light, heater)",
+     "running_w": 100,
+     "starting_w": 100,
+     "typical_hours_per_day": 24,
+     "load_type": "electronic"
+    },
+    "treadmill": {
+     "name": "Treadmill",
+     "running_w": 1000,
+     "starting_w": 2000,
+     "typical_hours_per_day": 1,
+     "load_type": "motor"
+    },
+    "drill": {
+     "name": "Electric drill / grinder (hand)",
+     "running_w": 600,
+     "starting_w": 900,
+     "typical_hours_per_day": 0.3,
+     "load_type": "motor"
+    },
+    "angle-grinder": {
+     "name": "Angle grinder (4-5 inch)",
+     "running_w": 900,
+     "starting_w": 1800,
+     "typical_hours_per_day": 0.3,
+     "load_type": "motor"
+    },
+    "circular-saw": {
+     "name": "Circular saw",
+     "running_w": 1200,
+     "starting_w": 2000,
+     "typical_hours_per_day": 0.3,
+     "load_type": "motor"
+    },
+    "air-compressor-1hp": {
+     "name": "Air compressor 1 hp",
+     "running_w": 1100,
+     "starting_w": 4500,
+     "typical_hours_per_day": 1,
+     "load_type": "motor"
+    },
+    "pressure-washer": {
+     "name": "Pressure washer",
+     "running_w": 1200,
+     "starting_w": 2400,
+     "typical_hours_per_day": 0.5,
+     "load_type": "motor"
+    },
+    "welding-machine-small": {
+     "name": "Welding machine (small inverter, 160-200 A)",
+     "running_w": 4000,
+     "starting_w": 4000,
+     "typical_hours_per_day": 1,
+     "load_type": "electronic"
+    },
+    "ebike-charger": {
+     "name": "E-bike / e-scooter charger",
+     "running_w": 250,
+     "starting_w": 250,
+     "typical_hours_per_day": 4,
+     "load_type": "electronic"
+    },
+    "ev-charger-level2": {
+     "name": "EV charger level 2 (7.4 kW, single phase)",
+     "running_w": 7400,
+     "starting_w": 7400,
+     "typical_hours_per_day": 4,
+     "load_type": "electronic"
+    }
+   },
+   "fields": [
+    {
+     "name": "loads",
+     "label": "Appliances that run at the same time",
+     "type": "loads",
+     "catalog": [
+      {
+       "id": "ceiling-fan-ac",
+       "name": "Ceiling fan (AC, 56 inch)",
+       "category": "cooling"
+      },
+      {
+       "id": "ceiling-fan-dc-inverter",
+       "name": "Ceiling fan (DC / inverter BLDC)",
+       "category": "cooling"
+      },
+      {
+       "id": "pedestal-fan",
+       "name": "Pedestal fan (AC)",
+       "category": "cooling"
+      },
+      {
+       "id": "pedestal-fan-dc",
+       "name": "Pedestal fan (DC / inverter)",
+       "category": "cooling"
+      },
+      {
+       "id": "bracket-fan",
+       "name": "Bracket / wall fan",
+       "category": "cooling"
+      },
+      {
+       "id": "exhaust-fan",
+       "name": "Exhaust fan (10-12 inch)",
+       "category": "cooling"
+      },
+      {
+       "id": "air-cooler",
+       "name": "Room air cooler (evaporative)",
+       "category": "cooling"
+      },
+      {
+       "id": "ac-split-1ton-inverter",
+       "name": "Split AC 1 ton inverter",
+       "category": "cooling"
+      },
+      {
+       "id": "ac-split-1ton-non-inverter",
+       "name": "Split AC 1 ton non-inverter",
+       "category": "cooling"
+      },
+      {
+       "id": "ac-split-1-5ton-inverter",
+       "name": "Split AC 1.5 ton inverter",
+       "category": "cooling"
+      },
+      {
+       "id": "ac-split-1-5ton-non-inverter",
+       "name": "Split AC 1.5 ton non-inverter",
+       "category": "cooling"
+      },
+      {
+       "id": "ac-split-2ton-inverter",
+       "name": "Split AC 2 ton inverter",
+       "category": "cooling"
+      },
+      {
+       "id": "ac-split-2ton-non-inverter",
+       "name": "Split AC 2 ton non-inverter",
+       "category": "cooling"
+      },
+      {
+       "id": "ac-window-1ton",
+       "name": "Window AC (about 1 ton / 12-13k BTU)",
+       "category": "cooling"
+      },
+      {
+       "id": "ac-floor-standing-4ton",
+       "name": "Floor-standing AC (4 ton)",
+       "category": "cooling"
+      },
+      {
+       "id": "heat-pump-3ton",
+       "name": "Heat pump / central AC 3 ton",
+       "category": "cooling"
+      },
+      {
+       "id": "dehumidifier",
+       "name": "Dehumidifier",
+       "category": "cooling"
+      },
+      {
+       "id": "refrigerator-non-inverter",
+       "name": "Refrigerator (non-inverter, 12-16 cu ft)",
+       "category": "kitchen"
+      },
+      {
+       "id": "refrigerator-inverter",
+       "name": "Refrigerator (inverter)",
+       "category": "kitchen"
+      },
+      {
+       "id": "deep-freezer",
+       "name": "Deep freezer (chest)",
+       "category": "kitchen"
+      },
+      {
+       "id": "water-dispenser",
+       "name": "Water dispenser (hot and cold)",
+       "category": "kitchen"
+      },
+      {
+       "id": "electric-geyser-storage",
+       "name": "Electric geyser (storage, 40-gallon class)",
+       "category": "heating"
+      },
+      {
+       "id": "instant-water-heater",
+       "name": "Instant electric water heater",
+       "category": "heating"
+      },
+      {
+       "id": "room-heater-oil-filled",
+       "name": "Room heater (oil-filled radiator)",
+       "category": "heating"
+      },
+      {
+       "id": "room-heater-fan",
+       "name": "Room heater (fan heater)",
+       "category": "heating"
+      },
+      {
+       "id": "room-heater-halogen",
+       "name": "Room heater (halogen / quartz rod)",
+       "category": "heating"
+      },
+      {
+       "id": "electric-blanket",
+       "name": "Electric blanket (double)",
+       "category": "heating"
+      },
+      {
+       "id": "electric-iron",
+       "name": "Electric iron (dry / steam)",
+       "category": "laundry"
+      },
+      {
+       "id": "washing-machine-twin-tub",
+       "name": "Washing machine (twin tub, semi-automatic)",
+       "category": "laundry"
+      },
+      {
+       "id": "washing-machine-automatic",
+       "name": "Washing machine (automatic, top/front load, no heater)",
+       "category": "laundry"
+      },
+      {
+       "id": "clothes-dryer",
+       "name": "Clothes dryer (electric)",
+       "category": "laundry"
+      },
+      {
+       "id": "microwave-oven",
+       "name": "Microwave oven",
+       "category": "kitchen"
+      },
+      {
+       "id": "electric-oven",
+       "name": "Electric oven (baking / toaster oven, large)",
+       "category": "kitchen"
+      },
+      {
+       "id": "air-fryer",
+       "name": "Air fryer",
+       "category": "kitchen"
+      },
+      {
+       "id": "electric-kettle",
+       "name": "Electric kettle",
+       "category": "kitchen"
+      },
+      {
+       "id": "toaster",
+       "name": "Toaster",
+       "category": "kitchen"
+      },
+      {
+       "id": "sandwich-maker",
+       "name": "Sandwich maker",
+       "category": "kitchen"
+      },
+      {
+       "id": "blender-juicer",
+       "name": "Blender / juicer",
+       "category": "kitchen"
+      },
+      {
+       "id": "food-processor",
+       "name": "Food processor",
+       "category": "kitchen"
+      },
+      {
+       "id": "rice-cooker",
+       "name": "Rice cooker",
+       "category": "kitchen"
+      },
+      {
+       "id": "slow-cooker",
+       "name": "Slow cooker",
+       "category": "kitchen"
+      },
+      {
+       "id": "coffee-maker",
+       "name": "Coffee maker",
+       "category": "kitchen"
+      },
+      {
+       "id": "induction-cooker",
+       "name": "Induction cooker (single zone)",
+       "category": "kitchen"
+      },
+      {
+       "id": "hot-plate",
+       "name": "Electric stove / hot plate (single)",
+       "category": "kitchen"
+      },
+      {
+       "id": "electric-grill",
+       "name": "Electric grill",
+       "category": "kitchen"
+      },
+      {
+       "id": "dishwasher",
+       "name": "Dishwasher (with drying)",
+       "category": "kitchen"
+      },
+      {
+       "id": "water-motor-0-5hp",
+       "name": "Water pump / donkey motor 0.5 hp",
+       "category": "water"
+      },
+      {
+       "id": "water-motor-1hp",
+       "name": "Water pump / donkey motor 1 hp",
+       "category": "water"
+      },
+      {
+       "id": "water-motor-1-5hp",
+       "name": "Water pump 1.5 hp",
+       "category": "water"
+      },
+      {
+       "id": "water-motor-2hp",
+       "name": "Water pump 2 hp",
+       "category": "water"
+      },
+      {
+       "id": "submersible-pump-1hp",
+       "name": "Submersible / deep-well pump 1 hp",
+       "category": "water"
+      },
+      {
+       "id": "tubewell-submersible-5hp",
+       "name": "Tubewell submersible pump 5 hp",
+       "category": "water"
+      },
+      {
+       "id": "led-bulb",
+       "name": "LED bulb (9-12 W)",
+       "category": "lighting"
+      },
+      {
+       "id": "led-tube-light",
+       "name": "LED tube light (4 ft)",
+       "category": "lighting"
+      },
+      {
+       "id": "cfl-energy-saver",
+       "name": "Energy saver (CFL)",
+       "category": "lighting"
+      },
+      {
+       "id": "fluorescent-tube-40w",
+       "name": "Fluorescent tube light (40 W, magnetic choke)",
+       "category": "lighting"
+      },
+      {
+       "id": "led-tv-32",
+       "name": "LED TV 32 inch",
+       "category": "electronics"
+      },
+      {
+       "id": "led-tv-43",
+       "name": "LED TV 43 inch",
+       "category": "electronics"
+      },
+      {
+       "id": "led-tv-55",
+       "name": "LED TV 55 inch",
+       "category": "electronics"
+      },
+      {
+       "id": "laptop",
+       "name": "Laptop",
+       "category": "electronics"
+      },
+      {
+       "id": "desktop-pc",
+       "name": "Desktop PC (CPU only)",
+       "category": "electronics"
+      },
+      {
+       "id": "gaming-pc",
+       "name": "Gaming PC (CPU + GPU, under load)",
+       "category": "electronics"
+      },
+      {
+       "id": "monitor",
+       "name": "Computer monitor (LED, 24 inch)",
+       "category": "electronics"
+      },
+      {
+       "id": "wifi-router",
+       "name": "WiFi router / modem",
+       "category": "electronics"
+      },
+      {
+       "id": "phone-charger",
+       "name": "Phone charger (fast charge, while charging)",
+       "category": "electronics"
+      },
+      {
+       "id": "printer-laser",
+       "name": "Printer (laser, printing)",
+       "category": "electronics"
+      },
+      {
+       "id": "printer-inkjet",
+       "name": "Printer (inkjet)",
+       "category": "electronics"
+      },
+      {
+       "id": "ups-idle",
+       "name": "UPS / home inverter idle draw (no load)",
+       "category": "electronics"
+      },
+      {
+       "id": "cctv-dvr-4cam",
+       "name": "CCTV DVR + 4 cameras",
+       "category": "electronics"
+      },
+      {
+       "id": "gaming-console",
+       "name": "Gaming console (PS5 / Xbox Series X)",
+       "category": "electronics"
+      },
+      {
+       "id": "sound-system",
+       "name": "Sound system / stereo",
+       "category": "electronics"
+      },
+      {
+       "id": "set-top-box",
+       "name": "Set-top box / Android TV box",
+       "category": "electronics"
+      },
+      {
+       "id": "vacuum-cleaner",
+       "name": "Vacuum cleaner",
+       "category": "other"
+      },
+      {
+       "id": "hair-dryer",
+       "name": "Hair dryer",
+       "category": "personal-care"
+      },
+      {
+       "id": "hair-straightener",
+       "name": "Hair straightener",
+       "category": "personal-care"
+      },
+      {
+       "id": "trimmer-shaver",
+       "name": "Trimmer / shaver (charging)",
+       "category": "personal-care"
+      },
+      {
+       "id": "sewing-machine",
+       "name": "Sewing machine (electric)",
+       "category": "other"
+      },
+      {
+       "id": "aquarium",
+       "name": "Aquarium (pump, light, heater)",
+       "category": "other"
+      },
+      {
+       "id": "treadmill",
+       "name": "Treadmill",
+       "category": "other"
+      },
+      {
+       "id": "drill",
+       "name": "Electric drill / grinder (hand)",
+       "category": "workshop"
+      },
+      {
+       "id": "angle-grinder",
+       "name": "Angle grinder (4-5 inch)",
+       "category": "workshop"
+      },
+      {
+       "id": "circular-saw",
+       "name": "Circular saw",
+       "category": "workshop"
+      },
+      {
+       "id": "air-compressor-1hp",
+       "name": "Air compressor 1 hp",
+       "category": "workshop"
+      },
+      {
+       "id": "pressure-washer",
+       "name": "Pressure washer",
+       "category": "workshop"
+      },
+      {
+       "id": "welding-machine-small",
+       "name": "Welding machine (small inverter, 160-200 A)",
+       "category": "workshop"
+      },
+      {
+       "id": "ebike-charger",
+       "name": "E-bike / e-scooter charger",
+       "category": "transport"
+      },
+      {
+       "id": "ev-charger-level2",
+       "name": "EV charger level 2 (7.4 kW, single phase)",
+       "category": "transport"
+      }
+     ],
+     "default": [
+      {
+       "id": "ceiling-fan-ac",
+       "qty": 4
+      },
+      {
+       "id": "led-bulb",
+       "qty": 10,
+       "hours": 6
+      },
+      {
+       "id": "refrigerator-inverter",
+       "qty": 1
+      },
+      {
+       "id": "led-tv-43",
+       "qty": 1,
+       "hours": 5
+      },
+      {
+       "id": "ac-split-1-5ton-inverter",
+       "qty": 1,
+       "hours": 8
+      },
+      {
+       "id": "water-motor-1hp",
+       "qty": 1,
+       "hours": 1
+      }
+     ],
+     "hint": "Pick each appliance, check the watts against its label, and set how many hours a day it runs. Add every load that can be on at once."
+    },
+    {
+     "name": "volts",
+     "label": "Supply voltage",
+     "unit": "V",
+     "type": "select",
+     "default": 230,
+     "options": [
+      [
+       230,
+       "230 V (Pakistan, UK, EU)"
+      ],
+      [
+       120,
+       "120 V (US, Canada)"
+      ]
+     ]
+    },
+    {
+     "name": "sanctioned_kw",
+     "label": "Sanctioned load",
+     "unit": "kW",
+     "placeholder": "Optional, from your bill",
+     "hint": "The kW printed on your electricity bill. Leave blank if you do not know it."
+    },
+    {
+     "name": "tariff",
+     "label": "Electricity rate",
+     "unit": "Rs per unit",
+     "default": 36.46,
+     "advanced": true,
+     "hint": "Energy rate of your slab. The default is the Pakistan unprotected rate for 301 to 400 units a month."
+    },
+    {
+     "name": "pf",
+     "label": "Power factor",
+     "unit": "0 to 1",
+     "default": 0.8,
+     "advanced": true,
+     "hint": "Mixed home loads with fans and motors are about 0.8; pure heaters are 1.0."
+    }
+   ],
+   "fixed_inputs": {},
+   "outputs": [
+    {
+     "key": "running_w",
+     "label": "Total running load",
+     "spec": "int",
+     "unit": "W",
+     "value": "3,085"
+    },
+    {
+     "key": "peak_w",
+     "label": "Peak with the largest motor starting",
+     "spec": "int",
+     "unit": "W",
+     "value": "4,885"
+    },
+    {
+     "key": "amps",
+     "label": "Current at full load",
+     "spec": "1",
+     "unit": "A",
+     "value": "16.8"
+    },
+    {
+     "key": "daily_kwh",
+     "label": "Energy a day",
+     "spec": "1",
+     "unit": "units",
+     "value": "15.1"
+    },
+    {
+     "key": "monthly_units",
+     "label": "Units a month",
+     "spec": "int",
+     "value": "454"
+    },
+    {
+     "key": "monthly_rs",
+     "label": "Estimated energy cost a month",
+     "spec": "rs",
+     "value": "Rs 16,555"
+    }
+   ],
+   "how": {
+    "tpl": "Running load = the watts of every appliance × its quantity, added up = {{out.running_w|int}} W. Peak load adds the starting surge of the largest motor = {{out.peak_w|int}} W. Current = {{out.running_w|int}} W ÷ ({{out.volts|int}} V × {{out.pf|2}} power factor) = {{out.amps|1}} A. Energy = each appliance's watts × hours a day, added up = {{out.daily_kwh|1}} units a day, × {{out.days|int}} days = {{out.monthly_units|int}} units a month; × Rs {{out.tariff|2}} per unit = {{out.monthly_rs|rs}} before fixed charges and taxes.",
+    "text": "Running load = the watts of every appliance × its quantity, added up = 3,085 W. Peak load adds the starting surge of the largest motor = 4,885 W. Current = 3,085 W ÷ (230 V × 0.8 power factor) = 16.8 A. Energy = each appliance's watts × hours a day, added up = 15.1 units a day, × 30 days = 454 units a month; × Rs 36.46 per unit = Rs 16,555 before fixed charges and taxes."
+   },
+   "submit": "Calculate",
+   "data_checked": [
+    {
+     "label": "Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)",
+     "url": "https://webstore.iec.ch/publication/1878",
+     "checked": "2026-10-13"
+    },
+    {
+     "label": "Appliance running and starting watts (Wattlyst appliance data, sources listed on the appliance list page)",
+     "url": "https://wattlyst.com/appliances/",
+     "checked": "2026-10-13"
+    }
+   ]
+  },
+  "examples": [
+   {
+    "title": "Small home: 4 kinds of appliance, no AC",
+    "text": "Three fans, eight LED bulbs, a TV and a fridge total 611 W running and 1,611 W when the fridge compressor starts, which is 3.3 A at 230 V. They use about 5.4 units a day and 161 units a month, within a 1 kW sanctioned load."
+   },
+   {
+    "title": "Family home with two inverter ACs",
+    "text": "Five fans, twelve bulbs, a fridge, two 1.5 ton inverter ACs, an iron and a water pump come to 5,564 W running and 7,364 W at peak, or 30.2 A. Expect about 731 units a month, about Rs 26,649 in energy charges at the default rate, using 111% of a 5 kW sanctioned load."
+   },
+   {
+    "title": "Non-inverter AC plus an electric geyser on a 2 kW connection",
+    "text": "The running load is 5,440 W, but the non-inverter compressor pushes the peak to 9,040 W, or 49.1 A for a moment. At 272% of the sanctioned load this connection is overloaded; a higher sanctioned load or an inverter AC is the fix."
+   }
+  ],
+  "table": {
+   "caption": "Typical running load and monthly units for common homes",
+   "head": [
+    "Home",
+    "Running load",
+    "Peak load",
+    "Current",
+    "Units a month"
+   ],
+   "rows": [
+    [
+     "9 appliances, 3 kinds",
+     "272 W",
+     "312 W",
+     "1.5 A",
+     "75"
+    ],
+    [
+     "13 appliances, 4 kinds",
+     "611 W",
+     "1,611 W",
+     "3.3 A",
+     "161"
+    ],
+    [
+     "18 appliances, 6 kinds",
+     "3,085 W",
+     "4,885 W",
+     "16.8 A",
+     "454"
+    ],
+    [
+     "22 appliances, 6 kinds",
+     "5,564 W",
+     "7,364 W",
+     "30.2 A",
+     "731"
+    ],
+    [
+     "28 appliances, 7 kinds",
+     "9,330 W",
+     "11,130 W",
+     "50.7 A",
+     "1,231"
+    ]
+   ]
+  },
+  "answer": "A typical home with 18 appliances running together (fans, lights, a fridge, a TV, a 1.5 ton inverter AC and a water pump) draws about 3,085 W, or 16.8 A at 230 V, and uses about 454 units a month. Add your own appliances below to get your total watts, peak load, amps and monthly units.",
+  "formula": {
+   "text": "P = Σ (W × qty); I = P ÷ (V × PF); units/day = Σ (W × qty × h) ÷ 1000",
+   "lines": [
+    "P = total running load in watts",
+    "W = running watts of one appliance, qty = how many",
+    "I = current in amps, V = supply voltage, PF = power factor",
+    "h = hours a day the appliance runs",
+    "Peak = P + the largest (starting watts − running watts) of any motor"
+   ]
+  },
+  "safety": "If the running load is close to your sanctioned load or your main breaker rating, do not add more; ask your DISCO for a higher sanctioned load and have a licensed electrician check the main cable and breaker."
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -39,6 +1375,12 @@
      {
       "@type": "ListItem",
       "position": 2,
+      "name": "Home Load Calculators",
+      "item": "https://wattlyst.com/load/"
+     },
+     {
+      "@type": "ListItem",
+      "position": 3,
       "name": "Home Electrical Load Calculator",
       "item": "https://wattlyst.com/load/home-electrical-load-calculator/"
      }
@@ -56,7 +1398,9 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/load/home-electrical-load-calculator/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-13",
+    "lastReviewed": "2026-10-13"
    },
    {
     "@type": "WebApplication",
@@ -88,6 +1432,60 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/load/home-electrical-load-calculator/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "How do I calculate the electrical load of my house?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "List every appliance that can run at the same time, take the running watts from its label or the appliance list, multiply by how many you have and add them up. Divide the total by volts × power factor (230 V × 0.8 in Pakistan) for amps."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What is the total load of a house in kW?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Most Pakistani homes without an AC run at well under one kilowatt; a home with one inverter AC, fans, lights and a fridge runs at about 3.1 kW, and each extra inverter AC adds about 1 kW on average and more at full speed."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What is a connected load and how is it different from running load?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Connected load is the sum of everything wired in the house; running load is what is on at the same moment. Bills and sanctioned loads are set against expected demand, so the running load is the number to plan with."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many units does this load use per month?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Each appliance's watts × hours a day ÷ 1,000 gives its units a day; add them and multiply by 30. The default home above uses about 15.1 units a day and 454 a month."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Can I use this load to size a UPS, inverter or solar system?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Yes. The running watts are the continuous rating your inverter or UPS needs (plus a safety margin), the peak watts are its surge rating, and the daily units are what a solar system must produce. The next-step links below take your numbers to those calculators."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What is the electrical load estimation for a new house?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Add the rooms' lights and fans, one AC per bedroom you plan to cool, the kitchen appliances and the water pump, then apply a diversity factor because not everything runs together; the sanctioned-load calculator does this and recommends the kW to apply for."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

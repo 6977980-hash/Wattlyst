@@ -3,26 +3,387 @@
  "type": "tool",
  "silo": "C",
  "url": "/generator/generator-for-1-5-ton-ac/",
- "h1": "Generator Size For 1.5 Ton Ac",
+ "h1": "Generator Size for 1.5 Ton AC",
  "title": "Generator Size for 1.5 Ton AC (kVA Guide) | Wattlyst",
  "meta": "What kVA generator runs a 1.5 ton inverter or non-inverter AC? Running and starting watts, kVA at PF 0.8, and home load examples.",
  "primary_keyword": "generator size for 1.5 ton ac",
  "wave": 1,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-13",
+ "published": "2026-10-13",
  "author": "ali-ahmad",
+ "related": [
+  "C5",
+  "D4",
+  "E5",
+  "W1"
+ ],
+ "next": "W1",
  "parent": "P-C",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
    "url": "/"
   },
   {
-   "name": "Generator Size For 1.5 Ton Ac",
+   "name": "Generator Calculators",
+   "url": "/generator/"
+  },
+  {
+   "name": "Generator Size for 1.5 Ton AC",
    "url": "/generator/generator-for-1-5-ton-ac/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "What kVA generator runs a 1.5 ton AC?",
+    "p": [
+     "It depends almost entirely on whether the AC is inverter or non-inverter. An inverter AC ramps its compressor up slowly, so its peak is its maximum rated input, about 1,900 W for 1.5 ton; it runs from a 2.5 kVA generator alone and a 3.5 kVA generator with 500 W of fans and lights.",
+     "A non-inverter AC starts its compressor at full speed and draws about 5,400 W for a second or two. The generator must carry that surge, so the same 1.5 ton size needs 7.5 kVA. The surge, not the running watts, sets the size."
+    ]
+   },
+   {
+    "h2": "Inverter AC on a generator: why it needs a much smaller set",
+    "p": [
+     "An inverter AC has no hard compressor start. It draws about 1,450 W on average at full cooling and never more than its maximum input of 1,900 W, so the generator only needs the running load plus the 1.25 margin. Inverter ACs are also more tolerant of the small voltage and frequency swings of a portable generator, though a very cheap generator with poor voltage control can still trip the AC's protection.",
+     "If your generator is already bought and is in the 2.5 to 3.5 kVA range, an inverter AC is the only type it can run; a non-inverter 1.5 ton AC will stall it."
+    ]
+   },
+   {
+    "h2": "Non-inverter AC generator size",
+    "p": [
+     "The compressor of a 1.5 ton non-inverter AC runs at about 1,800 W and starts at about 5,400 W, which is 3 times its running watts. With 500 W of fans and lights the peak is 5,900 W, or 7.38 kVA, so the generator to buy is 7.5 kVA. A 1 ton non-inverter AC with the same other load needs 6.5 kVA and a 2 ton non-inverter AC needs 10 kVA.",
+     "The compressor also restarts every few minutes as the thermostat cycles, so the generator takes that surge all day, not once. A soft starter fitted to the AC lowers the surge, but the calculator assumes a plain direct start, which is what most units have."
+    ]
+   },
+   {
+    "h2": "What kVA generator for a home with an AC?",
+    "p": [
+     "Add up everything that will run on the generator at the same time and enter it as the other load. Fans, LED lights, a TV, a WiFi router and an inverter fridge typically come to a few hundred watts, which is why 500 W is the default. With one 1.5 ton inverter AC that gives 1,950 W running and a 3.5 kVA generator.",
+     "For two inverter ACs, enter the second AC's running watts in the other load and its maximum input as the other starting watts: a 1.5 ton inverter AC plus 1,500 W (a second inverter AC with fans) needs 5 kVA. A fridge or water pump that can start while the AC runs should go in the other starting watts too. Loads such as an iron, geyser or microwave are best kept off while the generator runs the AC."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "Can a 5 kVA generator run a 1.5 ton AC?",
+    "a": "Yes for an inverter AC: it needs 2.5 kVA alone and 3.5 kVA with 500 W of fans and lights, so a 5 kVA set has room to spare. No for a 1.5 ton non-inverter AC: its 5,400 W compressor surge needs 7.5 kVA."
+   },
+   {
+    "q": "What size generator do I need for a 1 ton AC?",
+    "a": "A 1 ton inverter AC with 500 W of fans and lights runs from a 2.5 kVA generator (see the table). A 1 ton non-inverter AC with the same other load starts at 3,600 W and needs a 6.5 kVA generator."
+   },
+   {
+    "q": "What size generator do I need for a 2 ton AC?",
+    "a": "A 2 ton inverter AC with 500 W of other load needs a 5 kVA generator. A 2 ton non-inverter AC starts at 7,200 W and needs 10 kVA."
+   },
+   {
+    "q": "Is it safe to run an inverter AC on a generator?",
+    "a": "Yes, on a generator with reasonable voltage and frequency control and enough kVA for the AC's maximum input. Inverter ACs start softly and draw about 1,450 W at full cooling. Avoid very small or worn generators whose voltage sags when load changes; a stabiliser between the generator and the AC helps on a marginal set."
+   },
+   {
+    "q": "Why does a non-inverter AC need such a big generator?",
+    "a": "Its compressor starts direct-on-line and pulls about 3 times its running watts for a second or two, 5,400 W for a 1.5 ton unit. The generator must deliver that peak or it stalls, so it is sized on the surge, not on the running watts."
+   },
+   {
+    "q": "How many kVA of generator for a home with one AC, fans, lights and a fridge?",
+    "a": "With a 1.5 ton inverter AC and about 500 W of other load, 3.5 kVA. With a 1.5 ton non-inverter AC, 7.5 kVA. Add the running watts of each extra AC to the other load to size for more."
+   },
+   {
+    "q": "How do I work out the generator kVA for an AC myself?",
+    "a": "Take the larger of the running watts × 1.25 or the starting watts of everything running together, divide by the generator power factor of 0.8 and by one thousand, then round up to the next kVA size sold. The calculator does this with the real watts of each AC size."
+   }
+  ],
+  "key_facts": [
+   "A 1.5 ton inverter AC runs at about 1,450 W and needs at most 1,900 W, so on its own it runs from a 2.5 kVA generator.",
+   "A 1.5 ton non-inverter AC runs at about 1,800 W but its compressor draws about 5,400 W for a second or two while starting, which needs a 7.5 kVA generator even with only 500 W of other load.",
+   "Generator size in kVA = the larger of (running watts × 1.25) or (starting watts) ÷ 0.8 power factor ÷ 1,000, rounded up to the next standard size sold.",
+   "For a home with one inverter AC, fans, lights and a fridge, a 3.5 kVA generator is the usual size; each extra inverter AC adds about 1,450 W of running load."
+  ],
+  "mistakes": [
+   "Sizing for the running watts of a non-inverter AC. Its compressor starts at about 3 times the running watts, and a generator that cannot supply that surge stalls or trips every time the compressor cycles on.",
+   "Reading kVA as kW. A generator rated in kVA delivers only 80% of that number in watts at the nameplate power factor.",
+   "Forgetting what else is on. A fridge, water pump or second AC starting while the AC runs adds its own surge; enter it as the other starting watts.",
+   "Running the generator flat out. The 1.25 margin on the running load is there for engine life, fuel use and the loads people switch on without thinking.",
+   "Running an AC on a cheap generator with poor voltage control. Inverter ACs tolerate small swings, but a generator that hunts or sags under load can trip the AC's protection or damage its board."
+  ],
+  "sources": [
+   {
+    "label": "Wattlyst methodology and default values",
+    "url": "/methodology/"
+   }
+  ],
+  "tool": {
+   "calc": "generator_for_ac",
+   "module": "sizing.js",
+   "data_keys": [],
+   "appliances": {
+    "ac-split-1-5ton-inverter": {
+     "name": "Split AC 1.5 ton inverter",
+     "running_w": 1450,
+     "starting_w": 1900,
+     "typical_hours_per_day": 8,
+     "avg_w": 1000,
+     "load_type": "inverter_compressor"
+    },
+    "ac-split-1-5ton-non-inverter": {
+     "name": "Split AC 1.5 ton non-inverter",
+     "running_w": 1800,
+     "starting_w": 5400,
+     "typical_hours_per_day": 8,
+     "avg_w": 1440,
+     "load_type": "compressor"
+    },
+    "ac-split-1ton-inverter": {
+     "name": "Split AC 1 ton inverter",
+     "running_w": 900,
+     "starting_w": 1200,
+     "typical_hours_per_day": 8,
+     "avg_w": 650,
+     "load_type": "inverter_compressor"
+    },
+    "ac-split-1ton-non-inverter": {
+     "name": "Split AC 1 ton non-inverter",
+     "running_w": 1200,
+     "starting_w": 3600,
+     "typical_hours_per_day": 8,
+     "avg_w": 960,
+     "load_type": "compressor"
+    },
+    "ac-split-2ton-inverter": {
+     "name": "Split AC 2 ton inverter",
+     "running_w": 1900,
+     "starting_w": 2500,
+     "typical_hours_per_day": 8,
+     "avg_w": 1300,
+     "load_type": "inverter_compressor"
+    },
+    "ac-split-2ton-non-inverter": {
+     "name": "Split AC 2 ton non-inverter",
+     "running_w": 2400,
+     "starting_w": 7200,
+     "typical_hours_per_day": 8,
+     "avg_w": 1920,
+     "load_type": "compressor"
+    }
+   },
+   "fields": [
+    {
+     "name": "ac",
+     "label": "Air conditioner",
+     "type": "appliance",
+     "default": "ac-split-1-5ton-inverter",
+     "options": [
+      [
+       "ac-split-1-5ton-inverter",
+       "Split AC 1.5 ton inverter"
+      ],
+      [
+       "ac-split-1-5ton-non-inverter",
+       "Split AC 1.5 ton non-inverter"
+      ],
+      [
+       "ac-split-1ton-inverter",
+       "Split AC 1 ton inverter"
+      ],
+      [
+       "ac-split-1ton-non-inverter",
+       "Split AC 1 ton non-inverter"
+      ],
+      [
+       "ac-split-2ton-inverter",
+       "Split AC 2 ton inverter"
+      ],
+      [
+       "ac-split-2ton-non-inverter",
+       "Split AC 2 ton non-inverter"
+      ]
+     ],
+     "hint": "Pick the size and type from the AC nameplate. Inverter ACs start softly; non-inverter ACs have a big compressor surge."
+    },
+    {
+     "name": "other_w",
+     "label": "Other load running with the AC",
+     "unit": "W",
+     "default": 500,
+     "hint": "Fans, lights, TV and fridge that will run on the generator at the same time. Set zero for the AC alone."
+    },
+    {
+     "name": "other_start_w",
+     "label": "Starting watts of the other load",
+     "unit": "W",
+     "placeholder": "Same as running watts",
+     "advanced": true,
+     "hint": "Only if the other load includes a motor such as a fridge, water pump or a second AC. Leave blank for fans and lights."
+    },
+    {
+     "name": "margin",
+     "label": "Safety margin on running load",
+     "unit": "times",
+     "default": 1.25,
+     "advanced": true,
+     "hint": "Keeps the generator below full load so it lasts. A decimal like one point two five."
+    },
+    {
+     "name": "pf",
+     "label": "Generator power factor",
+     "unit": "0 to 1",
+     "default": 0.8,
+     "advanced": true,
+     "hint": "Generators are rated in kVA at this power factor. Leave the default unless the nameplate says otherwise."
+    }
+   ],
+   "fixed_inputs": {},
+   "outputs": [
+    {
+     "key": "standard_kva",
+     "label": "Generator size to buy",
+     "spec": "1",
+     "unit": "kVA",
+     "value": "3.5"
+    },
+    {
+     "key": "recommended_kva",
+     "label": "Calculated minimum",
+     "spec": "2",
+     "unit": "kVA",
+     "value": "3.05"
+    },
+    {
+     "key": "running_w",
+     "label": "Total running watts",
+     "spec": "int",
+     "unit": "W",
+     "value": "1,950"
+    },
+    {
+     "key": "peak_w",
+     "label": "Peak watts while the AC starts",
+     "spec": "int",
+     "unit": "W",
+     "value": "2,400"
+    }
+   ],
+   "how": {
+    "tpl": "{{out.ac_name}}: {{out.ac_run_w|int}} W running, {{out.ac_start_w|int}} W starting (its maximum input). Other load {{out.other_w|int}} W. Total {{out.running_w|int}} W running and {{out.peak_w|int}} W at the moment the AC starts. The larger of {{out.running_w|int}} W × {{out.margin|2}} margin and {{out.peak_w|int}} W is {{out.sized_w|int}} W; ÷ {{out.pf|2}} power factor ÷ 1,000 = {{out.recommended_kva|2}} kVA, rounded up to the next standard size, {{out.standard_kva|1}} kVA.",
+    "text": "Split AC 1.5 ton inverter: 1,450 W running, 1,900 W starting (its maximum input). Other load 500 W. Total 1,950 W running and 2,400 W at the moment the AC starts. The larger of 1,950 W × 1.25 margin and 2,400 W is 2,438 W; ÷ 0.8 power factor ÷ 1,000 = 3.05 kVA, rounded up to the next standard size, 3.5 kVA."
+   },
+   "submit": "Calculate",
+   "data_checked": [
+    {
+     "label": "Appliance running and starting watts (Wattlyst appliance data, sources listed on the appliance list page)",
+     "url": "https://wattlyst.com/appliances/",
+     "checked": "2026-10-13"
+    }
+   ]
+  },
+  "examples": [
+   {
+    "title": "1.5 ton inverter AC on its own",
+    "text": "Split AC 1.5 ton inverter: 1,450 W running and at most 1,900 W. 1,900 W ÷ 0.8 ÷ 1,000 = 2.38 kVA, so a 2.5 kVA generator runs it."
+   },
+   {
+    "title": "1.5 ton non-inverter AC with 500 W of fans and lights",
+    "text": "Split AC 1.5 ton non-inverter: 1,800 W running but 5,400 W while the compressor starts. With 500 W of other load the total is 2,300 W running and 5,900 W at the start, which is 7.38 kVA; buy a 7.5 kVA generator."
+   },
+   {
+    "title": "Two 1.5 ton inverter ACs with fans",
+    "text": "One Split AC 1.5 ton inverter (1,450 W) plus 1,500 W for the second inverter AC and fans, with the second AC's maximum input entered as the other starting watts: 2,950 W running, 3,400 W peak, 4.61 kVA calculated, so a 5 kVA generator."
+   },
+   {
+    "title": "1 ton non-inverter AC with 500 W of other load",
+    "text": "Split AC 1 ton non-inverter: 1,200 W running, 3,600 W starting. Total 1,700 W running and 4,100 W at the start, 5.13 kVA, so the generator to buy is 6.5 kVA."
+   },
+   {
+    "title": "2 ton non-inverter AC with 500 W of other load",
+    "text": "Split AC 2 ton non-inverter: 2,400 W running, 7,200 W starting. The peak of 7,700 W gives 9.63 kVA, so a 10 kVA generator is needed."
+   }
+  ],
+  "table": {
+   "caption": "Generator size for split ACs with 500 W of fans and lights running at the same time",
+   "head": [
+    "AC",
+    "Other load",
+    "Running watts",
+    "Peak watts",
+    "Generator to buy"
+   ],
+   "rows": [
+    [
+     "Split AC 1 ton inverter",
+     "500 W",
+     "1,400 W",
+     "1,700 W",
+     "2.5 kVA"
+    ],
+    [
+     "Split AC 1 ton non-inverter",
+     "500 W",
+     "1,700 W",
+     "4,100 W",
+     "6.5 kVA"
+    ],
+    [
+     "Split AC 1.5 ton inverter",
+     "500 W",
+     "1,950 W",
+     "2,400 W",
+     "3.5 kVA"
+    ],
+    [
+     "Split AC 1.5 ton non-inverter",
+     "500 W",
+     "2,300 W",
+     "5,900 W",
+     "7.5 kVA"
+    ],
+    [
+     "Split AC 2 ton inverter",
+     "500 W",
+     "2,400 W",
+     "3,000 W",
+     "5 kVA"
+    ],
+    [
+     "Split AC 2 ton non-inverter",
+     "500 W",
+     "2,900 W",
+     "7,700 W",
+     "10 kVA"
+    ],
+    [
+     "Split AC 1.5 ton inverter",
+     "0 W",
+     "1,450 W",
+     "1,900 W",
+     "2.5 kVA"
+    ],
+    [
+     "Split AC 1.5 ton non-inverter",
+     "0 W",
+     "1,800 W",
+     "5,400 W",
+     "7.5 kVA"
+    ]
+   ]
+  },
+  "answer": "A 1.5 ton inverter AC with 500 W of fans and lights needs a 3.5 kVA generator: 1,950 W running, 2,400 W while the compressor starts, 3.05 kVA calculated. A 1.5 ton non-inverter AC with the same load needs 7.5 kVA because its compressor starts at 5,400 W. Generator kVA = max(running watts × margin, starting watts) ÷ power factor ÷ 1,000.",
+  "formula": {
+   "text": "P_run = P_ac + P_other; P_peak = P_run + (P_ac_start − P_ac); kVA = max(P_run × m, P_peak) ÷ PF ÷ 1000",
+   "lines": [
+    "P_ac = AC running watts, P_ac_start = AC starting watts (compressor surge, or maximum input for an inverter AC)",
+    "P_other = other appliances running at the same time",
+    "P_peak = total watts at the moment the largest motor starts",
+    "m = safety margin on the running load",
+    "PF = generator power factor (nameplate convention)",
+    "kVA = generator size; the result is rounded up to the next standard size"
+   ]
+  },
+  "safety": "Earth the generator, connect it to the house only through a proper changeover switch so it can never back-feed the grid, keep it outdoors away from windows, and have a licensed electrician do the wiring."
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -39,7 +400,13 @@
      {
       "@type": "ListItem",
       "position": 2,
-      "name": "Generator Size For 1.5 Ton Ac",
+      "name": "Generator Calculators",
+      "item": "https://wattlyst.com/generator/"
+     },
+     {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Generator Size for 1.5 Ton AC",
       "item": "https://wattlyst.com/generator/generator-for-1-5-ton-ac/"
      }
     ]
@@ -56,12 +423,14 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/generator/generator-for-1-5-ton-ac/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-13",
+    "lastReviewed": "2026-10-13"
    },
    {
     "@type": "WebApplication",
     "@id": "https://wattlyst.com/generator/generator-for-1-5-ton-ac/#app",
-    "name": "Generator Size For 1.5 Ton Ac",
+    "name": "Generator Size for 1.5 Ton AC",
     "url": "https://wattlyst.com/generator/generator-for-1-5-ton-ac/",
     "description": "What kVA generator runs a 1.5 ton inverter or non-inverter AC? Running and starting watts, kVA at PF 0.8, and home load examples.",
     "applicationCategory": "UtilitiesApplication",
@@ -88,6 +457,68 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/generator/generator-for-1-5-ton-ac/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "Can a 5 kVA generator run a 1.5 ton AC?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Yes for an inverter AC: it needs 2.5 kVA alone and 3.5 kVA with 500 W of fans and lights, so a 5 kVA set has room to spare. No for a 1.5 ton non-inverter AC: its 5,400 W compressor surge needs 7.5 kVA."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What size generator do I need for a 1 ton AC?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "A 1 ton inverter AC with 500 W of fans and lights runs from a 2.5 kVA generator (see the table). A 1 ton non-inverter AC with the same other load starts at 3,600 W and needs a 6.5 kVA generator."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What size generator do I need for a 2 ton AC?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "A 2 ton inverter AC with 500 W of other load needs a 5 kVA generator. A 2 ton non-inverter AC starts at 7,200 W and needs 10 kVA."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Is it safe to run an inverter AC on a generator?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Yes, on a generator with reasonable voltage and frequency control and enough kVA for the AC's maximum input. Inverter ACs start softly and draw about 1,450 W at full cooling. Avoid very small or worn generators whose voltage sags when load changes; a stabiliser between the generator and the AC helps on a marginal set."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Why does a non-inverter AC need such a big generator?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Its compressor starts direct-on-line and pulls about 3 times its running watts for a second or two, 5,400 W for a 1.5 ton unit. The generator must deliver that peak or it stalls, so it is sized on the surge, not on the running watts."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many kVA of generator for a home with one AC, fans, lights and a fridge?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "With a 1.5 ton inverter AC and about 500 W of other load, 3.5 kVA. With a 1.5 ton non-inverter AC, 7.5 kVA. Add the running watts of each extra AC to the other load to size for more."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How do I work out the generator kVA for an AC myself?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Take the larger of the running watts × 1.25 or the starting watts of everything running together, divide by the generator power factor of 0.8 and by one thousand, then round up to the next kVA size sold. The calculator does this with the real watts of each AC size."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",
