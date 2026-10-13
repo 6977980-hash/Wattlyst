@@ -1,5 +1,5 @@
 // B. Battery / UPS (specs/formulas.md section B) and battery tools from section G.
-import { calculator, CalcError, pos, frac, nonneg, pick, ceilSafe, dflt, num } from './core.js';
+import { calculator, CalcError, has, pos, frac, nonneg, pick, ceilSafe, dflt, num } from './core.js';
 
 const CHEMISTRIES = ['tubular', 'lead_acid', 'agm', 'gel', 'lifepo4'];
 
@@ -39,7 +39,7 @@ export const battery_bank = calculator((i, d) => {
   const inverter_eff = frac(i, 'inverter_eff', dflt(d, 'inverter_eff_ups'));
   const ah_required = (load_w * hours) / (volts * dod * inverter_eff);
   const out = { chemistry, load_w, hours, volts, dod, inverter_eff, ah_required, kwh_required: (ah_required * volts) / 1000 };
-  if (i.battery_ah !== undefined && i.battery_ah !== '') {
+  if (has(i, 'battery_ah')) {
     const battery_ah = pos(i, 'battery_ah');
     const battery_v = pos(i, 'battery_v');
     const series = volts / battery_v;
@@ -69,7 +69,7 @@ export const ups_capacity = calculator((i, d) => {
   const max_w = va * pf;
   let ok = load_w <= max_w;
   const out = { va, pf, load_w, max_w, load_pct: (load_w / max_w) * 100 };
-  if (i.surge_w !== undefined && i.surge_rating_w !== undefined) {
+  if (has(i, 'surge_w') || has(i, 'surge_rating_w')) {
     const surge_w = nonneg(i, 'surge_w');
     const surge_rating_w = pos(i, 'surge_rating_w');
     out.surge_ok = surge_w <= surge_rating_w;

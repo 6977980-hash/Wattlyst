@@ -1,5 +1,5 @@
 // A. Conversions (specs/formulas.md section A).
-import { calculator, pos, frac, pick, nonneg, dflt } from './core.js';
+import { calculator, has, pos, frac, pick, nonneg, dflt } from './core.js';
 
 const MODES = ['dc', 'ac1', 'ac3'];
 
@@ -86,7 +86,7 @@ export const kwh_to_ah = calculator((i) => {
  *  ah:    units = Ah × V / 1000 (energy stored in / drawn from a battery)
  */
 export const units = calculator((i, d) => {
-  const input = pick(i, 'input', ['watts', 'amps', 'ah'], i.amps !== undefined ? 'amps' : i.ah !== undefined ? 'ah' : 'watts');
+  const input = pick(i, 'input', ['watts', 'amps', 'ah'], has(i, 'amps') ? 'amps' : has(i, 'ah') ? 'ah' : 'watts');
   if (input === 'ah') {
     const ah = nonneg(i, 'ah');
     const volts = pos(i, 'volts');

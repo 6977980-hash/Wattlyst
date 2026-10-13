@@ -1,5 +1,5 @@
 // E. Load, AC, units (specs/formulas.md section E) and load/cost tools from section G.
-import { calculator, CalcError, pos, frac, nonneg, num, dflt } from './core.js';
+import { calculator, CalcError, has, pos, frac, nonneg, num, dflt } from './core.js';
 
 /** units_day = avg_kW × hours; monthly = daily × days. */
 export const ac_units = calculator((i, d) => {
@@ -8,7 +8,7 @@ export const ac_units = calculator((i, d) => {
   const days = nonneg(i, 'days', dflt(d, 'days_per_month'));
   const daily_units = avg_kw * hours;
   const out = { avg_kw, hours, days, daily_units, monthly_units: daily_units * days };
-  if (i.tariff !== undefined && i.tariff !== '') out.monthly_rs = out.monthly_units * nonneg(i, 'tariff');
+  if (has(i, 'tariff')) out.monthly_rs = out.monthly_units * nonneg(i, 'tariff');
   return out;
 });
 
@@ -21,7 +21,7 @@ export const heating_cost = calculator((i, d) => {
   const cop = pos(i, 'cop', dflt(d, 'heat_pump_cop'));
   const tariff = nonneg(i, 'tariff');
   const out = { q_kw, cop, tariff, ac_rs_per_h: (q_kw / cop) * tariff, heater_rs_per_h: q_kw * tariff };
-  if (i.gas_price !== undefined && i.gas_price !== '') {
+  if (has(i, 'gas_price')) {
     const gas_price = nonneg(i, 'gas_price');
     const eta_gas = frac(i, 'eta_gas', dflt(d, 'gas_heater_eff'));
     const cv = pos(i, 'cv_mj_m3', dflt(d, 'gas_cv_mj_m3'));
@@ -36,9 +36,10 @@ export const heating_cost = calculator((i, d) => {
  * Lowering the set point returns extra_pct / extra_units instead of a negative saving.
  */
 export const ac_temp = calculator((i, d) => {
-  const t_old = num(i, 't_old', { min: 16, max: 30 });
-  const t_new = num(i, 't_new', { min: 16, max: 30 });
-  const per_degree = num(i, 'per_degree', { def: dflt(d, 'ac_saving_per_degree'), min: 0, max: 0.2 });
+  const [tmin, tmax] = dflt(d, 'ac_setpoint_range_c');
+  const t_old = num(i, 't_old', { min: tmin, max: tmax });
+  const t_new = num(i, 't_new', { min: tmin, max: tmax });
+  const per_degree = num(i, 'per_degree', { def: dflt(d, 'ac_saving_per_degree'), min: 0, max: dflt(d, 'ac_saving_per_degree_max') });
   const monthly_units = nonneg(i, 'monthly_units');
   const pct = Math.min(1, per_degree * Math.abs(t_new - t_old));
   if (t_new >= t_old) return { t_old, t_new, per_degree, monthly_units, saving_pct: pct, units_saved: monthly_units * pct };
@@ -70,7 +71,7 @@ export const tco = calculator((i) => {
   const maintenance_per_year = nonneg(i, 'maintenance_per_year', 0);
   let replacements = 0;
   let replacement_cost = 0;
-  if (i.life_years !== undefined && i.life_years !== '') {
+  if (has(i, 'life_years')) {
     const life_years = pos(i, 'life_years');
     replacement_cost = nonneg(i, 'replacement_cost');
     replacements = Math.max(0, Math.floor((years - 1e-9) / life_years));

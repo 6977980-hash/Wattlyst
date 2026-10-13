@@ -20,6 +20,10 @@ const EXACT = {
   protected_max_200_units: 'Protected tariff applies only up to 200 units a month. Above that the unprotected rate applies.',
   lifeline_max_100_units: 'Lifeline tariff applies only up to 100 units a month.',
   history_needs_6_months: 'Enter units for each of the last 6 months.',
+  period_unknown: 'We do not have the QTA rate for that quarter. Enter the QTA from your bill.',
+  surge_w_required: 'Enter the starting (surge) watts of your load, or leave both surge fields blank.',
+  surge_rating_w_required: 'Enter the UPS surge rating from its label, or leave both surge fields blank.',
+  internal_non_finite: 'These numbers are outside a realistic range. Please check your inputs.',
 };
 
 const PATTERNS = [

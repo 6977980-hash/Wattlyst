@@ -10,6 +10,15 @@ export class CalcError extends Error {
 
 const isNum = (v) => typeof v === 'number' && Number.isFinite(v);
 
+/** Sanity cap on any single input (1e12 = 1 TW / 1 TWh); beyond this no home or shop calculation is meaningful. */
+const MAX_INPUT = 1e12;
+
+/** Checkbox/toggle from a form: true, 'true', 'on', 'yes', '1', 1 → true. */
+export const bool = (v) => v === true || v === 1 || (typeof v === 'string' && ['true', 'on', 'yes', '1'].includes(v.trim().toLowerCase()));
+
+/** True when an optional input was actually filled in. */
+export const has = (inputs, key) => inputs?.[key] !== undefined && inputs?.[key] !== null && inputs?.[key] !== '';
+
 /**
  * Read a numeric input. Strings like "12.5" are accepted (form fields); blanks fall back to def.
  * opts: { def, min, max, gt, code }  gt = strictly greater than.
@@ -17,12 +26,16 @@ const isNum = (v) => typeof v === 'number' && Number.isFinite(v);
 export function num(inputs, key, opts = {}) {
   let v = inputs?.[key];
   if (v === undefined || v === null || v === '') v = opts.def;
-  if (typeof v === 'string') v = Number(v.trim());
+  if (typeof v === 'string') {
+    const t = v.trim();
+    v = /^[+-]?(\d+\.?\d*|\.\d+)$/.test(t) ? Number(t) : NaN;
+  }
   if (v === undefined || v === null) throw new CalcError(opts.code || `${key}_required`, key);
   if (!isNum(v)) throw new CalcError(opts.code || `${key}_invalid`, key);
   if (opts.gt !== undefined && !(v > opts.gt)) throw new CalcError(opts.code || `${key}_must_be_positive`, key);
   if (opts.min !== undefined && v < opts.min) throw new CalcError(opts.code || `${key}_too_small`, key);
   if (opts.max !== undefined && v > opts.max) throw new CalcError(opts.code || `${key}_too_large`, key);
+  if (Math.abs(v) > MAX_INPUT) throw new CalcError(opts.code || `${key}_too_large`, key);
   return v;
 }
 

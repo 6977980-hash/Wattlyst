@@ -1,5 +1,5 @@
 // F. Pakistan A-1 domestic bill (specs/formulas.md section F). All rates come from data/tariff-pk-2026.json.
-import { calculator, CalcError, num, pos, nonneg, dflt } from './core.js';
+import { calculator, CalcError, bool, has, num, pos, nonneg, dflt } from './core.js';
 
 function tariffOf(d) {
   const t = d?.tariff;
@@ -42,43 +42,54 @@ export function energyCharge(t, units, category, sanctioned_kw) {
   return { band_index: idx, band_upto: band.upto ?? 0, band_open_ended: band.upto === null, rate: band.rate, energy_rs, fixed_rs: band.fixed_per_kw * sanctioned_kw };
 }
 
+/** Sanctioned kW for the flat (non-ToU) A-1 tariff: ≥ tou_threshold_kw must use the ToU calculation. */
+function flatSanctioned(i, d) {
+  const kw = pos(i, 'sanctioned_kw', dflt(d, 'default_sanctioned_kw'));
+  if (kw >= dflt(d, 'tou_threshold_kw')) throw new CalcError('tou_required_at_5kw', 'sanctioned_kw');
+  return kw;
+}
+
 function categoryOf(i) {
-  if (i.lifeline === true) return 'lifeline';
-  return i.protected === true ? 'protected' : 'unprotected';
+  if (bool(i.lifeline)) return 'lifeline';
+  return bool(i.protected) ? 'protected' : 'unprotected';
 }
 
 export const bill_energy = calculator((i, d) => {
   const t = tariffOf(d);
   const units = nonneg(i, 'units');
-  const sanctioned_kw = pos(i, 'sanctioned_kw', 1);
-  if (sanctioned_kw >= dflt(d, 'tou_threshold_kw')) throw new CalcError('tou_required_at_5kw', 'sanctioned_kw');
+  const sanctioned_kw = flatSanctioned(i, d);
   const category = categoryOf(i);
   return { units, sanctioned_kw, category, ...energyCharge(t, units, category, sanctioned_kw) };
 });
 
-/** ToU (≥ 5 kW): peak × peak rate + off-peak × off-peak rate; fixed = Rs/kW × max(50% sanctioned, MDI). */
+/** ToU (≥ 5 kW): peak × peak rate + off-peak × off-peak rate; fixed = Rs/kW × max(fixed_min_fraction × sanctioned, MDI). */
 export const bill_tou = calculator((i, d) => {
   const t = tariffOf(d).tou;
   const peak_units = nonneg(i, 'peak_units');
   const offpeak_units = nonneg(i, 'offpeak_units');
   const sanctioned_kw = pos(i, 'sanctioned_kw');
   const mdi_kw = nonneg(i, 'mdi_kw', 0);
-  const billable_kw = Math.max(0.5 * sanctioned_kw, mdi_kw);
+  if (!(t.fixed_min_fraction > 0)) throw new CalcError('tariff_data_missing', 'tariff');
+  const billable_kw = Math.max(t.fixed_min_fraction * sanctioned_kw, mdi_kw);
   const energy_rs = peak_units * t.peak + offpeak_units * t.offpeak;
   return { peak_units, offpeak_units, units: peak_units + offpeak_units, sanctioned_kw, mdi_kw, billable_kw, energy_rs, fixed_rs: t.fixed_per_kw * billable_kw };
 });
 
 /**
  * Full estimate: energy + fixed + FC surcharge + QTA + FPA, then GST on that subtotal.
- * Add-on rates are inputs (UI pre-fills from data/tariff-pk-2026.json addons_secondary, each shown with source/date).
+ * Add-on rates are inputs; a blank field uses data/tariff-pk-2026.json addons_secondary (FC surcharge, GST,
+ * QTA for the given `period` like "2026-09..2026-11", FPA value when notified, else 0). Each line is shown with source/date.
  * QTA is not applied to lifeline. QTA/FPA may be negative (a credit).
  */
 export const bill_total = calculator((i, d) => {
   const base = bill_energy.raw(i, d);
-  const fc = nonneg(i, 'fc_surcharge_per_unit', 0);
-  const qta = num(i, 'qta_per_unit', { def: 0 });
-  const fpa = num(i, 'fpa_per_unit', { def: 0 });
-  const gst_pct = num(i, 'gst_pct', { def: 0, min: 0, max: 100 });
+  const a = tariffOf(d).addons_secondary || {};
+  const fc = nonneg(i, 'fc_surcharge_per_unit', a.fc_surcharge_per_unit?.value ?? 0);
+  const qtaDefault = has(i, 'period') ? a.qta_per_unit?.[i.period] : undefined;
+  if (has(i, 'period') && qtaDefault === undefined) throw new CalcError('period_unknown', 'period');
+  const qta = num(i, 'qta_per_unit', { def: qtaDefault ?? 0 });
+  const fpa = num(i, 'fpa_per_unit', { def: a.fpa_per_unit?.value ?? 0 });
+  const gst_pct = num(i, 'gst_pct', { def: a.gst_pct?.value ?? 0, min: 0, max: 100 });
   const fc_rs = fc * base.units;
   const qta_rs = base.category === 'lifeline' ? 0 : qta * base.units;
   const fpa_rs = fpa * base.units;
@@ -93,9 +104,9 @@ export const protected_check = calculator((i, d) => {
   const months = dflt(d, 'protected_months');
   const limit = dflt(d, 'protected_max_units');
   if (!Array.isArray(h) || h.length !== months) throw new CalcError(`history_needs_${months}_months`, 'history');
-  h.forEach((u, idx) => num({ u }, 'u', { min: 0, code: `history_${idx}_invalid` }));
-  const sanctioned_kw = pos(i, 'sanctioned_kw', 1);
-  const tou = i.tou === true || sanctioned_kw >= dflt(d, 'tou_threshold_kw');
+  h.forEach((u, idx) => num({ history: u }, 'history', { min: 0, code: `history_${idx}_invalid` }));
+  const sanctioned_kw = pos(i, 'sanctioned_kw', dflt(d, 'default_sanctioned_kw'));
+  const tou = bool(i.tou) || sanctioned_kw >= dflt(d, 'tou_threshold_kw');
   const max_month = Math.max(...h);
   const reasons = [];
   if (max_month > limit) reasons.push('month_over_200');
@@ -113,7 +124,7 @@ export const net_billing = calculator((i, d) => {
   const import_units = nonneg(i, 'import_units');
   const export_units = nonneg(i, 'export_units');
   const buyback_rs = nonneg(i, 'buyback_rs', t.net_billing?.buyback_rs_per_unit_default);
-  const sanctioned_kw = pos(i, 'sanctioned_kw', 1);
+  const sanctioned_kw = flatSanctioned(i, d);
   const imp = energyCharge(t, import_units, categoryOf(i), sanctioned_kw);
   const export_credit_rs = export_units * buyback_rs;
   const diff = imp.energy_rs - export_credit_rs;
@@ -137,12 +148,13 @@ export const bill_audit = calculator((i, d) => {
   const units_30 = (units * cycle) / days;
   const bands = t.unprotected;
   const limit = dflt(d, 'protected_max_units');
-  const slab_jump = bandIndex(bands, units) !== bandIndex(bands, units_30);
+  // Only a cycle longer than 30 days can push units into a higher band; a short cycle never overcharges.
+  const slab_jump = bandIndex(bands, units_30) < bandIndex(bands, units);
   const out = {
     units, days, units_30, long_cycle: days > dflt(d, 'max_normal_cycle_days'), slab_jump,
     protection_at_risk: units > limit && units_30 <= limit,
   };
-  if (i.sanctioned_kw !== undefined) {
+  if (has(i, 'sanctioned_kw')) {
     const kw = pos(i, 'sanctioned_kw');
     const actual = energyCharge(t, units, 'unprotected', kw);
     // Fair estimate = all billed units at the rate (and fixed charge) of the band the 30-day equivalent reaches.
@@ -152,7 +164,7 @@ export const bill_audit = calculator((i, d) => {
     out.fair_rs = fair_rs;
     out.extra_rs = Math.max(0, out.billed_rs - fair_rs);
   }
-  if (i.prev_year_units !== undefined) {
+  if (has(i, 'prev_year_units')) {
     const prev = nonneg(i, 'prev_year_units');
     out.spike = prev > 0 && units > prev * (1 + dflt(d, 'spike_threshold'));
   }

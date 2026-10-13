@@ -512,13 +512,14 @@
       "volts": 12,
       "dod": 0.5,
       "psh": 5,
-      "charge_eff": 0.85
+      "charge_eff": 0.85,
+      "pr": 0.78
     },
     "expected": {
-      "panel_w": 141.1765
+      "panel_w": 180.9955
     },
     "tolerance": 0.1,
-    "note": "round up to the next standard panel (150W)"
+    "note": "divide by PSH x PR (0.78): panels rarely give STC output; round up to 200W (reviewer fix 13 Oct)"
   },
   {
     "calc": "charge_controller",
@@ -1037,7 +1038,8 @@
       "protected": true,
       "sanctioned_kw": 1,
       "qta_per_unit": -1.9857,
-      "gst_pct": 0
+      "gst_pct": 0,
+      "fc_surcharge_per_unit": 0
     },
     "expected": {
       "qta_rs": -297.855,
@@ -1139,11 +1141,11 @@
     },
     "expected": {
       "ib_a": 10.8696,
-      "min_cable_a": 13.587,
+      "min_cable_a": 16,
       "min_breaker_a": 16
     },
     "tolerance": 0.01,
-    "note": ""
+    "note": "cable must be at least the breaker rating: I_b <= I_n <= I_z (reviewer fix 13 Oct)"
   },
   {
     "calc": "watts_to_amps",
@@ -1593,7 +1595,7 @@
   },
   {
     "calc": "panel_for_12v",
-    "name": "rounds up to 150W standard panel",
+    "name": "rounds up to 200W standard panel",
     "inputs": {
       "ah": 100,
       "volts": 12,
@@ -1602,7 +1604,7 @@
       "charge_eff": 0.85
     },
     "expected": {
-      "standard_panel_w": 150
+      "standard_panel_w": 200
     },
     "tolerance": 0,
     "note": "edge case"
@@ -1638,17 +1640,18 @@
   },
   {
     "calc": "sanctioned_load",
-    "name": "motor start decides when larger than demand",
+    "name": "motor start does not raise sanctioned load (shown as note)",
     "inputs": {
       "connected_kw": 2,
       "diversity": 0.6,
       "largest_start_kw": 2.25
     },
     "expected": {
-      "recommended_kw": 3
+      "recommended_kw": 2,
+      "start_exceeds_sanctioned": true
     },
     "tolerance": 0,
-    "note": "edge case"
+    "note": "surge lasts seconds and is not seen by MDI [ENGINEER] (reviewer fix 13 Oct)"
   },
   {
     "calc": "bill_energy",
@@ -2132,5 +2135,286 @@
     },
     "tolerance": 0.0001,
     "note": ""
+  },
+  {
+    "calc": "design_current",
+    "name": "cable margin below 1 rejected",
+    "inputs": {
+      "watts": 2000,
+      "volts": 230,
+      "pf": 0.8,
+      "margin": 0.5
+    },
+    "expected": {
+      "error": "margin_too_small"
+    },
+    "tolerance": 0,
+    "note": "reviewer fix 13 Oct"
+  },
+  {
+    "calc": "design_current",
+    "name": "above largest standard breaker is flagged",
+    "inputs": {
+      "watts": 20000,
+      "volts": 230,
+      "pf": 1
+    },
+    "expected": {
+      "above_standard_sizes": true
+    },
+    "tolerance": 0,
+    "note": "reviewer fix 13 Oct"
+  },
+  {
+    "calc": "net_billing",
+    "name": "10 kW connection must use ToU",
+    "inputs": {
+      "import_units": 400,
+      "export_units": 300,
+      "buyback_rs": 11,
+      "sanctioned_kw": 10
+    },
+    "expected": {
+      "error": "tou_required_at_5kw"
+    },
+    "tolerance": 0,
+    "note": "reviewer fix 13 Oct"
+  },
+  {
+    "calc": "bill_total",
+    "name": "blank add-ons use tariff file (FC 3.23, GST 18)",
+    "inputs": {
+      "units": 250,
+      "protected": false,
+      "sanctioned_kw": 2,
+      "fc_surcharge_per_unit": "",
+      "gst_pct": ""
+    },
+    "expected": {
+      "fc_rs": 807.5,
+      "gst_pct": 18,
+      "total_rs": 11543.35
+    },
+    "tolerance": 0.01,
+    "note": "reviewer fix 13 Oct"
+  },
+  {
+    "calc": "bill_total",
+    "name": "QTA from quarter in tariff file",
+    "inputs": {
+      "units": 250,
+      "protected": false,
+      "sanctioned_kw": 2,
+      "period": "2026-09..2026-11",
+      "gst_pct": 0,
+      "fc_surcharge_per_unit": 0
+    },
+    "expected": {
+      "qta_rs": 129.85
+    },
+    "tolerance": 0.01,
+    "note": "reviewer fix 13 Oct"
+  },
+  {
+    "calc": "bill_total",
+    "name": "unknown quarter rejected",
+    "inputs": {
+      "units": 250,
+      "sanctioned_kw": 2,
+      "period": "2030-01..2030-03"
+    },
+    "expected": {
+      "error": "period_unknown"
+    },
+    "tolerance": 0,
+    "note": "reviewer fix 13 Oct"
+  },
+  {
+    "calc": "bill_energy",
+    "name": "form value \"true\" for protected is honoured",
+    "inputs": {
+      "units": 150,
+      "protected": "true",
+      "sanctioned_kw": 1
+    },
+    "expected": {
+      "energy_rs": 1704.5
+    },
+    "tolerance": 0.01,
+    "note": "reviewer fix 13 Oct"
+  },
+  {
+    "calc": "bill_energy",
+    "name": "hex text input rejected",
+    "inputs": {
+      "units": "0x10",
+      "sanctioned_kw": 1
+    },
+    "expected": {
+      "error": "units_invalid"
+    },
+    "tolerance": 0,
+    "note": "reviewer fix 13 Oct"
+  },
+  {
+    "calc": "bill_audit",
+    "name": "short 25-day cycle never flags a slab jump",
+    "inputs": {
+      "units": 210,
+      "days": 25
+    },
+    "expected": {
+      "slab_jump": false
+    },
+    "tolerance": 0,
+    "note": "reviewer fix 13 Oct"
+  },
+  {
+    "calc": "bill_tou",
+    "name": "ToU fixed fraction comes from tariff file",
+    "inputs": {
+      "peak_units": 0,
+      "offpeak_units": 0,
+      "sanctioned_kw": 8,
+      "mdi_kw": 0
+    },
+    "expected": {
+      "billable_kw": 4.0,
+      "fixed_rs": 2700.0
+    },
+    "tolerance": 0.01,
+    "note": "reviewer fix 13 Oct"
+  },
+  {
+    "calc": "sanctioned_load",
+    "name": "empty appliance list rejected",
+    "inputs": {
+      "appliances_w": []
+    },
+    "expected": {
+      "error": "loads_required"
+    },
+    "tolerance": 0,
+    "note": "reviewer fix 13 Oct"
+  },
+  {
+    "calc": "sanctioned_load",
+    "name": "appliance list in watts",
+    "inputs": {
+      "appliances_w": [
+        1500,
+        1500,
+        150,
+        500
+      ],
+      "diversity": 0.6
+    },
+    "expected": {
+      "connected_kw": 3.65,
+      "demand_kw": 2.19,
+      "recommended_kw": 3
+    },
+    "tolerance": 0.001,
+    "note": "reviewer fix 13 Oct"
+  },
+  {
+    "calc": "ups_capacity",
+    "name": "surge given without UPS surge rating asks for it",
+    "inputs": {
+      "va": 1000,
+      "pf": 0.8,
+      "load_w": 500,
+      "surge_w": 3000
+    },
+    "expected": {
+      "error": "surge_rating_w_required"
+    },
+    "tolerance": 0,
+    "note": "reviewer fix 13 Oct"
+  },
+  {
+    "calc": "ups_capacity",
+    "name": "both surge fields blank: check skipped",
+    "inputs": {
+      "va": 1000,
+      "pf": 0.8,
+      "load_w": 500,
+      "surge_w": "",
+      "surge_rating_w": ""
+    },
+    "expected": {
+      "can_run": true
+    },
+    "tolerance": 0,
+    "note": "reviewer fix 13 Oct"
+  },
+  {
+    "calc": "units",
+    "name": "blank amps field falls back to watts mode",
+    "inputs": {
+      "amps": "",
+      "watts": 100,
+      "hours": 10
+    },
+    "expected": {
+      "input": "watts",
+      "units": 1.0
+    },
+    "tolerance": 0.001,
+    "note": "reviewer fix 13 Oct"
+  },
+  {
+    "calc": "solar_size",
+    "name": "city name with spaces and capitals",
+    "inputs": {
+      "monthly_units": 500,
+      "city": " Lahore "
+    },
+    "expected": {
+      "yield_kwh_per_kwp_day": 4.0
+    },
+    "tolerance": 0.001,
+    "note": "reviewer fix 13 Oct"
+  },
+  {
+    "calc": "charge_controller",
+    "name": "PWM fractional parallel strings rejected",
+    "inputs": {
+      "type": "pwm",
+      "isc": 9.5,
+      "n_parallel": 1.5
+    },
+    "expected": {
+      "error": "n_parallel_must_be_whole"
+    },
+    "tolerance": 0,
+    "note": "reviewer fix 13 Oct"
+  },
+  {
+    "calc": "charge_controller",
+    "name": "above largest standard controller is flagged",
+    "inputs": {
+      "panel_w": 10000,
+      "battery_v": 12
+    },
+    "expected": {
+      "above_standard_sizes": true
+    },
+    "tolerance": 0,
+    "note": "reviewer fix 13 Oct"
+  },
+  {
+    "calc": "watts_to_amps",
+    "name": "unrealistic input above 1e12 rejected",
+    "inputs": {
+      "mode": "ac1",
+      "watts": 1000000000000000.0,
+      "volts": 230
+    },
+    "expected": {
+      "error": "watts_too_large"
+    },
+    "tolerance": 0,
+    "note": "reviewer fix 13 Oct"
   }
 ]

@@ -1,13 +1,13 @@
 // D. Solar (specs/formulas.md section D) and solar tools from section G.
-import { calculator, CalcError, pos, frac, nonneg, ceilSafe, dflt, num } from './core.js';
+import { calculator, CalcError, has, pos, frac, nonneg, ceilSafe, dflt, num } from './core.js';
 
 /** Specific yield (kWh/kWp/day): explicit input > city from data/cities-pk.json > PSH × PR. */
 function yieldFor(i, d) {
-  if (i.yield_kwh_per_kwp_day !== undefined && i.yield_kwh_per_kwp_day !== '') {
+  if (has(i, 'yield_kwh_per_kwp_day')) {
     return { yield_kwh_per_kwp_day: pos(i, 'yield_kwh_per_kwp_day'), yield_source: 'input' };
   }
   if (i.city) {
-    const c = d?.cities?.[String(i.city).toLowerCase()];
+    const c = d?.cities?.[String(i.city).trim().toLowerCase()];
     if (!c || !(c.yield > 0)) throw new CalcError('city_unknown', 'city');
     return { yield_kwh_per_kwp_day: c.yield, yield_source: 'city' };
   }
@@ -19,7 +19,7 @@ function yieldFor(i, d) {
 /** E = monthly_units / 30 (or daily_kwh); kWp = E / yield; panels = ceil(kWp × 1000 / panel_W). */
 export const solar_size = calculator((i, d) => {
   let daily_kwh;
-  if (i.daily_kwh !== undefined && i.daily_kwh !== '') daily_kwh = pos(i, 'daily_kwh');
+  if (has(i, 'daily_kwh')) daily_kwh = pos(i, 'daily_kwh');
   else daily_kwh = pos(i, 'monthly_units', undefined, 'usage_required') / dflt(d, 'days_per_month');
   const y = yieldFor(i, d);
   const panel_w = pos(i, 'panel_w', dflt(d, 'panel_w'));
@@ -44,17 +44,18 @@ export const solar_battery = calculator((i, d) => {
   return { night_kwh, days, volts, dod, inverter_eff, ah, kwh: (ah * volts) / 1000 };
 });
 
-/** Panel for a battery: W = (Ah × V × DoD / η_chg) / PSH, then next standard panel size. */
+/** Panel for a battery: W = (Ah × V × DoD / η_chg) / (PSH × PR), then next standard panel size. PR covers heat, dust, wiring and PWM losses. */
 export const panel_for_12v = calculator((i, d) => {
   const ah = pos(i, 'ah');
   const volts = pos(i, 'volts');
   const dod = frac(i, 'dod', dflt(d, 'dod_lead_acid'));
   const psh = pos(i, 'psh');
   const charge_eff = frac(i, 'charge_eff', dflt(d, 'charge_eff_lead_acid'));
-  const panel_w = (ah * volts * dod) / charge_eff / psh;
+  const pr = frac(i, 'pr', dflt(d, 'pr'));
+  const panel_w = (ah * volts * dod) / charge_eff / (psh * pr);
   const sizes = dflt(d, 'standard_panel_w');
   const standard_panel_w = sizes.find((s) => s >= panel_w - 1e-9) ?? null;
-  const out = { ah, volts, dod, psh, charge_eff, panel_w };
+  const out = { ah, volts, dod, psh, pr, charge_eff, panel_w };
   if (standard_panel_w !== null) out.standard_panel_w = standard_panel_w;
   else out.panels_of_largest = ceilSafe(panel_w / sizes[sizes.length - 1]);
   return out;
@@ -68,11 +69,13 @@ export const charge_controller = calculator((i, d) => {
   if (type === 'mppt') {
     amps = (pos(i, 'panel_w') / pos(i, 'battery_v')) * margin;
   } else if (type === 'pwm') {
-    amps = pos(i, 'isc') * num(i, 'n_parallel', { def: 1, min: 1 }) * margin;
+    const n_parallel = num(i, 'n_parallel', { def: 1, min: 1 });
+    if (!Number.isInteger(n_parallel)) throw new CalcError('n_parallel_must_be_whole', 'n_parallel');
+    amps = pos(i, 'isc') * n_parallel * margin;
   } else throw new CalcError('type_invalid', 'type');
   const sizes = dflt(d, 'standard_controller_a');
   const standard_a = sizes.find((s) => s >= amps - 1e-9);
-  return standard_a === undefined ? { type, margin, amps } : { type, margin, amps, standard_a };
+  return standard_a === undefined ? { type, margin, amps, above_standard_sizes: true } : { type, margin, amps, standard_a, above_standard_sizes: false };
 });
 
 /** N3: Rs/W = price / (kWp × 1000). Verdict only against a dated range passed in (data/solar-prices.json). */
@@ -81,7 +84,7 @@ export const quote_checker = calculator((i) => {
   const price = pos(i, 'price');
   const rs_per_w = price / (kwp * 1000);
   const out = { kwp, price, rs_per_w };
-  if (i.range_low !== undefined && i.range_high !== undefined) {
+  if (has(i, 'range_low') || has(i, 'range_high')) {
     const lo = pos(i, 'range_low');
     const hi = pos(i, 'range_high');
     if (lo > hi) throw new CalcError('range_invalid', 'range_low');
@@ -104,7 +107,7 @@ export const cleaning_loss = calculator((i, d) => {
   const soiling = Math.min(rate * days, cap);
   const loss_kwh_day = kwp * y * soiling;
   const out = { kwp, yield: y, rate, days, tariff, soiling, soiling_capped: rate * days > cap, loss_kwh_day, rs_lost_day: loss_kwh_day * tariff };
-  if (i.cleaning_cost !== undefined && i.cleaning_cost !== '') {
+  if (has(i, 'cleaning_cost')) {
     const cleaning_cost = nonneg(i, 'cleaning_cost');
     let cum = 0;
     let clean_after_days = null;
