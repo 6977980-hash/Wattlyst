@@ -1,16 +1,18 @@
 {
  "_meta": {
-  "source": "IEC 60364-5-52:2009 Table B.52.4 (PVC insulated copper, two loaded conductors, 30 C ambient): columns B1 (insulated conductors in conduit on or in a masonry wall; NOT A1, conduit in a thermally insulated wall, which is rated lower) and C (clipped direct). The 1 mm2 row is not in Table B.52.4 (it starts at 1.5 mm2); its values are the same-basis BS 7671 Table 4D1A figures (methods B and C). Pakistani n/d sizes converted with formulas.md section W (A = n x pi x (d x 25.4 / 2)^2) and rated as the IEC size they are sold as when their real area is at least 90% of it, else the next smaller IEC size (conservative).",
-  "checked": "2026-10-13",
-  "status": "Engineer to confirm against the IEC table and Pakistan Cables / Fast Cables datasheets before launch. Ratings are for single-phase or three-phase circuits of one cable in free air or conduit at 30 C; grouping and hot roof spaces need derating by an electrician.",
+  "source": "IEC 60364-5-52:2009 Table B.52.4 (PVC insulated copper, two loaded conductors: single-phase and DC) and Table B.52.5 (three loaded conductors: three-phase), 30 C ambient: columns B1 (insulated conductors in conduit on or in a masonry wall; NOT A1, conduit in a thermally insulated wall, which is rated lower) and C (clipped direct). The 1 mm2 row is not in Tables B.52.4/B.52.5 (they start at 1.5 mm2); its values are the same-basis BS 7671 Table 4D1A figures (methods B and C, two and three loaded conductors). Correction factors: Table B.52.14 (ambient air other than 30 C, PVC) and Table B.52.17 row 1 (circuits bunched in air, on a surface, embedded or enclosed). Pakistani n/d sizes converted with formulas.md section W (A = n x pi x (d x 25.4 / 2)^2) and rated as the largest IEC size not above their real area (one rule for every wiring page, conservative).",
+  "checked": "2026-10-14",
+  "status": "Engineer to confirm against the IEC tables and Pakistan Cables / Fast Cables datasheets. Every rating is multiplied by the ambient factor (design air temperature, default derating.default_ambient_c, a conservative hot-climate value pending PEC review, editable on the page) and the grouping factor (circuits in one conduit, default 1).",
   "engineer_confirm": [
    "ampacity",
+   "ampacity_3ph_a",
    "pk_sizes.rated_as_mm2",
    "mcb_curves",
    "min_area_mm2",
-   "breaker_margin_load_types"
+   "breaker_margin_load_types",
+   "derating.default_ambient_c"
   ],
-  "fields": "cables: area_mm2 nominal conductor size; ampacity_a per installation method. pk_sizes: strands, strand diameter in inches, real area, rated_as_mm2 = the row of cables used for its ampacity. breaker_margin_load_types: load types whose MCB is chosen at I_b x margin (continuous motor-type loads), so a 1.5 ton AC gets a 16 A MCB on 2.5 mm2 rather than 10 A on 1 mm2."
+  "fields": "cables: area_mm2 nominal conductor size; ampacity_a per installation method with two loaded conductors (single-phase, DC); ampacity_3ph_a the same with three loaded conductors (three-phase). pk_sizes: strands, strand diameter in inches, real area, rated_as_mm2 = the largest row of cables whose area is not above the real area (used for its ampacity). derating: ambient_factors and grouping_factors as [value, factor] rows; a value between two rows takes the factor of the next row up (higher temperature, more circuits). breaker_margin_load_types: load types whose MCB is chosen at I_b x margin (continuous motor-type loads), so a 1.5 ton AC gets a 16 A MCB on 2.5 mm2 rather than 10 A on 1 mm2."
  },
  "methods": {
   "B1": "In conduit in a brick or plastered (masonry) wall, most Pakistani house wiring; a conduit buried in thermal insulation is method A1 and is rated lower",
@@ -22,6 +24,10 @@
    "ampacity_a": {
     "B1": 13.5,
     "C": 15.5
+   },
+   "ampacity_3ph_a": {
+    "B1": 12,
+    "C": 14
    }
   },
   {
@@ -29,6 +35,10 @@
    "ampacity_a": {
     "B1": 17.5,
     "C": 19.5
+   },
+   "ampacity_3ph_a": {
+    "B1": 15.5,
+    "C": 17.5
    }
   },
   {
@@ -36,6 +46,10 @@
    "ampacity_a": {
     "B1": 24,
     "C": 27
+   },
+   "ampacity_3ph_a": {
+    "B1": 21,
+    "C": 24
    }
   },
   {
@@ -43,6 +57,10 @@
    "ampacity_a": {
     "B1": 32,
     "C": 36
+   },
+   "ampacity_3ph_a": {
+    "B1": 28,
+    "C": 32
    }
   },
   {
@@ -50,6 +68,10 @@
    "ampacity_a": {
     "B1": 41,
     "C": 46
+   },
+   "ampacity_3ph_a": {
+    "B1": 36,
+    "C": 41
    }
   },
   {
@@ -57,6 +79,10 @@
    "ampacity_a": {
     "B1": 57,
     "C": 63
+   },
+   "ampacity_3ph_a": {
+    "B1": 50,
+    "C": 57
    }
   },
   {
@@ -64,6 +90,10 @@
    "ampacity_a": {
     "B1": 76,
     "C": 85
+   },
+   "ampacity_3ph_a": {
+    "B1": 68,
+    "C": 76
    }
   },
   {
@@ -71,6 +101,10 @@
    "ampacity_a": {
     "B1": 101,
     "C": 112
+   },
+   "ampacity_3ph_a": {
+    "B1": 89,
+    "C": 96
    }
   },
   {
@@ -78,6 +112,10 @@
    "ampacity_a": {
     "B1": 125,
     "C": 138
+   },
+   "ampacity_3ph_a": {
+    "B1": 110,
+    "C": 119
    }
   }
  ],
@@ -115,14 +153,14 @@
    "strands": 7,
    "strand_in": 0.052,
    "area_mm2": 9.59,
-   "rated_as_mm2": 10
+   "rated_as_mm2": 6
   },
   {
    "name": "7/64",
    "strands": 7,
    "strand_in": 0.064,
    "area_mm2": 14.53,
-   "rated_as_mm2": 16
+   "rated_as_mm2": 10
   },
   {
    "name": "19/44",
@@ -176,7 +214,7 @@
  },
  "min_area_mm2": {
   "_source": "IEC 60364-5-52 Table 52.2 minimum conductor sizes and common Pakistani practice (3/29 for lighting points, 7/29 for sockets and air conditioners); engineer to confirm",
-  "lighting": 1.0,
+  "lighting": 1,
   "other": 2.5
  },
  "breaker_margin_load_types": [
@@ -184,5 +222,107 @@
   "compressor",
   "inverter_compressor",
   "high_inrush"
- ]
+ ],
+ "derating": {
+  "_source": "IEC 60364-5-52:2009 Table B.52.14 (PVC, ambient air) and Table B.52.17 row 1 (bunched in air, on a surface, embedded or enclosed)",
+  "_status": "default_ambient_c is a conservative Pakistani summer design value pending PEC engineer review; ratings at 30 C are kept in the table above",
+  "default_ambient_c": 45,
+  "default_circuits": 1,
+  "ambient_factors": [
+   [
+    10,
+    1.22
+   ],
+   [
+    15,
+    1.17
+   ],
+   [
+    20,
+    1.12
+   ],
+   [
+    25,
+    1.06
+   ],
+   [
+    30,
+    1
+   ],
+   [
+    35,
+    0.94
+   ],
+   [
+    40,
+    0.87
+   ],
+   [
+    45,
+    0.79
+   ],
+   [
+    50,
+    0.71
+   ],
+   [
+    55,
+    0.61
+   ],
+   [
+    60,
+    0.5
+   ]
+  ],
+  "grouping_factors": [
+   [
+    1,
+    1
+   ],
+   [
+    2,
+    0.8
+   ],
+   [
+    3,
+    0.7
+   ],
+   [
+    4,
+    0.65
+   ],
+   [
+    5,
+    0.6
+   ],
+   [
+    6,
+    0.57
+   ],
+   [
+    7,
+    0.54
+   ],
+   [
+    8,
+    0.52
+   ],
+   [
+    9,
+    0.5
+   ],
+   [
+    12,
+    0.45
+   ],
+   [
+    16,
+    0.41
+   ],
+   [
+    20,
+    0.38
+   ]
+  ]
+ }
 }

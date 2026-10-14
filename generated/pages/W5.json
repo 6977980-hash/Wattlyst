@@ -49,7 +49,7 @@
     "h2": "Maximum voltage drop allowed",
     "p": [
      "This calculator uses 3% for lighting circuits and 5% for other circuits, the values given in an informative annex of IEC 60364-5-52 for installations supplied from the public low-voltage network. Solar DC strings are usually kept to 3% so the panels lose little output. Above the limit, motors run hot, lights dim and inverters may trip on low voltage.",
-     "The drop limit is not the only test. A thin cable on a short run can show a tiny drop while carrying far more current than it is rated for, and overheat. For copper the calculator also compares the current with the cable's rating in conduit and warns when it is exceeded."
+     "The drop limit is not the only test. A thin cable on a short run can show a tiny drop while carrying far more current than it is rated for, and overheat. For copper the calculator also compares the current with the cable's rating in conduit, corrected for the air temperature and the circuits sharing the conduit (Advanced settings), and warns when it is exceeded."
     ]
    },
    {
@@ -242,6 +242,22 @@
      "advanced": true,
      "hint": "Leave blank to use the conductor chosen above: copper 0.0225 or aluminium 0.036 Ω·mm²/m at working temperature. Enter a datasheet value to override it.",
      "placeholder": "From the conductor"
+    },
+    {
+     "name": "ambient_c",
+     "label": "Air temperature around the cable",
+     "unit": "°C",
+     "default": 45,
+     "hint": "Hottest air the cable sits in: a conduit under a sunny roof or in a hot wall gets far hotter than the room. The default is a Pakistani summer value; every cable rating is reduced for it.",
+     "advanced": true
+    },
+    {
+     "name": "circuits",
+     "label": "Circuits in the same conduit",
+     "unit": "circuits",
+     "default": 1,
+     "advanced": true,
+     "hint": "How many circuits share this conduit or bundle. Cables packed together heat each other, so each one carries less."
     }
    ],
    "fixed_inputs": {},
@@ -296,7 +312,7 @@
     {
      "label": "Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)",
      "url": "https://webstore.iec.ch/publication/1878",
-     "checked": "2026-10-13"
+     "checked": "2026-10-14"
     }
    ]
   },

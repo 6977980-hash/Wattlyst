@@ -62,13 +62,13 @@
    {
     "h2": "What load can a 32 A MCB take?",
     "p": [
-     "A socket circuit of 5,500 W at 230 V draws 29.9 A and takes a 32 A type C MCB; that is close to the most a 32 A breaker should carry continuously. The cable has to be rated 37.4 A, so it needs 6 mm² (7/44); 7/36 at 32 A would be rated exactly at the breaker with no margin. A 32 A MCB is a common choice for a kitchen, a geyser-plus-sockets circuit or a small sub-main."
+     "A socket circuit of 5,500 W at 230 V draws 29.9 A and takes a 32 A type C MCB; that is close to the most a 32 A breaker should carry continuously. The cable has to be rated 37.4 A, so in 45 °C air it needs 10 mm² (7/64), rated 45 A; any smaller cable loses too much of its rating in the heat. A 32 A MCB is a common choice for a kitchen, a geyser-plus-sockets circuit or a small sub-main."
     ]
    },
    {
     "h2": "What main breaker size for a house?",
     "p": [
-     "Add the running watts of everything that is on at the same time, not every appliance in the house: the home load calculator does this with a diversity factor. Enter the total as a mixed load; the main MCB is the next standard size above the current, and the service cable must be rated above the MCB. A home whose appliances come to 5,500 W at once draws 29.9 A and gets a 32 A main MCB on at least 6 mm² cable.",
+     "Add the running watts of everything that is on at the same time, not every appliance in the house: the home load calculator does this with a diversity factor. Enter the total as a mixed load; the main MCB is the next standard size above the current, and the service cable must be rated above the MCB. A home whose appliances come to 5,500 W at once draws 29.9 A and gets a 32 A main MCB on at least 10 mm² cable.",
      "The main breaker should also match the sanctioned load on your bill. If the current comes out above the largest listed MCB (63 A), the home needs a three-phase connection or a moulded-case breaker; ask an electrician and the DISCO rather than fitting a bigger single-phase breaker."
     ]
    }
@@ -210,9 +210,9 @@
      "name": "pf",
      "label": "Power factor",
      "unit": "0 to 1",
-     "default": 0.8,
      "advanced": true,
-     "hint": "Mixed loads about 0.8; heaters and lights 1.0; inverter ACs about 0.9."
+     "hint": "Leave blank to use the load type: 0.9 for an inverter AC, 0.8 for a non-inverter compressor, 0.8 for mixed loads and motors. Heaters are 1.0; enter it for them.",
+     "placeholder": "From the load type"
     },
     {
      "name": "margin",
@@ -221,6 +221,21 @@
      "default": 1.25,
      "advanced": true,
      "hint": "Applied to the breaker for motor-type loads and to the cable for every load."
+    },
+    {
+     "name": "ambient_c",
+     "label": "Air temperature around the cable",
+     "unit": "°C",
+     "default": 45,
+     "hint": "Hottest air the cable sits in: a conduit under a sunny roof or in a hot wall gets far hotter than the room. The default is a Pakistani summer value; every cable rating is reduced for it."
+    },
+    {
+     "name": "circuits",
+     "label": "Circuits in the same conduit",
+     "unit": "circuits",
+     "default": 1,
+     "advanced": true,
+     "hint": "How many circuits share this conduit or bundle. Cables packed together heat each other, so each one carries less."
     },
     {
      "name": "method",
@@ -272,11 +287,19 @@
      "unit": "A",
      "label_ur": "Design current",
      "value": "10.9"
+    },
+    {
+     "key": "ambient_c",
+     "label": "Rated for air at",
+     "spec": "int",
+     "unit": "°C",
+     "label_ur": "Hawa ke is darja hararat ke liye rating",
+     "value": "45"
     }
    ],
    "how": {
-    "tpl": "Design current = {{out.watts|int}} W ÷ ({{out.k|2}} × {{out.volts|int}} V × {{out.pf|2}} power factor) = {{out.ib_a|1}} A (the first factor is one for single phase, root three for three phase). Breaker design current = {{out.breaker_design_a|1}} A (× {{out.margin|2}} only for motors, compressors, ACs and welders). Next standard MCB = {{out.breaker_a|int}} A, type {{out.curve|raw}}, which trips instantly between {{out.trip_min_a|int}} A and {{out.trip_max_a|int}} A. The cable must be rated at least {{out.min_cable_a|1}} A and be at least {{out.min_mm2|1}} mm²: {{out.area_mm2|1}} mm² ({{out.pk_size|raw}}), rated {{out.ampacity_a|int}} A for this installation.",
-    "text": "Design current = 2,000 W ÷ (1 × 230 V × 0.8 power factor) = 10.9 A (the first factor is one for single phase, root three for three phase). Breaker design current = 10.9 A (× 1.25 only for motors, compressors, ACs and welders). Next standard MCB = 16 A, type C, which trips instantly between 80 A and 160 A. The cable must be rated at least 16 A and be at least 2.5 mm²: 2.5 mm² (7/29), rated 24 A for this installation."
+    "tpl": "Design current = {{out.watts|int}} W ÷ ({{out.k|2}} × {{out.volts|int}} V × {{out.pf|2}} power factor) = {{out.ib_a|1}} A (the first factor is one for single phase, root three for three phase). Breaker design current = {{out.breaker_design_a|1}} A (× {{out.margin|2}} only for motors, compressors, ACs and welders). Next standard MCB = {{out.breaker_a|int}} A, type {{out.curve|raw}}, which trips instantly between {{out.trip_min_a|int}} A and {{out.trip_max_a|int}} A. The cable must be rated at least {{out.min_cable_a|1}} A and be at least {{out.min_mm2|1}} mm²: {{out.area_mm2|1}} mm² ({{out.pk_size|raw}}), rated {{out.ampacity_a|int}} A for this installation ({{out.ampacity_30c_a|int}} A in the IEC table × {{out.derate|2}} for {{out.ambient_c|int}} °C air and {{out.circuits|int}} circuit in the conduit).",
+    "text": "Design current = 2,000 W ÷ (1 × 230 V × 0.8 power factor) = 10.9 A (the first factor is one for single phase, root three for three phase). Breaker design current = 10.9 A (× 1.25 only for motors, compressors, ACs and welders). Next standard MCB = 16 A, type C, which trips instantly between 80 A and 160 A. The cable must be rated at least 16 A and be at least 2.5 mm²: 2.5 mm² (7/29), rated 19 A for this installation (24 A in the IEC table × 0.79 for 45 °C air and 1 circuit in the conduit)."
    },
    "submit": "Calculate",
    "notice": "",
@@ -284,7 +307,7 @@
     {
      "label": "Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)",
      "url": "https://webstore.iec.ch/publication/1878",
-     "checked": "2026-10-13"
+     "checked": "2026-10-14"
     }
    ]
   },
@@ -307,11 +330,11 @@
    },
    {
     "title": "Kitchen socket circuit of 5,500 W",
-    "text": "5,500 W ÷ (230 V × 0.8) = 29.9 A, so a 32 A type C MCB. The cable must be rated 37.4 A, which takes 6 mm² (7/44) at 41 A."
+    "text": "5,500 W ÷ (230 V × 0.8) = 29.9 A, so a 32 A type C MCB. The cable must be rated 37.4 A, which takes 10 mm² (7/64) at 45 A."
    }
   ],
   "table": {
-   "caption": "MCB rating, curve and minimum cable for single-phase socket circuits at 230 V, power factor 0.8, cable in conduit",
+   "caption": "MCB rating, curve and minimum cable for single-phase socket circuits at 230 V, power factor 0.8, cable in conduit in 45 °C air",
    "head": [
     "Load",
     "Design current",
@@ -346,35 +369,35 @@
      "16.3 A",
      "20 A",
      "C",
-     "2.5 mm² (7/29)"
+     "4 mm² (7/36)"
     ],
     [
      "4,000 W",
      "21.7 A",
      "25 A",
      "C",
-     "4 mm² (7/36)"
+     "6 mm² (7/44)"
     ],
     [
      "5,000 W",
      "27.2 A",
      "32 A",
      "C",
-     "6 mm² (7/44)"
+     "10 mm² (7/64)"
     ],
     [
      "6,000 W",
      "32.6 A",
      "40 A",
      "C",
-     "6 mm² (7/44)"
+     "10 mm² (7/64)"
     ],
     [
      "7,000 W",
      "38 A",
      "40 A",
      "C",
-     "10 mm² (7/52)"
+     "16 mm² (19/44)"
     ]
    ]
   },
@@ -384,11 +407,11 @@
    "lines": [
     "I_b = design current; k = 1 single phase, √3 three phase",
     "I_n = MCB rating from the standard series; curve B, C or D by load type",
-    "I_z = cable current rating for the installation method, never below I_n",
+    "I_z = cable current rating for the installation method × the correction factors for air temperature and grouping, never below I_n",
     "Instant trip range = curve multiple × I_n (B 3-5, C 5-10, D 10-20)"
    ]
   },
-  "safety": "These ratings are planning values; a licensed electrician must confirm the MCB, the curve and the cable on site, check the earth and fit an RCD or RCCB for sockets and wet areas."
+  "safety": "These ratings are planning values for cable in 45 °C air with 1 circuit in the conduit (the air temperature default awaits review by a PEC-registered engineer); a licensed electrician must confirm the MCB, the curve and the cable on site, check the earth and fit an RCD or RCCB for sockets and wet areas."
  },
  "schema": {
   "@context": "https://schema.org",

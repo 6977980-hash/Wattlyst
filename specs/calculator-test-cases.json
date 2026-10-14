@@ -1265,21 +1265,22 @@
     "note": ""
   },
   {
-    "calc": "design_current",
+    "calc": "breaker_size",
     "name": "2 kW at 230V PF0.8",
     "inputs": {
       "watts": 2000,
       "volts": 230,
       "pf": 0.8,
-      "margin": 1.25
+      "margin": 1.25,
+      "load_type": "sockets"
     },
     "expected": {
       "ib_a": 10.8696,
       "min_cable_a": 16,
-      "min_breaker_a": 16
+      "breaker_a": 16
     },
     "tolerance": 0.01,
-    "note": "cable must be at least the breaker rating: I_b <= I_n <= I_z (reviewer fix 13 Oct)"
+    "note": "cable must be at least the breaker rating: I_b <= I_n <= I_z (reviewer fix 13 Oct); moved from the unused design_current calculator to breaker_size (audit 2026-10-14)"
   },
   {
     "calc": "watts_to_amps",
@@ -2328,33 +2329,35 @@
     "note": ""
   },
   {
-    "calc": "design_current",
+    "calc": "breaker_size",
     "name": "cable margin below 1 rejected",
     "inputs": {
       "watts": 2000,
       "volts": 230,
       "pf": 0.8,
-      "margin": 0.5
+      "margin": 0.5,
+      "load_type": "sockets"
     },
     "expected": {
       "error": "margin_too_small"
     },
     "tolerance": 0,
-    "note": "reviewer fix 13 Oct"
+    "note": "reviewer fix 13 Oct; moved from the unused design_current calculator to breaker_size (audit 2026-10-14)"
   },
   {
-    "calc": "design_current",
-    "name": "above largest standard breaker is flagged",
+    "calc": "breaker_size",
+    "name": "above largest standard breaker is an error",
     "inputs": {
       "watts": 20000,
       "volts": 230,
-      "pf": 1
+      "pf": 1,
+      "load_type": "sockets"
     },
     "expected": {
-      "above_standard_sizes": true
+      "error": "load_above_standard_breakers"
     },
     "tolerance": 0,
-    "note": "reviewer fix 13 Oct"
+    "note": "reviewer fix 13 Oct; moved from the unused design_current calculator to breaker_size (audit 2026-10-14)"
   },
   {
     "calc": "net_billing",
@@ -3138,14 +3141,15 @@
       "within_sanctioned": false,
       "load_pct": 147.5,
       "headroom_kw": 0,
-      "ac_ib_a": 10.3261,
+      "ac_ib_a": 9.1787,
       "ac_breaker_a": 16,
       "ac_cable_a": 16,
       "ac_cable_mm2": 2.5,
-      "ac_curve": "C"
+      "ac_curve": "C",
+      "ac_pf": 0.9
     },
     "tolerance": 0.01,
-    "note": "AC circuit sized like the wiring pages: inverter AC at max input 1900 W, motor margin -> 16 A type C on 2.5 mm2"
+    "note": "AC circuit sized like the wiring pages: inverter AC at max input 1900 W, motor margin -> 16 A type C on 2.5 mm2; audit 2026-10-14 (WL-10): the AC circuit uses the AC's own PF (inverter 0.9), as W1 does: 1900 / (230 x 0.9)"
   },
   {
     "calc": "add_ac_check",
@@ -3229,7 +3233,8 @@
     "inputs": {
       "appliance": "ac-split-1-5ton-inverter",
       "length_m": 15,
-      "pf": 0.9
+      "pf": 0.9,
+      "ambient_c": 30
     },
     "expected": {
       "watts": 1900,
@@ -3250,7 +3255,8 @@
     "name": "5 kW over 100 m: voltage drop decides",
     "inputs": {
       "watts": 5000,
-      "length_m": 100
+      "length_m": 100,
+      "ambient_c": 30
     },
     "expected": {
       "ib_a": 27.1739,
@@ -3259,10 +3265,10 @@
       "area_mm2": 16,
       "drop_pct": 3.3229,
       "limited_by": "voltage_drop",
-      "pk_size": "7/64"
+      "pk_size": "19/44"
     },
     "tolerance": 0.01,
-    "note": "6 mm2 (41 A) carries it but drops 8.9%; 16 mm2 keeps it under 5%"
+    "note": "6 mm2 (41 A) carries it but drops 8.9%; 16 mm2 keeps it under 5%; Audit 2026-10-14 (WL-09): a PK size is used only when its real area is at least the IEC size. 7/64 is 14.53 mm2, below 16."
   },
   {
     "calc": "wire_size",
@@ -3271,7 +3277,8 @@
       "watts": 2000,
       "length_m": 10,
       "load_type": "lighting",
-      "circuit": "lighting"
+      "circuit": "lighting",
+      "ambient_c": 30
     },
     "expected": {
       "breaker_a": 16,
@@ -3290,7 +3297,8 @@
       "mode": "dc",
       "volts": 24,
       "watts": 1000,
-      "length_m": 5
+      "length_m": 5,
+      "ambient_c": 30
     },
     "expected": {
       "ib_a": 41.6667,
@@ -3298,10 +3306,10 @@
       "min_cable_a": 52.0833,
       "area_mm2": 10,
       "drop_pct": 3.9063,
-      "pk_size": "7/52"
+      "pk_size": "7/64"
     },
     "tolerance": 0.01,
-    "note": "PF forced to 1 for DC"
+    "note": "PF forced to 1 for DC; Audit 2026-10-14 (WL-09): a PK size is used only when its real area is at least the IEC size. 7/52 is 9.59 mm2, below 10."
   },
   {
     "calc": "wire_size",
@@ -3391,7 +3399,8 @@
       "watts": 10000,
       "volts": 400,
       "pf": 0.85,
-      "load_type": "motor"
+      "load_type": "motor",
+      "ambient_c": 30
     },
     "expected": {
       "ib_a": 16.9809,
@@ -3983,7 +3992,8 @@
       "ac": "ac-split-1-5ton-non-inverter",
       "sanctioned_kw": 3,
       "volts": 120,
-      "pf": 1
+      "pf": 1,
+      "ambient_c": 30
     },
     "expected": {
       "new_total_w": 2300,
@@ -3992,14 +4002,15 @@
       "peak_amps": 49.1667,
       "within_sanctioned": true,
       "ac_design_w": 1800,
-      "ac_ib_a": 15,
-      "ac_breaker_a": 20,
-      "ac_cable_a": 20,
-      "ac_cable_mm2": 2.5,
-      "ac_curve": "C"
+      "ac_ib_a": 18.75,
+      "ac_breaker_a": 25,
+      "ac_cable_a": 25,
+      "ac_cable_mm2": 4,
+      "ac_curve": "C",
+      "ac_pf": 0.8
     },
     "tolerance": 0.01,
-    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): unit switch; compressor at running 1800 W: 15 A x 1.25 = 18.75 -> 20 A on 2.5 mm2 (24 A)"
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): unit switch. Audit 2026-10-14 (WL-10): the PF field is the home's; the AC circuit uses the non-inverter AC's own PF 0.8: 1800 / (120 x 0.8) = 18.75 A x 1.25 = 23.4 -> 25 A; 2.5 mm2 (24 A) is below 25 A, so 4 mm2"
   },
   {
     "calc": "add_ac_check",
@@ -4007,7 +4018,8 @@
     "inputs": {
       "current_w": 1000,
       "ac": "ac-floor-standing-4ton",
-      "sanctioned_kw": 5
+      "sanctioned_kw": 5,
+      "ambient_c": 30
     },
     "expected": {
       "new_total_w": 5500,
@@ -4042,22 +4054,23 @@
     "inputs": {
       "mode": "ac3",
       "amps": 30,
-      "length_m": 50
+      "length_m": 50,
+      "ambient_c": 30
     },
     "expected": {
       "watts": 16627.69,
       "ib_a": 30,
       "breaker_a": 32,
       "min_cable_a": 37.5,
-      "area_mm2": 6,
-      "ampacity_a": 41,
-      "pk_size": "7/44",
-      "drop_v": 9.7428,
-      "drop_pct": 2.4357,
+      "area_mm2": 10,
+      "ampacity_a": 50,
+      "pk_size": "7/64",
+      "drop_v": 5.8457,
+      "drop_pct": 1.4614,
       "limited_by": "ampacity"
     },
     "tolerance": 0.01,
-    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): unit switch; W = 30 x sqrt3 x 400 x 0.8; drop = sqrt3 x 50 x 30 x 0.0225 / 6"
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): unit switch; W = 30 x sqrt3 x 400 x 0.8; drop = sqrt3 x 50 x 30 x 0.0225 / 6; audit 2026-10-14 (WL-08): three loaded conductors (IEC B.52.5 B1): 6 mm2 = 36 A < 37.5 A, so 10 mm2 (50 A); drop = sqrt3 x 50 x 30 x 0.0225 / 10"
   },
   {
     "calc": "wire_size",
@@ -4065,7 +4078,8 @@
     "inputs": {
       "watts": 5000,
       "length_m": 20,
-      "method": "C"
+      "method": "C",
+      "ambient_c": 30
     },
     "expected": {
       "ib_a": 27.1739,
@@ -4088,7 +4102,8 @@
       "length_m": 5,
       "load_type": "lighting",
       "circuit": "lighting",
-      "pf": 1
+      "pf": 1,
+      "ambient_c": 30
     },
     "expected": {
       "ib_a": 0.4348,
@@ -4122,7 +4137,8 @@
     "name": "5 kW over 250 m reaches 35 mm2 (19/64)",
     "inputs": {
       "watts": 5000,
-      "length_m": 250
+      "length_m": 250,
+      "ambient_c": 30
     },
     "expected": {
       "ampacity_only_mm2": 6,
@@ -4141,7 +4157,8 @@
     "inputs": {
       "mode": "ac3",
       "amps": 20,
-      "load_type": "high_inrush"
+      "load_type": "high_inrush",
+      "ambient_c": 30
     },
     "expected": {
       "watts": 11085.13,
@@ -4162,7 +4179,8 @@
     "inputs": {
       "mode": "dc",
       "volts": 48,
-      "watts": 2400
+      "watts": 2400,
+      "ambient_c": 30
     },
     "expected": {
       "ib_a": 50,
@@ -4170,10 +4188,10 @@
       "min_cable_a": 62.5,
       "area_mm2": 16,
       "ampacity_a": 76,
-      "pk_size": "7/64"
+      "pk_size": "19/44"
     },
     "tolerance": 0.01,
-    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): PF forced to 1; 10 mm2 (57 A) is below 62.5 A"
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): PF forced to 1; 10 mm2 (57 A) is below 62.5 A; Audit 2026-10-14 (WL-09): a PK size is used only when its real area is at least the IEC size."
   },
   {
     "calc": "breaker_size",
@@ -4194,7 +4212,8 @@
       "watts": 3000,
       "load_type": "resistive",
       "pf": 1,
-      "method": "C"
+      "method": "C",
+      "ambient_c": 30
     },
     "expected": {
       "breaker_a": 16,
@@ -4212,7 +4231,8 @@
     "inputs": {
       "watts": 2944,
       "load_type": "motor",
-      "pf": 0.8
+      "pf": 0.8,
+      "ambient_c": 30
     },
     "expected": {
       "ib_a": 16,
@@ -4253,11 +4273,11 @@
     "expected": {
       "max_w_b1": 30400,
       "max_w_c": 34000,
-      "pk_size": "7/64",
-      "pk_area_mm2": 14.53
+      "pk_size": "19/44",
+      "pk_area_mm2": 18.64
     },
     "tolerance": 0.01,
-    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): unit switch"
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): unit switch; Audit 2026-10-14 (WL-09): a PK size is used only when its real area is at least the IEC size."
   },
   {
     "calc": "cable_rating",
@@ -5568,7 +5588,8 @@
     "inputs": {
       "watts": 3000,
       "length_m": 30,
-      "area_mm2": 4
+      "area_mm2": 4,
+      "ambient_c": 30
     },
     "expected": {
       "rho": 0.0225,
@@ -5600,7 +5621,8 @@
     "inputs": {
       "amps": 40,
       "length_m": 5,
-      "area_mm2": 1.5
+      "area_mm2": 1.5,
+      "ambient_c": 30
     },
     "expected": {
       "drop_pct": 2.6087,
@@ -5617,7 +5639,8 @@
     "inputs": {
       "amps": 24,
       "length_m": 10,
-      "area_mm2": 2.98
+      "area_mm2": 2.98,
+      "ambient_c": 30
     },
     "expected": {
       "rated_mm2": 2.5,
@@ -5670,5 +5693,302 @@
       "kv": 2
     },
     "tolerance": 0
+  },
+  {
+    "calc": "wire_size",
+    "name": "DC with no voltage is an error, never 230 V",
+    "inputs": {
+      "mode": "dc",
+      "watts": 3000,
+      "length_m": 3
+    },
+    "expected": {
+      "error": "volts_required_dc"
+    },
+    "tolerance": 0,
+    "note": "Audit 2026-10-14 Phase 1 (WL-01): this input used to size a 13 A, 2.5 mm2 cable at a silent 230 V"
+  },
+  {
+    "calc": "breaker_size",
+    "name": "DC with no voltage is an error, never 230 V",
+    "inputs": {
+      "mode": "dc",
+      "watts": 2400
+    },
+    "expected": {
+      "error": "volts_required_dc"
+    },
+    "tolerance": 0,
+    "note": "Audit 2026-10-14 Phase 1 (WL-01)"
+  },
+  {
+    "calc": "wire_size",
+    "name": "2 ton non-inverter AC at the default 45 C: 20 A MCB needs 4 mm2",
+    "inputs": {
+      "appliance": "ac-split-2ton-non-inverter",
+      "length_m": 15
+    },
+    "expected": {
+      "pf": 0.8,
+      "ib_a": 13.0435,
+      "breaker_a": 20,
+      "min_cable_a": 20,
+      "ambient_c": 45,
+      "ambient_factor": 0.79,
+      "derate": 0.79,
+      "area_mm2": 4,
+      "ampacity_30c_a": 32,
+      "ampacity_a": 25.28,
+      "pk_size": "7/36"
+    },
+    "tolerance": 0.01,
+    "note": "Audit 2026-10-14 Phase 1 (WL-07, WL-10): AC PF from its type (0.8); 2.5 mm2 B1 24 A x 0.79 = 18.96 A < 20 A"
+  },
+  {
+    "calc": "wire_size",
+    "name": "2 ton non-inverter AC at 30 C keeps 2.5 mm2",
+    "inputs": {
+      "appliance": "ac-split-2ton-non-inverter",
+      "length_m": 15,
+      "ambient_c": 30
+    },
+    "expected": {
+      "breaker_a": 20,
+      "area_mm2": 2.5,
+      "ampacity_a": 24,
+      "derate": 1
+    },
+    "tolerance": 0.01,
+    "note": "Audit 2026-10-14 Phase 1 (WL-07): the 30 C table value"
+  },
+  {
+    "calc": "wire_size",
+    "name": "2 ton inverter AC takes PF 0.9 from its type",
+    "inputs": {
+      "appliance": "ac-split-2ton-inverter",
+      "length_m": 15
+    },
+    "expected": {
+      "pf": 0.9,
+      "ib_a": 12.0773,
+      "breaker_a": 16,
+      "area_mm2": 2.5,
+      "ampacity_a": 18.96
+    },
+    "tolerance": 0.01,
+    "note": "Audit 2026-10-14 Phase 1 (WL-10): 2500 / (230 x 0.9) x 1.25 = 15.1 -> 16 A; same breaker as E4"
+  },
+  {
+    "calc": "add_ac_check",
+    "name": "2 ton inverter AC: same breaker as the wiring pages",
+    "inputs": {
+      "current_w": 1500,
+      "ac": "ac-split-2ton-inverter",
+      "sanctioned_kw": 5
+    },
+    "expected": {
+      "ac_pf": 0.9,
+      "ac_ib_a": 12.0773,
+      "ac_breaker_a": 16,
+      "ac_cable_mm2": 2.5,
+      "ac_cable_rating_a": 18.96,
+      "ambient_c": 45,
+      "ac_run_amps": 9.1787
+    },
+    "tolerance": 0.01,
+    "note": "Audit 2026-10-14 Phase 1 (WL-10): matches wire_size for ac-split-2ton-inverter; ac_run_amps = 1900 running / (230 x 0.9)"
+  },
+  {
+    "calc": "add_ac_check",
+    "name": "2 ton non-inverter AC: 20 A MCB on 4 mm2 as on W1",
+    "inputs": {
+      "current_w": 1500,
+      "ac": "ac-split-2ton-non-inverter",
+      "sanctioned_kw": 5
+    },
+    "expected": {
+      "ac_pf": 0.8,
+      "ac_ib_a": 13.0435,
+      "ac_breaker_a": 20,
+      "ac_cable_mm2": 4,
+      "ac_cable_rating_a": 25.28
+    },
+    "tolerance": 0.01,
+    "note": "Audit 2026-10-14 Phase 1 (WL-10)"
+  },
+  {
+    "calc": "breaker_size",
+    "name": "four circuits in one conduit move 2 kW to 4 mm2",
+    "inputs": {
+      "watts": 2000,
+      "circuits": 4,
+      "ambient_c": 30
+    },
+    "expected": {
+      "breaker_a": 16,
+      "group_factor": 0.65,
+      "area_mm2": 4,
+      "ampacity_a": 20.8
+    },
+    "tolerance": 0.01,
+    "note": "Audit 2026-10-14 Phase 1 (WL-07): IEC B.52.17: 2.5 mm2 24 A x 0.65 = 15.6 A < 16 A"
+  },
+  {
+    "calc": "breaker_size",
+    "name": "three circuits in one conduit keep 2.5 mm2",
+    "inputs": {
+      "watts": 2000,
+      "circuits": 3,
+      "ambient_c": 30
+    },
+    "expected": {
+      "group_factor": 0.7,
+      "area_mm2": 2.5,
+      "ampacity_a": 16.8
+    },
+    "tolerance": 0.01,
+    "note": "Audit 2026-10-14 Phase 1 (WL-07): 24 x 0.7 = 16.8 A >= 16 A"
+  },
+  {
+    "calc": "breaker_size",
+    "name": "42 C takes the 45 C factor (next row up, no interpolation)",
+    "inputs": {
+      "watts": 2000,
+      "ambient_c": 42
+    },
+    "expected": {
+      "ambient_factor": 0.79,
+      "ampacity_a": 18.96
+    },
+    "tolerance": 0.01,
+    "note": "Audit 2026-10-14 Phase 1 (WL-07)"
+  },
+  {
+    "calc": "breaker_size",
+    "name": "air temperature above the table is rejected",
+    "inputs": {
+      "watts": 2000,
+      "ambient_c": 65
+    },
+    "expected": {
+      "error": "ambient_out_of_range"
+    },
+    "tolerance": 0,
+    "note": "Audit 2026-10-14 Phase 1 (WL-07)"
+  },
+  {
+    "calc": "breaker_size",
+    "name": "zero circuits rejected",
+    "inputs": {
+      "watts": 2000,
+      "circuits": 0
+    },
+    "expected": {
+      "error": "circuits_out_of_range"
+    },
+    "tolerance": 0,
+    "note": "Audit 2026-10-14 Phase 1 (WL-07)"
+  },
+  {
+    "calc": "voltage_drop",
+    "name": "three-phase uses the three-loaded-conductor rating",
+    "inputs": {
+      "mode": "ac3",
+      "amps": 37,
+      "length_m": 10,
+      "area_mm2": 6,
+      "ambient_c": 30
+    },
+    "expected": {
+      "ampacity_a": 36,
+      "over_cable_rating": true
+    },
+    "tolerance": 0.001,
+    "note": "Audit 2026-10-14 Phase 1 (WL-08): IEC B.52.5 B1 6 mm2 = 36 A (single-phase 41 A)"
+  },
+  {
+    "calc": "voltage_drop",
+    "name": "single-phase 37 A on 6 mm2 is within its rating",
+    "inputs": {
+      "mode": "ac1",
+      "amps": 37,
+      "length_m": 10,
+      "area_mm2": 6,
+      "ambient_c": 30
+    },
+    "expected": {
+      "ampacity_a": 41,
+      "over_cable_rating": false
+    },
+    "tolerance": 0.001,
+    "note": "Audit 2026-10-14 Phase 1 (WL-08)"
+  },
+  {
+    "calc": "voltage_drop",
+    "name": "PK 7/64 (14.53 mm2) is rated as 10 mm2, as on the wire size pages",
+    "inputs": {
+      "amps": 50,
+      "length_m": 10,
+      "area_mm2": 14.53,
+      "ambient_c": 30
+    },
+    "expected": {
+      "rated_mm2": 10,
+      "ampacity_a": 57,
+      "over_cable_rating": false
+    },
+    "tolerance": 0.001,
+    "note": "Audit 2026-10-14 Phase 1 (WL-09)"
+  },
+  {
+    "calc": "wire_size",
+    "name": "9 kW at 95 m picks 19/44, whose real area keeps the drop under 5%",
+    "inputs": {
+      "watts": 9000,
+      "pf": 1,
+      "length_m": 95,
+      "ambient_c": 30
+    },
+    "expected": {
+      "area_mm2": 16,
+      "pk_size": "19/44",
+      "drop_pct": 4.5457,
+      "limited_by": "voltage_drop"
+    },
+    "tolerance": 0.01,
+    "note": "Audit 2026-10-14 Phase 1 (WL-09): 7/64 (14.53 mm2) would drop 5.01%"
+  },
+  {
+    "calc": "breaker_size",
+    "name": "small welding machine gets a type D MCB",
+    "inputs": {
+      "appliance": "welding-machine-small"
+    },
+    "expected": {
+      "curve": "D",
+      "breaker_a": 32,
+      "area_mm2": 6
+    },
+    "tolerance": 0.01,
+    "note": "Audit 2026-10-14 Phase 1 (WL-19): load_type high_inrush; 21.7 A x 1.25 = 27.2 -> 32 A; 4 mm2 x 0.79 = 25.3 A < 32 A, 6 mm2 = 32.4 A"
+  },
+  {
+    "calc": "wire_size",
+    "name": "three-phase 10 kW motor at the default 45 C",
+    "inputs": {
+      "mode": "ac3",
+      "watts": 10000,
+      "pf": 0.85,
+      "load_type": "motor",
+      "length_m": 20
+    },
+    "expected": {
+      "breaker_a": 25,
+      "area_mm2": 6,
+      "ampacity_30c_a": 36,
+      "ampacity_a": 28.44
+    },
+    "tolerance": 0.01,
+    "note": "Audit 2026-10-14 Phase 1 (WL-07, WL-08): 4 mm2 three-phase 28 A x 0.79 = 22.1 A < 25 A"
   }
 ]

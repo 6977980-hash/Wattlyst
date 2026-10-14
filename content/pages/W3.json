@@ -80,9 +80,9 @@
    "name": "pf",
    "label": "Power factor",
    "unit": "0 to 1",
-   "default": "@pf_mixed",
    "advanced": true,
-   "hint": "Mixed loads about 0.8; heaters and lights 1.0; inverter ACs about 0.9."
+   "hint": "Leave blank to use the load type: {{d.pf_by_load_type.inverter_compressor|1}} for an inverter AC, {{d.pf_by_load_type.compressor|1}} for a non-inverter compressor, {{d.pf_mixed|1}} for mixed loads and motors. Heaters are 1.0; enter it for them.",
+   "placeholder": "From the load type"
   },
   {
    "name": "margin",
@@ -91,6 +91,21 @@
    "default": "@margin",
    "advanced": true,
    "hint": "Applied to the breaker for motor-type loads and to the cable for every load."
+  },
+  {
+   "name": "ambient_c",
+   "label": "Air temperature around the cable",
+   "unit": "°C",
+   "default": "@data.cables.derating.default_ambient_c",
+   "hint": "Hottest air the cable sits in: a conduit under a sunny roof or in a hot wall gets far hotter than the room. The default is a Pakistani summer value; every cable rating is reduced for it."
+  },
+  {
+   "name": "circuits",
+   "label": "Circuits in the same conduit",
+   "unit": "circuits",
+   "default": "@data.cables.derating.default_circuits",
+   "advanced": true,
+   "hint": "How many circuits share this conduit or bundle. Cables packed together heat each other, so each one carries less."
   },
   {
    "name": "method",
@@ -133,10 +148,16 @@
    "label": "Design current",
    "spec": "1",
    "unit": "A"
+  },
+  {
+   "key": "ambient_c",
+   "label": "Rated for air at",
+   "spec": "int",
+   "unit": "°C"
   }
  ],
  "answer": "A {{in.watts|int}} W socket circuit on {{out.volts|int}} V draws {{out.ib_a|1}} A, so the MCB is the next standard size up: {{out.breaker_a|int}} A, type {{out.curve|raw}}, on at least {{out.area_mm2|1}} mm² ({{out.pk_size|raw}}) copper cable. MCB rating = next standard size above watts ÷ (volts × power factor); motor-type loads add a {{out.margin|2}} × margin, and the curve follows the load type.",
- "how": "Design current = {{out.watts|int}} W ÷ ({{out.k|2}} × {{out.volts|int}} V × {{out.pf|2}} power factor) = {{out.ib_a|1}} A (the first factor is one for single phase, root three for three phase). Breaker design current = {{out.breaker_design_a|1}} A (× {{out.margin|2}} only for motors, compressors, ACs and welders). Next standard MCB = {{out.breaker_a|int}} A, type {{out.curve|raw}}, which trips instantly between {{out.trip_min_a|int}} A and {{out.trip_max_a|int}} A. The cable must be rated at least {{out.min_cable_a|1}} A and be at least {{out.min_mm2|1}} mm²: {{out.area_mm2|1}} mm² ({{out.pk_size|raw}}), rated {{out.ampacity_a|int}} A for this installation.",
+ "how": "Design current = {{out.watts|int}} W ÷ ({{out.k|2}} × {{out.volts|int}} V × {{out.pf|2}} power factor) = {{out.ib_a|1}} A (the first factor is one for single phase, root three for three phase). Breaker design current = {{out.breaker_design_a|1}} A (× {{out.margin|2}} only for motors, compressors, ACs and welders). Next standard MCB = {{out.breaker_a|int}} A, type {{out.curve|raw}}, which trips instantly between {{out.trip_min_a|int}} A and {{out.trip_max_a|int}} A. The cable must be rated at least {{out.min_cable_a|1}} A and be at least {{out.min_mm2|1}} mm²: {{out.area_mm2|1}} mm² ({{out.pk_size|raw}}), rated {{out.ampacity_a|int}} A for this installation ({{out.ampacity_30c_a|int}} A in the IEC table × {{out.derate|2}} for {{out.ambient_c|int}} °C air and {{out.circuits|int}} circuit in the conduit).",
  "key_facts": [
   "MCB rating = the next standard size above the design current (watts ÷ volts ÷ power factor); standard domestic MCBs run from {{d.standard_breaker_a.0|int}} A to {{d.standard_breaker_a.8|int}} A.",
   "Type B trips instantly at three to five times its rating, type C at five to ten times, type D at ten to twenty times (IEC 60898-1): a {{out.breaker_a|int}} A type {{out.curve|raw}} trips instantly between {{out.trip_min_a|int}} A and {{out.trip_max_a|int}} A.",
@@ -148,7 +169,7 @@
   "lines": [
    "I_b = design current; k = 1 single phase, √3 three phase",
    "I_n = MCB rating from the standard series; curve B, C or D by load type",
-   "I_z = cable current rating for the installation method, never below I_n",
+   "I_z = cable current rating for the installation method × the correction factors for air temperature and grouping, never below I_n",
    "Instant trip range = curve multiple × I_n (B 3-5, C 5-10, D 10-20)"
   ]
  },
@@ -176,7 +197,7 @@
   {
    "h2": "What load can a {{ex.4.out.breaker_a|int}} A MCB take?",
    "p": [
-    "A socket circuit of {{ex.4.in.watts|int}} W at {{ex.4.out.volts|int}} V draws {{ex.4.out.ib_a|1}} A and takes a {{ex.4.out.breaker_a|int}} A type {{ex.4.out.curve|raw}} MCB; that is close to the most a {{ex.4.out.breaker_a|int}} A breaker should carry continuously. The cable has to be rated {{ex.4.out.min_cable_a|1}} A, so it needs {{ex.4.out.area_mm2|1}} mm² ({{ex.4.out.pk_size|raw}}); 7/36 at {{ex.4.out.breaker_a|int}} A would be rated exactly at the breaker with no margin. A {{ex.4.out.breaker_a|int}} A MCB is a common choice for a kitchen, a geyser-plus-sockets circuit or a small sub-main."
+    "A socket circuit of {{ex.4.in.watts|int}} W at {{ex.4.out.volts|int}} V draws {{ex.4.out.ib_a|1}} A and takes a {{ex.4.out.breaker_a|int}} A type {{ex.4.out.curve|raw}} MCB; that is close to the most a {{ex.4.out.breaker_a|int}} A breaker should carry continuously. The cable has to be rated {{ex.4.out.min_cable_a|1}} A, so in {{ex.4.out.ambient_c|int}} °C air it needs {{ex.4.out.area_mm2|1}} mm² ({{ex.4.out.pk_size|raw}}), rated {{ex.4.out.ampacity_a|int}} A; any smaller cable loses too much of its rating in the heat. A {{ex.4.out.breaker_a|int}} A MCB is a common choice for a kitchen, a geyser-plus-sockets circuit or a small sub-main."
    ]
   },
   {
@@ -233,7 +254,7 @@
   }
  ],
  "table": {
-  "caption": "MCB rating, curve and minimum cable for single-phase socket circuits at {{out.volts|int}} V, power factor {{out.pf|1}}, cable in conduit",
+  "caption": "MCB rating, curve and minimum cable for single-phase socket circuits at {{out.volts|int}} V, power factor {{out.pf|1}}, cable in conduit in {{out.ambient_c|int}} °C air",
   "rows": [
    {
     "watts": 500
@@ -290,7 +311,7 @@
   "Sizing from the appliance's average watts. Use the rated input on the label; for an inverter AC that is the maximum input, not the average the bill is based on.",
   "Forgetting three phase. On a {{d.v_3ph|int}} V three-phase supply the current per phase is divided by root three × the line voltage, so the same kW takes a much smaller MCB than on single phase."
  ],
- "safety": "These ratings are planning values; a licensed electrician must confirm the MCB, the curve and the cable on site, check the earth and fit an RCD or RCCB for sockets and wet areas.",
+ "safety": "These ratings are planning values for cable in {{out.ambient_c|int}} °C air with {{out.circuits|int}} circuit in the conduit (the air temperature default awaits review by a PEC-registered engineer); a licensed electrician must confirm the MCB, the curve and the cable on site, check the earth and fit an RCD or RCCB for sockets and wet areas.",
  "faq": [
   {
    "q": "What size MCB for a 1.5 ton AC?",
@@ -330,13 +351,14 @@
  ],
  "next": "W2",
  "literal_numbers": [
-  "IEC 60898-1",
-  "1.5 ton",
-  "1 ton",
   "1 mm²",
+  "1 ton",
+  "1.5 ton",
   "3/29",
   "7/29",
-  "7/36"
+  "7/36",
+  "IEC 60898-1",
+  "PEC"
  ],
  "sources": [
   {

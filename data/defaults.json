@@ -3,12 +3,14 @@
   "source": "specs/formulas.md 'Global defaults' table and section notes; NEPRA Performance Standards (400/230 V, 50 Hz); rho_copper and rho_aluminium from IEC 60364-5-52 Annex G (rho1 = 1.25 x rho20 at working temperature)",
   "checked": "2026-10-14",
   "status": "Engineering defaults, every one editable on the page. Items marked engineer_confirm need PEC engineer sign-off before launch.",
-  "engineer_confirm": ["diversity_home", "heat_pump_cop", "ac_saving_per_degree", "soiling_rate_per_day", "soiling_cap", "gas_heater_eff", "gas_cv_mj_m3", "start_factors", "standard_generator_kva", "planner_day_share", "forecast_sky_bands", "rho_aluminium", "dc_ac_ratio_max", "forecast_max_day_whm2", "soiling_rate_max_per_day"]
+  "engineer_confirm": ["diversity_home", "heat_pump_cop", "ac_saving_per_degree", "soiling_rate_per_day", "soiling_cap", "gas_heater_eff", "gas_cv_mj_m3", "start_factors", "standard_generator_kva", "planner_day_share", "forecast_sky_bands", "rho_aluminium", "dc_ac_ratio_max", "forecast_max_day_whm2", "soiling_rate_max_per_day", "pf_by_load_type"]
  },
  "v_1ph": 230,
  "v_3ph": 400,
  "v_1ph_us": 120,
  "pf_mixed": 0.8,
+ "pf_by_load_type": {"inverter_compressor": 0.9, "compressor": 0.8},
+ "pf_by_load_type_source": "Design power factor of an appliance circuit when none is entered (wiring pages, E4): inverter ACs about 0.9 (PFC drive), non-inverter compressors 0.8; engineer to confirm",
  "pf_resistive": 1.0,
  "pf_generator": 0.8,
  "pf_ups_line_interactive": 0.6,

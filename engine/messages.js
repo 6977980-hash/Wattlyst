@@ -32,6 +32,8 @@ const EXACT = {
   cable_size_unknown: 'Pick a standard cable size.',
   load_above_standard_breakers: 'This load needs more than the largest single-phase MCB. Split it into separate circuits or ask a licensed electrician about a three-phase connection.',
   load_above_cable_table: 'This load is above the largest cable in our table. Split it into separate circuits and consult a licensed electrician.',
+  ambient_out_of_range: 'Enter an air temperature around the cable between 10 and 60 °C.',
+  circuits_out_of_range: 'Enter how many circuits share the conduit or bundle, from 1 to 20.',
   run_too_long_for_table: 'This run is too long for the cables in our table: the voltage drop would exceed the limit. Shorten the run, split the load or consult a licensed electrician.',
   solar_above_sanctioned: 'Your solar array is larger than your sanctioned load. Net billing allows an array up to the sanctioned kW, so the bill step counts only the panels that fit within it. Apply for a higher sanctioned load or plan fewer panels.',
   price_low_confidence: 'The typical price range for this size rests on a single published price list, so treat it as a rough guide and compare at least two more quotes.',
