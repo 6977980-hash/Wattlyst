@@ -250,20 +250,34 @@ final class Wattlyst_Pages {
 		return get_post_meta( (int) $post_id, self::META_ID, true ) ? false : $open;
 	}
 
+	/**
+	 * Site footer (design Phase 7): brand line, the task hubs (same live nav as the header, so every page links to
+	 * every hub) and the trust pages.
+	 */
 	public function footer( $html ): string {
 		$links = array();
 		foreach ( $this->plugin->manifest()['pages'] as $row ) {
 			if ( in_array( $row['type'], array( 'trust', 'embed' ), true ) && ! empty( $row['live'] ) ) {
-				$links[] = sprintf( '<a href="%s">%s</a>', esc_url( Wattlyst_Tools::link( $row['url'] ) ), esc_html( $row['h1'] ) );
+				$links[] = sprintf( '<li><a href="%s">%s</a></li>', esc_url( Wattlyst_Tools::link( $row['url'] ) ), esc_html( $row['h1'] ) );
 			}
 		}
-		$brand = $this->plugin->site()['brand'] ?? 'Wattlyst';
-		return sprintf(
-			'<nav class="wl-footer-nav" aria-label="Site information">%s</nav><p class="wl-copy">&copy; %s %s</p>',
-			implode( ' ', $links ),
-			esc_html( wp_date( 'Y' ) ),
-			esc_html( $brand )
-		);
+		$hubs = array();
+		foreach ( $this->plugin->manifest()['nav'] ?? array() as $n ) {
+			$row = $this->plugin->row( $n['id'] );
+			if ( $row && ! empty( $row['live'] ) ) {
+				$hubs[] = sprintf( '<li><a href="%s">%s</a></li>', esc_url( Wattlyst_Tools::link( $n['url'] ) ), esc_html( $n['label'] ) );
+			}
+		}
+		$site  = $this->plugin->site();
+		$brand = $site['brand'] ?? 'Wattlyst';
+		$out   = '<div class="wl-footer"><div class="wl-footer-brand"><a href="' . esc_url( home_url( '/' ) ) . '"><img src="' . esc_url( Wattlyst_Tools::asset( 'assets/brand/logo-white.svg' ) ) . '" alt="' . esc_attr( $brand ) . '" width="152" height="28" loading="lazy" decoding="async"></a>';
+		$out  .= ! empty( $site['tagline'] ) ? '<p>' . esc_html( $site['tagline'] ) . '</p>' : '';
+		$out  .= '</div>';
+		if ( $hubs ) {
+			$out .= '<nav class="wl-footer-col" aria-label="Calculators"><p class="wl-footer-head">Calculators</p><ul>' . implode( '', $hubs ) . '</ul></nav>';
+		}
+		$out .= '<nav class="wl-footer-col wl-footer-nav" aria-label="Site information"><p class="wl-footer-head">' . esc_html( $brand ) . '</p><ul>' . implode( '', $links ) . '</ul></nav></div>';
+		return $out . sprintf( '<p class="wl-copy">&copy; %s %s</p>', esc_html( wp_date( 'Y' ) ), esc_html( $brand ) );
 	}
 
 	/* ---------------------------------------------------------------- render */
