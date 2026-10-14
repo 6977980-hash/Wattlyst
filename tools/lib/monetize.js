@@ -30,6 +30,7 @@ export function leadsConfig(site, form, rows, cities, fail) {
   const l = site.leads || {};
   for (const k of ['retention_days', 'rate_limit_per_hour', 'token_max_age_days']) if (!(Number.isInteger(l[k]) && l[k] > 0)) fail(`data/site.json leads.${k} must be a positive whole number`);
   for (const id of l.pages || []) if (!rows.some((r) => r.id === id)) fail(`data/site.json leads.pages: unknown page ${id}`);
+  if (l.client_ip_header != null && !/^[A-Za-z][A-Za-z0-9-]{0,63}$/.test(l.client_ip_header)) fail('data/site.json leads.client_ip_header must be a header name (e.g. X-Forwarded-For) or null');
   const success = rows.find((r) => r.id === form.success_link);
   if (!success) fail('content/lead-form.json success_link: unknown page');
   const text = (v, where) => (typeof v === 'string' ? fill(v, site, `content/lead-form.json ${where}`, fail) : Object.fromEntries(Object.entries(v).map(([k, x]) => [k, text(x, `${where}.${k}`)])));
@@ -41,6 +42,7 @@ export function leadsConfig(site, form, rows, cities, fail) {
     retention_days: l.retention_days,
     rate_limit_per_hour: l.rate_limit_per_hour,
     token_max_age_days: l.token_max_age_days,
+    client_ip_header: l.client_ip_header || '',
     cities: Object.keys(cities).map((id) => ({ id, name: id.replace(/\b\w/g, (m) => m.toUpperCase()) })),
     success_url: success.url,
     copy,

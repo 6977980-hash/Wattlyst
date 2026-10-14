@@ -86,6 +86,7 @@ final class Wattlyst_Endpoints {
 		header( 'Content-Type: text/html; charset=utf-8' );
 		header( 'Cache-Control: public, max-age=3600' );
 		header( 'X-Robots-Tag: noindex, follow' );
+		Wattlyst_Site::send_security_headers( true ); // other sites may frame this document
 		echo '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">';
 		echo '<title>' . esc_html( $page['h1'] ) . '</title><meta name="robots" content="noindex, follow">';
 		echo '<link rel="canonical" href="' . esc_url( Wattlyst_Tools::link( $page['url'] ) ) . '">';
