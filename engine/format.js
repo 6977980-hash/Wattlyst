@@ -4,7 +4,9 @@
 // Template syntax: {{path}} or {{path|spec}}. path is dotted (in.load_w, out.hours, a.ceiling-fan-ac.running_w).
 // spec: a digit = max decimals (default 2), "hm" = hours as "3 h 24 min", "int" = whole number,
 // "pct" = fraction as percent, "rs" = Pakistani rupees with no decimals, "rs2" = rupees with exactly two
-// decimals (per-unit rates: "Rs 33.10"), "yesno" = a true/false flag as Yes/No, "raw" = value as is.
+// decimals (per-unit rates: "Rs 33.10"), "yesno" = a true/false flag as Yes/No, "raw" = value as is,
+// "up" / "up1" / "up2" = a minimum size rounded UP to 0 / 1 / 2 decimals (never shows less than needed).
+// "hm" rounds the minutes DOWN: it is used for runtimes, which must not be overstated (audit WL-16).
 
 const nf = new Map();
 function numberFormat(decimals) {
@@ -18,6 +20,10 @@ export function fmt(value, spec = '2') {
   if (typeof value !== 'number' || !Number.isFinite(value)) return '';
   if (spec === 'raw') return String(value);
   if (spec === 'int') return numberFormat(0).format(Math.round(value));
+  if (/^up\d?$/.test(spec)) {
+    const k = 10 ** Number(spec.slice(2) || 0);
+    return numberFormat(Number(spec.slice(2) || 0)).format(Math.ceil(value * k - 1e-9) / k);
+  }
   if (spec === 'pct') return `${numberFormat(1).format(value * 100)}%`;
   if (spec === 'rs') return `Rs ${numberFormat(0).format(Math.round(value))}`;
   if (spec === 'rs2') return `Rs ${new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value)}`;
@@ -25,7 +31,7 @@ export function fmt(value, spec = '2') {
     const sign = value < 0 ? '-' : '';
     const v = Math.abs(value);
     let h = Math.floor(v);
-    let m = Math.round((v - h) * 60);
+    let m = Math.floor((v - h) * 60 + 1e-9);
     if (m === 60) { h += 1; m = 0; }
     if (h === 0 && m === 0) return v > 0 ? `${sign ? '> -1' : '< 1'} min` : '0 min';
     if (h === 0) return `${sign}${m} min`;
@@ -35,7 +41,7 @@ export function fmt(value, spec = '2') {
   return numberFormat(d).format(value);
 }
 
-export const SPECS = ['raw', 'int', 'pct', 'rs', 'rs2', 'hm', 'yesno'];
+export const SPECS = ['raw', 'int', 'pct', 'rs', 'rs2', 'hm', 'yesno', 'up', 'up1', 'up2'];
 export const isSpec = (spec) => /^\d$/.test(spec) || SPECS.includes(spec);
 
 export function lookup(ctx, path) {

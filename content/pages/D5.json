@@ -108,7 +108,7 @@
   {
    "key": "inverter_kw",
    "label": "Inverter size",
-   "spec": "2",
+   "spec": "up2",
    "unit": "kW"
   },
   {
@@ -118,8 +118,8 @@
    "unit": "units"
   }
  ],
- "answer": "A 1.5 ton inverter AC running {{in.hours|int}} hours a day in Lahore needs {{out.panels|int}} solar panels of {{out.panel_w|int}} W ({{out.installed_kw|2}} kW installed) and a {{out.inverter_kw|2}} kW inverter, with no battery for daytime use. It uses about {{out.daily_kwh|1}} units a day, and each kW of panels in Lahore makes about {{out.yield_kwh_per_kwp_day|1}} units a day.",
- "how": "{{out.ac_name}} draws about {{out.ac_avg_w|int}} W on average, so {{in.hours}} hours a day = {{out.daily_kwh|1}} units. Energy: {{out.daily_kwh|1}} units ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW per day in your city = {{out.kw_energy|2}} kW. Power: the panels must also carry the AC's running {{out.running_w|int}} W at midday, {{out.running_w|int}} W ÷ {{out.pr|2}} performance ratio = {{out.kw_power|2}} kW. The larger, {{out.kw|2}} kW, ÷ {{out.panel_w}} W per panel, rounded up = {{out.panels|int}} panels, {{out.installed_kw|2}} kW installed (about {{out.roof_m2|1}} m² of roof). Inverter: the larger of {{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_kw_load|2}} kW for the load and {{out.installed_kw|2}} kW of panels ÷ {{out.dc_ac_ratio_max|1}} = {{out.inverter_kw_array|2}} kW, so the panels are never more than {{out.dc_ac_ratio_max|1}} times the inverter: {{out.inverter_kw|2}} kW continuous, with a surge rating of at least {{out.inverter_surge_w|int}} W.",
+ "answer": "A 1.5 ton inverter AC running {{in.hours|int}} hours a day in Lahore needs {{out.panels|int}} solar panels of {{out.panel_w|int}} W ({{out.installed_kw|2}} kW installed) and a {{out.inverter_kw|up2}} kW inverter, with no battery for daytime use. It uses about {{out.daily_kwh|1}} units a day, and each kW of panels in Lahore makes about {{out.yield_kwh_per_kwp_day|1}} units a day.",
+ "how": "{{out.ac_name}} draws about {{out.ac_avg_w|int}} W on average, so {{in.hours}} hours a day = {{out.daily_kwh|1}} units. Energy: {{out.daily_kwh|1}} units ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW per day in your city = {{out.kw_energy|2}} kW. Power: the panels must also carry the AC's running {{out.running_w|int}} W at midday, {{out.running_w|int}} W ÷ {{out.pr|2}} performance ratio = {{out.kw_power|2}} kW. The larger, {{out.kw|2}} kW, ÷ {{out.panel_w}} W per panel, rounded up = {{out.panels|int}} panels, {{out.installed_kw|2}} kW installed (about {{out.roof_m2|1}} m² of roof). Inverter: the larger of {{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_kw_load|2}} kW for the load and {{out.installed_kw|2}} kW of panels ÷ {{out.dc_ac_ratio_max|1}} = {{out.inverter_kw_array|2}} kW, so the panels are never more than {{out.dc_ac_ratio_max|1}} times the inverter: {{out.inverter_kw|up2}} kW continuous, with a surge rating of at least {{out.inverter_surge_w|int}} W.",
  "key_facts": [
   "A 1.5 ton inverter AC uses about {{out.daily_kwh|1}} units in {{in.hours|int}} hours (about {{out.ac_avg_w|int}} W average), which in Lahore needs {{out.panels|int}} panels of {{out.panel_w|int}} W, or {{out.installed_kw|2}} kW of solar.",
   "Solar panels for an AC are sized two ways and the larger wins: energy (daily units ÷ the city's units per kW per day) and power (the AC's running watts ÷ the performance ratio of {{d.pr|2}}, so the array can carry the AC at midday without a battery).",
@@ -149,7 +149,7 @@
   {
    "h2": "Solar system for a 1 ton AC",
    "p": [
-    "A 1 ton inverter AC averages about {{ex.1.out.ac_avg_w|int}} W and uses about {{ex.1.out.daily_kwh|1}} units in {{ex.1.in.hours|int}} hours. In Karachi, where each kW of panels makes about {{ex.1.out.yield_kwh_per_kwp_day|1}} units a day, that needs {{ex.1.out.panels|int}} panels, {{ex.1.out.installed_kw|2}} kW, and a {{ex.1.out.inverter_kw|2}} kW inverter. In this case the midday power check, not the daily energy, sets the array size.",
+    "A 1 ton inverter AC averages about {{ex.1.out.ac_avg_w|int}} W and uses about {{ex.1.out.daily_kwh|1}} units in {{ex.1.in.hours|int}} hours. In Karachi, where each kW of panels makes about {{ex.1.out.yield_kwh_per_kwp_day|1}} units a day, that needs {{ex.1.out.panels|int}} panels, {{ex.1.out.installed_kw|2}} kW, and a {{ex.1.out.inverter_kw|up2}} kW inverter. In this case the midday power check, not the daily energy, sets the array size.",
     "For a 1 ton AC the solar system is small enough that most homes add fans, lights and a fridge to the same array; use the solar system from loads calculator for the whole house."
    ]
   },
@@ -163,7 +163,7 @@
   {
    "h2": "What solar inverter for an AC?",
    "p": [
-    "The inverter needs a continuous rating of at least the AC's running watts × {{d.margin|2}} ({{out.inverter_kw_load|2}} kW) and at least the panel kW ÷ {{d.dc_ac_ratio_max|1}} ({{out.inverter_kw_array|2}} kW), because an inverter accepts panels only up to about {{d.dc_ac_ratio_max|1}} times its rating: {{out.inverter_kw|2}} kW for a 1.5 ton inverter AC. Its surge rating must cover the AC's starting watts: {{out.inverter_surge_w|int}} W for the inverter model, but {{ex.2.out.inverter_surge_w|int}} W for the non-inverter 1.5 ton, which is why a non-inverter AC usually needs a three to five kW hybrid inverter.",
+    "The inverter needs a continuous rating of at least the AC's running watts × {{d.margin|2}} ({{out.inverter_kw_load|2}} kW) and at least the panel kW ÷ {{d.dc_ac_ratio_max|1}} ({{out.inverter_kw_array|2}} kW), because an inverter accepts panels only up to about {{d.dc_ac_ratio_max|1}} times its rating: {{out.inverter_kw|up2}} kW for a 1.5 ton inverter AC. Its surge rating must cover the AC's starting watts: {{out.inverter_surge_w|int}} W for the inverter model, but {{ex.2.out.inverter_surge_w|int}} W for the non-inverter 1.5 ton, which is why a non-inverter AC usually needs a three to five kW hybrid inverter.",
     "Buy the inverter for the whole house, not just the AC: add fans, lights and the fridge with the inverter size calculator. A hybrid inverter also lets you add a battery later without changing the panels."
    ]
   },
@@ -183,7 +183,7 @@
     "night_hours": 0
    },
    "title": "1.5 ton inverter AC in Lahore, {{in.hours|int}} hours a day, daytime only",
-   "text": "{{out.ac_name}}: {{out.ac_avg_w|int}} W average × {{in.hours|int}} h = {{out.daily_kwh|1}} units a day. {{out.daily_kwh|1}} ÷ {{out.yield_kwh_per_kwp_day|1}} = {{out.kw_energy|2}} kW for energy; {{out.running_w|int}} W ÷ {{out.pr|2}} = {{out.kw_power|2}} kW for midday power. Result: {{out.panels|int}} panels of {{out.panel_w|int}} W ({{out.installed_kw|2}} kW), a {{out.inverter_kw|2}} kW inverter, no battery."
+   "text": "{{out.ac_name}}: {{out.ac_avg_w|int}} W average × {{in.hours|int}} h = {{out.daily_kwh|1}} units a day. {{out.daily_kwh|1}} ÷ {{out.yield_kwh_per_kwp_day|1}} = {{out.kw_energy|2}} kW for energy; {{out.running_w|int}} W ÷ {{out.pr|2}} = {{out.kw_power|2}} kW for midday power. Result: {{out.panels|int}} panels of {{out.panel_w|int}} W ({{out.installed_kw|2}} kW), a {{out.inverter_kw|up2}} kW inverter, no battery."
   },
   {
    "inputs": {
@@ -193,7 +193,7 @@
     "night_hours": 0
    },
    "title": "1 ton inverter AC in Karachi",
-   "text": "{{out.ac_name}}: {{out.ac_avg_w|int}} W average × {{in.hours|int}} h = {{out.daily_kwh|1}} units. Karachi makes {{out.yield_kwh_per_kwp_day|1}} units per kW a day, so energy needs {{out.kw_energy|2}} kW, but midday power needs {{out.kw_power|2}} kW and wins. Result: {{out.panels|int}} panels ({{out.installed_kw|2}} kW) and a {{out.inverter_kw|2}} kW inverter."
+   "text": "{{out.ac_name}}: {{out.ac_avg_w|int}} W average × {{in.hours|int}} h = {{out.daily_kwh|1}} units. Karachi makes {{out.yield_kwh_per_kwp_day|1}} units per kW a day, so energy needs {{out.kw_energy|2}} kW, but midday power needs {{out.kw_power|2}} kW and wins. Result: {{out.panels|int}} panels ({{out.installed_kw|2}} kW) and a {{out.inverter_kw|up2}} kW inverter."
   },
   {
    "inputs": {
@@ -203,7 +203,7 @@
     "night_hours": 0
    },
    "title": "1.5 ton non-inverter AC in Lahore",
-   "text": "{{out.ac_name}}: about {{out.ac_avg_w|int}} W average × {{in.hours|int}} h = {{out.daily_kwh|1}} units a day, which needs {{out.kw_energy|2}} kW of panels in Lahore: {{out.panels|int}} panels, {{out.installed_kw|2}} kW. The inverter needs {{out.inverter_kw|2}} kW continuous but a surge rating of {{out.inverter_surge_w|int}} W for the compressor start, so a three to five kW hybrid inverter is the practical choice."
+   "text": "{{out.ac_name}}: about {{out.ac_avg_w|int}} W average × {{in.hours|int}} h = {{out.daily_kwh|1}} units a day, which needs {{out.kw_energy|2}} kW of panels in Lahore: {{out.panels|int}} panels, {{out.installed_kw|2}} kW. The inverter needs {{out.inverter_kw|up2}} kW continuous but a surge rating of {{out.inverter_surge_w|int}} W for the compressor start, so a three to five kW hybrid inverter is the practical choice."
   },
   {
    "inputs": {
@@ -213,7 +213,7 @@
     "night_hours": 5
    },
    "title": "1.5 ton inverter AC with {{in.night_hours|int}} hours on battery after sunset",
-   "text": "Daytime: {{out.panels|int}} panels ({{out.installed_kw|2}} kW) and a {{out.inverter_kw|2}} kW inverter as above. Night: {{out.running_w|int}} W × {{in.night_hours|int}} h = {{out.night_kwh|1}} units, ÷ ({{out.battery_v|int}} V × {{out.battery_dod|pct}} usable × hybrid inverter efficiency) = {{out.battery_ah|int}} Ah of lithium battery at {{out.battery_v|int}} V, about {{out.battery_kwh|1}} kWh. The panels are not enlarged for the night energy here; add it with the solar system from loads calculator if the battery must recharge from solar alone."
+   "text": "Daytime: {{out.panels|int}} panels ({{out.installed_kw|2}} kW) and a {{out.inverter_kw|up2}} kW inverter as above. Night: {{out.running_w|int}} W × {{in.night_hours|int}} h = {{out.night_kwh|1}} units, ÷ ({{out.battery_v|int}} V × {{out.battery_dod|pct}} usable × hybrid inverter efficiency) = {{out.battery_ah|int}} Ah of lithium battery at {{out.battery_v|int}} V, about {{out.battery_kwh|1}} kWh. The panels are not enlarged for the night energy here; add it with the solar system from loads calculator if the battery must recharge from solar alone."
   }
  ],
  "table": {
@@ -257,7 +257,7 @@
    },
    {
     "label": "Inverter",
-    "tpl": "{{out.inverter_kw|2}} kW, surge {{out.inverter_surge_w|int}} W"
+    "tpl": "{{out.inverter_kw|up2}} kW, surge {{out.inverter_surge_w|int}} W"
    }
   ]
  },
@@ -288,7 +288,7 @@
   },
   {
    "q": "What size solar inverter do I need for an AC?",
-   "a": "Continuous rating of at least the AC's running watts × {{d.margin|2}} and at least the panel kW ÷ {{d.dc_ac_ratio_max|1}}, which is {{out.inverter_kw|2}} kW for a 1.5 ton inverter AC, and a surge rating above the AC's starting watts ({{out.inverter_surge_w|int}} W inverter, {{ex.2.out.inverter_surge_w|int}} W non-inverter 1.5 ton). Size it for the whole house with the inverter size calculator."
+   "a": "Continuous rating of at least the AC's running watts × {{d.margin|2}} and at least the panel kW ÷ {{d.dc_ac_ratio_max|1}}, which is {{out.inverter_kw|up2}} kW for a 1.5 ton inverter AC, and a surge rating above the AC's starting watts ({{out.inverter_surge_w|int}} W inverter, {{ex.2.out.inverter_surge_w|int}} W non-inverter 1.5 ton). Size it for the whole house with the inverter size calculator."
   },
   {
    "q": "How much does a solar AC system cost in Pakistan?",

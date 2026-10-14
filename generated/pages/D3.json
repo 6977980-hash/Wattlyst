@@ -42,14 +42,14 @@
    {
     "h2": "How is an off-grid solar system designed?",
     "p": [
-     "Off-grid means no grid at all: the panels make every unit, the battery carries every night and the inverter runs every appliance. So each part is sized from the appliance list. The panels must make the day's 5.9 units, refill what the battery gave at night with its charging and inverter losses (6.6 units in all), and carry the 1,141 W running load at noon; the larger rule gives 1.66 kW, or 3 panels of 585 W. The battery must hold the load after sunset: 1,141 W for 4 hours is 4.6 units, which at 48 V with lithium is 117 Ah. The inverter must carry 1,141 W with a margin and accept the panels: 1.43 kW, with a surge of 2,341 W for the pump motor.",
+     "Off-grid means no grid at all: the panels make every unit, the battery carries every night and the inverter runs every appliance. So each part is sized from the appliance list. The panels must make the day's 5.9 units, refill what the battery gave at night with its charging and inverter losses (6.6 units in all), and carry the 1,141 W running load at noon; the larger rule gives 1.66 kW, or 3 panels of 585 W. The battery must hold the load after sunset: 1,141 W for 4 hours is 4.6 units, which at 48 V with lithium is 118 Ah. The inverter must carry 1,141 W with a margin and accept the panels: 1.43 kW, with a surge of 2,341 W for the pump motor.",
      "Everything in the list counts, including the appliances that run for minutes, because there is no grid to fall back on. Check each one's watts against its label before trusting the result."
     ]
    },
    {
     "h2": "Off-grid battery bank size and days of autonomy",
     "p": [
-     "This calculator sizes the battery for one night: the full running load for the hours you enter. That is honest about what it covers and what it does not. It assumes every listed appliance runs together for those hours, which is a worst case for the evening, but it does not add a second cloudy day. For 4 hours the bank is 117 Ah (5.6 kWh) at 48 V; for the whole 12 hour night it is 352 Ah (16.9 kWh).",
+     "This calculator sizes the battery for one night: the full running load for the hours you enter. That is honest about what it covers and what it does not. It assumes every listed appliance runs together for those hours, which is a worst case for the evening, but it does not add a second cloudy day. For 4 hours the bank is 118 Ah (5.6 kWh) at 48 V; for the whole 12 hour night it is 353 Ah (16.9 kWh).",
      "Off-grid homes usually plan for two days of autonomy, three where winter fog or monsoon clouds last for days. Take the night units from this result to the solar battery size calculator, enter the days of autonomy, and the bank grows in proportion. The panels then also have to refill a larger bank on the first sunny day, so add panels beyond the figure here; this page adds the charging losses for one night, not the catch-up after a cloudy spell."
     ]
    },
@@ -76,11 +76,11 @@
   "faq": [
    {
     "q": "How do I size an off-grid solar system?",
-    "a": "From the appliance list: panels from the daily units, the battery refill and the midday load (3 panels, 1.76 kW for the house above), a battery from the load after sunset (117 Ah at 48 V for 4 hours), and an inverter from the running watts, at least the panels ÷ 1.3 (1.43 kW)."
+    "a": "From the appliance list: panels from the daily units, the battery refill and the midday load (3 panels, 1.76 kW for the house above), a battery from the load after sunset (118 Ah at 48 V for 4 hours), and an inverter from the running watts, at least the panels ÷ 1.3 (1.43 kW)."
    },
    {
     "q": "How big should the off-grid battery bank be?",
-    "a": "Enough for the load after sunset times the hours it runs, divided by the bank volts, the usable share and the inverter efficiency: 117 Ah at 48 V for 4 hours here, 352 Ah for a full 12 hour night. Add days of autonomy for cloudy weather in the solar battery size calculator."
+    "a": "Enough for the load after sunset times the hours it runs, divided by the bank volts, the usable share and the inverter efficiency: 118 Ah at 48 V for 4 hours here, 353 Ah for a full 12 hour night. Add days of autonomy for cloudy weather in the solar battery size calculator."
    },
    {
     "q": "What size inverter for an off-grid system?",
@@ -104,8 +104,8 @@
    }
   ],
   "key_facts": [
-   "An off-grid solar system has three parts sized separately: panels from the daily units plus the battery refill (6.6 units ÷ 4 per kW in Lahore = 1.66 kW), a battery from the load after sunset (117 Ah at 48 V for 4 hours), and an inverter from the running watts (1,141 W × 1.25 = 1.43 kW), never smaller than the panels ÷ 1.3 (1.35 kW); here 1.43 kW.",
-   "The battery bank for one night is sized for the full running load for the hours you enter; running it for the whole 12 hour night needs 352 Ah at 48 V (16.9 kWh), against 117 Ah for 4 hours.",
+   "An off-grid solar system has three parts sized separately: panels from the daily units plus the battery refill (6.6 units ÷ 4 per kW in Lahore = 1.66 kW), a battery from the load after sunset (118 Ah at 48 V for 4 hours), and an inverter from the running watts (1,141 W × 1.25 = 1.43 kW), never smaller than the panels ÷ 1.3 (1.35 kW); here 1.43 kW.",
+   "The battery bank for one night is sized for the full running load for the hours you enter; running it for the whole 12 hour night needs 353 Ah at 48 V (16.9 kWh), against 118 Ah for 4 hours.",
    "A tubular bank for the same night is 423 Ah at 24 V (10.1 kWh) because only 50% of it may be used, against 90% for lithium.",
    "Adding one 1 ton inverter AC for eight hours takes the same house to 11.1 units a day, 6 panels (3.51 kW), a 210 Ah bank at 48 V and a 2.7 kW inverter."
   ],
@@ -1360,10 +1360,10 @@
     {
      "key": "battery_ah",
      "label": "Battery bank",
-     "spec": "int",
+     "spec": "up",
      "unit": "Ah",
      "label_ur": "Battery bank",
-     "value": "117"
+     "value": "118"
     },
     {
      "key": "battery_kwh",
@@ -1376,15 +1376,15 @@
     {
      "key": "inverter_kw",
      "label": "Off-grid inverter",
-     "spec": "2",
+     "spec": "up2",
      "unit": "kW",
      "label_ur": "Off-grid inverter",
      "value": "1.43"
     }
    ],
    "how": {
-    "tpl": "Energy: watts × quantity × hours a day for every appliance = {{out.daily_kwh|1}} units a day; the night share, {{out.night_kwh|1}} units, comes from the battery, so the panels must refill it through charging and inverter losses: {{out.day_kwh|1}} + {{out.night_kwh|1}} ÷ ({{out.battery_inverter_eff|pct}} × {{out.charge_eff|pct}}) = {{out.array_kwh|1}} units a day, ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW of panels a day in your city = {{out.kw_energy|2}} kW. Power: the panels must also carry the {{out.running_w|int}} W running load at midday, ÷ {{out.pr|2}} performance ratio = {{out.kw_power|2}} kW. The larger, {{out.kw|2}} kW, rounded up to whole {{out.panel_w}} W panels = {{out.panels|int}} panels, {{out.installed_kw|2}} kW. Battery: {{out.running_w|int}} W × {{out.night_hours}} hours = {{out.night_kwh|1}} units after sunset, ÷ ({{out.battery_v}} V × {{out.battery_dod|pct}} usable × inverter efficiency) = {{out.battery_ah|int}} Ah, a bank of {{out.battery_kwh|1}} kWh. Inverter: the larger of {{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_kw_load|2}} kW for the load and {{out.installed_kw|2}} kW of panels ÷ {{out.dc_ac_ratio_max|1}} = {{out.inverter_kw_array|2}} kW, so the panels are never more than {{out.dc_ac_ratio_max|1}} times the inverter: {{out.inverter_kw|2}} kW continuous, with a surge rating of at least {{out.inverter_surge_w|int}} W for the pump.",
-    "text": "Energy: watts × quantity × hours a day for every appliance = 5.9 units a day; the night share, 4.6 units, comes from the battery, so the panels must refill it through charging and inverter losses: 1.3 + 4.6 ÷ (90% × 95%) = 6.6 units a day, ÷ 4 units per kW of panels a day in your city = 1.66 kW. Power: the panels must also carry the 1,141 W running load at midday, ÷ 0.78 performance ratio = 1.46 kW. The larger, 1.66 kW, rounded up to whole 585 W panels = 3 panels, 1.76 kW. Battery: 1,141 W × 4 hours = 4.6 units after sunset, ÷ (48 V × 90% usable × inverter efficiency) = 117 Ah, a bank of 5.6 kWh. Inverter: the larger of 1,141 W × 1.25 = 1.43 kW for the load and 1.76 kW of panels ÷ 1.3 = 1.35 kW, so the panels are never more than 1.3 times the inverter: 1.43 kW continuous, with a surge rating of at least 2,341 W for the pump."
+    "tpl": "Energy: watts × quantity × hours a day for every appliance = {{out.daily_kwh|1}} units a day; the night share, {{out.night_kwh|1}} units, comes from the battery, so the panels must refill it through charging and inverter losses: {{out.day_kwh|1}} + {{out.night_kwh|1}} ÷ ({{out.battery_inverter_eff|pct}} × {{out.charge_eff|pct}}) = {{out.array_kwh|1}} units a day, ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW of panels a day in your city = {{out.kw_energy|2}} kW. Power: the panels must also carry the {{out.running_w|int}} W running load at midday, ÷ {{out.pr|2}} performance ratio = {{out.kw_power|2}} kW. The larger, {{out.kw|2}} kW, rounded up to whole {{out.panel_w}} W panels = {{out.panels|int}} panels, {{out.installed_kw|2}} kW. Battery: {{out.running_w|int}} W × {{out.night_hours}} hours = {{out.night_kwh|1}} units after sunset, ÷ ({{out.battery_v}} V × {{out.battery_dod|pct}} usable × inverter efficiency) = {{out.battery_ah|up}} Ah, a bank of {{out.battery_kwh|1}} kWh. Inverter: the larger of {{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_kw_load|2}} kW for the load and {{out.installed_kw|2}} kW of panels ÷ {{out.dc_ac_ratio_max|1}} = {{out.inverter_kw_array|2}} kW, so the panels are never more than {{out.dc_ac_ratio_max|1}} times the inverter: {{out.inverter_kw|up2}} kW continuous, with a surge rating of at least {{out.inverter_surge_w|int}} W for the pump.",
+    "text": "Energy: watts × quantity × hours a day for every appliance = 5.9 units a day; the night share, 4.6 units, comes from the battery, so the panels must refill it through charging and inverter losses: 1.3 + 4.6 ÷ (90% × 95%) = 6.6 units a day, ÷ 4 units per kW of panels a day in your city = 1.66 kW. Power: the panels must also carry the 1,141 W running load at midday, ÷ 0.78 performance ratio = 1.46 kW. The larger, 1.66 kW, rounded up to whole 585 W panels = 3 panels, 1.76 kW. Battery: 1,141 W × 4 hours = 4.6 units after sunset, ÷ (48 V × 90% usable × inverter efficiency) = 118 Ah, a bank of 5.6 kWh. Inverter: the larger of 1,141 W × 1.25 = 1.43 kW for the load and 1.76 kW of panels ÷ 1.3 = 1.35 kW, so the panels are never more than 1.3 times the inverter: 1.43 kW continuous, with a surge rating of at least 2,341 W for the pump."
    },
    "submit": "Calculate",
    "notice": "",
@@ -1404,7 +1404,7 @@
   "examples": [
    {
     "title": "Small off-grid house, Lahore, 4 hours of full load on lithium",
-    "text": "5.9 units a day and 1,141 W running. Panels: 3 × 585 W = 1.76 kW. Battery: 4.6 units after sunset ÷ (48 V × 90% × efficiency) = 117 Ah, 5.6 kWh. Inverter 1.43 kW, surge 2,341 W."
+    "text": "5.9 units a day and 1,141 W running. Panels: 3 × 585 W = 1.76 kW. Battery: 4.6 units after sunset ÷ (48 V × 90% × efficiency) = 118 Ah, 5.6 kWh. Inverter 1.43 kW, surge 2,341 W."
    },
    {
     "title": "Same house with a 1 ton inverter AC for eight hours",
@@ -1420,7 +1420,7 @@
    },
    {
     "title": "Worst case: full load for the whole 12 hour night",
-    "text": "The panels grow to 7 (4.1 kW) because they must refill the bigger night draw, and the inverter grows with them to 3.15 kW so the panels stay within 1.3 times its rating. Battery: 1,141 W × 12 h = 13.7 units, which is 352 Ah at 48 V, 16.9 kWh. More than the house uses in a whole day, because it assumes everything runs all night."
+    "text": "The panels grow to 7 (4.1 kW) because they must refill the bigger night draw, and the inverter grows with them to 3.15 kW so the panels stay within 1.3 times its rating. Battery: 1,141 W × 12 h = 13.7 units, which is 353 Ah at 48 V, 16.9 kWh. More than the house uses in a whole day, because it assumes everything runs all night."
    }
   ],
   "table": {
@@ -1435,7 +1435,7 @@
     [
      "4 kinds of appliance, 188 W, 1.4 units a day",
      "1 × 585 W (0.59 kW)",
-     "19 Ah (0.9 kWh)",
+     "20 Ah (0.9 kWh)",
      "0.45 kW"
     ],
     [
@@ -1447,7 +1447,7 @@
     [
      "6 kinds of appliance, 1,141 W, 5.9 units a day",
      "3 × 585 W (1.76 kW)",
-     "117 Ah (5.6 kWh)",
+     "118 Ah (5.6 kWh)",
      "1.43 kW"
     ],
     [
@@ -1466,11 +1466,11 @@
      "7 kinds of appliance, 4,041 W, 21.9 units a day",
      "11 × 585 W (6.44 kW)",
      "416 Ah (20 kWh)",
-     "5.05 kW"
+     "5.06 kW"
     ]
    ]
   },
-  "answer": "A small off-grid house with three fans, eight LED bulbs, an inverter fridge, a TV, a pump and a router needs 1.76 kW of panels (3 panels), a 117 Ah lithium bank at 48 V for 4 hours of the full load after sunset, and a 1.43 kW inverter. Panels = (day units + night units ÷ charging and inverter efficiency) ÷ sun yield; battery = night units ÷ (volts × usable share × efficiency).",
+  "answer": "A small off-grid house with three fans, eight LED bulbs, an inverter fridge, a TV, a pump and a router needs 1.76 kW of panels (3 panels), a 118 Ah lithium bank at 48 V for 4 hours of the full load after sunset, and a 1.43 kW inverter. Panels = (day units + night units ÷ charging and inverter efficiency) ÷ sun yield; battery = night units ÷ (volts × usable share × efficiency).",
   "formula": {
    "text": "kW = max(E_day ÷ yield, P_run ÷ 1000 ÷ PR); panels = ceil(kW × 1000 ÷ W_panel); Ah = P_run × h_night ÷ (V × DoD × η); P_inv = max(P_run × m, kW × 1000 ÷ r_max)",
    "lines": [
@@ -1568,7 +1568,7 @@
       "name": "How do I size an off-grid solar system?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "From the appliance list: panels from the daily units, the battery refill and the midday load (3 panels, 1.76 kW for the house above), a battery from the load after sunset (117 Ah at 48 V for 4 hours), and an inverter from the running watts, at least the panels ÷ 1.3 (1.43 kW)."
+       "text": "From the appliance list: panels from the daily units, the battery refill and the midday load (3 panels, 1.76 kW for the house above), a battery from the load after sunset (118 Ah at 48 V for 4 hours), and an inverter from the running watts, at least the panels ÷ 1.3 (1.43 kW)."
       }
      },
      {
@@ -1576,7 +1576,7 @@
       "name": "How big should the off-grid battery bank be?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Enough for the load after sunset times the hours it runs, divided by the bank volts, the usable share and the inverter efficiency: 117 Ah at 48 V for 4 hours here, 352 Ah for a full 12 hour night. Add days of autonomy for cloudy weather in the solar battery size calculator."
+       "text": "Enough for the load after sunset times the hours it runs, divided by the bank volts, the usable share and the inverter efficiency: 118 Ah at 48 V for 4 hours here, 353 Ah for a full 12 hour night. Add days of autonomy for cloudy weather in the solar battery size calculator."
       }
      },
      {

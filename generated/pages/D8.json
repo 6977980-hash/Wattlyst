@@ -1346,7 +1346,7 @@
     {
      "key": "inverter_kw",
      "label": "Inverter size",
-     "spec": "2",
+     "spec": "up2",
      "unit": "kW",
      "label_ur": "Inverter ka size",
      "value": "5.11"
@@ -1368,7 +1368,7 @@
     }
    ],
    "how": {
-    "tpl": "Energy: each appliance's watts × quantity × hours a day (an inverter AC counts at its average draw, below its rated watts), added up = {{out.daily_kwh|1}} units a day; ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW of panels a day for your city = {{out.kw_energy|2}} kW. Power: {{out.running_w|int}} W running load ÷ {{out.pr|2}} performance ratio = {{out.kw_power|2}} kW so the panels alone can carry the house at midday. The larger of the two, {{out.kw|2}} kW, needs {{out.panels|int}} panels of {{out.panel_w}} W = {{out.installed_kw|2}} kW installed, which makes about {{out.monthly_kwh_estimate|int}} units a month. Inverter: the larger of {{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_kw_load|2}} kW for the load and {{out.installed_kw|2}} kW of panels ÷ {{out.dc_ac_ratio_max|1}} = {{out.inverter_kw_array|2}} kW, so the panels are never more than {{out.dc_ac_ratio_max|1}} times the inverter: {{out.inverter_kw|2}} kW continuous, with a surge rating of at least {{out.inverter_surge_w|int}} W for the water pump.",
+    "tpl": "Energy: each appliance's watts × quantity × hours a day (an inverter AC counts at its average draw, below its rated watts), added up = {{out.daily_kwh|1}} units a day; ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW of panels a day for your city = {{out.kw_energy|2}} kW. Power: {{out.running_w|int}} W running load ÷ {{out.pr|2}} performance ratio = {{out.kw_power|2}} kW so the panels alone can carry the house at midday. The larger of the two, {{out.kw|2}} kW, needs {{out.panels|int}} panels of {{out.panel_w}} W = {{out.installed_kw|2}} kW installed, which makes about {{out.monthly_kwh_estimate|int}} units a month. Inverter: the larger of {{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_kw_load|2}} kW for the load and {{out.installed_kw|2}} kW of panels ÷ {{out.dc_ac_ratio_max|1}} = {{out.inverter_kw_array|2}} kW, so the panels are never more than {{out.dc_ac_ratio_max|1}} times the inverter: {{out.inverter_kw|up2}} kW continuous, with a surge rating of at least {{out.inverter_surge_w|int}} W for the water pump.",
     "text": "Energy: each appliance's watts × quantity × hours a day (an inverter AC counts at its average draw, below its rated watts), added up = 15.6 units a day; ÷ 4 units per kW of panels a day for your city = 3.91 kW. Power: 4,085 W running load ÷ 0.78 performance ratio = 5.24 kW so the panels alone can carry the house at midday. The larger of the two, 5.24 kW, needs 9 panels of 585 W = 5.27 kW installed, which makes about 632 units a month. Inverter: the larger of 4,085 W × 1.25 = 5.11 kW for the load and 5.27 kW of panels ÷ 1.3 = 4.05 kW, so the panels are never more than 1.3 times the inverter: 5.11 kW continuous, with a surge rating of at least 5,885 W for the water pump."
    },
    "submit": "Calculate",
@@ -1401,7 +1401,7 @@
    },
    {
     "title": "5 marla house without an AC",
-    "text": "Fans, bulbs, fridge, TV, pump and iron only: 2,635 W running and 7.6 units a day. Solar system 3.51 kW (6 panels), inverter 3.29 kW. The water pump and iron set the running load even though they run for a short time."
+    "text": "Fans, bulbs, fridge, TV, pump and iron only: 2,635 W running and 7.6 units a day. Solar system 3.51 kW (6 panels), inverter 3.3 kW. The water pump and iron set the running load even though they run for a short time."
    }
   ],
   "table": {
@@ -1425,7 +1425,7 @@
      "6 kinds of appliance, 2,635 W running, 7.6 units a day",
      "3.51 kW",
      "6 × 585 W",
-     "3.29 kW",
+     "3.3 kW",
      "421"
     ],
     [
@@ -1439,7 +1439,7 @@
      "7 kinds of appliance, 4,435 W running, 19.2 units a day",
      "5.85 kW",
      "10 × 585 W",
-     "5.54 kW",
+     "5.55 kW",
      "702"
     ],
     [

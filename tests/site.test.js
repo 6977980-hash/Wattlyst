@@ -29,7 +29,13 @@ test('generated/ matches a fresh build (run: node tools/build.js)', () => {
 test('format: numbers are never blank, NaN or Infinity', () => {
   assert.equal(fmt(3.4, 'hm'), '3 h 24 min');
   assert.equal(fmt(0.5, 'hm'), '30 min');
-  assert.equal(fmt(1.9999, 'hm'), '2 h');
+  assert.equal(fmt(1.9999, 'hm'), '1 h 59 min', 'runtimes round the minutes down (WL-16)');
+  assert.equal(fmt(2.0000000001, 'hm'), '2 h', 'float noise is not a lost minute');
+  assert.equal(fmt(102.1, 'up'), '103', 'minimum sizes round up (WL-16)');
+  assert.equal(fmt(102, 'up'), '102');
+  assert.equal(fmt(2.71, 'up1'), '2.8');
+  assert.equal(fmt(3.371, 'up2'), '3.38');
+  assert.equal(fmt(2.6999999999999997, 'up1'), '2.7', 'float noise does not add a step');
   assert.equal(fmt(1020.4, 'int'), '1,020');
   assert.equal(fmt(0.85, 'pct'), '85%');
   assert.equal(fmt(8275.4, 'rs'), 'Rs 8,275');
