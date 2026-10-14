@@ -9,6 +9,7 @@ import { root } from './load-data.js';
 import { build } from '../tools/build.js';
 
 const files = await build();
+const manifest = JSON.parse(files['generated/manifest.json']);
 const pages = Object.entries(files).filter(([p]) => p.startsWith('generated/pages/')).map(([, b]) => JSON.parse(b));
 
 const SMALL = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10, eleven: 11, twelve: 12, thirteen: 13, fourteen: 14, fifteen: 15, sixteen: 16, seventeen: 17, eighteen: 18, nineteen: 19, twenty: 20, thirty: 30, forty: 40, fifty: 50, sixty: 60, seventy: 70, eighty: 80, ninety: 90 };
@@ -135,7 +136,10 @@ test('"how" text renders and its arithmetic holds with edited inputs (WL-12)', (
   const bad = [];
   for (const p of tools) {
     const t = p.content.tool;
-    const browserData = { defaults: data.defaults, appliances: t.appliances, ...Object.fromEntries(t.data_keys.map((k) => [k, data[k]])) };
+    // Exactly what Wattlyst_Render::tool_data() ships: manifest data for each data key, plus the page's appliances.
+    // A key missing from the manifest left C8 with no fuel curve in the browser (audit Phase 6).
+    for (const k of t.data_keys) assert.ok(manifest.data[k], `${p.id}: data key ${k} is not in the manifest, so the browser calculator lacks it`);
+    const browserData = { defaults: manifest.data.defaults, appliances: t.appliances, ...Object.fromEntries(t.data_keys.map((k) => [k, manifest.data[k]])) };
     const base = { ...t.fixed_inputs, ...Object.fromEntries(t.fields.filter((f) => f.default !== undefined && f.default !== null).map((f) => [f.name, f.default])) };
     const variants = [['default', base]];
     for (const f of t.fields) {

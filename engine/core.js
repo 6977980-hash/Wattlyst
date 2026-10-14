@@ -33,11 +33,14 @@ export function num(inputs, key, opts = {}) {
     v = /^[+-]?(\d+\.?\d*|\.\d+)$/.test(t) ? Number(t) : NaN;
   }
   if (v === undefined || v === null) throw new CalcError(opts.code || `${key}_required`, key);
-  if (!isNum(v)) throw new CalcError(opts.code || `${key}_invalid`, key);
+  // A code ending in _invalid / _out_of_range covers every failure of that input; any other code (a range or
+  // "required" code) is kept for those cases only, so text or a huge number gets its own message (audit WL-29).
+  const all = /_(invalid|out_of_range)$/.test(opts.code || '');
+  if (!isNum(v)) throw new CalcError(all ? opts.code : `${key}_invalid`, key);
   if (opts.gt !== undefined && !(v > opts.gt)) throw new CalcError(opts.code || `${key}_must_be_positive`, key);
   if (opts.min !== undefined && v < opts.min) throw new CalcError(opts.code || `${key}_too_small`, key);
   if (opts.max !== undefined && v > opts.max) throw new CalcError(opts.code || `${key}_too_large`, key);
-  if (Math.abs(v) > MAX_INPUT) throw new CalcError(opts.code || `${key}_too_large`, key);
+  if (Math.abs(v) > MAX_INPUT) throw new CalcError(all ? opts.code : `${key}_too_large`, key);
   return v;
 }
 

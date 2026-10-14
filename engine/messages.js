@@ -46,6 +46,7 @@ const EXACT = {
   fuel_data_missing: 'Fuel data could not be loaded. Please refresh the page.',
   panels_must_be_whole: 'Number of panels must be a whole number.',
   forecast_invalid: 'The solar forecast could not be read. The typical day is shown instead.',
+  forecast_unavailable: 'The live forecast is not available right now, so a typical day is shown. Try again later.',
   volts_required_dc: 'For DC, enter the battery or system voltage; there is no standard DC voltage to assume.',
   cable_over_current_rating: 'This cable is not rated for this current (in conduit), so it is unsafe even if the voltage drop is small. Use a thicker cable; the wire size calculator checks both.',
   ampacity_not_checked_aluminium: 'The current rating of aluminium cable is not checked here, only its voltage drop. Check the current rating in the cable maker\'s datasheet, or ask a licensed electrician.',
@@ -55,16 +56,20 @@ const EXACT = {
   internal_non_finite: 'These numbers are outside a realistic range. Please check your inputs.',
 };
 
+const row = (m) => `Appliance ${Number(m[1]) + 1}: `; // codes count rows from 0, people from 1
 const PATTERNS = [
   [/^history_(\d+)_invalid$/, (m) => `Month ${m[1]}: enter the units as a number (0 or more).`],
-  [/^load_(\d+)_start_below_run$/, (m) => `Appliance ${Number(m[1]) + 1}: starting watts cannot be lower than running watts.`],
-  [/^load_(\d+)_watts_required$/, (m) => `Appliance ${Number(m[1]) + 1}: enter its watts.`],
-  [/^load_(\d+)_\w+_invalid$/, (m) => `Appliance ${Number(m[1]) + 1}: enter a valid number.`],
+  [/^load_(\d+)_start_below_run$/, (m) => `${row(m)}starting watts cannot be lower than running watts.`],
+  [/^load_(\d+)_watts_required$/, (m) => `${row(m)}enter its watts.`],
+  [/^load_(\d+)_hours_invalid$/, (m) => `${row(m)}hours per day must be a number from 0 to 24.`],
+  [/^load_(\d+)_start_invalid$/, (m) => `${row(m)}enter its starting watts as a number (0 or more).`],
+  [/^load_(\d+)_qty_invalid$/, (m) => `${row(m)}enter how many as a number (0 or more).`],
+  [/^(?:load|appliance)_(\d+)_(?:\w+_)?invalid$/, (m) => `${row(m)}enter its watts as a number (0 or more).`],
   [/^(\w+)_required$/, (m, f) => `Enter ${f(m[1])}.`],
-  [/^(\w+)_invalid$/, (m, f) => `Enter a valid number for ${f(m[1])}.`],
+  [/^(\w+)_invalid$/, (m, f, pick) => (pick.includes(m[1]) ? `Choose ${f(m[1])} from the list.` : `${cap(f(m[1]))} must be a number, for example 12 or 1500.`)],
   [/^(\w+)_must_be_positive$/, (m, f) => `${cap(f(m[1]))} must be greater than 0.`],
   [/^(\w+)_too_small$/, (m, f) => `${cap(f(m[1]))} is too small.`],
-  [/^(\w+)_too_large$/, (m, f) => `${cap(f(m[1]))} is too large.`],
+  [/^(\w+)_too_large$/, (m, f) => `${cap(f(m[1]))} is too large. Check the number and its unit.`],
 ];
 
 const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
@@ -81,12 +86,13 @@ export function noticeCode(out) {
   return '';
 }
 
-export function errorMessage(code, labels = {}) {
+/** labels: { field: label } from the page; choices: names of the fields that are a list to pick from. */
+export function errorMessage(code, labels = {}, choices = []) {
   if (EXACT[code]) return EXACT[code];
   const f = (key) => labels[key] || key.replace(/_/g, ' ');
   for (const [re, make] of PATTERNS) {
     const m = code.match(re);
-    if (m) return make(m, f);
+    if (m) return make(m, f, choices);
   }
   return 'Something went wrong with this calculation. Please check your inputs.';
 }

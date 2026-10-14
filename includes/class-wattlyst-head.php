@@ -153,11 +153,13 @@ final class Wattlyst_Head {
 		// dist/ holds the stripped copies built by tools/build.js (same code, no comments or indentation).
 		// Whole import chain (tool script, shared modules, the calculator module and its nested imports), each
 		// under the exact versioned URL the import uses, so nothing is fetched twice or discovered late.
-		// Pages with an appliance list also load the list module (assets/js/wattlyst-loads.js).
+		// Pages with an appliance list also load the list module (assets/js/wattlyst-loads.js); the live forecast
+		// and diagram pages load assets/js/wattlyst-extra.js.
 		$module  = basename( (string) $tool['module'] );
 		$engine  = array_unique( array_merge( array( 'format.js', 'messages.js', 'core.js', $module ), $this->plugin->module_deps( $module ) ) );
 		$list    = in_array( 'loads', array_column( $tool['fields'] ?? array(), 'type' ), true ) ? array( 'dist/assets/js/wattlyst-loads.js' ) : array();
-		$files   = array_merge( array( 'dist/assets/js/wattlyst-tool.js' ), $list, array_map( static fn( $f ) => 'dist/engine/' . $f, $engine ) );
+		$extra   = ! empty( $tool['live'] ) || ! empty( $tool['diagram'] ) ? array( 'dist/assets/js/wattlyst-extra.js' ) : array();
+		$files   = array_merge( array( 'dist/assets/js/wattlyst-tool.js' ), $list, $extra, array_map( static fn( $f ) => 'dist/engine/' . $f, $engine ) );
 		foreach ( $files as $f ) {
 			printf( '<link rel="modulepreload" href="%s">' . "\n", esc_url( $this->plugin->script_url( $f ) ) );
 		}

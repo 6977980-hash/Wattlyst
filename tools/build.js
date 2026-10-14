@@ -280,6 +280,15 @@ function priceSources(ctx, { panelsOnly = false } = {}) {
   return [...seen.values()];
 }
 
+/** Browser copy of data/generator-fuel.json: the curve and price per fuel, which is all engine/fuel.js reads. */
+function browserFuel(f) {
+  const pick = (o, keys) => Object.fromEntries(keys.map((k) => [k, o[k]]));
+  return {
+    fuels: Object.fromEntries(Object.entries(f.fuels).map(([k, v]) => [k, pick(v, ['intercept_l_per_h_per_kw_rated', 'slope_l_per_kwh'])])),
+    prices: Object.fromEntries(Object.entries(f.prices).filter(([, v]) => v && typeof v === 'object' && 'rs_per_litre' in v).map(([k, v]) => [k, { rs_per_litre: v.rs_per_litre }])),
+  };
+}
+
 /** C8: the generator data behind the fuel curve and the fuel price, once per URL. */
 function fuelSources(ctx) {
   const f = ctx.data.generator_fuel;
@@ -616,7 +625,9 @@ export async function build() {
       : { status: site.reviewer.status } },
     data: { defaults: inp.data.defaults, tariff: inp.data.tariff, cities: inp.data.cities, cables: inp.cables,
       // Browser copy of the price ranges: numbers only (sources and quotes stay on the quote-checker page).
-      solar_prices: { checked: inp.solarPrices._meta.checked, panel_rs_per_w: { low: inp.solarPrices.panel_rs_per_w.low, high: inp.solarPrices.panel_rs_per_w.high }, systems: inp.solarPrices.systems.map(({ type, kw, low_rs, high_rs }) => ({ type, kw, low_rs, high_rs })) } },
+      solar_prices: { checked: inp.solarPrices._meta.checked, panel_rs_per_w: { low: inp.solarPrices.panel_rs_per_w.low, high: inp.solarPrices.panel_rs_per_w.high }, systems: inp.solarPrices.systems.map(({ type, kw, low_rs, high_rs }) => ({ type, kw, low_rs, high_rs })) },
+      // C8 fuel curve and fuel prices, numbers only (the generator test points stay in data/, the page lists them).
+      generator_fuel: browserFuel(inp.data.generator_fuel) },
     pages: rows.map(({ id, type, url, h1, title, meta, status, live, parent, children, related, next, wave }) => ({ id, type, url, h1, title, meta, status, live, parent, children, related, next, wave })),
     nav: rows.filter((r) => r.nav_label).sort((a, b) => a.nav_order - b.nav_order).map((r) => ({ id: r.id, label: r.nav_label, url: r.url })),
     website_schema: websiteSchema(site, pluginUrl),
@@ -643,7 +654,7 @@ export async function build() {
 function distFiles() {
   const src = {};
   for (const f of readdirSync(join(root, 'engine')).filter((x) => x.endsWith('.js')).sort()) src[`dist/engine/${f}`] = stripJs(read(`engine/${f}`));
-  for (const f of ['wattlyst-tool.js', 'wattlyst-loads.js', 'wattlyst-page.js']) src[`dist/assets/js/${f}`] = stripJs(read(`assets/js/${f}`));
+  for (const f of ['wattlyst-tool.js', 'wattlyst-loads.js', 'wattlyst-extra.js', 'wattlyst-page.js']) src[`dist/assets/js/${f}`] = stripJs(read(`assets/js/${f}`));
   const hash = createHash('sha256');
   for (const [p, code] of Object.entries(src)) hash.update(`${p}\n${code}\n`);
   const ver = hash.digest('hex').slice(0, 10);

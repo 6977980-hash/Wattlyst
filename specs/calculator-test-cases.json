@@ -1473,6 +1473,48 @@
     "note": "edge case"
   },
   {
+    "calc": "battery_runtime",
+    "name": "text in the load field",
+    "inputs": {
+      "ah": 100,
+      "volts": 12,
+      "load_w": "abc"
+    },
+    "expected": {
+      "error": "load_w_invalid"
+    },
+    "tolerance": 0,
+    "note": "audit 2026-10-14 WL-29: text and huge numbers get their own code, not the range code"
+  },
+  {
+    "calc": "battery_runtime",
+    "name": "load beyond any home or shop",
+    "inputs": {
+      "ah": 100,
+      "volts": 12,
+      "load_w": 10000000000000
+    },
+    "expected": {
+      "error": "load_w_too_large"
+    },
+    "tolerance": 0,
+    "note": "audit 2026-10-14 WL-29: text and huge numbers get their own code, not the range code"
+  },
+  {
+    "calc": "battery_runtime",
+    "name": "decimal comma is not a number",
+    "inputs": {
+      "ah": 100,
+      "volts": 12,
+      "load_w": "1,5"
+    },
+    "expected": {
+      "error": "load_w_invalid"
+    },
+    "tolerance": 0,
+    "note": "audit 2026-10-14 WL-29: text and huge numbers get their own code, not the range code"
+  },
+  {
     "calc": "battery_bank",
     "name": "51.2V bank cannot be built from 12V batteries",
     "inputs": {

@@ -65,7 +65,7 @@ test('security headers on pages; the embed document may be framed, other pages m
   for (const h of ['X-Content-Type-Options', 'Referrer-Policy', 'Permissions-Policy', 'Strict-Transport-Security', 'X-Frame-Options', "frame-ancestors 'self'"]) assert.ok(wpsite.includes(h), h);
   assert.match(php('includes/class-wattlyst-endpoints.php'), /send_security_headers\( true \)/);
   // The live forecast reads coordinates from the city list, not the browser, so geolocation is not needed.
-  for (const f of ['wattlyst-tool.js', 'wattlyst-loads.js', 'wattlyst-page.js']) assert.doesNotMatch(php(`assets/js/${f}`), /navigator\.(geolocation|mediaDevices)/);
+  for (const f of ['wattlyst-tool.js', 'wattlyst-loads.js', 'wattlyst-extra.js', 'wattlyst-page.js']) assert.doesNotMatch(php(`assets/js/${f}`), /navigator\.(geolocation|mediaDevices)/);
 });
 
 test('users REST routes and oEmbed author are hidden from visitors (WL-62 code part)', () => {

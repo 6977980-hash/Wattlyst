@@ -1,6 +1,9 @@
 /* Wattlyst page styles. Inlined on Wattlyst pages only. Colours meet WCAG AA contrast. */
 .wl-page [hidden]{display:none!important}
-.wl-page{--wl-ink:#16211d;--wl-muted:#46534d;--wl-accent:#0b3d2e;--wl-accent-2:#0f6b4f;--wl-bg-soft:#f2f7f4;--wl-line:#cfdcd5;--wl-warn:#8a3b00;color:var(--wl-ink);line-height:1.6}
+:root{--wl-ink:#16211d;--wl-muted:#46534d;--wl-accent:#0b3d2e;--wl-accent-2:#0f6b4f;--wl-bg-soft:#f2f7f4;--wl-line:#cfdcd5;--wl-warn:#8a3b00;--wl-focus:#ffbf47}
+/* Theme (GeneratePress) accent = brand green, so the current menu item, menu hover and footer links are not theme blue (audit WL-53). html:root beats the theme's later :root. */
+html:root{--accent:#0f6b4f}
+.wl-page{color:var(--wl-ink);line-height:1.6}
 .wl-page h2{font-size:1.35rem;font-weight:700;margin:2rem 0 .75rem}
 .wl-page h3{font-size:1.1rem;font-weight:600;margin:1.25rem 0 .4rem}
 .wl-h1{font-size:1.8rem;font-weight:700;line-height:1.25;margin:.25rem 0 .75rem}
@@ -22,7 +25,11 @@
 .wl-advanced .wl-fields{margin-top:.5rem}
 .wl-btn{display:block;width:100%;min-height:48px;margin:1rem 0 0;font-size:1.05rem;font-weight:700;color:#fff;background:var(--wl-accent);border:0;border-radius:8px;cursor:pointer}
 .wl-btn:hover,.wl-btn:focus{background:var(--wl-accent-2)}
+/* Keyboard focus: dark ring outside a yellow band, visible on the green button and on white or tinted backgrounds (audit WL-59). */
+.wl-btn:focus-visible,.wl-btn-secondary:focus-visible,.wl-table-wrap:focus-visible,.wl-advanced summary:focus-visible,.wl-embed summary:focus-visible,.wl-page a:focus-visible{outline:3px solid var(--wl-ink);outline-offset:2px;box-shadow:0 0 0 2px var(--wl-focus)}
 .wl-error{margin:1rem 0 0;padding:.75rem;border-left:4px solid #b00020;background:#fff;color:#7a0016;font-weight:600}
+/* A notice on a valid result (size above the standard list, low price confidence, typical day shown) is advice, not an error (audit WL-54). */
+.wl-notice{border-left-color:#b25e00;background:#fff8e6;color:#5c3500;font-weight:500}
 .wl-results{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,12rem),1fr));gap:.75rem;margin-top:1rem}
 .wl-result{background:#fff;border:1px solid var(--wl-line);border-radius:8px;padding:.75rem}
 .wl-result-label{display:block;font-size:.9rem;color:var(--wl-muted)}
@@ -50,6 +57,25 @@
 .wl-footer-nav a{display:inline-block;padding:.5rem 0}
 .wl-copy{margin:.25rem 0 0}
 @media (min-width:768px){.wl-h1{font-size:2.2rem}}
+/* Phones: header, breadcrumb, H1 and answer take less height, so the calculator starts near the top (audit WL-51). */
+@media (max-width:768px){
+body .inside-header{padding:6px 16px}
+body .main-navigation .menu-toggle{line-height:48px}
+body.separate-containers .site-main{margin-top:8px;margin-bottom:8px}
+body.separate-containers .inside-article{padding:16px}
+.wl-breadcrumb ol{flex-wrap:nowrap;white-space:nowrap;overflow:hidden;font-size:.85rem}
+.wl-breadcrumb li:last-child{overflow:hidden;text-overflow:ellipsis;min-width:0}
+.wl-h1{font-size:1.5rem;margin:.25rem 0 .5rem}
+.wl-answer{font-size:1rem;line-height:1.5;margin-bottom:1rem}
+.wl-tool{padding:.85rem}
+.wl-fields{gap:.75rem}
+.wl-hint{font-size:.8125rem;line-height:1.45}
+}
+/* Desktop: ten task hubs fit on one menu row from 769 px up (audit WL-52). */
+@media (min-width:769px){body .main-navigation .main-nav ul li a{padding-left:12px;padding-right:12px}}
+/* Tablets: the menu takes its own full-width row under the logo instead of wrapping beside it. */
+@media (min-width:769px) and (max-width:1023px){body .inside-header{flex-wrap:wrap;padding-top:8px;padding-bottom:0}body.nav-float-right #site-navigation{flex-basis:100%;margin-left:0}body .main-navigation .main-nav ul li a{line-height:44px}}
+@media (min-width:769px) and (max-width:1199px){body .main-navigation .main-nav ul li a{padding-left:7px;padding-right:7px;font-size:14px}body .inside-header{padding-left:16px;padding-right:16px}}
 .wl-how,.wl-facts{margin:1.5rem 0}
 .wl-how h2,.wl-facts h2{margin-top:.25rem}
 .wl-label{display:block;font-weight:600;margin-bottom:.25rem}
