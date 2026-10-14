@@ -12,7 +12,7 @@
    "name": "watts",
    "label": "Load",
    "unit": "W",
-   "default": 3000,
+   "default": 2000,
    "hint": "Total watts the cable will carry, from the appliance labels or the home load calculator."
   },
   {
@@ -47,8 +47,7 @@
    "label": "Voltage",
    "unit": "V",
    "placeholder": "Auto by phase",
-   "advanced": true,
-   "hint": "Leave blank for the standard single or three-phase voltage. Enter the battery voltage for a DC cable."
+   "hint": "Required for DC: enter the battery or system voltage. On AC leave it blank for the standard single or three-phase voltage."
   },
   {
    "name": "load_type",
@@ -116,6 +115,21 @@
    ]
   },
   {
+   "name": "ambient_c",
+   "label": "Air temperature around the cable",
+   "unit": "°C",
+   "default": "@data.cables.derating.default_ambient_c",
+   "hint": "Hottest air the cable sits in: a conduit under a sunny roof or in a hot wall gets far hotter than the room. The default is a Pakistani summer value; every cable rating is reduced for it."
+  },
+  {
+   "name": "circuits",
+   "label": "Circuits in the same conduit",
+   "unit": "circuits",
+   "default": "@data.cables.derating.default_circuits",
+   "advanced": true,
+   "hint": "How many circuits share this conduit or bundle. Cables packed together heat each other, so each one carries less."
+  },
+  {
    "name": "pf",
    "label": "Power factor",
    "unit": "0 to 1",
@@ -161,21 +175,28 @@
    "label": "Voltage drop",
    "spec": "1",
    "unit": "%"
+  },
+  {
+   "key": "ambient_c",
+   "label": "Rated for air at",
+   "spec": "int",
+   "unit": "°C"
   }
  ],
  "answer": "A {{in.watts|int}} W single-phase load over a {{in.length_m|int}} m run in conduit needs a {{out.area_mm2|1}} mm² copper cable ({{out.pk_size|raw}} in Pakistani sizes), rated {{out.ampacity_a|int}} A, on a {{out.breaker_a|int}} A MCB, with a {{out.drop_pct|1}}% voltage drop. The cable must carry the design current of {{out.ib_a|1}} A times a {{out.margin|2}} safety margin and keep the drop under {{out.limit_pct|int}}%.",
  "how": "Design current = {{out.watts|int}} W ÷ ({{out.k|2}} × {{out.volts|int}} V × {{out.pf|2}} power factor) = {{out.ib_a|1}} A (the first factor is one for single phase and DC, root three for three phase). MCB = next standard size above {{out.breaker_design_a|1}} A = {{out.breaker_a|int}} A. The cable must be rated at least {{out.min_cable_a|1}} A, the larger of {{out.ib_a|1}} A × {{out.margin|2}} and the MCB, and be at least {{out.min_mm2|1}} mm² for this circuit type: {{out.area_mm2|1}} mm² ({{out.pk_size|raw}}) is rated {{out.ampacity_a|int}} A. Voltage drop over the {{in.length_m|int}} m run = {{out.drop_v|1}} V, which is {{out.drop_pct|1}}% of {{out.volts|int}} V, within the {{out.limit_pct|int}}% limit.",
  "key_facts": [
   "Wire size = the smallest copper cable whose current rating covers the design current × {{d.margin|2}} (and the MCB) and whose voltage drop over the run stays under {{d.vdrop_limit_other_pct|int}}% for power circuits or {{d.vdrop_limit_lighting_pct|int}}% for lighting.",
-  "Pakistani wire sizes are strands/diameter: 7/29 is rated as a {{out.area_mm2|1}} mm² cable and carries {{out.ampacity_a|int}} A in conduit; 7/36 as {{ex.4.out.area_mm2|1}} mm² at {{ex.4.out.ampacity_a|int}} A; 7/44 as {{ex.0.out.area_mm2|1}} mm² at {{ex.0.out.ampacity_a|int}} A (IEC 60364-5-52, PVC copper, in conduit).",
+  "Pakistani wire sizes are strands/diameter: 7/29 is rated as a {{out.area_mm2|1}} mm² cable and carries {{out.ampacity_a|int}} A in conduit; 7/36 as {{ex.4.out.area_mm2|1}} mm² at {{ex.4.out.ampacity_a|int}} A (IEC 60364-5-52, PVC copper, in conduit, corrected for {{out.ambient_c|int}} °C air).",
   "A {{in.watts|int}} W load at {{out.volts|int}} V draws {{out.ib_a|1}} A and fits on 7/29 with a {{out.breaker_a|int}} A MCB; a {{ex.0.in.watts|int}} W load draws {{ex.0.out.ib_a|1}} A and needs {{ex.0.out.area_mm2|1}} mm² ({{ex.0.out.pk_size|raw}}) with a {{ex.0.out.breaker_a|int}} A MCB.",
   "Long runs are sized by voltage drop, not current: {{ex.1.in.watts|int}} W over {{ex.1.in.length_m|int}} m needs {{ex.1.out.area_mm2|1}} mm² although {{ex.1.out.ampacity_only_mm2|1}} mm² would carry the current."
  ],
  "formula": {
-  "text": "I_b = P ÷ (k × V × PF); I_n = next standard ≥ I_b; I_z ≥ max(I_b × margin, I_n); ΔV% = k_v × L × I_b × ρ ÷ A ÷ V × 100",
+  "text": "I_b = P ÷ (k × V × PF); I_n = next standard ≥ I_b; I_z = I_z,table × f_temp × f_group ≥ max(I_b × margin, I_n); ΔV% = k_v × L × I_b × ρ ÷ A ÷ V × 100",
   "lines": [
    "I_b = design current; k = 1 for single phase and DC, √3 for three phase",
    "I_n = MCB rating; I_z = cable current rating for the installation method",
+   "f_temp, f_group = IEC 60364-5-52 correction factors for the air temperature and the circuits in one conduit; three phase uses the three-conductor ratings",
    "k_v = 2 for single phase and DC (there and back), √3 for three phase",
    "L = one-way run in metres; ρ = resistivity of copper; A = cable area in mm²",
    "Minimum sizes: lighting circuits and power circuits each have a floor whatever the current"
@@ -192,27 +213,27 @@
   {
    "h2": "What is the 7/29 wire ampere rating (2.5 mm² wire amps)?",
    "p": [
-    "7/29 copper wire is rated as a {{out.area_mm2|1}} mm² cable here and carries {{out.ampacity_a|int}} A in conduit inside a wall, a little more when clipped on the surface. With the {{out.margin|2}} safety margin that means a design current of about {{out.ib_a|1}} A, the default {{in.watts|int}} W load, fits on 7/29 with a {{out.breaker_a|int}} A MCB and room to spare ({{out.min_cable_a|1}} A needed against {{out.ampacity_a|int}} A).",
+    "7/29 copper wire is rated as a {{out.area_mm2|1}} mm² cable here and carries {{out.ampacity_a|int}} A in conduit inside a wall in {{out.ambient_c|int}} °C air ({{out.ampacity_30c_a|int}} A in the IEC table at {{data.cables.derating.ambient_factors.4.0|int}} °C), a little more when clipped on the surface. With the {{out.margin|2}} safety margin that means a design current of about {{out.ib_a|1}} A, the default {{in.watts|int}} W load, fits on 7/29 with a {{out.breaker_a|int}} A MCB and room to spare ({{out.min_cable_a|1}} A needed against {{out.ampacity_a|int}} A).",
     "A {{ex.4.in.watts|int}} W load on the same supply draws {{ex.4.out.ib_a|1}} A and needs a cable rated {{ex.4.out.min_cable_a|1}} A, above what 7/29 can carry, so the calculator moves to {{ex.4.out.pk_size|raw}} ({{ex.4.out.area_mm2|1}} mm²), rated {{ex.4.out.ampacity_a|int}} A, with a {{ex.4.out.breaker_a|int}} A MCB. 7/29 is also the minimum size for any socket or AC circuit."
    ]
   },
   {
    "h2": "How many amps can 4 mm² wire carry?",
    "p": [
-    "{{ex.4.out.area_mm2|1}} mm² copper, sold as 7/36 in Pakistan, carries {{ex.4.out.ampacity_a|int}} A in conduit. It is the usual choice for a kitchen socket ring, a geyser plus sockets, or an AC on a long run. In the example below a {{ex.4.in.watts|int}} W load at {{ex.4.in.length_m|int}} m gets 7/36 with a {{ex.4.out.breaker_a|int}} A MCB and a {{ex.4.out.drop_pct|1}}% drop. The next size, 7/44 ({{ex.0.out.area_mm2|1}} mm²), carries {{ex.0.out.ampacity_a|int}} A."
+    "{{ex.4.out.area_mm2|1}} mm² copper, sold as 7/36 in Pakistan, carries {{ex.4.out.ampacity_a|int}} A in conduit in {{ex.4.out.ambient_c|int}} °C air. It is the usual choice for a kitchen socket ring, a geyser plus sockets, or an AC on a long run. In the example below a {{ex.4.in.watts|int}} W load at {{ex.4.in.length_m|int}} m gets 7/36 with a {{ex.4.out.breaker_a|int}} A MCB and a {{ex.4.out.drop_pct|1}}% drop. Above that the calculator moves to 7/44."
    ]
   },
   {
    "h2": "What is copper wire ampacity and why does the installation method matter?",
    "p": [
     "Ampacity is the current a cable can carry continuously without its insulation getting too hot. The ratings here are for PVC-insulated copper from IEC 60364-5-52: method B1 is a cable in conduit inside a wall, which is most Pakistani house wiring and traps heat, so it is rated lower than method C, a cable clipped to a surface in free air. Pick the method that matches your installation.",
-    "Several cables in one conduit, a roof space that bakes in summer or an aluminium conductor all reduce the rating further. The calculator uses one cable at normal room temperature; an electrician derates for the rest."
+    "Heat and grouping reduce the rating further. The IEC table is for {{data.cables.derating.ambient_factors.4.0|int}} °C air; the calculator multiplies every rating by the IEC correction factors for the air temperature you enter (in {{out.ambient_c|int}} °C air a PVC cable keeps {{out.ambient_factor|2}} of its rating) and for the circuits sharing the conduit. The default air temperature is a cautious Pakistani summer value awaiting review by a PEC-registered engineer. Aluminium is not rated here."
    ]
   },
   {
    "h2": "Is there a cable size chart for Pakistani wire sizes?",
    "p": [
-    "The table below is one: common single-phase loads at {{in.length_m|int}} m with the mm² size, the Pakistani name, the current rating, the MCB and the voltage drop. The names count the strands and their diameter in thousandths of an inch: 3/29 is three strands and is rated as 1 mm² for lighting points, 7/29 is seven strands rated as 2.5 mm² for sockets and ACs, 7/36 as 4 mm², 7/44 as 6 mm², 7/52 as 10 mm² and 7/64 as 16 mm² for main feeds.",
+    "The table below is one: common single-phase loads at {{in.length_m|int}} m with the mm² size, the Pakistani name, the current rating, the MCB and the voltage drop. The names count the strands and their diameter in thousandths of an inch: 3/29 is three strands and is rated as 1 mm² for lighting points, 7/29 is seven strands rated as 2.5 mm² for sockets and ACs, 7/36 as 4 mm², 7/44 as 6 mm². Bigger sizes are rated by their real area: {{data.cables.pk_sizes.4.name|raw}} is {{data.cables.pk_sizes.4.area_mm2|2}} mm², just under {{data.cables.cables.5.area_mm2|int}}, so it is rated as {{data.cables.pk_sizes.4.rated_as_mm2|int}} mm²; {{data.cables.pk_sizes.5.name|raw}} ({{data.cables.pk_sizes.5.area_mm2|2}} mm²) as {{data.cables.pk_sizes.5.rated_as_mm2|int}} mm² and {{data.cables.pk_sizes.6.name|raw}} as {{data.cables.pk_sizes.6.rated_as_mm2|int}} mm² for main feeds.",
     "A 7/29 is actually a little larger than 2.5 mm², but it is rated as 2.5 mm² here to stay on the safe side. Always buy cable with the size printed on the sheath from a known maker; thin or copper-clad wire sold as 7/29 does not carry 7/29 current."
    ]
   },
@@ -234,7 +255,7 @@
   },
   {
    "inputs": {
-    "watts": 3000,
+    "watts": 2000,
     "length_m": 60
    },
    "title": "Long {{in.length_m|int}} m run: voltage drop decides",
@@ -263,7 +284,7 @@
   },
   {
    "inputs": {
-    "watts": 4400,
+    "watts": 3000,
     "length_m": 10,
     "pf": 0.8
    },
@@ -272,7 +293,7 @@
   }
  ],
  "table": {
-  "caption": "Cable size chart: single-phase loads at {{out.volts|int}} V over {{in.length_m|int}} m in conduit, power factor {{out.pf|1}}",
+  "caption": "Cable size chart: single-phase loads at {{out.volts|int}} V over {{in.length_m|int}} m in conduit in {{out.ambient_c|int}} °C air, power factor {{out.pf|1}}",
   "rows": [
    {
     "watts": 1000
@@ -331,7 +352,7 @@
   "Treating copper-clad or aluminium wire as copper. Both need a larger size and different terminals; the ratings here are for copper only.",
   "Trusting the name on the roll. A cheap 7/29 with thin strands is not 2.5 mm²; buy from a known maker with the size printed on the sheath."
  ],
- "safety": "These sizes are planning values for one copper cable at normal room temperature; a licensed electrician must confirm the cable, MCB and earth on site and derate for grouped cables, hot roof spaces and long runs.",
+ "safety": "These sizes are planning values for copper cable in {{out.ambient_c|int}} °C air with {{out.circuits|int}} circuit in the conduit; the air temperature default awaits review by a PEC-registered engineer. A licensed electrician must confirm the cable, MCB and earth on site.",
  "faq": [
   {
    "q": "Does this wire size calculator use Pakistani wire sizes?",
@@ -339,7 +360,7 @@
   },
   {
    "q": "What is the maximum load on 7/29 wire?",
-   "a": "7/29 carries {{out.ampacity_a|int}} A in conduit. With the {{out.margin|2}} planning margin a {{in.watts|int}} W single-phase load ({{out.ib_a|1}} A) fits with a {{out.breaker_a|int}} A MCB; a {{ex.4.in.watts|int}} W load ({{ex.4.out.ib_a|1}} A) does not and moves up to 7/36."
+   "a": "7/29 carries {{out.ampacity_a|int}} A in conduit in {{out.ambient_c|int}} °C air. With the {{out.margin|2}} planning margin a {{in.watts|int}} W single-phase load ({{out.ib_a|1}} A) fits with a {{out.breaker_a|int}} A MCB; a {{ex.4.in.watts|int}} W load ({{ex.4.out.ib_a|1}} A) does not and moves up to 7/36."
   },
   {
    "q": "What size wire for a five kW load at {{out.volts|int}} V?",
@@ -347,7 +368,7 @@
   },
   {
    "q": "Which wire for a {{ex.0.out.breaker_a|int}} A MCB?",
-   "a": "At least {{ex.0.out.area_mm2|1}} mm² ({{ex.0.out.pk_size|raw}}), rated {{ex.0.out.ampacity_a|int}} A in conduit, so that the cable rating stays above the breaker and the breaker protects the cable."
+   "a": "At least {{ex.0.out.area_mm2|1}} mm² ({{ex.0.out.pk_size|raw}}), rated {{ex.0.out.ampacity_a|int}} A in conduit in {{ex.0.out.ambient_c|int}} °C air, so that the cable rating stays above the breaker and the breaker protects the cable."
   },
   {
    "q": "Does cable length change the wire size?",
@@ -363,7 +384,7 @@
   },
   {
    "q": "What do 3/29, 7/29 and 7/36 mean?",
-   "a": "The number of copper strands and each strand's diameter in thousandths of an inch: 7/29 is seven strands of twenty-nine thousandths of an inch. The calculator converts each to its area in mm² and rates it as the IEC size it is sold as."
+   "a": "The number of copper strands and each strand's diameter in thousandths of an inch: 7/29 is seven strands of twenty-nine thousandths of an inch. The calculator converts each to its area in mm² and rates it as the largest IEC size that area reaches, so a cable is never rated above its real copper."
   }
  ],
  "related": [
@@ -375,21 +396,24 @@
  ],
  "next": "W3",
  "literal_numbers": [
-  "IEC 60364-5-52",
-  "5 kW",
-  "16 mm²",
-  "10 mm²",
-  "2.5 mm²",
   "1 mm²",
-  "4 mm²",
-  "6 mm²",
+  "10 mm²",
+  "16 mm²",
+  "2.5 mm²",
   "3/29",
+  "4 mm²",
+  "5 kW",
+  "6 mm²",
   "7/29",
   "7/36",
+  "7/36 as 4 mm²",
   "7/44",
+  "7/44 as 6 mm²",
   "7/52",
   "7/64",
-  "B1"
+  "B1",
+  "IEC 60364-5-52",
+  "PEC"
  ],
  "sources": [
   {

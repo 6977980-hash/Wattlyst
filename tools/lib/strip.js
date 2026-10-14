@@ -4,7 +4,10 @@
 // spec case against the shrunk engine too, so a stripping mistake fails the build, not the site.
 
 const REGEX_BEFORE = new Set([...'(,=:[!&|?{};+-*%<>~^']);
-const TIGHT = new Set([...'{}()[];,:=?']);
+const TIGHT = new Set([...'{}()[];,:=?*&|<>']);
+const JOIN_AFTER = new Set([...';{,([']);
+const SIGNS = new Set([...'+-/']);
+const JOIN_BEFORE = new Set([...'.)]},?:']);
 const REGEX_KEYWORDS = new Set(['return', 'typeof', 'case', 'in', 'of', 'new', 'delete', 'void', 'throw', 'else', 'do', 'yield', 'await']);
 
 export function stripJs(src) {
@@ -69,7 +72,7 @@ export function stripJs(src) {
     if (c === '/' && d === '*') {
       const end = src.indexOf('*/', i + 2);
       if (end < 0) throw new Error('stripJs: unterminated comment');
-      out += src.slice(i, end).includes('\n') ? '\n' : ' ';
+      if (src.slice(i, end).includes('\n')) { if (!out.endsWith('\n')) out += '\n'; } else out += ' ';
       i = end + 2;
       continue;
     }
@@ -96,17 +99,21 @@ export function stripJs(src) {
     if (c === '/' && regexAllowed()) { out += copyRegex(); continue; }
     if (c === '\n') {
       out = out.replace(/[ \t]+$/, '');
-      if (out !== '' && !out.endsWith('\n')) out += '\n';
       i++;
       while (i < n && (src[i] === ' ' || src[i] === '\t')) i++;
+      // A break after ; { , ( or [, or before . ) ] } , ? or :, can never end a statement by automatic semicolon
+      // insertion (the line either ended it already or must continue), so it goes.
+      if (out !== '' && !out.endsWith('\n') && !JOIN_AFTER.has(out[out.length - 1]) && !JOIN_BEFORE.has(src[i])) out += '\n';
       continue;
     }
     if (c === ' ' || c === '\t') {
       while (i < n && (src[i] === ' ' || src[i] === '\t')) i++;
-      // A space next to punctuation that can never join with its neighbour into another token is dropped
-      // (+, -, <, > and / are left alone: "a - -b" or "x / /re/" must keep their space).
+      // A space next to punctuation that can never join with its neighbour into another token is dropped;
+      // + - / lose it too unless both sides are one of them ("a - -b" and "x / /re/" keep their space).
       const prev = out[out.length - 1];
-      if (out !== '' && prev !== '\n' && prev !== ' ' && !TIGHT.has(prev) && !TIGHT.has(src[i]) && src[i] !== '\n') out += ' ';
+      const next = src[i];
+      const tight = TIGHT.has(prev) || TIGHT.has(next) || (SIGNS.has(prev) !== SIGNS.has(next));
+      if (out !== '' && prev !== '\n' && prev !== ' ' && !tight && next !== '\n') out += ' ';
       continue;
     }
     out += c;

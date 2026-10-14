@@ -6,7 +6,8 @@ import { calculator, CalcError, has, num, pos, frac, pick, dflt, appliance } fro
  * k_v = 2 (single-phase and DC, there and back) or √3 (three-phase). ρ from the conductor (copper or aluminium)
  * unless entered. drop_pct = ΔV / V × 100; limit 3% lighting, 5% other circuits. DC needs the voltage entered.
  * Current check (copper only, data/cable-ampacity.json): the rated size is the largest table cable ≤ the entered
- * area; over_cable_rating = I > its ampacity for the method (default B1), or the cable is below the table.
+ * area; over_cable_rating = I > its derated ampacity for the method (default B1; three-phase column for ac3), or the
+ * cable is below the table.
  */
 export const voltage_drop = calculator((i, d) => {
   const mode = pick(i, 'mode', ['ac1', 'ac3', 'dc'], 'ac1');
@@ -30,10 +31,12 @@ export const voltage_drop = calculator((i, d) => {
   if (conductor === 'aluminium') return { ...out, ampacity_checked: false };
   const t = cableTable(d);
   const method = pick(i, 'method', Object.keys(t.methods), 'B1');
+  const der = derating(i, t);
   const rated = [...t.cables].reverse().find((c) => c.area_mm2 <= area_mm2 + 1e-9);
-  if (!rated) return { ...out, ampacity_checked: true, method, over_cable_rating: true };
-  const ampacity_a = rated.ampacity_a[method];
-  return { ...out, ampacity_checked: true, method, rated_mm2: rated.area_mm2, ampacity_a, over_cable_rating: amps > ampacity_a + 1e-9 };
+  if (!rated) return { ...out, ampacity_checked: true, method, ...der, over_cable_rating: true };
+  const ampacity_30c_a = ratingAt30(rated, method, mode);
+  const ampacity_a = ampacity_30c_a * der.derate;
+  return { ...out, ampacity_checked: true, method, ...der, rated_mm2: rated.area_mm2, ampacity_30c_a, ampacity_a, over_cable_rating: amps > ampacity_a + 1e-9 };
 });
 
 /** PK designation n/d: n strands of diameter d inches. A = n × π × (d × 25.4 / 2)² mm². */
@@ -44,45 +47,54 @@ export const pk_cable_area = calculator((i) => {
   return { strands, strand_in, strand_mm, area_mm2: strands * Math.PI * (strand_mm / 2) ** 2 };
 });
 
-/**
- * Design current I_b = P / (V × PF). Breaker I_n = next standard size ≥ I_b.
- * Cable ampacity I_z ≥ max(I_b × margin, I_n) so that I_b ≤ I_n ≤ I_z always holds.
- */
-export const design_current = calculator((i, d) => {
-  const watts = pos(i, 'watts');
-  const volts = pos(i, 'volts', dflt(d, 'v_1ph'));
-  const pf = frac(i, 'pf', dflt(d, 'pf_mixed'));
-  const margin = num(i, 'margin', { def: dflt(d, 'margin'), min: 1 });
-  const ib = watts / (volts * pf);
-  const sizes = dflt(d, 'standard_breaker_a');
-  const breaker = sizes.find((s) => s >= ib - 1e-9);
-  if (breaker === undefined) {
-    return { watts, volts, pf, margin, ib_a: ib, min_cable_a: ib * margin, above_standard_sizes: true };
-  }
-  return { watts, volts, pf, margin, ib_a: ib, min_breaker_a: breaker, min_cable_a: Math.max(ib * margin, breaker), above_standard_sizes: false };
-});
-
 function cableTable(d) {
   const t = d?.cables;
   if (!Array.isArray(t?.cables) || !t.cables.length) throw new CalcError('cable_data_missing', 'cables');
   return t;
 }
 
+/** Table ampacity at 30 °C: two loaded conductors (single-phase, DC) or three (three-phase, ac3). */
+const ratingAt30 = (c, method, mode) => (mode === 'ac3' ? c.ampacity_3ph_a : c.ampacity_a)[method];
+
+/** Factor of the first [value, factor] row at or above v (between rows: the next row up, never interpolated). */
+const factorFor = (rows, v) => rows.find(([x]) => x >= v - 1e-9)?.[1];
+
+/**
+ * Correction factors (data/cable-ampacity.json derating, IEC 60364-5-52 B.52.14 and B.52.17):
+ * ambient air temperature (default a hot-climate design value [ENGINEER]) and circuits grouped together (default 1).
+ * derate = f_ambient × f_group multiplies every table rating.
+ */
+function derating(i, t) {
+  const g = t.derating;
+  if (!g) throw new CalcError('cable_data_missing', 'cables');
+  const amb = g.ambient_factors;
+  const grp = g.grouping_factors;
+  const ambient_c = num(i, 'ambient_c', { def: g.default_ambient_c, min: amb[0][0], max: amb[amb.length - 1][0], code: 'ambient_out_of_range' });
+  const circuits = num(i, 'circuits', { def: g.default_circuits, min: 1, max: grp[grp.length - 1][0], code: 'circuits_out_of_range' });
+  const ambient_factor = factorFor(amb, ambient_c);
+  const group_factor = factorFor(grp, circuits);
+  return { ambient_c, circuits, ambient_factor, group_factor, derate: ambient_factor * group_factor };
+}
+
 /**
  * Design current for a load given as watts, amps or an appliance id; k = √3 for three-phase.
  * An appliance sets the load type too; an inverter AC is designed at its maximum rated input
- * (starting_w = full-speed draw), other appliances at their running watts.
+ * (starting_w = full-speed draw), other appliances at their running watts. A blank PF on an appliance takes
+ * the PF of its load type (data/defaults.json pf_by_load_type), so W1 and E4 print the same breaker.
+ * DC has no standard voltage: a blank voltage is an error, never a silent 230 V.
  */
 function designCurrent(i, d, t) {
   const mode = pick(i, 'mode', ['ac1', 'ac3', 'dc'], 'ac1');
-  const volts = pos(i, 'volts', mode === 'ac3' ? dflt(d, 'v_3ph') : dflt(d, 'v_1ph'));
-  const pf = mode === 'dc' ? 1 : frac(i, 'pf', dflt(d, 'pf_mixed'));
+  const volts = mode === 'dc'
+    ? pos(i, 'volts', undefined, has(i, 'volts') ? undefined : 'volts_required_dc')
+    : pos(i, 'volts', mode === 'ac3' ? dflt(d, 'v_3ph') : dflt(d, 'v_1ph'));
+  const a = has(i, 'appliance') && String(i.appliance).trim() !== 'custom' ? appliance(d, i.appliance) : null;
+  const pf = mode === 'dc' ? 1 : frac(i, 'pf', (a && d?.defaults?.pf_by_load_type?.[a.load_type]) || dflt(d, 'pf_mixed'));
   const k = mode === 'ac3' ? Math.sqrt(3) : 1;
   const out = { mode, volts, pf, k };
   let watts;
   let ib;
-  if (has(i, 'appliance') && String(i.appliance).trim() !== 'custom') {
-    const a = appliance(d, i.appliance);
+  if (a) {
     watts = a.load_type === 'inverter_compressor' ? a.starting_w : a.running_w;
     ib = watts / (k * volts * pf);
     Object.assign(out, { appliance: String(i.appliance).trim(), appliance_name: a.name, appliance_load_type: a.load_type });
@@ -112,11 +124,15 @@ function breakerFor(dc, i, d, t) {
 
 const minArea = (t, circuit) => t.min_area_mm2?.[circuit] ?? 0;
 
-/** Pakistani n/d size for a standard cable: the exact one, else the next size up (never smaller). */
-const pkSizeFor = (t, mm2) => t.pk_sizes?.find((p) => p.rated_as_mm2 >= mm2 - 1e-9)?.name ?? 'none';
+/**
+ * Pakistani n/d size for a standard cable: the smallest one whose real area is at least the IEC size (formulas.md W),
+ * so its voltage drop is never above the one computed for the IEC size and W5 rates it at least as that size.
+ */
+const pkFor = (t, mm2) => t.pk_sizes?.find((p) => p.area_mm2 >= mm2 - 1e-9);
+const pkSizeFor = (t, mm2) => pkFor(t, mm2)?.name ?? 'none';
 
 /**
- * W2/W1: smallest copper cable (data/cable-ampacity.json) whose ampacity for the installation method
+ * W2/W1: smallest copper cable (data/cable-ampacity.json) whose derated ampacity for the installation method
  * covers max(I_b × margin, I_n) AND whose voltage drop over the run stays within the limit (formulas.md W).
  */
 export const wire_size = calculator((i, d) => {
@@ -127,6 +143,8 @@ export const wire_size = calculator((i, d) => {
   const rho = pos(i, 'rho', dflt(d, 'rho_copper'));
   const dc = designCurrent(i, d, t);
   const br = breakerFor(dc, i, d, t);
+  const der = derating(i, t);
+  const iz = (c) => ratingAt30(c, method, dc.mode) * der.derate;
   const limit_pct = circuit === 'lighting' ? dflt(d, 'vdrop_limit_lighting_pct') : dflt(d, 'vdrop_limit_other_pct');
   const kv = dc.mode === 'ac3' ? Math.sqrt(3) : 2;
   const dropOf = (mm2) => (kv * length_m * dc.ib_a * rho) / mm2;
@@ -134,15 +152,14 @@ export const wire_size = calculator((i, d) => {
   let chosen = null;
   let by_ampacity = null;
   for (const c of t.cables) {
-    const iz = c.ampacity_a[method];
-    if (c.area_mm2 < min_mm2 - 1e-9 || !(iz >= br.min_cable_a - 1e-9)) continue;
+    if (c.area_mm2 < min_mm2 - 1e-9 || !(iz(c) >= br.min_cable_a - 1e-9)) continue;
     if (by_ampacity === null) by_ampacity = c;
     if ((dropOf(c.area_mm2) / dc.volts) * 100 <= limit_pct + 1e-9) { chosen = c; break; }
   }
   if (!chosen) throw new CalcError(by_ampacity ? 'run_too_long_for_table' : 'load_above_cable_table', 'length_m');
   const drop_v = dropOf(chosen.area_mm2);
   return {
-    ...dc, length_m, method, circuit, rho, ...br, min_mm2, area_mm2: chosen.area_mm2, ampacity_a: chosen.ampacity_a[method], pk_size: pkSizeFor(t, chosen.area_mm2),
+    ...dc, length_m, method, circuit, rho, ...br, ...der, min_mm2, area_mm2: chosen.area_mm2, ampacity_30c_a: ratingAt30(chosen, method, dc.mode), ampacity_a: iz(chosen), pk_size: pkSizeFor(t, chosen.area_mm2),
     drop_v, drop_pct: (drop_v / dc.volts) * 100, limit_pct, voltage_at_load: dc.volts - drop_v,
     limited_by: chosen === by_ampacity ? 'ampacity' : 'voltage_drop', ampacity_only_mm2: by_ampacity.area_mm2,
   };
@@ -150,7 +167,7 @@ export const wire_size = calculator((i, d) => {
 
 /**
  * W3: MCB rating = next standard size ≥ I_b; curve by load type (IEC 60898-1 B/C/D from data/cable-ampacity.json);
- * matching cable = smallest size whose ampacity (method B1) ≥ max(I_b × margin, I_n).
+ * matching cable = smallest size whose derated ampacity (method B1) ≥ max(I_b × margin, I_n).
  */
 export const breaker_size = calculator((i, d) => {
   const t = cableTable(d);
@@ -159,12 +176,14 @@ export const breaker_size = calculator((i, d) => {
   const curve = t.curve_by_load[dc.load_type];
   const cv = t.mcb_curves[curve];
   const method = pick(i, 'method', Object.keys(t.methods), 'B1');
+  const der = derating(i, t);
+  const iz = (c) => ratingAt30(c, method, dc.mode) * der.derate;
   const min_mm2 = minArea(t, dc.load_type === 'lighting' ? 'lighting' : 'other');
-  const cable = t.cables.find((c) => c.area_mm2 >= min_mm2 - 1e-9 && c.ampacity_a[method] >= br.min_cable_a - 1e-9);
+  const cable = t.cables.find((c) => c.area_mm2 >= min_mm2 - 1e-9 && iz(c) >= br.min_cable_a - 1e-9);
   if (!cable) throw new CalcError('load_above_cable_table', 'watts');
   return {
-    ...dc, ...br, curve, trip_min: cv.trip_min, trip_max: cv.trip_max, trip_min_a: cv.trip_min * br.breaker_a, trip_max_a: cv.trip_max * br.breaker_a, curve_use: cv.use,
-    method, min_mm2, area_mm2: cable.area_mm2, ampacity_a: cable.ampacity_a[method], pk_size: pkSizeFor(t, cable.area_mm2),
+    ...dc, ...br, ...der, curve, trip_min: cv.trip_min, trip_max: cv.trip_max, trip_min_a: cv.trip_min * br.breaker_a, trip_max_a: cv.trip_max * br.breaker_a, curve_use: cv.use,
+    method, min_mm2, area_mm2: cable.area_mm2, ampacity_30c_a: ratingAt30(cable, method, dc.mode), ampacity_a: iz(cable), pk_size: pkSizeFor(t, cable.area_mm2),
   };
 });
 
