@@ -114,11 +114,13 @@ if(pushState)bad.focus();
 }
 return;
 }
-errorEl.hidden=true;
 results.hidden=false;
+const above=Object.keys(out).some((k)=> k.endsWith('above_standard_sizes')&& out[k]===true);
+errorEl.textContent=above?errorMessage('above_standard_sizes'):'';
+errorEl.hidden=!above;
 for(const o of cfg.outputs){
 const node=results.querySelector(`[data-out="${o.key}"] .wl-val`);
-if(node)node.textContent=fmt(out[o.key],o.spec);
+if(node)node.textContent=fmt(out[o.key],o.spec)|| 'n/a';
 }
 if(howEl && cfg.how){
 const text=render(form.dataset.lang==='ur' && cfg.how_ur?cfg.how_ur:cfg.how,{in:out,out,d:cfg.data.defaults});

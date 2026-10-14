@@ -245,8 +245,8 @@ final class Wattlyst_Pages {
 		}
 		require_once WATTLYST_TOOLS_DIR . 'includes/class-wattlyst-render.php';
 		$render = new Wattlyst_Render( $this->plugin, $page );
-		if ( ! empty( $page['content']['tool'] ) ) {
-			self::$tool_rendered = true;
+		if ( ! empty( $page['content']['tool'] ) || ! empty( $page['content']['lookup'] ) ) {
+			self::$tool_rendered = true; // the same script also drives the lookup filter
 		}
 		return $render->html();
 	}
