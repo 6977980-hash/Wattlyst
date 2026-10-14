@@ -154,3 +154,44 @@ test('"how" text renders and its arithmetic holds with edited inputs (WL-12)', (
   }
   assert.deepEqual(bad, []);
 });
+
+// ---- Price and FPA data (WL-11, WL-13, WL-15) ----
+const { solar_price_estimate } = await import('../engine/prices.js');
+
+test('solar prices never fall as the system size rises, in data and between listed sizes (WL-11)', () => {
+  for (const type of ['on-grid', 'hybrid']) {
+    const rows = data.solar_prices.systems.filter((r) => r.type === type).sort((a, b) => a.kw - b.kw);
+    for (let n = 1; n < rows.length; n++) {
+      for (const k of ['low_rs', 'high_rs']) assert.ok(rows[n][k] >= rows[n - 1][k], `${type} ${rows[n].kw} kW ${k} below ${rows[n - 1].kw} kW`);
+    }
+    let prev = null;
+    for (let kw = 1; kw <= 25.0001; kw += 0.1) {
+      const r = solar_price_estimate({ kwp: kw, type }, data);
+      if (prev) for (const k of ['price_low_rs', 'price_high_rs']) assert.ok(r[k] >= prev[k] - 1e-6, `${type} ${kw.toFixed(1)} kW ${k} ${r[k]} < ${prev[k]}`);
+      prev = r;
+    }
+  }
+});
+
+test('solar price points in use are dated, re-checked and not older than the limit; one publisher counts once (WL-15)', () => {
+  const sp = data.solar_prices;
+  const cfg = JSON.parse(readFileSync(join(root, 'data/maintenance.json'), 'utf8'));
+  const days = (a, b) => (Date.parse(b) - Date.parse(a)) / 864e5;
+  const used = [...sp.panel_rs_per_w.sources.filter((s) => !s.excluded), ...sp.systems.flatMap((s) => s.sources)];
+  for (const s of used) {
+    assert.match(s.price_date || '', /^\d{4}-\d{2}-\d{2}$/, `${s.url}: price_date`);
+    assert.ok(days(s.price_date, sp._meta.checked) <= cfg.price_point_max_age_days, `${s.url}: price date ${s.price_date} too old`);
+    assert.ok(days(s.checked, sp._meta.checked) <= cfg.data_max_age_days, `${s.url}: not re-checked`);
+  }
+  for (const r of sp.systems) {
+    const pubs = new Set(r.sources.map((s) => s.publisher.split(' (')[0]));
+    assert.equal(r.n_sources, pubs.size, `${r.type} ${r.kw} kW: n_sources counts publishers`);
+  }
+});
+
+test('one FPA source: the Bill Index; F14 pre-fills its newest NEPRA-verified month (WL-13)', () => {
+  assert.equal(data.tariff.addons_secondary.fpa_per_unit.latest, undefined, 'no FPA copy in the tariff file');
+  const newest = data.bill_index.months.find((m) => m.fpa_verified === true);
+  const f14 = pages.find((p) => p.id === 'F14').content.tool.fields.find((f) => f.name === 'fpa_per_unit');
+  assert.equal(f14.default, newest.fpa_per_unit);
+});

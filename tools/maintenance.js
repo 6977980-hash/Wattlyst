@@ -23,10 +23,13 @@ function dates(obj, path = '') {
   const out = [];
   if (Array.isArray(obj)) obj.forEach((v, i) => out.push(...dates(v, `${path}[${i}]`)));
   else if (obj && typeof obj === 'object') {
+    if (obj.excluded) return out; // a point kept for reference only is not in use
     for (const [k, v] of Object.entries(obj)) {
       const p = path ? `${path}.${k}` : k;
+      if (k === 'excluded_points') continue;
       if (isDate(v) && (k === 'checked' || k.endsWith('_checked'))) out.push({ kind: 'checked', path: p, date: v });
-      else if (isDate(v) && k === 'date') out.push({ kind: 'point', path: p, date: v });
+      // A price point's age is its price_date (when its prices are from); older files only have "date".
+      else if (isDate(v) && (k === 'price_date' || (k === 'date' && !isDate(obj.price_date)))) out.push({ kind: 'point', path: p, date: v });
       else out.push(...dates(v, p));
     }
   }
@@ -101,7 +104,7 @@ function markdown(r, cfg) {
   const L = [`# Wattlyst upkeep report, ${r.today}`, ''];
   L.push(`## Data older than ${cfg.data_max_age_days} days`, '');
   L.push(...(r.stale_data.length ? r.stale_data.map((d) => `- ${d.file} \`${d.path}\`: checked ${d.checked} (${d.days} days)`) : ['- none']));
-  L.push(...r.stale_points.map((p) => `- ${p.file}: ${p.old} of ${p.of} price points older than the limit (oldest ${p.oldest})`), '');
+  L.push(...r.stale_points.map((p) => `- ${p.file}: ${p.old} of ${p.of} price points in use are older than the limit (oldest ${p.oldest}); look for fresher sources`), '');
   L.push('## Monthly releases', '');
   L.push(`- Bill Index newest month: ${r.bill_index.latest}${r.bill_index.due ? ' (DUE: add the new month at the top of data/bill-index.json)' : ' (up to date)'}`);
   L.push(`- Net-billing buyback: ${r.buyback.verified ? 'verified' : `not verified on a NEPRA page (last checked ${r.buyback.checked})`}`, '');
