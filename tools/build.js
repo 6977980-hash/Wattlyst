@@ -346,7 +346,7 @@ function schemaFor(page, built, ctx) {
     inLanguage: 'en',
     isPartOf: { '@id': `${site.url}#website` },
     breadcrumb: { '@id': `${abs(page.url)}#breadcrumb` },
-    ...(page.reviewed ? { dateModified: page.reviewed, lastReviewed: page.reviewed } : {}),
+    ...(page.reviewed ? { dateModified: page.reviewed, lastReviewed: page.reviewed } : page.modified ? { dateModified: page.modified } : {}),
     ...(site.reviewer.status === 'signed_off' && page.type !== 'trust' ? { reviewedBy: { '@id': `${site.url}#/person/reviewer` } } : {}),
   };
   graph.push(webPage);
@@ -361,7 +361,7 @@ function schemaFor(page, built, ctx) {
       operatingSystem: 'Any',
       browserRequirements: 'Requires JavaScript for live results',
       isAccessibleForFree: true,
-      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'PKR' },
       publisher: { '@id': `${site.url}#organization` },
     });
   }
@@ -560,6 +560,8 @@ export async function build() {
   for (const r of rows.filter((x) => x.type === 'pillar')) {
     const children = rows.filter((x) => x.parent === r.id && x.live);
     r.children = children.map((x) => x.id);
+    // A hub changes when a page in it changes: dateModified = newest reviewed date of its live pages (WL-42).
+    if (!r.reviewed) r.modified = children.map((x) => x.reviewed).filter(Boolean).sort().at(-1);
     r.live = r.status === 'publish' || (r.status === 'auto' && children.length > 0) || (content[r.id]?.status === 'publish');
   }
   for (const r of rows) {
@@ -615,6 +617,13 @@ export async function build() {
   files['generated/manifest.json'] = JSON.stringify(manifest, null, 1) + '\n';
   files['generated/llms.txt'] = llmsTxt(rows, ctxBase);
   Object.assign(files, dist.files);
+  // Hash of everything a page shows (page JSON, CSV, llms.txt, inlined CSS, shipped JS). The plugin syncs
+  // and purges the page cache when the manifest changes, so a data-only deploy must change it too (WL-36).
+  const shown = createHash('sha256');
+  for (const p of Object.keys(files).filter((x) => x !== 'generated/manifest.json').sort()) shown.update(`${p}\n${files[p]}\n`);
+  shown.update(read('assets/css/wattlyst.css'));
+  manifest.assets.content = shown.digest('hex').slice(0, 16);
+  files['generated/manifest.json'] = JSON.stringify(manifest, null, 1) + '\n';
   return files;
 }
 

@@ -12,6 +12,7 @@ final class Wattlyst_Pages {
 	private const OPT_HASH  = 'wattlyst_sync_hash';
 	private const OPT_LOCK  = 'wattlyst_sync_lock';
 	private const SHORTCODE = 'wattlyst_page';
+	public const CRON       = 'wattlyst_sync';
 
 	private Wattlyst_Tools $plugin;
 
@@ -21,6 +22,7 @@ final class Wattlyst_Pages {
 		$this->plugin = $plugin;
 		add_action( 'init', array( $this, 'register' ) );
 		add_action( 'init', array( $this, 'maybe_sync' ), 20 );
+		add_action( self::CRON, array( $this, 'maybe_sync' ) );
 		add_filter( 'generate_show_title', array( $this, 'hide_theme_title' ) );
 		add_filter( 'generate_sidebar_layout', array( $this, 'no_sidebar' ) );
 		add_filter( 'comments_open', array( $this, 'no_comments' ), 10, 2 );
@@ -87,6 +89,13 @@ final class Wattlyst_Pages {
 
 	/* ---------------------------------------------------------------- sync */
 
+	/**
+	 * Runs when the deployed build changed (manifest hash: it carries a hash of every generated page, so a
+	 * data-only deploy counts too). A visitor request never does the work itself (WL-70): it schedules a
+	 * one-off cron event, which WordPress runs in its own background request. Admin screens, cron and
+	 * WP-CLI sync at once. Note: pages served from the LiteSpeed cache never reach PHP, so the sync starts
+	 * with the first uncached request (an admin visit, cron, a crawler on an uncached URL).
+	 */
 	public function maybe_sync(): void {
 		$file = WATTLYST_TOOLS_DIR . 'generated/manifest.json';
 		if ( ! is_readable( $file ) ) {
@@ -94,6 +103,12 @@ final class Wattlyst_Pages {
 		}
 		$hash = md5_file( $file ) . '-' . WATTLYST_TOOLS_VERSION;
 		if ( get_option( self::OPT_HASH ) === $hash ) {
+			return;
+		}
+		if ( ! is_admin() && ! wp_doing_cron() && ! ( defined( 'WP_CLI' ) && WP_CLI ) ) {
+			if ( ! wp_next_scheduled( self::CRON ) ) {
+				wp_schedule_single_event( time(), self::CRON );
+			}
 			return;
 		}
 		// add_option is atomic: only one request syncs at a time. A lock older than 5 minutes is stale.
@@ -109,6 +124,16 @@ final class Wattlyst_Pages {
 		} finally {
 			delete_option( self::OPT_LOCK );
 		}
+		self::purge_cache();
+	}
+
+	/**
+	 * A new build changes page HTML even when no WordPress post changed (e.g. a monthly data update), so
+	 * the page cache is emptied after every sync (WL-36). LiteSpeed Cache's public purge action; a no-op
+	 * when that plugin is not active.
+	 */
+	public static function purge_cache(): void {
+		do_action( 'litespeed_purge_all' );
 	}
 
 	private function sync(): void {
@@ -126,6 +151,7 @@ final class Wattlyst_Pages {
 		if ( $privacy instanceof WP_Post && 'privacy-policy' === get_post_meta( $privacy->ID, self::META_ID, true ) ) {
 			update_option( 'wp_page_for_privacy_policy', $privacy->ID );
 		}
+		Wattlyst_Site::remove_version_files();
 	}
 
 	/**
@@ -144,7 +170,12 @@ final class Wattlyst_Pages {
 		}
 	}
 
-	/** Make sure a live row has a published page at its URL. Returns the post id, or 0 if skipped. */
+	/**
+	 * Make sure a live row has a published page at its URL. Returns the post id, or 0 if skipped.
+	 * A managed page that was trashed or drafted in WordPress is published again on the next sync
+	 * (get_page_by_path also finds trashed pages; WL-69): the build decides what is live. To take a page
+	 * down, set "status": "draft" in content/pages/<ID>.json (or the row in specs/site-pages.csv).
+	 */
 	private function ensure( array $row ): int {
 		$path     = trim( $row['url'], '/' );
 		$content  = sprintf( '[%s id="%s"]', self::SHORTCODE, $row['id'] );

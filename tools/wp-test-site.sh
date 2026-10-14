@@ -29,5 +29,6 @@ $WP rewrite structure '/%postname%/' >/dev/null
 $WP plugin activate wattlyst-tools >/dev/null
 (cd "$W" && nohup php -S "127.0.0.1:$PORT" "$DIR/router.php" > "$DIR/php.log" 2>&1 &)
 sleep 1
-curl -s "http://127.0.0.1:$PORT/" > /dev/null   # first request runs the page sync
+$WP eval 'echo "";' >/dev/null   # WP-CLI runs the page sync at once (visitor requests only schedule it)
+curl -s "http://127.0.0.1:$PORT/" > /dev/null
 echo "WordPress test site on http://127.0.0.1:$PORT"

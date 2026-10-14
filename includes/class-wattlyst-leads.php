@@ -99,6 +99,22 @@ final class Wattlyst_Leads {
 		return (string) ( 0 + $v );
 	}
 
+	/**
+	 * Address the hourly limit counts against (WL-64). Behind Hostinger's CDN, REMOTE_ADDR can be the edge
+	 * server, so every visitor would share one bucket. data/site.json leads.client_ip_header names the
+	 * header the CDN sets to the visitor's address (only a header the CDN overwrites can be trusted; a
+	 * visitor can send any header). Empty: REMOTE_ADDR. The first address of a list is used.
+	 */
+	private static function client_ip( string $header ): string {
+		$remote = (string) ( $_SERVER['REMOTE_ADDR'] ?? '' ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+		if ( '' === $header ) {
+			return $remote;
+		}
+		$key   = 'HTTP_' . strtoupper( str_replace( '-', '_', $header ) );
+		$first = trim( explode( ',', (string) ( $_SERVER[ $key ] ?? '' ) )[0] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+		return filter_var( $first, FILTER_VALIDATE_IP ) ? $first : $remote;
+	}
+
 	public function handle(): void {
 		$site  = $this->plugin->site();
 		$leads = $site['leads'] ?? array();
@@ -136,7 +152,7 @@ final class Wattlyst_Leads {
 			$fail( 'consent' );
 		}
 
-		$ip_key = 'wl_lead_' . substr( wp_hash( (string) ( $_SERVER['REMOTE_ADDR'] ?? '' ) ), 0, 20 ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+		$ip_key = 'wl_lead_' . substr( wp_hash( self::client_ip( (string) ( $leads['client_ip_header'] ?? '' ) ) ), 0, 20 );
 		$count  = (int) get_transient( $ip_key );
 		if ( $count >= (int) ( $leads['rate_limit_per_hour'] ?? 1 ) ) {
 			$fail( 'rate' );
