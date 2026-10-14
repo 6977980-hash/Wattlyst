@@ -1,0 +1,499 @@
+{
+ "id": "C1",
+ "status": "publish",
+ "template": "tool",
+ "h1": "Generator Size Calculator for Home",
+ "author": "ali-ahmad",
+ "published": "2026-10-14",
+ "reviewed": "2026-10-14",
+ "calc": "generator_size",
+ "submit": "Size my generator",
+ "fields": [
+  {
+   "name": "loads",
+   "label": "Everything in the house that runs on the generator at once",
+   "type": "loads",
+   "catalog": "all",
+   "default": [
+    {
+     "id": "ceiling-fan-ac",
+     "qty": 4
+    },
+    {
+     "id": "led-bulb",
+     "qty": 10
+    },
+    {
+     "id": "refrigerator-inverter",
+     "qty": 1
+    },
+    {
+     "id": "led-tv-43",
+     "qty": 1
+    },
+    {
+     "id": "ac-split-1-5ton-inverter",
+     "qty": 1
+    },
+    {
+     "id": "water-motor-1hp",
+     "qty": 1
+    }
+   ],
+   "hint": "Start from the example home and change it to yours: remove what you will keep off during a power cut and add every load that can run together. Check the watts against each appliance label."
+  },
+  {
+   "name": "margin",
+   "label": "Safety margin on the running load",
+   "unit": "times",
+   "default": "@margin",
+   "advanced": true,
+   "hint": "Keeps the generator below full load for engine life and for loads switched on without thinking. A decimal like one point two five."
+  },
+  {
+   "name": "pf",
+   "label": "Generator power factor",
+   "unit": "0 to 1",
+   "default": "@pf_generator",
+   "advanced": true,
+   "hint": "Home generators are rated in kVA at this power factor. Leave the default unless the nameplate says otherwise."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "standard_kva",
+   "label": "Generator size to buy",
+   "spec": "1",
+   "unit": "kVA"
+  },
+  {
+   "key": "recommended_kva",
+   "label": "Calculated minimum",
+   "spec": "2",
+   "unit": "kVA"
+  },
+  {
+   "key": "running_w",
+   "label": "Running load of the house",
+   "spec": "int",
+   "unit": "W"
+  },
+  {
+   "key": "peak_w",
+   "label": "Peak with the largest motor starting",
+   "spec": "int",
+   "unit": "W"
+  }
+ ],
+ "answer": "A home running four fans, ten LED bulbs, an inverter fridge, a TV, a 1.5 ton inverter AC and a 1 hp water motor needs a {{out.standard_kva|1}} kVA generator: {{out.running_w|int}} W running and {{out.peak_w|int}} W when the pump starts. Generator kVA = the larger of running watts × {{d.margin|2}} or peak watts, ÷ {{d.pf_generator|2}} power factor ÷ 1,000, rounded up to a size sold.",
+ "how": "Your list runs at {{out.running_w|int}} W in total. When its largest motor starts, the peak is {{out.peak_w|int}} W. The generator is sized on the larger of {{out.running_w|int}} W × {{out.margin|2}} margin and {{out.peak_w|int}} W, which is {{out.sized_w|int}} W; ÷ {{out.pf|2}} power factor ÷ 1,000 = {{out.recommended_kva|2}} kVA, so the next standard size is {{out.standard_kva|1}} kVA.",
+ "key_facts": [
+  "A typical Pakistani home with four fans, ten LED bulbs, an inverter fridge, a TV, one 1.5 ton inverter AC and a 1 hp water motor runs at about {{out.running_w|int}} W and needs a {{out.standard_kva|1}} kVA generator, because the pump's start lifts the peak to {{out.peak_w|int}} W.",
+  "Keep the water motor off while the generator runs and the same home needs only {{ex.1.out.standard_kva|1}} kVA: the pump adds {{a.water-motor-1hp.running_w|int}} W of running load but about {{a.water-motor-1hp.starting_w|int}} W at the moment it starts.",
+  "Fans, lights, a TV and a non-inverter fridge alone, the usual loadshedding basics, need the smallest common size, {{ex.0.out.standard_kva|1}} kVA.",
+  "Home generator size in kVA = the larger of (running watts × {{d.margin|2}}) or (running watts plus the largest starting surge) ÷ {{d.pf_generator|2}} power factor ÷ 1,000, rounded up to the next size sold."
+ ],
+ "formula": {
+  "text": "P_run = Σ (W × qty); P_peak = P_run + max(W_start − W); kVA = max(P_run × m, P_peak) ÷ PF ÷ 1000",
+  "lines": [
+   "W = running watts of one appliance, qty = how many, W_start = its starting watts",
+   "P_run = running load of everything on at once",
+   "P_peak = running load plus the starting surge of the single largest motor or compressor",
+   "m = safety margin on the running load",
+   "PF = generator power factor (nameplate convention)",
+   "The result is rounded up to the next standard generator size"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "What size generator do I need for my house?",
+   "p": [
+    "List what you actually want running during a power cut, not everything you own. For the example home, fans, lights, an inverter fridge, a TV, one inverter AC and the water motor, the answer is {{out.standard_kva|1}} kVA. The running load is only {{out.running_w|int}} W; the size is set by the {{out.peak_w|int}} W moment when the water motor starts while everything else is on.",
+    "That is why the cheapest way to a smaller generator is often a habit, not a purchase: fill the tank with the pump before switching the AC on, or run the pump when the AC is off. With the pump left out the same home needs {{ex.1.out.standard_kva|1}} kVA."
+   ]
+  },
+  {
+   "h2": "Generator size for refrigerator and AC",
+   "p": [
+    "A fridge and an AC are the two loads that decide most home generator sizes. An inverter fridge and an inverter AC start softly, so a home with both plus fans and lights needs {{ex.1.out.standard_kva|1}} kVA. Swap them for a non-inverter fridge and a 1.5 ton non-inverter AC and the AC compressor's start pushes the peak to {{ex.3.out.peak_w|int}} W, which needs {{ex.3.out.standard_kva|1}} kVA.",
+    "If you are about to buy both a generator and an AC, the inverter AC usually pays for itself in a smaller generator and lower fuel use. If the AC is already a non-inverter unit, the generator size for a 1.5 ton AC page shows each AC size on its own."
+   ]
+  },
+  {
+   "h2": "What size generator for a 3 bedroom house?",
+   "p": [
+    "A three-bedroom home that wants two bedrooms cooled during a cut, with six fans, twelve bulbs, an inverter fridge, a TV, two 1.5 ton inverter ACs and the water motor, runs at {{ex.2.out.running_w|int}} W and peaks at {{ex.2.out.peak_w|int}} W. The calculated size is {{ex.2.out.recommended_kva|2}} kVA, so the generator to buy is {{ex.2.out.standard_kva|1}} kVA.",
+    "Each extra inverter AC adds about {{a.ac-split-1-5ton-inverter.running_w|int}} W of running load. With three such ACs, more fans and lights and an iron, the home in the last example reaches {{ex.4.out.standard_kva|1}} kVA. At that size a diesel set and a changeover switch on the main board are the usual choice."
+   ]
+  },
+  {
+   "h2": "Generator for home in Pakistan: sizes sold and what fits",
+   "p": [
+    "Home generators in Pakistan are sold in steps such as {{d.standard_generator_kva.0|1}}, {{d.standard_generator_kva.3|1}}, {{d.standard_generator_kva.5|1}} and {{d.standard_generator_kva.6|1}} kVA, and the calculator always rounds up to the next step, never down. The kVA figure is not the usable watts: usable watts = kVA × 1,000 × {{d.pf_generator|2}} power factor, and the page on what a generator can run lists them for each size.",
+    "Petrol sets cover the small and middle sizes; diesel is more common in the larger sizes and uses less fuel per unit of electricity. Once you know the size, the fuel consumption calculator shows what it will cost to run for your loadshedding hours."
+   ]
+  },
+  {
+   "h2": "Whole house generator: which loads to leave off",
+   "p": [
+    "Sizing a generator for the whole house at once, geyser, iron, microwave, every AC and the pump together, gives a set far bigger than most homes need for a few hours a day. Heaters and irons draw a lot while they are on but are easy to time, and only one motor needs to start at a time if you switch them on one after another.",
+    "A practical home list is what must stay on (fridge, fans, lights, router, one AC) plus the one motor you cannot schedule. Enter that list, then use the starting watts calculator if you are unsure which motor sets the peak."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 4
+     },
+     {
+      "id": "led-bulb",
+      "qty": 10
+     },
+     {
+      "id": "refrigerator-non-inverter"
+     },
+     {
+      "id": "led-tv-43"
+     }
+    ]
+   },
+   "title": "Loadshedding basics: four fans, ten bulbs, a TV and a non-inverter fridge",
+   "text": "Running load {{out.running_w|int}} W. The fridge compressor's start lifts the peak to {{out.peak_w|int}} W, which is larger than {{out.running_w|int}} W × {{out.margin|2}}. {{out.sized_w|int}} W ÷ {{out.pf|2}} ÷ 1,000 = {{out.recommended_kva|2}} kVA, so a {{out.standard_kva|1}} kVA generator."
+  },
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 4
+     },
+     {
+      "id": "led-bulb",
+      "qty": 10
+     },
+     {
+      "id": "refrigerator-inverter"
+     },
+     {
+      "id": "led-tv-43"
+     },
+     {
+      "id": "ac-split-1-5ton-inverter"
+     }
+    ]
+   },
+   "title": "The example home with the water motor kept off",
+   "text": "Fans, bulbs, an inverter fridge, a TV and a 1.5 ton inverter AC run at {{out.running_w|int}} W and peak at {{out.peak_w|int}} W. The larger of {{out.running_w|int}} W × {{out.margin|2}} and the peak is {{out.sized_w|int}} W, or {{out.recommended_kva|2}} kVA, so {{out.standard_kva|1}} kVA is enough."
+  },
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 6
+     },
+     {
+      "id": "led-bulb",
+      "qty": 12
+     },
+     {
+      "id": "refrigerator-inverter"
+     },
+     {
+      "id": "led-tv-43"
+     },
+     {
+      "id": "ac-split-1-5ton-inverter",
+      "qty": 2
+     },
+     {
+      "id": "water-motor-1hp"
+     }
+    ]
+   },
+   "title": "Three-bedroom house with two inverter ACs and a water motor",
+   "text": "Six fans, twelve bulbs, an inverter fridge, a TV, two 1.5 ton inverter ACs and a 1 hp pump: {{out.running_w|int}} W running, {{out.peak_w|int}} W when the pump starts, {{out.recommended_kva|2}} kVA calculated. Buy a {{out.standard_kva|1}} kVA generator."
+  },
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 4
+     },
+     {
+      "id": "led-bulb",
+      "qty": 10
+     },
+     {
+      "id": "refrigerator-non-inverter"
+     },
+     {
+      "id": "led-tv-43"
+     },
+     {
+      "id": "ac-split-1-5ton-non-inverter"
+     }
+    ]
+   },
+   "title": "Home with a non-inverter fridge and a 1.5 ton non-inverter AC",
+   "text": "The running load is {{out.running_w|int}} W, but the AC compressor's start takes the peak to {{out.peak_w|int}} W. That needs {{out.recommended_kva|2}} kVA, so the generator to buy is {{out.standard_kva|1}} kVA, much larger than the running watts suggest."
+  },
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 8
+     },
+     {
+      "id": "led-bulb",
+      "qty": 16
+     },
+     {
+      "id": "refrigerator-inverter"
+     },
+     {
+      "id": "led-tv-43",
+      "qty": 2
+     },
+     {
+      "id": "ac-split-1-5ton-inverter",
+      "qty": 3
+     },
+     {
+      "id": "water-motor-1hp"
+     },
+     {
+      "id": "electric-iron"
+     }
+    ]
+   },
+   "title": "Larger house: three inverter ACs, a pump and an iron",
+   "text": "Eight fans, sixteen bulbs, an inverter fridge, two TVs, three 1.5 ton inverter ACs, a 1 hp pump and an iron run at {{out.running_w|int}} W. Here the running load × {{out.margin|2}} ({{out.sized_w|int}} W) is larger than the {{out.peak_w|int}} W peak, so it sets the size: {{out.recommended_kva|2}} kVA, buy {{out.standard_kva|1}} kVA."
+  }
+ ],
+ "table": {
+  "caption": "Generator size chart for home, from the top: four fans, ten bulbs, a TV and a non-inverter fridge; the same with a 1 ton inverter AC; four fans, ten bulbs, an inverter fridge, a TV and a 1.5 ton inverter AC; the same with a 1 hp water motor; six fans, twelve bulbs, two 1.5 ton inverter ACs and the pump; eight fans, sixteen bulbs, three 1.5 ton inverter ACs, the pump and an iron",
+  "rows": [
+   {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 4
+     },
+     {
+      "id": "led-bulb",
+      "qty": 10
+     },
+     {
+      "id": "led-tv-43"
+     },
+     {
+      "id": "refrigerator-non-inverter"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 4
+     },
+     {
+      "id": "led-bulb",
+      "qty": 10
+     },
+     {
+      "id": "led-tv-43"
+     },
+     {
+      "id": "refrigerator-non-inverter"
+     },
+     {
+      "id": "ac-split-1ton-inverter"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 4
+     },
+     {
+      "id": "led-bulb",
+      "qty": 10
+     },
+     {
+      "id": "refrigerator-inverter"
+     },
+     {
+      "id": "led-tv-43"
+     },
+     {
+      "id": "ac-split-1-5ton-inverter"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 4
+     },
+     {
+      "id": "led-bulb",
+      "qty": 10
+     },
+     {
+      "id": "refrigerator-inverter"
+     },
+     {
+      "id": "led-tv-43"
+     },
+     {
+      "id": "ac-split-1-5ton-inverter"
+     },
+     {
+      "id": "water-motor-1hp"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 6
+     },
+     {
+      "id": "led-bulb",
+      "qty": 12
+     },
+     {
+      "id": "refrigerator-inverter"
+     },
+     {
+      "id": "led-tv-43"
+     },
+     {
+      "id": "ac-split-1-5ton-inverter",
+      "qty": 2
+     },
+     {
+      "id": "water-motor-1hp"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 8
+     },
+     {
+      "id": "led-bulb",
+      "qty": 16
+     },
+     {
+      "id": "refrigerator-inverter"
+     },
+     {
+      "id": "led-tv-43",
+      "qty": 2
+     },
+     {
+      "id": "ac-split-1-5ton-inverter",
+      "qty": 3
+     },
+     {
+      "id": "water-motor-1hp"
+     },
+     {
+      "id": "electric-iron"
+     }
+    ]
+   }
+  ],
+  "columns": [
+   {
+    "label": "Running watts",
+    "tpl": "{{out.running_w|int}} W"
+   },
+   {
+    "label": "Peak watts",
+    "tpl": "{{out.peak_w|int}} W"
+   },
+   {
+    "label": "Calculated kVA",
+    "tpl": "{{out.recommended_kva|2}} kVA"
+   },
+   {
+    "label": "Generator to buy",
+    "tpl": "{{out.standard_kva|1}} kVA"
+   }
+  ]
+ },
+ "mistakes": [
+  "Adding up the wattage of everything in the house. A generator only has to carry what runs at the same time; sizing for the whole inventory buys a much bigger set, with a fuel bill to match.",
+  "Forgetting the water motor. It is small when running, but its start can be the single biggest moment of the day, as the example home shows.",
+  "Treating kVA as kW. A generator's kVA × {{d.pf_generator|2}} is the usable kW, so a set that looks big enough on paper may not be.",
+  "Buying exactly the calculated minimum. Round up to the next size sold, and keep heaters, irons and the geyser off or timed while the AC runs."
+ ],
+ "safety": "Connect a home generator only through a changeover switch installed by a licensed electrician, so it can never feed power back into the grid line. Earth the set, run it outdoors away from doors and windows because of carbon monoxide, and never refuel while it is hot or running.",
+ "faq": [
+  {
+   "q": "What size generator do I need to run my whole house?",
+   "a": "For a typical home with fans, lights, an inverter fridge, a TV, one inverter AC and a water motor, {{out.standard_kva|1}} kVA. Most homes size for what must run during a cut, not every appliance; add your own list above for your answer."
+  },
+  {
+   "q": "What size generator do I need for a fridge and an AC?",
+   "a": "With an inverter fridge, a 1.5 ton inverter AC, fans, lights and a TV, {{ex.1.out.standard_kva|1}} kVA. With a non-inverter fridge and a 1.5 ton non-inverter AC, {{ex.3.out.standard_kva|1}} kVA, because the AC compressor starts at about {{a.ac-split-1-5ton-non-inverter.starting_w|int}} W."
+  },
+  {
+   "q": "What size generator for a 3 bedroom house?",
+   "a": "With two 1.5 ton inverter ACs, six fans, twelve bulbs, a fridge, a TV and a water motor, {{ex.2.out.standard_kva|1}} kVA. Without any AC, fans, lights, a TV and a fridge need only {{ex.0.out.standard_kva|1}} kVA."
+  },
+  {
+   "q": "Is there a generator size chart for home?",
+   "a": "Yes, the table above gives six common home load lists with their running watts, peak watts and the generator to buy, from {{ex.0.out.standard_kva|1}} kVA for loadshedding basics to {{ex.4.out.standard_kva|1}} kVA for a larger house with three ACs. Every row is calculated with the same rule as the calculator."
+  },
+  {
+   "q": "How do I calculate generator kVA for my home?",
+   "a": "Add the running watts of everything on at once, add the starting surge of the single largest motor, compare that peak with the running watts × {{d.margin|2}}, take the larger, divide by the power factor of {{d.pf_generator|2}} and by one thousand, and round up to the next kVA size sold."
+  },
+  {
+   "q": "Petrol or diesel generator for home?",
+   "a": "Petrol sets are cheaper to buy and fine for a few hours a day at the smaller sizes. Diesel sets cost more but use less fuel per unit, which matters for long cuts and larger sizes. The fuel consumption calculator gives the cost per hour for each fuel at your load."
+  }
+ ],
+ "related": [
+  "C2",
+  "C3",
+  "C6",
+  "C7",
+  "E1"
+ ],
+ "next": "C8",
+ "literal_numbers": [
+  "1,000",
+  "1.5 ton",
+  "1 ton",
+  "1 hp",
+  "3 bedroom"
+ ],
+ "sources": [
+  {
+   "label": "Virginia Tech Extension: appliance wattage table (running and starting watts)",
+   "url": "https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

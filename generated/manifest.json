@@ -1004,7 +1004,8 @@
     "D4",
     "H9",
     "C7",
-    "E2"
+    "E2",
+    "N11"
    ],
    "next": "D4",
    "wave": 2
@@ -1025,7 +1026,8 @@
     "H9",
     "D4",
     "P-G",
-    "N2"
+    "N2",
+    "H4"
    ],
    "next": "B1",
    "wave": 1
@@ -1034,24 +1036,40 @@
    "id": "C1",
    "type": "tool",
    "url": "/generator/generator-size-calculator/",
-   "h1": "Generator Size Calculator For Home",
+   "h1": "Generator Size Calculator for Home",
    "title": "Generator Size Calculator for Home (kVA & Watts) | Wattlyst",
    "meta": "Find the right generator size in kVA and watts for your home. Add AC, fridge, motor and lights; starting surge and a safety margin included.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-C",
+   "related": [
+    "C2",
+    "C3",
+    "C6",
+    "C7",
+    "E1"
+   ],
+   "next": "C8",
    "wave": 3
   },
   {
    "id": "C2",
    "type": "tool",
    "url": "/generator/generator-wattage-calculator/",
-   "h1": "Generator Watts Calculator For Appliances",
+   "h1": "Generator Watts Calculator for Appliances",
    "title": "Generator Wattage Calculator for Appliances | Wattlyst",
    "meta": "Add up running and starting watts of your appliances to size a generator. Includes a Pakistani and US appliance list with typical watts.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-C",
+   "related": [
+    "C3",
+    "C4",
+    "C7",
+    "E2",
+    "H2"
+   ],
+   "next": "C1",
    "wave": 3
   },
   {
@@ -1061,21 +1079,36 @@
    "h1": "Generator Starting Watts Calculator",
    "title": "Generator Starting Watts Calculator (Motor Surge) | Wattlyst",
    "meta": "Work out the peak starting watts your generator must handle for ACs, fridges and pumps, and why only the biggest motor's surge counts.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-C",
+   "related": [
+    "C4",
+    "C5",
+    "C6",
+    "H5",
+    "C2"
+   ],
+   "next": "C1",
    "wave": 3
   },
   {
    "id": "C4",
    "type": "tool",
    "url": "/generator/running-vs-starting-watts/",
-   "h1": "Running Watts Vs Starting Watts Calculator",
+   "h1": "Running Watts vs Starting Watts Calculator",
    "title": "Running Watts vs Starting Watts Calculator | Wattlyst",
    "meta": "See running and starting watts side by side for each appliance, and how they decide your generator or inverter size. Table and calculator.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-C",
+   "related": [
+    "C2",
+    "C3",
+    "D4",
+    "C7"
+   ],
+   "next": "C1",
    "wave": 3
   },
   {
@@ -1092,7 +1125,8 @@
     "C6",
     "D4",
     "W3",
-    "E1"
+    "E1",
+    "C1"
    ],
    "next": "W3",
    "wave": 1
@@ -1134,7 +1168,8 @@
     "D4",
     "E1",
     "E2",
-    "B4"
+    "B4",
+    "C8"
    ],
    "next": "C6",
    "wave": 2
@@ -1146,9 +1181,16 @@
    "h1": "Generator Fuel Consumption Calculator",
    "title": "Generator Fuel Consumption Calculator (Cost/Hour) | Wattlyst",
    "meta": "Estimate petrol, diesel or gas use per hour and cost in PKR for your generator size and load. Compare with UPS and solar running cost.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-C",
+   "related": [
+    "C1",
+    "C7",
+    "C6",
+    "E1"
+   ],
+   "next": "N7",
    "wave": 3
   },
   {
@@ -1270,7 +1312,8 @@
     "D5",
     "D8",
     "B1",
-    "D16"
+    "D16",
+    "D9"
    ],
    "next": "B2",
    "wave": 1
@@ -1321,12 +1364,20 @@
    "id": "D9",
    "type": "tool",
    "url": "/solar/solar-panel-price-pakistan/",
-   "h1": "Solar Panel Price In Pakistan",
+   "h1": "Solar Panel Price in Pakistan Today: Per Watt and Per Panel",
    "title": "Solar Panel Price in Pakistan Today (Per Watt) | Wattlyst",
    "meta": "Today's solar panel prices in Pakistan per watt and per panel for 550W to 600W+ brands, with the date checked and a cost calculator.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-D",
+   "related": [
+    "D14",
+    "D7",
+    "D6",
+    "D8",
+    "D11"
+   ],
+   "next": "N3",
    "wave": 3
   },
   {
@@ -1345,7 +1396,8 @@
     "F1",
     "F2",
     "F12",
-    "N3"
+    "N3",
+    "D11"
    ],
    "next": "F1",
    "wave": 1
@@ -1354,12 +1406,21 @@
    "id": "D11",
    "type": "guide",
    "url": "/guides/net-billing-pakistan/",
-   "h1": "Net Billing Pakistan",
+   "h1": "Net Billing in Pakistan: Rules, Buyback Rate and Net Metering Compared",
    "title": "Net Billing Pakistan 2026: Rates & Rules | Wattlyst",
    "meta": "What changed from net metering to net billing in Pakistan, the export rate, who keeps old contracts and what it means for solar payback.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-G",
+   "related": [
+    "D10",
+    "N4",
+    "F13",
+    "D14",
+    "D9",
+    "D8"
+   ],
+   "next": "D10",
    "wave": 3
   },
   {
@@ -1420,7 +1481,8 @@
     "D10",
     "D8",
     "D12",
-    "D13"
+    "D13",
+    "D9"
    ],
    "next": "N3",
    "wave": 2
@@ -1622,7 +1684,8 @@
    "related": [
     "F1",
     "F12",
-    "E5"
+    "E5",
+    "F13"
    ],
    "next": "F1",
    "wave": 1
@@ -1829,12 +1892,21 @@
    "id": "F13",
    "type": "guide",
    "url": "/guides/peak-hours-pakistan/",
-   "h1": "Peak Hours Lesco 2026",
+   "h1": "Peak Hours LESCO 2026: Peak and Off-Peak Timings for Every DISCO",
    "title": "Peak Hours 2026 for LESCO, IESCO & All DISCOs | Wattlyst",
    "meta": "Current peak and off-peak hours for every DISCO and K-Electric by season, and how much you save by shifting AC, iron and motor use.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-G",
+   "related": [
+    "F1",
+    "F2",
+    "N4",
+    "D11",
+    "F12",
+    "E5"
+   ],
+   "next": "F1",
    "wave": 3
   },
   {
@@ -1988,7 +2060,9 @@
    "parent": null,
    "children": [
     "H3",
+    "H4",
     "H5",
+    "H6",
     "H7"
    ],
    "related": [
@@ -2015,7 +2089,8 @@
     "E1",
     "D8",
     "H5",
-    "H7"
+    "H7",
+    "H4"
    ],
    "next": "B1",
    "wave": 2
@@ -2024,12 +2099,20 @@
    "id": "H4",
    "type": "appliance",
    "url": "/appliances/refrigerator/",
-   "h1": "Fridge Units Per Day",
+   "h1": "Fridge Units per Day: Inverter vs Non-Inverter Refrigerator and Deep Freezer",
    "title": "Fridge Units per Day (Inverter vs Non-Inverter) | Wattlyst",
    "meta": "Daily and monthly units of a refrigerator or deep freezer, inverter vs non-inverter, plus starting watts for UPS and generator sizing.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "H2",
+   "related": [
+    "H6",
+    "H3",
+    "H7",
+    "E1",
+    "D8"
+   ],
+   "next": "B5",
    "wave": 3
   },
   {
@@ -2056,12 +2139,20 @@
    "id": "H6",
    "type": "appliance",
    "url": "/appliances/electric-geyser/",
-   "h1": "Electric Geyser Units",
+   "h1": "Electric Geyser Units per Hour, Amps and Monthly Bill",
    "title": "Electric Geyser Units per Hour & Monthly Bill | Wattlyst",
    "meta": "Units per hour of a 1500W to 3000W electric geyser and its monthly bill in PKR, compared with instant electric and gas geysers.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "H2",
+   "related": [
+    "H4",
+    "N5",
+    "H7",
+    "W3",
+    "E1"
+   ],
+   "next": "F1",
    "wave": 3
   },
   {
@@ -2078,7 +2169,8 @@
     "D4",
     "B5",
     "H3",
-    "H5"
+    "H5",
+    "H6"
    ],
    "next": "E1",
    "wave": 2
@@ -2201,7 +2293,9 @@
     "E4",
     "D10",
     "F1",
-    "E2"
+    "E2",
+    "D11",
+    "F13"
    ],
    "next": "F1",
    "wave": 2
@@ -2220,7 +2314,8 @@
     "E5",
     "F1",
     "E6",
-    "E2"
+    "E2",
+    "H6"
    ],
    "next": "E5",
    "wave": 2
@@ -2260,7 +2355,8 @@
     "H9",
     "D15",
     "C6",
-    "D10"
+    "D10",
+    "C8"
    ],
    "next": "B1",
    "wave": 2
@@ -2269,84 +2365,140 @@
    "id": "N8",
    "type": "tool",
    "url": "/load/ebike-charging-cost-calculator/",
-   "h1": "Electric Bike Charging Cost Per Km",
+   "h1": "Electric Bike Charging Cost per km Calculator",
    "title": "Electric Bike Charging Cost per km | Wattlyst",
    "meta": "Find what it costs to charge your electric bike, e-scooter or EV per charge and per km, at your electricity tariff or from solar.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-E",
+   "related": [
+    "N9",
+    "N10",
+    "F1",
+    "D7"
+   ],
+   "next": "E6",
    "wave": 3
   },
   {
    "id": "N9",
    "type": "tool",
    "url": "/load/ac-temperature-saving-calculator/",
-   "h1": "Ac Temperature Saving Calculator",
+   "h1": "AC Temperature Saving Calculator",
    "title": "AC Temperature Saving Calculator (26° vs 18°) | Wattlyst",
    "meta": "See how much you can save each month by raising your AC temperature, with units and PKR for your AC size, set point and daily hours.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-E",
+   "related": [
+    "N10",
+    "E5",
+    "N8",
+    "F1",
+    "N5"
+   ],
+   "next": "N10",
    "wave": 3
   },
   {
    "id": "N10",
    "type": "tool",
    "url": "/load/inverter-ac-payback-calculator/",
-   "h1": "Inverter Ac Vs Non Inverter Ac Savings",
+   "h1": "Inverter AC vs Non-Inverter AC: Savings and Payback",
    "title": "Inverter vs Non-Inverter AC: Savings & Payback | Wattlyst",
    "meta": "Compare yearly units and bill of an inverter and a non-inverter AC, and how many months the extra price takes to pay back.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-E",
+   "related": [
+    "N9",
+    "E5",
+    "D5",
+    "N5",
+    "N8"
+   ],
+   "next": "E4",
    "wave": 3
   },
   {
    "id": "N11",
    "type": "tool",
    "url": "/troubleshoot/battery-series-parallel-calculator/",
-   "h1": "Battery Series Parallel Calculator",
+   "h1": "Battery Series and Parallel Calculator with Wiring Diagram",
    "title": "Battery Series & Parallel Calculator with Diagram | Wattlyst",
    "meta": "Pick your batteries and see the total voltage, Ah and kWh in series or parallel, with a live wiring diagram and safety notes.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-T",
+   "related": [
+    "B4",
+    "D1",
+    "A10",
+    "N14",
+    "H8"
+   ],
+   "next": "B1",
    "wave": 3
   },
   {
    "id": "N12",
    "type": "tool",
    "url": "/solar/solar-panel-cleaning-loss-calculator/",
-   "h1": "Solar Panel Cleaning Loss Calculator",
+   "h1": "Solar Panel Cleaning Loss Calculator: Dust and When to Clean",
    "title": "Solar Panel Dust & Cleaning Loss Calculator | Wattlyst",
    "meta": "Estimate how many units and rupees dust is costing your solar system, and how often cleaning pays for itself in your city.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-D",
+   "related": [
+    "N13",
+    "N14",
+    "D2",
+    "D7",
+    "N3",
+    "N6"
+   ],
+   "next": "D10",
    "wave": 3
   },
   {
    "id": "N13",
    "type": "tool",
    "url": "/solar/solar-for-mosque-and-shop/",
-   "h1": "Solar System For Mosque",
+   "h1": "Solar System for Mosque or Shop: Size, Panels and Inverter",
    "title": "Solar System for Mosque or Shop: Size & Cost | Wattlyst",
    "meta": "Size solar for a mosque (fans and ACs at prayer times, Jummah peak) or a shop (daytime load), with panels, inverter and cost.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-D",
+   "related": [
+    "N12",
+    "N14",
+    "D8",
+    "D12",
+    "N3"
+   ],
+   "next": "D14",
    "wave": 3
   },
   {
    "id": "N14",
    "type": "tool",
    "url": "/solar/solar-autonomy-calculator/",
-   "h1": "Solar Battery Autonomy Calculator",
+   "h1": "Solar Battery Autonomy Calculator: Days on Cloudy Weather",
    "title": "Solar Battery Autonomy Calculator (Cloudy Days) | Wattlyst",
    "meta": "Find how many cloudy or smoggy days your solar battery bank can carry your load, and the bank size for the autonomy you want.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-D",
+   "related": [
+    "N11",
+    "B4",
+    "N12",
+    "N13",
+    "H8"
+   ],
+   "next": "D1",
    "wave": 3
   },
   {
@@ -2487,9 +2639,14 @@
    "live": true,
    "parent": null,
    "children": [
+    "C1",
+    "C2",
+    "C3",
+    "C4",
     "C5",
     "C6",
-    "C7"
+    "C7",
+    "C8"
    ],
    "wave": 0
   },
@@ -2512,6 +2669,7 @@
     "D6",
     "D7",
     "D8",
+    "D9",
     "D10",
     "D12",
     "D13",
@@ -2519,7 +2677,10 @@
     "D15",
     "D16",
     "N3",
-    "N6"
+    "N6",
+    "N12",
+    "N13",
+    "N14"
    ],
    "wave": 0
   },
@@ -2541,7 +2702,10 @@
     "E5",
     "E6",
     "N5",
-    "N7"
+    "N7",
+    "N8",
+    "N9",
+    "N10"
    ],
    "wave": 0
   },
@@ -2603,6 +2767,8 @@
    "live": true,
    "parent": null,
    "children": [
+    "D11",
+    "F13",
     "F14",
     "H8",
     "H9"
@@ -2620,7 +2786,8 @@
    "live": true,
    "parent": null,
    "children": [
-    "N2"
+    "N2",
+    "N11"
    ],
    "wave": 0
   },

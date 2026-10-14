@@ -3,15 +3,25 @@
  "type": "tool",
  "silo": "D",
  "url": "/solar/solar-autonomy-calculator/",
- "h1": "Solar Battery Autonomy Calculator",
+ "h1": "Solar Battery Autonomy Calculator: Days on Cloudy Weather",
  "title": "Solar Battery Autonomy Calculator (Cloudy Days) | Wattlyst",
  "meta": "Find how many cloudy or smoggy days your solar battery bank can carry your load, and the bank size for the autonomy you want.",
  "primary_keyword": "solar battery autonomy calculator",
  "wave": 3,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-14",
+ "published": "2026-10-14",
  "author": "ali-ahmad",
+ "related": [
+  "N11",
+  "B4",
+  "N12",
+  "N13",
+  "H8"
+ ],
+ "next": "D1",
  "parent": "P-D",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
@@ -22,11 +32,267 @@
    "url": "/solar/"
   },
   {
-   "name": "Solar Battery Autonomy Calculator",
+   "name": "Solar Battery Autonomy Calculator: Days on Cloudy Weather",
    "url": "/solar/solar-autonomy-calculator/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "Solar battery autonomy calculator: what days of autonomy means",
+    "p": [
+     "Days of autonomy is how many overcast days in a row the battery can make up the gap between what the house uses and what the panels still make, before it reaches the depth of discharge you allow. For the default bank that is 1.5 days. After that the inverter switches to the grid, or, off-grid, shuts down.",
+     "The result assumes the battery starts full and the load is the same each day. A bank that starts the cloudy spell half empty lasts half as long."
+    ]
+   },
+   {
+    "h2": "Cloudy days battery backup: how much do panels make in bad weather?",
+    "p": [
+     "Not zero. Thin cloud and winter smog cut output to a share of a clear day, often a fifth to two fifths; heavy monsoon rain cuts it further. The default of 600 Wh is an example; read your own from the inverter app on a cloudy day, or take a normal day's units and multiply by a fifth for a cautious figure.",
+     "The fourth worked example shows a smog week with 300 Wh a day from the panels: the same bank lasts 1.2 days instead of 1.5."
+    ]
+   },
+   {
+    "h2": "Days of autonomy solar: how big a battery for the days you want?",
+    "p": [
+     "Turn the formula round: bank Ah = days wanted × cloudy-day shortfall ÷ (V × depth of discharge × inverter efficiency). For the default shortfall of 1,400 Wh, every extra day takes another 1,400 Wh of usable energy. Each day of autonomy costs a full day's worth of battery, so most grid-tied homes in Pakistan plan for less than one day and let the grid carry the rest; off-grid homes plan for two or three.",
+     "A smaller load is the cheapest autonomy. Moving the iron, the pump and the AC off the battery inverter on cloudy days adds days from the same bank."
+    ]
+   },
+   {
+    "h2": "Tubular or lithium for cloudy days?",
+    "p": [
+     "Lithium LiFePO4 can be used to about 90% of its capacity, tubular lead-acid to about 50% if it is to last. So the same Ah and voltage give 2.6 days in lithium against 1.5 in tubular. A tubular battery left partly discharged for days also sulphates and loses capacity; a lithium battery does not mind a few days part-charged."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "How many days can a solar battery last without sun?",
+    "a": "Usable battery Wh ÷ the daily shortfall. A 24 V 200 Ah tubular bank lasts about 1.5 cloudy days at a 2,000 Wh load with 600 Wh of cloudy-day solar; with no sun at all it lasts less."
+   },
+   {
+    "q": "How many days of autonomy should a solar system have?",
+    "a": "Grid-tied homes with a battery usually plan for less than one day, because the grid takes over. Off-grid homes plan for two or three cloudy days; each extra day costs a full day's shortfall in battery."
+   },
+   {
+    "q": "How much do solar panels make on a cloudy day?",
+    "a": "Often a fifth to two fifths of a clear day under thin cloud or smog, less in heavy rain. Your inverter app's history from a cloudy day is the best figure to enter."
+   },
+   {
+    "q": "Does a lithium battery last more cloudy days than tubular?",
+    "a": "From the same Ah and voltage, yes: 2.6 days against 1.5 here, because lithium can be used to about 90% and tubular to about 50%."
+   },
+   {
+    "q": "Why does the calculator say my solar covers the load?",
+    "a": "If the panels make at least as much as the house uses even on a cloudy day, the battery never runs down over the days, so there is no day count to show. Check the cloudy-day figure; it should be a fraction of a normal day."
+   },
+   {
+    "q": "How do I find my daily load in Wh?",
+    "a": "Add watts × hours a day for every appliance on the solar inverter, or take the units a day from your inverter app and multiply by a thousand. The home load calculator does the adding for you."
+   }
+  ],
+  "key_facts": [
+   "Days of battery autonomy = usable battery Wh ÷ (daily load Wh − Wh the panels still make on a cloudy day); usable Wh = Ah × V × depth of discharge × inverter efficiency.",
+   "A 24 V 200 Ah tubular bank used to 50% gives 2,040 Wh, enough for about 1.5 cloudy days at a 2,000 Wh load with 600 Wh of cloudy-day solar.",
+   "The same Ah in lithium LiFePO4, used to 90%, lasts about 2.6 cloudy days under the same load.",
+   "On a cloudy or smoggy day panels still make a share of their usual output, often a fifth to two fifths; counting it as zero undersizes the days, counting a sunny day oversizes them."
+  ],
+  "mistakes": [
+   "Counting zero solar on cloudy days. Panels still make a share of their output; leaving it out makes the bank look smaller than it is.",
+   "Using the full Ah of a tubular battery. Running it below about 50% shortens its life; the calculator uses only the share you allow.",
+   "Assuming the bank starts full. After a sunny evening of heavy use it may not be, and the days shrink in proportion.",
+   "Adding batteries of a different age to get more days. A new battery beside old ones is dragged down to their level; extend a bank with a full new string or replace it whole."
+  ],
+  "sources": [
+   {
+    "label": "Wattlyst methodology and default values",
+    "url": "/methodology/"
+   }
+  ],
+  "tool": {
+   "calc": "autonomy",
+   "module": "solar.js",
+   "data_keys": [
+    "cities"
+   ],
+   "appliances": {},
+   "fields": [
+    {
+     "name": "ah",
+     "label": "Battery bank capacity",
+     "unit": "Ah",
+     "default": 200,
+     "hint": "Amp hours of the whole bank at its voltage: batteries in parallel add Ah, batteries in series do not."
+    },
+    {
+     "name": "v",
+     "label": "Battery bank voltage",
+     "unit": "V",
+     "default": 24,
+     "hint": "12, 24 or 48 V: the inverter's battery voltage."
+    },
+    {
+     "name": "dod",
+     "label": "Battery type",
+     "type": "select",
+     "default": 0.5,
+     "options": [
+      [
+       0.5,
+       "Tubular / lead-acid (use about half)"
+      ],
+      [
+       0.9,
+       "Lithium LiFePO4 (use most of it)"
+      ]
+     ],
+     "hint": "Sets how much of the bank you can use without shortening its life (depth of discharge)."
+    },
+    {
+     "name": "load_wh",
+     "label": "Energy the house uses a day from the battery",
+     "unit": "Wh",
+     "default": 2000,
+     "hint": "Watts × hours a day of everything on the solar inverter, added up (units a day × 1000). The home load calculator gives it."
+    },
+    {
+     "name": "solar_wh",
+     "label": "Solar on a cloudy day",
+     "unit": "Wh",
+     "default": 600,
+     "hint": "What the panels still make on an overcast or smoggy day: roughly a fifth to two fifths of a normal day. Your inverter app's history from a cloudy day is the best figure. Enter 0 for no sun at all."
+    },
+    {
+     "name": "eta",
+     "label": "Inverter efficiency",
+     "unit": "0 to 1",
+     "default": 0.85,
+     "advanced": true,
+     "hint": "Share of battery energy that reaches the appliances."
+    }
+   ],
+   "fixed_inputs": {},
+   "outputs": [
+    {
+     "key": "days",
+     "label": "Days of autonomy",
+     "spec": "1",
+     "unit": "days",
+     "label_ur": "Battery kitne din chalegi",
+     "value": "1.5"
+    },
+    {
+     "key": "usable_wh",
+     "label": "Usable battery energy",
+     "spec": "int",
+     "unit": "Wh",
+     "label_ur": "Qabil-e-istemal battery energy",
+     "value": "2,040"
+    },
+    {
+     "key": "deficit_wh",
+     "label": "Shortfall on a cloudy day",
+     "spec": "int",
+     "unit": "Wh",
+     "label_ur": "Abr-alood din mein kami",
+     "value": "1,400"
+    }
+   ],
+   "how": {
+    "tpl": "Usable energy: {{out.ah|int}} Ah × {{out.v|int}} V × {{out.dod|pct}} depth of discharge × {{out.eta|pct}} inverter efficiency = {{out.usable_wh|int}} Wh. Shortfall each cloudy day: {{out.load_wh|int}} Wh load − {{out.solar_wh|int}} Wh from the panels = {{out.deficit_wh|int}} Wh. Days: {{out.usable_wh|int}} ÷ {{out.deficit_wh|int}} = {{out.days|1}} days before the bank reaches its safe limit.",
+    "text": "Usable energy: 200 Ah × 24 V × 50% depth of discharge × 85% inverter efficiency = 2,040 Wh. Shortfall each cloudy day: 2,000 Wh load − 600 Wh from the panels = 1,400 Wh. Days: 2,040 ÷ 1,400 = 1.5 days before the bank reaches its safe limit."
+   },
+   "submit": "Calculate",
+   "notice": "",
+   "data_checked": [
+    {
+     "label": "Peak sun hours by city (Global Solar Atlas)",
+     "url": "https://globalsolaratlas.info/",
+     "checked": "2026-10-13"
+    }
+   ]
+  },
+  "examples": [
+   {
+    "title": "24 V 200 Ah tubular bank",
+    "text": "200 Ah × 24 V × 50% × 85% = 2,040 Wh usable. Load 2,000 Wh − solar 600 Wh = 1,400 Wh short a day, so the bank lasts 1.5 days."
+   },
+   {
+    "title": "The same Ah in lithium",
+    "text": "Used to 90%, the 24 V 200 Ah lithium bank gives 3,672 Wh, which covers the 1,400 Wh daily shortfall for 2.6 days."
+   },
+   {
+    "title": "Off-grid house on a 48 V 200 Ah lithium bank",
+    "text": "A 6,000 Wh daily load with 1,800 Wh from the panels on a cloudy day leaves 4,200 Wh short; 7,344 Wh usable covers it for 1.7 days."
+   },
+   {
+    "title": "A smog week with very little sun",
+    "text": "With only 300 Wh a day from the panels, the shortfall grows to 1,700 Wh and the default tubular bank lasts 1.2 days."
+   }
+  ],
+  "table": {
+   "caption": "Days of autonomy for common battery banks at a 2,000 Wh daily load with 600 Wh of cloudy-day solar",
+   "head": [
+    "Bank",
+    "Depth of discharge",
+    "Usable energy",
+    "Days of autonomy"
+   ],
+   "rows": [
+    [
+     "12 V 150 Ah",
+     "50%",
+     "765 Wh",
+     "0.5"
+    ],
+    [
+     "12 V 200 Ah",
+     "50%",
+     "1,020 Wh",
+     "0.7"
+    ],
+    [
+     "24 V 200 Ah",
+     "50%",
+     "2,040 Wh",
+     "1.5"
+    ],
+    [
+     "24 V 200 Ah",
+     "90%",
+     "3,672 Wh",
+     "2.6"
+    ],
+    [
+     "48 V 100 Ah",
+     "90%",
+     "3,672 Wh",
+     "2.6"
+    ],
+    [
+     "48 V 200 Ah",
+     "90%",
+     "7,344 Wh",
+     "5.2"
+    ]
+   ]
+  },
+  "answer": "A 24 V 200 Ah tubular battery bank carries a 2,000 Wh daily load for about 1.5 cloudy days when the panels still make 600 Wh a day. Days of autonomy = (Ah × V × depth of discharge × inverter efficiency) ÷ (daily load in Wh − cloudy-day solar in Wh). Lithium, at a deeper discharge, lasts longer from the same Ah.",
+  "formula": {
+   "text": "Days = (Ah × V × DoD × η) ÷ (E_load − E_solar,cloudy)",
+   "lines": [
+    "Ah, V = bank capacity and voltage",
+    "DoD = depth of discharge: the share you can use without shortening battery life",
+    "η = inverter efficiency",
+    "E_load = Wh the house takes from the solar inverter in a day",
+    "E_solar,cloudy = Wh the panels still make on a cloudy day",
+    "Bank Ah for D days = D × (E_load − E_solar,cloudy) ÷ (V × DoD × η)"
+   ]
+  },
+  "safety": "A battery bank stores enough energy to start a fire if shorted. Keep it ventilated, fuse each string, and have a licensed electrician fit and check the battery cables, fuses and inverter connection."
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -49,7 +315,7 @@
      {
       "@type": "ListItem",
       "position": 3,
-      "name": "Solar Battery Autonomy Calculator",
+      "name": "Solar Battery Autonomy Calculator: Days on Cloudy Weather",
       "item": "https://wattlyst.com/solar/solar-autonomy-calculator/"
      }
     ]
@@ -66,12 +332,14 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/solar/solar-autonomy-calculator/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-14",
+    "lastReviewed": "2026-10-14"
    },
    {
     "@type": "WebApplication",
     "@id": "https://wattlyst.com/solar/solar-autonomy-calculator/#app",
-    "name": "Solar Battery Autonomy Calculator",
+    "name": "Solar Battery Autonomy Calculator: Days on Cloudy Weather",
     "url": "https://wattlyst.com/solar/solar-autonomy-calculator/",
     "description": "Find how many cloudy or smoggy days your solar battery bank can carry your load, and the bank size for the autonomy you want.",
     "applicationCategory": "UtilitiesApplication",
@@ -98,6 +366,60 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/solar/solar-autonomy-calculator/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "How many days can a solar battery last without sun?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Usable battery Wh ÷ the daily shortfall. A 24 V 200 Ah tubular bank lasts about 1.5 cloudy days at a 2,000 Wh load with 600 Wh of cloudy-day solar; with no sun at all it lasts less."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many days of autonomy should a solar system have?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Grid-tied homes with a battery usually plan for less than one day, because the grid takes over. Off-grid homes plan for two or three cloudy days; each extra day costs a full day's shortfall in battery."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How much do solar panels make on a cloudy day?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Often a fifth to two fifths of a clear day under thin cloud or smog, less in heavy rain. Your inverter app's history from a cloudy day is the best figure to enter."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Does a lithium battery last more cloudy days than tubular?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "From the same Ah and voltage, yes: 2.6 days against 1.5 here, because lithium can be used to about 90% and tubular to about 50%."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Why does the calculator say my solar covers the load?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "If the panels make at least as much as the house uses even on a cloudy day, the battery never runs down over the days, so there is no day count to show. Check the cloudy-day figure; it should be a fraction of a normal day."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How do I find my daily load in Wh?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Add watts × hours a day for every appliance on the solar inverter, or take the units a day from your inverter app and multiply by a thousand. The home load calculator does the adding for you."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

@@ -3,15 +3,25 @@
  "type": "appliance",
  "silo": "H",
  "url": "/appliances/refrigerator/",
- "h1": "Fridge Units Per Day",
+ "h1": "Fridge Units per Day: Inverter vs Non-Inverter Refrigerator and Deep Freezer",
  "title": "Fridge Units per Day (Inverter vs Non-Inverter) | Wattlyst",
  "meta": "Daily and monthly units of a refrigerator or deep freezer, inverter vs non-inverter, plus starting watts for UPS and generator sizing.",
  "primary_keyword": "fridge units per day",
  "wave": 3,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-14",
+ "published": "2026-10-14",
  "author": "ali-ahmad",
+ "related": [
+  "H6",
+  "H3",
+  "H7",
+  "E1",
+  "D8"
+ ],
+ "next": "B5",
  "parent": "H2",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
@@ -22,11 +32,372 @@
    "url": "/appliances/"
   },
   {
-   "name": "Fridge Units Per Day",
+   "name": "Fridge Units per Day: Inverter vs Non-Inverter Refrigerator and Deep Freezer",
    "url": "/appliances/refrigerator/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "How many watts does a refrigerator use?",
+    "p": [
+     "A non-inverter fridge of the usual size sold in Pakistan draws about 200 W while its compressor runs, with real models from about 100 W to 350 W; old fridges with worn door seals sit at the top. An inverter fridge draws about 120 W (60 to 200 W), and a chest deep freezer about 200 W.",
+     "These are running figures for the compressor. The energy label or rating plate on your own fridge is better than any typical value; enter its watts in the calculator."
+    ]
+   },
+   {
+    "h2": "Why a fridge does not run twenty-four hours: compressor hours",
+    "p": [
+     "A fridge is switched on all day, but the compressor is not. The thermostat starts it when the inside warms up and stops it when the set temperature is reached, so the compressor runs in bursts. The calculator counts only the hours it actually runs: about 8 hours a day for a non-inverter fridge, 10 hours of slower running for an inverter fridge and 10 hours for a deep freezer.",
+     "In a hot kitchen in June, with the door opened often or a worn door seal, the compressor runs longer and the units go up; the fourth example shows an old fridge running twelve hours a day. If you have a plug-in energy meter, measure a full day and enter the result."
+    ]
+   },
+   {
+    "h2": "Fridge units per month and monthly cost",
+    "p": [
+     "A non-inverter fridge on the default hours uses about 48 units in a 30-day month, about Rs 1,750 at Rs 36.46 per unit. An inverter fridge uses about 36 units, about Rs 1,313.",
+     "That is the energy charge only. Because the fridge runs every day of the year it is part of the base load that decides your slab, so in a month near a slab boundary its units can cost more than this. The bill calculator turns total units into a full bill."
+    ]
+   },
+   {
+    "h2": "Inverter fridge consumption: how much does it save?",
+    "p": [
+     "An inverter fridge runs its compressor slowly for longer instead of switching a full-speed compressor on and off, so it uses less energy for the same cooling: about 1.2 units per day against 1.6 for a non-inverter fridge on the typical figures, a saving of a few hundred rupees a month.",
+     "The bigger difference is on backup power. Its starting surge is about 200 W against about 1,200 W, so a small UPS or solar inverter can run it, where a non-inverter fridge can trip a small UPS when the compressor kicks in."
+    ]
+   },
+   {
+    "h2": "Deep freezer units per day",
+    "p": [
+     "A chest deep freezer draws about 200 W and runs about 10 hours a day, which is 2 units per day and 60 units a month, about Rs 2,188. Keeping it full, away from the sun and with a clean condenser keeps the hours down."
+    ]
+   },
+   {
+    "h2": "Fridge starting watts: running a fridge on a UPS or generator",
+    "p": [
+     "A non-inverter fridge compressor needs about 1,200 W for a moment when it starts, about 6.5 A at 230 V. A UPS or inverter must have a surge rating above the fridge's surge plus everything else running, and a generator must be sized for it too. An inverter fridge's soft start avoids most of that problem.",
+     "Battery backup depends on the fridge's average draw, not its surge: about 1.6 units over twenty-four hours is a small, steady load. The UPS backup time calculator in the next step works out the hours for your battery."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "How many units does a fridge use per day?",
+    "a": "About 1.6 units per day for a typical 200 W non-inverter fridge whose compressor runs about 8 hours, and about 1.2 for an inverter fridge. Old fridges in hot kitchens use more."
+   },
+   {
+    "q": "How many units does a fridge use per month?",
+    "a": "About 48 units for a non-inverter fridge and 36 for an inverter fridge in a 30-day month, about Rs 1,750 and Rs 1,313 at Rs 36.46 per unit."
+   },
+   {
+    "q": "How many watts does a refrigerator use?",
+    "a": "About 200 W while the compressor runs for a non-inverter fridge (100 to 350 W by size and age) and about 120 W for an inverter fridge. Check the rating plate inside the door or on the back."
+   },
+   {
+    "q": "How much electricity does an inverter fridge consume?",
+    "a": "About 1.2 units a day, 36 a month, on the typical figures: less than a non-inverter fridge because its compressor runs slowly and steadily instead of switching on and off at full power."
+   },
+   {
+    "q": "How many units does a deep freezer use per day?",
+    "a": "About 2 units per day for a chest deep freezer, 60 units a month, about Rs 2,188 at Rs 36.46 per unit."
+   },
+   {
+    "q": "What are a fridge's starting watts?",
+    "a": "About 1,200 W for a moment for a non-inverter fridge and about 200 W for an inverter fridge. Size a UPS, inverter or generator for the surge, not only the running watts."
+   },
+   {
+    "q": "Can a fridge run on a UPS or solar?",
+    "a": "Yes, if the inverter's surge rating covers the compressor start: an inverter fridge is easy, a non-inverter fridge needs a UPS with real surge headroom. The daily units, about 1.6, set the battery size; the UPS backup calculator gives the hours."
+   }
+  ],
+  "key_facts": [
+   "A non-inverter fridge of the usual Pakistani size (twelve to sixteen cubic feet) draws about 200 W while the compressor runs (100 to 350 W by size and age) and uses about 1.6 units per day; units per day = running watts × compressor hours ÷ one thousand.",
+   "A fridge is plugged in all day but its compressor switches on and off with the thermostat; the 8 hours used here are the hours the compressor actually runs, which is why a fridge uses far less than its watts × twenty-four hours.",
+   "An inverter fridge draws about 120 W and varies its compressor speed instead of switching on and off, using about 1.2 units per day and 36 units a month against 48 for a non-inverter fridge.",
+   "A chest deep freezer uses about 2 units per day (60 a month), so a fridge plus a deep freezer add about 108 units a month to the bill.",
+   "A non-inverter fridge compressor starts at about 1,200 W for a moment, several times its running watts; a UPS, inverter or generator must handle that surge, while an inverter fridge starts at about 200 W."
+  ],
+  "mistakes": [
+   "Multiplying the fridge's watts by twenty-four hours. The compressor cycles on and off; count the hours it actually runs, about 8 a day for a typical non-inverter fridge.",
+   "Sizing a UPS on running watts. A non-inverter fridge starts at about 1,200 W for a moment; a UPS rated only for the running watts trips.",
+   "Ignoring the season. In the hottest months the compressor runs longer, so the summer bill shows more fridge units than the winter one.",
+   "Treating the monthly cost as the whole bill. Rs 1,750 is the energy charge at one slab rate; fixed charges, surcharges and tax come on top."
+  ],
+  "sources": [
+   {
+    "label": "PowerHouse Express PK: 6kW solar load guide (deep freezer wattage)",
+    "url": "https://powerhouseexpress.com.pk/blogs/news/how-many-ac-can-run-on-6kw-solar-system"
+   },
+   {
+    "label": "NEPRA tariff notification for Ex-WAPDA DISCOs (A-1 domestic energy rates)",
+    "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf"
+   },
+   {
+    "label": "Wattlyst methodology and default values",
+    "url": "/methodology/"
+   }
+  ],
+  "tool": {
+   "calc": "home_load",
+   "module": "load.js",
+   "data_keys": [
+    "cables"
+   ],
+   "appliances": {
+    "refrigerator-non-inverter": {
+     "name": "Refrigerator (non-inverter, 12-16 cu ft)",
+     "running_w": 200,
+     "starting_w": 1200,
+     "typical_hours_per_day": 8,
+     "load_type": "compressor"
+    },
+    "refrigerator-inverter": {
+     "name": "Refrigerator (inverter)",
+     "running_w": 120,
+     "starting_w": 200,
+     "typical_hours_per_day": 10,
+     "load_type": "inverter_compressor"
+    },
+    "deep-freezer": {
+     "name": "Deep freezer (chest)",
+     "running_w": 200,
+     "starting_w": 1200,
+     "typical_hours_per_day": 10,
+     "load_type": "compressor"
+    },
+    "water-dispenser": {
+     "name": "Water dispenser (hot and cold)",
+     "running_w": 500,
+     "starting_w": 900,
+     "typical_hours_per_day": 6,
+     "load_type": "compressor"
+    }
+   },
+   "fields": [
+    {
+     "name": "loads",
+     "label": "Your fridge and freezer",
+     "type": "loads",
+     "catalog": [
+      {
+       "id": "refrigerator-non-inverter",
+       "name": "Refrigerator (non-inverter, 12-16 cu ft)",
+       "category": "kitchen"
+      },
+      {
+       "id": "refrigerator-inverter",
+       "name": "Refrigerator (inverter)",
+       "category": "kitchen"
+      },
+      {
+       "id": "deep-freezer",
+       "name": "Deep freezer (chest)",
+       "category": "kitchen"
+      },
+      {
+       "id": "water-dispenser",
+       "name": "Water dispenser (hot and cold)",
+       "category": "kitchen"
+      }
+     ],
+     "default": [
+      {
+       "id": "refrigerator-non-inverter",
+       "qty": 1
+      }
+     ],
+     "hint": "Pick the type and how many. The hours are the hours the compressor actually runs in a day, not the twenty-four hours the fridge is plugged in; change the watts if your label says otherwise."
+    },
+    {
+     "name": "tariff",
+     "label": "Electricity rate",
+     "unit": "Rs per unit",
+     "default": 36.46,
+     "hint": "Energy rate of your slab from the bill. The default is the Pakistan unprotected rate for 301 to 400 units a month."
+    },
+    {
+     "name": "days",
+     "label": "Days in the month",
+     "unit": "days",
+     "default": 30,
+     "advanced": true,
+     "hint": "Billing days; most bills cover 29 to 31 days."
+    },
+    {
+     "name": "volts",
+     "label": "Supply voltage",
+     "unit": "V",
+     "type": "select",
+     "default": 230,
+     "advanced": true,
+     "options": [
+      [
+       230,
+       "230 V (Pakistan, UK, EU)"
+      ],
+      [
+       120,
+       "120 V (US, Canada)"
+      ]
+     ]
+    },
+    {
+     "name": "pf",
+     "label": "Power factor",
+     "unit": "0 to 1",
+     "default": 0.8,
+     "advanced": true,
+     "hint": "Only affects the amps. Fridge compressors are about 0.8; leave the default unless the label says otherwise."
+    }
+   ],
+   "fixed_inputs": {},
+   "outputs": [
+    {
+     "key": "daily_kwh",
+     "label": "Units per day",
+     "spec": "2",
+     "unit": "kWh",
+     "label_ur": "Rozana units",
+     "value": "1.6"
+    },
+    {
+     "key": "monthly_units",
+     "label": "Units per month",
+     "spec": "1",
+     "unit": "kWh",
+     "label_ur": "Mahana units",
+     "value": "48"
+    },
+    {
+     "key": "monthly_rs",
+     "label": "Monthly cost (energy charge only)",
+     "spec": "rs",
+     "label_ur": "Mahana kharcha (sirf energy charge)",
+     "value": "Rs 1,750"
+    },
+    {
+     "key": "running_w",
+     "label": "Running watts",
+     "spec": "int",
+     "unit": "W",
+     "label_ur": "Chalne ke watts",
+     "value": "200"
+    },
+    {
+     "key": "peak_w",
+     "label": "Starting watts",
+     "spec": "int",
+     "unit": "W",
+     "label_ur": "Start ke watts",
+     "value": "1,200"
+    }
+   ],
+   "how": {
+    "tpl": "{{out.items|int}} appliance(s) running {{out.running_w|int}} W together. Running watts × the compressor hours a day you entered ÷ one thousand = {{out.daily_kwh|2}} units a day; × {{out.days|int}} days = {{out.monthly_units|1}} units a month; × {{out.tariff|rs2}} per unit = {{out.monthly_rs|rs}} for the energy charge, before fixed charges, surcharges and tax. Starting surge of the largest compressor: {{out.peak_w|int}} W in total for a moment, {{out.peak_amps|1}} A.",
+    "text": "1 appliance(s) running 200 W together. Running watts × the compressor hours a day you entered ÷ one thousand = 1.6 units a day; × 30 days = 48 units a month; × Rs 36.46 per unit = Rs 1,750 for the energy charge, before fixed charges, surcharges and tax. Starting surge of the largest compressor: 1,200 W in total for a moment, 6.5 A."
+   },
+   "submit": "Calculate",
+   "notice": "",
+   "data_checked": [
+    {
+     "label": "Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)",
+     "url": "https://webstore.iec.ch/publication/1878",
+     "checked": "2026-10-13"
+    },
+    {
+     "label": "Appliance running and starting watts (Wattlyst appliance data, sources listed on the appliance list page)",
+     "url": "https://wattlyst.com/appliances/",
+     "checked": "2026-10-13"
+    },
+    {
+     "label": "Typical wattage of Refrigerator (non-inverter, 12-16 cu ft) (Wattlyst estimate, engineer to confirm)",
+     "url": null,
+     "checked": "2026-10-13"
+    }
+   ]
+  },
+  "examples": [
+   {
+    "title": "One inverter fridge",
+    "text": "120 W × its compressor hours = 1.2 units a day, 36 units in 30 days, about Rs 1,313 at Rs 36.46 per unit. Starting surge only 200 W."
+   },
+   {
+    "title": "One chest deep freezer",
+    "text": "200 W running = 2 units a day and 60 units a month, about Rs 2,188. Starting surge about 1,200 W."
+   },
+   {
+    "title": "Non-inverter fridge plus deep freezer",
+    "text": "400 W together when both compressors run: 3.6 units a day, 108 units a month, about Rs 3,938. Peak when one starts while the other runs: 1,400 W."
+   },
+   {
+    "title": "Old 300 W fridge in a hot kitchen",
+    "text": "With a worn seal the compressor runs about twelve hours a day: 3.6 units a day and 108 units a month, about Rs 3,938, against Rs 1,313 for a new inverter fridge."
+   },
+   {
+    "title": "Hot and cold water dispenser",
+    "text": "500 W while the heater or cooler runs: 3 units a day and 90 units a month, about Rs 3,281. Switching off the hot tank when not needed saves most of it."
+   }
+  ],
+  "table": {
+   "caption": "Units and cost of a non-inverter fridge by running watts, compressor running 8 hours a day for 30 days at Rs 36.46 per unit (energy charge only)",
+   "head": [
+    "Running watts",
+    "Units per day",
+    "Units per month",
+    "Monthly cost"
+   ],
+   "rows": [
+    [
+     "100 W",
+     "0.8",
+     "24",
+     "Rs 875"
+    ],
+    [
+     "150 W",
+     "1.2",
+     "36",
+     "Rs 1,313"
+    ],
+    [
+     "200 W",
+     "1.6",
+     "48",
+     "Rs 1,750"
+    ],
+    [
+     "250 W",
+     "2",
+     "60",
+     "Rs 2,188"
+    ],
+    [
+     "300 W",
+     "2.4",
+     "72",
+     "Rs 2,625"
+    ],
+    [
+     "350 W",
+     "2.8",
+     "84",
+     "Rs 3,063"
+    ]
+   ]
+  },
+  "answer": "A normal non-inverter fridge uses about 1.6 units per day and an inverter fridge about 1.2. Units per day = running watts × compressor hours a day ÷ one thousand: a 200 W fridge whose compressor runs about 8 hours a day uses 1.6 units, 48 a month, about Rs 1,750 at Rs 36.46 per unit.",
+  "formula": {
+   "text": "units/day = running W × compressor hours ÷ 1000; units/month = units/day × days; cost = units/month × rate",
+   "lines": [
+    "running W = compressor running watts from the label, or the typical value for the type",
+    "compressor hours = hours a day the compressor actually runs (the fridge cycles on and off), not twenty-four",
+    "rate = energy rate of your slab in Rs per unit (one unit = one kWh)",
+    "starting watts = the compressor's brief surge; it matters for UPS, inverter and generator sizing, not for the bill"
+   ]
+  },
+  "safety": "Plug a fridge into its own earthed socket, not an extension board, and leave a few minutes before restarting it after a power cut; have a licensed electrician check the socket and the UPS or stabilizer connection if the plug or wiring runs warm."
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -49,7 +420,7 @@
      {
       "@type": "ListItem",
       "position": 3,
-      "name": "Fridge Units Per Day",
+      "name": "Fridge Units per Day: Inverter vs Non-Inverter Refrigerator and Deep Freezer",
       "item": "https://wattlyst.com/appliances/refrigerator/"
      }
     ]
@@ -66,12 +437,14 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/appliances/refrigerator/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-14",
+    "lastReviewed": "2026-10-14"
    },
    {
     "@type": "WebApplication",
     "@id": "https://wattlyst.com/appliances/refrigerator/#app",
-    "name": "Fridge Units Per Day",
+    "name": "Fridge Units per Day: Inverter vs Non-Inverter Refrigerator and Deep Freezer",
     "url": "https://wattlyst.com/appliances/refrigerator/",
     "description": "Daily and monthly units of a refrigerator or deep freezer, inverter vs non-inverter, plus starting watts for UPS and generator sizing.",
     "applicationCategory": "UtilitiesApplication",
@@ -98,6 +471,68 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/appliances/refrigerator/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "How many units does a fridge use per day?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "About 1.6 units per day for a typical 200 W non-inverter fridge whose compressor runs about 8 hours, and about 1.2 for an inverter fridge. Old fridges in hot kitchens use more."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many units does a fridge use per month?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "About 48 units for a non-inverter fridge and 36 for an inverter fridge in a 30-day month, about Rs 1,750 and Rs 1,313 at Rs 36.46 per unit."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many watts does a refrigerator use?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "About 200 W while the compressor runs for a non-inverter fridge (100 to 350 W by size and age) and about 120 W for an inverter fridge. Check the rating plate inside the door or on the back."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How much electricity does an inverter fridge consume?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "About 1.2 units a day, 36 a month, on the typical figures: less than a non-inverter fridge because its compressor runs slowly and steadily instead of switching on and off at full power."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many units does a deep freezer use per day?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "About 2 units per day for a chest deep freezer, 60 units a month, about Rs 2,188 at Rs 36.46 per unit."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What are a fridge's starting watts?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "About 1,200 W for a moment for a non-inverter fridge and about 200 W for an inverter fridge. Size a UPS, inverter or generator for the surge, not only the running watts."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Can a fridge run on a UPS or solar?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Yes, if the inverter's surge rating covers the compressor start: an inverter fridge is easy, a non-inverter fridge needs a UPS with real surge headroom. The daily units, about 1.6, set the battery size; the UPS backup calculator gives the hours."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

@@ -1,0 +1,372 @@
+{
+ "id": "C2",
+ "status": "publish",
+ "template": "tool",
+ "h1": "Generator Watts Calculator for Appliances",
+ "author": "ali-ahmad",
+ "published": "2026-10-14",
+ "reviewed": "2026-10-14",
+ "calc": "generator_size",
+ "submit": "Add up the watts",
+ "fields": [
+  {
+   "name": "loads",
+   "label": "Appliances to run on the generator",
+   "type": "loads",
+   "catalog": "all",
+   "default": [
+    {
+     "id": "ceiling-fan-ac",
+     "qty": 3
+    },
+    {
+     "id": "led-bulb",
+     "qty": 6
+    },
+    {
+     "id": "led-tv-43",
+     "qty": 1
+    },
+    {
+     "id": "refrigerator-non-inverter",
+     "qty": 1
+    },
+    {
+     "id": "wifi-router",
+     "qty": 1
+    }
+   ],
+   "hint": "Pick each appliance from the list; its running and starting watts fill in from our appliance data. If the label on your appliance gives a different wattage, type it in."
+  },
+  {
+   "name": "margin",
+   "label": "Safety margin on the running load",
+   "unit": "times",
+   "default": "@margin",
+   "advanced": true,
+   "hint": "Head-room so the generator is not run at full load for hours. A decimal like one point two five."
+  },
+  {
+   "name": "pf",
+   "label": "Generator power factor",
+   "unit": "0 to 1",
+   "default": "@pf_generator",
+   "advanced": true,
+   "hint": "Used only to turn watts into kVA. Most home generators are rated at the default."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "sized_w",
+   "label": "Generator watts needed",
+   "spec": "int",
+   "unit": "W"
+  },
+  {
+   "key": "running_w",
+   "label": "Total running watts",
+   "spec": "int",
+   "unit": "W"
+  },
+  {
+   "key": "peak_w",
+   "label": "Peak with the largest motor starting",
+   "spec": "int",
+   "unit": "W"
+  },
+  {
+   "key": "standard_kva",
+   "label": "Generator size to buy",
+   "spec": "1",
+   "unit": "kVA"
+  }
+ ],
+ "answer": "Three fans, six LED bulbs, a TV, a non-inverter fridge and a router run at {{out.running_w|int}} W and peak at {{out.peak_w|int}} W when the fridge starts, so the generator must deliver {{out.sized_w|int}} W, a {{out.standard_kva|1}} kVA set. Generator watts = the larger of total running watts × {{d.margin|2}} or running watts plus the biggest starting surge.",
+ "how": "Running watts of each appliance × how many, added up: {{out.running_w|int}} W. Adding the surge of the one appliance with the biggest jump at start gives {{out.peak_w|int}} W. {{out.running_w|int}} W × {{out.margin|2}} margin is compared with {{out.peak_w|int}} W, and the larger, {{out.sized_w|int}} W, is the wattage the generator must deliver. In kVA: {{out.sized_w|int}} W ÷ {{out.pf|2}} ÷ 1,000 = {{out.recommended_kva|2}} kVA, so {{out.standard_kva|1}} kVA.",
+ "key_facts": [
+  "Generator watts needed = the larger of (the running watts of every appliance on at once × {{d.margin|2}}) or (those running watts plus the starting surge of the one appliance with the biggest jump).",
+  "A TV, a non-inverter fridge and one ceiling fan run at only {{ex.0.out.running_w|int}} W, but the fridge compressor's start means the generator must supply {{ex.0.out.peak_w|int}} W for a moment.",
+  "Fans, lights, a TV, a non-inverter fridge and a router need {{out.sized_w|int}} W from the generator, so they fit a 2,000 W set; add a {{a.electric-iron.running_w|int}} W iron and the need rises to {{ex.1.out.sized_w|int}} W.",
+  "Heaters, irons, kettles and microwaves draw the same watts at start as when running; fridges, pumps, washing machines and non-inverter ACs draw several times more for a second or two."
+ ],
+ "formula": {
+  "text": "P_run = Σ (W_run × qty); P_peak = P_run + max(W_start − W_run); P_gen = max(P_run × m, P_peak); kVA = P_gen ÷ PF ÷ 1000",
+  "lines": [
+   "W_run = running watts of one appliance, W_start = its starting watts, qty = how many",
+   "P_run = total running watts; P_peak = the moment the appliance with the biggest jump starts",
+   "m = safety margin on the running load",
+   "P_gen = watts the generator must deliver",
+   "PF = generator power factor; kVA is rounded up to the next standard size"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "How many watts generator do I need?",
+   "p": [
+    "Add the running watts of every appliance you will switch on together, then check which one jumps the most when it starts. For the default list that is the fridge, so the generator must cover {{out.running_w|int}} W of running load plus the fridge's jump, {{out.peak_w|int}} W in all. The calculator also checks the running load × {{out.margin|2}} and keeps the larger: {{out.sized_w|int}} W.",
+    "Generators are sold by kVA, and {{out.sized_w|int}} W works out to {{out.recommended_kva|2}} kVA at the usual power factor, so the smallest standard size, {{out.standard_kva|1}} kVA, is enough here. If your generator's nameplate gives watts instead, compare it with the {{out.sized_w|int}} W directly."
+   ]
+  },
+  {
+   "h2": "Appliance wattage chart for generator sizing",
+   "p": [
+    "The table below lists eight common appliances on their own: the watts each draws while running, the watts it needs for a second or two at start, and what a generator must deliver for it alone. The running watts list and starting watts come from our appliance data, which is based on an extension-service wattage table, generator makers' charts and Pakistani datasheets, with the estimates marked.",
+    "Read the chart in pairs. A 1 hp water motor runs at {{a.water-motor-1hp.running_w|int}} W yet needs {{a.water-motor-1hp.starting_w|int}} W at start; a microwave runs at {{a.microwave-oven.running_w|int}} W and never needs more. Two appliances with similar running watts can need very different generators."
+   ]
+  },
+  {
+   "h2": "Generator watts for a TV, fridge and fan",
+   "p": [
+    "A 43 inch LED TV, a non-inverter fridge and one ceiling fan add up to {{ex.0.out.running_w|int}} W while running. The fridge compressor needs about {{a.refrigerator-non-inverter.starting_w|int}} W at start against {{a.refrigerator-non-inverter.running_w|int}} W running, so the generator must supply {{ex.0.out.peak_w|int}} W for that moment.",
+    "That is still inside the smallest common size, {{ex.0.out.standard_kva|1}} kVA. With an inverter fridge the start jump almost disappears, which matters more for a small portable set than for a home standby generator."
+   ]
+  },
+  {
+   "h2": "What can a 2,000 watt generator run?",
+   "p": [
+    "A generator rated for 2,000 W of continuous output runs the default list: fans, bulbs, a TV, a non-inverter fridge and a router need {{out.sized_w|int}} W. Switch an iron on at the same time and the need becomes {{ex.1.out.sized_w|int}} W, more than the set can give, so the iron must wait or the fridge must be off.",
+    "Check whether the 2,000 W figure on the label is running or peak output: many small portable and inverter generators print the peak, and their running rating is lower. The page on what a kVA generator can run tests any list against a given generator size."
+   ]
+  },
+  {
+   "h2": "Where to find the real watts of your appliances",
+   "p": [
+    "The rating plate on the back or bottom of each appliance gives watts, or volts and amps (watts = volts × amps). That figure is usually the maximum, so it is a safe number for generator sizing. Starting watts are rarely printed; for fridges, freezers, pumps and non-inverter ACs our list uses a multiple of the running watts from the appliance data.",
+    "If you change the running watts of a listed appliance, its starting watts scale with it. For anything not in the list, choose a custom load and type its watts."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac"
+     },
+     {
+      "id": "led-tv-43"
+     },
+     {
+      "id": "refrigerator-non-inverter"
+     }
+    ]
+   },
+   "title": "A TV, a fridge and a fan",
+   "text": "Fan, LED TV and non-inverter fridge: {{out.running_w|int}} W running. The fridge's start lifts it to {{out.peak_w|int}} W, larger than {{out.running_w|int}} W × {{out.margin|2}}, so the generator must deliver {{out.sized_w|int}} W ({{out.recommended_kva|2}} kVA); a {{out.standard_kva|1}} kVA set covers it."
+  },
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 3
+     },
+     {
+      "id": "led-bulb",
+      "qty": 6
+     },
+     {
+      "id": "led-tv-43"
+     },
+     {
+      "id": "refrigerator-non-inverter"
+     },
+     {
+      "id": "wifi-router"
+     },
+     {
+      "id": "electric-iron"
+     }
+    ]
+   },
+   "title": "The default list with an iron switched on",
+   "text": "The iron adds {{a.electric-iron.running_w|int}} W of running load and no start surge. Running load {{out.running_w|int}} W, peak {{out.peak_w|int}} W when the fridge starts, so the generator must deliver {{out.sized_w|int}} W: {{out.recommended_kva|2}} kVA, a {{out.standard_kva|1}} kVA set."
+  },
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 2
+     },
+     {
+      "id": "led-bulb",
+      "qty": 4
+     },
+     {
+      "id": "refrigerator-inverter"
+     },
+     {
+      "id": "microwave-oven"
+     }
+    ]
+   },
+   "title": "Kitchen loads: an inverter fridge and a microwave with two fans",
+   "text": "{{out.running_w|int}} W running and only {{out.peak_w|int}} W at peak, because nothing here has a hard start. Here the running load × {{out.margin|2}}, {{out.sized_w|int}} W, sets the size: {{out.recommended_kva|2}} kVA, so {{out.standard_kva|1}} kVA."
+  },
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "desktop-pc",
+      "qty": 2
+     },
+     {
+      "id": "monitor",
+      "qty": 2
+     },
+     {
+      "id": "led-tube-light",
+      "qty": 6
+     },
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 3
+     },
+     {
+      "id": "wifi-router"
+     },
+     {
+      "id": "printer-laser"
+     }
+    ]
+   },
+   "title": "Small office: two computers, a laser printer, tube lights and fans",
+   "text": "{{out.running_w|int}} W running. The laser printer's warm-up jump is the largest, so the peak is {{out.peak_w|int}} W and the generator must deliver {{out.sized_w|int}} W, {{out.recommended_kva|2}} kVA: a {{out.standard_kva|1}} kVA set."
+  }
+ ],
+ "table": {
+  "caption": "Appliance wattage chart for generator sizing, each appliance on its own, from the top: ceiling fan, 43 inch LED TV, non-inverter fridge, 1.5 ton inverter AC, 1 hp water motor, electric iron, microwave oven, automatic washing machine",
+  "rows": [
+   {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "led-tv-43"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "refrigerator-non-inverter"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "ac-split-1-5ton-inverter"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "water-motor-1hp"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "electric-iron"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "microwave-oven"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "washing-machine-automatic"
+     }
+    ]
+   }
+  ],
+  "columns": [
+   {
+    "label": "Running watts",
+    "tpl": "{{out.running_w|int}} W"
+   },
+   {
+    "label": "Starting watts",
+    "tpl": "{{out.peak_w|int}} W"
+   },
+   {
+    "label": "Generator watts needed alone",
+    "tpl": "{{out.sized_w|int}} W"
+   }
+  ]
+ },
+ "mistakes": [
+  "Adding the starting watts of every appliance together. Only one motor starts at a time, so only the biggest jump is added to the running total.",
+  "Ignoring the starting watts altogether. A fridge or pump that runs on a few hundred watts can stall a small generator at the moment it starts.",
+  "Using the watts from an online list when the appliance label says otherwise. The label on your own fridge, pump or AC is the better number; type it into the list.",
+  "Reading a portable generator's peak watts as its running watts. The running figure is the one that must cover the total for hours."
+ ],
+ "safety": "Plug appliances into the generator's own outlets with a heavy enough extension lead, or have a licensed electrician fit a changeover switch for the house wiring; never back-feed through a wall socket. Run the generator outdoors, away from windows, because its exhaust contains carbon monoxide.",
+ "faq": [
+  {
+   "q": "How many watts does a generator need to run a fridge?",
+   "a": "A non-inverter fridge runs at about {{a.refrigerator-non-inverter.running_w|int}} W but needs about {{a.refrigerator-non-inverter.starting_w|int}} W at start, so plan on that peak plus whatever else is running. An inverter fridge runs at about {{a.refrigerator-inverter.running_w|int}} W and starts at about {{a.refrigerator-inverter.starting_w|int}} W."
+  },
+  {
+   "q": "What can a 2,000 watt generator run?",
+   "a": "Fans, lights, a TV, a non-inverter fridge and a router together (they need {{out.sized_w|int}} W), but not the same list with an iron on ({{ex.1.out.sized_w|int}} W). It will not start a non-inverter AC, which needs about {{a.ac-split-1ton-non-inverter.starting_w|int}} W even in the 1 ton size."
+  },
+  {
+   "q": "What is a generator load calculator?",
+   "a": "It adds up the running watts of the appliances you will use together, adds the largest starting surge, and gives the watts and kVA your generator must supply. This page is one; the home generator size calculator does the same for a whole house list."
+  },
+  {
+   "q": "How many watts generator for a TV, fridge and fan?",
+   "a": "They run at {{ex.0.out.running_w|int}} W together but need {{ex.0.out.sized_w|int}} W at the moment the fridge starts, so a {{ex.0.out.standard_kva|1}} kVA generator or any set rated above that wattage."
+  },
+  {
+   "q": "Do I add running watts or starting watts?",
+   "a": "Both, but in a particular way: add the running watts of everything, then add the start jump of only the single appliance with the biggest jump. Adding every starting figure overstates the need, because two motors almost never start in the same second."
+  },
+  {
+   "q": "Is there an appliance running watts list?",
+   "a": "Yes: the chart on this page covers eight common appliances, the appliance picker in the calculator holds our full list with running and starting watts, and the appliance wattage list page gives units per hour and per day for each one."
+  }
+ ],
+ "related": [
+  "C3",
+  "C4",
+  "C7",
+  "E2",
+  "H2"
+ ],
+ "next": "C1",
+ "literal_numbers": [
+  "1,000",
+  "2,000",
+  "43 inch",
+  "1.5 ton",
+  "1 ton",
+  "1 hp"
+ ],
+ "sources": [
+  {
+   "label": "Virginia Tech Extension: appliance wattage table (running and starting watts)",
+   "url": "https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

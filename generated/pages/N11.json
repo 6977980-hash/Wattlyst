@@ -3,15 +3,25 @@
  "type": "tool",
  "silo": "T",
  "url": "/troubleshoot/battery-series-parallel-calculator/",
- "h1": "Battery Series Parallel Calculator",
+ "h1": "Battery Series and Parallel Calculator with Wiring Diagram",
  "title": "Battery Series & Parallel Calculator with Diagram | Wattlyst",
  "meta": "Pick your batteries and see the total voltage, Ah and kWh in series or parallel, with a live wiring diagram and safety notes.",
  "primary_keyword": "battery series parallel calculator",
  "wave": 3,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-14",
+ "published": "2026-10-14",
  "author": "ali-ahmad",
+ "related": [
+  "B4",
+  "D1",
+  "A10",
+  "N14",
+  "H8"
+ ],
+ "next": "B1",
  "parent": "P-T",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
@@ -22,11 +32,273 @@
    "url": "/troubleshoot/"
   },
   {
-   "name": "Battery Series Parallel Calculator",
+   "name": "Battery Series and Parallel Calculator with Wiring Diagram",
    "url": "/troubleshoot/battery-series-parallel-calculator/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "Battery series and parallel calculator: the two rules",
+    "p": [
+     "Series raises the voltage: the plus of one battery goes to the minus of the next, and the volts add up while the amp hours stay those of one battery. Parallel raises the capacity: all the pluses join and all the minuses join, the volts stay those of one battery and the amp hours add up. The stored energy is the same for the same batteries; only the voltage and current change.",
+     "The inverter decides the voltage. A 24 V inverter needs 2 batteries of 12 V in series, a 48 V inverter needs 4. Parallel strings are then added for more backup time."
+    ]
+   },
+   {
+    "h2": "How to connect batteries in series",
+    "p": [
+     "Step one: switch off the inverter and the charger, and remove the bank fuse or open the battery breaker. Step two: place the batteries side by side and connect the plus of the first battery to the minus of the second, then the plus of the second to the minus of the third, and so on. Step three: the free minus of the first battery and the free plus of the last battery are the string's terminals. Step four: check with a multimeter that the string reads about 2 × the battery voltage before you connect it to anything.",
+     "Use links of the same cable size and length between batteries, and tighten every terminal to the torque the battery maker gives. A loose link heats up under load."
+    ]
+   },
+   {
+    "h2": "Series-parallel wiring diagram: joining several strings",
+    "p": [
+     "Build each series string first and check its voltage. Then bring each string's plus to a common positive bus bar and each string's minus to a common negative bus bar, with a fuse or DC breaker in the positive lead of every string. Take the inverter cables from opposite ends of the bus bars (plus from one end, minus from the other) so every string sees the same cable length and shares the load evenly.",
+     "The wiring diagram with the result draws the bank you entered: 2 batteries across in each string and 2 strings down. Keep parallel strings to as few as the backup you need allows: the more strings, the harder it is to keep them balanced."
+    ]
+   },
+   {
+    "h2": "Can I mix old and new batteries or different sizes?",
+    "p": [
+     "No. In series, the weakest battery limits the string and is pushed past full and past empty by the others. In parallel, a battery with a different voltage or age makes current flow between the strings even with no load. Never mix lead-acid with lithium, or batteries of different Ah, in one bank; replace a whole string together."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "What happens when you connect batteries in series?",
+    "a": "The voltages add and the amp hours stay those of one battery: two 12 V 200 Ah batteries make 24 V 200 Ah."
+   },
+   {
+    "q": "What happens when you connect batteries in parallel?",
+    "a": "The voltage stays the same and the amp hours add: two 12 V 200 Ah batteries make 12 V 400 Ah. The stored energy, 4.8 kWh, is the same as in series."
+   },
+   {
+    "q": "Is series or parallel better for backup time?",
+    "a": "Neither: the same batteries store the same kWh either way. Choose series to match your inverter's voltage, then add parallel strings for more backup."
+   },
+   {
+    "q": "How many batteries do I need for a 48 V inverter?",
+    "a": "Four 12 V batteries in series, giving 48 V 200 Ah and 9.6 kWh with 200 Ah batteries. For more backup, add a second string of four in parallel."
+   },
+   {
+    "q": "Can I connect a 150 Ah and a 200 Ah battery together?",
+    "a": "No. Batteries of different capacity or age in one bank charge and discharge unevenly, and the smaller one is damaged. Use identical batteries only."
+   },
+   {
+    "q": "Do I need a fuse between parallel batteries?",
+    "a": "Yes, one fuse or DC breaker on the positive lead of each string, sized for the string's cable. Without it a short in one battery is fed by all the others."
+   }
+  ],
+  "key_facts": [
+   "Batteries in series add their voltage and keep the amp hours of one battery; batteries in parallel keep the voltage and add the amp hours; the stored energy in kWh = bank volts × bank amp hours ÷ 1000 either way.",
+   "2 × 12 V 200 Ah batteries in series make 24 V 200 Ah, 4.8 kWh; the same two in parallel make 12 V 400 Ah and store the same 4.8 kWh.",
+   "A 48 V inverter on 12 V 200 Ah batteries needs 4 batteries in series, storing 9.6 kWh, of which about 50% is usable from tubular lead-acid batteries.",
+   "Only identical batteries may share a bank: the same chemistry, model, capacity and age. A weak battery in a series string is overcharged and over-discharged by the others and drags the whole bank down."
+  ],
+  "mistakes": [
+   "Adding amp hours in series. Two 200 Ah batteries in series are still 200 Ah; only the voltage doubles.",
+   "Mixing an old battery with new ones. The old one fails first and takes the new ones with it; replace a whole string at once.",
+   "Taking both inverter cables from the same end of a parallel bank. The nearest string does most of the work and wears out first; take plus and minus from opposite ends.",
+   "Leaving out the fuse. Every parallel string needs its own fuse or DC breaker, because a shorted battery would otherwise draw current from all the others.",
+   "Matching the bank to the battery count instead of the inverter. The inverter's battery voltage sets the number in series; check it on the inverter label first."
+  ],
+  "sources": [
+   {
+    "label": "Wattlyst methodology and default values",
+    "url": "/methodology/"
+   }
+  ],
+  "tool": {
+   "calc": "series_parallel",
+   "module": "battery.js",
+   "data_keys": [],
+   "appliances": {},
+   "fields": [
+    {
+     "name": "v",
+     "label": "Voltage of one battery",
+     "unit": "V",
+     "default": 12,
+     "hint": "From the battery label: 12 V for most tubular and car batteries, 12.8 V for a lithium block, 3.2 V for a single LiFePO4 cell."
+    },
+    {
+     "name": "ah",
+     "label": "Capacity of one battery",
+     "unit": "Ah",
+     "default": 200,
+     "hint": "Amp hours from the same label. All batteries in the bank must be the same model, capacity and age."
+    },
+    {
+     "name": "n_series",
+     "label": "Batteries in series in each string",
+     "unit": "batteries",
+     "default": 2,
+     "hint": "Series adds voltage: two 12 V batteries make 24 V, four make 48 V. Match your inverter's battery voltage."
+    },
+    {
+     "name": "n_parallel",
+     "label": "Strings in parallel",
+     "unit": "strings",
+     "default": 2,
+     "hint": "Parallel adds amp hours at the same voltage. Use 1 for a single string; keep parallel strings to as few as you can."
+    }
+   ],
+   "fixed_inputs": {},
+   "outputs": [
+    {
+     "key": "v_total",
+     "label": "Bank voltage",
+     "spec": "1",
+     "unit": "V",
+     "label_ur": "Bank ka voltage",
+     "value": "24"
+    },
+    {
+     "key": "ah_total",
+     "label": "Battery bank capacity",
+     "spec": "int",
+     "unit": "Ah",
+     "label_ur": "Battery bank ki capacity",
+     "value": "400"
+    },
+    {
+     "key": "kwh",
+     "label": "Battery bank energy",
+     "spec": "2",
+     "unit": "kWh",
+     "label_ur": "Battery bank ki energy",
+     "value": "9.6"
+    },
+    {
+     "key": "batteries",
+     "label": "Batteries to buy",
+     "spec": "int",
+     "label_ur": "Kitni batteries khareedni hain",
+     "value": "4"
+    },
+    {
+     "key": "n_series",
+     "label": "In series per string",
+     "spec": "int",
+     "label_ur": "Har string mein series",
+     "value": "2"
+    },
+    {
+     "key": "n_parallel",
+     "label": "Strings in parallel",
+     "spec": "int",
+     "label_ur": "Parallel strings",
+     "value": "2"
+    }
+   ],
+   "how": {
+    "tpl": "Voltage: {{out.n_series|int}} batteries in series × the voltage of one battery = {{out.v_total|1}} V. Capacity: {{out.n_parallel|int}} strings × the Ah of one battery = {{out.ah_total|int}} Ah (series does not add amp hours). Energy: {{out.v_total|1}} V × {{out.ah_total|int}} Ah ÷ 1000 = {{out.kwh|2}} kWh. Batteries: {{out.n_series|int}} × {{out.n_parallel|int}} = {{out.batteries|int}}. The diagram shows each string as a row, wired plus to minus, with the strings joined at common positive and negative bus bars.",
+    "text": "Voltage: 2 batteries in series × the voltage of one battery = 24 V. Capacity: 2 strings × the Ah of one battery = 400 Ah (series does not add amp hours). Energy: 24 V × 400 Ah ÷ 1000 = 9.6 kWh. Batteries: 2 × 2 = 4. The diagram shows each string as a row, wired plus to minus, with the strings joined at common positive and negative bus bars."
+   },
+   "submit": "Calculate",
+   "diagram": "battery_grid",
+   "notice": "",
+   "data_checked": []
+  },
+  "examples": [
+   {
+    "title": "Two 12 V batteries in series for a 24 V inverter",
+    "text": "2 × 12 V = 24 V; capacity stays 200 Ah; energy 4.8 kWh from 2 batteries."
+   },
+   {
+    "title": "Four batteries in series for a 48 V inverter",
+    "text": "4 × 12 V = 48 V at 200 Ah, 9.6 kWh. Doubling the bank voltage halves the battery current for the same load, so the battery cables can be thinner."
+   },
+   {
+    "title": "Two 12 V batteries in parallel",
+    "text": "Voltage stays 12 V; capacity doubles to 400 Ah; energy 4.8 kWh, the same as two in series. Use this only for a 12 V inverter or a 12 V DC system."
+   },
+   {
+    "title": "2 in series × 2 in parallel",
+    "text": "Two strings of two batteries: 24 V 400 Ah, 9.6 kWh from 4 batteries. Fuse each string before the bus bar."
+   },
+   {
+    "title": "LiFePO4 pack from 16 cells of 3.2 V",
+    "text": "16 cells × 3.2 V = 51.2 V nominal at 100 Ah, 5.12 kWh: this is how a lithium battery sold for a 48 V inverter is built inside. A cell pack needs a battery management system (BMS); do not build one without it."
+   }
+  ],
+  "table": {
+   "caption": "Bank voltage, capacity and energy for common series and parallel layouts of 12 V 200 Ah batteries",
+   "head": [
+    "Layout",
+    "Batteries",
+    "Bank voltage",
+    "Capacity",
+    "Energy"
+   ],
+   "rows": [
+    [
+     "1 in series × 1 in parallel",
+     "1",
+     "12 V",
+     "200 Ah",
+     "2.4 kWh"
+    ],
+    [
+     "1 in series × 2 in parallel",
+     "2",
+     "12 V",
+     "400 Ah",
+     "4.8 kWh"
+    ],
+    [
+     "2 in series × 1 in parallel",
+     "2",
+     "24 V",
+     "200 Ah",
+     "4.8 kWh"
+    ],
+    [
+     "2 in series × 2 in parallel",
+     "4",
+     "24 V",
+     "400 Ah",
+     "9.6 kWh"
+    ],
+    [
+     "4 in series × 1 in parallel",
+     "4",
+     "48 V",
+     "200 Ah",
+     "9.6 kWh"
+    ],
+    [
+     "4 in series × 2 in parallel",
+     "8",
+     "48 V",
+     "400 Ah",
+     "19.2 kWh"
+    ],
+    [
+     "2 in series × 3 in parallel",
+     "6",
+     "24 V",
+     "600 Ah",
+     "14.4 kWh"
+    ]
+   ]
+  },
+  "answer": "4 batteries of 12 V 200 Ah, 2 in series in each of 2 parallel strings, make a 24 V 400 Ah bank storing 9.6 kWh. Series adds the volts (bank V = batteries in series × battery V), parallel adds the amp hours (bank Ah = strings × battery Ah), and kWh = bank V × bank Ah ÷ 1000.",
+  "formula": {
+   "text": "V_bank = N_series × V; Ah_bank = N_parallel × Ah; kWh = V_bank × Ah_bank ÷ 1000",
+   "lines": [
+    "V, Ah = voltage and capacity of one battery (all identical)",
+    "N_series = batteries in series in each string; N_parallel = number of strings in parallel",
+    "Batteries needed = N_series × N_parallel",
+    "Usable kWh = kWh × depth of discharge (about half for tubular lead-acid, most of it for LiFePO4)"
+   ]
+  },
+  "safety": "A battery bank can deliver thousands of amps into a short circuit. Remove rings and watches, use insulated tools, connect the last link only after checking polarity, and fuse each string. Lead-acid batteries give off hydrogen while charging, so keep them ventilated and away from sparks. Have a licensed electrician fit the fuses, breaker and inverter cables."
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -49,7 +321,7 @@
      {
       "@type": "ListItem",
       "position": 3,
-      "name": "Battery Series Parallel Calculator",
+      "name": "Battery Series and Parallel Calculator with Wiring Diagram",
       "item": "https://wattlyst.com/troubleshoot/battery-series-parallel-calculator/"
      }
     ]
@@ -66,12 +338,14 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/troubleshoot/battery-series-parallel-calculator/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-14",
+    "lastReviewed": "2026-10-14"
    },
    {
     "@type": "WebApplication",
     "@id": "https://wattlyst.com/troubleshoot/battery-series-parallel-calculator/#app",
-    "name": "Battery Series Parallel Calculator",
+    "name": "Battery Series and Parallel Calculator with Wiring Diagram",
     "url": "https://wattlyst.com/troubleshoot/battery-series-parallel-calculator/",
     "description": "Pick your batteries and see the total voltage, Ah and kWh in series or parallel, with a live wiring diagram and safety notes.",
     "applicationCategory": "UtilitiesApplication",
@@ -98,6 +372,60 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/troubleshoot/battery-series-parallel-calculator/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "What happens when you connect batteries in series?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "The voltages add and the amp hours stay those of one battery: two 12 V 200 Ah batteries make 24 V 200 Ah."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What happens when you connect batteries in parallel?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "The voltage stays the same and the amp hours add: two 12 V 200 Ah batteries make 12 V 400 Ah. The stored energy, 4.8 kWh, is the same as in series."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Is series or parallel better for backup time?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Neither: the same batteries store the same kWh either way. Choose series to match your inverter's voltage, then add parallel strings for more backup."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many batteries do I need for a 48 V inverter?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Four 12 V batteries in series, giving 48 V 200 Ah and 9.6 kWh with 200 Ah batteries. For more backup, add a second string of four in parallel."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Can I connect a 150 Ah and a 200 Ah battery together?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "No. Batteries of different capacity or age in one bank charge and discharge unevenly, and the smaller one is damaged. Use identical batteries only."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Do I need a fuse between parallel batteries?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Yes, one fuse or DC breaker on the positive lead of each string, sized for the string's cable. Without it a short in one battery is fed by all the others."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

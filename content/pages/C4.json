@@ -1,0 +1,309 @@
+{
+ "id": "C4",
+ "status": "publish",
+ "template": "tool",
+ "h1": "Running Watts vs Starting Watts Calculator",
+ "author": "ali-ahmad",
+ "published": "2026-10-14",
+ "reviewed": "2026-10-14",
+ "calc": "generator_size",
+ "submit": "Compare the watts",
+ "fields": [
+  {
+   "name": "loads",
+   "label": "Appliance to compare",
+   "type": "loads",
+   "catalog": "all",
+   "default": [
+    {
+     "id": "refrigerator-non-inverter",
+     "qty": 1
+    }
+   ],
+   "hint": "Pick one appliance to see its running and starting watts side by side. Add more rows to see how they combine on one generator or inverter."
+  },
+  {
+   "name": "margin",
+   "label": "Safety margin on the running load",
+   "unit": "times",
+   "default": "@margin",
+   "advanced": true,
+   "hint": "Applied to the running watts before they are compared with the starting watts. A decimal like one point two five."
+  },
+  {
+   "name": "pf",
+   "label": "Generator power factor",
+   "unit": "0 to 1",
+   "default": "@pf_generator",
+   "advanced": true,
+   "hint": "Only used for the kVA figure. Leave the default for a home generator."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "running_w",
+   "label": "Running watts",
+   "spec": "int",
+   "unit": "W"
+  },
+  {
+   "key": "peak_w",
+   "label": "Starting watts",
+   "spec": "int",
+   "unit": "W"
+  },
+  {
+   "key": "sized_w",
+   "label": "Generator watts needed",
+   "spec": "int",
+   "unit": "W"
+  },
+  {
+   "key": "standard_kva",
+   "label": "Generator size to buy",
+   "spec": "1",
+   "unit": "kVA"
+  }
+ ],
+ "answer": "Running watts are the steady power an appliance draws while it works; starting watts are the short burst a motor or compressor needs for a second or two to get going. A non-inverter fridge runs at {{out.running_w|int}} W but starts at {{out.peak_w|int}} W, so a generator must deliver {{out.sized_w|int}} W. Size on the larger of running watts × {{d.margin|2}} or starting watts.",
+ "how": "Running watts: {{out.running_w|int}} W. Starting watts (running watts plus the largest start jump): {{out.peak_w|int}} W. Running watts × {{out.margin|2}} margin is compared with the starting watts; the larger, {{out.sized_w|int}} W, is what a generator or inverter must deliver. {{out.sized_w|int}} W ÷ {{out.pf|2}} ÷ 1,000 = {{out.recommended_kva|2}} kVA, so a {{out.standard_kva|1}} kVA generator.",
+ "key_facts": [
+  "Running watts (also called rated or continuous watts) are what an appliance draws for as long as it is on; starting watts (surge or peak watts) are drawn for a second or two while a motor or compressor starts.",
+  "For heaters, irons, kettles, bulbs and electronics the two are the same: an electric iron runs and starts at {{a.electric-iron.running_w|int}} W, so the running watts × {{d.margin|2}} ({{ex.0.out.sized_w|int}} W) decide the generator.",
+  "For motors and compressors the starting watts decide: a non-inverter fridge needs {{out.peak_w|int}} W at start against {{out.running_w|int}} W running, and a 1 ton non-inverter AC needs {{ex.2.out.peak_w|int}} W against {{ex.2.out.running_w|int}} W.",
+  "Inverter fridges and inverter ACs ramp up gradually, so their starting watts are close to their running watts: a 1 ton inverter AC peaks at about {{ex.3.out.peak_w|int}} W."
+ ],
+ "formula": {
+  "text": "P_peak = P_run + max(W_start − W_run); P_gen = max(P_run × m, P_peak)",
+  "lines": [
+   "P_run = running watts (all appliances on together)",
+   "W_start − W_run = the jump of one appliance at start; only the largest is added",
+   "P_peak = starting watts the supply must cover for a second or two",
+   "m = safety margin on the running load",
+   "P_gen = watts the generator or inverter must deliver; kVA = P_gen ÷ PF ÷ 1000"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "Running watts vs starting watts: what is the difference?",
+   "p": [
+    "Running watts are the power an appliance uses once it is working, the number that sets your electricity units and how long a battery lasts. Starting watts are a brief spike above that, only for appliances with a motor or compressor, and they matter for one thing: whether your generator, UPS or inverter can get the appliance going.",
+    "The calculator shows both for any appliance in the list. For the default non-inverter fridge, {{out.running_w|int}} W running and {{out.peak_w|int}} W starting; the generator has to be built around the second number even though the fridge spends almost all its time on the first."
+   ]
+  },
+  {
+   "h2": "What are starting watts?",
+   "p": [
+    "An electric motor at rest has no back-voltage to limit its current, so for the first moments it draws several times its running current until it reaches speed. A compressor is harder still, because it starts against the refrigerant pressure. That spike, multiplied by the voltage, is the starting watts.",
+    "Appliances without a motor, an iron, a kettle, a geyser or an LED bulb, have no such spike: their starting watts equal their running watts, as the iron example shows ({{ex.0.out.running_w|int}} W both ways)."
+   ]
+  },
+  {
+   "h2": "Rated watts vs surge watts on a label",
+   "p": [
+    "On an appliance nameplate, the rated watts are its running watts at full output, often a little above its average draw. Surge watts are almost never printed; a motor or compressor nameplate may give locked-rotor amps (LRA) instead, and LRA × the supply voltage is a rough starting watts figure.",
+    "On a generator or inverter the same words describe the supply: rated or continuous watts can be given for hours, surge or peak watts for seconds. Check your appliance's running watts × {{d.margin|2}} and its starting watts against the continuous figure, as this calculator does; the starting watts calculator explains why the surge figure is best kept as reserve."
+   ]
+  },
+  {
+   "h2": "Why starting watts matter for a generator",
+   "p": [
+    "A generator that can carry the running load but not the start will stall, its breaker will open, or the voltage will sag so far that the motor never gets up to speed and overheats. For the 1 ton non-inverter AC in the examples, the running {{ex.2.out.running_w|int}} W would suggest a small set, but the {{ex.2.out.peak_w|int}} W start calls for a {{ex.2.out.standard_kva|1}} kVA generator.",
+    "Starting watts do not change the electricity or fuel you use; a surge of a second or two is too short to matter in units. They only change the size of the machine you buy."
+   ]
+  },
+  {
+   "h2": "Inverter appliances: when the two numbers nearly match",
+   "p": [
+    "Inverter ACs, inverter fridges and DC ceiling fans control their motor speed electronically and ramp up slowly. A 1 ton inverter AC runs at about {{ex.3.out.running_w|int}} W and peaks at about {{ex.3.out.peak_w|int}} W, its maximum rated input, so the running watts × {{d.margin|2}} decide its generator: {{ex.3.out.sized_w|int}} W.",
+    "That is why replacing a non-inverter AC with an inverter one often lets a home use a smaller generator or a UPS: the chart below puts the inverter and non-inverter versions of the same appliances side by side."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "electric-iron"
+     }
+    ]
+   },
+   "title": "Electric iron: running and starting watts are equal",
+   "text": "Running {{out.running_w|int}} W, starting {{out.peak_w|int}} W. With no start surge the running watts × {{out.margin|2}} = {{out.sized_w|int}} W decide the generator: {{out.recommended_kva|2}} kVA, so the smallest common size, {{out.standard_kva|1}} kVA."
+  },
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "refrigerator-inverter"
+     }
+    ]
+   },
+   "title": "Inverter fridge: a small start",
+   "text": "Running {{out.running_w|int}} W, starting {{out.peak_w|int}} W, against about {{a.refrigerator-non-inverter.starting_w|int}} W for a non-inverter fridge; the generator must deliver {{out.sized_w|int}} W."
+  },
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "ac-split-1ton-non-inverter"
+     }
+    ]
+   },
+   "title": "1 ton non-inverter AC: the start decides",
+   "text": "Running {{out.running_w|int}} W, starting {{out.peak_w|int}} W. The start is far above {{out.running_w|int}} W × {{out.margin|2}}, so the generator must deliver {{out.sized_w|int}} W, {{out.recommended_kva|2}} kVA: a {{out.standard_kva|1}} kVA set."
+  },
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "ac-split-1ton-inverter"
+     }
+    ]
+   },
+   "title": "1 ton inverter AC: the running load decides",
+   "text": "Running {{out.running_w|int}} W, highest draw {{out.peak_w|int}} W. Running × {{out.margin|2}} = {{out.sized_w|int}} W is the larger, so {{out.recommended_kva|2}} kVA and a {{out.standard_kva|1}} kVA set, against {{ex.2.out.standard_kva|1}} kVA for the non-inverter AC."
+  },
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "refrigerator-non-inverter"
+     },
+     {
+      "id": "electric-iron"
+     }
+    ]
+   },
+   "title": "Fridge and iron together",
+   "text": "Running watts add up: {{out.running_w|int}} W. Starting watts add only the fridge's jump on top: {{out.peak_w|int}} W, not the two starting figures added. The generator must deliver {{out.sized_w|int}} W, a {{out.standard_kva|1}} kVA set."
+  }
+ ],
+ "table": {
+  "caption": "Running vs starting watts, the same job done two ways, from the top: AC ceiling fan, DC inverter ceiling fan, inverter fridge, non-inverter fridge, 1 ton inverter AC, 1 ton non-inverter AC, electric kettle (no motor)",
+  "rows": [
+   {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "ceiling-fan-dc-inverter"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "refrigerator-inverter"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "refrigerator-non-inverter"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "ac-split-1ton-inverter"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "ac-split-1ton-non-inverter"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "electric-kettle"
+     }
+    ]
+   }
+  ],
+  "columns": [
+   {
+    "label": "Running watts",
+    "tpl": "{{out.running_w|int}} W"
+   },
+   {
+    "label": "Starting watts",
+    "tpl": "{{out.peak_w|int}} W"
+   },
+   {
+    "label": "Generator watts needed",
+    "tpl": "{{out.sized_w|int}} W"
+   },
+   {
+    "label": "Generator to buy",
+    "tpl": "{{out.standard_kva|1}} kVA"
+   }
+  ]
+ },
+ "mistakes": [
+  "Using running watts to size a generator or inverter for a motor load. The appliance may never start.",
+  "Using starting watts to estimate the electricity bill. Units depend on running watts and hours; the start lasts too briefly to count.",
+  "Assuming every appliance has a large surge. Heaters, irons, kettles, bulbs and electronics start at their running watts, so for them the margin on the running load decides.",
+  "Comparing an appliance's starting watts with a generator's peak watts. Compare both appliance figures with the generator's continuous rating."
+ ],
+ "safety": "If a motor hums but will not start on a generator or inverter, switch it off at once: a stalled motor overheats in seconds. Use a properly sized supply, a changeover switch fitted by a licensed electrician, and keep any generator outdoors because of carbon monoxide.",
+ "faq": [
+  {
+   "q": "What are starting watts on a generator?",
+   "a": "On a generator, starting (surge or peak) watts are the extra power it can give for a few seconds to start a motor; running (rated) watts are what it can give continuously. Size the running rating to cover your appliances' starting watts and keep the surge figure as reserve."
+  },
+  {
+   "q": "Are rated watts the same as running watts?",
+   "a": "Yes. Rated, running and continuous watts all mean the steady power. Surge, peak and starting watts all mean the short burst at start."
+  },
+  {
+   "q": "Why do starting watts matter?",
+   "a": "Because a generator or inverter that cannot supply them cannot start the appliance. A 1 ton non-inverter AC runs at {{ex.2.out.running_w|int}} W but needs a {{ex.2.out.standard_kva|1}} kVA generator because it starts at {{ex.2.out.peak_w|int}} W."
+  },
+  {
+   "q": "What is the difference between continuous and peak watts?",
+   "a": "Continuous watts can be drawn for hours; peak watts only for seconds. A fridge is continuous at {{out.running_w|int}} W and peaks at {{out.peak_w|int}} W each time its compressor starts."
+  },
+  {
+   "q": "Do starting watts increase my electricity bill?",
+   "a": "Barely. The surge lasts a second or two, so it adds a tiny amount of energy. Your units depend on running watts and hours; use the appliance load calculator for those."
+  },
+  {
+   "q": "How do I find the starting watts of my appliance?",
+   "a": "Look for locked-rotor amps (LRA) on the nameplate of a motor or compressor and multiply by the voltage. If none is printed, pick the appliance in the calculator above; our data uses a multiple of the running watts for motors and compressors."
+  }
+ ],
+ "related": [
+  "C2",
+  "C3",
+  "D4",
+  "C7"
+ ],
+ "next": "C1",
+ "literal_numbers": [
+  "1,000",
+  "1 ton"
+ ],
+ "sources": [
+  {
+   "label": "Virginia Tech Extension: appliance wattage table (running and starting watts)",
+   "url": "https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

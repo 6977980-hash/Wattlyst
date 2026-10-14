@@ -1,0 +1,239 @@
+{
+ "id": "D9",
+ "status": "publish",
+ "template": "tool",
+ "h1": "Solar Panel Price in Pakistan Today: Per Watt and Per Panel",
+ "author": "ali-ahmad",
+ "published": "2026-10-14",
+ "reviewed": "2026-10-14",
+ "calc": "panel_price",
+ "submit": "Work out the panel price",
+ "fields": [
+  {
+   "name": "panel_w",
+   "label": "Panel size",
+   "unit": "W",
+   "type": "select",
+   "default": "@panel_w",
+   "options": [
+    [550, "550 W"],
+    [575, "575 W"],
+    [585, "585 W"],
+    [600, "600 W"],
+    [615, "615 W"],
+    [645, "645 W"],
+    [720, "720 W"]
+   ],
+   "hint": "The watt rating on the panel's label or quote. Most panels sold for homes in Pakistan are in this range."
+  },
+  {
+   "name": "panels",
+   "label": "Number of panels",
+   "unit": "panels",
+   "default": 10,
+   "hint": "How many panels you plan to buy, as a whole number. Use the solar system size calculator if you do not know yet."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "panel_low_rs",
+   "label": "Price per panel, from",
+   "spec": "rs"
+  },
+  {
+   "key": "panel_high_rs",
+   "label": "to",
+   "spec": "rs"
+  },
+  {
+   "key": "total_low_rs",
+   "label": "All panels, from",
+   "spec": "rs"
+  },
+  {
+   "key": "total_high_rs",
+   "label": "to",
+   "spec": "rs"
+  },
+  {
+   "key": "rs_per_w_low",
+   "label": "Price per watt, from",
+   "spec": "rs2"
+  },
+  {
+   "key": "rs_per_w_high",
+   "label": "to",
+   "spec": "rs2"
+  },
+  {
+   "key": "kw",
+   "label": "Total panel capacity",
+   "spec": "2",
+   "unit": "kW"
+  }
+ ],
+ "answer": "A {{in.panel_w|int}} W solar panel costs about {{out.panel_low_rs|rs}} to {{out.panel_high_rs|rs}} in Pakistan today, at the typical retail rate of {{out.rs_per_w_low|rs2}} to {{out.rs_per_w_high|rs2}} per watt for tier-one N-type panels (checked {{data.solar_prices._meta.checked}}). Panel price = panel watts × rupees per watt, so {{in.panels|int}} panels cost {{out.total_low_rs|rs}} to {{out.total_high_rs|rs}}, panels only.",
+ "how": "Per panel: {{out.panel_w|int}} W × {{out.rs_per_w_low|rs2}} = {{out.panel_low_rs|rs}} at the low end and {{out.panel_w|int}} W × {{out.rs_per_w_high|rs2}} = {{out.panel_high_rs|rs}} at the high end. All panels: per-panel price × {{out.panels|int}} panels = {{out.total_low_rs|rs}} to {{out.total_high_rs|rs}}, for {{out.kw|2}} kW of panels. Panels only: inverter, structure, cables, protection and labour are extra.",
+ "key_facts": [
+  "Tier-one N-type solar panels sold for {{data.solar_prices.panel_rs_per_w.low|rs2}} to {{data.solar_prices.panel_rs_per_w.high|rs2}} per watt in Pakistan in the dealer price lists and news reports Wattlyst checked on {{data.solar_prices._meta.checked}}; the full spread seen across sources was {{data.solar_prices.panel_rs_per_w.min_low_seen|rs2}} to {{data.solar_prices.panel_rs_per_w.max_high_seen|rs2}} per watt.",
+  "A solar panel's price = its watts × the rupees per watt: a {{in.panel_w|int}} W panel is about {{out.panel_low_rs|rs}} to {{out.panel_high_rs|rs}}, a {{ex.3.in.panel_w|int}} W panel about {{ex.3.out.panel_low_rs|rs}} to {{ex.3.out.panel_high_rs|rs}}.",
+  "Panels are sold in Pakistan by the watt, not by the piece: a bigger panel costs more, but the rupees per watt of tier-one brands such as LONGi, Jinko, JA Solar, Trina and Canadian Solar sit in the same narrow band.",
+  "Panels alone are a minority of an installed system's price; the inverter, structure, cabling, protection and labour make up the rest (see the solar system price page).",
+  "These are secondary-source retail ranges (dealer lists, price guides and news), not an official rate; they move with the rupee, import costs and tax and are refreshed monthly."
+ ],
+ "formula": {
+  "text": "Price per panel = panel W × Rs per W; price of all panels = price per panel × number of panels (low and high end of the typical range)",
+  "lines": [
+   "Rs per W = typical retail panel-only rate from Wattlyst price data (median of the sources' low and high figures)",
+   "kW of panels = panel W × panels ÷ 1000",
+   "excludes inverter, structure, cables, protection, labour and delivery"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "Solar panel price per watt in Pakistan",
+   "p": [
+    "The typical retail price of a tier-one N-type solar panel is {{out.rs_per_w_low|rs2}} to {{out.rs_per_w_high|rs2}} per watt, the median of the low and high figures in the sources listed under Sources (checked {{data.solar_prices._meta.checked}}). Individual quotes ranged from {{data.solar_prices.panel_rs_per_w.min_low_seen|rs2}} to {{data.solar_prices.panel_rs_per_w.max_high_seen|rs2}} per watt, with the top of that spread for premium bifacial stock.",
+    "Dealers in Pakistan price panels by the watt, which is why a quote often reads as a per-watt figure rather than a price per plate. Multiply the per-watt rate by the panel's rated watts to get the price of one panel; the calculator above does that for any size and quantity."
+   ]
+  },
+  {
+   "h2": "{{in.panel_w|int}} W panel price",
+   "p": [
+    "A {{in.panel_w|int}} W panel, a common size in the dealer price lists, costs about {{out.panel_low_rs|rs}} to {{out.panel_high_rs|rs}} at the typical rate. {{in.panels|int}} of them give {{out.kw|2}} kW of panels for {{out.total_low_rs|rs}} to {{out.total_high_rs|rs}}, which is roughly the panel bill of a five-kilowatt home system.",
+    "Larger panels such as {{ex.3.in.panel_w|int}} W cost more each, about {{ex.3.out.panel_low_rs|rs}} to {{ex.3.out.panel_high_rs|rs}}, but you need fewer of them and fewer clamps and rails. Check that the roof, the structure and the inverter's input voltage suit the larger size before choosing it."
+   ]
+  },
+  {
+   "h2": "Solar panel rate today by brand: LONGi, Jinko, Canadian Solar and others",
+   "p": [
+    "The sources behind our range quote LONGi, Jinko, JA Solar, Trina and Canadian Solar N-type panels, and they disagree with each other about which brand is cheapest in a given week. Wattlyst does not publish a price per brand because no source updates brand prices reliably; the per-watt range above covers the tier-one brands the sources list.",
+    "Within a brand, the newest panel lines (higher efficiency, bifacial glass) carry a premium over older stock. Ask the dealer for the exact model, the warranty and whether the stock is documented (imported with full duty paid), then compare the per-watt rate with the range above."
+   ]
+  },
+  {
+   "h2": "N-type solar panel price vs older panels",
+   "p": [
+    "Most panels in our sources' lists are N-type (TOPCon or similar), which lose a little less output in heat and over the years than the older P-type panels. One of our sources, PhoneWorld, lists premium N-type bifacial panels above regular A-grade stock, and another, PriceData, lists smaller tier-two panels well below the tier-one range.",
+    "A cheaper panel is only a saving if its warranty, its real output and the seller can be trusted. Lower per-watt prices from unknown brands or undocumented stock are common; use the tier-one range as the benchmark."
+   ]
+  },
+  {
+   "h2": "Solar plate price in Lahore, Karachi and other cities",
+   "p": [
+    "Our sources quote national prices; one news report covers the Karachi market. We have no separate city price list, so the same per-watt range applies as a benchmark in Lahore, Islamabad or Multan. Local prices differ with transport, stock and the dealer's margin; ask two or three dealers for a per-watt figure on the same model.",
+    "Then move from panels to the whole system: the solar system price page and the quote checker show what a complete installed system typically costs."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "panel_w": 550,
+    "panels": 6
+   },
+   "title": "{{in.panels|int}} × {{in.panel_w|int}} W panels ({{out.kw|2}} kW)",
+   "text": "{{out.panel_w|int}} W × {{out.rs_per_w_low|rs2}} to {{out.rs_per_w_high|rs2}} = {{out.panel_low_rs|rs}} to {{out.panel_high_rs|rs}} per panel; × {{out.panels|int}} = {{out.total_low_rs|rs}} to {{out.total_high_rs|rs}} for a small three-kilowatt array."
+  },
+  {
+   "inputs": {
+    "panel_w": 585,
+    "panels": 10
+   },
+   "title": "{{in.panels|int}} × {{in.panel_w|int}} W panels ({{out.kw|2}} kW)",
+   "text": "{{out.panel_low_rs|rs}} to {{out.panel_high_rs|rs}} per panel; {{out.panels|int}} panels = {{out.total_low_rs|rs}} to {{out.total_high_rs|rs}}, the panel share of a typical five-kilowatt home system."
+  },
+  {
+   "inputs": {
+    "panel_w": 645,
+    "panels": 16
+   },
+   "title": "{{in.panels|int}} × {{in.panel_w|int}} W panels ({{out.kw|2}} kW)",
+   "text": "{{out.panel_low_rs|rs}} to {{out.panel_high_rs|rs}} per panel; {{out.panels|int}} panels = {{out.total_low_rs|rs}} to {{out.total_high_rs|rs}} for about ten kilowatts of panels."
+  },
+  {
+   "inputs": {
+    "panel_w": 720,
+    "panels": 1
+   },
+   "title": "One {{in.panel_w|int}} W panel",
+   "text": "{{out.panel_w|int}} W × {{out.rs_per_w_low|rs2}} = {{out.panel_low_rs|rs}}; × {{out.rs_per_w_high|rs2}} = {{out.panel_high_rs|rs}}. A big panel costs more each but not more per watt."
+  }
+ ],
+ "table": {
+  "caption": "Price of one tier-one solar panel by size in Pakistan, panel only, at {{data.solar_prices.panel_rs_per_w.low|rs2}} to {{data.solar_prices.panel_rs_per_w.high|rs2}} per watt (checked {{data.solar_prices._meta.checked}})",
+  "rows": [
+   { "panel_w": 550, "panels": 1 },
+   { "panel_w": 575, "panels": 1 },
+   { "panel_w": 585, "panels": 1 },
+   { "panel_w": 600, "panels": 1 },
+   { "panel_w": 615, "panels": 1 },
+   { "panel_w": 645, "panels": 1 },
+   { "panel_w": 720, "panels": 1 }
+  ],
+  "columns": [
+   {
+    "label": "Panel",
+    "tpl": "{{in.panel_w|int}} W"
+   },
+   {
+    "label": "Price per panel",
+    "tpl": "{{out.panel_low_rs|rs}} to {{out.panel_high_rs|rs}}"
+   },
+   {
+    "label": "Per watt",
+    "tpl": "{{out.rs_per_w_low|rs2}} to {{out.rs_per_w_high|rs2}}"
+   }
+  ]
+ },
+ "mistakes": [
+  "Comparing a per-panel price with a per-watt price. Convert every quote to rupees per watt (price ÷ panel watts) before comparing.",
+  "Treating the panel price as the system price. Panels are only part of an installed system; the inverter, structure, cables, protection and labour come on top.",
+  "Chasing the lowest per-watt rate without checking the brand, model, warranty and stock. Undocumented or unknown-brand panels are often cheaper for a reason.",
+  "Buying panels before sizing the system. Size the array from your bill and roof first; then the number of panels decides the price."
+ ],
+ "safety": "Solar panels in series produce DC voltage that can kill and cannot be switched off while the sun shines; have a licensed electrician or registered installer mount, wire and earth them, with DC breakers and surge protection in the quote.",
+ "faq": [
+  {
+   "q": "What is the solar panel price in Pakistan today?",
+   "a": "About {{out.rs_per_w_low|rs2}} to {{out.rs_per_w_high|rs2}} per watt for tier-one N-type panels in the sources we checked on {{data.solar_prices._meta.checked}}, so a {{in.panel_w|int}} W panel costs about {{out.panel_low_rs|rs}} to {{out.panel_high_rs|rs}}. Prices change monthly."
+  },
+  {
+   "q": "What is the price of a {{in.panel_w|int}} W solar panel?",
+   "a": "About {{out.panel_low_rs|rs}} to {{out.panel_high_rs|rs}} at the typical rate of {{out.rs_per_w_low|rs2}} to {{out.rs_per_w_high|rs2}} per watt. The exact price depends on brand, model and dealer."
+  },
+  {
+   "q": "What is the solar panel price per watt in Pakistan?",
+   "a": "{{out.rs_per_w_low|rs2}} to {{out.rs_per_w_high|rs2}} per watt is the typical range for tier-one panels, with individual quotes from {{data.solar_prices.panel_rs_per_w.min_low_seen|rs2}} to {{data.solar_prices.panel_rs_per_w.max_high_seen|rs2}}. These are secondary-source retail figures, not an official rate."
+  },
+  {
+   "q": "What is the price of LONGi, Jinko or Canadian Solar panels?",
+   "a": "Our sources quote these brands inside the tier-one range of {{out.rs_per_w_low|rs2}} to {{out.rs_per_w_high|rs2}} per watt, and they disagree on which is cheapest. We do not publish brand prices; ask dealers for a per-watt quote on the exact model and compare it with this range."
+  },
+  {
+   "q": "How much do panels for a five-kilowatt system cost?",
+   "a": "{{ex.1.in.panels|int}} panels of {{ex.1.in.panel_w|int}} W ({{ex.1.out.kw|2}} kW) cost about {{ex.1.out.total_low_rs|rs}} to {{ex.1.out.total_high_rs|rs}}, panels only. The full installed system costs more; see the solar system price page."
+  },
+  {
+   "q": "Why do solar panel prices change so often?",
+   "a": "Panels are imported, so their price moves with the dollar rate, international panel prices, duties and sales tax. Wattlyst refreshes this range monthly and prints the date it was checked."
+  }
+ ],
+ "related": [
+  "D14",
+  "D7",
+  "D6",
+  "D8",
+  "D11"
+ ],
+ "next": "N3",
+ "literal_numbers": [
+  "1000"
+ ],
+ "sources": [
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

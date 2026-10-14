@@ -1,0 +1,243 @@
+{
+ "id": "N10",
+ "status": "publish",
+ "template": "tool",
+ "h1": "Inverter AC vs Non-Inverter AC: Savings and Payback",
+ "author": "ali-ahmad",
+ "published": "2026-10-14",
+ "reviewed": "2026-10-14",
+ "calc": "ac_payback",
+ "fields": [
+  {
+   "name": "kw_noninv",
+   "label": "Non-inverter AC power while running",
+   "unit": "kW",
+   "default": "@ac_noninverter_kw_1_5_ton",
+   "hint": "Input watts from the label ÷ 1000. The default is a 1.5 ton non-inverter AC with its compressor on, as in peak summer when it barely switches off. For milder weather, multiply by how much of the hour the compressor runs."
+  },
+  {
+   "name": "kw_inv",
+   "label": "Inverter AC average power",
+   "unit": "kW",
+   "default": "@ac_inverter_avg_kw_1_5_ton",
+   "hint": "Average draw over an hour, not the maximum on the label. The default is the planning average for a 1.5 ton inverter AC; a plug-in energy meter gives your own."
+  },
+  {
+   "name": "hours_year",
+   "label": "Hours the AC runs a year",
+   "unit": "hours",
+   "default": 1200,
+   "hint": "Hours a day × days of AC weather. The default is 8 hours a day for about five months; Karachi and southern Punjab often run more."
+  },
+  {
+   "name": "tariff",
+   "label": "Electricity rate",
+   "unit": "Rs per unit",
+   "default": "@data.tariff.unprotected.3.rate",
+   "hint": "Energy rate of your slab from the bill. The default is the Pakistan unprotected rate for 301 to 400 units a month."
+  },
+  {
+   "name": "price_diff",
+   "label": "Extra price of the inverter model",
+   "unit": "Rs",
+   "default": 40000,
+   "hint": "Example figure, not a market price. Enter the gap between two real quotes for the same tonnage and brand, installation included."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "payback_months",
+   "label": "Months to pay back the extra price",
+   "spec": "1"
+  },
+  {
+   "key": "annual_saving",
+   "label": "Bill saving a year",
+   "spec": "rs"
+  },
+  {
+   "key": "annual_units_saved",
+   "label": "Units saved a year",
+   "spec": "int"
+  }
+ ],
+ "answer": "In peak summer a 1.5 ton inverter AC saves about {{out.annual_units_saved|int}} units a year over a non-inverter AC run {{in.hours_year|int}} hours, {{out.annual_saving|rs}} at {{in.tariff|rs2}} per unit, so an extra price of {{in.price_diff|rs}} pays back in about {{out.payback_months|1}} months. Saving = (non-inverter kW − inverter kW) × hours × tariff; payback = extra price ÷ monthly saving.",
+ "how": "Power saved: {{out.kw_noninv|2}} kW − {{out.kw_inv|2}} kW, for {{out.hours_year|int}} hours a year = {{out.annual_units_saved|int}} units. Bill saving: {{out.annual_units_saved|int}} units × {{out.tariff|rs2}} = {{out.annual_saving|rs}} a year. Payback: {{out.price_diff|rs}} ÷ ({{out.annual_saving|rs}} ÷ twelve months) = {{out.payback_months|1}} months.",
+ "key_facts": [
+  "Yearly saving of an inverter AC = (non-inverter kW − inverter average kW) × hours a year × tariff; payback in months = the extra price ÷ (yearly saving ÷ twelve).",
+  "Using a 1.5 ton non-inverter AC at {{d.ac_noninverter_kw_1_5_ton|1}} kW with its compressor on and an inverter AC at a planning average of {{d.ac_inverter_avg_kw_1_5_ton|1}} kW, {{in.hours_year|int}} hours a year save about {{out.annual_units_saved|int}} units, {{out.annual_saving|rs}} at {{in.tariff|rs2}} per unit.",
+  "In milder weather, when the non-inverter compressor runs only about {{d.ac_noninverter_duty|pct}} of the hour, the same AC saves about {{ex.1.out.annual_units_saved|int}} units a year and the payback stretches to about {{ex.1.out.payback_months|1}} months for the same example price gap.",
+  "A home on the protected tariff at {{ex.3.in.tariff|rs2}} per unit takes about {{ex.3.out.payback_months|1}} months to recover the same example price gap, because each saved unit is worth less."
+ ],
+ "formula": {
+  "text": "Payback months = ΔPrice ÷ ((kW_non-inverter − kW_inverter) × hours a year × tariff ÷ 12)",
+  "lines": [
+   "kW_non-inverter = power of the non-inverter AC while it runs (× its on-time share in mild weather)",
+   "kW_inverter = average power of the inverter AC over an hour",
+   "hours a year = hours a day × days of AC use",
+   "tariff = Rs per unit of your slab",
+   "ΔPrice = extra price of the inverter model over the non-inverter one"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "Inverter AC vs non-inverter AC savings: where they come from",
+   "p": [
+    "A non-inverter AC has one speed: its compressor runs at full power until the room reaches the setting, switches off, and starts again with a surge. An inverter AC slows its compressor down as the room cools and keeps it running gently, so it draws less on average. With the defaults the difference is {{out.kw_noninv|2}} kW against {{out.kw_inv|2}} kW, which over {{out.hours_year|int}} hours is {{out.annual_units_saved|int}} units a year.",
+    "Both power figures are planning averages, not measurements of your units. The saving is largest in the hottest weeks, when the non-inverter compressor hardly ever switches off, and smallest in mild weather, when it cycles; the second worked example uses the mild-weather figure."
+   ]
+  },
+  {
+   "h2": "Inverter AC payback period",
+   "p": [
+    "Payback = the extra price ÷ the saving a month. With the example price gap of {{in.price_diff|rs}} and {{out.annual_saving|rs}} saved a year, that is about {{out.payback_months|1}} months of AC use in peak heat, or about {{ex.1.out.payback_months|1}} months if your weather is milder. The price gap is an example to show the method, not a market price; enter the gap between two real quotes for the same brand and tonnage.",
+    "Count only the months the AC actually runs. If your payback is two summers, it is two years of calendar time, not two years of AC months."
+   ]
+  },
+  {
+   "h2": "Is an inverter AC worth it?",
+   "p": [
+    "Usually yes for a room cooled many hours a day at a high slab rate: the saving is largest where hours and tariff are both high. It is less clear for an AC used a few evenings a month or on the protected tariff, where the payback in the table below runs much longer.",
+    "Two benefits do not show in the payback: an inverter AC starts without a big surge, so it runs on a smaller generator, UPS or solar inverter, and it keeps the room at a steadier temperature. If you plan to run the AC on solar or a generator, that alone often decides it."
+   ]
+  },
+  {
+   "h2": "What the sum leaves out",
+   "p": [
+    "Repair costs differ: an inverter AC's control board is dearer to replace if it fails. Voltage swings shorten the life of both kinds; a stabiliser or a good surge protector protects either. The calculator does not count these because they vary too much to put a fair number on."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {},
+   "title": "1.5 ton AC in peak summer, {{in.hours_year|int}} hours a year",
+   "text": "({{out.kw_noninv|2}} − {{out.kw_inv|2}}) kW × {{out.hours_year|int}} h = {{out.annual_units_saved|int}} units × {{out.tariff|rs2}} = {{out.annual_saving|rs}} a year. The example price gap of {{out.price_diff|rs}} pays back in about {{out.payback_months|1}} months."
+  },
+  {
+   "inputs": {
+    "kw_noninv": 1.44
+   },
+   "title": "The same AC in milder weather",
+   "text": "When the non-inverter compressor runs about {{d.ac_noninverter_duty|pct}} of the hour, it averages {{out.kw_noninv|2}} kW. The saving falls to {{out.annual_units_saved|int}} units, {{out.annual_saving|rs}} a year, and payback stretches to about {{out.payback_months|1}} months."
+  },
+  {
+   "inputs": {
+    "hours_year": 2400
+   },
+   "title": "Long hours: {{in.hours_year|int}} hours a year",
+   "text": "An AC run day and night through a long summer saves {{out.annual_units_saved|int}} units, {{out.annual_saving|rs}} a year, and pays back the example gap in about {{out.payback_months|1}} months."
+  },
+  {
+   "inputs": {
+    "tariff": "@data.tariff.protected.1.rate"
+   },
+   "title": "Protected consumer at {{in.tariff|rs2}} per unit",
+   "text": "The same units saved, {{out.annual_units_saved|int}} a year, are worth only {{out.annual_saving|rs}} at the protected rate, so the example gap takes about {{out.payback_months|1}} months. Note that an AC usually pushes a home past the protected limit."
+  }
+ ],
+ "table": {
+  "caption": "Payback of an example price gap of {{in.price_diff|rs}} for a 1.5 ton inverter AC in peak summer, by hours a year and tariff (example price gap, not a market price)",
+  "rows": [
+   {
+    "hours_year": 600
+   },
+   {
+    "hours_year": 900
+   },
+   {},
+   {
+    "hours_year": 1800
+   },
+   {
+    "hours_year": 2400
+   },
+   {
+    "tariff": "@data.tariff.unprotected.7.rate"
+   },
+   {
+    "tariff": "@data.tariff.protected.1.rate"
+   }
+  ],
+  "columns": [
+   {
+    "label": "Hours a year",
+    "tpl": "{{out.hours_year|int}}"
+   },
+   {
+    "label": "Rate",
+    "tpl": "{{out.tariff|rs2}}"
+   },
+   {
+    "label": "Units saved a year",
+    "tpl": "{{out.annual_units_saved|int}}"
+   },
+   {
+    "label": "Saving a year",
+    "tpl": "{{out.annual_saving|rs}}"
+   },
+   {
+    "label": "Payback",
+    "tpl": "{{out.payback_months|1}} months"
+   }
+  ]
+ },
+ "mistakes": [
+  "Comparing label watts. The inverter AC's label shows its maximum; the bill follows its average, about {{d.ac_inverter_avg_kw_1_5_ton|1}} kW for a 1.5 ton unit.",
+  "Counting calendar months as AC months. Payback is measured in months of AC use; a payback of a summer and a half takes two calendar years.",
+  "Comparing different brands or tonnage. The price gap is fair only for the same brand, the same tonnage and the same installation.",
+  "Using the peak-summer saving all year. In mild weather the non-inverter AC cycles off and the gap is smaller, as the second example shows."
+ ],
+ "safety": "Both kinds of AC need their own circuit with the right cable and MCB; an AC on an overloaded socket can overheat the wiring. Have a licensed electrician check the circuit before installing a new AC.",
+ "faq": [
+  {
+   "q": "How much electricity does an inverter AC save?",
+   "a": "With the planning averages here, about {{out.annual_units_saved|int}} units a year for a 1.5 ton AC run {{in.hours_year|int}} hours in peak heat, and about {{ex.1.out.annual_units_saved|int}} units in milder weather. Your figure depends on hours, weather and the models."
+  },
+  {
+   "q": "What is the payback period of an inverter AC?",
+   "a": "The extra price ÷ the monthly saving. For the example gap of {{in.price_diff|rs}}, about {{out.payback_months|1}} months of AC use in peak heat at {{in.tariff|rs2}} per unit, longer at lower rates or fewer hours."
+  },
+  {
+   "q": "Is an inverter AC worth it in Pakistan?",
+   "a": "Usually yes for long daily use at unprotected slab rates, where the payback is short. For a few hours a week or the protected tariff it takes much longer. Its soft start also helps on solar, UPS or a generator."
+  },
+  {
+   "q": "Does an inverter AC save on solar?",
+   "a": "Yes, twice: it uses fewer units, and it starts without a big surge, so it needs a smaller solar inverter. See how many panels each kind needs with the solar panels for AC calculator."
+  },
+  {
+   "q": "Why does the non-inverter AC use less in mild weather?",
+   "a": "Its compressor switches off when the room reaches the setting. In mild weather it is off for part of each hour, about {{d.ac_noninverter_duty|pct}} on by our planning figure, so its average draw falls and the inverter AC's advantage shrinks."
+  },
+  {
+   "q": "Is the price difference on this page real?",
+   "a": "No. {{in.price_diff|rs}} is an example to show the sum, not a market price. Enter the gap between two real quotes for the same brand and tonnage."
+  }
+ ],
+ "related": [
+  "N9",
+  "E5",
+  "D5",
+  "N5",
+  "N8"
+ ],
+ "next": "E4",
+ "literal_numbers": [
+  "1.5 ton"
+ ],
+ "sources": [
+  {
+   "label": "Gree GS-18PITH11G datasheet (Japan Electronics PK)",
+   "url": "https://japanelectronics.com.pk/products/gree-ac-split-inverter-1-5-ton-gs-18pith11g-aaa"
+  },
+  {
+   "label": "NEPRA domestic tariff decision, February 2026",
+   "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}
