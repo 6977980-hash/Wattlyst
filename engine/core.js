@@ -21,14 +21,15 @@ export const bool = (v) => v === true || v === 1 || (typeof v === 'string' && ['
 export const has = (inputs, key) => inputs?.[key] !== undefined && inputs?.[key] !== null && inputs?.[key] !== '';
 
 /**
- * Read a numeric input. Strings like "12.5" are accepted (form fields); blanks fall back to def.
+ * Read a numeric input. Strings like "12.5" are accepted (form fields), with thousands commas ("1,500", lakh style "1,50,000"); blanks fall back to def.
  * opts: { def, min, max, gt, code }  gt = strictly greater than.
  */
 export function num(inputs, key, opts = {}) {
   let v = inputs?.[key];
   if (v === undefined || v === null || v === '') v = opts.def;
   if (typeof v === 'string') {
-    const t = v.trim();
+    let t = v.trim();
+    if (/^[+-]?\d{1,3}((,\d{3})+|(,\d\d)*,\d{3})(\.\d*)?$/.test(t)) t = t.replace(/,/g, ''); // "1,5" stays invalid
     v = /^[+-]?(\d+\.?\d*|\.\d+)$/.test(t) ? Number(t) : NaN;
   }
   if (v === undefined || v === null) throw new CalcError(opts.code || `${key}_required`, key);

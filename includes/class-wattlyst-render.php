@@ -260,12 +260,14 @@ final class Wattlyst_Render {
 			'diagram' => $t['diagram'] ?? '',
 			'data'    => $this->tool_data( $t['data_keys'] ?? array(), $t['appliances'] ?? array() ),
 		);
-		$form  = '<form class="wl-tool" id="' . esc_attr( $id ) . '" data-wl-tool novalidate>';
+		$form  = '<form class="wl-tool" id="' . esc_attr( $id ) . '" data-wl-tool novalidate onsubmit="return false">';
 		$form .= '<div class="wl-fields">' . $main . '</div>';
 		if ( '' !== $adv ) {
 			$form .= '<details class="wl-advanced"><summary>Advanced settings</summary><div class="wl-fields">' . $adv . '</div></details>';
 		}
 		$form .= '<button type="submit" class="wl-btn">' . esc_html( $t['submit'] ?? 'Calculate' ) . '</button>';
+		// Without JavaScript the button does nothing (onsubmit), instead of reloading the page with the defaults (audit WL-27).
+		$form .= '<noscript><p class="wl-hint">Turn on JavaScript to calculate with your own numbers. The result below uses the default inputs.</p></noscript>';
 		$notice = (string) ( $t['notice'] ?? '' ); // a warning on the default result, same text the browser prints
 		$form  .= '<p class="wl-error" id="' . esc_attr( $id ) . '-error" role="alert"' . ( '' === $notice ? ' hidden' : '' ) . '>' . esc_html( $notice ) . '</p>';
 		$form .= '<div class="wl-results" aria-live="polite">' . $results . '</div>' . $this->diagram( $t ) . $share;
@@ -304,7 +306,7 @@ final class Wattlyst_Render {
 		for ( $p = 1; $p <= min( $parallel, $max ); $p++ ) {
 			$cells = str_repeat( '<span class="wl-cell">&minus; +</span>', min( $series, $max ) );
 			$more  = $series > $max ? '<span class="wl-more">+' . ( $series - $max ) . '</span>' : '';
-			$rows .= '<div class="wl-string"><span class="wl-string-label">String ' . $p . '</span><div class="wl-row"><span class="wl-lead"></span>' . $cells . $more . '<span class="wl-lead"></span><span class="wl-fuse">fuse</span><span class="wl-lead"></span></div></div>';
+			$rows .= '<div class="wl-string"><span class="wl-string-label">String ' . $p . '</span><div class="wl-row"><span class="wl-wire"></span>' . $cells . $more . '<span class="wl-wire"></span><span class="wl-fuse">fuse</span><span class="wl-wire"></span></div></div>';
 		}
 		$more_rows = $parallel > $max ? '<div class="wl-more">+' . ( $parallel - $max ) . ' more strings</div>' : '';
 		return '<div class="wl-grid"><span class="wl-bus wl-bus-neg">Negative bus</span><div class="wl-strings">' . $rows . $more_rows . '</div><span class="wl-bus wl-bus-pos">Positive bus</span></div>';
@@ -479,7 +481,7 @@ final class Wattlyst_Render {
 		return '<form class="wl-tool wl-lookup" data-wl-lookup onsubmit="return false"><div class="wl-fields">' .
 			'<div class="wl-field"><label for="' . esc_attr( $id ) . '-brand">' . esc_html( $l['label'] ) . '</label><select id="' . esc_attr( $id ) . '-brand" data-wl-group-select>' . $opts . '</select></div>' .
 			'<div class="wl-field"><label for="' . esc_attr( $id ) . '-q">' . esc_html( $l['text_label'] ) . '</label><input type="search" id="' . esc_attr( $id ) . '-q" data-wl-filter autocomplete="off" placeholder="For example 02, 1010, F03, grid"><p class="wl-hint">Type the code as the display shows it, or a word such as battery, fan or grid. ' . esc_html( (string) $l['count'] ) . ' codes from manufacturer manuals, last checked <time datetime="' . esc_attr( $l['checked'] ) . '">' . esc_html( self::date( $l['checked'] ) ) . '</time>.</p></div>' .
-			'</div><p class="wl-error" data-wl-nomatch hidden>No code matches. Check the brand, try a shorter text, or look at the full table below.</p></form>';
+			'</div><p class="wl-error" data-wl-nomatch role="status" hidden>No code matches. Check the brand, or try a shorter text such as the code alone.</p></form>';
 	}
 
 	private function tables(): string {

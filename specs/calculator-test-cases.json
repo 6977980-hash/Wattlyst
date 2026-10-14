@@ -5434,6 +5434,51 @@
     "tolerance": 0.001
   },
   {
+    "calc": "watts_to_amps",
+    "name": "typed with a thousands comma: 1,500 W at 230 V",
+    "inputs": {
+      "mode": "ac1",
+      "watts": "1,500",
+      "volts": "230",
+      "pf": "1"
+    },
+    "expected": {
+      "amps": 6.5217
+    },
+    "tolerance": 0.001,
+    "note": "audit WL-17: form text with commas"
+  },
+  {
+    "calc": "watts_to_amps",
+    "name": "typed in lakh grouping: 1,50,000 W three-phase 400 V",
+    "inputs": {
+      "mode": "ac3",
+      "watts": "1,50,000",
+      "volts": "400",
+      "pf": "1"
+    },
+    "expected": {
+      "amps": 216.5064
+    },
+    "tolerance": 0.01,
+    "note": "audit WL-17: Pakistani grouping"
+  },
+  {
+    "calc": "watts_to_amps",
+    "name": "a comma that is not a thousands separator is rejected",
+    "inputs": {
+      "mode": "ac1",
+      "watts": "1,5",
+      "volts": 230,
+      "pf": 1
+    },
+    "expected": {
+      "error": "watts_invalid"
+    },
+    "tolerance": 0,
+    "note": "audit WL-17: never read 1,5 as 15 or 1.5"
+  },
+  {
     "calc": "amps_to_watts",
     "name": "DC with the voltage left blank is an error",
     "inputs": {

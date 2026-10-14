@@ -8,7 +8,7 @@ const ver = new URL(import.meta.url).searchParams.get('ver') || '';
 /** N11 battery diagram: same markup as Wattlyst_Render::battery_grid() (one row per parallel string, minus bus left, fused plus lead right). */
 function drawGrid(box, series, parallel) {
   const max = 8;
-  const L = '<span class="wl-lead"></span>';
+  const L = '<span class="wl-wire"></span>';
   let rows = '';
   for (let p = 1; p <= Math.min(parallel, max); p++) {
     rows += `<div class="wl-string"><span class="wl-string-label">String ${p}</span><div class="wl-row">${L}${'<span class="wl-cell">&minus; +</span>'.repeat(Math.min(series, max))}${series > max ? `<span class="wl-more">+${series - max}</span>` : ''}${L}<span class="wl-fuse">fuse</span>${L}</div></div>`;
@@ -36,92 +36,23 @@ async function forecastFor(c, tilt) {
   return forecasts[key];
 }
 
-/** Appliance-list field: rows of { id, watts, qty, hours } (+ start where the field has the start flag) with add/remove and auto-filled watts and hours. */
-function loadsField(form, f, cfg, onChange) {
-  const box = form.querySelector(`[data-wl-loads="${f.name}"]`);
-  if (!box) return null;
-  const body = box.querySelector('tbody');
-  const keys = f.start ? ['watts', 'start', 'qty', 'hours'] : ['watts', 'qty', 'hours'];
-  const tmpl = box.querySelector('.wl-loads-template');
-  let n = body.children.length;
-  // The server renders only the chosen option per row; build the full grouped list once and copy it into every select.
-  const full = document.createElement('select');
-  full.append(new Option('Custom (enter watts)', 'custom'));
-  // catalog: [[category, [id, ...]], ...]; names come from cfg.data.appliances (shipped once).
-  for (const [cat, ids] of f.catalog || []) {
-    const group = document.createElement('optgroup');
-    group.label = cat.replace(/-/g, ' ').replace(/^\w/, (m) => m.toUpperCase());
-    for (const id of ids) group.append(new Option(cfg.data.appliances[id].name, id));
-    full.append(group);
-  }
-  // Filled lazily on first focus, so a page with several rows does not carry hundreds of <option>s in the DOM.
-  const populate = (sel) => {
-    if (sel.dataset.full) return;
-    const cur = sel.value;
-    sel.innerHTML = full.innerHTML;
-    sel.value = cur;
-    if (sel.value !== cur) sel.value = 'custom';
-    sel.dataset.full = '1';
-  };
-  box.addEventListener('focusin', (e) => { if (e.target.matches('[data-k="id"]')) populate(e.target); });
-  box.addEventListener('pointerdown', (e) => { if (e.target.matches('[data-k="id"]')) populate(e.target); });
-  const fill = (tr) => {
-    const id = tr.querySelector('[data-k="id"]').value;
-    const a = cfg.data.appliances?.[id];
-    if (!a) return;
-    tr.querySelector('[data-k="watts"]').value = a.running_w;
-    tr.querySelector('[data-k="hours"]').value = a.typical_hours_per_day ?? '';
-    const st = tr.querySelector('[data-k="start"]');
-    if (st) st.value = ''; // a listed appliance starts at its own starting watts unless the user types one
-  };
-  const add = (row) => {
-    const tr = tmpl.content.firstElementChild.cloneNode(true);
-    tr.querySelectorAll('[id]').forEach((el) => { el.id = el.id.replace('-x-', `-${n}-`); });
-    tr.querySelectorAll('label[for]').forEach((el) => { el.htmlFor = el.htmlFor.replace('-x-', `-${n}-`); });
-    n += 1;
-    if (row) {
-      const sel = tr.querySelector('[data-k="id"]');
-      populate(sel);
-      sel.value = row.id || 'custom';
-      if (sel.value !== (row.id || 'custom')) sel.value = 'custom';
-      fill(tr);
-      for (const k of keys) if (row[k] !== undefined && row[k] !== '') tr.querySelector(`[data-k="${k}"]`).value = row[k];
-    }
-    body.appendChild(tr);
-    return tr;
-  };
-  box.querySelector('.wl-add-row').addEventListener('click', () => { add().querySelector('select').focus(); });
-  box.addEventListener('click', (e) => {
-    const btn = e.target.closest('.wl-remove-row');
-    if (!btn || body.children.length <= 1) return;
-    btn.closest('tr').remove();
-    onChange();
-  });
-  box.addEventListener('change', (e) => {
-    if (e.target.matches('[data-k="id"]')) { fill(e.target.closest('tr')); onChange(); }
-  });
-  const rows = () => [...body.querySelectorAll('tr')].map((tr) => Object.fromEntries(['id', ...keys].map((k) => [k, tr.querySelector(`[data-k="${k}"]`).value.trim()])));
-  const set = (list) => { body.innerHTML = ''; list.forEach(add); };
-  // ?load= rows: id~watts~qty~hours[~start] (start last, so links made before the column still read).
-  const order = ['id', 'watts', 'qty', 'hours', 'start'];
-  return { rows, set, encode: () => rows().map((r) => order.filter((k) => k in r).map((k) => r[k]).join('~')).join(';'), decode: (s) => s.split(';').map((p) => { const v = p.split('~'); return Object.fromEntries(order.map((k, i) => [k, v[i]])); }) };
-}
-
 async function init(form) {
   const cfgEl = form.querySelector('.wl-config');
   if (!cfgEl) return;
   const cfg = JSON.parse(cfgEl.textContent);
-  const mod = await import(`../../engine/${cfg.module}${ver ? `?ver=${ver}` : ''}`);
+  const q = ver ? `?ver=${ver}` : '';
+  const hasList = cfg.fields.some((f) => f.type === 'loads');
+  const [mod, list] = await Promise.all([import(`../../engine/${cfg.module}${q}`), hasList && import(`./wattlyst-loads.js${q}`)]);
   const calc = mod[cfg.calc];
   if (typeof calc !== 'function') return;
-  const labels = Object.fromEntries(cfg.fields.map((f) => [f.name, f.label.toLowerCase()]));
+  const labels = Object.fromEntries(cfg.fields.map((f) => [f.name, f.label.replace(/^[A-Z](?=[a-z])/, (c) => c.toLowerCase())]));
   const errorEl = form.querySelector('.wl-error');
   const results = form.querySelector('.wl-results');
   const howEl = form.parentElement.querySelector('[data-wl-how]');
   const el = (name) => form.elements.namedItem(name);
   const lists = {};
   let show;
-  for (const f of cfg.fields) if (f.type === 'loads') lists[f.name] = loadsField(form, f, cfg, () => show && show(true));
+  for (const f of cfg.fields) if (f.type === 'loads') lists[f.name] = list.loadsField(form, f, cfg, () => show && show(true));
 
   let live = null;
   const read = () => {
@@ -137,11 +68,18 @@ async function init(form) {
     return inputs;
   };
 
-  const fieldEl = (name) => {
-    // Errors on a list row come back as loads; point at the first row's select.
-    if (lists[name]) return form.querySelector(`[data-wl-loads="${name}"] select`);
+  const fieldEl = (name, code) => {
+    // Errors on a list row come back as loads with the row in the code (load_<row>_<column>_...); point at that cell.
+    if (lists[name]) {
+      const box = form.querySelector(`[data-wl-loads="${name}"]`);
+      const m = /^load_(\d+)_([a-z]+)_/.exec(code);
+      const tr = m && box.querySelectorAll('tbody tr')[m[1]];
+      return (tr && (tr.querySelector(`[data-k="${m[2]}"]`) || tr.querySelector('[data-k="watts"]'))) || box.querySelector('select');
+    }
     return el(name);
   };
+  const share = form.querySelector('.wl-share');
+  const diagram = form.querySelector('[data-wl-diagram]');
 
   show = (pushState) => {
     const out = calc(read(), cfg.data);
@@ -155,9 +93,14 @@ async function init(form) {
       errorEl.hidden = false;
       results.hidden = true;
       if (howEl) howEl.hidden = true;
+      // Nothing from the last good result stays on screen or in a shared link (audit WL-30).
+      if (share) share.hidden = true;
+      if (diagram) diagram.hidden = true;
       // Tie the message to the wrong field and move focus there (WCAG 3.3.1, build-plan Phase 2).
-      const bad = out.field && fieldEl(out.field);
+      const bad = out.field && fieldEl(out.field, out.error);
       if (bad && bad.setAttribute) {
+        const adv = bad.closest('details');
+        if (adv) adv.open = true; // a field under "Advanced settings" must be visible before it takes focus
         bad.setAttribute('aria-invalid', 'true');
         bad.setAttribute('aria-describedby', `${bad.getAttribute('aria-describedby') || ''} ${errorEl.id}`.trim());
         if (pushState) bad.focus();
@@ -165,6 +108,8 @@ async function init(form) {
       return;
     }
     results.hidden = false;
+    if (share) share.hidden = false;
+    if (diagram) diagram.hidden = false;
     // Warning flags (size above the standard list, solar above the sanctioned load) print a notice, not a blank.
     const notice = noticeCode(out);
     errorEl.textContent = notice ? errorMessage(notice) : '';
@@ -173,18 +118,19 @@ async function init(form) {
       const node = results.querySelector(`[data-out="${o.key}"] .wl-val`);
       if (node) node.textContent = fmt(out[o.key], o.spec) || 'n/a';
     }
-    const grid = cfg.diagram === 'battery_grid' && form.querySelector('[data-wl-diagram]');
-    if (grid) drawGrid(grid, Math.round(out.n_series), Math.round(out.n_parallel));
+    if (diagram && cfg.diagram === 'battery_grid') drawGrid(diagram, Math.round(out.n_series), Math.round(out.n_parallel));
     if (howEl && cfg.how) {
       const text = render(form.dataset.lang === 'ur' && cfg.how_ur ? cfg.how_ur : cfg.how, { in: out, out, d: cfg.data.defaults });
       howEl.hidden = text === null;
       if (text !== null) howEl.textContent = text;
     }
-    if (pushState) history.replaceState(null, '', shareUrl());
+    if (pushState) history.replaceState(null, '', shareUrl(window.location.href));
   };
 
-  // The ?load= link that reproduces the current inputs (only filled fields; the canonical stays clean).
-  const shareUrl = () => {
+  // The ?load= link that reproduces the current inputs (only filled fields; the canonical stays clean). Inside an
+  // embed it points at the full tool page (the canonical), not the noindex /embed/ URL (audit WL-32).
+  const home = (document.body.hasAttribute('data-wl-embed') && document.querySelector('link[rel="canonical"]')?.href) || '';
+  const shareUrl = (href = home || window.location.href) => {
     const load = cfg.fields
       .map((f) => {
         if (lists[f.name]) return `${f.name}:${encodeURIComponent(lists[f.name].encode())}`;
@@ -193,13 +139,12 @@ async function init(form) {
       })
       .filter(Boolean)
       .join(',');
-    const url = new URL(window.location.href);
+    const url = new URL(href);
     url.search = load ? `?load=${load}` : '';
     return url.href;
   };
 
   // Share bar: Save as PDF (the browser's print dialog, with a print stylesheet), WhatsApp (results + link), Copy link.
-  const share = form.querySelector('.wl-share');
   if (share) {
     share.hidden = false;
     const note = share.querySelector('.wl-share-note');
@@ -235,8 +180,9 @@ async function init(form) {
     }
   }
 
-  // ?load=name:value,name:value restores a shared result. Only known fields and listed options are used.
-  const load = new URLSearchParams(window.location.search).get('load');
+  // ?load=name:value,name:value restores a shared result. Only known fields and listed options are used. Read from the
+  // raw query: each value is encoded once, so a typed "18%" or "1,500" survives; a broken pair is skipped (audit WL-06).
+  const load = /[?&]load=([^&#]*)/.exec(window.location.search)?.[1];
   if (load) {
     let changed = false;
     for (const pair of load.split(',')) {
@@ -245,12 +191,14 @@ async function init(form) {
       const name = pair.slice(0, i);
       const f = cfg.fields.find((x) => x.name === name);
       if (!f) continue;
+      let value;
+      try { value = decodeURIComponent(pair.slice(i + 1)); } catch { continue; }
       if (lists[name]) {
-        const rows = lists[name].decode(decodeURIComponent(pair.slice(i + 1)).slice(0, 2000)).slice(0, 40);
+        const rows = lists[name].decode(value.slice(0, 2000));
         if (rows.length) { lists[name].set(rows); changed = true; }
         continue;
       }
-      const value = decodeURIComponent(pair.slice(i + 1)).slice(0, 40);
+      value = value.slice(0, 40);
       const input = el(name);
       if (!input) continue;
       if (f.type === 'checkbox') input.checked = value === '1';
@@ -277,14 +225,12 @@ async function init(form) {
   form.addEventListener('change', (e) => { if (!e.target.closest('.wl-loads') && (e.target.tagName === 'SELECT' || e.target.type === 'checkbox')) show(true); });
 }
 
-document.querySelectorAll('form[data-wl-tool]').forEach((form) => { init(form).catch(() => {}); });
-
-// Embed page: copy buttons next to each code box.
-document.querySelectorAll('[data-wl-copy]').forEach((btn) => {
-  btn.addEventListener('click', async () => {
-    const box = document.getElementById(btn.dataset.wlCopy);
-    box.select();
-    try { await navigator.clipboard.writeText(box.value); btn.textContent = 'Copied'; } catch { document.execCommand('copy'); }
+// A calculator that fails to start says so instead of failing silently (audit WL-06).
+document.querySelectorAll('form[data-wl-tool]').forEach((form) => {
+  init(form).catch((e) => {
+    console.error(e);
+    const box = form.querySelector('.wl-error');
+    if (box) { box.textContent = errorMessage('calculator_failed'); box.hidden = false; }
   });
 });
 
@@ -293,30 +239,5 @@ if (document.body.hasAttribute('data-wl-embed') && window.parent !== window && '
   new ResizeObserver(() => window.parent.postMessage({ wattlyst: 'height', h: document.documentElement.scrollHeight }, '*')).observe(document.body);
 }
 
-// Lookup pages (error codes): the tables are already in the HTML; this only hides rows and brands that do not match.
-document.querySelectorAll('form[data-wl-lookup]').forEach((form) => {
-  const page = form.closest('.wl-page');
-  const groups = [...page.querySelectorAll('[data-wl-group]')];
-  const select = form.querySelector('[data-wl-group-select]');
-  const box = form.querySelector('[data-wl-filter]');
-  const nomatch = form.querySelector('[data-wl-nomatch]');
-  const apply = () => {
-    const q = box.value.trim().toLowerCase();
-    let shown = 0;
-    for (const g of groups) {
-      const on = !select.value || g.dataset.wlGroup === select.value;
-      let rows = 0;
-      for (const tr of g.querySelectorAll('tbody tr')) {
-        const hit = on && (!q || tr.textContent.toLowerCase().includes(q));
-        tr.hidden = !hit;
-        if (hit) rows += 1;
-      }
-      g.hidden = !on || rows === 0;
-      shown += rows;
-    }
-    nomatch.hidden = shown > 0;
-  };
-  select.addEventListener('change', apply);
-  box.addEventListener('input', apply);
-  if (select.value || box.value) apply();
-});
+// Lookup filter and embed code boxes live in their own small module, so tool pages do not download them.
+if (document.querySelector('[data-wl-lookup], [data-wl-copy]')) import(`./wattlyst-page.js${ver ? `?ver=${ver}` : ''}`);

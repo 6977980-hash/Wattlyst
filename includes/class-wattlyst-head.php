@@ -129,7 +129,7 @@ final class Wattlyst_Head {
 		$this->styles();
 		echo Wattlyst_Ads::loader( $site, $page ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in loader()
 		if ( ! empty( $page['content']['tool'] ) ) {
-			$this->preload( $page['content']['tool']['module'] );
+			$this->preload( $page['content']['tool'] );
 		}
 		echo "<!-- /Wattlyst SEO -->\n";
 	}
@@ -149,13 +149,15 @@ final class Wattlyst_Head {
 		}
 	}
 
-	private function preload( string $module ): void {
+	private function preload( array $tool ): void {
 		// dist/ holds the stripped copies built by tools/build.js (same code, no comments or indentation).
 		// Whole import chain (tool script, shared modules, the calculator module and its nested imports), each
 		// under the exact versioned URL the import uses, so nothing is fetched twice or discovered late.
-		$module  = basename( $module );
+		// Pages with an appliance list also load the list module (assets/js/wattlyst-loads.js).
+		$module  = basename( (string) $tool['module'] );
 		$engine  = array_unique( array_merge( array( 'format.js', 'messages.js', 'core.js', $module ), $this->plugin->module_deps( $module ) ) );
-		$files   = array_merge( array( 'dist/assets/js/wattlyst-tool.js' ), array_map( static fn( $f ) => 'dist/engine/' . $f, $engine ) );
+		$list    = in_array( 'loads', array_column( $tool['fields'] ?? array(), 'type' ), true ) ? array( 'dist/assets/js/wattlyst-loads.js' ) : array();
+		$files   = array_merge( array( 'dist/assets/js/wattlyst-tool.js' ), $list, array_map( static fn( $f ) => 'dist/engine/' . $f, $engine ) );
 		foreach ( $files as $f ) {
 			printf( '<link rel="modulepreload" href="%s">' . "\n", esc_url( $this->plugin->script_url( $f ) ) );
 		}

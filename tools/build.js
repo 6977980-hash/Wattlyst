@@ -627,7 +627,7 @@ export async function build() {
 function distFiles() {
   const src = {};
   for (const f of readdirSync(join(root, 'engine')).filter((x) => x.endsWith('.js')).sort()) src[`dist/engine/${f}`] = stripJs(read(`engine/${f}`));
-  src['dist/assets/js/wattlyst-tool.js'] = stripJs(read('assets/js/wattlyst-tool.js'));
+  for (const f of ['wattlyst-tool.js', 'wattlyst-loads.js', 'wattlyst-page.js']) src[`dist/assets/js/${f}`] = stripJs(read(`assets/js/${f}`));
   const hash = createHash('sha256');
   for (const [p, code] of Object.entries(src)) hash.update(`${p}\n${code}\n`);
   const ver = hash.digest('hex').slice(0, 10);
