@@ -62,7 +62,7 @@ export const solar_price_estimate = calculator((i, d) => {
   const kwp = pos(i, 'kwp');
   const type = pick(i, 'type', ['on-grid', 'hybrid'], 'on-grid');
   const r = priceRange(d, type, kwp);
-  const out = { kwp, type, rs_per_w_low: r.lo, rs_per_w_high: r.hi, price_low_rs: r.lo * kwp * 1000, price_high_rs: r.hi * kwp * 1000, price_mid_rs: ((r.lo + r.hi) / 2) * kwp * 1000 };
+  const out = { kwp, type, system_w: kwp * 1000, rs_per_w_low: r.lo, rs_per_w_high: r.hi, price_low_rs: r.lo * kwp * 1000, price_high_rs: r.hi * kwp * 1000, price_mid_rs: ((r.lo + r.hi) / 2) * kwp * 1000 };
   if (r.range_kw_used !== undefined) out.range_kw_used = r.range_kw_used; else out.range_between_kw = r.range_between_kw;
   out.low_confidence = r.low_confidence;
   const panel = d?.solar_prices?.panel_rs_per_w;

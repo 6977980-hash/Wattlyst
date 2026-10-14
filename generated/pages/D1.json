@@ -225,7 +225,7 @@
     }
    ],
    "how": {
-    "tpl": "Energy to store = {{in.night_kwh|1}} kWh a night × {{in.days|int}} day of autonomy. The battery can only give back part of that: the usable share is {{out.dod|pct}} for this battery type and the inverter passes on {{out.inverter_eff|pct}}. So Ah = {{in.night_kwh|1}} kWh × {{in.days|int}} × 1,000 ÷ ({{in.volts|int}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}}) = {{out.ah|int}} Ah, which is a bank of {{out.kwh|1}} kWh at {{in.volts|int}} V. Buy batteries whose Ah add up to at least this at the bank voltage.",
+    "tpl": "Energy to store = {{in.night_kwh|1}} kWh a night × {{in.days}} day of autonomy. The battery can only give back part of that: the usable share is {{out.dod|pct}} for this battery type and the inverter passes on {{out.inverter_eff|pct}}. So Ah = {{in.night_kwh|1}} kWh × {{in.days}} × 1,000 ÷ ({{in.volts}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}}) = {{out.ah|int}} Ah, which is a bank of {{out.kwh|1}} kWh at {{in.volts}} V. Buy batteries whose Ah add up to at least this at the bank voltage.",
     "text": "Energy to store = 5 kWh a night × 1 day of autonomy. The battery can only give back part of that: the usable share is 90% for this battery type and the inverter passes on 90%. So Ah = 5 kWh × 1 × 1,000 ÷ (48 V × 90% × 90%) = 129 Ah, which is a bank of 6.2 kWh at 48 V. Buy batteries whose Ah add up to at least this at the bank voltage."
    },
    "submit": "Calculate",

@@ -214,7 +214,7 @@
     }
    ],
    "how": {
-    "tpl": "Energy: {{out.peak_units|int}} peak units at the peak rate + {{out.offpeak_units|int}} off-peak units at the off-peak rate = {{out.energy_rs|rs}} for {{out.units|int}} units. Fixed charge: billed on {{out.billable_kw|1}} kW, the higher of half the {{out.sanctioned_kw|1}} kW sanctioned load and the MDI entered ({{out.mdi_kw|1}} kW) = {{out.fixed_rs|rs}}. FC surcharge, QTA, FPA and GST come on top; this tool works out the energy and fixed charge only.",
+    "tpl": "Energy: {{out.peak_units}} peak units at the peak rate + {{out.offpeak_units}} off-peak units at the off-peak rate = {{out.energy_rs|rs}} for {{out.units|int}} units. Fixed charge: billed on {{out.billable_kw|1}} kW, the higher of half the {{out.sanctioned_kw|1}} kW sanctioned load and the MDI entered ({{out.mdi_kw|1}} kW) = {{out.fixed_rs|rs}}. FC surcharge, QTA, FPA and GST come on top; this tool works out the energy and fixed charge only.",
     "text": "Energy: 150 peak units at the peak rate + 650 off-peak units at the off-peak rate = Rs 29,472 for 800 units. Fixed charge: billed on 2.5 kW, the higher of half the 5 kW sanctioned load and the MDI entered (0 kW) = Rs 1,688. FC surcharge, QTA, FPA and GST come on top; this tool works out the energy and fixed charge only."
    },
    "submit": "Work out the ToU bill",

@@ -98,7 +98,7 @@
   }
  ],
  "answer": "A {{in.ah|int}} Ah, {{in.volts|int}} V lead-acid battery runs a {{in.load_w|int}} W load through an inverter for about {{out.hours|hm}}, using only the {{out.dod|pct}} of its capacity that is safe to use. Runtime in hours equals Ah × volts × usable depth of discharge × inverter efficiency ÷ load watts; for a DC load set the efficiency to one.",
- "how": "{{in.ah|int}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable × {{out.inverter_eff|pct}} inverter efficiency = {{out.usable_wh|int}} Wh usable. {{out.usable_wh|int}} Wh ÷ {{in.load_w|int}} W = {{out.hours|2}} hours, about {{out.hours|hm}}.",
+ "how": "{{in.ah}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable × {{out.inverter_eff|pct}} inverter efficiency = {{out.usable_wh|int}} Wh usable. {{out.usable_wh|int}} Wh ÷ {{in.load_w}} W = {{out.hours|2}} hours, about {{out.hours|hm}}.",
  "key_facts": [
   "Runtime of a {{in.volts|int}} V battery in hours = Ah × {{in.volts|int}} V × usable depth of discharge × inverter efficiency ÷ load in watts.",
   "A {{in.ah|int}} Ah, {{in.volts|int}} V lead-acid battery stores about {{out.usable_wh|int}} Wh of usable energy through an inverter, which runs a {{in.load_w|int}} W load for about {{out.hours|hm}} or a {{ex.1.in.load_w|int}} W load for about {{ex.1.out.hours|hm}}.",

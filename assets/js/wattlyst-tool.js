@@ -120,7 +120,7 @@ async function init(form) {
     }
     if (diagram && cfg.diagram === 'battery_grid') drawGrid(diagram, Math.round(out.n_series), Math.round(out.n_parallel));
     if (howEl && cfg.how) {
-      const text = render(form.dataset.lang === 'ur' && cfg.how_ur ? cfg.how_ur : cfg.how, { in: out, out, d: cfg.data.defaults });
+      const text = render(form.dataset.lang === 'ur' && cfg.how_ur ? cfg.how_ur : cfg.how, { in: out, out, d: cfg.data.defaults, data: cfg.data });
       howEl.hidden = text === null;
       if (text !== null) howEl.textContent = text;
     }

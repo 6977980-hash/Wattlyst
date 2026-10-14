@@ -102,7 +102,7 @@
   }
  ],
  "answer": "A {{in.ah|int}} Ah, {{in.volts|int}} V tubular battery gives about {{out.hours|hm}} of backup for a {{in.load_w|int}} W load (a fan, lights and a TV) through a home UPS, using the safe {{out.dod|pct}} of its capacity. Backup hours = Ah × volts × usable depth of discharge × inverter efficiency ÷ load watts; the chart below shows common loads.",
- "how": "{{in.ah|int}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable × {{out.inverter_eff|pct}} inverter efficiency = {{out.usable_wh|int}} Wh usable. {{out.usable_wh|int}} Wh ÷ {{in.load_w|int}} W = {{out.hours|2}} hours, about {{out.hours|hm}}.",
+ "how": "{{in.ah}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable × {{out.inverter_eff|pct}} inverter efficiency = {{out.usable_wh|int}} Wh usable. {{out.usable_wh|int}} Wh ÷ {{in.load_w}} W = {{out.hours|2}} hours, about {{out.hours|hm}}.",
  "key_facts": [
   "A {{in.ah|int}} Ah, {{in.volts|int}} V tubular battery stores about {{out.usable_wh|int}} Wh of usable energy for a UPS when used to the recommended {{d.dod_lead_acid|pct}} of its rating.",
   "That {{out.usable_wh|int}} Wh runs one ceiling fan ({{ex.0.in.load_w|int}} W) for about {{ex.0.out.hours|hm}}, two fans with lights ({{ex.1.in.load_w|int}} W) for about {{ex.1.out.hours|hm}}, and a {{ex.2.in.load_w|int}} W load for only about {{ex.2.out.hours|hm}}.",

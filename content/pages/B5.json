@@ -121,7 +121,7 @@
   }
  ],
  "answer": "A {{in.va|int}} VA UPS with a {{in.ah|int}} Ah, {{in.volts|int}} V tubular battery runs a {{in.load_w|int}} W desktop PC for about {{out.hours|hm}}. The UPS can deliver at most {{out.max_w|int}} W ({{in.va|int}} VA × {{out.pf|2}} power factor), so this load uses {{out.load_pct|int}}% of it. Backup hours = Ah × volts × usable depth × inverter efficiency ÷ load watts.",
- "how": "Capacity check: {{in.va|int}} VA × {{out.pf|2}} power factor = {{out.max_w|int}} W, and {{in.load_w|int}} W is {{out.load_pct|int}}% of that, so the UPS can run it. Backup: {{in.ah|int}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable × {{out.inverter_eff|pct}} inverter efficiency = {{out.usable_wh|int}} Wh; {{out.usable_wh|int}} Wh ÷ {{in.load_w|int}} W = {{out.hours|2}} hours, about {{out.hours|hm}}.",
+ "how": "Capacity check: {{in.va}} VA × {{out.pf|2}} power factor = {{out.max_w|int}} W, and {{in.load_w}} W is {{out.load_pct|int}}% of that, so the UPS can run it. Backup: {{in.ah}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable × {{out.inverter_eff|pct}} inverter efficiency = {{out.usable_wh|int}} Wh; {{out.usable_wh|int}} Wh ÷ {{in.load_w}} W = {{out.hours|2}} hours, about {{out.hours|hm}}.",
  "key_facts": [
   "UPS backup time in hours = battery Ah × battery volts × usable depth of discharge × inverter efficiency ÷ load in watts; the VA rating sets how big a load the UPS can carry, not how long it runs.",
   "A line-interactive home UPS delivers about {{d.pf_ups_line_interactive|2}} W per VA, so a {{in.va|int}} VA (one kVA) UPS can run loads up to about {{out.max_w|int}} W; an online UPS delivers closer to one W per VA.",

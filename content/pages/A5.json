@@ -42,7 +42,7 @@
   }
  ],
  "answer": "A {{in.kw|int}} kW three-phase load at {{in.volts|int}} V and a power factor of {{in.pf|2}} draws {{out.amps|1}} A in each line. Three-phase amps = kW × 1,000 ÷ (√3 × line-to-line volts × power factor). For a kVA rating leave out the power factor: a {{ex.0.in.kw|int}} kVA supply carries {{ex.0.out.amps|1}} A per line at full load.",
- "how": "{{in.kw|2}} kW × 1,000 ÷ (√3 × {{in.volts|int}} V × {{in.pf|2}}) = {{out.amps|1}} A per line. The √3 appears because the three phases are a third of a cycle apart, so the line-to-line voltage is √3 times the phase voltage. Each of the three line wires carries this current when the load is balanced.",
+ "how": "{{in.kw|2}} kW × 1,000 ÷ (√3 × {{in.volts}} V × {{in.pf|2}}) = {{out.amps|1}} A per line. The √3 appears because the three phases are a third of a cycle apart, so the line-to-line voltage is √3 times the phase voltage. Each of the three line wires carries this current when the load is balanced.",
  "key_facts": [
   "Three-phase current = kW × 1,000 ÷ (√3 × line-to-line volts × power factor); {{in.kw|int}} kW at {{in.volts|int}} V and a power factor of {{in.pf|2}} is {{out.amps|1}} A per line.",
   "A {{ex.0.in.kw|int}} kVA transformer or generator at {{ex.0.in.volts|int}} V delivers {{ex.0.out.amps|1}} A per line at full load; kVA already includes the power factor.",

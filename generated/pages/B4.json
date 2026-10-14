@@ -292,7 +292,7 @@
     }
    ],
    "how": {
-    "tpl": "{{out.load_w|int}} W × {{out.hours|int}} h = {{out.load_kwh|2}} kWh used by the load. Divide by {{out.volts|1}} V, by {{out.dod|pct}} usable depth of discharge and by {{out.inverter_eff|pct}} inverter efficiency: {{out.ah_required|int}} Ah, a rated bank of {{out.kwh_required|1}} kWh. A {{out.volts|1}} V bank made of {{out.battery_v|1}} V batteries needs {{out.series|int}} in series per string; {{out.ah_required|int}} Ah ÷ {{out.battery_ah|int}} Ah per battery, rounded up, is {{out.strings|int}} string(s) in parallel; {{out.series|int}} × {{out.strings|int}} = {{out.batteries|int}} batteries.",
+    "tpl": "{{out.load_w}} W × {{out.hours}} h = {{out.load_kwh|2}} kWh used by the load. Divide by {{out.volts|1}} V, by {{out.dod|pct}} usable depth of discharge and by {{out.inverter_eff|pct}} inverter efficiency: {{out.ah_required|int}} Ah, a rated bank of {{out.kwh_required|1}} kWh. A {{out.volts|1}} V bank made of {{out.battery_v|1}} V batteries needs {{out.series|int}} in series per string; {{out.ah_required|int}} Ah ÷ {{out.battery_ah}} Ah per battery, rounded up, is {{out.strings|int}} string(s) in parallel; {{out.series|int}} × {{out.strings|int}} = {{out.batteries|int}} batteries.",
     "text": "500 W × 4 h = 2 kWh used by the load. Divide by 24 V, by 50% usable depth of discharge and by 85% inverter efficiency: 196 Ah, a rated bank of 4.7 kWh. A 24 V bank made of 12 V batteries needs 2 in series per string; 196 Ah ÷ 200 Ah per battery, rounded up, is 1 string(s) in parallel; 2 × 1 = 2 batteries."
    },
    "submit": "Calculate",

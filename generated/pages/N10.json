@@ -218,7 +218,7 @@
     }
    ],
    "how": {
-    "tpl": "Non-inverter average: {{out.kw_noninv|2}} kW × {{out.duty|pct}} compressor on-time = {{out.kw_noninv_avg|2}} kW, × {{out.hours_year|int}} hours = {{out.units_noninv|int}} units, {{out.rs_noninv|rs}} a year. Inverter: {{out.kw_inv|2}} kW × {{out.hours_year|int}} hours = {{out.units_inv|int}} units, {{out.rs_inv|rs}}. Saved: {{out.annual_units_saved|int}} units × {{out.tariff|rs2}} = {{out.annual_saving|rs}} a year. Payback: {{out.price_diff|rs}} ÷ ({{out.annual_saving|rs}} ÷ twelve months) = {{out.payback_months|1}} calendar months.",
+    "tpl": "Non-inverter average: {{out.kw_noninv|2}} kW × {{out.duty|pct}} compressor on-time = {{out.kw_noninv_avg|2}} kW, × {{out.hours_year}} hours = {{out.units_noninv|int}} units, {{out.rs_noninv|rs}} a year. Inverter: {{out.kw_inv|2}} kW × {{out.hours_year}} hours = {{out.units_inv|int}} units, {{out.rs_inv|rs}}. Saved: {{out.annual_units_saved|int}} units × {{out.tariff|rs2}} = {{out.annual_saving|rs}} a year. Payback: {{out.price_diff|rs}} ÷ ({{out.annual_saving|rs}} ÷ twelve months) = {{out.payback_months|1}} calendar months.",
     "text": "Non-inverter average: 1.8 kW × 80% compressor on-time = 1.44 kW, × 1,200 hours = 1,728 units, Rs 63,003 a year. Inverter: 1 kW × 1,200 hours = 1,200 units, Rs 43,752. Saved: 528 units × Rs 36.46 = Rs 19,251 a year. Payback: Rs 40,000 ÷ (Rs 19,251 ÷ twelve months) = 24.9 calendar months."
    },
    "submit": "Calculate",

@@ -66,7 +66,7 @@
   }
  ],
  "answer": "{{in.watts|int}} watts is {{out.amps|2}} amps on a {{in.volts|int}} V single-phase supply at a power factor of {{out.pf|2}}, or {{ex.0.out.amps|2}} A for a heater with a power factor of one. Amps = watts ÷ (volts × power factor); for DC the power factor is one, and for three-phase the volts are multiplied by the square root of three.",
- "how": "{{in.watts|int}} W ÷ ({{out.k|4}} × {{out.volts|int}} V × {{out.pf|2}} power factor) = {{out.amps|2}} A. The first factor is one for DC and single-phase and √3 for three-phase, where the volts are the line-to-line voltage and the result is the current in each line. On DC the power factor is always one, so amps are simply watts ÷ volts.",
+ "how": "{{in.watts}} W ÷ ({{out.k|4}} × {{out.volts}} V × {{out.pf|2}} power factor) = {{out.amps|2}} A. The first factor is one for DC and single-phase and √3 for three-phase, where the volts are the line-to-line voltage and the result is the current in each line. On DC the power factor is always one, so amps are simply watts ÷ volts.",
  "key_facts": [
   "Amps = watts ÷ (volts × power factor). On a {{in.volts|int}} V single-phase supply, {{in.watts|int}} W at a power factor of {{out.pf|2}} draws {{out.amps|2}} A.",
   "Watts alone do not give amps: the same {{ex.1.in.watts|int}} W draws {{ex.1.out.amps|2}} A from a {{ex.1.in.volts|int}} V battery but only {{ex.4.out.amps|2}} A at {{ex.4.in.volts|int}} V mains with a power factor of one.",

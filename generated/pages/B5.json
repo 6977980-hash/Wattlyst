@@ -233,7 +233,7 @@
     }
    ],
    "how": {
-    "tpl": "Capacity check: {{in.va|int}} VA × {{out.pf|2}} power factor = {{out.max_w|int}} W, and {{in.load_w|int}} W is {{out.load_pct|int}}% of that, so the UPS can run it. Backup: {{in.ah|int}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable × {{out.inverter_eff|pct}} inverter efficiency = {{out.usable_wh|int}} Wh; {{out.usable_wh|int}} Wh ÷ {{in.load_w|int}} W = {{out.hours|2}} hours, about {{out.hours|hm}}.",
+    "tpl": "Capacity check: {{in.va}} VA × {{out.pf|2}} power factor = {{out.max_w|int}} W, and {{in.load_w}} W is {{out.load_pct|int}}% of that, so the UPS can run it. Backup: {{in.ah}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable × {{out.inverter_eff|pct}} inverter efficiency = {{out.usable_wh|int}} Wh; {{out.usable_wh|int}} Wh ÷ {{in.load_w}} W = {{out.hours|2}} hours, about {{out.hours|hm}}.",
     "text": "Capacity check: 1,000 VA × 0.6 power factor = 600 W, and 300 W is 50% of that, so the UPS can run it. Backup: 150 Ah × 12 V × 50% usable × 85% inverter efficiency = 765 Wh; 765 Wh ÷ 300 W = 2.55 hours, about 2 h 33 min."
    },
    "submit": "Calculate",

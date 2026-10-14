@@ -184,7 +184,7 @@
     }
    ],
    "how": {
-    "tpl": "Battery energy: {{out.v|int}} V × {{out.ah|1}} Ah ÷ 1000 = the stored units; the charger loses some on the way, so the wall meter counts that ÷ {{out.eta|2}} = {{out.kwh|2}} units for a full charge from empty. Cost of a charge: {{out.kwh|2}} units × {{out.tariff|rs2}} = {{out.rs_per_charge|rs}}. Cost per km: {{out.rs_per_charge|rs}} ÷ {{out.range_km|int}} km = {{out.rs_per_km|rs2}}.",
+    "tpl": "Battery energy: {{out.v}} V × {{out.ah|1}} Ah ÷ 1000 = the stored units; the charger loses some on the way, so the wall meter counts that ÷ {{out.eta|2}} = {{out.kwh|2}} units for a full charge from empty. Cost of a charge: {{out.kwh|2}} units × {{out.tariff|rs2}} = {{out.rs_per_charge|rs}}. Cost per km: {{out.rs_per_charge|rs}} ÷ {{out.range_km}} km = {{out.rs_per_km|rs2}}.",
     "text": "Battery energy: 48 V × 24 Ah ÷ 1000 = the stored units; the charger loses some on the way, so the wall meter counts that ÷ 0.85 = 1.36 units for a full charge from empty. Cost of a charge: 1.36 units × Rs 36.46 = Rs 49. Cost per km: Rs 49 ÷ 60 km = Rs 0.82."
    },
    "submit": "Calculate",

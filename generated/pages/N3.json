@@ -272,7 +272,7 @@
     }
    ],
    "how": {
-    "tpl": "{{in.price|rs}} ÷ ({{in.kwp|int}} kW × 1,000) = {{out.rs_per_w|rs2}} per watt. Typical {{in.type}} range for {{in.kwp|int}} kW: {{out.range_low|rs2}} to {{out.range_high|rs2}} per watt, that is {{out.range_low_rs|rs}} to {{out.range_high_rs|rs}}. Against the low end your quote differs by {{out.vs_low_pct|int}}%, against the high end by {{out.vs_high_pct|int}}% (a minus sign means below it), so it is {{out.verdict}} the range.",
+    "tpl": "{{in.price|rs}} ÷ ({{in.kwp}} kW × 1,000) = {{out.rs_per_w|rs2}} per watt. Typical {{in.type}} range for {{in.kwp}} kW: {{out.range_low|rs2}} to {{out.range_high|rs2}} per watt, that is {{out.range_low_rs|rs}} to {{out.range_high_rs|rs}}. Against the low end your quote differs by {{out.vs_low_pct|int}}%, against the high end by {{out.vs_high_pct|int}}% (a minus sign means below it), so it is {{out.verdict}} the range.",
     "text": "Rs 1,100,000 ÷ (10 kW × 1,000) = Rs 110.00 per watt. Typical on-grid range for 10 kW: Rs 95.00 to Rs 120.00 per watt, that is Rs 950,000 to Rs 1,200,000. Against the low end your quote differs by 16%, against the high end by -8% (a minus sign means below it), so it is within the range."
    },
    "submit": "Check my quote",

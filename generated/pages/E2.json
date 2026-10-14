@@ -1287,7 +1287,7 @@
     }
    ],
    "how": {
-    "tpl": "Running load = {{out.running_w|int}} W (the appliance's running watts × quantity). Starting watts = {{out.peak_w|int}} W, the surge for a second or two when its motor or compressor starts. Current = {{out.running_w|int}} W ÷ ({{out.volts|int}} V × {{out.pf|2}} power factor) = {{out.amps|1}} A running, {{out.peak_amps|1}} A at start. Energy = watts × hours a day ÷ 1,000 = {{out.daily_kwh|2}} units a day; × {{out.days|int}} days = {{out.monthly_units|1}} units a month; × {{out.tariff|rs2}} per unit = {{out.monthly_rs|rs}} in energy charges before fixed charges and taxes.",
+    "tpl": "Running load = {{out.running_w|int}} W (the appliance's running watts × quantity). Starting watts = {{out.peak_w|int}} W, the surge for a second or two when its motor or compressor starts. Current = {{out.running_w|int}} W ÷ ({{out.volts}} V × {{out.pf|2}} power factor) = {{out.amps|1}} A running, {{out.peak_amps|1}} A at start. Energy = watts × hours a day ÷ 1,000 = {{out.daily_kwh|2}} units a day; × {{out.days}} days = {{out.monthly_units|1}} units a month; × {{out.tariff|rs2}} per unit = {{out.monthly_rs|rs}} in energy charges before fixed charges and taxes.",
     "text": "Running load = 200 W (the appliance's running watts × quantity). Starting watts = 1,200 W, the surge for a second or two when its motor or compressor starts. Current = 200 W ÷ (230 V × 0.8 power factor) = 1.1 A running, 6.5 A at start. Energy = watts × hours a day ÷ 1,000 = 1.6 units a day; × 30 days = 48 units a month; × Rs 36.46 per unit = Rs 1,750 in energy charges before fixed charges and taxes."
    },
    "submit": "Calculate",

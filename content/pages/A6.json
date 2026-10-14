@@ -96,7 +96,7 @@
   }
  ],
  "answer": "{{in.amps|int}} amps on a {{in.volts|int}} V single-phase supply is {{out.kw|2}} kW at a power factor of {{out.pf|2}}. kW = amps × volts × power factor ÷ 1,000, with √3 added for three-phase, where {{ex.2.in.amps|int}} A per line at {{ex.2.out.volts|int}} V is {{ex.2.out.kw|2}} kW. For kW to amps, choose kW to amps above: amps = kW × 1,000 ÷ (volts × power factor), so {{ex.1.in.kw|int}} kW on single-phase is {{ex.1.out.amps|2}} A.",
- "how": "{{out.k|4}} × {{out.amps|2}} A × {{out.volts|int}} V × {{out.pf|2}} ÷ 1,000 = {{out.kw|2}} kW of real power, so kW to amps is the same sum turned round. The first factor is one for DC and single-phase and √3 for three-phase, where the volts are line-to-line and the amps are per line. The apparent power is {{out.va|int}} VA, the load the cable, breaker and any generator or UPS must carry. On DC the power factor is one.",
+ "how": "{{out.k|4}} × {{out.amps|2}} A × {{out.volts}} V × {{out.pf|2}} ÷ 1,000 = {{out.kw|2}} kW of real power, so kW to amps is the same sum turned round. The first factor is one for DC and single-phase and √3 for three-phase, where the volts are line-to-line and the amps are per line. The apparent power is {{out.va|int}} VA, the load the cable, breaker and any generator or UPS must carry. On DC the power factor is one.",
  "key_facts": [
   "kW = amps × volts × power factor ÷ 1,000 (single-phase). {{in.amps|int}} A at {{in.volts|int}} V and a power factor of {{out.pf|2}} is {{out.kw|2}} kW.",
   "On a three-phase {{ex.2.out.volts|int}} V supply, {{ex.2.in.amps|int}} A per line at a power factor of {{ex.2.in.pf|2}} is {{ex.2.out.kw|2}} kW, about three times the single-phase figure for the same amps.",

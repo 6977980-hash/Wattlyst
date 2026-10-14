@@ -74,6 +74,7 @@ export const panel_for_12v = calculator((i, d) => {
   out.charge_hours = (ah * volts * dod) / charge_eff / (fitted_w * pr);
   out.charge_days = out.charge_hours / psh;
   const margin = num(i, 'margin', { def: dflt(d, 'margin'), min: 1 });
+  out.margin = margin;
   out.controller_a = (fitted_w / volts) * margin;
   const controllers = dflt(d, 'standard_controller_a');
   const standard_controller_a = controllers.find((s) => s >= out.controller_a - 1e-9);

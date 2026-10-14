@@ -170,7 +170,7 @@
     }
    ],
    "how": {
-    "tpl": "{{in.watts|int}} W ÷ {{in.volts|int}} V = {{out.amps|2}} A. Battery power is DC, so the power factor is one and nothing else is needed. If the load runs through an inverter, the battery supplies more than this: divide the watts by the inverter efficiency (about {{d.inverter_eff_ups|pct}} for a home UPS) before dividing by volts.",
+    "tpl": "{{in.watts}} W ÷ {{in.volts}} V = {{out.amps|2}} A. Battery power is DC, so the power factor is one and nothing else is needed. If the load runs through an inverter, the battery supplies more than this: divide the watts by the inverter efficiency (about {{d.inverter_eff_ups|pct}} for a home UPS) before dividing by volts.",
     "text": "100 W ÷ 12 V = 8.33 A. Battery power is DC, so the power factor is one and nothing else is needed. If the load runs through an inverter, the battery supplies more than this: divide the watts by the inverter efficiency (about 85% for a home UPS) before dividing by volts."
    },
    "submit": "Calculate",
