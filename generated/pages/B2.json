@@ -49,7 +49,7 @@
    {
     "h2": "100 Ah battery runtime calculator: lead-acid against lithium",
     "p": [
-     "The label Ah is not the usable Ah. A 100 Ah lead-acid, AGM or gel battery should only be taken to about 50% of its rating, so only half the energy counts. A 100 Ah lithium (LiFePO4) battery can safely use about 90%, and sits at 12.8 V instead of 12 V, which is why the lithium example below gives about 3 h 16 min at 300 W while a lead-acid battery of the same Ah gives much less.",
+     "The label Ah is not the usable Ah. A 100 Ah lead-acid, AGM or gel battery should only be taken to about 50% of its rating, so only half the energy counts. A 100 Ah lithium (LiFePO4) battery can safely use about 90%, and sits at 12.8 V instead of 12 V, which is why the lithium example below gives about 3 h 15 min at 300 W while a lead-acid battery of the same Ah gives much less.",
      "Lead-acid batteries also lose capacity when they are drained fast. The label Ah is measured over about twenty hours; at a load that empties the battery in an hour the real capacity can be a quarter lower. The calculator does not apply this drop, so treat results under about two hours as optimistic."
     ]
    }
@@ -57,15 +57,15 @@
   "faq": [
    {
     "q": "How long will a 12 V battery last?",
-    "a": "Divide the usable watt-hours by the load watts. A 100 Ah lead-acid battery has about 510 Wh usable through an inverter, so it lasts about 5 h 6 min at 100 W, about 2 h 2 min at 500 W if it is a 200 Ah battery, and about 31 min at 1,000 W."
+    "a": "Divide the usable watt-hours by the load watts. A 100 Ah lead-acid battery has about 510 Wh usable through an inverter, so it lasts about 5 h 6 min at 100 W, about 2 h 2 min at 500 W if it is a 200 Ah battery, and about 30 min at 1,000 W."
    },
    {
     "q": "A 100 Ah battery gives how many hours?",
-    "a": "About 5 h 6 min at 100 W through an inverter, or about 3 h 16 min at 300 W if it is a 12.8 V lithium battery. The hours fall in proportion as the load rises."
+    "a": "About 5 h 6 min at 100 W through an inverter, or about 3 h 15 min at 300 W if it is a 12.8 V lithium battery. The hours fall in proportion as the load rises."
    },
    {
     "q": "Can a 12 V 100 Ah battery run a 1,000 W load?",
-    "a": "Only briefly: about 31 min on paper, and less in practice because a lead-acid battery drained that fast delivers less than its label Ah. You also need an inverter rated for the load and a thick, fused battery cable for the high current."
+    "a": "Only briefly: about 30 min on paper, and less in practice because a lead-acid battery drained that fast delivers less than its label Ah. You also need an inverter rated for the load and a thick, fused battery cable for the high current."
    },
    {
     "q": "Is this a 12 V battery life calculator?",
@@ -86,7 +86,7 @@
   ],
   "key_facts": [
    "Runtime of a 12 V battery in hours = Ah × 12 V × usable depth of discharge × inverter efficiency ÷ load in watts.",
-   "A 100 Ah, 12 V lead-acid battery stores about 510 Wh of usable energy through an inverter, which runs a 100 W load for about 5 h 6 min or a 1,000 W load for about 31 min.",
+   "A 100 Ah, 12 V lead-acid battery stores about 510 Wh of usable energy through an inverter, which runs a 100 W load for about 5 h 6 min or a 1,000 W load for about 30 min.",
    "Lead-acid, AGM and gel batteries should be used to about 50% of their rating; lithium (LiFePO4) batteries to about 90%, so a lithium battery of the same Ah runs almost twice as long.",
    "An inverter running at about 85% efficiency turns the rest of the battery energy into heat; a DC load wired straight to the battery has no inverter loss."
   ],
@@ -204,7 +204,7 @@
     }
    ],
    "how": {
-    "tpl": "{{in.ah|int}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable × {{out.inverter_eff|pct}} inverter efficiency = {{out.usable_wh|int}} Wh usable. {{out.usable_wh|int}} Wh ÷ {{in.load_w|int}} W = {{out.hours|2}} hours, about {{out.hours|hm}}.",
+    "tpl": "{{in.ah}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable × {{out.inverter_eff|pct}} inverter efficiency = {{out.usable_wh|int}} Wh usable. {{out.usable_wh|int}} Wh ÷ {{in.load_w}} W = {{out.hours|2}} hours, about {{out.hours|hm}}.",
     "text": "100 Ah × 12 V × 50% usable × 85% inverter efficiency = 510 Wh usable. 510 Wh ÷ 100 W = 5.1 hours, about 5 h 6 min."
    },
    "submit": "Calculate",
@@ -218,11 +218,11 @@
    },
    {
     "title": "100 Ah battery with a 1,000 W load (microwave or kettle)",
-    "text": "The same 510 Wh ÷ 1,000 W = about 31 min. At this rate the inverter pulls well over eighty amps from the battery, and a lead-acid battery drained this fast gives less than its label Ah, so expect even less in practice."
+    "text": "The same 510 Wh ÷ 1,000 W = about 30 min. At this rate the inverter pulls well over eighty amps from the battery, and a lead-acid battery drained this fast gives less than its label Ah, so expect even less in practice."
    },
    {
     "title": "100 Ah lithium battery with a 300 W load",
-    "text": "100 Ah × 12.8 V × 90% × 85% = 979 Wh usable, which runs 300 W (a TV with a few fans, or a small compressor fridge at full duty) for about 3 h 16 min."
+    "text": "100 Ah × 12.8 V × 90% × 85% = 979 Wh usable, which runs 300 W (a TV with a few fans, or a small compressor fridge at full duty) for about 3 h 15 min."
    },
    {
     "title": "12 V compressor fridge, 60 W average, wired as DC",
@@ -264,7 +264,7 @@
      "100 Ah",
      "1,000 W",
      "510 Wh",
-     "31 min"
+     "30 min"
     ],
     [
      "150 Ah",
@@ -276,7 +276,7 @@
      "150 Ah",
      "500 W",
      "765 Wh",
-     "1 h 32 min"
+     "1 h 31 min"
     ],
     [
      "200 Ah",
@@ -347,7 +347,10 @@
      "@id": "https://wattlyst.com/battery/12v-battery-runtime-calculator/#breadcrumb"
     },
     "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13"
+    "lastReviewed": "2026-10-13",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
    },
    {
     "@type": "WebApplication",
@@ -389,7 +392,7 @@
       "name": "How long will a 12 V battery last?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Divide the usable watt-hours by the load watts. A 100 Ah lead-acid battery has about 510 Wh usable through an inverter, so it lasts about 5 h 6 min at 100 W, about 2 h 2 min at 500 W if it is a 200 Ah battery, and about 31 min at 1,000 W."
+       "text": "Divide the usable watt-hours by the load watts. A 100 Ah lead-acid battery has about 510 Wh usable through an inverter, so it lasts about 5 h 6 min at 100 W, about 2 h 2 min at 500 W if it is a 200 Ah battery, and about 30 min at 1,000 W."
       }
      },
      {
@@ -397,7 +400,7 @@
       "name": "A 100 Ah battery gives how many hours?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "About 5 h 6 min at 100 W through an inverter, or about 3 h 16 min at 300 W if it is a 12.8 V lithium battery. The hours fall in proportion as the load rises."
+       "text": "About 5 h 6 min at 100 W through an inverter, or about 3 h 15 min at 300 W if it is a 12.8 V lithium battery. The hours fall in proportion as the load rises."
       }
      },
      {
@@ -405,7 +408,7 @@
       "name": "Can a 12 V 100 Ah battery run a 1,000 W load?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Only briefly: about 31 min on paper, and less in practice because a lead-acid battery drained that fast delivers less than its label Ah. You also need an inverter rated for the load and a thick, fused battery cable for the high current."
+       "text": "Only briefly: about 30 min on paper, and less in practice because a lead-acid battery drained that fast delivers less than its label Ah. You also need an inverter rated for the load and a thick, fused battery cable for the high current."
       }
      },
      {

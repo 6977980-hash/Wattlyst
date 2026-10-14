@@ -109,16 +109,19 @@
   },
   "fpa_per_unit": {
    "value": null,
-   "note": "Changes monthly and is not applied by default (a blank field = 0); pages that explain the FPA pre-fill the latest notified figure from `latest`. Not charged to lifeline, protected, EV charging station and prepaid consumers (NEPRA review decision on the March 2026 FCA, SRO 852(I)/2026).",
-   "latest": {
-    "month": "2026-07",
-    "value": 2.5182,
-    "sro": "SRO 1499(I)/2026",
-    "source": "NEPRA decision on the monthly fuel charges adjustment for July 2026, ex-WAPDA DISCOs, dated 04-09-2026",
-    "source_url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20MFPA%20FOR%20THE%20MONTH%20OF%20JULY%202026%20EX-WAPDA%20DISCOS%2004-09-2026%2018342-60.PDF",
-    "checked": "2026-10-14"
-   },
+   "note": "Changes monthly and is not applied by default (a blank field = 0). The monthly FPA history lives only in data/bill-index.json (months[].fpa_per_unit); pages that explain the FPA pre-fill its newest NEPRA-verified month (build: data.fpa_latest; audit WL-13). Not charged to lifeline, protected, EV charging station and prepaid consumers (NEPRA review decision on the March 2026 FCA, SRO 852(I)/2026).",
    "verified": true
+  },
+  "income_tax_235": {
+   "threshold_rs": 25000,
+   "rate_pct_non_atl": 7.5,
+   "applies_to": "domestic consumers not on FBR's Active Taxpayers List (ATL); monthly bill of Rs 25,000 or more",
+   "modelled": false,
+   "note": "Advance income tax on electricity bills, Income Tax Ordinance 2001 section 235 (domestic consumers brought in by the Finance Act 2021). Not added by the bill engine because it depends on the consumer's tax status; pages mention it (audit WL-14c, WL-49). Confirm against the current FBR withholding tax card at each budget.",
+   "source": "PkRevenue: 'Domestic electricity consumers to pay tax on monthly bill above Rs25,000' and 'Electricity withholding tax not applicable on ATL domestic consumers' (FBR withholding rates); secondary",
+   "source_url": "https://pkrevenue.com/domestic-electricity-consumers-to-pay-tax-on-monthly-bill-above-rs25000/",
+   "checked": "2026-10-14",
+   "verified": false
   },
   "gst_pct": {
    "value": 18,

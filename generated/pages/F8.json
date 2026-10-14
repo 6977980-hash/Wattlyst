@@ -83,7 +83,7 @@
    },
    {
     "q": "What is the HESCO tariff for 2026?",
-    "a": "The uniform A-1 domestic tariff notified as SRO 279(I)/2026: lifeline slabs up to one hundred units, protected slabs up to 200 units, unprotected slabs of a hundred units each up to seven hundred and an open-ended top slab; connections of 5 kW and above are billed on ToU rates."
+    "a": "The uniform A-1 domestic tariff notified as SRO 279(I)/2026: lifeline slabs up to 100 units, protected slabs up to 200 units, unprotected slabs of 100 units each up to 700 and an open-ended top slab; connections of 5 kW and above are billed on ToU rates."
    },
    {
     "q": "How do I check my HESCO bill online?",
@@ -96,13 +96,18 @@
    {
     "q": "Why is my HESCO bill higher than this estimate?",
     "a": "Usually the FPA line, arrears, a late-payment surcharge or a bill that covers more than a month. Enter the FPA from the bill in the advanced fields, and if the reading period is longer than a month run the bill through the overbilling check linked below."
+   },
+   {
+    "q": "Why is my real bill higher than this estimate when it is over Rs 25,000?",
+    "a": "A bill of Rs 25,000 or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: 7.5% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
    }
   ],
   "key_facts": [
    "HESCO, the Hyderabad Electric Supply Company Limited, bills the uniform NEPRA A-1 domestic tariff for 2026; it has no rates of its own, so a HESCO bill for a given number of units equals a LESCO or IESCO bill apart from the monthly FPA line.",
    "The HESCO per unit rate for an unprotected home using 350 units is Rs 36.46 on every unit, which gives Rs 12,761 before the fixed charge, surcharges and GST.",
    "A HESCO consumer stays protected only while every one of the last 6 bills is at or under 200 units; in lower Sindh a single summer month with a fan-and-AC load above that limit moves the home to unprotected rates.",
-   "GST at 18% is charged on energy, fixed charge and surcharges together, adding Rs 2,605 to a 350 unit HESCO bill; the surcharge and GST values are secondary-source figures that change over time."
+   "GST at 18% is charged on energy, fixed charge and surcharges together, adding Rs 2,605 to a 350 unit HESCO bill; the surcharge and GST values are secondary-source figures that change over time.",
+   "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of 7.5% on a monthly bill of Rs 25,000 or more; consumers on the list pay none."
   ],
   "mistakes": [
    "Looking for a HESCO-only tariff. HESCO bills the uniform NEPRA domestic tariff; the slab rates are the same in Hyderabad, Lahore and Peshawar.",
@@ -126,6 +131,10 @@
    {
     "label": "Wattlyst methodology and default values",
     "url": "/methodology/"
+   },
+   {
+    "label": "PkRevenue: income tax on domestic electricity bills of Rs 25,000 or more (section 235, FBR withholding rates)",
+    "url": "https://pkrevenue.com/domestic-electricity-consumers-to-pay-tax-on-monthly-bill-above-rs25000/"
    }
   ],
   "tool": {
@@ -259,7 +268,7 @@
     }
    ],
    "how": {
-    "tpl": "{{out.units|int}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw|int}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct|int}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
+    "tpl": "{{out.units}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
     "text": "350 units × Rs 36.46 (unprotected slab rate) = Rs 12,761. Fixed charge for 1 kW = Rs 400. FC surcharge Rs 1,131 + QTA Rs 182 + FPA Rs 0. Subtotal Rs 14,473 + GST 18% (Rs 2,605) = Rs 17,078."
    },
    "submit": "Calculate",
@@ -404,7 +413,10 @@
      "@id": "https://wattlyst.com/bill/hesco-bill-calculator/#breadcrumb"
     },
     "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13"
+    "lastReviewed": "2026-10-13",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
    },
    {
     "@type": "WebApplication",
@@ -470,7 +482,7 @@
       "name": "What is the HESCO tariff for 2026?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "The uniform A-1 domestic tariff notified as SRO 279(I)/2026: lifeline slabs up to one hundred units, protected slabs up to 200 units, unprotected slabs of a hundred units each up to seven hundred and an open-ended top slab; connections of 5 kW and above are billed on ToU rates."
+       "text": "The uniform A-1 domestic tariff notified as SRO 279(I)/2026: lifeline slabs up to 100 units, protected slabs up to 200 units, unprotected slabs of 100 units each up to 700 and an open-ended top slab; connections of 5 kW and above are billed on ToU rates."
       }
      },
      {
@@ -495,6 +507,14 @@
       "acceptedAnswer": {
        "@type": "Answer",
        "text": "Usually the FPA line, arrears, a late-payment surcharge or a bill that covers more than a month. Enter the FPA from the bill in the advanced fields, and if the reading period is longer than a month run the bill through the overbilling check linked below."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Why is my real bill higher than this estimate when it is over Rs 25,000?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "A bill of Rs 25,000 or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: 7.5% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
       }
      }
     ]

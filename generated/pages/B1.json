@@ -63,19 +63,19 @@
    },
    {
     "q": "What is the backup time of a 150 Ah battery?",
-    "a": "A 150 Ah, 12 V tubular battery holds about 765 Wh of usable energy through a UPS. That is about 3 h 50 min at 200 W (fans and lights) or about 7 h 39 min at 100 W."
+    "a": "A 150 Ah, 12 V tubular battery holds about 765 Wh of usable energy through a UPS. That is about 3 h 49 min at 200 W (fans and lights) or about 7 h 39 min at 100 W."
    },
    {
     "q": "How many hours of backup does a tubular battery give?",
-    "a": "It depends on the load. A tubular battery should only be used to about 50% of its rating, so a 200 Ah battery gives about 3 h 24 min at 300 W, and a 150 Ah battery about 3 h 50 min at 200 W."
+    "a": "It depends on the load. A tubular battery should only be used to about 50% of its rating, so a 200 Ah battery gives about 3 h 24 min at 300 W, and a 150 Ah battery about 3 h 49 min at 200 W."
    },
    {
     "q": "What is the backup time of a lithium battery?",
-    "a": "Longer than a tubular battery of the same Ah, because lithium (LiFePO4) can safely use about 90% of its capacity against about 50% for tubular. A 100 Ah, 12.8 V lithium battery gives about 3 h 16 min at 300 W."
+    "a": "Longer than a tubular battery of the same Ah, because lithium (LiFePO4) can safely use about 90% of its capacity against about 50% for tubular. A 100 Ah, 12.8 V lithium battery gives about 3 h 15 min at 300 W."
    },
    {
     "q": "How many hours of battery backup for a fan and lights?",
-    "a": "One ceiling fan with a few LED lights is about 100 W. On a 150 Ah tubular battery that is about 7 h 39 min; two fans with lights, about 200 W, give about 3 h 50 min."
+    "a": "One ceiling fan with a few LED lights is about 100 W. On a 150 Ah tubular battery that is about 7 h 39 min; two fans with lights, about 200 W, give about 3 h 49 min."
    },
    {
     "q": "What is the battery backup formula in hours?",
@@ -221,7 +221,7 @@
     }
    ],
    "how": {
-    "tpl": "{{in.ah|int}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable × {{out.inverter_eff|pct}} inverter efficiency = {{out.usable_wh|int}} Wh usable. {{out.usable_wh|int}} Wh ÷ {{in.load_w|int}} W = {{out.hours|2}} hours, about {{out.hours|hm}}.",
+    "tpl": "{{in.ah}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable × {{out.inverter_eff|pct}} inverter efficiency = {{out.usable_wh|int}} Wh usable. {{out.usable_wh|int}} Wh ÷ {{in.load_w}} W = {{out.hours|2}} hours, about {{out.hours|hm}}.",
     "text": "200 Ah × 12 V × 50% usable × 85% inverter efficiency = 1,020 Wh usable. 1,020 Wh ÷ 300 W = 3.4 hours, about 3 h 24 min."
    },
    "submit": "Calculate",
@@ -231,7 +231,7 @@
   "examples": [
    {
     "title": "150 Ah battery with fans and lights",
-    "text": "150 Ah × 12 V × 50% × 85% = 765 Wh. At 200 W the backup is 3 h 50 min."
+    "text": "150 Ah × 12 V × 50% × 85% = 765 Wh. At 200 W the backup is 3 h 49 min."
    },
    {
     "title": "Two 200 Ah batteries on a 24 V UPS",
@@ -239,7 +239,7 @@
    },
    {
     "title": "100 Ah lithium battery",
-    "text": "100 Ah × 12.8 V × 90% × 85% = 979 Wh. At 300 W the backup is 3 h 16 min."
+    "text": "100 Ah × 12.8 V × 90% × 85% = 979 Wh. At 300 W the backup is 3 h 15 min."
    },
    {
     "title": "One fan and a few LED lights on a 150 Ah battery",
@@ -267,12 +267,12 @@
     [
      "150 Ah",
      "200 W",
-     "3 h 50 min"
+     "3 h 49 min"
     ],
     [
      "150 Ah",
      "400 W",
-     "1 h 55 min"
+     "1 h 54 min"
     ],
     [
      "200 Ah",
@@ -341,7 +341,10 @@
      "@id": "https://wattlyst.com/battery/battery-backup-time-calculator/#breadcrumb"
     },
     "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13"
+    "lastReviewed": "2026-10-13",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
    },
    {
     "@type": "WebApplication",
@@ -391,7 +394,7 @@
       "name": "What is the backup time of a 150 Ah battery?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "A 150 Ah, 12 V tubular battery holds about 765 Wh of usable energy through a UPS. That is about 3 h 50 min at 200 W (fans and lights) or about 7 h 39 min at 100 W."
+       "text": "A 150 Ah, 12 V tubular battery holds about 765 Wh of usable energy through a UPS. That is about 3 h 49 min at 200 W (fans and lights) or about 7 h 39 min at 100 W."
       }
      },
      {
@@ -399,7 +402,7 @@
       "name": "How many hours of backup does a tubular battery give?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "It depends on the load. A tubular battery should only be used to about 50% of its rating, so a 200 Ah battery gives about 3 h 24 min at 300 W, and a 150 Ah battery about 3 h 50 min at 200 W."
+       "text": "It depends on the load. A tubular battery should only be used to about 50% of its rating, so a 200 Ah battery gives about 3 h 24 min at 300 W, and a 150 Ah battery about 3 h 49 min at 200 W."
       }
      },
      {
@@ -407,7 +410,7 @@
       "name": "What is the backup time of a lithium battery?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Longer than a tubular battery of the same Ah, because lithium (LiFePO4) can safely use about 90% of its capacity against about 50% for tubular. A 100 Ah, 12.8 V lithium battery gives about 3 h 16 min at 300 W."
+       "text": "Longer than a tubular battery of the same Ah, because lithium (LiFePO4) can safely use about 90% of its capacity against about 50% for tubular. A 100 Ah, 12.8 V lithium battery gives about 3 h 15 min at 300 W."
       }
      },
      {
@@ -415,7 +418,7 @@
       "name": "How many hours of battery backup for a fan and lights?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "One ceiling fan with a few LED lights is about 100 W. On a 150 Ah tubular battery that is about 7 h 39 min; two fans with lights, about 200 W, give about 3 h 50 min."
+       "text": "One ceiling fan with a few LED lights is about 100 W. On a 150 Ah tubular battery that is about 7 h 39 min; two fans with lights, about 200 W, give about 3 h 49 min."
       }
      },
      {

@@ -7,16 +7,19 @@ export const charge_controller = calculator((i, d) => {
   const type = i.type ?? 'mppt';
   const margin = num(i, 'margin', { def: dflt(d, 'margin'), min: 1 });
   let amps;
+  let echo; // the inputs used, so the page text can print what was entered (audit WL-12, WL-23)
   if (type === 'mppt') {
-    amps = (pos(i, 'panel_w') / pos(i, 'battery_v')) * margin;
+    echo = { panel_w: pos(i, 'panel_w'), battery_v: pos(i, 'battery_v') };
+    amps = (echo.panel_w / echo.battery_v) * margin;
   } else if (type === 'pwm') {
     const n_parallel = num(i, 'n_parallel', { def: 1, min: 1 });
     if (!Number.isInteger(n_parallel)) throw new CalcError('n_parallel_must_be_whole', 'n_parallel');
-    amps = pos(i, 'isc') * n_parallel * margin;
+    echo = { isc: pos(i, 'isc'), n_parallel };
+    amps = echo.isc * n_parallel * margin;
   } else throw new CalcError('type_invalid', 'type');
   const sizes = dflt(d, 'standard_controller_a');
   const standard_a = sizes.find((s) => s >= amps - 1e-9);
-  return standard_a === undefined ? { type, margin, amps, above_standard_sizes: true } : { type, margin, amps, standard_a, above_standard_sizes: false };
+  return standard_a === undefined ? { type, margin, ...echo, amps, above_standard_sizes: true } : { type, margin, ...echo, amps, standard_a, above_standard_sizes: false };
 });
 
 /**

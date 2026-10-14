@@ -195,7 +195,7 @@
     {
      "key": "target_ah",
      "label": "Bank needed for the days you want",
-     "spec": "int",
+     "spec": "up",
      "unit": "Ah",
      "value": "275"
     },
@@ -217,7 +217,7 @@
     }
    ],
    "how": {
-    "tpl": "Usable energy: {{out.ah|int}} Ah × {{out.v|int}} V × {{out.dod|pct}} depth of discharge × {{out.eta|pct}} inverter efficiency = {{out.usable_wh|int}} Wh. Shortfall each cloudy day: {{out.load_wh|int}} Wh load − {{out.solar_wh|int}} Wh from the panels = {{out.deficit_wh|int}} Wh. Days: {{out.usable_wh|int}} ÷ {{out.deficit_wh|int}} = {{out.days|1}} days before the bank reaches its safe limit. Bank for {{out.target_days|1}} days: {{out.target_days|1}} × {{out.deficit_wh|int}} Wh ÷ ({{out.v|int}} V × {{out.dod|pct}} × {{out.eta|pct}}) = {{out.target_ah|int}} Ah.",
+    "tpl": "Usable energy: {{out.ah}} Ah × {{out.v}} V × {{out.dod|pct}} depth of discharge × {{out.eta|pct}} inverter efficiency = {{out.usable_wh|int}} Wh. Shortfall each cloudy day: {{out.load_wh}} Wh load − {{out.solar_wh}} Wh from the panels = {{out.deficit_wh|int}} Wh. Days: {{out.usable_wh|int}} ÷ {{out.deficit_wh|int}} = {{out.days|1}} days before the bank reaches its safe limit. Bank for {{out.target_days|1}} days: {{out.target_days|1}} × {{out.deficit_wh|int}} Wh ÷ ({{out.v}} V × {{out.dod|pct}} × {{out.eta|pct}}) = {{out.target_ah|up}} Ah.",
     "text": "Usable energy: 200 Ah × 24 V × 50% depth of discharge × 85% inverter efficiency = 2,040 Wh. Shortfall each cloudy day: 2,000 Wh load − 600 Wh from the panels = 1,400 Wh. Days: 2,040 ÷ 1,400 = 1.5 days before the bank reaches its safe limit. Bank for 2 days: 2 × 1,400 Wh ÷ (24 V × 50% × 85%) = 275 Ah."
    },
    "submit": "Calculate",
@@ -350,7 +350,10 @@
      "@id": "https://wattlyst.com/solar/solar-autonomy-calculator/#breadcrumb"
     },
     "dateModified": "2026-10-14",
-    "lastReviewed": "2026-10-14"
+    "lastReviewed": "2026-10-14",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
    },
    {
     "@type": "WebApplication",

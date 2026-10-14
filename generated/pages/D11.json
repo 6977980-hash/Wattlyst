@@ -227,7 +227,7 @@
     }
    ],
    "how": {
-    "tpl": "Import: {{out.import_units|int}} units × {{out.import_rate|rs2}} = {{out.import_energy_rs|rs}}. Export credit: {{out.export_units|int}} units × {{out.buyback_rs|rs2}} = {{out.export_credit_rs|rs}}. Net billing energy charge = {{out.import_energy_rs|rs}} − {{out.export_credit_rs|rs}} = {{out.net_energy_rs|rs}} (credit carried forward: {{out.carry_forward_rs|rs}}). Old net metering: {{out.net_metering_units|int}} net units × {{out.net_metering_rate|rs2}} = {{out.net_metering_rs|rs}}. Net billing costs {{out.extra_vs_net_metering_rs|rs}} more. Fixed charges, surcharges, adjustments and GST come on top of both.",
+    "tpl": "Import: {{out.import_units}} units × {{out.import_rate|rs2}} = {{out.import_energy_rs|rs}}. Export credit: {{out.export_units}} units × {{out.buyback_rs|rs2}} = {{out.export_credit_rs|rs}}. Net billing energy charge = {{out.import_energy_rs|rs}} − {{out.export_credit_rs|rs}} = {{out.net_energy_rs|rs}} (credit carried forward: {{out.carry_forward_rs|rs}}). Old net metering: {{out.net_metering_units|int}} net units × {{out.net_metering_rate|rs2}} = {{out.net_metering_rs|rs}}. Net billing costs {{out.extra_vs_net_metering_rs|rs}} more. Fixed charges, surcharges, adjustments and GST come on top of both.",
     "text": "Import: 400 units × Rs 36.46 = Rs 14,584. Export credit: 300 units × Rs 11.00 = Rs 3,300. Net billing energy charge = Rs 14,584 − Rs 3,300 = Rs 11,284 (credit carried forward: Rs 0). Old net metering: 100 net units × Rs 22.44 = Rs 2,244. Net billing costs Rs 9,040 more. Fixed charges, surcharges, adjustments and GST come on top of both."
    },
    "submit": "Compare net billing and net metering",
@@ -365,7 +365,10 @@
      "@id": "https://wattlyst.com/guides/net-billing-pakistan/#breadcrumb"
     },
     "dateModified": "2026-10-14",
-    "lastReviewed": "2026-10-14"
+    "lastReviewed": "2026-10-14",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
    },
    {
     "@type": "Article",

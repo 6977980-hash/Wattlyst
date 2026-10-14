@@ -104,7 +104,7 @@
   }
  ],
  "answer": "A normal AC ceiling fan in Pakistan uses about {{out.running_kw|3}} units per hour ({{out.running_w|int}} W); a DC inverter fan uses about {{ex.0.out.running_kw|3}} units per hour ({{ex.0.out.running_w|int}} W). Units per hour equal the fan's watts divided by one thousand. At {{appliance.typical_hours_per_day|int}} hours a day one AC fan uses about {{out.monthly_units|1}} units a month, about {{out.monthly_rs|rs}} at {{out.tariff|rs2}} per unit.",
- "how": "{{out.items|int}} fan(s) × {{out.largest_w|int}} W = {{out.running_w|int}} W running. {{out.running_w|int}} W ÷ one thousand = {{out.running_kw|3}} kWh per hour, and one kWh is one unit on the bill. Units per hour × the hours a day you entered = {{out.daily_kwh|2}} units a day; × {{out.days|int}} days = {{out.monthly_units|1}} units a month; × {{out.tariff|rs2}} per unit = {{out.monthly_rs|rs}} a month for the energy charge, before fixed charges, surcharges and tax.",
+ "how": "{{out.items|int}} fan(s) × {{out.largest_w|int}} W = {{out.running_w|int}} W running. {{out.running_w|int}} W ÷ one thousand = {{out.running_kw|3}} kWh per hour, and one kWh is one unit on the bill. Units per hour × the hours a day you entered = {{out.daily_kwh|2}} units a day; × {{out.days}} days = {{out.monthly_units|1}} units a month; × {{out.tariff|rs2}} per unit = {{out.monthly_rs|rs}} a month for the energy charge, before fixed charges, surcharges and tax.",
  "key_facts": [
   "A normal AC ceiling fan draws about {{appliance.running_w|int}} W at full speed ({{appliance.running_w_range.0|int}} to {{appliance.running_w_range.1|int}} W depending on make and age), which is {{out.running_kw|3}} units per hour; units per hour = watts ÷ one thousand.",
   "A DC inverter (BLDC) ceiling fan draws about {{a.ceiling-fan-dc-inverter.running_w|int}} W at full speed ({{a.ceiling-fan-dc-inverter.running_w_range.0|int}} to {{a.ceiling-fan-dc-inverter.running_w_range.1|int}} W), less than half of an AC fan, so it uses about {{ex.0.out.running_kw|3}} units per hour.",
@@ -348,7 +348,9 @@
   "H4"
  ],
  "next": "B1",
- "literal_numbers": [],
+ "literal_numbers": [
+  "thirty watt"
+ ],
  "sources": [
   {
    "label": "ARY News: do inverter fans really consume only 30 watts (AC and DC fan wattage)",

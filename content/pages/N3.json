@@ -99,10 +99,10 @@
   }
  ],
  "answer": "A {{in.kwp|int}} kW {{in.type}} solar quote of {{in.price|rs}} works out to {{out.rs_per_w|rs2}} per watt, which is {{out.verdict}} the typical installed range of {{out.range_low|rs2}} to {{out.range_high|rs2}} per watt ({{out.range_low_rs|rs}} to {{out.range_high_rs|rs}} for this size) seen in Pakistani installer price lists and reports. Price per watt = total price ÷ (kW × one thousand). The range is a market check, not a verdict on any installer.",
- "how": "{{in.price|rs}} ÷ ({{in.kwp|int}} kW × 1,000) = {{out.rs_per_w|rs2}} per watt. Typical {{in.type}} range for {{in.kwp|int}} kW: {{out.range_low|rs2}} to {{out.range_high|rs2}} per watt, that is {{out.range_low_rs|rs}} to {{out.range_high_rs|rs}}. Against the low end your quote differs by {{out.vs_low_pct|int}}%, against the high end by {{out.vs_high_pct|int}}% (a minus sign means below it), so it is {{out.verdict}} the range.",
+ "how": "{{in.price|rs}} ÷ ({{in.kwp}} kW × 1,000) = {{out.rs_per_w|rs2}} per watt. Typical {{in.type}} range for {{in.kwp}} kW: {{out.range_low|rs2}} to {{out.range_high|rs2}} per watt, that is {{out.range_low_rs|rs}} to {{out.range_high_rs|rs}}. Against the low end your quote differs by {{out.vs_low_pct|int}}%, against the high end by {{out.vs_high_pct|int}}% (a minus sign means below it), so it is {{out.verdict}} the range.",
  "key_facts": [
   "Price per watt = total quoted price ÷ (system kW × one thousand); it is the only fair way to compare quotes of different sizes.",
-  "In Pakistan a {{in.kwp|int}} kW on-grid system was quoted at about {{out.range_low|rs2}} to {{out.range_high|rs2}} per watt in installer price lists checked in the month shown under Sources; larger systems cost less per watt, hybrid systems with a battery cost more.",
+  "In Pakistan a {{in.kwp|int}} kW on-grid system was quoted at about {{out.range_low|rs2}} to {{out.range_high|rs2}} per watt in installer price lists checked in the month shown under Sources; large systems (around ten kW and up) usually cost less per watt than small ones, hybrid systems with a battery cost more.",
   "A complete quote should list panels (brand, watts, count), inverter (brand, kW, on-grid or hybrid), mounting structure, DC and AC cables with breakers and surge protection, earthing, installation and the net-metering paperwork; a low price that leaves these out is not cheaper.",
   "The range comes from secondary sources (installer price lists, news and blogs), not an official list; prices move with the rupee and tax policy, so treat the result as a market check and get at least three written quotes."
  ],
@@ -163,7 +163,7 @@
     "type": "on-grid"
    },
    "title": "A small {{in.kwp|int}} kW system at {{in.price|rs}}",
-   "text": "{{out.rs_per_w|rs2}} per watt is {{out.verdict}} the typical {{out.range_low|rs2}} to {{out.range_high|rs2}} per watt for this size; small systems cost more per watt, but this one is {{out.vs_high_pct|int}}% past the high end."
+   "text": "{{out.rs_per_w|rs2}} per watt is {{out.verdict}} the typical {{out.range_low|rs2}} to {{out.range_high|rs2}} per watt for this size; small systems often cost more per watt, but this one is {{out.vs_high_pct|int}}% past the high end."
   },
   {
    "inputs": {

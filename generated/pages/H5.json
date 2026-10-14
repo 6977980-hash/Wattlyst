@@ -333,8 +333,8 @@
     }
    ],
    "how": {
-    "tpl": "{{out.items|int}} motor × {{out.largest_w|int}} W = {{out.running_w|int}} W running, which is {{out.running_w|int}} ÷ one thousand = {{out.running_kw|2}} kWh per hour. Units per hour × the pumping hours a day you entered = {{out.daily_kwh|2}} kWh a day; × {{out.days|int}} days = {{out.monthly_units|1}} units a month; × {{out.tariff|rs2}} per unit = {{out.monthly_rs|rs}} (energy charge only). Running current = {{out.running_w|int}} W ÷ ({{out.volts|int}} V × {{out.pf|1}} power factor) = {{out.amps|1}} A. At start the motor draws {{out.peak_w|int}} W, so the starting current is {{out.peak_w|int}} W ÷ ({{out.volts|int}} V × {{out.pf|1}}) = {{out.peak_amps|1}} A.",
-    "text": "1 motor × 1,000 W = 1,000 W running, which is 1,000 ÷ one thousand = 1 kWh per hour. Units per hour × the pumping hours a day you entered = 1 kWh a day; × 30 days = 30 units a month; × Rs 36.46 per unit = Rs 1,094 (energy charge only). Running current = 1,000 W ÷ (230 V × 0.8 power factor) = 5.4 A. At start the motor draws 2,800 W, so the starting current is 2,800 W ÷ (230 V × 0.8) = 15.2 A."
+    "tpl": "The listed motors ({{out.items|int}}, the largest {{out.largest_w|int}} W) run at {{out.running_w|int}} W together, which is {{out.running_w|int}} ÷ one thousand = {{out.running_kw|2}} kWh per hour. Units per hour × the pumping hours a day you entered = {{out.daily_kwh|2}} kWh a day; × {{out.days}} days = {{out.monthly_units|1}} units a month; × {{out.tariff|rs2}} per unit = {{out.monthly_rs|rs}} (energy charge only). Running current = {{out.running_w|int}} W ÷ ({{out.volts}} V × {{out.pf|1}} power factor) = {{out.amps|1}} A. At start the motor draws {{out.peak_w|int}} W, so the starting current is {{out.peak_w|int}} W ÷ ({{out.volts}} V × {{out.pf|1}}) = {{out.peak_amps|1}} A.",
+    "text": "The listed motors (1, the largest 1,000 W) run at 1,000 W together, which is 1,000 ÷ one thousand = 1 kWh per hour. Units per hour × the pumping hours a day you entered = 1 kWh a day; × 30 days = 30 units a month; × Rs 36.46 per unit = Rs 1,094 (energy charge only). Running current = 1,000 W ÷ (230 V × 0.8 power factor) = 5.4 A. At start the motor draws 2,800 W, so the starting current is 2,800 W ÷ (230 V × 0.8) = 15.2 A."
    },
    "submit": "Calculate",
    "notice": "",
@@ -492,7 +492,10 @@
      "@id": "https://wattlyst.com/appliances/water-motor-1hp/#breadcrumb"
     },
     "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13"
+    "lastReviewed": "2026-10-13",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
    },
    {
     "@type": "WebApplication",

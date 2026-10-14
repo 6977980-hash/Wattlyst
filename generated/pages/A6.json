@@ -217,7 +217,7 @@
     }
    ],
    "how": {
-    "tpl": "{{out.k|4}} × {{out.amps|2}} A × {{out.volts|int}} V × {{out.pf|2}} ÷ 1,000 = {{out.kw|2}} kW of real power, so kW to amps is the same sum turned round. The first factor is one for DC and single-phase and √3 for three-phase, where the volts are line-to-line and the amps are per line. The apparent power is {{out.va|int}} VA, the load the cable, breaker and any generator or UPS must carry. On DC the power factor is one.",
+    "tpl": "{{out.k|4}} × {{out.amps|2}} A × {{out.volts}} V × {{out.pf|2}} ÷ 1,000 = {{out.kw|2}} kW of real power, so kW to amps is the same sum turned round. The first factor is one for DC and single-phase and √3 for three-phase, where the volts are line-to-line and the amps are per line. The apparent power is {{out.va|int}} VA, the load the cable, breaker and any generator or UPS must carry. On DC the power factor is one.",
     "text": "1 × 32 A × 230 V × 0.8 ÷ 1,000 = 5.89 kW of real power, so kW to amps is the same sum turned round. The first factor is one for DC and single-phase and √3 for three-phase, where the volts are line-to-line and the amps are per line. The apparent power is 7,360 VA, the load the cable, breaker and any generator or UPS must carry. On DC the power factor is one."
    },
    "submit": "Calculate",
@@ -359,7 +359,10 @@
      "@id": "https://wattlyst.com/converters/amps-to-kw-calculator/#breadcrumb"
     },
     "dateModified": "2026-10-14",
-    "lastReviewed": "2026-10-14"
+    "lastReviewed": "2026-10-14",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
    },
    {
     "@type": "WebApplication",

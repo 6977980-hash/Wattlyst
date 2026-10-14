@@ -44,14 +44,14 @@
    {
     "h2": "Battery size calculator: from appliance watts to Ah",
     "p": [
-     "Start with the appliances, not with the battery. Add the running watts of everything that must stay on during a cut (fans, lights, a TV, a WiFi router) and decide how many hours they must run. The calculator turns that into watt hours, then into the amp hours a bank at your inverter voltage must hold. With the default 500 W for 4 hours the load uses 2 kWh, which needs a rated bank of 4.7 kWh, 196 Ah at 24 V.",
+     "Start with the appliances, not with the battery. Add the running watts of everything that must stay on during a cut (fans, lights, a TV, a WiFi router) and decide how many hours they must run. The calculator turns that into watt hours, then into the amp hours a bank at your inverter voltage must hold. With the default 500 W for 4 hours the load uses 2 kWh, which needs a rated bank of 4.7 kWh, 197 Ah at 24 V.",
      "Only part of a battery is usable. A tubular or lead-acid battery lasts far longer when it is drained to about 50% of its rating, so the calculator doubles the Ah to allow for that. A lithium (LiFePO4) battery can go to about 90%, which is why a lithium bank is smaller for the same backup. The inverter also loses some energy as heat, about 85% efficient for a basic UPS."
     ]
    },
    {
     "h2": "How many batteries for a 3 kW inverter?",
     "p": [
-     "Most 3 kW hybrid inverters run on a 48 V bank, which means 4 batteries of 12 V in series before you have any backup at all. How many sets of 4 depends on the load and hours: 1,500 W for 4 hours needs 294 Ah, which is 2 strings of 200 Ah batteries, 8 batteries in all.",
+     "Most 3 kW hybrid inverters run on a 48 V bank, which means 4 batteries of 12 V in series before you have any backup at all. How many sets of 4 depends on the load and hours: 1,500 W for 4 hours needs 295 Ah, which is 2 strings of 200 Ah batteries, 8 batteries in all.",
      "The inverter's kW rating tells you how much load it can carry, not how many batteries it needs. A 3 kW inverter running only 600 W of fans and lights needs far fewer batteries than one carrying 1,500 W. Size the bank for the load you actually put on backup, and pick the hours from your longest usual outage."
     ]
    },
@@ -59,7 +59,7 @@
     "h2": "How many batteries do I need for a 1 kW or 5 kW inverter?",
     "p": [
      "A 1 kW UPS usually runs on 12 V, one battery per string. For 600 W over 3 hours it needs 353 Ah, which is 3 batteries of 150 Ah in parallel. Many people instead buy one bigger battery and accept shorter backup; the backup time calculator shows how long one battery lasts.",
-     "A 5 kW inverter is normally 48 V. Running 2,500 W for 4 hours (an inverter AC plus fans and lights) needs 490 Ah: 3 strings of 4 tubular batteries, 12 in total. At that size a lithium bank is usually the better buy: 3 batteries of 100 Ah at 51.2 V give 2,500 W for 4 hours, with less space, weight and maintenance."
+     "A 5 kW inverter is normally 48 V. Running 2,500 W for 4 hours (an inverter AC plus fans and lights) needs 491 Ah: 3 strings of 4 tubular batteries, 12 in total. At that size a lithium bank is usually the better buy: 3 batteries of 100 Ah at 51.2 V give 2,500 W for 4 hours, with less space, weight and maintenance."
     ]
    },
    {
@@ -73,11 +73,11 @@
   "faq": [
    {
     "q": "How many batteries do I need for a 3 kW inverter?",
-    "a": "A 3 kW inverter is usually 48 V, so 4 batteries of 12 V in series per string. For 1,500 W over 4 hours you need 294 Ah, which is 2 strings of 200 Ah: 8 tubular batteries."
+    "a": "A 3 kW inverter is usually 48 V, so 4 batteries of 12 V in series per string. For 1,500 W over 4 hours you need 295 Ah, which is 2 strings of 200 Ah: 8 tubular batteries."
    },
    {
     "q": "How many batteries for a 5 kW inverter?",
-    "a": "On 48 V, sets of 4. Running 2,500 W for 4 hours needs 490 Ah, so 12 tubular batteries of 200 Ah, or 3 lithium batteries of 100 Ah at 51.2 V."
+    "a": "On 48 V, sets of 4. Running 2,500 W for 4 hours needs 491 Ah, so 12 tubular batteries of 200 Ah, or 3 lithium batteries of 100 Ah at 51.2 V."
    },
    {
     "q": "What battery do I need for a 1 kW inverter or UPS?",
@@ -89,15 +89,15 @@
    },
    {
     "q": "How do I calculate battery Ah for an inverter?",
-    "a": "Multiply the watts on backup by the hours to get watt hours, divide by the inverter's battery voltage to get Ah, then divide by the usable fraction and the inverter efficiency. The default 500 W for 4 hours at 24 V gives 196 Ah."
+    "a": "Multiply the watts on backup by the hours to get watt hours, divide by the inverter's battery voltage to get Ah, then divide by the usable fraction and the inverter efficiency. The default 500 W for 4 hours at 24 V gives 197 Ah."
    },
    {
     "q": "Is 12 V, 24 V or 48 V better for a battery bank?",
-    "a": "The inverter decides. Higher voltage means lower current for the same watts, thinner cables and less loss, which is why inverters above about 2 kW use 48 V. The rated energy is the same: 14.1 kWh is 294 Ah at 48 V or twice the Ah at half the voltage."
+    "a": "The inverter decides. Higher voltage means lower current for the same watts, thinner cables and less loss, which is why inverters above about 2 kW use 48 V. The rated energy is the same: 14.1 kWh is 295 Ah at 48 V or twice the Ah at half the voltage."
    },
    {
     "q": "How many lithium batteries do I need compared with tubular?",
-    "a": "Fewer Ah, because lithium uses about 90% of its capacity against 50% for tubular. For 2,500 W over 4 hours a lithium bank needs 241 Ah at 51.2 V, while tubular needs 490 Ah at 48 V."
+    "a": "Fewer Ah, because lithium uses about 90% of its capacity against 50% for tubular. For 2,500 W over 4 hours a lithium bank needs 242 Ah at 51.2 V, while tubular needs 491 Ah at 48 V."
    },
    {
     "q": "Can I add one more battery later for more backup?",
@@ -107,8 +107,8 @@
   "key_facts": [
    "Battery bank Ah = appliance watts × backup hours ÷ (bank volts × usable depth of discharge × inverter efficiency); for tubular batteries use 50% usable and 85% inverter efficiency, for lithium (LiFePO4) 90% usable.",
    "Number of batteries = (bank Ah ÷ Ah of one battery, rounded up) × (bank volts ÷ volts of one battery): a 48 V inverter needs 4 batteries of 12 V in series per string, so batteries are bought in sets of 4.",
-   "A 1,500 W load for 4 hours on a 48 V inverter needs about 294 Ah of tubular battery, which is 8 batteries of 200 Ah.",
-   "A 2,500 W load for 4 hours needs 490 Ah of tubular battery at 48 V but only 241 Ah of lithium at 51.2 V, because lithium can safely use 90% of its capacity against 50% for tubular."
+   "A 1,500 W load for 4 hours on a 48 V inverter needs about 295 Ah of tubular battery, which is 8 batteries of 200 Ah.",
+   "A 2,500 W load for 4 hours needs 491 Ah of tubular battery at 48 V but only 242 Ah of lithium at 51.2 V, because lithium can safely use 90% of its capacity against 50% for tubular."
   ],
   "mistakes": [
    "Sizing from the inverter's kW instead of the real load. A 3 kW inverter running 600 W of fans and lights needs far fewer batteries than one carrying 1,500 W.",
@@ -256,10 +256,10 @@
     {
      "key": "ah_required",
      "label": "Battery bank needed",
-     "spec": "int",
+     "spec": "up",
      "unit": "Ah",
      "label_ur": "Darkar battery bank",
-     "value": "196"
+     "value": "197"
     },
     {
      "key": "batteries",
@@ -292,8 +292,8 @@
     }
    ],
    "how": {
-    "tpl": "{{out.load_w|int}} W × {{out.hours|int}} h = {{out.load_kwh|2}} kWh used by the load. Divide by {{out.volts|1}} V, by {{out.dod|pct}} usable depth of discharge and by {{out.inverter_eff|pct}} inverter efficiency: {{out.ah_required|int}} Ah, a rated bank of {{out.kwh_required|1}} kWh. A {{out.volts|1}} V bank made of {{out.battery_v|1}} V batteries needs {{out.series|int}} in series per string; {{out.ah_required|int}} Ah ÷ {{out.battery_ah|int}} Ah per battery, rounded up, is {{out.strings|int}} string(s) in parallel; {{out.series|int}} × {{out.strings|int}} = {{out.batteries|int}} batteries.",
-    "text": "500 W × 4 h = 2 kWh used by the load. Divide by 24 V, by 50% usable depth of discharge and by 85% inverter efficiency: 196 Ah, a rated bank of 4.7 kWh. A 24 V bank made of 12 V batteries needs 2 in series per string; 196 Ah ÷ 200 Ah per battery, rounded up, is 1 string(s) in parallel; 2 × 1 = 2 batteries."
+    "tpl": "{{out.load_w}} W × {{out.hours}} h = {{out.load_kwh|2}} kWh used by the load. Divide by {{out.volts|1}} V, by {{out.dod|pct}} usable depth of discharge and by {{out.inverter_eff|pct}} inverter efficiency: {{out.ah_required|up}} Ah, a rated bank of {{out.kwh_required|1}} kWh. A {{out.volts|1}} V bank made of {{out.battery_v|1}} V batteries needs {{out.series|int}} in series per string; {{out.ah_required|up}} Ah ÷ {{out.battery_ah}} Ah per battery, rounded up, is {{out.strings|int}} string(s) in parallel; {{out.series|int}} × {{out.strings|int}} = {{out.batteries|int}} batteries.",
+    "text": "500 W × 4 h = 2 kWh used by the load. Divide by 24 V, by 50% usable depth of discharge and by 85% inverter efficiency: 197 Ah, a rated bank of 4.7 kWh. A 24 V bank made of 12 V batteries needs 2 in series per string; 197 Ah ÷ 200 Ah per battery, rounded up, is 1 string(s) in parallel; 2 × 1 = 2 batteries."
    },
    "submit": "Calculate",
    "notice": "",
@@ -306,15 +306,15 @@
    },
    {
     "title": "A 3 kW inverter with 1,500 W on backup",
-    "text": "1,500 W × 4 h ÷ (48 V × 50% × 85%) = 294 Ah. A 48 V bank takes 4 batteries of 12 V in series; 294 Ah needs 2 strings of 200 Ah, so 8 tubular batteries."
+    "text": "1,500 W × 4 h ÷ (48 V × 50% × 85%) = 295 Ah. A 48 V bank takes 4 batteries of 12 V in series; 295 Ah needs 2 strings of 200 Ah, so 8 tubular batteries."
    },
    {
     "title": "A 5 kW inverter running an inverter AC, fans and lights",
-    "text": "2,500 W × 4 h = 10 kWh used. At 48 V with 50% usable and 85% efficiency that is 490 Ah, a rated bank of 23.5 kWh: 3 strings × 4 in series = 12 batteries of 200 Ah."
+    "text": "2,500 W × 4 h = 10 kWh used. At 48 V with 50% usable and 85% efficiency that is 491 Ah, a rated bank of 23.5 kWh: 3 strings × 4 in series = 12 batteries of 200 Ah."
    },
    {
     "title": "The same load on lithium at 51.2 V",
-    "text": "2,500 W × 4 h ÷ (51.2 V × 90% × 90%) = 241 Ah. Rack lithium batteries come as 51.2 V units, so 1 per string and 3 in parallel: 3 batteries of 100 Ah."
+    "text": "2,500 W × 4 h ÷ (51.2 V × 90% × 90%) = 242 Ah. Rack lithium batteries come as 51.2 V units, so 1 per string and 3 in parallel: 3 batteries of 100 Ah."
    }
   ],
   "table": {
@@ -331,47 +331,47 @@
      "300 W",
      "4 h",
      "12 V",
-     "235 Ah",
+     "236 Ah",
      "2 (1 in series × 2 parallel)"
     ],
     [
      "500 W",
      "4 h",
      "12 V",
-     "392 Ah",
+     "393 Ah",
      "2 (1 in series × 2 parallel)"
     ],
     [
      "500 W",
      "4 h",
      "24 V",
-     "196 Ah",
+     "197 Ah",
      "2 (2 in series × 1 parallel)"
     ],
     [
      "1,000 W",
      "4 h",
      "24 V",
-     "392 Ah",
+     "393 Ah",
      "4 (2 in series × 2 parallel)"
     ],
     [
      "1,500 W",
      "4 h",
      "48 V",
-     "294 Ah",
+     "295 Ah",
      "8 (4 in series × 2 parallel)"
     ],
     [
      "2,000 W",
      "6 h",
      "48 V",
-     "588 Ah",
+     "589 Ah",
      "12 (4 in series × 3 parallel)"
     ]
    ]
   },
-  "answer": "To run 500 W of appliances for 4 hours on a 24 V inverter you need a 196 Ah tubular battery bank: 2 batteries of 200 Ah, 2 in series. Battery Ah = watts × hours ÷ (bank volts × usable depth of discharge × inverter efficiency); batteries = bank Ah ÷ one battery's Ah, times the batteries in series.",
+  "answer": "To run 500 W of appliances for 4 hours on a 24 V inverter you need a 197 Ah tubular battery bank: 2 batteries of 200 Ah, 2 in series. Battery Ah = watts × hours ÷ (bank volts × usable depth of discharge × inverter efficiency); batteries = bank Ah ÷ one battery's Ah, times the batteries in series.",
   "formula": {
    "text": "Ah = (P × t) ÷ (V × DoD × η); n = ceil(Ah ÷ Ah_battery) × (V ÷ V_battery)",
    "lines": [
@@ -425,7 +425,10 @@
      "@id": "https://wattlyst.com/battery/battery-bank-size-calculator/#breadcrumb"
     },
     "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13"
+    "lastReviewed": "2026-10-13",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
    },
    {
     "@type": "WebApplication",
@@ -467,7 +470,7 @@
       "name": "How many batteries do I need for a 3 kW inverter?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "A 3 kW inverter is usually 48 V, so 4 batteries of 12 V in series per string. For 1,500 W over 4 hours you need 294 Ah, which is 2 strings of 200 Ah: 8 tubular batteries."
+       "text": "A 3 kW inverter is usually 48 V, so 4 batteries of 12 V in series per string. For 1,500 W over 4 hours you need 295 Ah, which is 2 strings of 200 Ah: 8 tubular batteries."
       }
      },
      {
@@ -475,7 +478,7 @@
       "name": "How many batteries for a 5 kW inverter?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "On 48 V, sets of 4. Running 2,500 W for 4 hours needs 490 Ah, so 12 tubular batteries of 200 Ah, or 3 lithium batteries of 100 Ah at 51.2 V."
+       "text": "On 48 V, sets of 4. Running 2,500 W for 4 hours needs 491 Ah, so 12 tubular batteries of 200 Ah, or 3 lithium batteries of 100 Ah at 51.2 V."
       }
      },
      {
@@ -499,7 +502,7 @@
       "name": "How do I calculate battery Ah for an inverter?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Multiply the watts on backup by the hours to get watt hours, divide by the inverter's battery voltage to get Ah, then divide by the usable fraction and the inverter efficiency. The default 500 W for 4 hours at 24 V gives 196 Ah."
+       "text": "Multiply the watts on backup by the hours to get watt hours, divide by the inverter's battery voltage to get Ah, then divide by the usable fraction and the inverter efficiency. The default 500 W for 4 hours at 24 V gives 197 Ah."
       }
      },
      {
@@ -507,7 +510,7 @@
       "name": "Is 12 V, 24 V or 48 V better for a battery bank?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "The inverter decides. Higher voltage means lower current for the same watts, thinner cables and less loss, which is why inverters above about 2 kW use 48 V. The rated energy is the same: 14.1 kWh is 294 Ah at 48 V or twice the Ah at half the voltage."
+       "text": "The inverter decides. Higher voltage means lower current for the same watts, thinner cables and less loss, which is why inverters above about 2 kW use 48 V. The rated energy is the same: 14.1 kWh is 295 Ah at 48 V or twice the Ah at half the voltage."
       }
      },
      {
@@ -515,7 +518,7 @@
       "name": "How many lithium batteries do I need compared with tubular?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Fewer Ah, because lithium uses about 90% of its capacity against 50% for tubular. For 2,500 W over 4 hours a lithium bank needs 241 Ah at 51.2 V, while tubular needs 490 Ah at 48 V."
+       "text": "Fewer Ah, because lithium uses about 90% of its capacity against 50% for tubular. For 2,500 W over 4 hours a lithium bank needs 242 Ah at 51.2 V, while tubular needs 491 Ah at 48 V."
       }
      },
      {

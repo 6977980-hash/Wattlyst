@@ -36,6 +36,9 @@ export async function loadInputs() {
   const inverterCodes = readJson('data/inverter-codes.json');
   const data = { defaults: readJson('data/defaults.json'), tariff: readJson('data/tariff-pk-2026.json'), cities, appliances: Object.fromEntries(appliances.items.map((a) => [a.id, a])), cables, solar_prices: solarPrices, generator_fuel: readJson('data/generator-fuel.json'), load_profiles: readJson('data/load-profiles.json').profiles,
     bill_index: readJson('data/bill-index.json'), component_prices: readJson('data/component-prices.json'), solar_price_history: readJson('data/solar-price-history.json') };
+  // One source for the FPA (audit WL-13): the newest NEPRA-verified month of the Bill Index. Pages that pre-fill
+  // an FPA read data.fpa_latest; data/tariff-pk-2026.json keeps no copy.
+  data.fpa_latest = data.bill_index.months.find((m) => m.fpa_verified === true) || null;
   const modules = {};
   for (const m of ENGINE_MODULES) modules[m] = await import(pathToFileURL(join(root, 'engine', `${m}.js`)).href);
   const keywordRows = parseCsv(read('specs/keyword-map.csv'));
@@ -169,6 +172,11 @@ function buildContent(c, ctx) {
       const r = runCalc(ctx, exIn, `example ${n + 1}`);
       return { in: r, out: r };
     });
+    // Table rows run once; captions and page text can name a row's inputs as {{table.N.in.x}} (audit WL-23).
+    scope.table = (c.table?.rows || []).map((r, n) => {
+      const res = runCalc(ctx, { ...inputs, ...Object.fromEntries(Object.entries(r).map(([k, v]) => [k, resolveDefault(v, ctx)])) }, `table row ${n + 1}`);
+      return { in: res, out: res };
+    });
     out.tool = {
       calc: c.calc,
       module: `${module}.js`,
@@ -197,10 +205,7 @@ function buildContent(c, ctx) {
       text: text(ctx, ex.text, { ...scope, ...scope.ex[n] }, `example ${n + 1}`),
     }));
     if (c.table) {
-      const rows = c.table.rows.map((r, n) => {
-        const res = runCalc(ctx, { ...inputs, ...Object.fromEntries(Object.entries(r).map(([k, v]) => [k, resolveDefault(v, ctx)])) }, `table row ${n + 1}`);
-        return c.table.columns.map((col) => text(ctx, col.tpl, { ...scope, in: res, out: res }, `table row ${n + 1}`));
-      });
+      const rows = scope.table.map((res, n) => c.table.columns.map((col) => text(ctx, col.tpl, { ...scope, ...res }, `table row ${n + 1}`)));
       out.table = { caption: text(ctx, c.table.caption, scope, 'table caption'), head: c.table.columns.map((col) => col.label), rows };
     }
   }
@@ -348,6 +353,8 @@ function schemaFor(page, built, ctx) {
     breadcrumb: { '@id': `${abs(page.url)}#breadcrumb` },
     ...(page.reviewed ? { dateModified: page.reviewed, lastReviewed: page.reviewed } : page.modified ? { dateModified: page.modified } : {}),
     ...(site.reviewer.status === 'signed_off' && page.type !== 'trust' ? { reviewedBy: { '@id': `${site.url}#/person/reviewer` } } : {}),
+    // The author box is visible on every content page, so the page names its author too (audit WL-50).
+    ...(page.author && page.type !== 'trust' ? { author: { '@id': `${site.url}#/person/${page.author}` } } : {}),
   };
   graph.push(webPage);
   if (page.type === 'tool' || page.type === 'appliance' || page.type === 'lookup') {

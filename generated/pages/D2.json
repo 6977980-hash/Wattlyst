@@ -43,7 +43,7 @@
    {
     "h2": "How many watts of solar panel do I need?",
     "p": [
-     "Take the units on your bill, turn them into units a day, and divide by what one kW of panels really makes a day where you live. For three hundred units a month in Lahore that is 10 units a day ÷ 4 = 2.5 kW of panels. The yield figure already includes the losses from heat, dust, wiring and the inverter, so you do not add another margin on top.",
+     "Take the units on your bill, turn them into units a day, and divide by what one kW of panels really makes a day where you live. For 300 units a month in Lahore that is 10 units a day ÷ 4 = 2.5 kW of panels. The yield figure already includes the losses from heat, dust, wiring and the inverter, so you do not add another margin on top.",
      "The calculator then rounds up to whole panels of the size you chose: 5 panels of 585 W, or 2.93 kW installed, which makes about 351 units a month. The extra over your bill is normal; the next whole panel always adds a little."
     ]
    },
@@ -62,27 +62,27 @@
     ]
    },
    {
-    "h2": "How many solar panels for ten units a day?",
+    "h2": "How many solar panels for 10 units a day?",
     "p": [
-     "Ten units a day is three hundred units a month, the default above: 5 panels of 585 W in Lahore, 2.93 kW. The same ten units in Karachi need 4 panels (2.34 kW) because each kW makes 4.6 units a day there. For any other daily figure, multiply by thirty and enter it as monthly units, or use the solar system size calculator, which takes daily kWh directly."
+     "10 units a day is 300 units a month, the default above: 5 panels of 585 W in Lahore, 2.93 kW. The same 10 units a day in Karachi need 4 panels (2.34 kW) because each kW makes 4.6 units a day there. For any other daily figure, multiply by 30 and enter it as monthly units, or use the solar system size calculator, which takes daily kWh directly."
     ]
    },
    {
     "h2": "Solar watts calculator for a bigger bill",
     "p": [
-     "The watts grow in a straight line with the units: a thousand units a month in Lahore is 33.3 units a day and needs 8.33 kW, 15 panels of 585 W on about 39 m² of roof. Above five kW the connection and net-billing rules change, so check the sanctioned load with your DISCO before buying.",
+     "The watts grow in a straight line with the units: 1,000 units a month in Lahore is 33.3 units a day and needs 8.33 kW, 15 panels of 585 W on about 39 m² of roof. Above five kW the connection and net-billing rules change, so check the sanctioned load with your DISCO before buying.",
      "This page sizes panels from the units you use. It does not check whether the panels can carry your AC at noon without the grid; for that, size from the appliance list with the solar system from loads calculator."
     ]
    }
   ],
   "faq": [
    {
-    "q": "How many watts of solar panels do I need for three hundred units a month?",
+    "q": "How many watts of solar panels do I need for 300 units a month?",
     "a": "About 2.5 kW in Lahore: 5 panels of 585 W, 2.93 kW installed, on about 13 m² of roof. Karachi needs 4 panels for the same bill because of its stronger sun."
    },
    {
-    "q": "How many solar panels for ten kWh a day?",
-    "a": "Ten kWh a day is three hundred units a month, so 5 panels of 585 W in Lahore or 4 in Karachi. Multiply any daily figure by thirty to enter it as monthly units."
+    "q": "How many solar panels for 10 kWh a day?",
+    "a": "10 kWh a day is 300 units a month, so 5 panels of 585 W in Lahore or 4 in Karachi. Multiply any daily figure by 30 to enter it as monthly units."
    },
    {
     "q": "How much power does a 585 W solar panel produce per day?",
@@ -106,9 +106,9 @@
    }
   ],
   "key_facts": [
-   "Solar panel wattage for a home = daily units ÷ the units each kW of panels makes a day in the city: three hundred units a month in Lahore is 10 units a day and needs 2.5 kW of panels, or 5 panels of 585 W.",
+   "Solar panel wattage for a home = daily units ÷ the units each kW of panels makes a day in the city: 300 units a month in Lahore is 10 units a day and needs 2.5 kW of panels, or 5 panels of 585 W.",
    "One kW of panels makes about 4 units a day in Lahore and 4.6 in Karachi over the year (Global Solar Atlas), so the same bill needs 5 panels in Lahore but 4 in Karachi.",
-   "One 585 W panel makes about 70 units a month in Lahore as a yearly average, after real-world losses; sixty units a month of usage is covered by exactly 1 panel.",
+   "One 585 W panel makes about 70 units a month in Lahore as a yearly average, after real-world losses; 60 units a month of usage is covered by exactly 1 panel.",
    "Panel size does not change the total watts: 2.5 kW is 5 panels of 585 W or 7 panels of 400 W, but the smaller panels take 18.2 m² of roof instead of 13 m²."
   ],
   "mistakes": [
@@ -243,7 +243,7 @@
     }
    ],
    "how": {
-    "tpl": "Monthly units ÷ {{d.days_per_month|int}} days = {{out.daily_kwh|1}} units a day. Each kW of panels in your city makes about {{out.yield_kwh_per_kwp_day|1}} units a day over the year (sun hours with heat, dust and wiring losses already taken off). {{out.daily_kwh|1}} ÷ {{out.yield_kwh_per_kwp_day|1}} = {{out.kw|2}} kW of panels. At {{out.panel_w|int}} W a panel that is {{out.panels|int}} panels after rounding up, {{out.installed_kw|2}} kW installed, which should make about {{out.monthly_kwh_estimate|int}} units a month on about {{out.roof_m2|1}} m² of roof.",
+    "tpl": "Monthly units ÷ {{d.days_per_month|int}} days = {{out.daily_kwh|1}} units a day. Each kW of panels in your city makes about {{out.yield_kwh_per_kwp_day|1}} units a day over the year (sun hours with heat, dust and wiring losses already taken off). {{out.daily_kwh|1}} ÷ {{out.yield_kwh_per_kwp_day|1}} = {{out.kw|2}} kW of panels. At {{out.panel_w}} W a panel that is {{out.panels|int}} panels after rounding up, {{out.installed_kw|2}} kW installed, which should make about {{out.monthly_kwh_estimate|int}} units a month on about {{out.roof_m2|1}} m² of roof.",
     "text": "Monthly units ÷ 30 days = 10 units a day. Each kW of panels in your city makes about 4 units a day over the year (sun hours with heat, dust and wiring losses already taken off). 10 ÷ 4 = 2.5 kW of panels. At 585 W a panel that is 5 panels after rounding up, 2.93 kW installed, which should make about 351 units a month on about 13 m² of roof."
    },
    "submit": "Calculate",
@@ -258,23 +258,23 @@
   },
   "examples": [
    {
-    "title": "Three hundred units a month with 550 W panels",
+    "title": "300 units a month with 550 W panels",
     "text": "10 units a day ÷ 4 = 2.5 kW. At 550 W a panel: 5 panels, 2.75 kW installed, 13 m² of roof, about 330 units a month."
    },
    {
-    "title": "Three hundred units a month with 400 W panels",
+    "title": "300 units a month with 400 W panels",
     "text": "Same 2.5 kW, but at 400 W a panel it takes 7 panels, 2.8 kW installed on 18.2 m² of roof. More panels, more mounting and cable, same energy."
    },
    {
-    "title": "Three hundred units a month in Karachi",
+    "title": "300 units a month in Karachi",
     "text": "Karachi makes 4.6 units per kW a day, so 10 ÷ 4.6 = 2.17 kW: 4 panels of 585 W, 2.34 kW installed, about 323 units a month."
    },
    {
     "title": "What one 585 W panel makes in Lahore",
-    "text": "Sixty units a month is 2 units a day, which needs 0.5 kW, so exactly 1 panel of 585 W. That panel makes about 70 units a month as a yearly average, a little more than the sixty needed."
+    "text": "60 units a month is 2 units a day, which needs 0.5 kW, so exactly 1 panel of 585 W. That panel makes about 70 units a month as a yearly average, a little more than the 60 needed."
    },
    {
-    "title": "A thousand units a month in Lahore",
+    "title": "1,000 units a month in Lahore",
     "text": "33.3 units a day ÷ 4 = 8.33 kW. 15 panels of 585 W, 8.78 kW installed on about 39 m² of roof, making about 1,053 units a month."
    }
   ],
@@ -339,7 +339,7 @@
     ]
    ]
   },
-  "answer": "For a bill of three hundred units a month in Lahore you need about 2.5 kW of solar panel wattage, which is 5 panels of 585 W (2.93 kW installed) on about 13 m² of roof. Panel watts = daily units ÷ the units one kW of panels makes a day in your city, rounded up to whole panels.",
+  "answer": "For a bill of 300 units a month in Lahore you need about 2.5 kW of solar panel wattage, which is 5 panels of 585 W (2.93 kW installed) on about 13 m² of roof. Panel watts = daily units ÷ the units one kW of panels makes a day in your city, rounded up to whole panels.",
   "formula": {
    "text": "E = units_month ÷ 30; kW = E ÷ yield; panels = ceil(kW × 1000 ÷ W_panel); kW_installed = panels × W_panel ÷ 1000",
    "lines": [
@@ -393,7 +393,10 @@
      "@id": "https://wattlyst.com/solar/solar-panel-wattage-calculator/#breadcrumb"
     },
     "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13"
+    "lastReviewed": "2026-10-13",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
    },
    {
     "@type": "WebApplication",
@@ -432,7 +435,7 @@
     "mainEntity": [
      {
       "@type": "Question",
-      "name": "How many watts of solar panels do I need for three hundred units a month?",
+      "name": "How many watts of solar panels do I need for 300 units a month?",
       "acceptedAnswer": {
        "@type": "Answer",
        "text": "About 2.5 kW in Lahore: 5 panels of 585 W, 2.93 kW installed, on about 13 m² of roof. Karachi needs 4 panels for the same bill because of its stronger sun."
@@ -440,10 +443,10 @@
      },
      {
       "@type": "Question",
-      "name": "How many solar panels for ten kWh a day?",
+      "name": "How many solar panels for 10 kWh a day?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Ten kWh a day is three hundred units a month, so 5 panels of 585 W in Lahore or 4 in Karachi. Multiply any daily figure by thirty to enter it as monthly units."
+       "text": "10 kWh a day is 300 units a month, so 5 panels of 585 W in Lahore or 4 in Karachi. Multiply any daily figure by 30 to enter it as monthly units."
       }
      },
      {

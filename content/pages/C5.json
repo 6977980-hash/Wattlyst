@@ -104,7 +104,7 @@
   {
    "key": "recommended_kva",
    "label": "Calculated minimum",
-   "spec": "2",
+   "spec": "up2",
    "unit": "kVA"
   },
   {
@@ -120,8 +120,8 @@
    "unit": "W"
   }
  ],
- "answer": "A {{in.hp|2}} hp well pump draws about {{out.pump_run_w|int}} W while running and about {{out.pump_start_w|int}} W for a second or two while it starts. That surge needs about {{out.recommended_kva|2}} kVA, so the generator to buy is the next standard size, {{out.standard_kva|1}} kVA. Generator kVA = the larger of running watts × margin or starting watts, ÷ power factor ÷ 1,000.",
- "how": "{{in.hp|2}} hp × {{d.w_per_hp|1}} W per hp ÷ {{out.motor_eff|pct}} motor efficiency = {{out.pump_run_w|int}} W running. × {{out.start_factor|int}} start factor = {{out.pump_start_w|int}} W starting. Other loads add {{out.other_w|int}} W, so the total is {{out.running_w|int}} W running and {{out.peak_w|int}} W at the moment of starting. The larger of {{out.running_w|int}} W × {{out.margin|2}} margin and {{out.peak_w|int}} W is {{out.sized_w|int}} W; ÷ {{out.pf|2}} power factor ÷ 1,000 = {{out.recommended_kva|2}} kVA, rounded up to the next standard size, {{out.standard_kva|1}} kVA.",
+ "answer": "A {{in.hp|2}} hp well pump draws about {{out.pump_run_w|int}} W while running and about {{out.pump_start_w|int}} W for a second or two while it starts. That surge needs about {{out.recommended_kva|up2}} kVA, so the generator to buy is the next standard size, {{out.standard_kva|1}} kVA. Generator kVA = the larger of running watts × margin or starting watts, ÷ power factor ÷ 1,000.",
+ "how": "{{in.hp|2}} hp × {{d.w_per_hp|1}} W per hp ÷ {{out.motor_eff|pct}} motor efficiency = {{out.pump_run_w|int}} W running. × {{out.start_factor}} start factor = {{out.pump_start_w|int}} W starting. Other loads add {{out.other_w}} W, so the total is {{out.running_w|int}} W running and {{out.peak_w|int}} W at the moment of starting. The larger of {{out.running_w|int}} W × {{out.margin|2}} margin and {{out.peak_w|int}} W is {{out.sized_w|int}} W; ÷ {{out.pf|2}} power factor ÷ 1,000 = {{out.recommended_kva|up2}} kVA, rounded up to the next standard size, {{out.standard_kva|1}} kVA.",
  "key_facts": [
   "A {{in.hp|2}} hp water pump needs about {{out.pump_run_w|int}} W of electrical input while running ({{in.hp|2}} hp × {{d.w_per_hp|1}} W ÷ {{d.motor_eff|pct}} motor efficiency) and about {{out.pump_start_w|int}} W while starting.",
   "Generator size in kVA = the larger of (running watts × {{d.margin|2}}) or (starting watts) ÷ {{d.pf_generator|2}} power factor ÷ 1,000, rounded up to the next standard generator size.",
@@ -165,7 +165,7 @@
   {
    "h2": "Generator size for a well pump: standard sizes and the margin",
    "p": [
-    "Generators are sold in kVA at a power factor of {{d.pf_generator|2}}, so the watts are divided by {{d.pf_generator|2}} to get kVA. The calculated minimum for the {{in.hp|2}} hp pump is {{out.recommended_kva|2}} kVA, and the next size sold is {{out.standard_kva|1}} kVA. The {{d.margin|2}} margin on the running load keeps the engine from running flat out, which matters for fuel use and engine life.",
+    "Generators are sold in kVA at a power factor of {{d.pf_generator|2}}, so the watts are divided by {{d.pf_generator|2}} to get kVA. The calculated minimum for the {{in.hp|2}} hp pump is {{out.recommended_kva|up2}} kVA, and the next size sold is {{out.standard_kva|1}} kVA. The {{d.margin|2}} margin on the running load keeps the engine from running flat out, which matters for fuel use and engine life.",
     "The kVA needed does not change with supply voltage, so the result is the same for a {{d.v_1ph|int}} V pump in Pakistan and a {{d.v_1ph_us|int}} V pump in North America; only the amps differ."
    ]
   }
@@ -176,7 +176,7 @@
     "hp": 1
    },
    "title": "{{in.hp|2}} hp donkey pump on its own",
-   "text": "{{in.hp|2}} hp × {{d.w_per_hp|1}} W ÷ {{out.motor_eff|pct}} = {{out.pump_run_w|int}} W running; × {{out.start_factor|int}} = {{out.pump_start_w|int}} W starting. {{out.pump_start_w|int}} W ÷ {{out.pf|2}} ÷ 1,000 = {{out.recommended_kva|2}} kVA, so buy a {{out.standard_kva|1}} kVA generator."
+   "text": "{{in.hp|2}} hp × {{d.w_per_hp|1}} W ÷ {{out.motor_eff|pct}} = {{out.pump_run_w|int}} W running; × {{out.start_factor|int}} = {{out.pump_start_w|int}} W starting. {{out.pump_start_w|int}} W ÷ {{out.pf|2}} ÷ 1,000 = {{out.recommended_kva|up2}} kVA, so buy a {{out.standard_kva|1}} kVA generator."
   },
   {
    "inputs": {
@@ -184,28 +184,28 @@
     "other_w": 300
    },
    "title": "{{in.hp|2}} hp submersible pump with {{in.other_w|int}} W of lights",
-   "text": "The pump runs at {{out.pump_run_w|int}} W and starts at {{out.pump_start_w|int}} W. With {{in.other_w|int}} W of lights the total is {{out.running_w|int}} W running and {{out.peak_w|int}} W at the start, which is {{out.recommended_kva|2}} kVA; the next standard generator is {{out.standard_kva|1}} kVA."
+   "text": "The pump runs at {{out.pump_run_w|int}} W and starts at {{out.pump_start_w|int}} W. With {{in.other_w|int}} W of lights the total is {{out.running_w|int}} W running and {{out.peak_w|int}} W at the start, which is {{out.recommended_kva|up2}} kVA; the next standard generator is {{out.standard_kva|1}} kVA."
   },
   {
    "inputs": {
     "hp": 3
    },
    "title": "{{in.hp|2}} hp tubewell pump",
-   "text": "A {{in.hp|2}} hp motor runs at {{out.pump_run_w|int}} W and starts at about {{out.pump_start_w|int}} W. That surge sets the size: {{out.recommended_kva|2}} kVA calculated, {{out.standard_kva|1}} kVA to buy."
+   "text": "A {{in.hp|2}} hp motor runs at {{out.pump_run_w|int}} W and starts at about {{out.pump_start_w|int}} W. That surge sets the size: {{out.recommended_kva|up2}} kVA calculated, {{out.standard_kva|1}} kVA to buy."
   },
   {
    "inputs": {
     "hp": 0.5
    },
    "title": "{{in.hp|2}} hp small pump",
-   "text": "{{out.pump_run_w|int}} W running and {{out.pump_start_w|int}} W starting give {{out.recommended_kva|2}} kVA, so the smallest common generator, {{out.standard_kva|1}} kVA, is enough with room for lights and fans."
+   "text": "{{out.pump_run_w|int}} W running and {{out.pump_start_w|int}} W starting give {{out.recommended_kva|up2}} kVA, so the smallest common generator, {{out.standard_kva|1}} kVA, is enough with room for lights and fans."
   },
   {
    "inputs": {
     "hp": 2
    },
    "title": "{{in.hp|2}} hp pump on its own",
-   "text": "A {{in.hp|2}} hp pump runs at {{out.pump_run_w|int}} W and starts at {{out.pump_start_w|int}} W, so it needs {{out.recommended_kva|2}} kVA, or a {{out.standard_kva|1}} kVA generator."
+   "text": "A {{in.hp|2}} hp pump runs at {{out.pump_run_w|int}} W and starts at {{out.pump_start_w|int}} W, so it needs {{out.recommended_kva|up2}} kVA, or a {{out.standard_kva|1}} kVA generator."
   }
  ],
  "table": {
@@ -248,7 +248,7 @@
    },
    {
     "label": "Calculated kVA",
-    "tpl": "{{out.recommended_kva|2}} kVA"
+    "tpl": "{{out.recommended_kva|up2}} kVA"
    },
    {
     "label": "Generator to buy",
@@ -271,7 +271,7 @@
   },
   {
    "q": "What size generator runs a {{ex.4.in.hp|2}} hp pump?",
-   "a": "About {{ex.4.out.recommended_kva|2}} kVA calculated, so a {{ex.4.out.standard_kva|1}} kVA generator. The pump runs at {{ex.4.out.pump_run_w|int}} W but starts at about {{ex.4.out.pump_start_w|int}} W, and the starting surge sets the size."
+   "a": "About {{ex.4.out.recommended_kva|up2}} kVA calculated, so a {{ex.4.out.standard_kva|1}} kVA generator. The pump runs at {{ex.4.out.pump_run_w|int}} W but starts at about {{ex.4.out.pump_start_w|int}} W, and the starting surge sets the size."
   },
   {
    "q": "How many kVA are required for a submersible pump?",

@@ -104,12 +104,13 @@
   }
  ],
  "answer": "A LESCO home using {{in.units|int}} units a month as an unprotected consumer on a {{in.sanctioned_kw|int}} kW connection pays about {{out.total_rs|rs}}, of which {{out.energy_rs|rs}} is the energy charge at {{out.rate|rs2}} per unit and the rest is fixed charge, FC surcharge, QTA and GST. LESCO bill = units × slab rate + fixed charge + surcharges + GST.",
- "how": "{{out.units|int}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge {{out.sanctioned_kw|int}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct|int}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
+ "how": "{{out.units}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
  "key_facts": [
   "LESCO charges the NEPRA uniform A-1 domestic tariff for 2026, so a LESCO bill for a given number of units is the same as any other DISCO's; only the monthly FPA line differs.",
   "The LESCO per unit rate for an unprotected home using {{out.units|int}} units is {{out.rate|rs2}} on every unit, which gives {{out.energy_rs|rs}} before the fixed charge, surcharges and GST.",
   "LESCO protected units: a home stays protected only while every one of its last {{d.protected_months|int}} bills is at or under {{d.protected_max_units|int}} units; protected bills are worked out slab-wise at much lower rates.",
-  "GST at {{out.gst_pct|int}}% is charged on energy, fixed charge and surcharges together, adding {{out.gst_rs|rs}} to a {{out.units|int}} unit LESCO bill; the surcharge and GST values are secondary-source figures that change monthly."
+  "GST at {{out.gst_pct|int}}% is charged on energy, fixed charge and surcharges together, adding {{out.gst_rs|rs}} to a {{out.units|int}} unit LESCO bill; the surcharge and GST values are secondary-source figures that change monthly.",
+  "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of {{data.tariff.addons_secondary.income_tax_235.rate_pct_non_atl|1}}% on a monthly bill of {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}} or more; consumers on the list pay none."
  ],
  "formula": {
   "text": "Bill = units × slab rate + fixed Rs/kW × sanctioned kW + (FC + QTA + FPA) × units, then + GST",
@@ -125,7 +126,7 @@
    "h2": "What is the LESCO per unit rate in 2026?",
    "p": [
     "LESCO, the Lahore Electric Supply Company, does not set its own rates. It bills the uniform A-1 domestic tariff that NEPRA determined and the Government notified for 2026, the same slabs as every other DISCO. For an unprotected home the rate of the slab the month's units reach applies to every unit: {{out.units|int}} units are all billed at {{out.rate|rs2}}, the top slab is the most expensive, and the first hundred units are the cheapest.",
-    "The worked examples below print the rate for the protected, the three-hundred-unit, the five-hundred-unit and the lifeline cases, and the table lists the rate for each slab. Add the FPA from your bill for the month's exact figure."
+    "The worked examples below print the rate for the protected, the {{ex.1.in.units|int}}-unit, the {{ex.2.in.units|int}}-unit and the lifeline cases, and the table lists the rate for each slab. Add the FPA from your bill for the month's exact figure."
    ]
   },
   {
@@ -249,7 +250,7 @@
   },
   {
    "q": "What is the LESCO tariff for 2026?",
-   "a": "The uniform A-1 domestic tariff notified as SRO 279(I)/2026: lifeline slabs up to one hundred units, protected slabs up to {{d.protected_max_units|int}} units and unprotected slabs of a hundred units each up to seven hundred, then an open-ended top slab; connections of {{d.tou_threshold_kw|int}} kW and above are billed on ToU rates."
+   "a": "The uniform A-1 domestic tariff notified as SRO 279(I)/2026: lifeline slabs up to {{data.tariff.lifeline.1.upto|int}} units, protected slabs up to {{d.protected_max_units|int}} units and unprotected slabs of {{data.tariff.unprotected.0.upto|int}} units each up to {{data.tariff.unprotected.6.upto|int}}, then an open-ended top slab; connections of {{d.tou_threshold_kw|int}} kW and above are billed on ToU rates."
   },
   {
    "q": "How do I check my LESCO bill online?",
@@ -258,6 +259,10 @@
   {
    "q": "How many units keep a LESCO consumer protected?",
    "a": "At or under {{d.protected_max_units|int}} units in every one of the last {{d.protected_months|int}} months, on a connection below {{d.tou_threshold_kw|int}} kW. Cross the limit once and the next bills are unprotected until six months under the limit have passed again."
+  },
+  {
+   "q": "Why is my real bill higher than this estimate when it is over {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}}?",
+   "a": "A bill of {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}} or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: {{data.tariff.addons_secondary.income_tax_235.rate_pct_non_atl|1}}% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
   }
  ],
  "related": [
@@ -270,7 +275,10 @@
  "literal_numbers": [
   "SRO 279(I)/2026",
   "2026",
-  "A-1"
+  "A-1",
+  "section 235",
+  "Ordinance 2001",
+  "Rs 25,000"
  ],
  "sources": [
   {
@@ -284,6 +292,10 @@
   {
    "label": "Wattlyst methodology and default values",
    "url": "/methodology/"
+  },
+  {
+   "label": "PkRevenue: income tax on domestic electricity bills of Rs 25,000 or more (section 235, FBR withholding rates)",
+   "url": "https://pkrevenue.com/domestic-electricity-consumers-to-pay-tax-on-monthly-bill-above-rs25000/"
   }
  ]
 }

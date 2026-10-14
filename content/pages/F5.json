@@ -104,13 +104,14 @@
   }
  ],
  "answer": "A GEPCO home in Gujranwala, Sialkot or Gujrat using {{in.units|int}} units in a month as an unprotected consumer on a {{in.sanctioned_kw|int}} kW connection pays about {{out.total_rs|rs}}: {{out.energy_rs|rs}} energy charge at {{out.rate|rs2}} per unit, plus fixed charge, FC surcharge, QTA and GST, before the month's FPA. GEPCO bill = units × slab rate + fixed charge + surcharges, then GST on the subtotal.",
- "how": "{{out.units|int}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw|int}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct|int}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
+ "how": "{{out.units}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
  "key_facts": [
   "GEPCO, the Gujranwala Electric Power Company, supplies Gujranwala, Gujrat, Sialkot, Narowal, Hafizabad, Mandi Bahauddin and Wazirabad from its head office in Gujranwala and bills the uniform NEPRA A-1 domestic tariff for 2026, not a tariff of its own.",
   "An unprotected GEPCO consumer using {{out.units|int}} units pays {{out.rate|rs2}} on every unit, which is {{out.energy_rs|rs}} of energy charge before the fixed charge, FC surcharge, QTA and GST.",
   "Crossing a slab costs more than the extra units: {{ex.0.out.units|int}} protected units cost about {{ex.0.out.total_rs|rs}}, while {{ex.1.out.units|int}} unprotected units, only a few more, cost about {{ex.1.out.total_rs|rs}} because the whole month moves to the unprotected rate of {{ex.1.out.rate|rs2}}.",
   "Protection on GEPCO needs every one of the last {{d.protected_months|int}} bills at or under {{d.protected_max_units|int}} units on a connection below {{d.tou_threshold_kw|int}} kW; a single bill over the limit ends it for the next {{d.protected_months|int}} months.",
-  "GST at {{out.gst_pct|int}}% is charged on the energy charge, fixed charge and surcharges together and adds {{out.gst_rs|rs}} to a {{out.units|int}} unit GEPCO bill; the surcharge and GST defaults are secondary-source figures that change."
+  "GST at {{out.gst_pct|int}}% is charged on the energy charge, fixed charge and surcharges together and adds {{out.gst_rs|rs}} to a {{out.units|int}} unit GEPCO bill; the surcharge and GST defaults are secondary-source figures that change.",
+  "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of {{data.tariff.addons_secondary.income_tax_235.rate_pct_non_atl|1}}% on a monthly bill of {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}} or more; consumers on the list pay none."
  ],
  "formula": {
   "text": "Bill = units × slab rate + fixed Rs/kW × sanctioned kW + (FC + QTA + FPA) × units, then + GST",
@@ -132,7 +133,7 @@
   {
    "h2": "GEPCO tariff: what one unit over a slab costs",
    "p": [
-    "Unprotected domestic slabs are a hundred units wide, and the rate of the slab reached applies to every unit of the month, not just the units above the line. So a month of {{ex.1.out.units|int}} units is billed at {{ex.1.out.rate|rs2}} on all of them and costs {{ex.1.out.total_rs|rs}}, while a protected month of {{ex.0.out.units|int}} units costs {{ex.0.out.total_rs|rs}}. The gap between those two bills is the price of a few units of extra use at the wrong time.",
+    "Unprotected domestic slabs are {{data.tariff.unprotected.0.upto|int}} units wide, and the rate of the slab reached applies to every unit of the month, not just the units above the line. So a month of {{ex.1.out.units|int}} units is billed at {{ex.1.out.rate|rs2}} on all of them and costs {{ex.1.out.total_rs|rs}}, while a protected month of {{ex.0.out.units|int}} units costs {{ex.0.out.total_rs|rs}}. The gap between those two bills is the price of a few units of extra use at the wrong time.",
     "The same thing happens at every edge further up: in the table, compare the row just under a boundary with the row just over it. If a month looks like it will land a few units into the next slab, moving a wash, an iron session or a pump run to after the reading date keeps the whole month in the lower slab."
    ]
   },
@@ -269,6 +270,10 @@
   {
    "q": "Why does my GEPCO bill differ from this estimate?",
    "a": "The estimate leaves out the FPA unless you enter it, and it cannot see arrears, late payment surcharge or meter rent. If the reading dates cover more than a month, the units may have crossed a slab because of the long cycle; run the bill audit tool."
+  },
+  {
+   "q": "Why is my real bill higher than this estimate when it is over {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}}?",
+   "a": "A bill of {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}} or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: {{data.tariff.addons_secondary.income_tax_235.rate_pct_non_atl|1}}% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
   }
  ],
  "related": [
@@ -282,7 +287,10 @@
  "literal_numbers": [
   "SRO 279(I)/2026",
   "2026",
-  "A-1"
+  "A-1",
+  "section 235",
+  "Ordinance 2001",
+  "Rs 25,000"
  ],
  "sources": [
   {
@@ -300,6 +308,10 @@
   {
    "label": "Wattlyst methodology and default values",
    "url": "/methodology/"
+  },
+  {
+   "label": "PkRevenue: income tax on domestic electricity bills of Rs 25,000 or more (section 235, FBR withholding rates)",
+   "url": "https://pkrevenue.com/domestic-electricity-consumers-to-pay-tax-on-monthly-bill-above-rs25000/"
   }
  ]
 }

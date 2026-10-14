@@ -47,7 +47,7 @@
    {
     "h2": "What is the K-Electric tariff for 2026?",
     "p": [
-     "The tariff is the uniform domestic schedule notified as SRO 279(I)/2026: two lifeline slabs up to one hundred units, two protected slabs up to 200 units, unprotected slabs of a hundred units each up to seven hundred and one open-ended slab above. Each slab carries its own fixed charge per kW of sanctioned load, and connections of 5 kW and above are billed on peak and off-peak ToU rates instead.",
+     "The tariff is the uniform domestic schedule notified as SRO 279(I)/2026: two lifeline slabs up to 100 units, two protected slabs up to 200 units, unprotected slabs of 100 units each up to 700 and one open-ended slab above. Each slab carries its own fixed charge per kW of sanctioned load, and connections of 5 kW and above are billed on peak and off-peak ToU rates instead.",
      "On top of the energy and fixed charges, the bill adds the FC surcharge, the quarterly tariff adjustment, the monthly FCA and GST. The surcharge, QTA and GST defaults here come from secondary sources and change over time, and how GST and the FC surcharge apply to lifeline bills is still being verified, so copy those lines from your bill."
     ]
    },
@@ -83,13 +83,18 @@
    {
     "q": "Where do I see my official K-Electric bill?",
     "a": "On the K-Electric website, using the account or consumer number printed on the bill. This calculator does not fetch your bill; it estimates one from the units you enter."
+   },
+   {
+    "q": "Why is my real bill higher than this estimate when it is over Rs 25,000?",
+    "a": "A bill of Rs 25,000 or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: 7.5% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
    }
   ],
   "key_facts": [
    "K-Electric's domestic tariff was rationalised to the same uniform NEPRA A-1 rates as the ex-WAPDA DISCOs in the 2026 determination, so a Karachi bill for a given number of units matches a Lahore or Islamabad bill apart from the monthly fuel adjustment.",
    "The K-Electric per unit rate for an unprotected home using 300 units is Rs 33.10 on every unit, giving Rs 9,930 in energy charges before the fixed charge, surcharges, FCA and GST.",
    "FCA is K-Electric's name for the monthly fuel charge adjustment that other DISCOs print as FPA; it changes every month, can be a credit, and is the field to copy from your bill.",
-   "A K-Electric protected consumer is one whose last 6 bills were all at or under 200 units on a connection below 5 kW; such bills are worked out slab-wise at the low protected rates."
+   "A K-Electric protected consumer is one whose last 6 bills were all at or under 200 units on a connection below 5 kW; such bills are worked out slab-wise at the low protected rates.",
+   "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of 7.5% on a monthly bill of Rs 25,000 or more; consumers on the list pay none."
   ],
   "mistakes": [
    "Expecting a separate K-Electric rate. Since the 2026 rationalisation the slab rates are the uniform NEPRA domestic rates; only the FCA is K-Electric's own monthly figure.",
@@ -109,6 +114,10 @@
    {
     "label": "Wattlyst methodology and default values",
     "url": "/methodology/"
+   },
+   {
+    "label": "PkRevenue: income tax on domestic electricity bills of Rs 25,000 or more (section 235, FBR withholding rates)",
+    "url": "https://pkrevenue.com/domestic-electricity-consumers-to-pay-tax-on-monthly-bill-above-rs25000/"
    }
   ],
   "tool": {
@@ -242,7 +251,7 @@
     }
    ],
    "how": {
-    "tpl": "{{out.units|int}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw|int}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, FCA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}}; GST {{out.gst_pct|int}}% = {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}.",
+    "tpl": "{{out.units}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, FCA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}}; GST {{out.gst_pct}}% = {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}.",
     "text": "300 units × Rs 33.10 (unprotected slab rate) = Rs 9,930. Fixed charge for 1 kW = Rs 350. FC surcharge Rs 969, QTA Rs 156, FCA Rs 0. Subtotal Rs 11,405; GST 18% = Rs 2,053. Estimated bill Rs 13,458."
    },
    "submit": "Calculate",
@@ -387,7 +396,10 @@
      "@id": "https://wattlyst.com/bill/k-electric-bill-calculator/#breadcrumb"
     },
     "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13"
+    "lastReviewed": "2026-10-13",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
    },
    {
     "@type": "WebApplication",
@@ -470,6 +482,14 @@
       "acceptedAnswer": {
        "@type": "Answer",
        "text": "On the K-Electric website, using the account or consumer number printed on the bill. This calculator does not fetch your bill; it estimates one from the units you enter."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Why is my real bill higher than this estimate when it is over Rs 25,000?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "A bill of Rs 25,000 or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: 7.5% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
       }
      }
     ]

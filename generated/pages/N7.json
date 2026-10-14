@@ -212,7 +212,7 @@
     }
    ],
    "how": {
-    "tpl": "Purchase and installation {{out.capex|rs}}. Running cost: {{out.years|int}} years × (energy or fuel cost a year + maintenance a year) = {{out.running_rs|rs}}. Replacements: the part that wears out is replaced each time its life runs out within the period, but not in the final year, giving {{out.replacements|int}} replacements = {{out.replacements_rs|rs}}. Total cost of ownership = {{out.capex|rs}} + {{out.running_rs|rs}} + {{out.replacements_rs|rs}} = {{out.tco_rs|rs}}.",
+    "tpl": "Purchase and installation {{out.capex|rs}}. Running cost: {{out.years}} years × (energy or fuel cost a year + maintenance a year) = {{out.running_rs|rs}}. Replacements: the part that wears out is replaced each time its life runs out within the period, but not in the final year, giving {{out.replacements|int}} replacements = {{out.replacements_rs|rs}}. Total cost of ownership = {{out.capex|rs}} + {{out.running_rs|rs}} + {{out.replacements_rs|rs}} = {{out.tco_rs|rs}}.",
     "text": "Purchase and installation Rs 120,000. Running cost: 5 years × (energy or fuel cost a year + maintenance a year) = Rs 85,000. Replacements: the part that wears out is replaced each time its life runs out within the period, but not in the final year, giving 2 replacements = Rs 120,000. Total cost of ownership = Rs 120,000 + Rs 85,000 + Rs 120,000 = Rs 325,000."
    },
    "submit": "Calculate",
@@ -370,7 +370,10 @@
      "@id": "https://wattlyst.com/load/ups-vs-solar-vs-generator-cost/#breadcrumb"
     },
     "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13"
+    "lastReviewed": "2026-10-13",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
    },
    {
     "@type": "WebApplication",

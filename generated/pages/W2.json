@@ -334,7 +334,7 @@
     }
    ],
    "how": {
-    "tpl": "Design current = {{out.watts|int}} W ÷ ({{out.k|2}} × {{out.volts|int}} V × {{out.pf|2}} power factor) = {{out.ib_a|1}} A (the first factor is one for single phase and DC, root three for three phase). MCB = next standard size above {{out.breaker_design_a|1}} A = {{out.breaker_a|int}} A. The cable must be rated at least {{out.min_cable_a|1}} A, the larger of {{out.ib_a|1}} A × {{out.margin|2}} and the MCB, and be at least {{out.min_mm2|1}} mm² for this circuit type: {{out.area_mm2|1}} mm² ({{out.pk_size|raw}}) is rated {{out.ampacity_a|int}} A. Voltage drop over the {{in.length_m|int}} m run = {{out.drop_v|1}} V, which is {{out.drop_pct|1}}% of {{out.volts|int}} V, within the {{out.limit_pct|int}}% limit.",
+    "tpl": "Design current = {{out.watts}} W ÷ ({{out.k|2}} × {{out.volts}} V × {{out.pf|2}} power factor) = {{out.ib_a|1}} A (the first factor is one for single phase and DC, root three for three phase). MCB = next standard size above {{out.breaker_design_a|1}} A = {{out.breaker_a|int}} A. The cable must be rated at least {{out.min_cable_a|1}} A, the larger of {{out.ib_a|1}} A × {{out.margin|2}} and the MCB, and be at least {{out.min_mm2|1}} mm² for this circuit type: {{out.area_mm2|1}} mm² ({{out.pk_size|raw}}) is rated {{out.ampacity_a|int}} A. Voltage drop over the {{in.length_m}} m run = {{out.drop_v|1}} V, which is {{out.drop_pct|1}}% of {{out.volts}} V, within the {{out.limit_pct|int}}% limit.",
     "text": "Design current = 2,000 W ÷ (1 × 230 V × 0.8 power factor) = 10.9 A (the first factor is one for single phase and DC, root three for three phase). MCB = next standard size above 10.9 A = 16 A. The cable must be rated at least 16 A, the larger of 10.9 A × 1.25 and the MCB, and be at least 2.5 mm² for this circuit type: 2.5 mm² (7/29) is rated 19 A. Voltage drop over the 20 m run = 3.9 V, which is 1.7% of 230 V, within the 5% limit."
    },
    "submit": "Calculate",
@@ -492,7 +492,10 @@
      "@id": "https://wattlyst.com/wiring/wire-size-calculator/#breadcrumb"
     },
     "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13"
+    "lastReviewed": "2026-10-13",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
    },
    {
     "@type": "WebApplication",

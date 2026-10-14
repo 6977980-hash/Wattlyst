@@ -251,7 +251,7 @@
     {
      "key": "recommended_kva",
      "label": "Calculated minimum",
-     "spec": "2",
+     "spec": "up2",
      "unit": "kVA",
      "label_ur": "Hisab se kam az kam",
      "value": "3.05"
@@ -274,7 +274,7 @@
     }
    ],
    "how": {
-    "tpl": "{{out.ac_name}}: {{out.ac_run_w|int}} W running, {{out.ac_start_w|int}} W starting (its maximum input). Other load {{out.other_w|int}} W. Total {{out.running_w|int}} W running and {{out.peak_w|int}} W at the moment the AC starts. The larger of {{out.running_w|int}} W × {{out.margin|2}} margin and {{out.peak_w|int}} W is {{out.sized_w|int}} W; ÷ {{out.pf|2}} power factor ÷ 1,000 = {{out.recommended_kva|2}} kVA, rounded up to the next standard size, {{out.standard_kva|1}} kVA.",
+    "tpl": "{{out.ac_name}}: {{out.ac_run_w|int}} W running, {{out.ac_start_w|int}} W starting (its maximum input). Other load {{out.other_w}} W. Total {{out.running_w|int}} W running and {{out.peak_w|int}} W at the moment the AC starts. The larger of {{out.running_w|int}} W × {{out.margin|2}} margin and {{out.peak_w|int}} W is {{out.sized_w|int}} W; ÷ {{out.pf|2}} power factor ÷ 1,000 = {{out.recommended_kva|up2}} kVA, rounded up to the next standard size, {{out.standard_kva|1}} kVA.",
     "text": "Split AC 1.5 ton inverter: 1,450 W running, 1,900 W starting (its maximum input). Other load 500 W. Total 1,950 W running and 2,400 W at the moment the AC starts. The larger of 1,950 W × 1.25 margin and 2,400 W is 2,438 W; ÷ 0.8 power factor ÷ 1,000 = 3.05 kVA, rounded up to the next standard size, 3.5 kVA."
    },
    "submit": "Calculate",
@@ -432,7 +432,10 @@
      "@id": "https://wattlyst.com/generator/generator-for-1-5-ton-ac/#breadcrumb"
     },
     "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13"
+    "lastReviewed": "2026-10-13",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
    },
    {
     "@type": "WebApplication",

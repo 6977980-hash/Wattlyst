@@ -167,7 +167,7 @@
     }
    ],
    "how": {
-    "tpl": "Degrees raised: {{out.t_new|int}} °C − {{out.t_old|int}} °C. Saving share: {{out.per_degree|pct}} per degree × the degrees raised = {{out.saving_pct|pct}} (never more than all of the AC's units). Units saved: {{out.monthly_units|int}} units a month × {{out.saving_pct|pct}} = {{out.units_saved|int}} units. Multiply by your slab rate for the rupee saving.",
+    "tpl": "Degrees raised: {{out.t_new}} °C − {{out.t_old}} °C. Saving share: {{out.per_degree|pct}} per degree × the degrees raised = {{out.saving_pct|pct}} (never more than all of the AC's units). Units saved: {{out.monthly_units}} units a month × {{out.saving_pct|pct}} = {{out.units_saved|int}} units. Multiply by your slab rate for the rupee saving.",
     "text": "Degrees raised: 26 °C − 22 °C. Saving share: 6% per degree × the degrees raised = 24% (never more than all of the AC's units). Units saved: 240 units a month × 24% = 58 units. Multiply by your slab rate for the rupee saving."
    },
    "submit": "Calculate",
@@ -304,7 +304,10 @@
      "@id": "https://wattlyst.com/load/ac-temperature-saving-calculator/#breadcrumb"
     },
     "dateModified": "2026-10-14",
-    "lastReviewed": "2026-10-14"
+    "lastReviewed": "2026-10-14",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
    },
    {
     "@type": "WebApplication",

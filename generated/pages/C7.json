@@ -72,7 +72,7 @@
    {
     "h2": "7 kVA and 10 kVA generator capacity for a whole home",
     "p": [
-     "At 7.5 kVA (6,000 W) a generator can start one 1.5 ton non-inverter AC with fans and lights: the list runs at 2,240 W and peaks at 5,840 W. Add a running non-inverter fridge and the start peak of 6,040 W is above the capacity, so either stagger the starts or choose 10 kVA. Two non-inverter ACs do not fit until the second one's start is covered on top of the first one running.",
+     "At 7 kVA (5,600 W) a generator runs fans, lights and the running draw of a 1.5 ton non-inverter AC, but the AC's start peak of 5,840 W is above the capacity. At 7.5 kVA (6,000 W) the same list starts: it runs at 2,240 W and peaks at 5,840 W. Add a running non-inverter fridge and the start peak of 6,040 W is above that capacity too, so either stagger the starts or choose 10 kVA. Two non-inverter ACs do not fit until the second one's start is covered on top of the first one running.",
      "At 10 kVA (8,000 W, 6,400 W steady) two 1.5 ton inverter ACs, six fans, twelve bulbs, an inverter fridge and a 1 hp water pump run together at 4,644 W, peaking at 6,444 W when the pump starts; on its own it runs 4 inverter ACs of 1.5 ton. Above this size most homes should look at three-phase sets and a changeover switch fitted by a licensed electrician."
     ]
    }
@@ -100,7 +100,7 @@
    },
    {
     "q": "What can a 7 kVA generator run?",
-    "a": "A 7.5 kVA set gives 6,000 W and about 4,800 W of steady load: one 1.5 ton non-inverter AC with fans and lights (2,240 W, peak 5,840 W). A non-inverter fridge running at the same time lifts the AC's start peak to 6,040 W, past that capacity; a 10 kVA set covers it and runs 4 inverter ACs of 1.5 ton on their own."
+    "a": "A 7 kVA set gives 5,600 W and about 4,480 W of steady load, enough for the running draw of a 1.5 ton non-inverter AC with fans and lights (2,240 W) but not for its start, which peaks at 5,840 W. A 7.5 kVA set (6,000 W) starts it; with a non-inverter fridge also running the peak becomes 6,040 W, so stagger the starts or choose 10 kVA."
    },
    {
     "q": "Why does my generator trip when the AC starts even though the watts add up?",
@@ -780,6 +780,10 @@
       [
        6.5,
        "6.5 kVA"
+      ],
+      [
+       7,
+       "7 kVA"
       ],
       [
        7.5,
@@ -1480,6 +1484,13 @@
      "2"
     ],
     [
+     "7 kVA",
+     "4,480 W",
+     "5,600 W",
+     "47%",
+     "3"
+    ],
+    [
      "7.5 kVA",
      "4,800 W",
      "6,000 W",
@@ -1549,7 +1560,10 @@
      "@id": "https://wattlyst.com/generator/what-can-a-kva-generator-run/#breadcrumb"
     },
     "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13"
+    "lastReviewed": "2026-10-13",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
    },
    {
     "@type": "WebApplication",
@@ -1631,7 +1645,7 @@
       "name": "What can a 7 kVA generator run?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "A 7.5 kVA set gives 6,000 W and about 4,800 W of steady load: one 1.5 ton non-inverter AC with fans and lights (2,240 W, peak 5,840 W). A non-inverter fridge running at the same time lifts the AC's start peak to 6,040 W, past that capacity; a 10 kVA set covers it and runs 4 inverter ACs of 1.5 ton on their own."
+       "text": "A 7 kVA set gives 5,600 W and about 4,480 W of steady load, enough for the running draw of a 1.5 ton non-inverter AC with fans and lights (2,240 W) but not for its start, which peaks at 5,840 W. A 7.5 kVA set (6,000 W) starts it; with a non-inverter fridge also running the peak becomes 6,040 W, so stagger the starts or choose 10 kVA."
       }
      },
      {

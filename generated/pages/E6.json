@@ -250,7 +250,7 @@
     }
    ],
    "how": {
-    "tpl": "{{out.watts|int}} W × {{out.hours|2}} h a day × {{out.days|int}} days ÷ 1,000 = {{out.units|2}} units (kWh). In Amps mode the watts come first from volts × amps × power factor (× the square root of three for three phase), then the same step.",
+    "tpl": "{{out.watts}} W × {{out.hours|2}} h a day × {{out.days}} days ÷ 1,000 = {{out.units|2}} units (kWh). In Amps mode the watts come first from volts × amps × power factor (× the square root of three for three phase), then the same step.",
     "text": "1,000 W × 1 h a day × 30 days ÷ 1,000 = 30 units (kWh). In Amps mode the watts come first from volts × amps × power factor (× the square root of three for three phase), then the same step."
    },
    "submit": "Calculate",
@@ -276,7 +276,7 @@
    },
    {
     "title": "Amp hours: a 200 Ah, 12 V battery",
-    "text": "200 Ah × 12 V ÷ 1,000 = 2.4 units of stored energy. About half is usable on a tubular battery and about ninety percent on lithium."
+    "text": "200 Ah × 12 V ÷ 1,000 = 2.4 units of stored energy. About half is usable on a tubular battery and about 90% on lithium."
    }
   ],
   "table": {
@@ -382,7 +382,10 @@
      "@id": "https://wattlyst.com/load/unit-calculator/#breadcrumb"
     },
     "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13"
+    "lastReviewed": "2026-10-13",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
    },
    {
     "@type": "WebApplication",

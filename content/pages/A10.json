@@ -65,7 +65,7 @@
   }
  ],
  "answer": "A {{in.ah|int}} Ah battery at {{in.volts|1}} V stores {{out.wh|int}} Wh, which is {{out.kwh|2}} kWh or {{out.kwh|2}} units. Watt hours = amp hours × volts. A {{ex.0.in.ah|int}} Ah battery at the same voltage holds {{ex.0.out.kwh|2}} kWh, and a {{ex.2.in.ah|int}} Ah battery on a {{ex.2.in.volts|int}} V bank holds {{ex.2.out.kwh|2}} kWh. Only part of this is usable; see depth of discharge below.",
- "how": "{{in.ah|int}} Ah × {{in.volts|1}} V = {{out.wh|int}} Wh. Divide by a thousand for kilowatt hours: {{out.kwh|2}} kWh. One kWh is one unit on the electricity bill. This is the total stored energy; multiply by the usable depth of discharge for the part you can actually draw.",
+ "how": "{{in.ah}} Ah × {{in.volts|1}} V = {{out.wh|int}} Wh. Divide by a thousand for kilowatt hours: {{out.kwh|2}} kWh. One kWh is one unit on the electricity bill. This is the total stored energy; multiply by the usable depth of discharge for the part you can actually draw.",
  "key_facts": [
   "Watt hours = amp hours × volts, so a {{in.ah|int}} Ah {{in.volts|1}} V battery stores {{out.wh|int}} Wh ({{out.kwh|2}} kWh) and a {{ex.0.in.ah|int}} Ah {{ex.0.in.volts|1}} V battery stores {{ex.0.out.wh|int}} Wh ({{ex.0.out.kwh|2}} kWh).",
   "A {{ex.2.in.ah|int}} Ah battery on a {{ex.2.in.volts|int}} V bank holds {{ex.2.out.kwh|2}} kWh, four times the energy of the same Ah at {{ex.0.in.volts|int}} V, because the voltage is four times higher.",
@@ -256,7 +256,8 @@
  "next": "B1",
  "literal_numbers": [
   "LiFePO4",
-  "12V"
+  "12V",
+  "a one hundred watt"
  ],
  "sources": [
   {

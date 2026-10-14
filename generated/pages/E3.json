@@ -200,7 +200,7 @@
     }
    ],
    "how": {
-    "tpl": "{{in.total_w|int}} W ÷ ({{in.volts|int}} V × {{in.pf|2}} power factor) = {{out.amps|1}} A. {{in.total_w|int}} W ÷ 1,000 = {{out.total_kw|2}} kW. {{out.total_kw|2}} kW ÷ {{in.sanctioned_kw|int}} kW sanctioned load = {{out.load_pct|int}}% of the sanctioned load. Anything above the full sanctioned load means the connection is overloaded.",
+    "tpl": "{{in.total_w}} W ÷ ({{in.volts}} V × {{in.pf|2}} power factor) = {{out.amps|1}} A. {{in.total_w}} W ÷ 1,000 = {{out.total_kw|2}} kW. {{out.total_kw|2}} kW ÷ {{in.sanctioned_kw}} kW sanctioned load = {{out.load_pct|int}}% of the sanctioned load. Anything above the full sanctioned load means the connection is overloaded.",
     "text": "3,000 W ÷ (230 V × 0.8 power factor) = 16.3 A. 3,000 W ÷ 1,000 = 3 kW. 3 kW ÷ 2 kW sanctioned load = 150% of the sanctioned load. Anything above the full sanctioned load means the connection is overloaded."
    },
    "submit": "Calculate",
@@ -324,7 +324,10 @@
      "@id": "https://wattlyst.com/load/single-phase-load-calculator/#breadcrumb"
     },
     "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13"
+    "lastReviewed": "2026-10-13",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
    },
    {
     "@type": "WebApplication",

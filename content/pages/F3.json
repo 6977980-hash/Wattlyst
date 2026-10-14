@@ -104,13 +104,14 @@
   }
  ],
  "answer": "An IESCO home in Islamabad or Rawalpindi using {{in.units|int}} units in a month as an unprotected consumer on a {{in.sanctioned_kw|int}} kW connection pays about {{out.total_rs|rs}}: {{out.energy_rs|rs}} energy charge at {{out.rate|rs2}} per unit, plus fixed charge, FC surcharge, QTA and GST, before the month's FPA. IESCO bill = units × slab rate + fixed charge + surcharges, then GST on the subtotal.",
- "how": "{{out.units|int}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw|int}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct|int}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
+ "how": "{{out.units}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
  "key_facts": [
   "IESCO, the Islamabad Electric Supply Company, bills the uniform NEPRA A-1 domestic tariff for 2026 across Islamabad, Rawalpindi, Attock, Chakwal and Jhelum, so {{out.units|int}} units cost the same in Rawalpindi as in Lahore apart from the monthly FPA line.",
   "An unprotected IESCO consumer using {{out.units|int}} units pays {{out.rate|rs2}} on every unit, which is {{out.energy_rs|rs}} of energy charge before the fixed charge, FC surcharge, QTA and GST.",
   "A heater month of {{ex.1.out.units|int}} units in an Islamabad winter costs about {{ex.1.out.total_rs|rs}} unprotected, while the same home stays at about {{ex.0.out.total_rs|rs}} in a protected month of {{ex.0.out.units|int}} units.",
   "Protection on IESCO needs every one of the last {{d.protected_months|int}} bills at or under {{d.protected_max_units|int}} units on a connection below {{d.tou_threshold_kw|int}} kW; one winter month over the limit moves every later bill to unprotected rates until the run is rebuilt.",
-  "GST at {{out.gst_pct|int}}% is charged on the energy charge, fixed charge and surcharges together and adds {{out.gst_rs|rs}} to a {{out.units|int}} unit IESCO bill; the surcharge and GST defaults are secondary-source figures that change."
+  "GST at {{out.gst_pct|int}}% is charged on the energy charge, fixed charge and surcharges together and adds {{out.gst_rs|rs}} to a {{out.units|int}} unit IESCO bill; the surcharge and GST defaults are secondary-source figures that change.",
+  "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of {{data.tariff.addons_secondary.income_tax_235.rate_pct_non_atl|1}}% on a monthly bill of {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}} or more; consumers on the list pay none."
  ],
  "formula": {
   "text": "Bill = units × slab rate + fixed Rs/kW × sanctioned kW + (FC + QTA + FPA) × units, then + GST",
@@ -247,7 +248,7 @@
   },
   {
    "q": "What is the IESCO tariff for 2026?",
-   "a": "The uniform A-1 domestic tariff notified as SRO 279(I)/2026: lifeline slabs up to one hundred units, protected slabs up to {{d.protected_max_units|int}} units, unprotected slabs of a hundred units each up to seven hundred and an open-ended top slab. Connections of {{d.tou_threshold_kw|int}} kW and above are billed on ToU rates."
+   "a": "The uniform A-1 domestic tariff notified as SRO 279(I)/2026: lifeline slabs up to {{data.tariff.lifeline.1.upto|int}} units, protected slabs up to {{d.protected_max_units|int}} units, unprotected slabs of {{data.tariff.unprotected.0.upto|int}} units each up to {{data.tariff.unprotected.6.upto|int}} and an open-ended top slab. Connections of {{d.tou_threshold_kw|int}} kW and above are billed on ToU rates."
   },
   {
    "q": "How do I check my IESCO bill online?",
@@ -264,6 +265,10 @@
   {
    "q": "Why does my IESCO bill differ from this estimate?",
    "a": "The estimate leaves out the month's FPA unless you enter it, and it cannot see arrears, late payment surcharge, meter rent or a long reading cycle. Copy the FPA from the bill, and if the reading dates cover more than a month, run the bill audit tool."
+  },
+  {
+   "q": "Why is my real bill higher than this estimate when it is over {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}}?",
+   "a": "A bill of {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}} or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: {{data.tariff.addons_secondary.income_tax_235.rate_pct_non_atl|1}}% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
   }
  ],
  "related": [
@@ -277,7 +282,11 @@
  "literal_numbers": [
   "SRO 279(I)/2026",
   "2026",
-  "A-1"
+  "A-1",
+  "well over a hundred units",
+  "section 235",
+  "Ordinance 2001",
+  "Rs 25,000"
  ],
  "sources": [
   {
@@ -295,6 +304,10 @@
   {
    "label": "Wattlyst methodology and default values",
    "url": "/methodology/"
+  },
+  {
+   "label": "PkRevenue: income tax on domestic electricity bills of Rs 25,000 or more (section 235, FBR withholding rates)",
+   "url": "https://pkrevenue.com/domestic-electricity-consumers-to-pay-tax-on-monthly-bill-above-rs25000/"
   }
  ]
 }

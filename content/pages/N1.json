@@ -72,7 +72,7 @@
   }
  ],
  "answer": "This electricity bill overbilling check converts the units on your bill to a normal thirty-day month (units × thirty ÷ days between readings) and recomputes the slab. A bill of {{in.units|int}} units read after {{in.days|int}} days is {{out.units_30|int}} units a month; billed at the higher slab it carries about {{out.extra_rs|rs}} more in energy and fixed charge than the normal-month slab would. An estimate, not an official finding.",
- "how": "{{out.units|int}} units × {{d.days_per_month|int}} ÷ {{out.days|int}} days = {{out.units_30|int}} units in a normal month. Energy and fixed charge as billed, at the slab for {{out.units|int}} units: {{out.billed_rs|rs}}. The same {{out.units|int}} units at the slab {{out.units_30|int}} units would reach: {{out.fair_rs|rs}}. Possible extra from the long reading cycle: {{out.extra_rs|rs}} before surcharges and GST.",
+ "how": "{{out.units}} units × {{d.days_per_month|int}} ÷ {{out.days}} days = {{out.units_30|int}} units in a normal month. Energy and fixed charge as billed, at the slab for {{out.units}} units: {{out.billed_rs|rs}}. The same {{out.units}} units at the slab {{out.units_30|int}} units would reach: {{out.fair_rs|rs}}. Possible extra from the long reading cycle: {{out.extra_rs|rs}} before surcharges and GST.",
  "key_facts": [
   "A reading cycle longer than {{d.max_normal_cycle_days|int}} days can push a bill into a higher unprotected slab, and because every unit is then charged at the higher rate, the extra is not just the extra days: {{in.units|int}} units over {{in.days|int}} days carries about {{out.extra_rs|rs}} more than the same units billed at the normal-month slab.",
   "The check scales the units to a {{d.days_per_month|int}}-day month, {{out.units_30|int}} here, and compares the slab reached with the slab the bill used; a short cycle never produces an overcharge, only a long one.",
@@ -254,7 +254,9 @@
   "E5"
  ],
  "next": "F1",
- "literal_numbers": [],
+ "literal_numbers": [
+  "thirty"
+ ],
  "sources": [
   {
    "label": "NEPRA online complaint management system (register a consumer complaint)",

@@ -103,7 +103,7 @@ export function solarTracker(ctx) {
   const sys = (type, kw) => systems.find((r) => r.type === type && r.kw === kw);
   const scope = {
     checked: sp._meta.checked,
-    panel: { low: sp.panel_rs_per_w.low, high: sp.panel_rs_per_w.high, w: panelW, each_low: panelW * sp.panel_rs_per_w.low, each_high: panelW * sp.panel_rs_per_w.high, sources: sp.panel_rs_per_w.sources.length },
+    panel: { low: sp.panel_rs_per_w.low, high: sp.panel_rs_per_w.high, w: panelW, each_low: panelW * sp.panel_rs_per_w.low, each_high: panelW * sp.panel_rs_per_w.high, sources: sp.panel_rs_per_w.n_sources },
     sizes: systems.length,
     components: cp.items.length,
     history_months: hist.months.length,
@@ -123,8 +123,8 @@ export function solarTracker(ctx) {
       caption: `Solar panels, inverters and batteries: equipment prices, checked ${cp._meta.checked}`,
       head: ['Item', 'Price from', 'to', 'Unit', 'Sources'],
       rows: [
-        [`Solar panel (Tier-1 N-type), per watt`, fmt(sp.panel_rs_per_w.low, 'rs2'), fmt(sp.panel_rs_per_w.high, 'rs2'), 'per watt', fmt(sp.panel_rs_per_w.sources.length, 'int')],
-        [`Solar panel, ${fmt(panelW, 'int')} W`, fmt(panelW * sp.panel_rs_per_w.low, 'rs'), fmt(panelW * sp.panel_rs_per_w.high, 'rs'), 'per panel', fmt(sp.panel_rs_per_w.sources.length, 'int')],
+        [`Solar panel (Tier-1 N-type), per watt`, fmt(sp.panel_rs_per_w.low, 'rs2'), fmt(sp.panel_rs_per_w.high, 'rs2'), 'per watt', fmt(sp.panel_rs_per_w.n_sources, 'int')],
+        [`Solar panel, ${fmt(panelW, 'int')} W`, fmt(panelW * sp.panel_rs_per_w.low, 'rs'), fmt(panelW * sp.panel_rs_per_w.high, 'rs'), 'per panel', fmt(sp.panel_rs_per_w.n_sources, 'int')],
         ...cp.items.map((it) => [it.label, fmt(it.low, 'rs'), fmt(it.high, 'rs'), it.unit.replace(/^PKR /, ''), fmt(it.n_sources, 'int')]),
       ],
     },
@@ -136,7 +136,7 @@ export function solarTracker(ctx) {
     { name: 'Rs per watt', value: perW(r).hi, low: perW(r).lo, text: `${fmt(perW(r).lo, 'rs2')} to ${fmt(perW(r).hi, 'rs2')}` },
   ] })), 'Rs per watt');
   const csvRows = [
-    ['panel', 'per watt', '', round(sp.panel_rs_per_w.low), round(sp.panel_rs_per_w.high), round(sp.panel_rs_per_w.low), round(sp.panel_rs_per_w.high), sp.panel_rs_per_w.sources.length, sp._meta.checked],
+    ['panel', 'per watt', '', round(sp.panel_rs_per_w.low), round(sp.panel_rs_per_w.high), round(sp.panel_rs_per_w.low), round(sp.panel_rs_per_w.high), sp.panel_rs_per_w.n_sources, sp._meta.checked],
     ...systems.map((r) => [`system ${r.type}`, `${r.kw} kW`, r.kw, r.low_rs, r.high_rs, round(perW(r).lo), round(perW(r).hi), r.n_sources, sp._meta.checked]),
     ...cp.items.map((it) => [it.category, it.size, '', it.low, it.high, '', '', it.n_sources, cp._meta.checked]),
   ];

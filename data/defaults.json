@@ -3,7 +3,7 @@
   "source": "specs/formulas.md 'Global defaults' table and section notes; NEPRA Performance Standards (400/230 V, 50 Hz); rho_copper and rho_aluminium from IEC 60364-5-52 Annex G (rho1 = 1.25 x rho20 at working temperature)",
   "checked": "2026-10-14",
   "status": "Engineering defaults, every one editable on the page. Items marked engineer_confirm need PEC engineer sign-off before launch.",
-  "engineer_confirm": ["diversity_home", "heat_pump_cop", "ac_saving_per_degree", "soiling_rate_per_day", "soiling_cap", "gas_heater_eff", "gas_cv_mj_m3", "start_factors", "standard_generator_kva", "planner_day_share", "forecast_sky_bands", "rho_aluminium", "dc_ac_ratio_max", "forecast_max_day_whm2", "soiling_rate_max_per_day", "pf_by_load_type"]
+  "engineer_confirm": ["diversity_home", "heat_pump_cop", "ac_saving_per_degree", "soiling_rate_per_day", "soiling_cap", "gas_heater_eff", "gas_cv_mj_m3", "start_factors", "standard_generator_kva", "planner_day_share", "forecast_sky_bands", "rho_aluminium", "dc_ac_ratio_max", "forecast_max_day_whm2", "soiling_rate_max_per_day", "pf_by_load_type", "ac_life_years"]
  },
  "v_1ph": 230,
  "v_3ph": 400,
@@ -58,6 +58,8 @@
  "ac_inverter_avg_kw_1_5_ton": 1.0,
  "ac_noninverter_kw_1_5_ton": 1.8,
  "ac_noninverter_duty": 0.8,
+ "ac_life_years": 15,
+ "ac_life_years_source": "ASHRAE Handbook HVAC Applications, Owning and Operating Costs chapter, median service life of residential single or split package air conditioners (15 years); N10 reports no payback when the payback is longer than this (audit WL-22); engineer to confirm",
  "standard_generator_kva": [2.5, 3, 3.5, 5, 6.5, 7.5, 10, 12.5, 15, 20, 25, 30],
  "battery_v_default": 24,
  "planner_day_share": 0.5,

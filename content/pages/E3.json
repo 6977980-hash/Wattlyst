@@ -69,7 +69,7 @@
   }
  ],
  "answer": "A {{in.total_w|int}} W single-phase load at {{in.volts|int}} V draws about {{out.amps|1}} A with a {{in.pf|1}} power factor. That is {{out.total_kw|1}} kW, or {{out.load_pct|int}}% of a {{in.sanctioned_kw|int}} kW sanctioned load, so this connection is overloaded and needs a higher sanctioned load or less load running together. Amps = watts ÷ (volts × power factor).",
- "how": "{{in.total_w|int}} W ÷ ({{in.volts|int}} V × {{in.pf|2}} power factor) = {{out.amps|1}} A. {{in.total_w|int}} W ÷ 1,000 = {{out.total_kw|2}} kW. {{out.total_kw|2}} kW ÷ {{in.sanctioned_kw|int}} kW sanctioned load = {{out.load_pct|int}}% of the sanctioned load. Anything above the full sanctioned load means the connection is overloaded.",
+ "how": "{{in.total_w}} W ÷ ({{in.volts}} V × {{in.pf|2}} power factor) = {{out.amps|1}} A. {{in.total_w}} W ÷ 1,000 = {{out.total_kw|2}} kW. {{out.total_kw|2}} kW ÷ {{in.sanctioned_kw}} kW sanctioned load = {{out.load_pct|int}}% of the sanctioned load. Anything above the full sanctioned load means the connection is overloaded.",
  "key_facts": [
   "Single-phase current in amps = watts ÷ (volts × power factor); a {{in.total_kw|1}} kW mixed home load at {{d.v_1ph|int}} V and a {{d.pf_mixed|1}} power factor draws about {{out.amps|1}} A.",
   "The load check compares the total kW with the sanctioned kW on the bill: {{in.total_kw|1}} kW on a {{in.sanctioned_kw|int}} kW connection is {{out.load_pct|int}}% of the sanctioned load, so it is over the limit.",

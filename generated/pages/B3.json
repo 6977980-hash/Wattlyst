@@ -48,7 +48,7 @@
    {
     "h2": "150 Ah battery backup time",
     "p": [
-     "A 150 Ah tubular battery at 12 V holds about 765 Wh of usable energy through a UPS. That is about 3 h 50 min at 200 W (two fans and lights); at 300 W with a TV added it drops to about three quarters of the 200 Ah figure of 3 h 24 min. The 150 Ah rows in the chart give the exact hours for each load.",
+     "A 150 Ah tubular battery at 12 V holds about 765 Wh of usable energy through a UPS. That is about 3 h 49 min at 200 W (two fans and lights); at 300 W with a TV added it drops to about three quarters of the 200 Ah figure of 3 h 24 min. The 150 Ah rows in the chart give the exact hours for each load.",
      "If a 150 Ah battery is not enough, a second battery in series on a 24 V UPS doubles the energy, but you must change the bank voltage to 24 V in the calculator rather than entering the Ah twice."
     ]
    }
@@ -68,7 +68,7 @@
    },
    {
     "q": "What is the backup of a 200 Ah lithium battery?",
-    "a": "About 6 h 32 min at 300 W for a 12.8 V LiFePO4 battery, nearly double the tubular figure, because lithium can use about 90% of its capacity. Switch the battery type to lithium above to see other loads."
+    "a": "About 6 h 31 min at 300 W for a 12.8 V LiFePO4 battery, nearly double the tubular figure, because lithium can use about 90% of its capacity. Switch the battery type to lithium above to see other loads."
    },
    {
     "q": "Can a 200 Ah battery run a 1,000 W load?",
@@ -84,14 +84,14 @@
    },
    {
     "q": "What is the backup time of a 150 Ah battery?",
-    "a": "About 3 h 50 min for two fans and lights (200 W), from about 765 Wh usable. For a fan, lights and TV expect three quarters of the 3 h 24 min that a 200 Ah battery gives."
+    "a": "About 3 h 49 min for two fans and lights (200 W), from about 765 Wh usable. For a fan, lights and TV expect three quarters of the 3 h 24 min that a 200 Ah battery gives."
    }
   ],
   "key_facts": [
    "A 200 Ah, 12 V tubular battery stores about 1,020 Wh of usable energy for a UPS when used to the recommended 50% of its rating.",
    "That 1,020 Wh runs one ceiling fan (80 W) for about 12 h 45 min, two fans with lights (200 W) for about 5 h 6 min, and a 1,000 W load for only about 1 h 1 min.",
-   "A 200 Ah lithium (LiFePO4) battery at 12.8 V gives about 6 h 32 min at 300 W, almost twice the tubular figure, because it can use about 90% of its capacity.",
-   "A 150 Ah tubular battery gives three quarters of the backup of a 200 Ah battery at the same load: about 3 h 50 min at 200 W."
+   "A 200 Ah lithium (LiFePO4) battery at 12.8 V gives about 6 h 31 min at 300 W, almost twice the tubular figure, because it can use about 90% of its capacity.",
+   "A 150 Ah tubular battery gives three quarters of the backup of a 200 Ah battery at the same load: about 3 h 49 min at 200 W."
   ],
   "mistakes": [
    "Counting the full 200 Ah. A tubular battery should only be taken to about 50%; going deeper every day cuts its life to a year or two.",
@@ -210,7 +210,7 @@
     }
    ],
    "how": {
-    "tpl": "{{in.ah|int}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable × {{out.inverter_eff|pct}} inverter efficiency = {{out.usable_wh|int}} Wh usable. {{out.usable_wh|int}} Wh ÷ {{in.load_w|int}} W = {{out.hours|2}} hours, about {{out.hours|hm}}.",
+    "tpl": "{{in.ah}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable × {{out.inverter_eff|pct}} inverter efficiency = {{out.usable_wh|int}} Wh usable. {{out.usable_wh|int}} Wh ÷ {{in.load_w}} W = {{out.hours|2}} hours, about {{out.hours|hm}}.",
     "text": "200 Ah × 12 V × 50% usable × 85% inverter efficiency = 1,020 Wh usable. 1,020 Wh ÷ 300 W = 3.4 hours, about 3 h 24 min."
    },
    "submit": "Calculate",
@@ -232,11 +232,11 @@
    },
    {
     "title": "200 Ah lithium battery backup",
-    "text": "200 Ah × 12.8 V × 90% × 85% = 1,958 Wh usable. At 300 W that is about 6 h 32 min, roughly double the tubular figure for the same load in the chart."
+    "text": "200 Ah × 12.8 V × 90% × 85% = 1,958 Wh usable. At 300 W that is about 6 h 31 min, roughly double the tubular figure for the same load in the chart."
    },
    {
     "title": "150 Ah battery for two fans and lights",
-    "text": "150 Ah × 12 V × 50% × 85% = 765 Wh, ÷ 200 W = about 3 h 50 min."
+    "text": "150 Ah × 12 V × 50% × 85% = 765 Wh, ÷ 200 W = about 3 h 49 min."
    }
   ],
   "table": {
@@ -282,19 +282,19 @@
      "150 Ah",
      "80 W",
      "765 Wh",
-     "9 h 34 min"
+     "9 h 33 min"
     ],
     [
      "150 Ah",
      "200 W",
      "765 Wh",
-     "3 h 50 min"
+     "3 h 49 min"
     ],
     [
      "150 Ah",
      "500 W",
      "765 Wh",
-     "1 h 32 min"
+     "1 h 31 min"
     ]
    ]
   },
@@ -353,7 +353,10 @@
      "@id": "https://wattlyst.com/battery/200ah-battery-backup-time-calculator/#breadcrumb"
     },
     "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13"
+    "lastReviewed": "2026-10-13",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
    },
    {
     "@type": "WebApplication",
@@ -419,7 +422,7 @@
       "name": "What is the backup of a 200 Ah lithium battery?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "About 6 h 32 min at 300 W for a 12.8 V LiFePO4 battery, nearly double the tubular figure, because lithium can use about 90% of its capacity. Switch the battery type to lithium above to see other loads."
+       "text": "About 6 h 31 min at 300 W for a 12.8 V LiFePO4 battery, nearly double the tubular figure, because lithium can use about 90% of its capacity. Switch the battery type to lithium above to see other loads."
       }
      },
      {
@@ -451,7 +454,7 @@
       "name": "What is the backup time of a 150 Ah battery?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "About 3 h 50 min for two fans and lights (200 W), from about 765 Wh usable. For a fan, lights and TV expect three quarters of the 3 h 24 min that a 200 Ah battery gives."
+       "text": "About 3 h 49 min for two fans and lights (200 W), from about 765 Wh usable. For a fan, lights and TV expect three quarters of the 3 h 24 min that a 200 Ah battery gives."
       }
      }
     ]

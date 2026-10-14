@@ -72,7 +72,7 @@
    },
    {
     "q": "What is the IESCO tariff for 2026?",
-    "a": "The uniform A-1 domestic tariff notified as SRO 279(I)/2026: lifeline slabs up to one hundred units, protected slabs up to 200 units, unprotected slabs of a hundred units each up to seven hundred and an open-ended top slab. Connections of 5 kW and above are billed on ToU rates."
+    "a": "The uniform A-1 domestic tariff notified as SRO 279(I)/2026: lifeline slabs up to 100 units, protected slabs up to 200 units, unprotected slabs of 100 units each up to 700 and an open-ended top slab. Connections of 5 kW and above are billed on ToU rates."
    },
    {
     "q": "How do I check my IESCO bill online?",
@@ -89,6 +89,10 @@
    {
     "q": "Why does my IESCO bill differ from this estimate?",
     "a": "The estimate leaves out the month's FPA unless you enter it, and it cannot see arrears, late payment surcharge, meter rent or a long reading cycle. Copy the FPA from the bill, and if the reading dates cover more than a month, run the bill audit tool."
+   },
+   {
+    "q": "Why is my real bill higher than this estimate when it is over Rs 25,000?",
+    "a": "A bill of Rs 25,000 or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: 7.5% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
    }
   ],
   "key_facts": [
@@ -96,7 +100,8 @@
    "An unprotected IESCO consumer using 300 units pays Rs 33.10 on every unit, which is Rs 9,930 of energy charge before the fixed charge, FC surcharge, QTA and GST.",
    "A heater month of 450 units in an Islamabad winter costs about Rs 23,263 unprotected, while the same home stays at about Rs 3,622 in a protected month of 180 units.",
    "Protection on IESCO needs every one of the last 6 bills at or under 200 units on a connection below 5 kW; one winter month over the limit moves every later bill to unprotected rates until the run is rebuilt.",
-   "GST at 18% is charged on the energy charge, fixed charge and surcharges together and adds Rs 2,053 to a 300 unit IESCO bill; the surcharge and GST defaults are secondary-source figures that change."
+   "GST at 18% is charged on the energy charge, fixed charge and surcharges together and adds Rs 2,053 to a 300 unit IESCO bill; the surcharge and GST defaults are secondary-source figures that change.",
+   "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of 7.5% on a monthly bill of Rs 25,000 or more; consumers on the list pay none."
   ],
   "mistakes": [
    "Searching for a separate IESCO tariff. IESCO bills the uniform NEPRA domestic slabs; the only line that is IESCO's own month to month is the FPA.",
@@ -120,6 +125,10 @@
    {
     "label": "Wattlyst methodology and default values",
     "url": "/methodology/"
+   },
+   {
+    "label": "PkRevenue: income tax on domestic electricity bills of Rs 25,000 or more (section 235, FBR withholding rates)",
+    "url": "https://pkrevenue.com/domestic-electricity-consumers-to-pay-tax-on-monthly-bill-above-rs25000/"
    }
   ],
   "tool": {
@@ -253,7 +262,7 @@
     }
    ],
    "how": {
-    "tpl": "{{out.units|int}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw|int}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct|int}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
+    "tpl": "{{out.units}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
     "text": "300 units × Rs 33.10 (unprotected slab rate) = Rs 9,930. Fixed charge for 1 kW = Rs 350. FC surcharge Rs 969 + QTA Rs 156 + FPA Rs 0. Subtotal Rs 11,405 + GST 18% (Rs 2,053) = Rs 13,458."
    },
    "submit": "Calculate",
@@ -406,7 +415,10 @@
      "@id": "https://wattlyst.com/bill/iesco-bill-calculator/#breadcrumb"
     },
     "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13"
+    "lastReviewed": "2026-10-13",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
    },
    {
     "@type": "WebApplication",
@@ -464,7 +476,7 @@
       "name": "What is the IESCO tariff for 2026?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "The uniform A-1 domestic tariff notified as SRO 279(I)/2026: lifeline slabs up to one hundred units, protected slabs up to 200 units, unprotected slabs of a hundred units each up to seven hundred and an open-ended top slab. Connections of 5 kW and above are billed on ToU rates."
+       "text": "The uniform A-1 domestic tariff notified as SRO 279(I)/2026: lifeline slabs up to 100 units, protected slabs up to 200 units, unprotected slabs of 100 units each up to 700 and an open-ended top slab. Connections of 5 kW and above are billed on ToU rates."
       }
      },
      {
@@ -497,6 +509,14 @@
       "acceptedAnswer": {
        "@type": "Answer",
        "text": "The estimate leaves out the month's FPA unless you enter it, and it cannot see arrears, late payment surcharge, meter rent or a long reading cycle. Copy the FPA from the bill, and if the reading dates cover more than a month, run the bill audit tool."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Why is my real bill higher than this estimate when it is over Rs 25,000?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "A bill of Rs 25,000 or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: 7.5% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
       }
      }
     ]

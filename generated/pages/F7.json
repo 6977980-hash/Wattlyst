@@ -96,6 +96,10 @@
    {
     "q": "Does a winter heater make a PESCO home unprotected?",
     "a": "It can. Protection needs all of the last 6 bills at or under 200 units. A fan heater of about 2,000 W run a few hours a day adds well over a hundred units a month, enough to cross the limit on its own."
+   },
+   {
+    "q": "Why is my real bill higher than this estimate when it is over Rs 25,000?",
+    "a": "A bill of Rs 25,000 or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: 7.5% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
    }
   ],
   "key_facts": [
@@ -103,7 +107,8 @@
    "An unprotected PESCO consumer using 300 units pays Rs 33.10 on every unit, which is Rs 9,930 of energy charge before the fixed charge, FC surcharge, QTA and GST.",
    "The QTA changes by quarter: the same 300 units come to about Rs 13,458 in the September to November quarter and about Rs 12,571 in the June to August quarter, when the adjustment was a credit.",
    "A Khyber Pakhtunkhwa winter month of 480 units with a fan heater and an electric geyser costs about Rs 25,365 unprotected, against about Rs 3,195 for a protected spring month of 160 units.",
-   "Protection on PESCO needs every one of the last 6 bills at or under 200 units on a connection below 5 kW; one heater month over the limit ends it for the next 6 bills."
+   "Protection on PESCO needs every one of the last 6 bills at or under 200 units on a connection below 5 kW; one heater month over the limit ends it for the next 6 bills.",
+   "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of 7.5% on a monthly bill of Rs 25,000 or more; consumers on the list pay none."
   ],
   "mistakes": [
    "Looking for a PESCO tariff of its own. PESCO bills the uniform NEPRA domestic slabs; the QTA and FPA lines are the parts that move from quarter to quarter and month to month.",
@@ -127,6 +132,10 @@
    {
     "label": "Wattlyst methodology and default values",
     "url": "/methodology/"
+   },
+   {
+    "label": "PkRevenue: income tax on domestic electricity bills of Rs 25,000 or more (section 235, FBR withholding rates)",
+    "url": "https://pkrevenue.com/domestic-electricity-consumers-to-pay-tax-on-monthly-bill-above-rs25000/"
    }
   ],
   "tool": {
@@ -268,7 +277,7 @@
     }
    ],
    "how": {
-    "tpl": "{{out.units|int}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw|int}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct|int}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
+    "tpl": "{{out.units}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
     "text": "300 units × Rs 33.10 (unprotected slab rate) = Rs 9,930. Fixed charge for 1 kW = Rs 350. FC surcharge Rs 969 + QTA Rs 156 + FPA Rs 0. Subtotal Rs 11,405 + GST 18% (Rs 2,053) = Rs 13,458."
    },
    "submit": "Calculate",
@@ -425,7 +434,10 @@
      "@id": "https://wattlyst.com/bill/pesco-bill-calculator/#breadcrumb"
     },
     "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13"
+    "lastReviewed": "2026-10-13",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
    },
    {
     "@type": "WebApplication",
@@ -516,6 +528,14 @@
       "acceptedAnswer": {
        "@type": "Answer",
        "text": "It can. Protection needs all of the last 6 bills at or under 200 units. A fan heater of about 2,000 W run a few hours a day adds well over a hundred units a month, enough to cross the limit on its own."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Why is my real bill higher than this estimate when it is over Rs 25,000?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "A bill of Rs 25,000 or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: 7.5% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
       }
      }
     ]

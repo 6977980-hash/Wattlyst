@@ -64,7 +64,7 @@
    {
     "h2": "What solar inverter for an AC?",
     "p": [
-     "The inverter needs a continuous rating of at least the AC's running watts × 1.25 (1.81 kW) and at least the panel kW ÷ 1.3 (1.8 kW), because an inverter accepts panels only up to about 1.3 times its rating: 1.81 kW for a 1.5 ton inverter AC. Its surge rating must cover the AC's starting watts: 1,900 W for the inverter model, but 5,400 W for the non-inverter 1.5 ton, which is why a non-inverter AC usually needs a three to five kW hybrid inverter.",
+     "The inverter needs a continuous rating of at least the AC's running watts × 1.25 (1.81 kW) and at least the panel kW ÷ 1.3 (1.8 kW), because an inverter accepts panels only up to about 1.3 times its rating: 1.82 kW for a 1.5 ton inverter AC. Its surge rating must cover the AC's starting watts: 1,900 W for the inverter model, but 5,400 W for the non-inverter 1.5 ton, which is why a non-inverter AC usually needs a three to five kW hybrid inverter.",
      "Buy the inverter for the whole house, not just the AC: add fans, lights and the fridge with the inverter size calculator. A hybrid inverter also lets you add a battery later without changing the panels."
     ]
    },
@@ -94,7 +94,7 @@
    },
    {
     "q": "What size solar inverter do I need for an AC?",
-    "a": "Continuous rating of at least the AC's running watts × 1.25 and at least the panel kW ÷ 1.3, which is 1.81 kW for a 1.5 ton inverter AC, and a surge rating above the AC's starting watts (1,900 W inverter, 5,400 W non-inverter 1.5 ton). Size it for the whole house with the inverter size calculator."
+    "a": "Continuous rating of at least the AC's running watts × 1.25 and at least the panel kW ÷ 1.3, which is 1.82 kW for a 1.5 ton inverter AC, and a surge rating above the AC's starting watts (1,900 W inverter, 5,400 W non-inverter 1.5 ton). Size it for the whole house with the inverter size calculator."
    },
    {
     "q": "How much does a solar AC system cost in Pakistan?",
@@ -334,10 +334,10 @@
     {
      "key": "inverter_kw",
      "label": "Inverter size",
-     "spec": "2",
+     "spec": "up2",
      "unit": "kW",
      "label_ur": "Inverter ka size",
-     "value": "1.81"
+     "value": "1.82"
     },
     {
      "key": "daily_kwh",
@@ -349,8 +349,8 @@
     }
    ],
    "how": {
-    "tpl": "{{out.ac_name}} draws about {{out.ac_avg_w|int}} W on average, so {{in.hours|int}} hours a day = {{out.daily_kwh|1}} units. Energy: {{out.daily_kwh|1}} units ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW per day in your city = {{out.kw_energy|2}} kW. Power: the panels must also carry the AC's running {{out.running_w|int}} W at midday, {{out.running_w|int}} W ÷ {{out.pr|2}} performance ratio = {{out.kw_power|2}} kW. The larger, {{out.kw|2}} kW, ÷ {{out.panel_w|int}} W per panel, rounded up = {{out.panels|int}} panels, {{out.installed_kw|2}} kW installed (about {{out.roof_m2|1}} m² of roof). Inverter: the larger of {{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_kw_load|2}} kW for the load and {{out.installed_kw|2}} kW of panels ÷ {{out.dc_ac_ratio_max|1}} = {{out.inverter_kw_array|2}} kW, so the panels are never more than {{out.dc_ac_ratio_max|1}} times the inverter: {{out.inverter_kw|2}} kW continuous, with a surge rating of at least {{out.inverter_surge_w|int}} W.",
-    "text": "Split AC 1.5 ton inverter draws about 1,000 W on average, so 8 hours a day = 8 units. Energy: 8 units ÷ 4 units per kW per day in your city = 2 kW. Power: the panels must also carry the AC's running 1,450 W at midday, 1,450 W ÷ 0.78 performance ratio = 1.86 kW. The larger, 2 kW, ÷ 585 W per panel, rounded up = 4 panels, 2.34 kW installed (about 10.4 m² of roof). Inverter: the larger of 1,450 W × 1.25 = 1.81 kW for the load and 2.34 kW of panels ÷ 1.3 = 1.8 kW, so the panels are never more than 1.3 times the inverter: 1.81 kW continuous, with a surge rating of at least 1,900 W."
+    "tpl": "{{out.ac_name}} draws about {{out.ac_avg_w|int}} W on average, so {{in.hours}} hours a day = {{out.daily_kwh|1}} units. Energy: {{out.daily_kwh|1}} units ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW per day in your city = {{out.kw_energy|2}} kW. Power: the panels must also carry the AC's running {{out.running_w|int}} W at midday, {{out.running_w|int}} W ÷ {{out.pr|2}} performance ratio = {{out.kw_power|2}} kW. The larger, {{out.kw|2}} kW, ÷ {{out.panel_w}} W per panel, rounded up = {{out.panels|int}} panels, {{out.installed_kw|2}} kW installed (about {{out.roof_m2|1}} m² of roof). Inverter: the larger of {{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_kw_load|2}} kW for the load and {{out.installed_kw|2}} kW of panels ÷ {{out.dc_ac_ratio_max|1}} = {{out.inverter_kw_array|2}} kW, so the panels are never more than {{out.dc_ac_ratio_max|1}} times the inverter: {{out.inverter_kw|up2}} kW continuous, with a surge rating of at least {{out.inverter_surge_w|int}} W.",
+    "text": "Split AC 1.5 ton inverter draws about 1,000 W on average, so 8 hours a day = 8 units. Energy: 8 units ÷ 4 units per kW per day in your city = 2 kW. Power: the panels must also carry the AC's running 1,450 W at midday, 1,450 W ÷ 0.78 performance ratio = 1.86 kW. The larger, 2 kW, ÷ 585 W per panel, rounded up = 4 panels, 2.34 kW installed (about 10.4 m² of roof). Inverter: the larger of 1,450 W × 1.25 = 1.81 kW for the load and 2.34 kW of panels ÷ 1.3 = 1.8 kW, so the panels are never more than 1.3 times the inverter: 1.82 kW continuous, with a surge rating of at least 1,900 W."
    },
    "submit": "Calculate",
    "notice": "",
@@ -370,7 +370,7 @@
   "examples": [
    {
     "title": "1.5 ton inverter AC in Lahore, 8 hours a day, daytime only",
-    "text": "Split AC 1.5 ton inverter: 1,000 W average × 8 h = 8 units a day. 8 ÷ 4 = 2 kW for energy; 1,450 W ÷ 0.78 = 1.86 kW for midday power. Result: 4 panels of 585 W (2.34 kW), a 1.81 kW inverter, no battery."
+    "text": "Split AC 1.5 ton inverter: 1,000 W average × 8 h = 8 units a day. 8 ÷ 4 = 2 kW for energy; 1,450 W ÷ 0.78 = 1.86 kW for midday power. Result: 4 panels of 585 W (2.34 kW), a 1.82 kW inverter, no battery."
    },
    {
     "title": "1 ton inverter AC in Karachi",
@@ -382,7 +382,7 @@
    },
    {
     "title": "1.5 ton inverter AC with 5 hours on battery after sunset",
-    "text": "Daytime: 4 panels (2.34 kW) and a 1.81 kW inverter as above. Night: 1,450 W × 5 h = 7.3 units, ÷ (24 V × 90% usable × hybrid inverter efficiency) = 373 Ah of lithium battery at 24 V, about 9 kWh. The panels are not enlarged for the night energy here; add it with the solar system from loads calculator if the battery must recharge from solar alone."
+    "text": "Daytime: 4 panels (2.34 kW) and a 1.82 kW inverter as above. Night: 1,450 W × 5 h = 7.3 units, ÷ (24 V × 90% usable × hybrid inverter efficiency) = 373 Ah of lithium battery at 24 V, about 9 kWh. The panels are not enlarged for the night energy here; add it with the solar system from loads calculator if the battery must recharge from solar alone."
    }
   ],
   "table": {
@@ -414,7 +414,7 @@
      "8",
      "4 × 585 W",
      "2.34 kW",
-     "1.81 kW, surge 1,900 W"
+     "1.82 kW, surge 1,900 W"
     ],
     [
      "Split AC 1.5 ton non-inverter",
@@ -439,7 +439,7 @@
     ]
    ]
   },
-  "answer": "A 1.5 ton inverter AC running 8 hours a day in Lahore needs 4 solar panels of 585 W (2.34 kW installed) and a 1.81 kW inverter, with no battery for daytime use. It uses about 8 units a day, and each kW of panels in Lahore makes about 4 units a day.",
+  "answer": "A 1.5 ton inverter AC running 8 hours a day in Lahore needs 4 solar panels of 585 W (2.34 kW installed) and a 1.82 kW inverter, with no battery for daytime use. It uses about 8 units a day, and each kW of panels in Lahore makes about 4 units a day.",
   "formula": {
    "text": "E = W_avg × h ÷ 1000; kW = max(E ÷ yield, P_run ÷ 1000 ÷ PR); panels = ceil(kW × 1000 ÷ W_panel)",
    "lines": [
@@ -495,7 +495,10 @@
      "@id": "https://wattlyst.com/solar/solar-panels-to-run-ac/#breadcrumb"
     },
     "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13"
+    "lastReviewed": "2026-10-13",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
    },
    {
     "@type": "WebApplication",
@@ -569,7 +572,7 @@
       "name": "What size solar inverter do I need for an AC?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Continuous rating of at least the AC's running watts × 1.25 and at least the panel kW ÷ 1.3, which is 1.81 kW for a 1.5 ton inverter AC, and a surge rating above the AC's starting watts (1,900 W inverter, 5,400 W non-inverter 1.5 ton). Size it for the whole house with the inverter size calculator."
+       "text": "Continuous rating of at least the AC's running watts × 1.25 and at least the panel kW ÷ 1.3, which is 1.82 kW for a 1.5 ton inverter AC, and a surge rating above the AC's starting watts (1,900 W inverter, 5,400 W non-inverter 1.5 ton). Size it for the whole house with the inverter size calculator."
       }
      },
      {

@@ -210,7 +210,7 @@
     }
    ],
    "how": {
-    "tpl": "Inverter AC: {{out.q_kw|1}} kW of heat ÷ COP {{out.cop|1}} = electricity drawn per hour, × {{out.tariff|rs2}} per unit = {{out.ac_rs_per_h|rs}} an hour. Electric heater: every unit becomes one unit of heat, so {{out.q_kw|1}} kW × {{out.tariff|rs2}} = {{out.heater_rs_per_h|rs}} an hour. Gas price: {{out.gas_price_mmbtu|rs}} per MMBtu on the bill × {{out.cv_mj_m3|int}} MJ per m³ ÷ {{d.mj_per_mmbtu|int}} MJ per MMBtu = {{out.gas_price|rs}} per m³. Gas heater: {{out.q_kw|1}} kW ÷ {{out.eta_gas|pct}} efficiency × 3.6 MJ per kWh ÷ {{out.cv_mj_m3|int}} MJ per m³ = {{out.gas_m3_per_h|2}} m³ an hour, × {{out.gas_price|rs}} = {{out.gas_rs_per_h|rs}} an hour.",
+    "tpl": "Inverter AC: {{out.q_kw|1}} kW of heat ÷ COP {{out.cop|1}} = electricity drawn per hour, × {{out.tariff|rs2}} per unit = {{out.ac_rs_per_h|rs}} an hour. Electric heater: every unit becomes one unit of heat, so {{out.q_kw|1}} kW × {{out.tariff|rs2}} = {{out.heater_rs_per_h|rs}} an hour. Gas price: {{out.gas_price_mmbtu|rs}} per MMBtu on the bill × {{out.cv_mj_m3}} MJ per m³ ÷ {{d.mj_per_mmbtu|int}} MJ per MMBtu = {{out.gas_price|rs}} per m³. Gas heater: {{out.q_kw|1}} kW ÷ {{out.eta_gas|pct}} efficiency × 3.6 MJ per kWh ÷ {{out.cv_mj_m3}} MJ per m³ = {{out.gas_m3_per_h|2}} m³ an hour, × {{out.gas_price|rs}} = {{out.gas_rs_per_h|rs}} an hour.",
     "text": "Inverter AC: 2 kW of heat ÷ COP 3 = electricity drawn per hour, × Rs 36.46 per unit = Rs 24 an hour. Electric heater: every unit becomes one unit of heat, so 2 kW × Rs 36.46 = Rs 73 an hour. Gas price: Rs 1,250 per MMBtu on the bill × 37 MJ per m³ ÷ 1,055 MJ per MMBtu = Rs 44 per m³. Gas heater: 2 kW ÷ 80% efficiency × 3.6 MJ per kWh ÷ 37 MJ per m³ = 0.24 m³ an hour, × Rs 44 = Rs 11 an hour."
    },
    "submit": "Calculate",
@@ -351,7 +351,10 @@
      "@id": "https://wattlyst.com/load/winter-heating-cost-calculator/#breadcrumb"
     },
     "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13"
+    "lastReviewed": "2026-10-13",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
    },
    {
     "@type": "WebApplication",

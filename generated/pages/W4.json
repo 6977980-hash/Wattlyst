@@ -254,7 +254,7 @@
     }
    ],
    "how": {
-    "tpl": "The current flows out along the positive and back along the negative, so the cable length counts twice: {{d.rho_copper|4}} Ω·mm²/m copper resistivity × two × {{in.length_m|int}} m × {{in.amps|int}} A ÷ {{in.area_mm2|int}} mm² = {{out.drop_v|1}} V lost. {{out.drop_v|1}} V ÷ {{in.volts|int}} V string voltage = {{out.drop_pct|2}}%, against the {{out.limit_pct|int}}% limit you chose, leaving {{out.voltage_at_load|int}} V at the inverter. If the drop is above the limit, pick the next cable size and check again.",
+    "tpl": "The current flows out along the positive and back along the negative, so the cable length counts twice: {{out.rho|4}} Ω·mm²/m copper resistivity × two × {{in.length_m}} m × {{in.amps}} A ÷ {{in.area_mm2}} mm² = {{out.drop_v|1}} V lost. {{out.drop_v|1}} V ÷ {{in.volts}} V string voltage = {{out.drop_pct|2}}%, against the {{out.limit_pct|int}}% limit you chose, leaving {{out.voltage_at_load|int}} V at the inverter. If the drop is above the limit, pick the next cable size and check again.",
     "text": "The current flows out along the positive and back along the negative, so the cable length counts twice: 0.0225 Ω·mm²/m copper resistivity × two × 25 m × 14 A ÷ 4 mm² = 3.9 V lost. 3.9 V ÷ 420 V string voltage = 0.94%, against the 3% limit you chose, leaving 416 V at the inverter. If the drop is above the limit, pick the next cable size and check again."
    },
    "submit": "Calculate",
@@ -412,7 +412,10 @@
      "@id": "https://wattlyst.com/wiring/solar-cable-size-calculator/#breadcrumb"
     },
     "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13"
+    "lastReviewed": "2026-10-13",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
    },
    {
     "@type": "WebApplication",

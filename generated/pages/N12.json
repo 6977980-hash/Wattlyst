@@ -207,7 +207,7 @@
     }
    ],
    "how": {
-    "tpl": "Dust share: {{out.rate|pct}} a day × {{out.days|int}} days = {{out.soiling|pct}} (never more than {{d.soiling_cap|pct}}, where dust stops building up much). Units lost: {{out.kwp|1}} kW × {{out.yield|1}} units per kW a day × {{out.soiling|pct}} = {{out.loss_kwh_day|1}} units a day. Money lost: {{out.loss_kwh_day|1}} × {{out.tariff|rs2}} = {{out.rs_lost_day|rs}} a day. Cleaning pays when the money lost since the last cleaning, added up day by day, passes the cost of one cleaning.",
+    "tpl": "Dust share: {{out.rate|pct}} a day × {{out.days}} days = {{out.soiling|pct}} (never more than {{d.soiling_cap|pct}}, where dust stops building up much). Units lost: {{out.kwp|1}} kW × {{out.yield|1}} units per kW a day × {{out.soiling|pct}} = {{out.loss_kwh_day|1}} units a day. Money lost: {{out.loss_kwh_day|1}} × {{out.tariff|rs2}} = {{out.rs_lost_day|rs}} a day. Cleaning pays when the money lost since the last cleaning, added up day by day, passes the cost of one cleaning.",
     "text": "Dust share: 0.3% a day × 30 days = 9% (never more than 25%, where dust stops building up much). Units lost: 10 kW × 4 units per kW a day × 9% = 3.6 units a day. Money lost: 3.6 × Rs 36.46 = Rs 131 a day. Cleaning pays when the money lost since the last cleaning, added up day by day, passes the cost of one cleaning."
    },
    "submit": "Calculate",
@@ -339,7 +339,10 @@
      "@id": "https://wattlyst.com/solar/solar-panel-cleaning-loss-calculator/#breadcrumb"
     },
     "dateModified": "2026-10-14",
-    "lastReviewed": "2026-10-14"
+    "lastReviewed": "2026-10-14",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
    },
    {
     "@type": "WebApplication",

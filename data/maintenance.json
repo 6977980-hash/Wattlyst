@@ -5,6 +5,8 @@
   "use": "Thresholds for the upkeep report tools/maintenance.js. It only reports; it never fails the build or tests."
  },
  "data_max_age_days": 35,
+ "price_point_max_age_days": 120,
+ "price_point_max_age_note": "data/solar-prices.json: a price point whose price_date is older than this (counted from the file's checked date) is moved to excluded_points and no longer used; the report lists points older than data_max_age_days as due for a fresher source (audit WL-15). tests/calc-text.test.js enforces it.",
  "page_review_days": 90,
  "thin_page_words": 600,
  "refresh_position_min": 8,

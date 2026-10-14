@@ -294,7 +294,7 @@
     }
    ],
    "how": {
-    "tpl": "{{out.items|int}} appliance(s) running {{out.running_w|int}} W together. Running watts × the compressor hours a day you entered ÷ one thousand = {{out.daily_kwh|2}} units a day; × {{out.days|int}} days = {{out.monthly_units|1}} units a month; × {{out.tariff|rs2}} per unit = {{out.monthly_rs|rs}} for the energy charge, before fixed charges, surcharges and tax. Starting surge of the largest compressor: {{out.peak_w|int}} W in total for a moment, {{out.peak_amps|1}} A.",
+    "tpl": "{{out.items|int}} appliance(s) running {{out.running_w|int}} W together. Running watts × the compressor hours a day you entered ÷ one thousand = {{out.daily_kwh|2}} units a day; × {{out.days}} days = {{out.monthly_units|1}} units a month; × {{out.tariff|rs2}} per unit = {{out.monthly_rs|rs}} for the energy charge, before fixed charges, surcharges and tax. Starting surge of the largest compressor: {{out.peak_w|int}} W in total for a moment, {{out.peak_amps|1}} A.",
     "text": "1 appliance(s) running 200 W together. Running watts × the compressor hours a day you entered ÷ one thousand = 1.6 units a day; × 30 days = 48 units a month; × Rs 36.46 per unit = Rs 1,750 for the energy charge, before fixed charges, surcharges and tax. Starting surge of the largest compressor: 1,200 W in total for a moment, 6.5 A."
    },
    "submit": "Calculate",
@@ -439,7 +439,10 @@
      "@id": "https://wattlyst.com/appliances/refrigerator/#breadcrumb"
     },
     "dateModified": "2026-10-14",
-    "lastReviewed": "2026-10-14"
+    "lastReviewed": "2026-10-14",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
    },
    {
     "@type": "WebApplication",

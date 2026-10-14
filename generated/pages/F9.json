@@ -79,7 +79,7 @@
    },
    {
     "q": "What is the SEPCO tariff for 2026?",
-    "a": "The uniform A-1 domestic tariff notified as SRO 279(I)/2026: two lifeline slabs up to one hundred units, two protected slabs up to 200 units, unprotected slabs of a hundred units each up to seven hundred and an open-ended slab above, each with its own fixed charge per kW. Connections of 5 kW and above are billed on ToU rates."
+    "a": "The uniform A-1 domestic tariff notified as SRO 279(I)/2026: two lifeline slabs up to 100 units, two protected slabs up to 200 units, unprotected slabs of 100 units each up to 700 and an open-ended slab above, each with its own fixed charge per kW. Connections of 5 kW and above are billed on ToU rates."
    },
    {
     "q": "Is SEPCO part of HESCO?",
@@ -92,13 +92,18 @@
    {
     "q": "Why is my SEPCO bill higher than the estimate here?",
     "a": "The usual reasons are the month's FPA, arrears or a late-payment surcharge, or a bill covering more than a month of readings. Add the FPA in the advanced fields; for a long reading period use the overbilling check linked below."
+   },
+   {
+    "q": "Why is my real bill higher than this estimate when it is over Rs 25,000?",
+    "a": "A bill of Rs 25,000 or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: 7.5% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
    }
   ],
   "key_facts": [
    "SEPCO, the Sukkur Electric Power Company Limited, bills the uniform NEPRA A-1 domestic tariff for 2026 from its head office at the old thermal power station in Sukkur; it has no slab rates of its own.",
    "The SEPCO per unit rate for an unprotected home using 400 units is Rs 36.46 on every unit, giving Rs 14,584 in energy charges before the fixed charge, surcharges and GST.",
    "The fixed charge on a SEPCO bill is Rs per kW of sanctioned load, set by the slab reached: a 2 kW connection using 400 units pays Rs 800, and the per-kW figure rises with every slab.",
-   "A SEPCO consumer is protected only while all of the last 6 bills are at or under 200 units on a connection below 5 kW; the first summer month above the limit moves every unit to unprotected rates."
+   "A SEPCO consumer is protected only while all of the last 6 bills are at or under 200 units on a connection below 5 kW; the first summer month above the limit moves every unit to unprotected rates.",
+   "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of 7.5% on a monthly bill of Rs 25,000 or more; consumers on the list pay none."
   ],
   "mistakes": [
    "Expecting a separate SEPCO tariff. SEPCO bills the uniform NEPRA domestic slabs; only the company name and the FPA line differ from the HESCO bill next door.",
@@ -118,6 +123,10 @@
    {
     "label": "Wattlyst methodology and default values",
     "url": "/methodology/"
+   },
+   {
+    "label": "PkRevenue: income tax on domestic electricity bills of Rs 25,000 or more (section 235, FBR withholding rates)",
+    "url": "https://pkrevenue.com/domestic-electricity-consumers-to-pay-tax-on-monthly-bill-above-rs25000/"
    }
   ],
   "tool": {
@@ -251,7 +260,7 @@
     }
    ],
    "how": {
-    "tpl": "{{out.units|int}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw|int}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct|int}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
+    "tpl": "{{out.units}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
     "text": "400 units × Rs 36.46 (unprotected slab rate) = Rs 14,584. Fixed charge for 2 kW = Rs 800. FC surcharge Rs 1,292 + QTA Rs 208 + FPA Rs 0. Subtotal Rs 16,884 + GST 18% (Rs 3,039) = Rs 19,923."
    },
    "submit": "Calculate",
@@ -403,7 +412,10 @@
      "@id": "https://wattlyst.com/bill/sepco-bill-calculator/#breadcrumb"
     },
     "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13"
+    "lastReviewed": "2026-10-13",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
    },
    {
     "@type": "WebApplication",
@@ -461,7 +473,7 @@
       "name": "What is the SEPCO tariff for 2026?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "The uniform A-1 domestic tariff notified as SRO 279(I)/2026: two lifeline slabs up to one hundred units, two protected slabs up to 200 units, unprotected slabs of a hundred units each up to seven hundred and an open-ended slab above, each with its own fixed charge per kW. Connections of 5 kW and above are billed on ToU rates."
+       "text": "The uniform A-1 domestic tariff notified as SRO 279(I)/2026: two lifeline slabs up to 100 units, two protected slabs up to 200 units, unprotected slabs of 100 units each up to 700 and an open-ended slab above, each with its own fixed charge per kW. Connections of 5 kW and above are billed on ToU rates."
       }
      },
      {
@@ -486,6 +498,14 @@
       "acceptedAnswer": {
        "@type": "Answer",
        "text": "The usual reasons are the month's FPA, arrears or a late-payment surcharge, or a bill covering more than a month of readings. Add the FPA in the advanced fields; for a long reading period use the overbilling check linked below."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Why is my real bill higher than this estimate when it is over Rs 25,000?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "A bill of Rs 25,000 or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: 7.5% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
       }
      }
     ]

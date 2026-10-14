@@ -3,8 +3,9 @@ import { calculator, CalcError, has, pos, num, pick, dflt } from './core.js';
 
 /**
  * Typical installed price range (Rs per W) for a system type and size from data/solar-prices.json:
- * the listed size's low/high ÷ (kW × 1000); between two listed sizes the Rs/W of each end interpolated
- * linearly by kW; below the smallest or above the largest listed size the nearest end's Rs/W.
+ * the listed size's low/high ÷ (kW × 1000); between two listed sizes the total price (low and high) is
+ * interpolated linearly by kW and divided by the watts, so the price never falls as the size rises when the
+ * listed sizes do not (audit WL-11); below the smallest or above the largest listed size the nearest end's Rs/W.
  */
 function priceRange(d, type, kwp) {
   const rows = (d?.solar_prices?.systems || []).filter((r) => r.type === type && r.kw > 0).sort((a, b) => a.kw - b.kw);
@@ -20,9 +21,8 @@ function priceRange(d, type, kwp) {
   const a = rows.filter((r) => r.kw < kwp).pop();
   const b = rows.find((r) => r.kw > kwp);
   const t = (kwp - a.kw) / (b.kw - a.kw);
-  const pa = perW(a);
-  const pb = perW(b);
-  return { lo: pa.lo + (pb.lo - pa.lo) * t, hi: pa.hi + (pb.hi - pa.hi) * t, range_between_kw: [a.kw, b.kw], ...weak(a, b) };
+  const w = kwp * 1000;
+  return { lo: (a.low_rs + (b.low_rs - a.low_rs) * t) / w, hi: (a.high_rs + (b.high_rs - a.high_rs) * t) / w, range_between_kw: [a.kw, b.kw], ...weak(a, b) };
 }
 
 /**
@@ -62,7 +62,7 @@ export const solar_price_estimate = calculator((i, d) => {
   const kwp = pos(i, 'kwp');
   const type = pick(i, 'type', ['on-grid', 'hybrid'], 'on-grid');
   const r = priceRange(d, type, kwp);
-  const out = { kwp, type, rs_per_w_low: r.lo, rs_per_w_high: r.hi, price_low_rs: r.lo * kwp * 1000, price_high_rs: r.hi * kwp * 1000, price_mid_rs: ((r.lo + r.hi) / 2) * kwp * 1000 };
+  const out = { kwp, type, system_w: kwp * 1000, rs_per_w_low: r.lo, rs_per_w_high: r.hi, price_low_rs: r.lo * kwp * 1000, price_high_rs: r.hi * kwp * 1000, price_mid_rs: ((r.lo + r.hi) / 2) * kwp * 1000 };
   if (r.range_kw_used !== undefined) out.range_kw_used = r.range_kw_used; else out.range_between_kw = r.range_between_kw;
   out.low_confidence = r.low_confidence;
   const panel = d?.solar_prices?.panel_rs_per_w;

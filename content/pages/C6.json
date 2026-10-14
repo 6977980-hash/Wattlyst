@@ -65,7 +65,7 @@
   {
    "key": "recommended_kva",
    "label": "Calculated minimum",
-   "spec": "2",
+   "spec": "up2",
    "unit": "kVA"
   },
   {
@@ -81,8 +81,8 @@
    "unit": "W"
   }
  ],
- "answer": "A 1.5 ton inverter AC with {{in.other_w|int}} W of fans and lights needs a {{out.standard_kva|1}} kVA generator: {{out.running_w|int}} W running, {{out.peak_w|int}} W while the compressor starts, {{out.recommended_kva|2}} kVA calculated. A 1.5 ton non-inverter AC with the same load needs {{ex.1.out.standard_kva|1}} kVA because its compressor starts at {{ex.1.out.ac_start_w|int}} W. Generator kVA = max(running watts × margin, starting watts) ÷ power factor ÷ 1,000.",
- "how": "{{out.ac_name}}: {{out.ac_run_w|int}} W running, {{out.ac_start_w|int}} W starting (its maximum input). Other load {{out.other_w|int}} W. Total {{out.running_w|int}} W running and {{out.peak_w|int}} W at the moment the AC starts. The larger of {{out.running_w|int}} W × {{out.margin|2}} margin and {{out.peak_w|int}} W is {{out.sized_w|int}} W; ÷ {{out.pf|2}} power factor ÷ 1,000 = {{out.recommended_kva|2}} kVA, rounded up to the next standard size, {{out.standard_kva|1}} kVA.",
+ "answer": "A 1.5 ton inverter AC with {{in.other_w|int}} W of fans and lights needs a {{out.standard_kva|1}} kVA generator: {{out.running_w|int}} W running, {{out.peak_w|int}} W while the compressor starts, {{out.recommended_kva|up2}} kVA calculated. A 1.5 ton non-inverter AC with the same load needs {{ex.1.out.standard_kva|1}} kVA because its compressor starts at {{ex.1.out.ac_start_w|int}} W. Generator kVA = max(running watts × margin, starting watts) ÷ power factor ÷ 1,000.",
+ "how": "{{out.ac_name}}: {{out.ac_run_w|int}} W running, {{out.ac_start_w|int}} W starting (its maximum input). Other load {{out.other_w}} W. Total {{out.running_w|int}} W running and {{out.peak_w|int}} W at the moment the AC starts. The larger of {{out.running_w|int}} W × {{out.margin|2}} margin and {{out.peak_w|int}} W is {{out.sized_w|int}} W; ÷ {{out.pf|2}} power factor ÷ 1,000 = {{out.recommended_kva|up2}} kVA, rounded up to the next standard size, {{out.standard_kva|1}} kVA.",
  "key_facts": [
   "A 1.5 ton inverter AC runs at about {{ex.0.out.ac_run_w|int}} W and needs at most {{ex.0.out.ac_start_w|int}} W, so on its own it runs from a {{ex.0.out.standard_kva|1}} kVA generator.",
   "A 1.5 ton non-inverter AC runs at about {{ex.1.out.ac_run_w|int}} W but its compressor draws about {{ex.1.out.ac_start_w|int}} W for a second or two while starting, which needs a {{ex.1.out.standard_kva|1}} kVA generator even with only {{ex.1.in.other_w|int}} W of other load.",
@@ -118,7 +118,7 @@
   {
    "h2": "Non-inverter AC generator size",
    "p": [
-    "The compressor of a 1.5 ton non-inverter AC runs at about {{ex.1.out.ac_run_w|int}} W and starts at about {{ex.1.out.ac_start_w|int}} W, which is {{d.start_factors.compressor_non_inverter|int}} times its running watts. With {{ex.1.in.other_w|int}} W of fans and lights the peak is {{ex.1.out.peak_w|int}} W, or {{ex.1.out.recommended_kva|2}} kVA, so the generator to buy is {{ex.1.out.standard_kva|1}} kVA. A 1 ton non-inverter AC with the same other load needs {{ex.3.out.standard_kva|1}} kVA and a 2 ton non-inverter AC needs {{ex.4.out.standard_kva|1}} kVA.",
+    "The compressor of a 1.5 ton non-inverter AC runs at about {{ex.1.out.ac_run_w|int}} W and starts at about {{ex.1.out.ac_start_w|int}} W, which is {{d.start_factors.compressor_non_inverter|int}} times its running watts. With {{ex.1.in.other_w|int}} W of fans and lights the peak is {{ex.1.out.peak_w|int}} W, or {{ex.1.out.recommended_kva|up2}} kVA, so the generator to buy is {{ex.1.out.standard_kva|1}} kVA. A 1 ton non-inverter AC with the same other load needs {{ex.3.out.standard_kva|1}} kVA and a 2 ton non-inverter AC needs {{ex.4.out.standard_kva|1}} kVA.",
     "The compressor also restarts every few minutes as the thermostat cycles, so the generator takes that surge all day, not once. A soft starter fitted to the AC lowers the surge, but the calculator assumes a plain direct start, which is what most units have."
    ]
   },
@@ -137,7 +137,7 @@
     "other_w": 0
    },
    "title": "1.5 ton inverter AC on its own",
-   "text": "{{out.ac_name}}: {{out.ac_run_w|int}} W running and at most {{out.ac_start_w|int}} W. {{out.ac_start_w|int}} W ÷ {{out.pf|2}} ÷ 1,000 = {{out.recommended_kva|2}} kVA, so a {{out.standard_kva|1}} kVA generator runs it."
+   "text": "{{out.ac_name}}: {{out.ac_run_w|int}} W running and at most {{out.ac_start_w|int}} W. {{out.ac_start_w|int}} W ÷ {{out.pf|2}} ÷ 1,000 = {{out.recommended_kva|up2}} kVA, so a {{out.standard_kva|1}} kVA generator runs it."
   },
   {
    "inputs": {
@@ -145,7 +145,7 @@
     "other_w": 500
    },
    "title": "1.5 ton non-inverter AC with {{in.other_w|int}} W of fans and lights",
-   "text": "{{out.ac_name}}: {{out.ac_run_w|int}} W running but {{out.ac_start_w|int}} W while the compressor starts. With {{in.other_w|int}} W of other load the total is {{out.running_w|int}} W running and {{out.peak_w|int}} W at the start, which is {{out.recommended_kva|2}} kVA; buy a {{out.standard_kva|1}} kVA generator."
+   "text": "{{out.ac_name}}: {{out.ac_run_w|int}} W running but {{out.ac_start_w|int}} W while the compressor starts. With {{in.other_w|int}} W of other load the total is {{out.running_w|int}} W running and {{out.peak_w|int}} W at the start, which is {{out.recommended_kva|up2}} kVA; buy a {{out.standard_kva|1}} kVA generator."
   },
   {
    "inputs": {
@@ -154,7 +154,7 @@
     "other_start_w": 1900
    },
    "title": "Two 1.5 ton inverter ACs with fans",
-   "text": "One {{out.ac_name}} ({{out.ac_run_w|int}} W) plus {{in.other_w|int}} W for the second inverter AC and fans, with the second AC's maximum input entered as the other starting watts: {{out.running_w|int}} W running, {{out.peak_w|int}} W peak, {{out.recommended_kva|2}} kVA calculated, so a {{out.standard_kva|1}} kVA generator."
+   "text": "One {{out.ac_name}} ({{out.ac_run_w|int}} W) plus {{in.other_w|int}} W for the second inverter AC and fans, with the second AC's maximum input entered as the other starting watts: {{out.running_w|int}} W running, {{out.peak_w|int}} W peak, {{out.recommended_kva|up2}} kVA calculated, so a {{out.standard_kva|1}} kVA generator."
   },
   {
    "inputs": {
@@ -162,7 +162,7 @@
     "other_w": 500
    },
    "title": "1 ton non-inverter AC with {{in.other_w|int}} W of other load",
-   "text": "{{out.ac_name}}: {{out.ac_run_w|int}} W running, {{out.ac_start_w|int}} W starting. Total {{out.running_w|int}} W running and {{out.peak_w|int}} W at the start, {{out.recommended_kva|2}} kVA, so the generator to buy is {{out.standard_kva|1}} kVA."
+   "text": "{{out.ac_name}}: {{out.ac_run_w|int}} W running, {{out.ac_start_w|int}} W starting. Total {{out.running_w|int}} W running and {{out.peak_w|int}} W at the start, {{out.recommended_kva|up2}} kVA, so the generator to buy is {{out.standard_kva|1}} kVA."
   },
   {
    "inputs": {
@@ -170,7 +170,7 @@
     "other_w": 500
    },
    "title": "2 ton non-inverter AC with {{in.other_w|int}} W of other load",
-   "text": "{{out.ac_name}}: {{out.ac_run_w|int}} W running, {{out.ac_start_w|int}} W starting. The peak of {{out.peak_w|int}} W gives {{out.recommended_kva|2}} kVA, so a {{out.standard_kva|1}} kVA generator is needed."
+   "text": "{{out.ac_name}}: {{out.ac_run_w|int}} W running, {{out.ac_start_w|int}} W starting. The peak of {{out.peak_w|int}} W gives {{out.recommended_kva|up2}} kVA, so a {{out.standard_kva|1}} kVA generator is needed."
   }
  ],
  "table": {

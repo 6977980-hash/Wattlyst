@@ -198,7 +198,7 @@
     }
    ],
    "how": {
-    "tpl": "Import: {{out.import_units|int}} units at the slab rate of {{out.import_rate|rs2}} = {{out.import_energy_rs|rs}}. Export credit: {{out.export_units|int}} units × {{out.buyback_rs|rs2}} = {{out.export_credit_rs|rs}}. Net billing energy charge = {{out.import_energy_rs|rs}} − {{out.export_credit_rs|rs}} = {{out.net_energy_rs|rs}}; any credit above the import bill carries forward ({{out.carry_forward_rs|rs}} here). Old net metering: {{out.import_units|int}} − {{out.export_units|int}} = {{out.net_metering_units|int}} net units billed at {{out.net_metering_rate|rs2}} = {{out.net_metering_rs|rs}}. Difference = {{out.extra_vs_net_metering_rs|rs}}. Fixed charges, FC surcharge, QTA, FPA and GST are added on top; use the bill calculator for the full bill.",
+    "tpl": "Import: {{out.import_units}} units at the slab rate of {{out.import_rate|rs2}} = {{out.import_energy_rs|rs}}. Export credit: {{out.export_units}} units × {{out.buyback_rs|rs2}} = {{out.export_credit_rs|rs}}. Net billing energy charge = {{out.import_energy_rs|rs}} − {{out.export_credit_rs|rs}} = {{out.net_energy_rs|rs}}; any credit above the import bill carries forward ({{out.carry_forward_rs|rs}} here). Old net metering: {{out.import_units}} − {{out.export_units}} = {{out.net_metering_units|int}} net units billed at {{out.net_metering_rate|rs2}} = {{out.net_metering_rs|rs}}. Difference = {{out.extra_vs_net_metering_rs|rs}}. Fixed charges, FC surcharge, QTA, FPA and GST are added on top; use the bill calculator for the full bill.",
     "text": "Import: 400 units at the slab rate of Rs 36.46 = Rs 14,584. Export credit: 300 units × Rs 11.00 = Rs 3,300. Net billing energy charge = Rs 14,584 − Rs 3,300 = Rs 11,284; any credit above the import bill carries forward (Rs 0 here). Old net metering: 400 − 300 = 100 net units billed at Rs 22.44 = Rs 2,244. Difference = Rs 9,040. Fixed charges, FC surcharge, QTA, FPA and GST are added on top; use the bill calculator for the full bill."
    },
    "submit": "Calculate",
@@ -349,7 +349,10 @@
      "@id": "https://wattlyst.com/solar/net-billing-calculator/#breadcrumb"
     },
     "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13"
+    "lastReviewed": "2026-10-13",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
    },
    {
     "@type": "WebApplication",

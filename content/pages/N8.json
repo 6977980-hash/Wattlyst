@@ -64,7 +64,7 @@
   }
  ],
  "answer": "A {{in.v|int}} V {{in.ah|int}} Ah electric bike that goes {{in.range_km|int}} km on a charge costs about {{out.rs_per_km|rs2}} per km at {{in.tariff|rs2}} per unit, or {{out.rs_per_charge|rs}} for a full charge of {{out.kwh|2}} units. Units per charge = volts × amp hours ÷ 1000 ÷ charger efficiency; cost per km = units × tariff ÷ km per charge.",
- "how": "Battery energy: {{out.v|int}} V × {{out.ah|1}} Ah ÷ 1000 = the stored units; the charger loses some on the way, so the wall meter counts that ÷ {{out.eta|2}} = {{out.kwh|2}} units for a full charge from empty. Cost of a charge: {{out.kwh|2}} units × {{out.tariff|rs2}} = {{out.rs_per_charge|rs}}. Cost per km: {{out.rs_per_charge|rs}} ÷ {{out.range_km|int}} km = {{out.rs_per_km|rs2}}.",
+ "how": "Battery energy: {{out.v}} V × {{out.ah|1}} Ah ÷ 1000 = the stored units; the charger loses some on the way, so the wall meter counts that ÷ {{out.eta|2}} = {{out.kwh|2}} units for a full charge from empty. Cost of a charge: {{out.kwh|2}} units × {{out.tariff|rs2}} = {{out.rs_per_charge|rs}}. Cost per km: {{out.rs_per_charge|rs}} ÷ {{out.range_km}} km = {{out.rs_per_km|rs2}}.",
  "key_facts": [
   "Units to charge an electric bike from empty = battery volts × amp hours ÷ 1000 ÷ charger efficiency; a {{in.v|int}} V {{in.ah|int}} Ah pack takes about {{out.kwh|2}} units from the wall with a charger at {{d.ebike_charger_eff|pct}} efficiency.",
   "At {{in.tariff|rs2}} per unit, the Pakistan unprotected slab rate for a home using more than {{data.tariff.unprotected.2.upto|int}} and up to {{data.tariff.unprotected.3.upto|int}} units a month, a {{in.v|int}} V {{in.ah|int}} Ah e-scooter with {{in.range_km|int}} km of range costs about {{out.rs_per_km|rs2}} per km to charge.",

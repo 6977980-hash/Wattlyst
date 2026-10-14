@@ -104,12 +104,13 @@
   }
  ],
  "answer": "A HESCO home in Hyderabad or lower Sindh using {{in.units|int}} units a month as an unprotected consumer on a {{in.sanctioned_kw|int}} kW connection pays about {{out.total_rs|rs}}: {{out.energy_rs|rs}} energy charge at {{out.rate|rs2}} per unit plus fixed charge, FC surcharge, QTA and GST. HESCO bill = units × slab rate + fixed charge + surcharges + GST, with the month's FPA added from your bill.",
- "how": "{{out.units|int}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw|int}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct|int}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
+ "how": "{{out.units}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
  "key_facts": [
   "HESCO, the Hyderabad Electric Supply Company Limited, bills the uniform NEPRA A-1 domestic tariff for 2026; it has no rates of its own, so a HESCO bill for a given number of units equals a LESCO or IESCO bill apart from the monthly FPA line.",
   "The HESCO per unit rate for an unprotected home using {{out.units|int}} units is {{out.rate|rs2}} on every unit, which gives {{out.energy_rs|rs}} before the fixed charge, surcharges and GST.",
   "A HESCO consumer stays protected only while every one of the last {{d.protected_months|int}} bills is at or under {{d.protected_max_units|int}} units; in lower Sindh a single summer month with a fan-and-AC load above that limit moves the home to unprotected rates.",
-  "GST at {{out.gst_pct|int}}% is charged on energy, fixed charge and surcharges together, adding {{out.gst_rs|rs}} to a {{out.units|int}} unit HESCO bill; the surcharge and GST values are secondary-source figures that change over time."
+  "GST at {{out.gst_pct|int}}% is charged on energy, fixed charge and surcharges together, adding {{out.gst_rs|rs}} to a {{out.units|int}} unit HESCO bill; the surcharge and GST values are secondary-source figures that change over time.",
+  "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of {{data.tariff.addons_secondary.income_tax_235.rate_pct_non_atl|1}}% on a monthly bill of {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}} or more; consumers on the list pay none."
  ],
  "formula": {
   "text": "Bill = units × slab rate + fixed Rs/kW × sanctioned kW + (FC + QTA + FPA) × units, then + GST",
@@ -255,7 +256,7 @@
   },
   {
    "q": "What is the HESCO tariff for 2026?",
-   "a": "The uniform A-1 domestic tariff notified as SRO 279(I)/2026: lifeline slabs up to one hundred units, protected slabs up to {{d.protected_max_units|int}} units, unprotected slabs of a hundred units each up to seven hundred and an open-ended top slab; connections of {{d.tou_threshold_kw|int}} kW and above are billed on ToU rates."
+   "a": "The uniform A-1 domestic tariff notified as SRO 279(I)/2026: lifeline slabs up to {{data.tariff.lifeline.1.upto|int}} units, protected slabs up to {{d.protected_max_units|int}} units, unprotected slabs of {{data.tariff.unprotected.0.upto|int}} units each up to {{data.tariff.unprotected.6.upto|int}} and an open-ended top slab; connections of {{d.tou_threshold_kw|int}} kW and above are billed on ToU rates."
   },
   {
    "q": "How do I check my HESCO bill online?",
@@ -268,6 +269,10 @@
   {
    "q": "Why is my HESCO bill higher than this estimate?",
    "a": "Usually the FPA line, arrears, a late-payment surcharge or a bill that covers more than a month. Enter the FPA from the bill in the advanced fields, and if the reading period is longer than a month run the bill through the overbilling check linked below."
+  },
+  {
+   "q": "Why is my real bill higher than this estimate when it is over {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}}?",
+   "a": "A bill of {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}} or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: {{data.tariff.addons_secondary.income_tax_235.rate_pct_non_atl|1}}% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
   }
  ],
  "related": [
@@ -281,7 +286,11 @@
  "literal_numbers": [
   "SRO 279(I)/2026",
   "2026",
-  "A-1"
+  "A-1",
+  "five hundred units in a humid June",
+  "section 235",
+  "Ordinance 2001",
+  "Rs 25,000"
  ],
  "sources": [
   {
@@ -299,6 +308,10 @@
   {
    "label": "Wattlyst methodology and default values",
    "url": "/methodology/"
+  },
+  {
+   "label": "PkRevenue: income tax on domestic electricity bills of Rs 25,000 or more (section 235, FBR withholding rates)",
+   "url": "https://pkrevenue.com/domestic-electricity-consumers-to-pay-tax-on-monthly-bill-above-rs25000/"
   }
  ]
 }

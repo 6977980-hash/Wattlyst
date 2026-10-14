@@ -196,7 +196,7 @@
     }
    ],
    "how": {
-    "tpl": "Voltage: {{out.n_series|int}} batteries in series × the voltage of one battery = {{out.v_total|1}} V. Capacity: {{out.n_parallel|int}} strings × the Ah of one battery = {{out.ah_total|int}} Ah (series does not add amp hours). Energy: {{out.v_total|1}} V × {{out.ah_total|int}} Ah ÷ 1000 = {{out.kwh|2}} kWh. Batteries: {{out.n_series|int}} × {{out.n_parallel|int}} = {{out.batteries|int}}. The diagram shows each string as a row, wired plus to minus, with the strings joined at common positive and negative bus bars.",
+    "tpl": "Voltage: {{out.n_series}} batteries in series × the voltage of one battery = {{out.v_total|1}} V. Capacity: {{out.n_parallel}} strings × the Ah of one battery = {{out.ah_total|int}} Ah (series does not add amp hours). Energy: {{out.v_total|1}} V × {{out.ah_total|int}} Ah ÷ 1000 = {{out.kwh|2}} kWh. Batteries: {{out.n_series}} × {{out.n_parallel}} = {{out.batteries|int}}. The diagram shows each string as a row, wired plus to minus, with the strings joined at common positive and negative bus bars.",
     "text": "Voltage: 2 batteries in series × the voltage of one battery = 24 V. Capacity: 2 strings × the Ah of one battery = 400 Ah (series does not add amp hours). Energy: 24 V × 400 Ah ÷ 1000 = 9.6 kWh. Batteries: 2 × 2 = 4. The diagram shows each string as a row, wired plus to minus, with the strings joined at common positive and negative bus bars."
    },
    "submit": "Calculate",
@@ -340,7 +340,10 @@
      "@id": "https://wattlyst.com/troubleshoot/battery-series-parallel-calculator/#breadcrumb"
     },
     "dateModified": "2026-10-14",
-    "lastReviewed": "2026-10-14"
+    "lastReviewed": "2026-10-14",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
    },
    {
     "@type": "WebApplication",

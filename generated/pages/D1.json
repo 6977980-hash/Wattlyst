@@ -49,7 +49,7 @@
    {
     "h2": "What size battery for a 5 kW solar system?",
     "p": [
-     "The solar size does not fix the battery size; the night load does. A five kW system usually belongs to a house that runs fans, a fridge, lights, a TV and one inverter AC into the evening, which draws about 10 units a night. That needs 257 Ah at 48 V, about 12.3 kWh of lithium. The same house without the AC at night needs about half: enter your own night units above.",
+     "The solar size does not fix the battery size; the night load does. A five kW system usually belongs to a house that runs fans, a fridge, lights, a TV and one inverter AC into the evening, which draws about 10 units a night. That needs 258 Ah at 48 V, about 12.3 kWh of lithium. The same house without the AC at night needs about half: enter your own night units above.",
      "If you want the battery to also run the AC through a full summer night, measure the evening units on your meter for a week and use the highest night, not the average."
     ]
    },
@@ -63,7 +63,7 @@
    {
     "h2": "How many days of autonomy should a solar battery have?",
     "p": [
-     "Days of autonomy means how many nights the battery can carry the house with no sun to recharge it. With the grid available, one day is enough: a cloudy day is covered by the grid, and the battery is sized for one night. Off-grid, two days is a common planning figure and three in a monsoon or winter-fog area. Each day adds a whole night of storage: 2 days of autonomy for 5 units a night needs 257 Ah at 48 V, twice the bank for one day.",
+     "Days of autonomy means how many nights the battery can carry the house with no sun to recharge it. With the grid available, one day is enough: a cloudy day is covered by the grid, and the battery is sized for one night. Off-grid, two days is a common planning figure and three in a monsoon or winter-fog area. Each day adds a whole night of storage: 2 days of autonomy for 5 units a night needs 258 Ah at 48 V, twice the bank for one day.",
      "More autonomy also means the panels must put back more than one night's energy on the first sunny day, so size the array with that in mind. The off-grid solar calculator sizes panels, battery and inverter together."
     ]
    },
@@ -85,7 +85,7 @@
    },
    {
     "q": "What battery do I need for a 5 kW solar system?",
-    "a": "It depends on the night load, not the array. A typical house with a five kW system uses about 10 units in the evening with an inverter AC, which needs about 257 Ah at 48 V (12.3 kWh) of lithium."
+    "a": "It depends on the night load, not the array. A typical house with a five kW system uses about 10 units in the evening with an inverter AC, which needs about 258 Ah at 48 V (12.3 kWh) of lithium."
    },
    {
     "q": "Is a lithium battery better for solar than tubular?",
@@ -107,8 +107,8 @@
   "key_facts": [
    "A solar battery bank for 5 units a night is about 129 Ah at 48 V (6.2 kWh) in lithium, using 90% of the battery, or 463 Ah at 24 V (11.1 kWh) in tubular, which should only be used to 50%.",
    "Solar battery size in Ah = night kWh × days of autonomy × 1,000 ÷ (bank voltage × depth of discharge × inverter efficiency), with a hybrid inverter efficiency of 90%.",
-   "Each extra day of autonomy adds a full night of storage: 2 days for the same 5 units a night needs 257 Ah at 48 V, twice the one-day bank.",
-   "A home with a five kW solar system that runs fans, a fridge, lights and one inverter AC through the evening uses about 10 units a night and needs about 257 Ah of lithium at 48 V, about 12.3 kWh."
+   "Each extra day of autonomy adds a full night of storage: 2 days for the same 5 units a night needs 258 Ah at 48 V, twice the one-day bank.",
+   "A home with a five kW solar system that runs fans, a fridge, lights and one inverter AC through the evening uses about 10 units a night and needs about 258 Ah of lithium at 48 V, about 12.3 kWh."
   ],
   "mistakes": [
    "Sizing the battery from the solar kW. A five kW array says nothing about the night load; count the units used after sunset instead.",
@@ -203,7 +203,7 @@
     {
      "key": "ah",
      "label": "Battery bank capacity",
-     "spec": "int",
+     "spec": "up",
      "unit": "Ah",
      "label_ur": "Battery bank ki capacity",
      "value": "129"
@@ -225,7 +225,7 @@
     }
    ],
    "how": {
-    "tpl": "Energy to store = {{in.night_kwh|1}} kWh a night × {{in.days|int}} day of autonomy. The battery can only give back part of that: the usable share is {{out.dod|pct}} for this battery type and the inverter passes on {{out.inverter_eff|pct}}. So Ah = {{in.night_kwh|1}} kWh × {{in.days|int}} × 1,000 ÷ ({{in.volts|int}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}}) = {{out.ah|int}} Ah, which is a bank of {{out.kwh|1}} kWh at {{in.volts|int}} V. Buy batteries whose Ah add up to at least this at the bank voltage.",
+    "tpl": "Energy to store = {{in.night_kwh|1}} kWh a night × {{in.days}} day of autonomy. The battery can only give back part of that: the usable share is {{out.dod|pct}} for this battery type and the inverter passes on {{out.inverter_eff|pct}}. So Ah = {{in.night_kwh|1}} kWh × {{in.days}} × 1,000 ÷ ({{in.volts}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}}) = {{out.ah|up}} Ah, which is a bank of {{out.kwh|1}} kWh at {{in.volts}} V. Buy batteries whose Ah add up to at least this at the bank voltage.",
     "text": "Energy to store = 5 kWh a night × 1 day of autonomy. The battery can only give back part of that: the usable share is 90% for this battery type and the inverter passes on 90%. So Ah = 5 kWh × 1 × 1,000 ÷ (48 V × 90% × 90%) = 129 Ah, which is a bank of 6.2 kWh at 48 V. Buy batteries whose Ah add up to at least this at the bank voltage."
    },
    "submit": "Calculate",
@@ -245,11 +245,11 @@
    },
    {
     "title": "2 days of autonomy, 48 V lithium",
-    "text": "5 kWh × 2 days ÷ (48 V × 90% × 90%) = 257 Ah, a 12.3 kWh bank. The second cloudy night doubles the battery, which is why off-grid banks are large."
+    "text": "5 kWh × 2 days ÷ (48 V × 90% × 90%) = 258 Ah, a 12.3 kWh bank. The second cloudy night doubles the battery, which is why off-grid banks are large."
    },
    {
     "title": "House with a five kW solar system and an inverter AC in the evening",
-    "text": "Fans, fridge, lights, TV and an inverter AC for the evening use about 10 units a night. At 48 V lithium that is 257 Ah, a 12.3 kWh bank, for 1 day of autonomy."
+    "text": "Fans, fridge, lights, TV and an inverter AC for the evening use about 10 units a night. At 48 V lithium that is 258 Ah, a 12.3 kWh bank, for 1 day of autonomy."
    },
    {
     "title": "Small 12 V tubular setup for lights and fans",
@@ -266,12 +266,12 @@
    "rows": [
     [
      "2",
-     "51 Ah",
+     "52 Ah",
      "2.5 kWh"
     ],
     [
      "3",
-     "77 Ah",
+     "78 Ah",
      "3.7 kWh"
     ],
     [
@@ -286,7 +286,7 @@
     ],
     [
      "10",
-     "257 Ah",
+     "258 Ah",
      "12.3 kWh"
     ],
     [
@@ -351,7 +351,10 @@
      "@id": "https://wattlyst.com/solar/solar-battery-size-calculator/#breadcrumb"
     },
     "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13"
+    "lastReviewed": "2026-10-13",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
    },
    {
     "@type": "WebApplication",
@@ -409,7 +412,7 @@
       "name": "What battery do I need for a 5 kW solar system?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "It depends on the night load, not the array. A typical house with a five kW system uses about 10 units in the evening with an inverter AC, which needs about 257 Ah at 48 V (12.3 kWh) of lithium."
+       "text": "It depends on the night load, not the array. A typical house with a five kW system uses about 10 units in the evening with an inverter AC, which needs about 258 Ah at 48 V (12.3 kWh) of lithium."
       }
      },
      {

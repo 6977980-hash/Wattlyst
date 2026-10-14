@@ -157,7 +157,7 @@
   }
  ],
  "answer": "A {{in.watts|int}} W socket circuit on {{out.volts|int}} V draws {{out.ib_a|1}} A, so the MCB is the next standard size up: {{out.breaker_a|int}} A, type {{out.curve|raw}}, on at least {{out.area_mm2|1}} mm² ({{out.pk_size|raw}}) copper cable. MCB rating = next standard size above watts ÷ (volts × power factor); motor-type loads add a {{out.margin|2}} × margin, and the curve follows the load type.",
- "how": "Design current = {{out.watts|int}} W ÷ ({{out.k|2}} × {{out.volts|int}} V × {{out.pf|2}} power factor) = {{out.ib_a|1}} A (the first factor is one for single phase, root three for three phase). Breaker design current = {{out.breaker_design_a|1}} A (× {{out.margin|2}} only for motors, compressors, ACs and welders). Next standard MCB = {{out.breaker_a|int}} A, type {{out.curve|raw}}, which trips instantly between {{out.trip_min_a|int}} A and {{out.trip_max_a|int}} A. The cable must be rated at least {{out.min_cable_a|1}} A and be at least {{out.min_mm2|1}} mm²: {{out.area_mm2|1}} mm² ({{out.pk_size|raw}}), rated {{out.ampacity_a|int}} A for this installation ({{out.ampacity_30c_a|int}} A in the IEC table × {{out.derate|2}} for {{out.ambient_c|int}} °C air and {{out.circuits|int}} circuit in the conduit).",
+ "how": "Design current = {{out.watts}} W ÷ ({{out.k|2}} × {{out.volts}} V × {{out.pf|2}} power factor) = {{out.ib_a|1}} A (the first factor is one for single phase, root three for three phase). Breaker design current = {{out.breaker_design_a|1}} A (× {{out.margin|2}} only for motors, compressors, ACs and welders). Next standard MCB = {{out.breaker_a|int}} A, type {{out.curve|raw}}, which trips instantly between {{out.trip_min_a|int}} A and {{out.trip_max_a|int}} A. The cable must be rated at least {{out.min_cable_a|1}} A and be at least {{out.min_mm2|1}} mm²: {{out.area_mm2|1}} mm² ({{out.pk_size|raw}}), rated {{out.ampacity_a|int}} A for this installation ({{out.ampacity_30c_a|int}} A in the IEC table × {{out.derate|2}} for {{out.ambient_c}} °C air and {{out.circuits}} circuit in the conduit).",
  "key_facts": [
   "MCB rating = the next standard size above the design current (watts ÷ volts ÷ power factor); standard domestic MCBs run from {{d.standard_breaker_a.0|int}} A to {{d.standard_breaker_a.8|int}} A.",
   "Type B trips instantly at three to five times its rating, type C at five to ten times, type D at ten to twenty times (IEC 60898-1): a {{out.breaker_a|int}} A type {{out.curve|raw}} trips instantly between {{out.trip_min_a|int}} A and {{out.trip_max_a|int}} A.",
@@ -358,7 +358,8 @@
   "7/29",
   "7/36",
   "IEC 60898-1",
-  "PEC"
+  "PEC",
+  "twenty"
  ],
  "sources": [
   {

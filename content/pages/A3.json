@@ -50,7 +50,7 @@
   }
  ],
  "answer": "A {{in.watts|int}} W load on a {{in.volts|int}} V battery draws about {{out.amps|2}} A. For DC, amps = watts ÷ volts, with no power factor. Double the voltage and the current halves: a {{ex.2.in.watts|int}} W inverter load draws {{ex.2.out.amps|1}} A at {{ex.2.in.volts|int}} V but {{ex.3.out.amps|1}} A at {{ex.3.in.volts|int}} V, which is why bigger inverters use higher battery voltages.",
- "how": "{{in.watts|int}} W ÷ {{in.volts|int}} V = {{out.amps|2}} A. Battery power is DC, so the power factor is one and nothing else is needed. If the load runs through an inverter, the battery supplies more than this: divide the watts by the inverter efficiency (about {{d.inverter_eff_ups|pct}} for a home UPS) before dividing by volts.",
+ "how": "{{in.watts}} W ÷ {{in.volts}} V = {{out.amps|2}} A. Battery power is DC, so the power factor is one and nothing else is needed. If the load runs through an inverter, the battery supplies more than this: divide the watts by the inverter efficiency (about {{d.inverter_eff_ups|pct}} for a home UPS) before dividing by volts.",
  "key_facts": [
   "On a {{ex.0.in.volts|int}} V battery, amps = watts ÷ volts, so a {{ex.0.in.watts|int}} W load draws {{ex.0.out.amps|2}} A and a {{ex.2.in.watts|int}} W load draws {{ex.2.out.amps|1}} A, before any inverter loss.",
   "A {{ex.2.in.watts|int}} W inverter at full load pulls {{ex.2.out.amps|1}} A from a {{ex.2.in.volts|int}} V battery before losses; a home UPS is about {{d.inverter_eff_ups|pct}} efficient, so the real battery current is higher still.",

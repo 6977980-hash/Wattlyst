@@ -208,7 +208,7 @@
     }
    ],
    "how": {
-    "tpl": "{{in.watts|int}} W ÷ ({{in.volts|int}} V × {{out.pf|2}} power factor) = {{out.amps|2}} A. For three-phase the voltage is also multiplied by the square root of three. The power factor turns the real watts into the apparent power the supply must carry; a heater has a power factor of one, motors and ACs less.",
+    "tpl": "{{in.watts}} W ÷ ({{in.volts}} V × {{out.pf|2}} power factor) = {{out.amps|2}} A. For three-phase the voltage is also multiplied by the square root of three. The power factor turns the real watts into the apparent power the supply must carry; a heater has a power factor of one, motors and ACs less.",
     "text": "1,500 W ÷ (230 V × 0.8 power factor) = 8.15 A. For three-phase the voltage is also multiplied by the square root of three. The power factor turns the real watts into the apparent power the supply must carry; a heater has a power factor of one, motors and ACs less."
    },
    "submit": "Calculate",
@@ -341,7 +341,10 @@
      "@id": "https://wattlyst.com/converters/230v-watts-to-amps-calculator/#breadcrumb"
     },
     "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13"
+    "lastReviewed": "2026-10-13",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
    },
    {
     "@type": "WebApplication",

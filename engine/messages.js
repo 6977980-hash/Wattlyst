@@ -8,6 +8,7 @@ const EXACT = {
   cable_far_too_small_for_load: 'This cable is far too thin for this load and length. Use a thicker cable and confirm with a licensed electrician.',
   city_unknown: 'We do not have sun data for this city yet. Pick the nearest city or enter the yield yourself.',
   inverter_ac_must_use_less: 'The inverter AC must use less power than the non-inverter AC for a payback to exist.',
+  inverter_ac_no_payback: 'At these figures the saving is too small to pay back the extra price within the working life of an air conditioner. Check the hours a year, the tariff and both power figures.',
   n_parallel_must_be_whole: 'Number of parallel strings must be a whole number.',
   n_series_must_be_whole: 'Number of batteries in series must be a whole number.',
   range_invalid: 'The low end of the price range must be below the high end.',

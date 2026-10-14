@@ -42,7 +42,7 @@
     "h2": "What is the LESCO per unit rate in 2026?",
     "p": [
      "LESCO, the Lahore Electric Supply Company, does not set its own rates. It bills the uniform A-1 domestic tariff that NEPRA determined and the Government notified for 2026, the same slabs as every other DISCO. For an unprotected home the rate of the slab the month's units reach applies to every unit: 300 units are all billed at Rs 33.10, the top slab is the most expensive, and the first hundred units are the cheapest.",
-     "The worked examples below print the rate for the protected, the three-hundred-unit, the five-hundred-unit and the lifeline cases, and the table lists the rate for each slab. Add the FPA from your bill for the month's exact figure."
+     "The worked examples below print the rate for the protected, the 300-unit, the 500-unit and the lifeline cases, and the table lists the rate for each slab. Add the FPA from your bill for the month's exact figure."
     ]
    },
    {
@@ -75,7 +75,7 @@
    },
    {
     "q": "What is the LESCO tariff for 2026?",
-    "a": "The uniform A-1 domestic tariff notified as SRO 279(I)/2026: lifeline slabs up to one hundred units, protected slabs up to 200 units and unprotected slabs of a hundred units each up to seven hundred, then an open-ended top slab; connections of 5 kW and above are billed on ToU rates."
+    "a": "The uniform A-1 domestic tariff notified as SRO 279(I)/2026: lifeline slabs up to 100 units, protected slabs up to 200 units and unprotected slabs of 100 units each up to 700, then an open-ended top slab; connections of 5 kW and above are billed on ToU rates."
    },
    {
     "q": "How do I check my LESCO bill online?",
@@ -84,13 +84,18 @@
    {
     "q": "How many units keep a LESCO consumer protected?",
     "a": "At or under 200 units in every one of the last 6 months, on a connection below 5 kW. Cross the limit once and the next bills are unprotected until six months under the limit have passed again."
+   },
+   {
+    "q": "Why is my real bill higher than this estimate when it is over Rs 25,000?",
+    "a": "A bill of Rs 25,000 or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: 7.5% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
    }
   ],
   "key_facts": [
    "LESCO charges the NEPRA uniform A-1 domestic tariff for 2026, so a LESCO bill for a given number of units is the same as any other DISCO's; only the monthly FPA line differs.",
    "The LESCO per unit rate for an unprotected home using 300 units is Rs 33.10 on every unit, which gives Rs 9,930 before the fixed charge, surcharges and GST.",
    "LESCO protected units: a home stays protected only while every one of its last 6 bills is at or under 200 units; protected bills are worked out slab-wise at much lower rates.",
-   "GST at 18% is charged on energy, fixed charge and surcharges together, adding Rs 2,053 to a 300 unit LESCO bill; the surcharge and GST values are secondary-source figures that change monthly."
+   "GST at 18% is charged on energy, fixed charge and surcharges together, adding Rs 2,053 to a 300 unit LESCO bill; the surcharge and GST values are secondary-source figures that change monthly.",
+   "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of 7.5% on a monthly bill of Rs 25,000 or more; consumers on the list pay none."
   ],
   "mistakes": [
    "Looking for a separate LESCO tariff. LESCO bills the uniform NEPRA domestic tariff; the slab rates are the same across Pakistan.",
@@ -110,6 +115,10 @@
    {
     "label": "Wattlyst methodology and default values",
     "url": "/methodology/"
+   },
+   {
+    "label": "PkRevenue: income tax on domestic electricity bills of Rs 25,000 or more (section 235, FBR withholding rates)",
+    "url": "https://pkrevenue.com/domestic-electricity-consumers-to-pay-tax-on-monthly-bill-above-rs25000/"
    }
   ],
   "tool": {
@@ -243,7 +252,7 @@
     }
    ],
    "how": {
-    "tpl": "{{out.units|int}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge {{out.sanctioned_kw|int}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct|int}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
+    "tpl": "{{out.units}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
     "text": "300 units × Rs 33.10 (unprotected slab rate) = Rs 9,930. Fixed charge 1 kW = Rs 350. FC surcharge Rs 969 + QTA Rs 156 + FPA Rs 0. Subtotal Rs 11,405 + GST 18% (Rs 2,053) = Rs 13,458."
    },
    "submit": "Calculate",
@@ -388,7 +397,10 @@
      "@id": "https://wattlyst.com/bill/lesco-bill-calculator/#breadcrumb"
     },
     "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13"
+    "lastReviewed": "2026-10-13",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
    },
    {
     "@type": "WebApplication",
@@ -454,7 +466,7 @@
       "name": "What is the LESCO tariff for 2026?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "The uniform A-1 domestic tariff notified as SRO 279(I)/2026: lifeline slabs up to one hundred units, protected slabs up to 200 units and unprotected slabs of a hundred units each up to seven hundred, then an open-ended top slab; connections of 5 kW and above are billed on ToU rates."
+       "text": "The uniform A-1 domestic tariff notified as SRO 279(I)/2026: lifeline slabs up to 100 units, protected slabs up to 200 units and unprotected slabs of 100 units each up to 700, then an open-ended top slab; connections of 5 kW and above are billed on ToU rates."
       }
      },
      {
@@ -471,6 +483,14 @@
       "acceptedAnswer": {
        "@type": "Answer",
        "text": "At or under 200 units in every one of the last 6 months, on a connection below 5 kW. Cross the limit once and the next bills are unprotected until six months under the limit have passed again."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Why is my real bill higher than this estimate when it is over Rs 25,000?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "A bill of Rs 25,000 or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: 7.5% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
       }
      }
     ]

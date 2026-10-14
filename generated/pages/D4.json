@@ -1241,7 +1241,7 @@
     {
      "key": "kva",
      "label": "Inverter rating",
-     "spec": "2",
+     "spec": "up2",
      "unit": "kVA",
      "label_ur": "Inverter ki rating",
      "value": "2.24"
@@ -1264,7 +1264,7 @@
     }
    ],
    "how": {
-    "tpl": "Running load = the running watts of every appliance × its quantity, added up = {{out.running_w|int}} W. Continuous rating = {{out.running_w|int}} W × {{out.margin|2}} margin = {{out.continuous_w|int}} W. kVA = {{out.continuous_w|int}} W ÷ {{out.pf|2}} power factor ÷ 1,000 = {{out.kva|2}} kVA. Surge = running load plus the extra starting watts of the largest motor or compressor = {{out.surge_w|int}} W, which the inverter's surge rating must cover.",
+    "tpl": "Running load = the running watts of every appliance × its quantity, added up = {{out.running_w|int}} W. Continuous rating = {{out.running_w|int}} W × {{out.margin|2}} margin = {{out.continuous_w|int}} W. kVA = {{out.continuous_w|int}} W ÷ {{out.pf|2}} power factor ÷ 1,000 = {{out.kva|up2}} kVA. Surge = running load plus the extra starting watts of the largest motor or compressor = {{out.surge_w|int}} W, which the inverter's surge rating must cover.",
     "text": "Running load = the running watts of every appliance × its quantity, added up = 1,431 W. Continuous rating = 1,431 W × 1.25 margin = 1,789 W. kVA = 1,789 W ÷ 0.8 power factor ÷ 1,000 = 2.24 kVA. Surge = running load plus the extra starting watts of the largest motor or compressor = 1,731 W, which the inverter's surge rating must cover."
    },
    "submit": "Calculate",
@@ -1317,7 +1317,7 @@
     [
      "525 W",
      "656 W",
-     "0.82 kVA",
+     "0.83 kVA",
      "565 W"
     ],
     [
@@ -1335,13 +1335,13 @@
     [
      "2,010 W",
      "2,513 W",
-     "3.14 kVA",
+     "3.15 kVA",
      "2,460 W"
     ],
     [
      "3,719 W",
      "4,649 W",
-     "5.81 kVA",
+     "5.82 kVA",
      "4,169 W"
     ]
    ]
@@ -1401,7 +1401,10 @@
      "@id": "https://wattlyst.com/solar/inverter-size-calculator/#breadcrumb"
     },
     "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13"
+    "lastReviewed": "2026-10-13",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
    },
    {
     "@type": "WebApplication",

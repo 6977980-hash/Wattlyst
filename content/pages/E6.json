@@ -120,7 +120,7 @@
   }
  ],
  "answer": "One electricity unit is one kilowatt hour (kWh): a {{out.watts|int}} W appliance running for one hour uses exactly one unit, so {{out.hours|int}} hour a day for {{out.days|int}} days is {{out.units|2}} units. Units = watts × hours ÷ 1,000, or from amps: volts × amps × power factor × hours ÷ 1,000. Enter your appliance's watts or amps and hours to get its units.",
- "how": "{{out.watts|int}} W × {{out.hours|2}} h a day × {{out.days|int}} days ÷ 1,000 = {{out.units|2}} units (kWh). In Amps mode the watts come first from volts × amps × power factor (× the square root of three for three phase), then the same step.",
+ "how": "{{out.watts}} W × {{out.hours|2}} h a day × {{out.days}} days ÷ 1,000 = {{out.units|2}} units (kWh). In Amps mode the watts come first from volts × amps × power factor (× the square root of three for three phase), then the same step.",
  "key_facts": [
   "One electricity unit = one kilowatt hour (kWh) = 1,000 watts used for one hour; a {{out.watts|int}} W appliance uses one unit every hour it runs, and a hundred-watt bulb takes ten hours to use one unit.",
   "Units = watts × hours ÷ 1,000: an {{ex.0.out.watts|int}} W fan for {{ex.0.out.hours|int}} hours a day uses {{ex.0.out.units|2}} units in {{ex.0.out.days|int}} days.",
@@ -217,7 +217,7 @@
     "volts": 12
    },
    "title": "Amp hours: a {{out.ah|int}} Ah, {{out.volts|int}} V battery",
-   "text": "{{out.ah|int}} Ah × {{out.volts|int}} V ÷ 1,000 = {{out.units|1}} units of stored energy. About half is usable on a tubular battery and about ninety percent on lithium."
+   "text": "{{out.ah|int}} Ah × {{out.volts|int}} V ÷ 1,000 = {{out.units|1}} units of stored energy. About half is usable on a tubular battery and about {{d.dod_lifepo4|pct}} on lithium."
   }
  ],
  "table": {
@@ -326,7 +326,11 @@
   "1 kWh",
   "1 unit",
   "1.5 ton",
-  "200 Ah"
+  "200 Ah",
+  "a hundred-watt",
+  "a hundred hours",
+  "A thousand-watt",
+  "a hundred-watt load"
  ],
  "sources": [
   {

@@ -77,7 +77,7 @@
   }
  ],
  "answer": "A {{out.ac_name|raw}} uses about {{out.avg_kw|1}} unit (kWh) per hour on average in Pakistan, so {{in.hours|int}} hours a day is about {{out.daily_units|1}} units a day and {{out.monthly_units|int}} units a month, costing about {{out.monthly_rs|rs}} at {{out.tariff|rs2}} per unit. Units = average kW × hours; an inverter AC's average is well below its {{out.ac_rated_w|int}} W rated input.",
- "how": "{{out.avg_kw|2}} kW average draw × {{in.hours|int}} hours = {{out.daily_units|1}} units a day. {{out.daily_units|1}} units × {{out.days|int}} days = {{out.monthly_units|int}} units a month. Cost: {{out.avg_kw|2}} kW × {{out.tariff|rs2}} = {{out.hourly_rs|rs}} per hour; {{out.monthly_units|int}} units × {{out.tariff|rs2}} = {{out.monthly_rs|rs}} a month in energy charges, before fixed charges, surcharges and taxes.",
+ "how": "{{out.avg_kw|2}} kW average draw × {{in.hours}} hours = {{out.daily_units|1}} units a day. {{out.daily_units|1}} units × {{out.days}} days = {{out.monthly_units|int}} units a month. Cost: {{out.avg_kw|2}} kW × {{out.tariff|rs2}} = {{out.hourly_rs|rs}} per hour; {{out.monthly_units|int}} units × {{out.tariff|rs2}} = {{out.monthly_rs|rs}} a month in energy charges, before fixed charges, surcharges and taxes.",
  "key_facts": [
   "A 1.5 ton inverter AC uses about {{out.avg_kw|1}} unit (kWh) per hour on average: its rated input is {{out.ac_rated_w|int}} W, but once the room is cool the compressor slows down and the draw falls to a few hundred watts.",
   "Running {{in.hours|int}} hours a day, a 1.5 ton inverter AC uses about {{out.daily_units|1}} units a day and {{out.monthly_units|int}} units a month.",
