@@ -36,6 +36,7 @@ const EXACT = {
   solar_above_sanctioned: 'Your solar array is larger than your sanctioned load. Net billing allows an array up to the sanctioned kW, so the bill step counts only the panels that fit within it. Apply for a higher sanctioned load or plan fewer panels.',
   price_low_confidence: 'The typical price range for this size rests on a single published price list, so treat it as a rough guide and compare at least two more quotes.',
   above_standard_sizes: 'This is above the largest standard size we list. Split the array or circuit into two, or ask a licensed electrician or engineer; the sizes shown are the calculated minimums.',
+  generator_above_standard_sizes: 'This is above the largest generator size we list. Use two generators on separate circuits or a larger industrial set, and ask a licensed electrician; the size shown is the calculated minimum.',
   price_data_missing: 'Price data could not be loaded. Enter the typical price range yourself or refresh the page.',
   load_above_generator: 'This load is more than the generator can deliver (kVA × power factor). Enter a bigger generator or a smaller load.',
   fuel_data_missing: 'Fuel data could not be loaded. Please refresh the page.',
@@ -60,7 +61,9 @@ const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
 /** Notice for a valid result that carries a warning flag (shown above the results, same text in build and browser). */
 export function noticeCode(out) {
-  if (Object.keys(out).some((k) => k.endsWith('above_standard_sizes') && out[k] === true)) return 'above_standard_sizes';
+  const above = Object.keys(out).filter((k) => k.endsWith('above_standard_sizes') && out[k] === true);
+  // A generator gets its own advice (two sets or an industrial set), not "split the array or circuit".
+  if (above.length) return above.every((k) => k === 'generator_above_standard_sizes' || 'recommended_kva' in out) ? 'generator_above_standard_sizes' : 'above_standard_sizes';
   if (out.solar_above_sanctioned === true) return 'solar_above_sanctioned';
   if (out.low_confidence === true) return 'price_low_confidence';
   return '';

@@ -5013,5 +5013,129 @@
     },
     "tolerance": 0,
     "note": ""
+  },
+  {
+    "calc": "generator_size",
+    "name": "custom row with its own starting watts",
+    "inputs": {
+      "loads": [
+        {
+          "id": "custom",
+          "watts": 1000,
+          "start": 3000,
+          "hours": 2
+        },
+        {
+          "id": "custom",
+          "watts": 200,
+          "qty": 2
+        }
+      ],
+      "margin": 1.25,
+      "pf": 0.8
+    },
+    "expected": {
+      "running_w": 1400,
+      "peak_w": 3400,
+      "running_margin_w": 1750,
+      "sized_w": 3400,
+      "recommended_kva": 4.25
+    },
+    "tolerance": 0.01,
+    "note": "custom motor: start 3000 on 1000 running, step 2000 added to 1400 running"
+  },
+  {
+    "calc": "generator_size",
+    "name": "custom row with blank starting watts starts at its running watts",
+    "inputs": {
+      "loads": [
+        {
+          "id": "custom",
+          "watts": 1000,
+          "start": ""
+        }
+      ],
+      "margin": 1.25,
+      "pf": 0.8
+    },
+    "expected": {
+      "running_w": 1000,
+      "peak_w": 1000,
+      "running_margin_w": 1250,
+      "sized_w": 1250,
+      "recommended_kva": 1.5625
+    },
+    "tolerance": 0.01,
+    "note": "blank start = auto"
+  },
+  {
+    "calc": "generator_size",
+    "name": "custom starting watts below its watts rejected",
+    "inputs": {
+      "loads": [
+        {
+          "id": "custom",
+          "watts": 1000,
+          "start": 500
+        }
+      ]
+    },
+    "expected": {
+      "error": "load_0_start_below_run"
+    },
+    "tolerance": 0,
+    "note": "edge case"
+  },
+  {
+    "calc": "generator_capacity",
+    "name": "custom motor row surge checked against capacity",
+    "inputs": {
+      "kva": 3,
+      "pf": 0.8,
+      "margin": 1.25,
+      "loads": [
+        {
+          "id": "custom",
+          "watts": 800,
+          "start": 2600
+        }
+      ]
+    },
+    "expected": {
+      "capacity_w": 2400,
+      "running_w": 800,
+      "peak_w": 2600,
+      "running_ok": true,
+      "start_ok": false,
+      "fits": false
+    },
+    "tolerance": 0.01,
+    "note": "start 2600 > 3 kVA x 0.8 = 2400"
+  },
+  {
+    "calc": "home_load",
+    "name": "custom starting watts raise the peak",
+    "inputs": {
+      "loads": [
+        {
+          "id": "custom",
+          "watts": 750,
+          "start": 2250,
+          "hours": 1
+        },
+        {
+          "id": "custom",
+          "watts": 100,
+          "qty": 3,
+          "hours": 5
+        }
+      ]
+    },
+    "expected": {
+      "running_w": 1050,
+      "peak_w": 2550
+    },
+    "tolerance": 0.01,
+    "note": "step 1500 of the custom motor"
   }
 ]

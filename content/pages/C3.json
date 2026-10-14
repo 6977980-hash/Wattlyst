@@ -13,6 +13,7 @@
    "name": "loads",
    "label": "Motors, compressors and everything else on at the same time",
    "type": "loads",
+   "start": true,
    "catalog": "all",
    "default": [
     {
@@ -36,7 +37,7 @@
      "qty": 1
     }
    ],
-   "hint": "List every appliance that can be running when a motor starts. Fridges, freezers, pumps, washing machines, compressors and non-inverter ACs carry a starting surge; the calculator finds the largest one."
+   "hint": "List every appliance that can be running when a motor starts. Fridges, freezers, pumps, washing machines, compressors and non-inverter ACs carry a starting surge; the calculator finds the largest one. Starting watts: leave it blank for an appliance picked from the list (its own starting watts are used); for a custom motor or compressor type its starting watts."
   },
   {
    "name": "margin",
@@ -182,7 +183,7 @@
     ]
    },
    "title": "Fridge, pump and a 1.5 ton non-inverter AC with fans and lights",
-   "text": "Running {{out.running_w|int}} W. Three motors are on the list, but only the biggest jump, the AC compressor's, is added: peak {{out.peak_w|int}} W, {{out.recommended_kva|2}} kVA, so {{out.standard_kva|1}} kVA."
+   "text": "Running {{out.running_w|int}} W. The fans, the fridge, the pump and the AC all have motors, but only the biggest jump, the AC compressor's, is added: peak {{out.peak_w|int}} W, {{out.recommended_kva|2}} kVA, so {{out.standard_kva|1}} kVA."
   },
   {
    "inputs": {

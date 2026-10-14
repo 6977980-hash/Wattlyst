@@ -109,7 +109,7 @@
    "h2": "Series-parallel wiring diagram: joining several strings",
    "p": [
     "Build each series string first and check its voltage. Then bring each string's plus to a common positive bus bar and each string's minus to a common negative bus bar, with a fuse or DC breaker in the positive lead of every string. Take the inverter cables from opposite ends of the bus bars (plus from one end, minus from the other) so every string sees the same cable length and shares the load evenly.",
-    "The wiring diagram with the result draws the bank you entered: {{out.n_series|int}} batteries across in each string and {{out.n_parallel|int}} strings down. Keep parallel strings to as few as the backup you need allows: the more strings, the harder it is to keep them balanced."
+    "The wiring diagram with the result draws the bank you entered: {{out.n_series|int}} batteries across in each string and {{out.n_parallel|int}} strings down, with the minus of each string led to the negative bus and its plus led through a fuse to the positive bus. Keep parallel strings to as few as the backup you need allows: the more strings, the harder it is to keep them balanced."
    ]
   },
   {

@@ -13,6 +13,7 @@
    "name": "loads",
    "label": "Everything in the house that runs on the generator at once",
    "type": "loads",
+   "start": true,
    "catalog": "all",
    "default": [
     {
@@ -40,7 +41,7 @@
      "qty": 1
     }
    ],
-   "hint": "Start from the example home and change it to yours: remove what you will keep off during a power cut and add every load that can run together. Check the watts against each appliance label."
+   "hint": "Start from the example home and change it to yours: remove what you will keep off during a power cut and add every load that can run together. Check the watts against each appliance label. Starting watts: leave it blank for an appliance picked from the list (its own starting watts are used); for a custom motor or compressor type its starting watts."
   },
   {
    "name": "margin",
@@ -116,7 +117,7 @@
    "h2": "Generator size for refrigerator and AC",
    "p": [
     "A fridge and an AC are the two loads that decide most home generator sizes. An inverter fridge and an inverter AC start softly, so a home with both plus fans and lights needs {{ex.1.out.standard_kva|1}} kVA. Swap them for a non-inverter fridge and a 1.5 ton non-inverter AC and the AC compressor's start pushes the peak to {{ex.3.out.peak_w|int}} W, which needs {{ex.3.out.standard_kva|1}} kVA.",
-    "If you are about to buy both a generator and an AC, the inverter AC usually pays for itself in a smaller generator and lower fuel use. If the AC is already a non-inverter unit, the generator size for a 1.5 ton AC page shows each AC size on its own."
+    "If you are about to buy both a generator and an AC, the inverter AC also lets you buy a smaller generator; whether its higher price pays back in units saved is what the inverter AC payback calculator works out. If the AC is already a non-inverter unit, the generator size for a 1.5 ton AC page shows each AC size on its own."
    ]
   },
   {
@@ -476,7 +477,8 @@
   "C3",
   "C6",
   "C7",
-  "E1"
+  "E1",
+  "N10"
  ],
  "next": "C8",
  "literal_numbers": [

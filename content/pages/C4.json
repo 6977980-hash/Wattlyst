@@ -13,6 +13,7 @@
    "name": "loads",
    "label": "Appliance to compare",
    "type": "loads",
+   "start": true,
    "catalog": "all",
    "default": [
     {
@@ -20,7 +21,7 @@
      "qty": 1
     }
    ],
-   "hint": "Pick one appliance to see its running and starting watts side by side. Add more rows to see how they combine on one generator or inverter."
+   "hint": "Pick one appliance to see its running and starting watts side by side. Add more rows to see how they combine on one generator. Starting watts: leave it blank for an appliance picked from the list (its own starting watts are used); for a custom motor or compressor type its starting watts."
   },
   {
    "name": "margin",
@@ -66,7 +67,7 @@
   }
  ],
  "answer": "Running watts are the steady power an appliance draws while it works; starting watts are the short burst a motor or compressor needs for a second or two to get going. A non-inverter fridge runs at {{out.running_w|int}} W but starts at {{out.peak_w|int}} W, so a generator must deliver {{out.sized_w|int}} W. Size on the larger of running watts × {{d.margin|2}} or starting watts.",
- "how": "Running watts: {{out.running_w|int}} W. Starting watts (running watts plus the largest start jump): {{out.peak_w|int}} W. Running watts × {{out.margin|2}} margin is compared with the starting watts; the larger, {{out.sized_w|int}} W, is what a generator or inverter must deliver. {{out.sized_w|int}} W ÷ {{out.pf|2}} ÷ 1,000 = {{out.recommended_kva|2}} kVA, so a {{out.standard_kva|1}} kVA generator.",
+ "how": "Running watts: {{out.running_w|int}} W. Starting watts (running watts plus the largest start jump): {{out.peak_w|int}} W. Running watts × {{out.margin|2}} margin is compared with the starting watts; the larger, {{out.sized_w|int}} W, is what a generator must deliver (an inverter is checked on two ratings instead: its continuous rating against the running watts × margin, its surge rating against the starting watts). {{out.sized_w|int}} W ÷ {{out.pf|2}} ÷ 1,000 = {{out.recommended_kva|2}} kVA, so a {{out.standard_kva|1}} kVA generator.",
  "key_facts": [
   "Running watts (also called rated or continuous watts) are what an appliance draws for as long as it is on; starting watts (surge or peak watts) are drawn for a second or two while a motor or compressor starts.",
   "For heaters, irons, kettles, bulbs and electronics the two are the same: an electric iron runs and starts at {{a.electric-iron.running_w|int}} W, so the running watts × {{d.margin|2}} ({{ex.0.out.sized_w|int}} W) decide the generator.",
@@ -80,7 +81,7 @@
    "W_start − W_run = the jump of one appliance at start; only the largest is added",
    "P_peak = starting watts the supply must cover for a second or two",
    "m = safety margin on the running load",
-   "P_gen = watts the generator or inverter must deliver; kVA = P_gen ÷ PF ÷ 1000"
+   "P_gen = watts the generator must deliver; kVA = P_gen ÷ PF ÷ 1000 (an inverter instead needs continuous rating ≥ P_run × m and surge rating ≥ P_peak, each on its own)"
   ]
  },
  "sections": [
@@ -101,8 +102,8 @@
   {
    "h2": "Rated watts vs surge watts on a label",
    "p": [
-    "On an appliance nameplate, the rated watts are its running watts at full output, often a little above its average draw. Surge watts are almost never printed; a motor or compressor nameplate may give locked-rotor amps (LRA) instead, and LRA × the supply voltage is a rough starting watts figure.",
-    "On a generator or inverter the same words describe the supply: rated or continuous watts can be given for hours, surge or peak watts for seconds. Check your appliance's running watts × {{d.margin|2}} and its starting watts against the continuous figure, as this calculator does; the starting watts calculator explains why the surge figure is best kept as reserve."
+    "On an appliance nameplate, the rated watts are its running watts at full output, often a little above its average draw. Surge watts are almost never printed; a motor or compressor nameplate may give locked-rotor amps (LRA) instead, and LRA × the supply voltage gives the starting volt-amperes (VA), not watts, because a motor starts at a low power factor. A generator must supply that apparent power: to enter it in the Starting watts column of a custom row, multiply it by the generator power factor, {{d.pf_generator|2}}, so the kVA the calculator prints covers it.",
+    "On a generator or inverter the same words describe the supply: rated or continuous watts can be given for hours, surge or peak watts for seconds. For a generator, check your appliance's running watts × {{d.margin|2}} and its starting watts against the continuous figure, as this calculator does; the starting watts calculator explains why the surge figure is best kept as reserve. For an inverter, the continuous rating must cover the running watts × {{d.margin|2}} and its surge rating the starting watts."
    ]
   },
   {
@@ -115,7 +116,7 @@
   {
    "h2": "Inverter appliances: when the two numbers nearly match",
    "p": [
-    "Inverter ACs, inverter fridges and DC ceiling fans control their motor speed electronically and ramp up slowly. A 1 ton inverter AC runs at about {{ex.3.out.running_w|int}} W and peaks at about {{ex.3.out.peak_w|int}} W, its maximum rated input, so the running watts × {{d.margin|2}} decide its generator: {{ex.3.out.sized_w|int}} W.",
+    "Inverter ACs, inverter fridges and DC ceiling fans control their motor speed electronically and ramp up slowly. A 1 ton inverter AC runs at about {{ex.3.out.running_w|int}} W and peaks at about {{ex.3.out.peak_w|int}} W, its maximum rated input. The running watts × {{d.margin|2}} come to only {{ex.3.out.running_margin_w|int}} W, so even here the peak sets the generator: {{ex.3.out.sized_w|int}} W, against {{ex.2.out.sized_w|int}} W for the non-inverter AC.",
     "That is why replacing a non-inverter AC with an inverter one often lets a home use a smaller generator or a UPS: the chart below puts the inverter and non-inverter versions of the same appliances side by side."
    ]
   }
@@ -162,8 +163,8 @@
      }
     ]
    },
-   "title": "1 ton inverter AC: the running load decides",
-   "text": "Running {{out.running_w|int}} W, highest draw {{out.peak_w|int}} W. Running × {{out.margin|2}} = {{out.sized_w|int}} W is the larger, so {{out.recommended_kva|2}} kVA and a {{out.standard_kva|1}} kVA set, against {{ex.2.out.standard_kva|1}} kVA for the non-inverter AC."
+   "title": "1 ton inverter AC: a small peak still decides",
+   "text": "Running {{out.running_w|int}} W, highest draw {{out.peak_w|int}} W. Running × {{out.margin|2}} = {{out.running_margin_w|int}} W is below that peak, so the peak of {{out.sized_w|int}} W sets the size: {{out.recommended_kva|2}} kVA and a {{out.standard_kva|1}} kVA set, against {{ex.2.out.standard_kva|1}} kVA for the non-inverter AC."
   },
   {
    "inputs": {
@@ -282,7 +283,7 @@
   },
   {
    "q": "How do I find the starting watts of my appliance?",
-   "a": "Look for locked-rotor amps (LRA) on the nameplate of a motor or compressor and multiply by the voltage. If none is printed, pick the appliance in the calculator above; our data uses a multiple of the running watts for motors and compressors."
+   "a": "Look for locked-rotor amps (LRA) on the nameplate of a motor or compressor and multiply by the voltage: that is the starting VA, not watts. Choose Custom in the calculator, enter the running watts, and in Starting watts enter LRA × voltage × {{d.pf_generator|2}}, the generator power factor, so the generator kVA covers the starting VA. If none is printed, pick the appliance in the calculator above; our data uses a multiple of the running watts for motors and compressors."
   }
  ],
  "related": [

@@ -13,6 +13,7 @@
    "name": "loads",
    "label": "Appliances to run on the generator",
    "type": "loads",
+   "start": true,
    "catalog": "all",
    "default": [
     {
@@ -36,7 +37,7 @@
      "qty": 1
     }
    ],
-   "hint": "Pick each appliance from the list; its running and starting watts fill in from our appliance data. If the label on your appliance gives a different wattage, type it in."
+   "hint": "Pick each appliance from the list; its running and starting watts fill in from our appliance data. If the label on your appliance gives a different wattage, type it in. Starting watts: leave it blank for an appliance picked from the list (its own starting watts are used); for a custom motor or compressor type its starting watts."
   },
   {
    "name": "margin",
@@ -132,7 +133,7 @@
    "h2": "Where to find the real watts of your appliances",
    "p": [
     "The rating plate on the back or bottom of each appliance gives watts, or volts and amps (watts = volts × amps). That figure is usually the maximum, so it is a safe number for generator sizing. Starting watts are rarely printed; for fridges, freezers, pumps and non-inverter ACs our list uses a multiple of the running watts from the appliance data.",
-    "If you change the running watts of a listed appliance, its starting watts scale with it. For anything not in the list, choose a custom load and type its watts."
+    "If you change the running watts of a listed appliance, its starting watts scale with it. For anything not in the list, choose a custom load, type its watts and, if it has a motor or compressor, its starting watts too."
    ]
   }
  ],
@@ -201,7 +202,7 @@
      }
     ]
    },
-   "title": "Kitchen loads: an inverter fridge and a microwave with two fans",
+   "title": "Kitchen loads: an inverter fridge and a microwave with two fans and four LED bulbs",
    "text": "{{out.running_w|int}} W running and only {{out.peak_w|int}} W at peak, because nothing here has a hard start. Here the running load × {{out.margin|2}}, {{out.sized_w|int}} W, sets the size: {{out.recommended_kva|2}} kVA, so {{out.standard_kva|1}} kVA."
   },
   {

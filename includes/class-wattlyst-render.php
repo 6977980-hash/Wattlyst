@@ -167,6 +167,7 @@ final class Wattlyst_Render {
 						'options' => isset( $f['options'] ) ? array_map( static fn( $o ) => (string) $o[0], $f['options'] ) : null,
 						'default' => $f['default'] ?? null,
 						'catalog' => $f['catalog'] ?? null,
+						'start'   => empty( $f['start'] ) ? null : true,
 					),
 					static fn( $v ) => null !== $v
 				),
@@ -211,23 +212,24 @@ final class Wattlyst_Render {
 			}
 			return 0;
 		};
-		return '<div class="wl-diagram" data-wl-diagram="battery_grid" role="img" aria-label="Battery wiring diagram">' . self::battery_grid( $val( 'n_series' ), $val( 'n_parallel' ) ) . '</div>';
+		return '<div class="wl-diagram" data-wl-diagram="battery_grid" role="img" aria-label="Battery wiring diagram: the batteries of each string in series, minus of the first battery to the negative bus, plus of the last battery through a fuse to the positive bus">' . self::battery_grid( $val( 'n_series' ), $val( 'n_parallel' ) ) . '</div>';
 	}
 
-	/** Same markup as the browser's drawGrid() in assets/js/wattlyst-tool.js. */
+	/**
+	 * Same markup as the browser's drawGrid() in assets/js/wattlyst-tool.js. Each battery reads "− +" left to right,
+	 * so battery 1's free terminal is minus (N11 step 3); each string's minus lead runs to the negative bus on the
+	 * left and its plus lead through a fuse to the positive bus on the right.
+	 */
 	public static function battery_grid( int $series, int $parallel ): string {
 		$max  = 8;
 		$rows = '';
 		for ( $p = 1; $p <= min( $parallel, $max ); $p++ ) {
-			$cells = '';
-			for ( $n = 1; $n <= min( $series, $max ); $n++ ) {
-				$cells .= '<span class="wl-cell">+ &minus;</span>';
-			}
+			$cells = str_repeat( '<span class="wl-cell">&minus; +</span>', min( $series, $max ) );
 			$more  = $series > $max ? '<span class="wl-more">+' . ( $series - $max ) . '</span>' : '';
-			$rows .= '<div class="wl-string"><span class="wl-string-label">String ' . $p . '</span>' . $cells . $more . '</div>';
+			$rows .= '<div class="wl-string"><span class="wl-string-label">String ' . $p . '</span><div class="wl-row"><span class="wl-lead"></span>' . $cells . $more . '<span class="wl-lead"></span><span class="wl-fuse">fuse</span><span class="wl-lead"></span></div></div>';
 		}
 		$more_rows = $parallel > $max ? '<div class="wl-more">+' . ( $parallel - $max ) . ' more strings</div>' : '';
-		return '<div class="wl-grid"><span class="wl-bus">Positive bus</span>' . $rows . $more_rows . '<span class="wl-bus">Negative bus</span></div>';
+		return '<div class="wl-grid"><span class="wl-bus wl-bus-neg">Negative bus</span><div class="wl-strings">' . $rows . $more_rows . '</div><span class="wl-bus wl-bus-pos">Positive bus</span></div>';
 	}
 
 	private function tool_data( array $keys, array $appliances ): array {
@@ -244,7 +246,9 @@ final class Wattlyst_Render {
 	}
 
 	/**
-	 * Appliance list: one row per load (appliance, watts, quantity, hours a day) with add/remove buttons.
+	 * Appliance list: one row per load (appliance, watts, quantity, hours a day) with add/remove buttons. With the
+	 * field flag "start" (generator pages) a Starting watts column follows Watts: blank = the listed appliance's own
+	 * starting watts (or the running watts for a custom row), a number = that starting surge (a custom motor).
 	 * Default rows are rendered server-side so the default result and the form agree before JavaScript runs.
 	 */
 	private function loads_field( string $prefix, array $f ): string {
@@ -254,7 +258,7 @@ final class Wattlyst_Render {
 		foreach ( $f['default'] ?? array() as $n => $row ) {
 			$rows .= $this->loads_row( $fid, $f, (int) $n, $row );
 		}
-		$head  = '<tr><th scope="col">Appliance</th><th scope="col">Watts</th><th scope="col">Qty</th><th scope="col">Hours a day</th><th scope="col"><span class="screen-reader-text">Remove</span></th></tr>';
+		$head  = '<tr><th scope="col">Appliance</th><th scope="col">Watts</th>' . ( empty( $f['start'] ) ? '' : '<th scope="col">Starting watts</th>' ) . '<th scope="col">Qty</th><th scope="col">Hours a day</th><th scope="col"><span class="screen-reader-text">Remove</span></th></tr>';
 		$tmpl  = '<template class="wl-loads-template">' . $this->loads_row( $fid, $f, -1, array() ) . '</template>';
 		return '<div class="wl-field wl-field-loads" data-wl-loads="' . esc_attr( $f['name'] ) . '"><span class="wl-label" id="' . esc_attr( $fid ) . '-label">' . esc_html( $f['label'] ?? 'Appliances' ) . '</span>' .
 			'<div class="wl-table-wrap"><table class="wl-table wl-loads" aria-labelledby="' . esc_attr( $fid ) . '-label"><thead>' . $head . '</thead><tbody>' . $rows . '</tbody></table></div>' .
@@ -276,7 +280,7 @@ final class Wattlyst_Render {
 		$cell  = static fn( string $k, string $v, string $label, string $extra = '' ) => '<td><label class="screen-reader-text" for="' . esc_attr( "$fid-$r-$k" ) . '">' . esc_html( $label ) . '</label><input type="text" inputmode="decimal" autocomplete="off" id="' . esc_attr( "$fid-$r-$k" ) . '" data-k="' . esc_attr( $k ) . '" value="' . esc_attr( $v ) . '"' . $extra . '></td>';
 		return '<tr class="wl-load-row">' .
 			'<td><label class="screen-reader-text" for="' . esc_attr( "$fid-$r-id" ) . '">Appliance</label><select id="' . esc_attr( "$fid-$r-id" ) . '" data-k="id">' . $opts . '</select></td>' .
-			$cell( 'watts', $watts, 'Watts' ) . $cell( 'qty', $qty, 'Quantity', ' size="3"' ) . $cell( 'hours', $hours, 'Hours a day', ' size="4"' ) .
+			$cell( 'watts', $watts, 'Watts' ) . ( empty( $f['start'] ) ? '' : $cell( 'start', isset( $row['start'] ) ? (string) $row['start'] : '', 'Starting watts (blank = automatic)', ' placeholder="auto"' ) ) . $cell( 'qty', $qty, 'Quantity', ' size="3"' ) . $cell( 'hours', $hours, 'Hours a day', ' size="4"' ) .
 			'<td><button type="button" class="wl-remove-row" aria-label="Remove this appliance">&times;</button></td></tr>';
 	}
 
