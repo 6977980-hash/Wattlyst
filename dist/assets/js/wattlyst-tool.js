@@ -3,11 +3,12 @@ import{errorMessage,noticeCode}from '../../engine/messages.js';
 const ver=new URL(import.meta.url).searchParams.get('ver')|| '';
 function drawGrid(box,series,parallel){
 const max=8;
+const L='<span class="wl-lead"></span>';
 let rows='';
 for(let p=1;p <=Math.min(parallel,max);p++){
-rows +=`<div class="wl-string"><span class="wl-string-label">String ${p}</span>${'<span class="wl-cell">+ &minus;</span>'.repeat(Math.min(series,max))}${series > max?`<span class="wl-more">+${series - max}</span>`:''}</div>`;
+rows +=`<div class="wl-string"><span class="wl-string-label">String ${p}</span><div class="wl-row">${L}${'<span class="wl-cell">&minus; +</span>'.repeat(Math.min(series,max))}${series > max?`<span class="wl-more">+${series - max}</span>`:''}${L}<span class="wl-fuse">fuse</span>${L}</div></div>`;
 }
-box.innerHTML=`<div class="wl-grid"><span class="wl-bus">Positive bus</span>${rows}${parallel > max?`<div class="wl-more">+${parallel - max} more strings</div>`:''}<span class="wl-bus">Negative bus</span></div>`;
+box.innerHTML=`<div class="wl-grid"><span class="wl-bus wl-bus-neg">Negative bus</span><div class="wl-strings">${rows}${parallel > max?`<div class="wl-more">+${parallel - max} more strings</div>`:''}</div><span class="wl-bus wl-bus-pos">Positive bus</span></div>`;
 }
 
 const forecasts={};
@@ -29,6 +30,7 @@ function loadsField(form,f,cfg,onChange){
 const box=form.querySelector(`[data-wl-loads="${f.name}"]`);
 if(!box)return null;
 const body=box.querySelector('tbody');
+const keys=f.start?['watts','start','qty','hours']:['watts','qty','hours'];
 const tmpl=box.querySelector('.wl-loads-template');
 let n=body.children.length;
 const full=document.createElement('select');
@@ -54,6 +56,8 @@ const a=cfg.data.appliances?.[id];
 if(!a)return;
 tr.querySelector('[data-k="watts"]').value=a.running_w;
 tr.querySelector('[data-k="hours"]').value=a.typical_hours_per_day??'';
+const st=tr.querySelector('[data-k="start"]');
+if(st)st.value='';
 };
 const add=(row)=>{
 const tr=tmpl.content.firstElementChild.cloneNode(true);
@@ -66,7 +70,7 @@ populate(sel);
 sel.value=row.id || 'custom';
 if(sel.value !==(row.id || 'custom'))sel.value='custom';
 fill(tr);
-for(const k of['watts','qty','hours'])if(row[k]!==undefined && row[k]!=='')tr.querySelector(`[data-k="${k}"]`).value=row[k];
+for(const k of keys)if(row[k]!==undefined && row[k]!=='')tr.querySelector(`[data-k="${k}"]`).value=row[k];
 }
 body.appendChild(tr);
 return tr;
@@ -81,12 +85,10 @@ onChange();
 box.addEventListener('change',(e)=>{
 if(e.target.matches('[data-k="id"]')){fill(e.target.closest('tr'));onChange();}
 });
-const rows=()=>[...body.querySelectorAll('tr')].map((tr)=>{
-const v=(k)=> tr.querySelector(`[data-k="${k}"]`).value.trim();
-return{id:v('id'),watts:v('watts'),qty:v('qty'),hours:v('hours')};
-});
+const rows=()=>[...body.querySelectorAll('tr')].map((tr)=> Object.fromEntries(['id',...keys].map((k)=>[k,tr.querySelector(`[data-k="${k}"]`).value.trim()])));
 const set=(list)=>{body.innerHTML='';list.forEach(add);};
-return{rows,set,encode:()=> rows().map((r)=>[r.id,r.watts,r.qty,r.hours].join('~')).join(';'),decode:(s)=> s.split(';').map((p)=>{const[id,watts,qty,hours]=p.split('~');return{id,watts,qty,hours};})};
+const order=['id','watts','qty','hours','start'];
+return{rows,set,encode:()=> rows().map((r)=> order.filter((k)=> k in r).map((k)=> r[k]).join('~')).join(';'),decode:(s)=> s.split(';').map((p)=>{const v=p.split('~');return Object.fromEntries(order.map((k,i)=>[k,v[i]]));})};
 }
 async function init(form){
 const cfgEl=form.querySelector('.wl-config');

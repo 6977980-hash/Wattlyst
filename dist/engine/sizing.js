@@ -58,7 +58,7 @@ const sized_w=Math.max(running_w * margin,surge_w);
 const recommended_kva=sized_w / pf / 1000;
 const sizes=dflt(d,'standard_generator_kva');
 const standard_kva=sizes.find((s)=> s >=recommended_kva - 1e-9);
-const out={running_w,peak_w:surge_w,margin,pf,sized_w,recommended_kva,recommended_kw:sized_w / 1000,above_standard_sizes:standard_kva===undefined};
+const out={running_w,peak_w:surge_w,margin,pf,running_margin_w:running_w * margin,sized_w,recommended_kva,recommended_kw:sized_w / 1000,above_standard_sizes:standard_kva===undefined};
 if(standard_kva !==undefined)out.standard_kva=standard_kva;
 return out;
 }

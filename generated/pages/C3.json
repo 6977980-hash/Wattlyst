@@ -752,6 +752,7 @@
      "name": "loads",
      "label": "Motors, compressors and everything else on at the same time",
      "type": "loads",
+     "start": true,
      "catalog": [
       {
        "id": "ceiling-fan-ac",
@@ -1211,7 +1212,7 @@
        "qty": 1
       }
      ],
-     "hint": "List every appliance that can be running when a motor starts. Fridges, freezers, pumps, washing machines, compressors and non-inverter ACs carry a starting surge; the calculator finds the largest one."
+     "hint": "List every appliance that can be running when a motor starts. Fridges, freezers, pumps, washing machines, compressors and non-inverter ACs carry a starting surge; the calculator finds the largest one. Starting watts: leave it blank for an appliance picked from the list (its own starting watts are used); for a custom motor or compressor type its starting watts."
     },
     {
      "name": "margin",
@@ -1290,7 +1291,7 @@
    },
    {
     "title": "Fridge, pump and a 1.5 ton non-inverter AC with fans and lights",
-    "text": "Running 3,440 W. Three motors are on the list, but only the biggest jump, the AC compressor's, is added: peak 7,040 W, 8.8 kVA, so 10 kVA."
+    "text": "Running 3,440 W. The fans, the fridge, the pump and the AC all have motors, but only the biggest jump, the AC compressor's, is added: peak 7,040 W, 8.8 kVA, so 10 kVA."
    },
    {
     "title": "The same house with a 1.5 ton inverter AC",
