@@ -9,11 +9,35 @@
  "calc": "amps_to_kw",
  "fields": [
   {
+   "name": "direction",
+   "label": "Convert",
+   "type": "select",
+   "default": "amps_to_kw",
+   "options": [
+    [
+     "amps_to_kw",
+     "Amps to kW"
+    ],
+    [
+     "kw_to_amps",
+     "kW to amps"
+    ]
+   ],
+   "hint": "Amps to kW uses the current below; kW to amps uses the power below."
+  },
+  {
    "name": "amps",
    "label": "Current",
    "unit": "A",
    "default": 32,
-   "hint": "Measured or rated current. For three-phase, the current in one line wire."
+   "hint": "Measured or rated current, for amps to kW. For three-phase, the current in one line wire."
+  },
+  {
+   "name": "kw",
+   "label": "Power",
+   "unit": "kW",
+   "default": 5,
+   "hint": "Real power in kW, for kW to amps (the whole load; for three-phase, all three lines together)."
   },
   {
    "name": "mode",
@@ -59,18 +83,24 @@
    "unit": "kW"
   },
   {
+   "key": "amps",
+   "label": "Current per line",
+   "spec": "2",
+   "unit": "A"
+  },
+  {
    "key": "va",
    "label": "Apparent power",
    "spec": "int",
    "unit": "VA"
   }
  ],
- "answer": "{{in.amps|int}} amps on a {{in.volts|int}} V single-phase supply is {{out.kw|2}} kW at a power factor of {{out.pf|2}}. kW = amps × volts × power factor ÷ 1,000, with √3 added for three-phase, where {{ex.2.in.amps|int}} A per line at {{ex.2.out.volts|int}} V is {{ex.2.out.kw|2}} kW. For kW to amps, reverse it: amps = kW × 1,000 ÷ (volts × power factor).",
- "how": "{{in.amps|int}} A × {{out.volts|int}} V × {{out.pf|2}} ÷ 1,000 = {{out.kw|2}} kW of real power. The apparent power is {{out.va|int}} VA, the load the cable, breaker and any generator or UPS must carry. On three-phase the result is multiplied by √3; on DC the power factor is one.",
+ "answer": "{{in.amps|int}} amps on a {{in.volts|int}} V single-phase supply is {{out.kw|2}} kW at a power factor of {{out.pf|2}}. kW = amps × volts × power factor ÷ 1,000, with √3 added for three-phase, where {{ex.2.in.amps|int}} A per line at {{ex.2.out.volts|int}} V is {{ex.2.out.kw|2}} kW. For kW to amps, choose kW to amps above: amps = kW × 1,000 ÷ (volts × power factor), so {{ex.1.in.kw|int}} kW on single-phase is {{ex.1.out.amps|2}} A.",
+ "how": "{{out.k|4}} × {{out.amps|2}} A × {{out.volts|int}} V × {{out.pf|2}} ÷ 1,000 = {{out.kw|2}} kW of real power, so kW to amps is the same sum turned round. The first factor is one for DC and single-phase and √3 for three-phase, where the volts are line-to-line and the amps are per line. The apparent power is {{out.va|int}} VA, the load the cable, breaker and any generator or UPS must carry. On DC the power factor is one.",
  "key_facts": [
   "kW = amps × volts × power factor ÷ 1,000 (single-phase). {{in.amps|int}} A at {{in.volts|int}} V and a power factor of {{out.pf|2}} is {{out.kw|2}} kW.",
   "On a three-phase {{ex.2.out.volts|int}} V supply, {{ex.2.in.amps|int}} A per line at a power factor of {{ex.2.in.pf|2}} is {{ex.2.out.kw|2}} kW, about three times the single-phase figure for the same amps.",
-  "A {{ex.1.in.amps|int}} A single-phase supply at {{ex.1.out.volts|int}} V carries {{ex.1.out.kw|2}} kW at a power factor of {{ex.1.in.pf|2}}.",
+  "Going the other way, {{ex.1.in.kw|int}} kW on a {{ex.1.out.volts|int}} V single-phase supply at a power factor of {{ex.1.in.pf|2}} draws {{ex.1.out.amps|2}} A.",
   "kW is real power, kVA is apparent power and amps is current: kW = kVA × power factor, and amps follow from kVA and the voltage."
  ],
  "formula": {
@@ -93,7 +123,7 @@
   {
    "h2": "kW to amps formula",
    "p": [
-    "Reverse the same formula: amps = kW × 1,000 ÷ (volts × power factor) on single-phase, and amps = kW × 1,000 ÷ (√3 × volts × power factor) on three-phase. In the table below, find the kW nearest your load and read the current on the same row. For an exact figure, the watts to amps calculator does single-phase and DC, and the 3 phase amps calculator takes kW or kVA directly."
+    "Reverse the same formula: amps = kW × 1,000 ÷ (volts × power factor) on single-phase, and amps = kW × 1,000 ÷ (√3 × volts × power factor) on three-phase. Choose kW to amps in the calculator above for an exact figure: {{ex.1.in.kw|int}} kW at {{ex.1.out.volts|int}} V single-phase and a power factor of {{ex.1.out.pf|2}} draws {{ex.1.out.amps|2}} A. The chart below also reads either way, and the 3 phase amps calculator takes kVA as well."
    ]
   },
   {
@@ -120,20 +150,21 @@
   },
   {
    "inputs": {
-    "amps": 25,
+    "direction": "kw_to_amps",
+    "kw": 5,
     "pf": 0.8
    },
-   "title": "{{in.amps|int}} A single-phase, mixed home load",
-   "text": "{{in.amps|int}} A × {{out.volts|int}} V × {{in.pf|2}} ÷ 1,000 = {{out.kw|2}} kW of real power, while the cable carries {{out.va|int}} VA."
+   "title": "{{in.kw|int}} kW to amps on single-phase {{out.volts|int}} V",
+   "text": "{{in.kw|int}} kW × 1,000 ÷ ({{out.volts|int}} V × {{in.pf|2}}) = {{out.amps|2}} A."
   },
   {
    "inputs": {
-    "amps": 16,
+    "amps": 32,
     "mode": "ac3",
     "pf": 0.8
    },
    "title": "{{in.amps|int}} A per line, three-phase {{out.volts|int}} V",
-   "text": "√3 × {{out.volts|int}} V × {{in.amps|int}} A × {{in.pf|2}} ÷ 1,000 = {{out.kw|2}} kW."
+   "text": "√3 × {{out.volts|int}} V × {{in.amps|int}} A × {{in.pf|2}} ÷ 1,000 = {{out.kw|2}} kW, the most a {{in.amps|int}} A three-phase supply passes at this power factor."
   },
   {
    "inputs": {
@@ -215,7 +246,7 @@
  "faq": [
   {
    "q": "How many kW is {{in.amps|int}} amps?",
-   "a": "{{out.kw|2}} kW on {{in.volts|int}} V single-phase at a power factor of {{out.pf|2}}, or {{ex.0.out.kw|2}} kW for a heating load. On three-phase {{d.v_3ph|int}} V, {{ex.3.in.amps|int}} A per line is {{ex.3.out.kw|2}} kW at the same power factor."
+   "a": "{{out.kw|2}} kW on {{in.volts|int}} V single-phase at a power factor of {{out.pf|2}}, or {{ex.0.out.kw|2}} kW for a heating load. On three-phase {{ex.2.out.volts|int}} V, {{ex.2.in.amps|int}} A per line is {{ex.2.out.kw|2}} kW at the same power factor."
   },
   {
    "q": "What is the kW to amps formula?",
@@ -223,11 +254,11 @@
   },
   {
    "q": "How many amps is one kW?",
-   "a": "It depends on the voltage and power factor: amps = kW × 1,000 ÷ (volts × power factor). On {{d.v_1ph|int}} V single-phase that is a few amps per kW, on {{d.v_3ph|int}} V three-phase fewer per line, and on a battery many more. The table above gives exact pairs."
+   "a": "It depends on the voltage and power factor: amps = kW × 1,000 ÷ (volts × power factor). On {{d.v_1ph|int}} V single-phase that is a few amps per kW, on {{d.v_3ph|int}} V three-phase fewer per line, and on a battery many more. Choose kW to amps in the calculator for the exact figure: {{ex.1.in.kw|int}} kW is {{ex.1.out.amps|2}} A on {{ex.1.out.volts|int}} V single-phase at a power factor of {{ex.1.out.pf|2}}."
   },
   {
    "q": "How many kW is {{ex.3.in.amps|int}} amps on three-phase?",
-   "a": "{{ex.3.out.kw|2}} kW at {{ex.3.out.volts|int}} V and a power factor of {{ex.3.in.pf|2}}. On single-phase {{d.v_1ph|int}} V, {{ex.3.in.amps|int}} A is much less; the table shows both."
+   "a": "{{ex.3.out.kw|2}} kW at {{ex.3.out.volts|int}} V and a power factor of {{ex.3.in.pf|2}}. On single-phase {{d.v_1ph|int}} V, {{ex.3.in.amps|int}} A is much less; the chart on this page shows both."
   },
   {
    "q": "How do I convert amps to kW on three-phase?",

@@ -66,11 +66,11 @@
   }
  ],
  "answer": "{{in.watts|int}} watts is {{out.amps|2}} amps on a {{in.volts|int}} V single-phase supply at a power factor of {{out.pf|2}}, or {{ex.0.out.amps|2}} A for a heater with a power factor of one. Amps = watts ÷ (volts × power factor); for DC the power factor is one, and for three-phase the volts are multiplied by the square root of three.",
- "how": "{{in.watts|int}} W ÷ ({{out.volts|int}} V × {{out.pf|2}} power factor) = {{out.amps|2}} A. On DC the power factor is always one, so amps are simply watts ÷ volts. On three-phase the divisor is √3 × the line-to-line voltage × power factor, because the power is shared by three wires.",
+ "how": "{{in.watts|int}} W ÷ ({{out.k|4}} × {{out.volts|int}} V × {{out.pf|2}} power factor) = {{out.amps|2}} A. The first factor is one for DC and single-phase and √3 for three-phase, where the volts are the line-to-line voltage and the result is the current in each line. On DC the power factor is always one, so amps are simply watts ÷ volts.",
  "key_facts": [
   "Amps = watts ÷ (volts × power factor). On a {{in.volts|int}} V single-phase supply, {{in.watts|int}} W at a power factor of {{out.pf|2}} draws {{out.amps|2}} A.",
   "Watts alone do not give amps: the same {{ex.1.in.watts|int}} W draws {{ex.1.out.amps|2}} A from a {{ex.1.in.volts|int}} V battery but only {{ex.4.out.amps|2}} A at {{ex.4.in.volts|int}} V mains with a power factor of one.",
-  "At {{ex.3.in.volts|int}} V (US and Canada) a {{ex.3.in.watts|int}} W heater draws {{ex.3.out.amps|2}} A, about twice the current of the same heater on a {{in.volts|int}} V supply.",
+  "At {{ex.3.in.volts|int}} V (US and Canada) a {{ex.3.in.watts|int}} W heater draws {{ex.3.out.amps|2}} A, close to twice the {{ex.0.out.amps|2}} A the same heater draws on a {{ex.0.in.volts|int}} V supply.",
   "On three-phase {{ex.2.out.volts|int}} V, {{ex.2.in.watts|int}} W at a power factor of {{ex.2.in.pf|2}} draws {{ex.2.out.amps|2}} A in each line wire."
  ],
  "formula": {
@@ -88,7 +88,7 @@
    "h2": "What is {{ex.0.in.watts|int}} W in amps?",
    "p": [
     "On a {{ex.0.in.volts|int}} V home supply, {{ex.0.in.watts|int}} W is {{ex.0.out.amps|2}} A for a heater, kettle or iron (power factor one) and {{out.amps|2}} A for a motor or AC at a power factor of {{out.pf|2}}. The watts are the same; the motor draws more current because part of it flows back and forth without doing work.",
-    "On a {{ex.3.in.volts|int}} V US supply the same heater draws twice as much current, so always enter the voltage of the supply the load actually runs on."
+    "On a {{ex.3.in.volts|int}} V US supply the same heater draws {{ex.3.out.amps|2}} A, close to twice as much current, so always enter the voltage of the supply the load actually runs on."
    ]
   },
   {

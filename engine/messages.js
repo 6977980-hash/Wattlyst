@@ -42,6 +42,9 @@ const EXACT = {
   fuel_data_missing: 'Fuel data could not be loaded. Please refresh the page.',
   panels_must_be_whole: 'Number of panels must be a whole number.',
   forecast_invalid: 'The solar forecast could not be read. The typical day is shown instead.',
+  volts_required_dc: 'For DC, enter the battery or system voltage; there is no standard DC voltage to assume.',
+  cable_over_current_rating: 'This current is more than this cable size is rated to carry in conduit, or the cable is smaller than our table, so the cable is not safe for this load even if the voltage drop is small. Use a thicker cable; the wire size calculator checks current and voltage drop together.',
+  ampacity_not_checked_aluminium: 'The current rating of aluminium cable is not checked here, only its voltage drop. Check the current rating in the cable maker\'s datasheet, or ask a licensed electrician.',
   internal_non_finite: 'These numbers are outside a realistic range. Please check your inputs.',
 };
 
@@ -66,6 +69,8 @@ export function noticeCode(out) {
   if (above.length) return above.every((k) => k === 'generator_above_standard_sizes' || 'recommended_kva' in out) ? 'generator_above_standard_sizes' : 'above_standard_sizes';
   if (out.solar_above_sanctioned === true) return 'solar_above_sanctioned';
   if (out.low_confidence === true) return 'price_low_confidence';
+  if (out.over_cable_rating === true) return 'cable_over_current_rating';
+  if (out.ampacity_checked === false) return 'ampacity_not_checked_aluminium';
   return '';
 }
 

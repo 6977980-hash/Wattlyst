@@ -60,13 +60,13 @@
   },
   {
    "key": "va",
-   "label": "Volts × amps",
+   "label": "Apparent power (VA)",
    "spec": "int",
    "unit": "VA"
   }
  ],
  "answer": "{{in.volts|int}} volts at {{in.amps|int}} amps is {{out.va|int}} VA, which is {{out.watts|int}} watts at a power factor of {{out.pf|2}} or {{out.va|int}} W for a heater. Watts = volts × amps × power factor. Volts alone do not give watts: you need the current too. On DC the power factor is one, so {{ex.0.in.volts|int}} V at {{ex.0.in.amps|int}} A is {{ex.0.out.watts|int}} W.",
- "how": "{{out.volts|int}} V × {{in.amps|int}} A = {{out.va|int}} VA. × {{out.pf|2}} power factor = {{out.watts|int}} W of real power. On DC the power factor is one, so watts = volts × amps exactly; on three-phase the product is multiplied by √3 as well.",
+ "how": "{{out.k|4}} × {{out.volts|int}} V × {{in.amps|int}} A = {{out.va|int}} VA of apparent power, and × {{out.pf|2}} power factor = {{out.watts|int}} W of real power. The first factor is one for DC and single-phase and √3 for three-phase, where the volts are line-to-line and the amps are per line. On DC the power factor is one, so watts = volts × amps exactly.",
  "key_facts": [
   "Watts = volts × amps × power factor. {{in.volts|int}} V × {{in.amps|int}} A at a power factor of {{out.pf|2}} is {{out.watts|int}} W.",
   "On DC there is no power factor: {{ex.0.in.volts|int}} V × {{ex.0.in.amps|int}} A = {{ex.0.out.watts|int}} W and {{ex.1.in.volts|int}} V × {{ex.1.in.amps|int}} A = {{ex.1.out.watts|int}} W.",
@@ -199,7 +199,7 @@
     "tpl": "{{out.pf|2}}"
    },
    {
-    "label": "Volts × amps",
+    "label": "Apparent power (VA)",
     "tpl": "{{out.va|int}} VA"
    },
    {

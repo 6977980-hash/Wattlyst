@@ -5137,5 +5137,291 @@
     },
     "tolerance": 0.01,
     "note": "step 1500 of the custom motor"
+  },
+  {
+    "calc": "watts_to_amps",
+    "name": "DC with the voltage left blank is an error, not 230 V",
+    "inputs": {
+      "watts": 100,
+      "mode": "dc"
+    },
+    "expected": {
+      "error": "volts_required_dc"
+    },
+    "tolerance": 0,
+    "note": "Engineer Reviewer 14 Oct 2026: DC has no default voltage"
+  },
+  {
+    "calc": "watts_to_amps",
+    "name": "three-phase returns the voltage factor root 3",
+    "inputs": {
+      "watts": 10000,
+      "mode": "ac3",
+      "pf": 0.8
+    },
+    "expected": {
+      "k": 1.7321,
+      "volts": 400,
+      "amps": 18.0422
+    },
+    "tolerance": 0.001
+  },
+  {
+    "calc": "amps_to_watts",
+    "name": "DC with the voltage left blank is an error",
+    "inputs": {
+      "amps": 10,
+      "mode": "dc"
+    },
+    "expected": {
+      "error": "volts_required_dc"
+    },
+    "tolerance": 0
+  },
+  {
+    "calc": "amps_to_watts",
+    "name": "three-phase 400 V 5 A apparent power and factor",
+    "inputs": {
+      "amps": 5,
+      "volts": 400,
+      "mode": "ac3",
+      "pf": 0.8
+    },
+    "expected": {
+      "k": 1.7321,
+      "va": 3464.1016,
+      "watts": 2771.2813
+    },
+    "tolerance": 0.01
+  },
+  {
+    "calc": "amps_to_kw",
+    "name": "32 A three-phase 400 V PF 0.8",
+    "inputs": {
+      "amps": 32,
+      "mode": "ac3",
+      "pf": 0.8
+    },
+    "expected": {
+      "kw": 17.7369,
+      "k": 1.7321,
+      "direction": "amps_to_kw"
+    },
+    "tolerance": 0.001
+  },
+  {
+    "calc": "amps_to_kw",
+    "name": "kW to amps direction, 5 kW single-phase 230 V PF 0.8",
+    "inputs": {
+      "direction": "kw_to_amps",
+      "kw": 5,
+      "amps": 32,
+      "pf": 0.8
+    },
+    "expected": {
+      "amps": 27.1739,
+      "kw": 5,
+      "va": 6250,
+      "watts": 5000
+    },
+    "tolerance": 0.001,
+    "note": "the amps field is ignored in this direction"
+  },
+  {
+    "calc": "amps_to_kw",
+    "name": "kW to amps direction, 10 kW three-phase 400 V PF 0.8",
+    "inputs": {
+      "direction": "kw_to_amps",
+      "kw": 10,
+      "mode": "ac3",
+      "pf": 0.8
+    },
+    "expected": {
+      "amps": 18.0422,
+      "va": 12500
+    },
+    "tolerance": 0.001
+  },
+  {
+    "calc": "amps_to_kw",
+    "name": "unknown direction is an error",
+    "inputs": {
+      "direction": "sideways",
+      "amps": 10
+    },
+    "expected": {
+      "error": "direction_invalid"
+    },
+    "tolerance": 0
+  },
+  {
+    "calc": "kw_to_amps",
+    "name": "DC with the voltage left blank is an error",
+    "inputs": {
+      "kw": 1,
+      "mode": "dc"
+    },
+    "expected": {
+      "error": "volts_required_dc"
+    },
+    "tolerance": 0
+  },
+  {
+    "calc": "units",
+    "name": "amps mode on DC with the voltage left blank is an error",
+    "inputs": {
+      "input": "amps",
+      "amps": 5,
+      "mode": "dc",
+      "hours": 4
+    },
+    "expected": {
+      "error": "volts_required_dc"
+    },
+    "tolerance": 0
+  },
+  {
+    "calc": "voltage_drop",
+    "name": "DC with the voltage left blank is an error, not 230 V",
+    "inputs": {
+      "amps": 20,
+      "mode": "dc",
+      "length_m": 5,
+      "area_mm2": 6
+    },
+    "expected": {
+      "error": "volts_required_dc"
+    },
+    "tolerance": 0,
+    "note": "Engineer Reviewer 14 Oct 2026"
+  },
+  {
+    "calc": "voltage_drop",
+    "name": "aluminium 4 mm2, 3 kW 230 V PF 0.8, 30 m",
+    "inputs": {
+      "watts": 3000,
+      "length_m": 30,
+      "area_mm2": 4,
+      "conductor": "aluminium"
+    },
+    "expected": {
+      "rho": 0.036,
+      "amps": 16.3043,
+      "drop_v": 8.8043,
+      "drop_pct": 3.828,
+      "within_limit": true,
+      "ampacity_checked": false
+    },
+    "tolerance": 0.001,
+    "note": "rho_aluminium 0.036 = IEC 60364-5-52 Annex G rho1 (1.25 x rho20), same basis as copper 0.0225"
+  },
+  {
+    "calc": "voltage_drop",
+    "name": "copper is the default conductor",
+    "inputs": {
+      "watts": 3000,
+      "length_m": 30,
+      "area_mm2": 4
+    },
+    "expected": {
+      "rho": 0.0225,
+      "conductor": "copper",
+      "drop_pct": 2.3925,
+      "ampacity_a": 32,
+      "over_cable_rating": false
+    },
+    "tolerance": 0.001
+  },
+  {
+    "calc": "voltage_drop",
+    "name": "entered resistivity overrides the conductor",
+    "inputs": {
+      "watts": 3000,
+      "length_m": 30,
+      "area_mm2": 4,
+      "conductor": "aluminium",
+      "rho": 0.03
+    },
+    "expected": {
+      "rho": 0.03
+    },
+    "tolerance": 0
+  },
+  {
+    "calc": "voltage_drop",
+    "name": "40 A on 1.5 mm2 over 5 m: drop within limit but over the cable rating",
+    "inputs": {
+      "amps": 40,
+      "length_m": 5,
+      "area_mm2": 1.5
+    },
+    "expected": {
+      "drop_pct": 2.6087,
+      "within_limit": true,
+      "ampacity_a": 17.5,
+      "over_cable_rating": true
+    },
+    "tolerance": 0.001,
+    "note": "Engineer Reviewer 14 Oct 2026: never imply an undersized cable is fine"
+  },
+  {
+    "calc": "voltage_drop",
+    "name": "PK 7/29 (2.98 mm2) is rated as 2.5 mm2",
+    "inputs": {
+      "amps": 24,
+      "length_m": 10,
+      "area_mm2": 2.98
+    },
+    "expected": {
+      "rated_mm2": 2.5,
+      "ampacity_a": 24,
+      "over_cable_rating": false
+    },
+    "tolerance": 0
+  },
+  {
+    "calc": "voltage_drop",
+    "name": "cable below the table is flagged",
+    "inputs": {
+      "amps": 5,
+      "length_m": 5,
+      "area_mm2": 0.75
+    },
+    "expected": {
+      "over_cable_rating": true,
+      "ampacity_checked": true
+    },
+    "tolerance": 0
+  },
+  {
+    "calc": "voltage_drop",
+    "name": "three-phase returns current factor root 3 and drop factor root 3",
+    "inputs": {
+      "watts": 15000,
+      "mode": "ac3",
+      "length_m": 50,
+      "area_mm2": 6
+    },
+    "expected": {
+      "k": 1.7321,
+      "kv": 1.7321,
+      "amps": 27.0633,
+      "drop_v": 8.7881
+    },
+    "tolerance": 0.001
+  },
+  {
+    "calc": "voltage_drop",
+    "name": "single-phase drop factor is two",
+    "inputs": {
+      "watts": 3000,
+      "length_m": 30,
+      "area_mm2": 2.5
+    },
+    "expected": {
+      "k": 1,
+      "kv": 2
+    },
+    "tolerance": 0
   }
 ]

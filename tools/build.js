@@ -140,6 +140,7 @@ function buildContent(c, ctx) {
     Object.assign(ctx, { calc: c.calc, module });
     const fields = (c.fields || []).map((f) => {
       const out = { ...f, default: resolveDefault(f.default, ctx) };
+      if (f.hint) out.hint = text(ctx, f.hint, scope, `field ${f.name} hint`); // {{data.…}} / {{d.…}} placeholders in hints
       if (f.options || f.options_from || f.type === 'appliance') out.options = fieldOptions(f, ctx);
       if (f.type === 'loads') {
         const ids = f.catalog === 'all' ? ctx.appliances.items.map((a) => a.id) : f.catalog || [];
@@ -467,6 +468,8 @@ function defaultsTable(d) {
     ['Days per billing month', fmt(d.days_per_month)],
     ['Default solar panel size', `${fmt(d.panel_w)} W`],
     ['Watts per horsepower', `${fmt(d.w_per_hp)} W`],
+    ['Copper resistivity at working temperature', `${fmt(d.rho_copper, '4')} Ω·mm²/m`],
+    ['Aluminium resistivity at working temperature', `${fmt(d.rho_aluminium, '4')} Ω·mm²/m`],
     ['Voltage drop limit, lighting', `${fmt(d.vdrop_limit_lighting_pct)}%`],
     ['Voltage drop limit, other circuits', `${fmt(d.vdrop_limit_other_pct)}%`],
   ];

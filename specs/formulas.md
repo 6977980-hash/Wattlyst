@@ -21,6 +21,8 @@ Engineer review required before launch (see engineer-reviewer.md). Units are SI 
 - DC: `I = P / V`; `P = V × I`
 - AC single-phase: `I = P / (V × PF)`; `P = V × I × PF`
 - AC three-phase (V = line-to-line): `I = P / (√3 × V × PF)`; `P = √3 × V × I × PF`
+- The voltage factor k (1 for DC and single-phase, √3 for three-phase) is returned as `k` so the page prints the factor it used (`P = k × V × I × PF`, `I = P / (k × V × PF)`). DC has no standard voltage: a blank voltage in DC mode is an error (`volts_required_dc`), never a silent 230 V. Blank AC voltage = V_1ph or V_3ph.
+- Amps to kW page (A6) has a direction switch: `amps_to_kw` (default, `kW = k × V × I × PF / 1000`) or `kw_to_amps` (`I = kW × 1000 / (k × V × PF)`); both return kW, amps and apparent power `VA = k × V × I`.
 - kW = W / 1000. `kW = kVA × PF`; `W = VA × PF` (UPS VA ratings: line-interactive often PF 0.6, online 0.8–1.0; read the label)
 - `Wh = Ah × V`; `Ah = Wh / V`; usable Wh = Wh × DoD
 - 1 unit = 1 kWh. `units = W × hours / 1000`
@@ -67,7 +69,8 @@ Engineer review required before launch (see engineer-reviewer.md). Units are SI 
 
 ## W. Wiring (advisory, always with "confirm with a licensed electrician")
 - Design current: `I_b = P / (V × PF)`; breaker `I_n` = next standard size ≥ I_b; cable ampacity `I_z ≥ max(I_b × 1.25, I_n)` so `I_b ≤ I_n ≤ I_z` always holds; margin < 1 rejected
-- Voltage drop single-phase: `ΔV = 2 × L × I × ρ / A`, ρ_copper = 0.0225 Ω·mm²/m (≈70 °C); three-phase: `ΔV = √3 × L × I × ρ / A`; target ≤ 3% (lighting) / 5% (other)
+- Voltage drop single-phase and DC: `ΔV = 2 × L × I × ρ / A`; three-phase: `ΔV = √3 × L × I × ρ / A` (drop factor returned as `kv`); with watts entered `I = P / (k × V × PF)`, k = √3 for three-phase (returned as `k`); target ≤ 3% (lighting) / 5% (other). Conductor select: ρ_copper = 0.0225, ρ_aluminium = 0.036 Ω·mm²/m, both IEC 60364-5-52 Annex G ρ1 = 1.25 × ρ20, which states these two values for conductors in normal service (aluminium value [ENGINEER]); an entered ρ overrides both. DC mode needs the voltage entered (`volts_required_dc`).
+- Voltage drop current check (copper only): rated size = largest cable in data/cable-ampacity.json with area ≤ the entered area (a PK n/d area such as 2.98 mm² is rated as 2.5); `over_cable_rating = I > I_z(method, default B1)`, or true when the area is below the smallest table cable. The page shows a warning whenever it is true, whatever the voltage drop. Aluminium: `ampacity_checked = false` and the page says the current rating is not checked (no aluminium ampacity data yet).
 - PK cable designation n/d (n strands, strand diameter d in thou = 0.001 inch): `A = n × π × (d_mm / 2)²` with `d_mm = d_thou × 0.0254 = d_inch × 25.4` → 3/29 ≈ 1.28 mm², 7/29 ≈ 2.98 mm² (sold as 2.5), 7/36 ≈ 4.6 (≈4), 7/44 ≈ 6.9 (≈6), 7/52 ≈ 9.6 (≈10), 7/64 ≈ 14.5 (≈16), 19/52 ≈ 26 (≈25), 19/64 ≈ 39.4 (≈35). Engine input `strand_in` is in inches (0.029 for /29). A PK size is rated as the IEC size it is sold as only when its real area is ≥ 90% of it, else as the next smaller IEC size (data/cable-ampacity.json `rated_as_mm2`).
 - Ampacity table: IEC 60364-5-52 values for PVC copper, method B1/C (engineer to load exact table + PK maker datasheets into data/cable-ampacity.json)
 

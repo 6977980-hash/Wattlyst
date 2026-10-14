@@ -1,9 +1,9 @@
 {
  "_meta": {
-  "source": "specs/formulas.md 'Global defaults' table and section notes; NEPRA Performance Standards (400/230 V, 50 Hz)",
-  "checked": "2026-10-13",
+  "source": "specs/formulas.md 'Global defaults' table and section notes; NEPRA Performance Standards (400/230 V, 50 Hz); rho_copper and rho_aluminium from IEC 60364-5-52 Annex G (rho1 = 1.25 x rho20 at working temperature)",
+  "checked": "2026-10-14",
   "status": "Engineering defaults, every one editable on the page. Items marked engineer_confirm need PEC engineer sign-off before launch.",
-  "engineer_confirm": ["diversity_home", "heat_pump_cop", "ac_saving_per_degree", "soiling_rate_per_day", "soiling_cap", "gas_heater_eff", "gas_cv_mj_m3", "start_factors", "standard_generator_kva", "planner_day_share", "forecast_sky_bands"]
+  "engineer_confirm": ["diversity_home", "heat_pump_cop", "ac_saving_per_degree", "soiling_rate_per_day", "soiling_cap", "gas_heater_eff", "gas_cv_mj_m3", "start_factors", "standard_generator_kva", "planner_day_share", "forecast_sky_bands", "rho_aluminium"]
  },
  "v_1ph": 230,
  "v_3ph": 400,
@@ -30,6 +30,7 @@
  "motor_eff": 0.8,
  "start_factors": {"compressor_non_inverter": 3, "fridge": 4, "motor": 3, "inverter_ac": 1, "resistive": 1},
  "rho_copper": 0.0225,
+ "rho_aluminium": 0.036,
  "vdrop_limit_lighting_pct": 3,
  "vdrop_limit_other_pct": 5,
  "tou_threshold_kw": 5,

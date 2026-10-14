@@ -72,7 +72,7 @@
   }
  ],
  "answer": "{{in.amps|int}} amps on a {{in.volts|int}} V single-phase supply is {{out.watts|int}} watts at a power factor of {{out.pf|2}}, and {{out.va|int}} W for a heater with a power factor of one. Watts = amps × volts × power factor; DC uses a power factor of one, and three-phase multiplies by the square root of three.",
- "how": "{{in.amps|int}} A × {{out.volts|int}} V × {{out.pf|2}} power factor = {{out.watts|int}} W ({{out.kw|2}} kW). Without the power factor the product of volts and amps is {{out.va|int}} VA, the apparent power the wires carry. On DC the power factor is one; on three-phase the result is multiplied by √3.",
+ "how": "{{out.k|4}} × {{in.amps|int}} A × {{out.volts|int}} V × {{out.pf|2}} power factor = {{out.watts|int}} W ({{out.kw|2}} kW). The first factor is one for DC and single-phase and √3 for three-phase, where the volts are line-to-line and the amps are per line. Without the power factor the result is {{out.va|int}} VA, the apparent power the wires carry. On DC the power factor is one.",
  "key_facts": [
   "Watts = amps × volts × power factor. {{in.amps|int}} A at {{in.volts|int}} V and a power factor of {{out.pf|2}} is {{out.watts|int}} W, out of {{out.va|int}} VA of apparent power.",
   "One amp on a {{ex.0.out.volts|int}} V supply carries {{ex.0.out.watts|int}} W of heating load; on a {{ex.3.out.volts|int}} V battery one amp carries only {{ex.3.out.volts|int}} W.",
