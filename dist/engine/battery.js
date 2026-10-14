@@ -27,7 +27,7 @@ const volts=pos(i,'volts');
 const{chemistry,dod}=dodFor(i,d);
 const inverter_eff=frac(i,'inverter_eff',dflt(d,'inverter_eff_ups'));
 const ah_required=(load_w * hours)/(volts * dod * inverter_eff);
-const out={chemistry,load_w,hours,volts,dod,inverter_eff,ah_required,kwh_required:(ah_required * volts)/ 1000};
+const out={chemistry,load_w,hours,volts,dod,inverter_eff,load_kwh:(load_w * hours)/ 1000,ah_required,kwh_required:(ah_required * volts)/ 1000};
 if(has(i,'battery_ah')){
 const battery_ah=pos(i,'battery_ah');
 const battery_v=pos(i,'battery_v');

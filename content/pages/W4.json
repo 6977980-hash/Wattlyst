@@ -140,7 +140,7 @@
   {
    "h2": "How is the DC cable size for solar panels worked out?",
    "p": [
-    "A solar DC cable has to pass two checks: it must carry the string current safely, and it must not lose too much voltage over the run. For a single string the first check is easy: a string carries only one panel's current, and 4 mm² copper PV cable, the smallest size sold for strings, is rated well above the short-circuit current of any common panel with the {{d.margin|2}} safety margin. The second check, voltage drop, is what this calculator does: {{in.amps|int}} A over {{in.length_m|int}} m in {{in.area_mm2|int}} mm² loses {{out.drop_v|1}} V, {{out.drop_pct|2}}% of a {{in.volts|int}} V string.",
+    "A solar DC cable has to pass two checks: it must carry the string current safely, and it must not lose too much voltage over the run. For a single string the first check is easy: a string carries only one panel's current, and 4 mm² copper PV cable, the common size for strings, is rated well above the short-circuit current of any common panel with the {{d.margin|2}} safety margin. The second check, voltage drop, is what this calculator does: {{in.amps|int}} A over {{in.length_m|int}} m in {{in.area_mm2|int}} mm² loses {{out.drop_v|1}} V, {{out.drop_pct|2}}% of a {{in.volts|int}} V string.",
     "Pick 4 mm² first. If the drop is above the limit, pick 6 mm² and check again. The table below does this for common runs so you can see where 4 mm² stops being enough."
    ]
   },
@@ -161,7 +161,7 @@
   {
    "h2": "Battery cable size for an inverter",
    "p": [
-    "The cable between the battery and the inverter is the opposite case: low voltage and very high current. A three kW inverter on a {{ex.4.in.volts|int}} V bank draws about {{ex.4.in.amps|1}} A, and even a {{ex.4.in.length_m|int}} m run in {{ex.4.in.area_mm2|int}} mm² loses {{ex.4.out.drop_pct|2}}%. The size here is set by current rating, not by drop: check it with the wire size calculator in DC mode, which picks the cable from the current table and gives the Pakistani size. Keep battery cables as short as possible and fit a DC-rated fuse or breaker at the battery.",
+    "The cable between the battery and the inverter is the opposite case: low voltage and very high current. A three kW inverter on a {{ex.4.in.volts|int}} V bank draws at least {{ex.4.in.amps|1}} A (more with the inverter's losses and a low battery), and even a {{ex.4.in.length_m|int}} m run in {{ex.4.in.area_mm2|int}} mm² loses {{ex.4.out.drop_pct|2}}%. The size here is set by current rating, not by drop: check it with the wire size calculator in DC mode, which picks the cable from the current table and gives the Pakistani size. Keep battery cables as short as possible and fit a DC-rated fuse or breaker at the battery.",
     "A five kW inverter on 48 V draws over a hundred amps, beyond the single-phase breaker sizes in our table; the inverter maker's manual gives the cable and fuse for it, and a licensed electrician should fit them."
    ]
   },
@@ -279,7 +279,7 @@
   "Using building wire on the roof. Ordinary PVC wire is not rated for sun, rain or the DC voltage of a string; use double-insulated PV cable with MC4 connectors.",
   "Combining strings without checking the current. Two strings on one cable double the amps; the drop doubles and the cable's current rating must be checked separately.",
   "Fixing a drop with thicker cable when more panels in series would do. Raising the string voltage cuts the percentage drop and the cost at the same time, within the inverter's voltage limits.",
-  "Going below 4 mm² because the drop allows it. 4 mm² is the smallest PV cable sold for strings and keeps a current margin; this calculator does not offer smaller sizes."
+  "Going below 4 mm² because the drop allows it. 4 mm² is the common PV cable size for strings and keeps a current margin; this calculator does not offer smaller sizes."
  ],
  "safety": "Solar strings carry lethal DC voltage whenever there is daylight and cannot be switched off at the panels; the DC cables, isolators, fuses, earthing and surge protection must be installed by a licensed electrician or a certified solar installer, and the cable's current rating must be confirmed against the combined string current.",
  "faq": [
@@ -301,7 +301,7 @@
   },
   {
    "q": "What cable size between the battery and the inverter?",
-   "a": "That cable is sized by current, not drop: {{ex.4.in.amps|1}} A for a three kW inverter on {{ex.4.in.volts|int}} V. {{ex.4.in.area_mm2|int}} mm² over {{ex.4.in.length_m|int}} m drops only {{ex.4.out.drop_pct|2}}%, but confirm the current rating with the wire size calculator and the inverter manual."
+   "a": "That cable is sized by current, not drop: at least {{ex.4.in.amps|1}} A for a three kW inverter on {{ex.4.in.volts|int}} V, and more when the battery is low and with the inverter's own losses. {{ex.4.in.area_mm2|int}} mm² over {{ex.4.in.length_m|int}} m drops only {{ex.4.out.drop_pct|2}}%, but confirm the current rating with the wire size calculator and the inverter manual."
   },
   {
    "q": "What wire size for a five kW solar inverter?",

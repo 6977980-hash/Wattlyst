@@ -70,12 +70,13 @@ const q_kw=pos(i,'q_kw');
 const cop=pos(i,'cop',dflt(d,'heat_pump_cop'));
 const tariff=nonneg(i,'tariff');
 const out={q_kw,cop,tariff,ac_rs_per_h:(q_kw / cop)* tariff,heater_rs_per_h:q_kw * tariff};
-if(has(i,'gas_price')){
-const gas_price=nonneg(i,'gas_price');
+if(has(i,'gas_price')|| has(i,'gas_price_mmbtu')){
 const eta_gas=frac(i,'eta_gas',dflt(d,'gas_heater_eff'));
 const cv=pos(i,'cv_mj_m3',dflt(d,'gas_cv_mj_m3'));
+const gas_price_mmbtu=has(i,'gas_price')?undefined:nonneg(i,'gas_price_mmbtu');
+const gas_price=gas_price_mmbtu===undefined?nonneg(i,'gas_price'):(gas_price_mmbtu * cv)/ dflt(d,'mj_per_mmbtu');
 const m3_per_h=((q_kw / eta_gas)* 3.6)/ cv;
-Object.assign(out,{gas_price,eta_gas,cv_mj_m3:cv,gas_m3_per_h:m3_per_h,gas_rs_per_h:m3_per_h * gas_price});
+Object.assign(out,{gas_price,eta_gas,cv_mj_m3:cv,gas_m3_per_h:m3_per_h,gas_rs_per_h:m3_per_h * gas_price},gas_price_mmbtu===undefined?{}:{gas_price_mmbtu});
 }
 return out;
 });

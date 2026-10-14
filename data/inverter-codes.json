@@ -2,7 +2,8 @@
  "_meta": {
   "source": "manufacturer manuals listed per brand (PDF or manufacturer support page), all fetched 2026-10-13/14",
   "checked": "2026-10-14",
-  "notes": "Skipped (no manufacturer manual found): Inverex (Nitrox/Veyron/Aerox) - inverex.com is a parked GoDaddy domain and no official PDF surfaced in search (only ManualsLib listings and retailer pages); Knox - no official site or manual found (retailer w11stop lists datasheets only). Growatt MOD/MID and Growatt SPH hybrids not read (MIN TL-X and SPF ES Plus only). GoodWe F41-F163 not extracted. Huawei alarm IDs come from the L1 (2-6 kW single-phase) manual Issue 10; newer issues exist. Fronius Symo/Primo Class 1-5 STATE codes were read from the Symo Hybrid online manual and GEN24 codes from the GEN24 PDF. 'causes' and 'action' fields quote the manual where quoted; sentences starting 'Owner:' are plain-English guidance derived from the quoted manual text, not additional manufacturer statements. call_installer=true where the manual says to contact dealer/service/repair center or the fix needs DC/AC wiring work."
+  "notes": "Skipped (no manufacturer manual found): Inverex (Nitrox/Veyron/Aerox) - inverex.com is a parked GoDaddy domain and no official PDF surfaced in search (only ManualsLib listings and retailer pages); Knox - no official site or manual found (retailer w11stop lists datasheets only). Growatt MOD/MID and Growatt SPH hybrids not read (MIN TL-X and SPF ES Plus only). GoodWe F41-F163 not extracted. Huawei alarm IDs come from the L1 (2-6 kW single-phase) manual Issue 10; newer issues exist. Fronius Symo/Primo Class 1-5 STATE codes were read from the Symo Hybrid online manual and GEN24 codes from the GEN24 PDF. 'causes' and 'action' fields quote the manual where quoted; sentences starting 'Owner:' are plain-English guidance derived from the quoted manual text, not additional manufacturer statements. call_installer=true where the manual says to contact dealer/service/repair center or the fix needs DC/AC wiring work.",
+  "installer_flags": "call_installer set to true on 2026-10-14 (engineer review) wherever the manual's remedy needs wiring, terminal, protection-setting or part replacement work."
  },
  "brands": [
   {
@@ -53,7 +54,7 @@
      "meaning": "Output short circuited",
      "causes": "Manual: 'Output short circuited.'",
      "action": "Manual: 'Check if wiring is connected well and remove abnormal load.' Owner: switch off loads, look for a faulty appliance; if the fault stays, call installer.",
-     "call_installer": false,
+     "call_installer": true,
      "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
      "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Trouble Shooting table (pp. 41-42)"
     },
@@ -566,7 +567,7 @@
      "meaning": "Grid voltage below lower threshold",
      "causes": "Manual: 'The grid voltage is below the lower threshold or the low voltage duration has lasted for more than the value specified by low voltage ride-through (LVRT).'",
      "action": "Manual: '1. If the alarm occurs occasionally, the power grid may be abnormal temporarily. The SUN2000 automatically recovers... 2. If the alarm occurs frequently, check whether the power grid voltage is within the allowed range. If no, contact the local power operator. If yes, modify the grid undervoltage protection threshold ... with the consent of the local power operator.'",
-     "call_installer": false,
+     "call_installer": true,
      "source_url": "https://res.cloudinary.com/gpceurope/image/upload/v1690811120/eau10ickazhrwervcftj.pdf",
      "source_ref": "SUN2000-(2KTL-6KTL)-L1 User Manual Issue 10 (2022-10-27), 8.3 Troubleshooting, Table 8-2 Common alarms and troubleshooting measures (pp. 82-94)"
     },
@@ -755,7 +756,7 @@
      "meaning": "Grid overvoltage",
      "causes": "Article: 'Grid voltage is higher than standard code's 1st level overvoltage limit for the set period of time.' (02: 'transient value is over 1.35 times of rated voltage peak value'; 03: 10-min overvoltage; 04: 2nd level; 05: transient over 200ms)",
      "action": "Article: '1. If it happens accidentally, it may be a short-term abnormality of the grid. The inverter will resume normal operation after detecting that the grid is normal, without manual intervention. 2. Check if the standard is set correctly. 3. If it occurs frequently, please check the grid voltage and the grid frequency... check whether the AC side circuit breaker and the output cable are connected properly. 4. ...After obtaining the approval from the local power operator, please contact customer service to modify the inverter grid Over and under voltage/frequency protection points.'",
-     "call_installer": false,
+     "call_installer": true,
      "source_url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-",
      "source_ref": "Solis North America support article 'Solis Inverter Alarm Codes (Complete List)', section 'Alarm Messages (ordered by Alarm Code)'"
     },
@@ -764,7 +765,7 @@
      "meaning": "Grid undervoltage",
      "causes": "Article: 'Grid voltage is lower than the limit.'",
      "action": "Same steps as OV-G-V (wait if occasional; check grid/wiring and protection settings if frequent).",
-     "call_installer": false,
+     "call_installer": true,
      "source_url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-",
      "source_ref": "Solis North America support article 'Solis Inverter Alarm Codes (Complete List)', section 'Alarm Messages (ordered by Alarm Code)'"
     },
@@ -1277,7 +1278,7 @@
      "meaning": "Grid voltage too high",
      "causes": "Manual: 'Generally, the inverter will be reconnected to the grid after the grid returns to normal.'",
      "action": "Manual: 'If the fault occurs repeatedly: 1. Measure the actual grid voltage, and contact the local electric power company for solutions if the grid voltage is higher than the set value. 2. Check whether the protection parameters are appropriately set via the App or the LCD. Modify the overvoltage protection values with the consent of the local electric power operator. 3. Contact Sungrow Customer Service if the preceding causes are ruled out and the fault persists.'",
-     "call_installer": false,
+     "call_installer": true,
      "source_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
      "source_ref": "Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312, 9.1 Troubleshooting (pp. 103-109)"
     },
@@ -1286,7 +1287,7 @@
      "meaning": "Grid voltage too low",
      "causes": "Same auto-reconnect note.",
      "action": "Manual: measure grid voltage / contact power company; check protection parameters; '3. Check whether the AC cable is firmly in place. 4. Contact Sungrow Customer Service...'",
-     "call_installer": false,
+     "call_installer": true,
      "source_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
      "source_ref": "Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312, 9.1 Troubleshooting (pp. 103-109)"
     },
@@ -1295,7 +1296,7 @@
      "meaning": "Grid frequency too high",
      "causes": "Same auto-reconnect note.",
      "action": "Manual: '1. Measure the actual grid frequency, and contact the local electric power company for solutions if the grid frequency is beyond the set range. 2. Check whether the protection parameters are appropriately set via the App or the LCD. 3. Contact Sungrow Customer Service...'",
-     "call_installer": false,
+     "call_installer": true,
      "source_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
      "source_ref": "Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312, 9.1 Troubleshooting (pp. 103-109)"
     },
@@ -1313,7 +1314,7 @@
      "meaning": "No grid",
      "causes": "Same auto-reconnect note.",
      "action": "Manual: '1. Check whether the grid supplies power reliably. 2. Check whether the AC cable is firmly in place. 3. Check whether the AC cable is connected to the correct terminal (whether the live wire and the N wire are correctly in place). 4. Check whether the AC circuit breaker is connected. 5. Contact Sungrow Customer Service...' Owner: check for outage / AC breaker.",
-     "call_installer": false,
+     "call_installer": true,
      "source_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
      "source_ref": "Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312, 9.1 Troubleshooting (pp. 103-109)"
     },
@@ -1340,7 +1341,7 @@
      "meaning": "Phase voltages differ too much (3-phase)",
      "causes": "Same auto-reconnect note.",
      "action": "Manual: '1. Measure the actual grid voltage. If grid phase voltages differ greatly, contact the electric power company for solutions. 2. ...modify the grid voltage imbalance parameter through the App or the LCD. 3. Contact Sungrow Customer Service...'",
-     "call_installer": false,
+     "call_installer": true,
      "source_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
      "source_ref": "Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312, 9.1 Troubleshooting (pp. 103-109)"
     },
@@ -1358,7 +1359,7 @@
      "meaning": "Inverter/module too hot",
      "causes": "Manual: 'Generally, the inverter will resume operation when the internal or module temperature returns to normal.'",
      "action": "Manual: '1. Check whether the ambient temperature of the inverter is too high; 2. Check whether the inverter is in a well-ventilated place; 3. Check whether the inverter is exposed to direct sunlight. Shield it if so; 4. Check whether the fan is running properly. Replace the fan if not; 5. Contact Sungrow Power Customer Service...'",
-     "call_installer": false,
+     "call_installer": true,
      "source_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
      "source_ref": "Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312, 9.1 Troubleshooting (pp. 103-109)"
     },
@@ -1466,7 +1467,7 @@
      "meaning": "String producing abnormally (shading, loose wiring, fuse)",
      "causes": "Manual: '1. Check whether the corresponding module is sheltered... 2. Check whether the battery board wiring is loose... 3. Check if the DC fuse is damaged.'",
      "action": "Manual: '4. Contact Sungrow Customer Service if the preceding causes are ruled out and the alarm persists.' Owner can check shading/cleanliness; wiring/fuse is installer work.",
-     "call_installer": false,
+     "call_installer": true,
      "source_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
      "source_ref": "Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312, 9.1 Troubleshooting (pp. 103-109)"
     },
@@ -1484,7 +1485,7 @@
      "meaning": "Non-blocking system alarm",
      "causes": "Manual: '1. The inverter can continue running.'",
      "action": "Manual: '2. Check whether the related wiring and terminal are abnormal, check whether there are any foreign materials or other environmental abnormalities, and take corresponding corrective measures when necessary. 3. If the fault persists, please contact Sungrow Power Customer Service.'",
-     "call_installer": false,
+     "call_installer": true,
      "source_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
      "source_ref": "Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312, 9.1 Troubleshooting (pp. 103-109)"
     }
@@ -1745,7 +1746,7 @@
      "meaning": "Output short circuited (or converter over-temperature)",
      "causes": "Manual: 'Output short circuited or over temperature is detected by internal converter components.'",
      "action": "Manual: 'Check if wiring is connected well and remove abnormal load.'",
-     "call_installer": false,
+     "call_installer": true,
      "source_url": "https://voltronicpower.com/content/download/Manual/Axpert%20VM%20III_manual-20200904.pdf",
      "source_ref": "Voltronic Axpert VM III User Manual v1.8, 'TROUBLE SHOOTING' table (p. 43)"
     },

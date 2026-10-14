@@ -30,11 +30,11 @@
    "hint": "Energy rate of your slab from the bill. The default is the Pakistan unprotected rate for 301 to 400 units a month."
   },
   {
-   "name": "gas_price",
-   "label": "Gas price",
-   "unit": "Rs per cubic metre",
-   "default": 50,
-   "hint": "From your gas bill. Bills quote Rs per MMBtu; one MMBtu is about 28 cubic metres, so divide by 28 (Rs 1,400 per MMBtu is about Rs 50 per m³). Edit this: it changes with your slab."
+   "name": "gas_price_mmbtu",
+   "label": "Gas price (from your bill)",
+   "unit": "Rs per MMBtu",
+   "default": "@data.tariff.gas_domestic.non_protected.2.rs_per_mmbtu",
+   "hint": "The gas rate of your slab as printed on your Sui gas bill. The default is a middle non-protected domestic slab from a published price table that we could not yet match to the OGRA notification; edit it for your own bill."
   },
   {
    "name": "eta_gas",
@@ -80,7 +80,7 @@
   }
  ],
  "answer": "For {{out.q_kw|1}} kW of heat, an inverter AC in heat mode costs about {{out.ac_rs_per_h|rs}} an hour at {{out.tariff|rs2}} per unit, a gas heater about {{out.gas_rs_per_h|rs}} an hour at {{out.gas_price|rs}} per cubic metre, and an electric heater about {{out.heater_rs_per_h|rs}}. AC cost = heat ÷ COP × tariff, because a heat pump moves about {{out.cop|1}} units of heat for each unit of electricity.",
- "how": "Inverter AC: {{out.q_kw|1}} kW of heat ÷ COP {{out.cop|1}} = electricity drawn per hour, × {{out.tariff|rs2}} per unit = {{out.ac_rs_per_h|rs}} an hour. Electric heater: every unit becomes one unit of heat, so {{out.q_kw|1}} kW × {{out.tariff|rs2}} = {{out.heater_rs_per_h|rs}} an hour. Gas heater: {{out.q_kw|1}} kW ÷ {{out.eta_gas|pct}} efficiency × 3.6 MJ per kWh ÷ {{out.cv_mj_m3|int}} MJ per m³ = {{out.gas_m3_per_h|2}} m³ an hour, × {{out.gas_price|rs}} = {{out.gas_rs_per_h|rs}} an hour.",
+ "how": "Inverter AC: {{out.q_kw|1}} kW of heat ÷ COP {{out.cop|1}} = electricity drawn per hour, × {{out.tariff|rs2}} per unit = {{out.ac_rs_per_h|rs}} an hour. Electric heater: every unit becomes one unit of heat, so {{out.q_kw|1}} kW × {{out.tariff|rs2}} = {{out.heater_rs_per_h|rs}} an hour. Gas price: {{out.gas_price_mmbtu|rs}} per MMBtu on the bill × {{out.cv_mj_m3|int}} MJ per m³ ÷ {{d.mj_per_mmbtu|int}} MJ per MMBtu = {{out.gas_price|rs}} per m³. Gas heater: {{out.q_kw|1}} kW ÷ {{out.eta_gas|pct}} efficiency × 3.6 MJ per kWh ÷ {{out.cv_mj_m3|int}} MJ per m³ = {{out.gas_m3_per_h|2}} m³ an hour, × {{out.gas_price|rs}} = {{out.gas_rs_per_h|rs}} an hour.",
  "key_facts": [
   "An inverter AC in heat mode is a heat pump: with a COP of about {{d.heat_pump_cop|1}} it delivers about {{d.heat_pump_cop|1}} units of heat for each unit of electricity, so it costs about one third as much to run as an electric heater giving the same heat.",
   "For {{out.q_kw|1}} kW of heat at {{out.tariff|rs2}} per unit, an inverter AC costs about {{out.ac_rs_per_h|rs}} an hour and an electric heater about {{out.heater_rs_per_h|rs}} an hour; the electric heater's cost per hour is simply its kW × the rate.",
@@ -146,15 +146,15 @@
   {
    "inputs": {
     "q_kw": 2,
-    "gas_price": 110
+    "gas_price_mmbtu": "@data.tariff.gas_domestic.non_protected.7.rs_per_mmbtu"
    },
-   "title": "Heavy gas user: gas at {{out.gas_price|rs}} per m³",
-   "text": "In the upper winter gas slabs the same {{out.gas_m3_per_h|2}} m³ an hour costs {{out.gas_rs_per_h|rs}}, while the inverter AC costs {{out.ac_rs_per_h|rs}} at a COP of {{out.cop|1}}. The AC is now the cheaper heater, and the electric heater is still {{out.heater_rs_per_h|rs}}."
+   "title": "Heavy gas user: the top slab, {{out.gas_price|rs}} per m³",
+   "text": "In the top non-protected gas slab the same {{out.gas_m3_per_h|2}} m³ an hour costs {{out.gas_rs_per_h|rs}}, while the inverter AC costs {{out.ac_rs_per_h|rs}} at a COP of {{out.cop|1}}. The AC is now the cheaper heater, and the electric heater is still {{out.heater_rs_per_h|rs}}."
   },
   {
    "inputs": {
     "q_kw": 2,
-    "tariff": 47.2
+    "tariff": "@data.tariff.unprotected.7.rate"
    },
    "title": "Top electricity slab at {{out.tariff|rs2}} per unit",
    "text": "At the highest unprotected rate the inverter AC costs {{out.ac_rs_per_h|rs}} an hour for {{out.q_kw|1}} kW of heat and the electric heater {{out.heater_rs_per_h|rs}}, while gas at {{out.gas_price|rs}} per m³ stays at {{out.gas_rs_per_h|rs}}."
@@ -223,7 +223,7 @@
   },
   {
    "q": "Is an inverter AC cheaper than a gas heater for heating?",
-   "a": "At the default gas price of {{out.gas_price|rs}} per m³ gas is cheaper ({{out.gas_rs_per_h|rs}} against {{out.ac_rs_per_h|rs}} an hour). At {{ex.2.out.gas_price|rs}} per m³, the rate of the upper winter slabs, the AC wins ({{ex.2.out.ac_rs_per_h|rs}} against {{ex.2.out.gas_rs_per_h|rs}}). Enter your own gas slab to see which side you are on."
+   "a": "At the default gas price of {{out.gas_price|rs}} per m³ gas is cheaper ({{out.gas_rs_per_h|rs}} against {{out.ac_rs_per_h|rs}} an hour). At {{ex.2.out.gas_price|rs}} per m³, the top non-protected slab, the AC wins ({{ex.2.out.ac_rs_per_h|rs}} against {{ex.2.out.gas_rs_per_h|rs}}). Enter your own gas slab to see which side you are on."
   },
   {
    "q": "Is an inverter AC cheaper than an electric heater?",

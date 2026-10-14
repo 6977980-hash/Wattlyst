@@ -6,10 +6,10 @@
  "author": "ali-ahmad",
  "published": "2026-10-13",
  "reviewed": "2026-10-13",
- "answer": "The Home Power Planner sizes everything from one appliance list: a typical home running {{out.running_w|int}} W needs about a {{out.inverter_kw|1}} kW inverter, a {{out.battery_ah|int}} Ah battery for {{in.backup_hours|1}} hours of backup, a {{out.installed_kw|2}} kW solar system of {{out.panels|int}} panels that saves about {{out.saving_rs|rs}} a month under net billing, and a {{out.generator_pick_kva|1}} kVA generator. Edit the list and every size updates. Each number links to the full calculator with its formula.",
+ "answer": "The Home Power Planner sizes everything from one appliance list: a typical home running {{out.running_w|int}} W needs about a {{out.inverter_kw|1}} kW inverter, a {{out.battery_ah|int}} Ah battery for {{in.backup_hours|1}} hours of backup, a {{out.installed_kw|2}} kW solar system of {{out.panels|int}} panels that saves about {{out.saving_rs|rs}} a month in energy charge under net billing, and a {{out.generator_pick_kva|1}} kVA generator. Edit the list and every size updates. Each number links to the full calculator with its formula.",
  "key_facts": [
   "The planner carries one appliance list through the whole chain: running load, inverter, battery, solar, net billing and generator, each with the formula of its own calculator, so the sizes never contradict each other.",
-  "Inverter size = running watts × {{d.margin|2}}; battery Ah = backup watts × hours ÷ (bank volts × usable depth of discharge × inverter efficiency); solar kW = daily units ÷ city yield; generator kVA = the larger of running × {{d.margin|2}} and the starting peak, ÷ {{d.pf_generator|1}}.",
+  "Inverter size = running watts × {{d.margin|2}}; battery Ah = backup watts × hours ÷ (bank volts × usable depth of discharge × inverter efficiency); solar kW = the larger of daily units ÷ city yield and running watts ÷ performance ratio, with net billing counting the array only up to the sanctioned load; generator kVA = the larger of running × {{d.margin|2}} and the starting peak, ÷ {{d.pf_generator|1}}.",
   "Default values (inverter efficiency {{d.inverter_eff_ups|pct}} UPS and {{d.inverter_eff_hybrid|pct}} hybrid, usable battery capacity {{d.dod_lead_acid|pct}} tubular and {{d.dod_lifepo4|pct}} lithium, power factor {{d.pf_mixed|2}}) are listed on the methodology page and editable in each calculator.",
   "Pakistan tariff slabs, peak sun hours by city and appliance wattages live in dated data files; the net-billing buyback rate is not yet confirmed on a NEPRA page and stays editable.",
   "Results are planning estimates, not an official bill or an engineer's design; wiring and solar work must be confirmed by a licensed electrician."
@@ -44,7 +44,7 @@
   },
   {
    "q": "Why is the saving an energy-charge estimate only?",
-   "a": "Fixed charge, surcharges and tax are the same with or without solar, so the planner compares only the energy charge of {{out.monthly_units|int}} units with the net-billing energy charge after {{out.self_used_units|int}} self-used and {{out.export_units|int}} exported units. The buyback rate is editable because it is not yet confirmed on a NEPRA page."
+   "a": "The planner compares only the energy charge of {{out.monthly_units|int}} units with the net-billing energy charge after {{out.self_used_units|int}} self-used and {{out.export_units|int}} exported units. Fixed charge, per-unit surcharges and GST are left out; most of them also fall when you import fewer units, so the real saving is usually somewhat higher than this estimate. The buyback rate is editable because it is not yet confirmed on a NEPRA page."
   },
   {
    "q": "Are the calculators free?",
@@ -102,7 +102,7 @@
     {
      "id": "ac-split-1-5ton-inverter",
      "qty": 1,
-     "hours": 8
+     "hours": 7
     },
     {
      "id": "refrigerator-inverter",
@@ -111,11 +111,6 @@
     {
      "id": "led-tv-43",
      "qty": 1
-    },
-    {
-     "id": "water-motor-1hp",
-     "qty": 1,
-     "hours": 1
     }
    ],
    "hint": "Watts and hours fill in from our appliance data; change any value to match your home."
@@ -235,6 +230,12 @@
    "unit": "kW"
   },
   {
+   "key": "inverter_surge_w",
+   "label": "Surge rating needed",
+   "spec": "int",
+   "unit": "W"
+  },
+  {
    "key": "battery_ah",
    "label": "Battery for backup",
    "label_ur": "Backup ke liye battery",
@@ -268,6 +269,6 @@
    "unit": "kVA"
   }
  ],
- "how": "Your list runs {{out.running_w|int}} W at once ({{out.peak_w|int}} W when the biggest motor starts) and uses {{out.daily_kwh|1}} units a day, {{out.monthly_units|int}} a month. Inverter: {{out.running_w|int}} W × {{in.margin|2}} = {{out.inverter_kw|1}} kW. Battery: {{in.backup_w|int}} W × {{in.backup_hours|1}} h = {{out.backup_kwh|2}} kWh ÷ ({{out.battery_v|int}} V × {{out.battery_dod|pct}} usable × {{d.inverter_eff_hybrid|pct}} inverter) = {{out.battery_ah|int}} Ah. Solar: {{out.daily_kwh|1}} kWh ÷ {{out.city_yield|1}} kWh per kW per day = {{out.solar_kw|2}} kW, so {{out.panels|int}} panels of {{out.panel_w|int}} W = {{out.installed_kw|2}} kW making about {{out.monthly_solar_kwh|int}} units a month. Net billing: you use {{out.self_used_units|int}} of those units yourself, export {{out.export_units|int}} at {{out.buyback_rs|rs2}} and import {{out.import_units|int}}; energy charge {{out.bill_before_rs|rs}} before solar, {{out.bill_after_rs|rs}} after, saving {{out.saving_rs|rs}} a month. Generator for the whole list: {{out.generator_kva|1}} kVA, next standard size {{out.generator_pick_kva|1}} kVA.",
- "how_ur": "Aap ki list ek waqt mein {{out.running_w|int}} W chalti hai (sab se bara motor start hone par {{out.peak_w|int}} W) aur roz {{out.daily_kwh|1}} units, mahine ke {{out.monthly_units|int}} units lagti hai. Inverter: {{out.running_w|int}} W × {{in.margin|2}} = {{out.inverter_kw|1}} kW. Battery: {{in.backup_w|int}} W × {{in.backup_hours|1}} h = {{out.backup_kwh|2}} kWh ÷ ({{out.battery_v|int}} V × {{out.battery_dod|pct}} qabil-e-istemal × {{d.inverter_eff_hybrid|pct}} inverter) = {{out.battery_ah|int}} Ah. Solar: {{out.daily_kwh|1}} kWh ÷ {{out.city_yield|1}} kWh fi kW roz = {{out.solar_kw|2}} kW, yani {{out.panel_w|int}} W ke {{out.panels|int}} panels = {{out.installed_kw|2}} kW, mahine ke taqreeban {{out.monthly_solar_kwh|int}} units. Net billing: {{out.self_used_units|int}} units khud istemal, {{out.export_units|int}} export {{out.buyback_rs|rs2}} par, {{out.import_units|int}} import; solar se pehle energy charge {{out.bill_before_rs|rs}}, baad mein {{out.bill_after_rs|rs}}, bachat {{out.saving_rs|rs}} mahana. Poori list ke liye generator: {{out.generator_kva|1}} kVA, agla standard size {{out.generator_pick_kva|1}} kVA."
+ "how": "Your list runs {{out.running_w|int}} W at once ({{out.peak_w|int}} W when the biggest motor starts) and uses {{out.daily_kwh|1}} units a day, {{out.monthly_units|int}} a month. Inverter: {{out.running_w|int}} W × {{in.margin|2}} = {{out.inverter_kw|1}} kW. Battery: {{in.backup_w|int}} W × {{in.backup_hours|1}} h = {{out.backup_kwh|2}} kWh ÷ ({{out.battery_v|int}} V × {{out.battery_dod|pct}} usable × {{d.inverter_eff_hybrid|pct}} inverter) = {{out.battery_ah|int}} Ah. Solar: energy {{out.daily_kwh|1}} kWh ÷ {{out.city_yield|1}} kWh per kW per day = {{out.solar_kw_energy|2}} kW; midday power {{out.running_w|int}} W ÷ {{out.pr|2}} performance ratio = {{out.solar_kw_power|2}} kW; the larger, {{out.solar_kw|2}} kW, needs {{out.panels|int}} panels of {{out.panel_w|int}} W = {{out.installed_kw|2}} kW making about {{out.monthly_solar_kwh|int}} units a month. Net billing counts an array up to your {{out.sanctioned_kw|1}} kW sanctioned load: {{out.net_billing_panels|int}} panels, {{out.net_billing_kw|2}} kW, about {{out.net_billing_solar_kwh|int}} units a month. You use {{out.self_used_units|int}} of those units yourself, export {{out.export_units|int}} at {{out.buyback_rs|rs2}} and import {{out.import_units|int}}; energy charge {{out.bill_before_rs|rs}} before solar, {{out.bill_after_rs|rs}} after, saving {{out.saving_rs|rs}} a month on the energy charge alone. Generator for the whole list: {{out.generator_kva|1}} kVA, next standard size {{out.generator_pick_kva|1}} kVA.",
+ "how_ur": "Aap ki list ek waqt mein {{out.running_w|int}} W chalti hai (sab se bara motor start hone par {{out.peak_w|int}} W) aur roz {{out.daily_kwh|1}} units, mahine ke {{out.monthly_units|int}} units lagti hai. Inverter: {{out.running_w|int}} W × {{in.margin|2}} = {{out.inverter_kw|1}} kW. Battery: {{in.backup_w|int}} W × {{in.backup_hours|1}} h = {{out.backup_kwh|2}} kWh ÷ ({{out.battery_v|int}} V × {{out.battery_dod|pct}} qabil-e-istemal × {{d.inverter_eff_hybrid|pct}} inverter) = {{out.battery_ah|int}} Ah. Solar: energy {{out.daily_kwh|1}} kWh ÷ {{out.city_yield|1}} kWh fi kW roz = {{out.solar_kw_energy|2}} kW; dopahar ki power {{out.running_w|int}} W ÷ {{out.pr|2}} performance ratio = {{out.solar_kw_power|2}} kW; in mein bara, {{out.solar_kw|2}} kW, yani {{out.panel_w|int}} W ke {{out.panels|int}} panels = {{out.installed_kw|2}} kW, mahine ke taqreeban {{out.monthly_solar_kwh|int}} units. Net billing mein array aap ke {{out.sanctioned_kw|1}} kW sanctioned load tak gina jata hai: {{out.net_billing_panels|int}} panels, {{out.net_billing_kw|2}} kW, mahine ke taqreeban {{out.net_billing_solar_kwh|int}} units. In mein se {{out.self_used_units|int}} units khud istemal, {{out.export_units|int}} export {{out.buyback_rs|rs2}} par, {{out.import_units|int}} import; solar se pehle energy charge {{out.bill_before_rs|rs}}, baad mein {{out.bill_after_rs|rs}}, sirf energy charge par bachat {{out.saving_rs|rs}} mahana. Poori list ke liye generator: {{out.generator_kva|1}} kVA, agla standard size {{out.generator_pick_kva|1}} kVA."
 }

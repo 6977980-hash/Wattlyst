@@ -103,7 +103,6 @@
     "source_url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20MFPA%20FOR%20THE%20MONTH%20OF%20JULY%202026%20EX-WAPDA%20DISCOS%2004-09-2026%2018342-60.PDF",
     "checked": "2026-10-14"
    },
-   
    "verified": true
   },
   "gst_pct": {
@@ -138,5 +137,66 @@
   ],
   "buyback_checked": "2026-10-13",
   "buyback_status": "No NEPRA notification of the buyback rate found on 2026-10-13 (searched nepra.org.pk); re-check monthly and replace these links with the NEPRA page when it exists."
+ },
+ "gas_domestic": {
+  "_note": "Sui gas domestic sale prices (SNGPL/SSGC), Rs per MMBtu, used only as the N5 winter-heating default. Secondary source: no OGRA notification page could be fetched on 2026-10-14 (ogra.org.pk notification URLs returned 404). Reports say the July 2025 slab prices were kept unchanged into 2026. Replace with the OGRA notification and set verified when found.",
+  "source": "icons.com.pk, 'Domestic Gas Sale Prices and Minimum Charges (Effective July 1, 2025)', attributing the table to OGRA",
+  "source_url": "https://icons.com.pk/?p=32346",
+  "checked": "2026-10-14",
+  "verified": false,
+  "effective": "2025-07-01",
+  "unit": "Rs per MMBtu",
+  "protected": [
+   {
+    "slab": "up to 0.25 hm3",
+    "rs_per_mmbtu": 200
+   },
+   {
+    "slab": "up to 0.5 hm3",
+    "rs_per_mmbtu": 250
+   },
+   {
+    "slab": "up to 0.6 hm3",
+    "rs_per_mmbtu": 300
+   },
+   {
+    "slab": "up to 0.9 hm3",
+    "rs_per_mmbtu": 350
+   }
+  ],
+  "non_protected": [
+   {
+    "slab": "up to 0.25 hm3",
+    "rs_per_mmbtu": 500
+   },
+   {
+    "slab": "up to 0.6 hm3",
+    "rs_per_mmbtu": 850
+   },
+   {
+    "slab": "up to 1 hm3",
+    "rs_per_mmbtu": 1250
+   },
+   {
+    "slab": "up to 1.5 hm3",
+    "rs_per_mmbtu": 1450
+   },
+   {
+    "slab": "up to 2 hm3",
+    "rs_per_mmbtu": 1900
+   },
+   {
+    "slab": "up to 3 hm3",
+    "rs_per_mmbtu": 3300
+   },
+   {
+    "slab": "up to 4 hm3",
+    "rs_per_mmbtu": 3800
+   },
+   {
+    "slab": "above 4 hm3",
+    "rs_per_mmbtu": 4200
+   }
+  ]
  }
 }

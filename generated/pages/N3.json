@@ -105,6 +105,66 @@
    {
     "label": "Wattlyst methodology and default values",
     "url": "/methodology/"
+   },
+   {
+    "label": "Toolsfluent (blog), 2026-07-14 (price data)",
+    "url": "https://www.toolsfluent.com/blog/3kw-solar-system-pakistan-complete-guide"
+   },
+   {
+    "label": "PriceData.pk (market data), page 'Last Updated: October 14, 2026' (price data)",
+    "url": "https://www.pricedata.pk/solar/solar-panel-prices-in-pakistan"
+   },
+   {
+    "label": "GreenOH (installer marketplace), 2026-10-14 (price data)",
+    "url": "https://thegreenoh.com/solar-guides/on-grid-vs-hybrid-solar-system-pakistan"
+   },
+   {
+    "label": "Toolsfluent (blog), 2026-05-13 (price data)",
+    "url": "https://www.toolsfluent.com/blog/5kw-solar-system-pakistan-complete-guide"
+   },
+   {
+    "label": "Max Power (manufacturer/installer blog), undated (price data)",
+    "url": "https://maxpower.com.pk/?p=4888"
+   },
+   {
+    "label": "VoltFlow (blog), 2026-04-03 (price data)",
+    "url": "https://www.voltflow.net/blog/solar-panels-pakistan-2026"
+   },
+   {
+    "label": "GreenOH (installer marketplace), 2026-10-14 (price data)",
+    "url": "https://thegreenoh.com/solar-guides/10kw-solar-system-price-pakistan"
+   },
+   {
+    "label": "Toolsfluent (blog), 2026-07-14 (price data)",
+    "url": "https://www.toolsfluent.com/blog/10kw-solar-system-pakistan-complete-guide"
+   },
+   {
+    "label": "Max Power (manufacturer/installer blog), 2026-07-28 (price data)",
+    "url": "https://maxpower.com.pk/?p=4877"
+   },
+   {
+    "label": "SheikhX Solar Corporation (installer), 2026-10-14 (price data)",
+    "url": "https://sheikhxsolarcorp.com/solar-rates-pakistan"
+   },
+   {
+    "label": "solar-price.pk (dealer-sourced guide), 2026-05 (price data)",
+    "url": "https://solar-price.pk/10kw-solar-system-price-in-pakistan/"
+   },
+   {
+    "label": "PhoneWorld.com.pk, 2026-06-11 (price data)",
+    "url": "https://www.phoneworld.com.pk/solar-panel-price-in-pakistan-today-updated-rates/"
+   },
+   {
+    "label": "Toolsfluent (blog), 2026-08-18 (price data)",
+    "url": "https://www.toolsfluent.com/blog/solar-panel-price-pakistan-2026"
+   },
+   {
+    "label": "Toolsfluent price tracker (search-result snippet, not fetched), 2026-07-15 (price data)",
+    "url": "https://www.toolsfluent.com/tools/solar-panel-price-tracker-pakistan"
+   },
+   {
+    "label": "ARY News, 2026-07-01 (price data)",
+    "url": "https://arynews.tv/solar-panel-batteries-and-inverters-prices-drop-in-karachi"
    }
   ],
   "tool": {
@@ -213,18 +273,14 @@
     }
    ],
    "how": {
-    "tpl": "{{in.price|rs}} ÷ ({{in.kwp|int}} kW × 1,000) = {{out.rs_per_w|rs2}} per watt. Typical {{in.type}} range for {{in.kwp|int}} kW: {{out.range_low|rs2}} to {{out.range_high|rs2}} per watt, that is {{out.range_low_rs|rs}} to {{out.range_high_rs|rs}}. Your quote is {{out.vs_low_pct|int}}% from the low end and {{out.vs_high_pct|int}}% from the high end, so it is {{out.verdict}} the range.",
-    "text": "Rs 1,100,000 ÷ (10 kW × 1,000) = Rs 110.00 per watt. Typical on-grid range for 10 kW: Rs 95.00 to Rs 120.00 per watt, that is Rs 950,000 to Rs 1,200,000. Your quote is 16% from the low end and -8% from the high end, so it is within the range."
+    "tpl": "{{in.price|rs}} ÷ ({{in.kwp|int}} kW × 1,000) = {{out.rs_per_w|rs2}} per watt. Typical {{in.type}} range for {{in.kwp|int}} kW: {{out.range_low|rs2}} to {{out.range_high|rs2}} per watt, that is {{out.range_low_rs|rs}} to {{out.range_high_rs|rs}}. Against the low end your quote differs by {{out.vs_low_pct|int}}%, against the high end by {{out.vs_high_pct|int}}% (a minus sign means below it), so it is {{out.verdict}} the range.",
+    "text": "Rs 1,100,000 ÷ (10 kW × 1,000) = Rs 110.00 per watt. Typical on-grid range for 10 kW: Rs 95.00 to Rs 120.00 per watt, that is Rs 950,000 to Rs 1,200,000. Against the low end your quote differs by 16%, against the high end by -8% (a minus sign means below it), so it is within the range."
    },
    "submit": "Check my quote",
+   "notice": "",
    "data_checked": [
     {
-     "label": "Peak sun hours by city (Global Solar Atlas)",
-     "url": "https://globalsolaratlas.info/",
-     "checked": "2026-10-13"
-    },
-    {
-     "label": "Typical solar system prices in Pakistan (installer price lists and news reports, listed on this page)",
+     "label": "Typical solar system prices in Pakistan (installer price lists and news reports, each listed under Sources on this page)",
      "url": null,
      "checked": "2026-10-14"
     }

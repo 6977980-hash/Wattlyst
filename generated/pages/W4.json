@@ -41,7 +41,7 @@
    {
     "h2": "How is the DC cable size for solar panels worked out?",
     "p": [
-     "A solar DC cable has to pass two checks: it must carry the string current safely, and it must not lose too much voltage over the run. For a single string the first check is easy: a string carries only one panel's current, and 4 mm² copper PV cable, the smallest size sold for strings, is rated well above the short-circuit current of any common panel with the 1.25 safety margin. The second check, voltage drop, is what this calculator does: 14 A over 25 m in 4 mm² loses 3.9 V, 0.94% of a 420 V string.",
+     "A solar DC cable has to pass two checks: it must carry the string current safely, and it must not lose too much voltage over the run. For a single string the first check is easy: a string carries only one panel's current, and 4 mm² copper PV cable, the common size for strings, is rated well above the short-circuit current of any common panel with the 1.25 safety margin. The second check, voltage drop, is what this calculator does: 14 A over 25 m in 4 mm² loses 3.9 V, 0.94% of a 420 V string.",
      "Pick 4 mm² first. If the drop is above the limit, pick 6 mm² and check again. The table below does this for common runs so you can see where 4 mm² stops being enough."
     ]
    },
@@ -62,7 +62,7 @@
    {
     "h2": "Battery cable size for an inverter",
     "p": [
-     "The cable between the battery and the inverter is the opposite case: low voltage and very high current. A three kW inverter on a 48 V bank draws about 62.5 A, and even a 2 m run in 25 mm² loses 0.47%. The size here is set by current rating, not by drop: check it with the wire size calculator in DC mode, which picks the cable from the current table and gives the Pakistani size. Keep battery cables as short as possible and fit a DC-rated fuse or breaker at the battery.",
+     "The cable between the battery and the inverter is the opposite case: low voltage and very high current. A three kW inverter on a 48 V bank draws at least 62.5 A (more with the inverter's losses and a low battery), and even a 2 m run in 25 mm² loses 0.47%. The size here is set by current rating, not by drop: check it with the wire size calculator in DC mode, which picks the cable from the current table and gives the Pakistani size. Keep battery cables as short as possible and fit a DC-rated fuse or breaker at the battery.",
      "A five kW inverter on 48 V draws over a hundred amps, beyond the single-phase breaker sizes in our table; the inverter maker's manual gives the cable and fuse for it, and a licensed electrician should fit them."
     ]
    },
@@ -92,7 +92,7 @@
    },
    {
     "q": "What cable size between the battery and the inverter?",
-    "a": "That cable is sized by current, not drop: 62.5 A for a three kW inverter on 48 V. 25 mm² over 2 m drops only 0.47%, but confirm the current rating with the wire size calculator and the inverter manual."
+    "a": "That cable is sized by current, not drop: at least 62.5 A for a three kW inverter on 48 V, and more when the battery is low and with the inverter's own losses. 25 mm² over 2 m drops only 0.47%, but confirm the current rating with the wire size calculator and the inverter manual."
    },
    {
     "q": "What wire size for a five kW solar inverter?",
@@ -114,7 +114,7 @@
    "Using building wire on the roof. Ordinary PVC wire is not rated for sun, rain or the DC voltage of a string; use double-insulated PV cable with MC4 connectors.",
    "Combining strings without checking the current. Two strings on one cable double the amps; the drop doubles and the cable's current rating must be checked separately.",
    "Fixing a drop with thicker cable when more panels in series would do. Raising the string voltage cuts the percentage drop and the cost at the same time, within the inverter's voltage limits.",
-   "Going below 4 mm² because the drop allows it. 4 mm² is the smallest PV cable sold for strings and keeps a current margin; this calculator does not offer smaller sizes."
+   "Going below 4 mm² because the drop allows it. 4 mm² is the common PV cable size for strings and keeps a current margin; this calculator does not offer smaller sizes."
   ],
   "sources": [
    {
@@ -257,6 +257,7 @@
     "text": "The current flows out along the positive and back along the negative, so the cable length counts twice: 0.0225 Ω·mm²/m copper resistivity × two × 25 m × 14 A ÷ 4 mm² = 3.9 V lost. 3.9 V ÷ 420 V string voltage = 0.94%, against the 3% limit you chose, leaving 416 V at the inverter. If the drop is above the limit, pick the next cable size and check again."
    },
    "submit": "Calculate",
+   "notice": "",
    "data_checked": [
     {
      "label": "Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)",
@@ -484,7 +485,7 @@
       "name": "What cable size between the battery and the inverter?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "That cable is sized by current, not drop: 62.5 A for a three kW inverter on 48 V. 25 mm² over 2 m drops only 0.47%, but confirm the current rating with the wire size calculator and the inverter manual."
+       "text": "That cable is sized by current, not drop: at least 62.5 A for a three kW inverter on 48 V, and more when the battery is low and with the inverter's own losses. 25 mm² over 2 m drops only 0.47%, but confirm the current rating with the wire size calculator and the inverter manual."
       }
      },
      {

@@ -1923,6 +1923,22 @@
     "note": "edge case"
   },
   {
+    "calc": "heating_cost",
+    "name": "gas price from the bill in Rs per MMBtu",
+    "inputs": {
+      "q_kw": 2,
+      "tariff": 36.46,
+      "gas_price_mmbtu": 1250
+    },
+    "expected": {
+      "gas_price": 43.837,
+      "gas_m3_per_h": 0.24324,
+      "gas_rs_per_h": 10.663
+    },
+    "tolerance": 0.001,
+    "note": "1250 x 37 / 1055.056 = 43.84 Rs/m3; 2 / 0.8 x 3.6 / 37 = 0.2432 m3/h"
+  },
+  {
     "calc": "quote_checker",
     "name": "within dated range 100-140 Rs/W",
     "inputs": {
@@ -3634,6 +3650,40 @@
     "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): energy at avg 1920 W x 8 h x 10; only one compressor starts at once"
   },
   {
+    "calc": "solar_from_loads",
+    "name": "off-grid: panels also refill the night battery through charging and inverter losses",
+    "inputs": {
+      "loads": [
+        {
+          "id": "led-bulb",
+          "qty": 10,
+          "hours": 6
+        },
+        {
+          "id": "ceiling-fan-ac",
+          "qty": 2,
+          "hours": 12
+        }
+      ],
+      "city": "lahore",
+      "night_hours": 4,
+      "battery_v": 24,
+      "off_grid": true
+    },
+    "expected": {
+      "daily_kwh": 2.64,
+      "night_kwh": 1.12,
+      "day_kwh": 1.52,
+      "charge_eff": 0.95,
+      "array_kwh": 2.8299,
+      "kw_energy": 0.7075,
+      "panels": 2,
+      "installed_kw": 1.17
+    },
+    "tolerance": 0.001,
+    "note": "10 x 12 W x 6 h + 2 x 80 W x 12 h = 2.64 kWh; night 280 W x 4 h = 1.12; array 1.52 + 1.12 / (0.9 x 0.95) = 2.830; / 4.0 = 0.707 kW -> 2 x 585 W"
+  },
+  {
     "calc": "home_load",
     "name": "120 V resistive load at PF 1",
     "inputs": {
@@ -4325,6 +4375,44 @@
   },
   {
     "calc": "home_plan",
+    "name": "array above the sanctioned load: net billing counts only the panels within 3 kW",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ceiling-fan-ac",
+          "qty": 4
+        },
+        {
+          "id": "ac-split-1-5ton-inverter",
+          "hours": 8
+        },
+        {
+          "id": "refrigerator-inverter"
+        }
+      ],
+      "backup_w": 500,
+      "backup_hours": 4,
+      "city": "lahore",
+      "sanctioned_kw": 3
+    },
+    "expected": {
+      "panels": 6,
+      "installed_kw": 3.51,
+      "solar_above_sanctioned": true,
+      "net_billing_panels": 5,
+      "net_billing_kw": 2.925,
+      "net_billing_solar_kwh": 351,
+      "self_used_units": 195.6,
+      "export_units": 155.4,
+      "import_units": 195.6,
+      "solar_kw_energy": 3.26,
+      "solar_kw_power": 2.4231
+    },
+    "tolerance": 0.01,
+    "note": "floor(3000 / 585) = 5 panels = 2.925 kW x 4.0 x 30 = 351 units; export 351 - 195.6 = 155.4; energy rule 13.04 / 4.0 = 3.26 kW, power rule 1890 / 0.78 = 2.42 kW"
+  },
+  {
+    "calc": "home_plan",
     "name": "no backup hours gives no battery; tubular chemistry accepted",
     "inputs": {
       "loads": [
@@ -4507,6 +4595,38 @@
     },
     "tolerance": 0.001,
     "note": "no verdict without a range"
+  },
+  {
+    "calc": "quote_checker",
+    "name": "8 kW on-grid rests on one source: low-confidence flag",
+    "inputs": {
+      "kwp": 8,
+      "price": 950000,
+      "type": "on-grid"
+    },
+    "expected": {
+      "range_kw_used": 8,
+      "low_confidence": true,
+      "range_low_rs": 850000,
+      "range_high_rs": 1050000,
+      "verdict": "within"
+    },
+    "tolerance": 0.001,
+    "note": "data/solar-prices.json on-grid 8 kW has n_sources 1"
+  },
+  {
+    "calc": "quote_checker",
+    "name": "10 kW on-grid has several sources: no flag",
+    "inputs": {
+      "kwp": 10,
+      "price": 1100000,
+      "type": "on-grid"
+    },
+    "expected": {
+      "low_confidence": false
+    },
+    "tolerance": 0,
+    "note": ""
   },
   {
     "calc": "solar_price_estimate",

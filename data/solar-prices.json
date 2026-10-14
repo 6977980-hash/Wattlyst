@@ -3,7 +3,7 @@
   "source": "Pakistani blogs, installer price lists and news reports fetched 2026-10-14 (URLs on every data point). No official/regulatory price list exists; AEDB/NEPRA publish none.",
   "checked": "2026-10-14",
   "currency": "PKR",
-  "method": "For each (type, kW): collect every 2026 price range found (low_rs/high_rs per source). Points flagged in excluded_points are not used (reason given). with 4+ used sources low_rs = median of their lows and high_rs = median of their highs; with 1-3 sources low_rs = lowest low and high_rs = highest high (so single-source sizes keep that source's full range); rounded to Rs 5,000; rs_per_w = that / (kW*1000). min_low_seen / max_high_seen give the full spread. A quote below low_rs is 'below typical', above high_rs 'above typical'. Sizes with no 2026 data point (6 kW on-grid, 12 kW on-grid, 20 kW hybrid) are omitted rather than interpolated.",
+  "method": "For each (type, kW): collect every 2026 price range found (low_rs/high_rs per source). Points flagged in excluded_points are not used (reason given). with 4+ used sources low_rs = median of their lows and high_rs = median of their highs; with 1-3 sources low_rs = lowest low and high_rs = highest high (so single-source sizes keep that source's full range); rounded to Rs 5,000; rs_per_w = that / (kW*1000). min_low_seen / max_high_seen give the full spread. A quote below low_rs is 'below typical', above high_rs 'above typical'. Sizes with no 2026 data point (6 kW on-grid, 12 kW on-grid, 20 kW hybrid) are omitted rather than interpolated. A size whose only source gives a single price (zero-width range) is excluded (see excluded_points); a size backed by one source only is kept but the engine flags it low confidence and the page says so.",
   "notes": "Sources disagree by up to 2x for the same size; most are blogs or installer marketing, several internally inconsistent (noted per source). Hybrid prices depend mainly on battery kWh/chemistry. Panel prices move 5-10% month to month with USD/PKR and tax policy (ProPakistani and Nukta reported early-2026 price rises and a proposal to raise GST on solar equipment from 10% to 18%; ProPakistani page returned HTTP 403 so it is not quoted). Business Recorder, Dawn and Express Tribune pages were not found with system-price tables in the time available. ferozepower.com figures are 2025 and were not used.",
   "status": "Secondary sources only (blogs, installer price lists); refresh monthly (Phase 6 routine). Ranges are typical installed prices incl. panels, inverter, structure, wiring, labour; hybrid ranges mix battery sizes."
  },
@@ -308,30 +308,6 @@
      "low_rs": 2100000,
      "high_rs": 2850000,
      "note": "excluded: conflicts with same site's 10kW guide"
-    }
-   ],
-   "battery_note": "Hybrid prices depend heavily on battery chemistry and kWh; sources mix 5-15 kWh lithium and lead-acid banks (see each source's note)."
-  },
-  {
-   "type": "hybrid",
-   "kw": 12,
-   "low_rs": 1990000,
-   "high_rs": 1990000,
-   "low_rs_per_w": 165.8,
-   "high_rs_per_w": 165.8,
-   "n_sources": 1,
-   "min_low_seen": 1989999,
-   "max_high_seen": 1989999,
-   "confidence": "low",
-   "sources": [
-    {
-     "url": "https://thegreenoh.com/solar-guides/10kw-solar-system-price-pakistan",
-     "publisher": "GreenOH (installer marketplace)",
-     "date": "2026-10-14",
-     "quote": "\"12 kW Hybrid\": \"Rs 1,990,000\" (166 PKR per watt)",
-     "low_rs": 1989999,
-     "high_rs": 1989999,
-     "note": "battery size not stated"
     }
    ],
    "battery_note": "Hybrid prices depend heavily on battery chemistry and kWh; sources mix 5-15 kWh lithium and lead-acid banks (see each source's note)."
@@ -761,6 +737,31 @@
    ],
    "battery_note": "Hybrid prices depend heavily on battery chemistry and kWh; sources mix 5-15 kWh lithium and lead-acid banks (see each source's note).",
    "reason_excluded": "single installer figure (a 5 kW inverter with 10 panels sold as 6 kW) that is below the 5 kW on-grid range; using it would make the 5 to 8 kW hybrid range dip. Keep for reference, not used by the engine."
+  },
+  {
+   "type": "hybrid",
+   "kw": 12,
+   "low_rs": 1990000,
+   "high_rs": 1990000,
+   "low_rs_per_w": 165.8,
+   "high_rs_per_w": 165.8,
+   "n_sources": 1,
+   "min_low_seen": 1989999,
+   "max_high_seen": 1989999,
+   "confidence": "low",
+   "sources": [
+    {
+     "url": "https://thegreenoh.com/solar-guides/10kw-solar-system-price-pakistan",
+     "publisher": "GreenOH (installer marketplace)",
+     "date": "2026-10-14",
+     "quote": "\"12 kW Hybrid\": \"Rs 1,990,000\" (166 PKR per watt)",
+     "low_rs": 1989999,
+     "high_rs": 1989999,
+     "note": "battery size not stated"
+    }
+   ],
+   "battery_note": "Hybrid prices depend heavily on battery chemistry and kWh; sources mix 5-15 kWh lithium and lead-acid banks (see each source's note).",
+   "reason_excluded": "single source with one price (low = high), so any quote would read as above or below by a rupee; excluded 2026-10-14 after engineer review until a second source is found"
   }
  ]
 }

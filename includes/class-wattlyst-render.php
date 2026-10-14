@@ -169,7 +169,8 @@ final class Wattlyst_Render {
 			$form .= '<details class="wl-advanced"><summary>Advanced settings</summary><div class="wl-fields">' . $adv . '</div></details>';
 		}
 		$form .= '<button type="submit" class="wl-btn">' . esc_html( $t['submit'] ?? 'Calculate' ) . '</button>';
-		$form .= '<p class="wl-error" id="' . esc_attr( $id ) . '-error" role="alert" hidden></p>';
+		$notice = (string) ( $t['notice'] ?? '' ); // a warning on the default result, same text the browser prints
+		$form  .= '<p class="wl-error" id="' . esc_attr( $id ) . '-error" role="alert"' . ( '' === $notice ? ' hidden' : '' ) . '>' . esc_html( $notice ) . '</p>';
 		$form .= '<div class="wl-results" aria-live="polite">' . $results . '</div>' . $share;
 		$form .= '<script type="application/json" class="wl-config">' . wp_json_encode( $config, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ) . '</script>';
 		$form .= '</form>';

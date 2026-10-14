@@ -43,7 +43,7 @@
    {
     "h2": "Battery size calculator: from appliance watts to Ah",
     "p": [
-     "Start with the appliances, not with the battery. Add the running watts of everything that must stay on during a cut (fans, lights, a TV, a WiFi router) and decide how many hours they must run. The calculator turns that into watt hours, then into the amp hours a bank at your inverter voltage must hold. With the default 500 W for 4 hours that is 4.7 kWh and 196 Ah at 24 V.",
+     "Start with the appliances, not with the battery. Add the running watts of everything that must stay on during a cut (fans, lights, a TV, a WiFi router) and decide how many hours they must run. The calculator turns that into watt hours, then into the amp hours a bank at your inverter voltage must hold. With the default 500 W for 4 hours the load uses 2 kWh, which needs a rated bank of 4.7 kWh, 196 Ah at 24 V.",
      "Only part of a battery is usable. A tubular or lead-acid battery lasts far longer when it is drained to about 50% of its rating, so the calculator doubles the Ah to allow for that. A lithium (LiFePO4) battery can go to about 90%, which is why a lithium bank is smaller for the same backup. The inverter also loses some energy as heat, about 85% efficient for a basic UPS."
     ]
    },
@@ -92,7 +92,7 @@
    },
    {
     "q": "Is 12 V, 24 V or 48 V better for a battery bank?",
-    "a": "The inverter decides. Higher voltage means lower current for the same watts, thinner cables and less loss, which is why inverters above about 2 kW use 48 V. The energy stored is the same: 14.1 kWh is 294 Ah at 48 V or twice the Ah at half the voltage."
+    "a": "The inverter decides. Higher voltage means lower current for the same watts, thinner cables and less loss, which is why inverters above about 2 kW use 48 V. The rated energy is the same: 14.1 kWh is 294 Ah at 48 V or twice the Ah at half the voltage."
    },
    {
     "q": "How many lithium batteries do I need compared with tubular?",
@@ -283,18 +283,19 @@
     },
     {
      "key": "kwh_required",
-     "label": "Energy stored",
+     "label": "Rated bank size",
      "spec": "1",
      "unit": "kWh",
-     "label_ur": "Mehfooz energy",
+     "label_ur": "Battery bank ka rated size",
      "value": "4.7"
     }
    ],
    "how": {
-    "tpl": "{{out.load_w|int}} W × {{out.hours|int}} h = {{out.kwh_required|1}} kWh of energy must come out of the batteries. Divide by {{out.volts|1}} V, by {{out.dod|pct}} usable depth of discharge and by {{out.inverter_eff|pct}} inverter efficiency: {{out.ah_required|int}} Ah. A {{out.volts|1}} V bank made of {{out.battery_v|1}} V batteries needs {{out.series|int}} in series per string; {{out.ah_required|int}} Ah ÷ {{out.battery_ah|int}} Ah per battery, rounded up, is {{out.strings|int}} string(s) in parallel; {{out.series|int}} × {{out.strings|int}} = {{out.batteries|int}} batteries.",
-    "text": "500 W × 4 h = 4.7 kWh of energy must come out of the batteries. Divide by 24 V, by 50% usable depth of discharge and by 85% inverter efficiency: 196 Ah. A 24 V bank made of 12 V batteries needs 2 in series per string; 196 Ah ÷ 200 Ah per battery, rounded up, is 1 string(s) in parallel; 2 × 1 = 2 batteries."
+    "tpl": "{{out.load_w|int}} W × {{out.hours|int}} h = {{out.load_kwh|2}} kWh used by the load. Divide by {{out.volts|1}} V, by {{out.dod|pct}} usable depth of discharge and by {{out.inverter_eff|pct}} inverter efficiency: {{out.ah_required|int}} Ah, a rated bank of {{out.kwh_required|1}} kWh. A {{out.volts|1}} V bank made of {{out.battery_v|1}} V batteries needs {{out.series|int}} in series per string; {{out.ah_required|int}} Ah ÷ {{out.battery_ah|int}} Ah per battery, rounded up, is {{out.strings|int}} string(s) in parallel; {{out.series|int}} × {{out.strings|int}} = {{out.batteries|int}} batteries.",
+    "text": "500 W × 4 h = 2 kWh used by the load. Divide by 24 V, by 50% usable depth of discharge and by 85% inverter efficiency: 196 Ah, a rated bank of 4.7 kWh. A 24 V bank made of 12 V batteries needs 2 in series per string; 196 Ah ÷ 200 Ah per battery, rounded up, is 1 string(s) in parallel; 2 × 1 = 2 batteries."
    },
    "submit": "Calculate",
+   "notice": "",
    "data_checked": []
   },
   "examples": [
@@ -308,7 +309,7 @@
    },
    {
     "title": "A 5 kW inverter running an inverter AC, fans and lights",
-    "text": "2,500 W × 4 h = 23.5 kWh. At 48 V with 50% usable and 85% efficiency that is 490 Ah: 3 strings × 4 in series = 12 batteries of 200 Ah."
+    "text": "2,500 W × 4 h = 10 kWh used. At 48 V with 50% usable and 85% efficiency that is 490 Ah, a rated bank of 23.5 kWh: 3 strings × 4 in series = 12 batteries of 200 Ah."
    },
    {
     "title": "The same load on lithium at 51.2 V",
@@ -505,7 +506,7 @@
       "name": "Is 12 V, 24 V or 48 V better for a battery bank?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "The inverter decides. Higher voltage means lower current for the same watts, thinner cables and less loss, which is why inverters above about 2 kW use 48 V. The energy stored is the same: 14.1 kWh is 294 Ah at 48 V or twice the Ah at half the voltage."
+       "text": "The inverter decides. Higher voltage means lower current for the same watts, thinner cables and less loss, which is why inverters above about 2 kW use 48 V. The rated energy is the same: 14.1 kWh is 294 Ah at 48 V or twice the Ah at half the voltage."
       }
      },
      {

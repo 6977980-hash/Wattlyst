@@ -458,7 +458,7 @@
    },
    {
     "q": "Why is the saving an energy-charge estimate only?",
-    "a": "Fixed charge, surcharges and tax are the same with or without solar, so the planner compares only the energy charge of 456 units with the net-billing energy charge after 228 self-used and 263 exported units. The buyback rate is editable because it is not yet confirmed on a NEPRA page."
+    "a": "The planner compares only the energy charge of 396 units with the net-billing energy charge after 198 self-used and 223 exported units. Fixed charge, per-unit surcharges and GST are left out; most of them also fall when you import fewer units, so the real saving is usually somewhat higher than this estimate. The buyback rate is editable because it is not yet confirmed on a NEPRA page."
    },
    {
     "q": "Are the calculators free?",
@@ -479,7 +479,7 @@
   ],
   "key_facts": [
    "The planner carries one appliance list through the whole chain: running load, inverter, battery, solar, net billing and generator, each with the formula of its own calculator, so the sizes never contradict each other.",
-   "Inverter size = running watts × 1.25; battery Ah = backup watts × hours ÷ (bank volts × usable depth of discharge × inverter efficiency); solar kW = daily units ÷ city yield; generator kVA = the larger of running × 1.25 and the starting peak, ÷ 0.8.",
+   "Inverter size = running watts × 1.25; battery Ah = backup watts × hours ÷ (bank volts × usable depth of discharge × inverter efficiency); solar kW = the larger of daily units ÷ city yield and running watts ÷ performance ratio, with net billing counting the array only up to the sanctioned load; generator kVA = the larger of running × 1.25 and the starting peak, ÷ 0.8.",
    "Default values (inverter efficiency 85% UPS and 90% hybrid, usable battery capacity 50% tubular and 90% lithium, power factor 0.8) are listed on the methodology page and editable in each calculator.",
    "Pakistan tariff slabs, peak sun hours by city and appliance wattages live in dated data files; the net-billing buyback rate is not yet confirmed on a NEPRA page and stays editable.",
    "Results are planning estimates, not an official bill or an engineer's design; wiring and solar work must be confirmed by a licensed electrician."
@@ -1576,7 +1576,7 @@
       {
        "id": "ac-split-1-5ton-inverter",
        "qty": 1,
-       "hours": 8
+       "hours": 7
       },
       {
        "id": "refrigerator-inverter",
@@ -1585,11 +1585,6 @@
       {
        "id": "led-tv-43",
        "qty": 1
-      },
-      {
-       "id": "water-motor-1hp",
-       "qty": 1,
-       "hours": 1
       }
      ],
      "hint": "Watts and hours fill in from our appliance data; change any value to match your home."
@@ -1720,7 +1715,7 @@
      "label_ur": "Chalta hua load",
      "spec": "int",
      "unit": "W",
-     "value": "3,085"
+     "value": "2,085"
     },
     {
      "key": "monthly_units",
@@ -1728,7 +1723,7 @@
      "label_ur": "Mahana units",
      "spec": "int",
      "unit": "units",
-     "value": "456"
+     "value": "396"
     },
     {
      "key": "inverter_kw",
@@ -1736,7 +1731,15 @@
      "label_ur": "Inverter ka size",
      "spec": "1",
      "unit": "kW",
-     "value": "3.9"
+     "value": "2.6"
+    },
+    {
+     "key": "inverter_surge_w",
+     "label": "Surge rating needed",
+     "spec": "int",
+     "unit": "W",
+     "label_ur": "Darkar surge rating",
+     "value": "2,535"
     },
     {
      "key": "battery_ah",
@@ -1752,21 +1755,21 @@
      "label_ur": "Solar system",
      "spec": "2",
      "unit": "kW",
-     "value": "4.1"
+     "value": "3.51"
     },
     {
      "key": "panels",
      "label": "Panels",
      "label_ur": "Panels",
      "spec": "int",
-     "value": "7"
+     "value": "6"
     },
     {
      "key": "saving_rs",
      "label": "Monthly saving with net billing",
      "label_ur": "Net billing se mahana bachat",
      "spec": "rs",
-     "value": "Rs 13,117"
+     "value": "Rs 11,174"
     },
     {
      "key": "generator_pick_kva",
@@ -1774,16 +1777,17 @@
      "label_ur": "Generator (agar chahiye)",
      "spec": "1",
      "unit": "kVA",
-     "value": "6.5"
+     "value": "3.5"
     }
    ],
    "how": {
-    "tpl": "Your list runs {{out.running_w|int}} W at once ({{out.peak_w|int}} W when the biggest motor starts) and uses {{out.daily_kwh|1}} units a day, {{out.monthly_units|int}} a month. Inverter: {{out.running_w|int}} W × {{in.margin|2}} = {{out.inverter_kw|1}} kW. Battery: {{in.backup_w|int}} W × {{in.backup_hours|1}} h = {{out.backup_kwh|2}} kWh ÷ ({{out.battery_v|int}} V × {{out.battery_dod|pct}} usable × {{d.inverter_eff_hybrid|pct}} inverter) = {{out.battery_ah|int}} Ah. Solar: {{out.daily_kwh|1}} kWh ÷ {{out.city_yield|1}} kWh per kW per day = {{out.solar_kw|2}} kW, so {{out.panels|int}} panels of {{out.panel_w|int}} W = {{out.installed_kw|2}} kW making about {{out.monthly_solar_kwh|int}} units a month. Net billing: you use {{out.self_used_units|int}} of those units yourself, export {{out.export_units|int}} at {{out.buyback_rs|rs2}} and import {{out.import_units|int}}; energy charge {{out.bill_before_rs|rs}} before solar, {{out.bill_after_rs|rs}} after, saving {{out.saving_rs|rs}} a month. Generator for the whole list: {{out.generator_kva|1}} kVA, next standard size {{out.generator_pick_kva|1}} kVA.",
-    "text": "Your list runs 3,085 W at once (4,885 W when the biggest motor starts) and uses 15.2 units a day, 456 a month. Inverter: 3,085 W × 1.25 = 3.9 kW. Battery: 500 W × 4 h = 2 kWh ÷ (24 V × 90% usable × 90% inverter) = 103 Ah. Solar: 15.2 kWh ÷ 4 kWh per kW per day = 3.96 kW, so 7 panels of 585 W = 4.1 kW making about 491 units a month. Net billing: you use 228 of those units yourself, export 263 at Rs 11.00 and import 228; energy charge Rs 17,773 before solar, Rs 4,656 after, saving Rs 13,117 a month. Generator for the whole list: 6.1 kVA, next standard size 6.5 kVA.",
-    "tpl_ur": "Aap ki list ek waqt mein {{out.running_w|int}} W chalti hai (sab se bara motor start hone par {{out.peak_w|int}} W) aur roz {{out.daily_kwh|1}} units, mahine ke {{out.monthly_units|int}} units lagti hai. Inverter: {{out.running_w|int}} W × {{in.margin|2}} = {{out.inverter_kw|1}} kW. Battery: {{in.backup_w|int}} W × {{in.backup_hours|1}} h = {{out.backup_kwh|2}} kWh ÷ ({{out.battery_v|int}} V × {{out.battery_dod|pct}} qabil-e-istemal × {{d.inverter_eff_hybrid|pct}} inverter) = {{out.battery_ah|int}} Ah. Solar: {{out.daily_kwh|1}} kWh ÷ {{out.city_yield|1}} kWh fi kW roz = {{out.solar_kw|2}} kW, yani {{out.panel_w|int}} W ke {{out.panels|int}} panels = {{out.installed_kw|2}} kW, mahine ke taqreeban {{out.monthly_solar_kwh|int}} units. Net billing: {{out.self_used_units|int}} units khud istemal, {{out.export_units|int}} export {{out.buyback_rs|rs2}} par, {{out.import_units|int}} import; solar se pehle energy charge {{out.bill_before_rs|rs}}, baad mein {{out.bill_after_rs|rs}}, bachat {{out.saving_rs|rs}} mahana. Poori list ke liye generator: {{out.generator_kva|1}} kVA, agla standard size {{out.generator_pick_kva|1}} kVA.",
-    "text_ur": "Aap ki list ek waqt mein 3,085 W chalti hai (sab se bara motor start hone par 4,885 W) aur roz 15.2 units, mahine ke 456 units lagti hai. Inverter: 3,085 W × 1.25 = 3.9 kW. Battery: 500 W × 4 h = 2 kWh ÷ (24 V × 90% qabil-e-istemal × 90% inverter) = 103 Ah. Solar: 15.2 kWh ÷ 4 kWh fi kW roz = 3.96 kW, yani 585 W ke 7 panels = 4.1 kW, mahine ke taqreeban 491 units. Net billing: 228 units khud istemal, 263 export Rs 11.00 par, 228 import; solar se pehle energy charge Rs 17,773, baad mein Rs 4,656, bachat Rs 13,117 mahana. Poori list ke liye generator: 6.1 kVA, agla standard size 6.5 kVA."
+    "tpl": "Your list runs {{out.running_w|int}} W at once ({{out.peak_w|int}} W when the biggest motor starts) and uses {{out.daily_kwh|1}} units a day, {{out.monthly_units|int}} a month. Inverter: {{out.running_w|int}} W × {{in.margin|2}} = {{out.inverter_kw|1}} kW. Battery: {{in.backup_w|int}} W × {{in.backup_hours|1}} h = {{out.backup_kwh|2}} kWh ÷ ({{out.battery_v|int}} V × {{out.battery_dod|pct}} usable × {{d.inverter_eff_hybrid|pct}} inverter) = {{out.battery_ah|int}} Ah. Solar: energy {{out.daily_kwh|1}} kWh ÷ {{out.city_yield|1}} kWh per kW per day = {{out.solar_kw_energy|2}} kW; midday power {{out.running_w|int}} W ÷ {{out.pr|2}} performance ratio = {{out.solar_kw_power|2}} kW; the larger, {{out.solar_kw|2}} kW, needs {{out.panels|int}} panels of {{out.panel_w|int}} W = {{out.installed_kw|2}} kW making about {{out.monthly_solar_kwh|int}} units a month. Net billing counts an array up to your {{out.sanctioned_kw|1}} kW sanctioned load: {{out.net_billing_panels|int}} panels, {{out.net_billing_kw|2}} kW, about {{out.net_billing_solar_kwh|int}} units a month. You use {{out.self_used_units|int}} of those units yourself, export {{out.export_units|int}} at {{out.buyback_rs|rs2}} and import {{out.import_units|int}}; energy charge {{out.bill_before_rs|rs}} before solar, {{out.bill_after_rs|rs}} after, saving {{out.saving_rs|rs}} a month on the energy charge alone. Generator for the whole list: {{out.generator_kva|1}} kVA, next standard size {{out.generator_pick_kva|1}} kVA.",
+    "text": "Your list runs 2,085 W at once (2,535 W when the biggest motor starts) and uses 13.2 units a day, 396 a month. Inverter: 2,085 W × 1.25 = 2.6 kW. Battery: 500 W × 4 h = 2 kWh ÷ (24 V × 90% usable × 90% inverter) = 103 Ah. Solar: energy 13.2 kWh ÷ 4 kWh per kW per day = 3.3 kW; midday power 2,085 W ÷ 0.78 performance ratio = 2.67 kW; the larger, 3.3 kW, needs 6 panels of 585 W = 3.51 kW making about 421 units a month. Net billing counts an array up to your 4 kW sanctioned load: 6 panels, 3.51 kW, about 421 units a month. You use 198 of those units yourself, export 223 at Rs 11.00 and import 198; energy charge Rs 14,449 before solar, Rs 3,275 after, saving Rs 11,174 a month on the energy charge alone. Generator for the whole list: 3.3 kVA, next standard size 3.5 kVA.",
+    "tpl_ur": "Aap ki list ek waqt mein {{out.running_w|int}} W chalti hai (sab se bara motor start hone par {{out.peak_w|int}} W) aur roz {{out.daily_kwh|1}} units, mahine ke {{out.monthly_units|int}} units lagti hai. Inverter: {{out.running_w|int}} W × {{in.margin|2}} = {{out.inverter_kw|1}} kW. Battery: {{in.backup_w|int}} W × {{in.backup_hours|1}} h = {{out.backup_kwh|2}} kWh ÷ ({{out.battery_v|int}} V × {{out.battery_dod|pct}} qabil-e-istemal × {{d.inverter_eff_hybrid|pct}} inverter) = {{out.battery_ah|int}} Ah. Solar: energy {{out.daily_kwh|1}} kWh ÷ {{out.city_yield|1}} kWh fi kW roz = {{out.solar_kw_energy|2}} kW; dopahar ki power {{out.running_w|int}} W ÷ {{out.pr|2}} performance ratio = {{out.solar_kw_power|2}} kW; in mein bara, {{out.solar_kw|2}} kW, yani {{out.panel_w|int}} W ke {{out.panels|int}} panels = {{out.installed_kw|2}} kW, mahine ke taqreeban {{out.monthly_solar_kwh|int}} units. Net billing mein array aap ke {{out.sanctioned_kw|1}} kW sanctioned load tak gina jata hai: {{out.net_billing_panels|int}} panels, {{out.net_billing_kw|2}} kW, mahine ke taqreeban {{out.net_billing_solar_kwh|int}} units. In mein se {{out.self_used_units|int}} units khud istemal, {{out.export_units|int}} export {{out.buyback_rs|rs2}} par, {{out.import_units|int}} import; solar se pehle energy charge {{out.bill_before_rs|rs}}, baad mein {{out.bill_after_rs|rs}}, sirf energy charge par bachat {{out.saving_rs|rs}} mahana. Poori list ke liye generator: {{out.generator_kva|1}} kVA, agla standard size {{out.generator_pick_kva|1}} kVA.",
+    "text_ur": "Aap ki list ek waqt mein 2,085 W chalti hai (sab se bara motor start hone par 2,535 W) aur roz 13.2 units, mahine ke 396 units lagti hai. Inverter: 2,085 W × 1.25 = 2.6 kW. Battery: 500 W × 4 h = 2 kWh ÷ (24 V × 90% qabil-e-istemal × 90% inverter) = 103 Ah. Solar: energy 13.2 kWh ÷ 4 kWh fi kW roz = 3.3 kW; dopahar ki power 2,085 W ÷ 0.78 performance ratio = 2.67 kW; in mein bara, 3.3 kW, yani 585 W ke 6 panels = 3.51 kW, mahine ke taqreeban 421 units. Net billing mein array aap ke 4 kW sanctioned load tak gina jata hai: 6 panels, 3.51 kW, mahine ke taqreeban 421 units. In mein se 198 units khud istemal, 223 export Rs 11.00 par, 198 import; solar se pehle energy charge Rs 14,449, baad mein Rs 3,275, sirf energy charge par bachat Rs 11,174 mahana. Poori list ke liye generator: 3.3 kVA, agla standard size 3.5 kVA."
    },
    "submit": "Plan my home power",
+   "notice": "",
    "data_checked": [
     {
      "label": "Appliance running and starting watts (Wattlyst appliance data, sources listed on the appliance list page)",
@@ -1793,7 +1797,7 @@
    ]
   },
   "examples": [],
-  "answer": "The Home Power Planner sizes everything from one appliance list: a typical home running 3,085 W needs about a 3.9 kW inverter, a 103 Ah battery for 4 hours of backup, a 4.1 kW solar system of 7 panels that saves about Rs 13,117 a month under net billing, and a 6.5 kVA generator. Edit the list and every size updates. Each number links to the full calculator with its formula.",
+  "answer": "The Home Power Planner sizes everything from one appliance list: a typical home running 2,085 W needs about a 2.6 kW inverter, a 103 Ah battery for 4 hours of backup, a 3.51 kW solar system of 6 panels that saves about Rs 11,174 a month in energy charge under net billing, and a 3.5 kVA generator. Edit the list and every size updates. Each number links to the full calculator with its formula.",
   "formula": null,
   "safety": ""
  },
@@ -1868,7 +1872,7 @@
       "name": "Why is the saving an energy-charge estimate only?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Fixed charge, surcharges and tax are the same with or without solar, so the planner compares only the energy charge of 456 units with the net-billing energy charge after 228 self-used and 263 exported units. The buyback rate is editable because it is not yet confirmed on a NEPRA page."
+       "text": "The planner compares only the energy charge of 396 units with the net-billing energy charge after 198 self-used and 223 exported units. Fixed charge, per-unit surcharges and GST are left out; most of them also fall when you import fewer units, so the real saving is usually somewhat higher than this estimate. The buyback rate is editable because it is not yet confirmed on a NEPRA page."
       }
      },
      {

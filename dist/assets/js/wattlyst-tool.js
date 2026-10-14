@@ -1,5 +1,5 @@
 import{fmt,render}from '../../engine/format.js';
-import{errorMessage}from '../../engine/messages.js';
+import{errorMessage,noticeCode}from '../../engine/messages.js';
 const ver=new URL(import.meta.url).searchParams.get('ver')|| '';
 function loadsField(form,f,cfg,onChange){
 const box=form.querySelector(`[data-wl-loads="${f.name}"]`);
@@ -115,9 +115,9 @@ if(pushState)bad.focus();
 return;
 }
 results.hidden=false;
-const above=Object.keys(out).some((k)=> k.endsWith('above_standard_sizes')&& out[k]===true);
-errorEl.textContent=above?errorMessage('above_standard_sizes'):'';
-errorEl.hidden=!above;
+const notice=noticeCode(out);
+errorEl.textContent=notice?errorMessage(notice):'';
+errorEl.hidden=!notice;
 for(const o of cfg.outputs){
 const node=results.querySelector(`[data-out="${o.key}"] .wl-val`);
 if(node)node.textContent=fmt(out[o.key],o.spec)|| 'n/a';

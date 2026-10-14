@@ -10,7 +10,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parseCsv } from './lib/csv.js';
 import { stripJs } from './lib/strip.js';
 import { render, fmt, placeholders, isSpec, lookup } from '../engine/format.js';
-import { errorMessage } from '../engine/messages.js';
+import { errorMessage, noticeCode } from '../engine/messages.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => readFileSync(join(root, p), 'utf8');
@@ -64,7 +64,7 @@ function fail(msg) {
   throw new Error(`build: ${msg}`);
 }
 
-/** Resolve "@key" (data/defaults.json), "@appliance.key" and "@data.tariff.unprotected.3.rate" in field defaults. */
+/** Resolve "@key" (data/defaults.json), "@appliance.key" and "@data.tariff.unprotected.3.rate" in field defaults and example inputs. */
 function resolveDefault(v, ctx) {
   if (typeof v !== 'string' || !v.startsWith('@')) return v;
   const path = v.slice(1);
@@ -158,7 +158,7 @@ function buildContent(c, ctx) {
     scope.in = result;
     scope.out = result;
     scope.ex = (c.examples || []).map((ex, n) => {
-      const exIn = { ...inputs, ...ex.inputs };
+      const exIn = { ...inputs, ...Object.fromEntries(Object.entries(ex.inputs || {}).map(([k, v]) => [k, resolveDefault(v, ctx)])) };
       const r = runCalc(ctx, exIn, `example ${n + 1}`);
       return { in: r, out: r };
     });
@@ -180,6 +180,7 @@ function buildContent(c, ctx) {
       }),
       how: c.how ? { tpl: c.how, text: text(ctx, c.how, scope, 'how'), ...(c.how_ur ? { tpl_ur: c.how_ur, text_ur: text(ctx, c.how_ur, scope, 'how_ur') } : {}) } : null,
       submit: c.submit || 'Calculate',
+      notice: noticeCode(result) ? errorMessage(noticeCode(result)) : '',
       data_checked: dataChecked(module, { ...ctx, usesAppliances: fields.some((f) => f.type === 'appliance' || f.type === 'loads') }),
     };
     out.examples = (c.examples || []).map((ex, n) => ({
@@ -196,6 +197,7 @@ function buildContent(c, ctx) {
   }
   if (c.appliance_table) out.tables = applianceTables(ctx);
   if (c.codes_table) Object.assign(out, codeTables(ctx, out.sources));
+  if (c.calc === 'quote_checker' || c.calc === 'solar_price_estimate') out.sources = [...out.sources, ...priceSources(ctx)];
   out.answer = text(ctx, c.answer, scope, 'answer');
   out.intro = text(ctx, c.intro, scope, 'intro');
   out.key_facts = (c.key_facts || []).map((k, n) => text(ctx, k, scope, `key fact ${n + 1}`));
@@ -239,13 +241,29 @@ function codeTables(ctx, sources) {
   return { tables, lookup: { label: 'Brand', text_label: 'Error code or word', checked: ctx.inverterCodes._meta.checked, count: brands.reduce((n, b) => n + b.codes.length, 0) } };
 }
 
+/** N3 / D14: every price source behind data/solar-prices.json (systems in use and panel prices), once per URL. */
+function priceSources(ctx) {
+  const seen = new Map();
+  const add = (s) => {
+    if (s.url && !seen.has(s.url)) seen.set(s.url, { label: `${s.publisher}, ${String(s.date).split(/ \(|;/)[0]} (price data)`, url: s.url });
+  };
+  for (const r of ctx.solarPrices.systems) for (const s of r.sources || []) add(s);
+  for (const s of ctx.solarPrices.panel_rs_per_w.sources || []) add(s);
+  return [...seen.values()];
+}
+
 /** "Last checked" lines for the data a tool depends on, so a data refresh re-dates the page. */
 function dataChecked(module, ctx) {
   const out = [];
   if (module === 'bill') out.push({ label: 'Pakistan electricity tariff (NEPRA notification)', url: ctx.data.tariff._meta.source_url || null, checked: ctx.data.tariff._meta.checked });
-  if (module === 'solar') out.push({ label: 'Peak sun hours by city (Global Solar Atlas)', url: 'https://globalsolaratlas.info/', checked: ctx.citiesMeta.checked });
-  if (module === 'wiring' || module === 'load') out.push({ label: 'Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)', url: 'https://webstore.iec.ch/publication/1878', checked: ctx.cables._meta.checked });
-  if (ctx.calc === 'quote_checker' || ctx.calc === 'solar_price_estimate') out.push({ label: 'Typical solar system prices in Pakistan (installer price lists and news reports, listed on this page)', url: null, checked: ctx.solarPrices._meta.checked });
+  const prices = ctx.calc === 'quote_checker' || ctx.calc === 'solar_price_estimate';
+  if (module === 'solar' && !prices) out.push({ label: 'Peak sun hours by city (Global Solar Atlas)', url: 'https://globalsolaratlas.info/', checked: ctx.citiesMeta.checked });
+  if (ctx.calc === 'heating_cost') {
+    out.push({ label: 'Pakistan electricity tariff (NEPRA notification)', url: ctx.data.tariff._meta.source_url || null, checked: ctx.data.tariff._meta.checked });
+    const g = ctx.data.tariff.gas_domestic;
+    out.push({ label: `Domestic gas slab prices (${g.source}; not yet matched to the OGRA notification)`, url: g.source_url, checked: g.checked });
+  } else if (module === 'wiring' || module === 'load') out.push({ label: 'Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)', url: 'https://webstore.iec.ch/publication/1878', checked: ctx.cables._meta.checked });
+  if (prices) out.push({ label: 'Typical solar system prices in Pakistan (installer price lists and news reports, each listed under Sources on this page)', url: null, checked: ctx.solarPrices._meta.checked });
   if (ctx.usesAppliances) out.push({ label: 'Appliance running and starting watts (Wattlyst appliance data, sources listed on the appliance list page)', url: `${ctx.site.url.replace(/\/$/, '')}/appliances/`, checked: ctx.appliances._meta.checked });
   if (ctx.appliance) out.push({ label: `Typical wattage of ${ctx.appliance.name} (${ctx.appliance.source})`, url: ctx.appliance.source_url || null, checked: ctx.appliances._meta.checked });
   return out;

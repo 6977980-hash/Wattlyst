@@ -184,7 +184,7 @@
       "Output short circuited",
       "Manual: 'Output short circuited.'",
       "Manual: 'Check if wiring is connected well and remove abnormal load.' Owner: switch off loads, look for a faulty appliance; if the fault stays, call installer.",
-      "Usually not"
+      "Yes"
      ],
      [
       "Fault 06 / 58",
@@ -597,7 +597,7 @@
       "Grid voltage below lower threshold",
       "Manual: 'The grid voltage is below the lower threshold or the low voltage duration has lasted for more than the value specified by low voltage ride-through (LVRT).'",
       "Manual: '1. If the alarm occurs occasionally, the power grid may be abnormal temporarily. The SUN2000 automatically recovers... 2. If the alarm occurs frequently, check whether the power grid voltage is within the allowed range. If no, contact the local power operator. If yes, modify the grid undervoltage protection threshold ... with the consent of the local power operator.'",
-      "Usually not"
+      "Yes"
      ],
      [
       "2034 Grid Overvoltage",
@@ -751,14 +751,14 @@
       "Grid overvoltage",
       "Article: 'Grid voltage is higher than standard code's 1st level overvoltage limit for the set period of time.' (02: 'transient value is over 1.35 times of rated voltage peak value'; 03: 10-min overvoltage; 04: 2nd level; 05: transient over 200ms)",
       "Article: '1. If it happens accidentally, it may be a short-term abnormality of the grid. The inverter will resume normal operation after detecting that the grid is normal, without manual intervention. 2. Check if the standard is set correctly. 3. If it occurs frequently, please check the grid voltage and the grid frequency... check whether the AC side circuit breaker and the output cable are connected properly. 4. ...After obtaining the approval from the local power operator, please contact customer service to modify the inverter grid Over and under voltage/frequency protection points.'",
-      "Usually not"
+      "Yes"
      ],
      [
       "UN-G-V (1011)",
       "Grid undervoltage",
       "Article: 'Grid voltage is lower than the limit.'",
       "Same steps as OV-G-V (wait if occasional; check grid/wiring and protection settings if frequent).",
-      "Usually not"
+      "Yes"
      ],
      [
       "OV-G-F (1012)",
@@ -1171,21 +1171,21 @@
       "Grid voltage too high",
       "Manual: 'Generally, the inverter will be reconnected to the grid after the grid returns to normal.'",
       "Manual: 'If the fault occurs repeatedly: 1. Measure the actual grid voltage, and contact the local electric power company for solutions if the grid voltage is higher than the set value. 2. Check whether the protection parameters are appropriately set via the App or the LCD. Modify the overvoltage protection values with the consent of the local electric power operator. 3. Contact Sungrow Customer Service if the preceding causes are ruled out and the fault persists.'",
-      "Usually not"
+      "Yes"
      ],
      [
       "004, 005 Grid Undervoltage",
       "Grid voltage too low",
       "Same auto-reconnect note.",
       "Manual: measure grid voltage / contact power company; check protection parameters; '3. Check whether the AC cable is firmly in place. 4. Contact Sungrow Customer Service...'",
-      "Usually not"
+      "Yes"
      ],
      [
       "008 Grid Overfrequency",
       "Grid frequency too high",
       "Same auto-reconnect note.",
       "Manual: '1. Measure the actual grid frequency, and contact the local electric power company for solutions if the grid frequency is beyond the set range. 2. Check whether the protection parameters are appropriately set via the App or the LCD. 3. Contact Sungrow Customer Service...'",
-      "Usually not"
+      "Yes"
      ],
      [
       "009 Grid Underfrequency",
@@ -1199,7 +1199,7 @@
       "No grid",
       "Same auto-reconnect note.",
       "Manual: '1. Check whether the grid supplies power reliably. 2. Check whether the AC cable is firmly in place. 3. Check whether the AC cable is connected to the correct terminal (whether the live wire and the N wire are correctly in place). 4. Check whether the AC circuit breaker is connected. 5. Contact Sungrow Customer Service...' Owner: check for outage / AC breaker.",
-      "Usually not"
+      "Yes"
      ],
      [
       "012 Excess Leakage Current",
@@ -1220,7 +1220,7 @@
       "Phase voltages differ too much (3-phase)",
       "Same auto-reconnect note.",
       "Manual: '1. Measure the actual grid voltage. If grid phase voltages differ greatly, contact the electric power company for solutions. 2. ...modify the grid voltage imbalance parameter through the App or the LCD. 3. Contact Sungrow Customer Service...'",
-      "Usually not"
+      "Yes"
      ],
      [
       "028, 029, 208, 212, 448-479 PV Reverse Connection Fault",
@@ -1234,7 +1234,7 @@
       "Inverter/module too hot",
       "Manual: 'Generally, the inverter will resume operation when the internal or module temperature returns to normal.'",
       "Manual: '1. Check whether the ambient temperature of the inverter is too high; 2. Check whether the inverter is in a well-ventilated place; 3. Check whether the inverter is exposed to direct sunlight. Shield it if so; 4. Check whether the fan is running properly. Replace the fan if not; 5. Contact Sungrow Power Customer Service...'",
-      "Usually not"
+      "Yes"
      ],
      [
       "039 Low System Insulation Resistance",
@@ -1318,7 +1318,7 @@
       "String producing abnormally (shading, loose wiring, fuse)",
       "Manual: '1. Check whether the corresponding module is sheltered... 2. Check whether the battery board wiring is loose... 3. Check if the DC fuse is damaged.'",
       "Manual: '4. Contact Sungrow Customer Service if the preceding causes are ruled out and the alarm persists.' Owner can check shading/cleanliness; wiring/fuse is installer work.",
-      "Usually not"
+      "Yes"
      ],
      [
       "System Fault (007, 011, 016, 019-025, 030-034, 036, 038, 040-042, 044-050, 052-058, 060-069, 085, 087, 092, 093, 100-105, 107-114, 116-124, 200-211, 248-255, 300-322, 324-328, 401-412, 600-603, 605, 608, 612, 616, 620, 622-624, 800, 802, 804, 807, 1096-1122)",
@@ -1332,7 +1332,7 @@
       "Non-blocking system alarm",
       "Manual: '1. The inverter can continue running.'",
       "Manual: '2. Check whether the related wiring and terminal are abnormal, check whether there are any foreign materials or other environmental abnormalities, and take corresponding corrective measures when necessary. 3. If the fault persists, please contact Sungrow Power Customer Service.'",
-      "Usually not"
+      "Yes"
      ]
     ]
    },
@@ -1549,7 +1549,7 @@
       "Output short circuited (or converter over-temperature)",
       "Manual: 'Output short circuited or over temperature is detected by internal converter components.'",
       "Manual: 'Check if wiring is connected well and remove abnormal load.'",
-      "Usually not"
+      "Yes"
      ],
      [
       "Fault 06 / 58",

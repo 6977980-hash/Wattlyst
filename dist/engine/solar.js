@@ -72,13 +72,29 @@ const y=yieldFor(i,d);
 const panel_w=pos(i,'panel_w',dflt(d,'panel_w'));
 const pr=frac(i,'pr',dflt(d,'pr'));
 const margin=num(i,'margin',{def:dflt(d,'margin'),min:1});
-const kw_energy=daily_kwh / y.yield_kwh_per_kwp_day;
+const night_hours=nonneg(i,'night_hours',0);
+let bat=null;
+let night_kwh=0;
+if(night_hours > 0){
+night_kwh=(running_w * night_hours)/ 1000;
+const volts=pos(i,'battery_v',dflt(d,'battery_v_default'));
+bat={volts,...solar_battery.raw({night_kwh,volts,dod:i.dod,inverter_eff:i.inverter_eff},d)};
+}
+let array_kwh=daily_kwh;
+let offgrid={};
+if(i.off_grid===true && bat){
+const charge_eff=frac(i,'charge_eff',bat.dod > dflt(d,'dod_lead_acid')?dflt(d,'charge_eff_lifepo4'):dflt(d,'charge_eff_lead_acid'));
+const load_kwh=Math.max(daily_kwh,night_kwh);
+array_kwh=load_kwh - night_kwh + night_kwh /(bat.inverter_eff * charge_eff);
+offgrid={off_grid:true,charge_eff,battery_inverter_eff:bat.inverter_eff,load_kwh,day_kwh:load_kwh - night_kwh};
+}
+const kw_energy=array_kwh / y.yield_kwh_per_kwp_day;
 const kw_power=running_w / 1000 / pr;
 const kw=Math.max(kw_energy,kw_power);
 const panels=ceilSafe((kw * 1000)/ panel_w);
 const installed_kw=(panels * panel_w)/ 1000;
 const out={
-daily_kwh,running_w,surge_w,...y,pr,panel_w,margin,kw_energy,kw_power,kw,panels,installed_kw,
+daily_kwh,array_kwh,...offgrid,running_w,surge_w,...y,pr,panel_w,margin,kw_energy,kw_power,kw,panels,installed_kw,
 roof_m2:panels * dflt(d,'panel_area_m2'),
 monthly_kwh_estimate:installed_kw * y.yield_kwh_per_kwp_day * dflt(d,'days_per_month'),
 inverter_w:running_w * margin,
@@ -86,13 +102,7 @@ inverter_kw:(running_w * margin)/ 1000,
 inverter_surge_w:surge_w,
 limited_by:kw_power > kw_energy?'power':'energy',
 };
-const night_hours=nonneg(i,'night_hours',0);
-if(night_hours > 0){
-const night_kwh=(running_w * night_hours)/ 1000;
-const volts=pos(i,'battery_v',dflt(d,'battery_v_default'));
-const bat=solar_battery.raw({night_kwh,volts,dod:i.dod,inverter_eff:i.inverter_eff},d);
-Object.assign(out,{night_hours,night_kwh,battery_v:volts,battery_dod:bat.dod,battery_ah:bat.ah,battery_kwh:bat.kwh});
-}
+if(bat)Object.assign(out,{night_hours,night_kwh,battery_v:bat.volts,battery_dod:bat.dod,battery_ah:bat.ah,battery_kwh:bat.kwh});
 return out;
 }
 
@@ -117,7 +127,7 @@ const motor_eff=frac(i,'motor_eff',dflt(d,'motor_eff'));
 const hours=pos(i,'hours');
 const pump_w=(hp * dflt(d,'w_per_hp'))/ motor_eff;
 const sys=solarSystem((pump_w * hours)/ 1000,pump_w,pump_w,i,d);
-return{hp,motor_eff,hours,pump_w,pump_kw:pump_w / 1000,...sys,drive_kw:sys.inverter_kw};
+return{hp,motor_eff,hours,pump_w,pump_kw:pump_w / 1000,motor_kw:(hp * dflt(d,'w_per_hp'))/ 1000,...sys,drive_kw:sys.inverter_kw};
 });
 export const charge_controller=calculator((i,d)=>{
 const type=i.type??'mppt';
@@ -139,17 +149,18 @@ function priceRange(d,type,kwp){
 const rows=(d?.solar_prices?.systems ||[]).filter((r)=> r.type===type && r.kw > 0).sort((a,b)=> a.kw - b.kw);
 if(!rows.length)throw new CalcError('price_data_missing','type');
 const perW=(r)=>({lo:r.low_rs /(r.kw * 1000),hi:r.high_rs /(r.kw * 1000)});
+const weak=(...rs)=>({low_confidence:rs.some((r)=>(r.n_sources??0)< 2)});
 const exact=rows.find((r)=> Math.abs(r.kw - kwp)< 1e-9);
-if(exact)return{...perW(exact),range_kw_used:exact.kw};
-if(kwp <=rows[0].kw)return{...perW(rows[0]),range_kw_used:rows[0].kw};
+if(exact)return{...perW(exact),range_kw_used:exact.kw,...weak(exact)};
+if(kwp <=rows[0].kw)return{...perW(rows[0]),range_kw_used:rows[0].kw,...weak(rows[0])};
 const last=rows[rows.length - 1];
-if(kwp >=last.kw)return{...perW(last),range_kw_used:last.kw};
+if(kwp >=last.kw)return{...perW(last),range_kw_used:last.kw,...weak(last)};
 const a=rows.filter((r)=> r.kw < kwp).pop();
 const b=rows.find((r)=> r.kw > kwp);
 const t=(kwp - a.kw)/(b.kw - a.kw);
 const pa=perW(a);
 const pb=perW(b);
-return{lo:pa.lo +(pb.lo - pa.lo)* t,hi:pa.hi +(pb.hi - pa.hi)* t,range_between_kw:[a.kw,b.kw]};
+return{lo:pa.lo +(pb.lo - pa.lo)* t,hi:pa.hi +(pb.hi - pa.hi)* t,range_between_kw:[a.kw,b.kw],...weak(a,b)};
 }
 
 export const quote_checker=calculator((i,d)=>{
@@ -167,7 +178,7 @@ out.range_source='input';
 const type=pick(i,'type',['on-grid','hybrid']);
 const r=priceRange(d,type,kwp);
 ({lo,hi}=r);
-Object.assign(out,{type,range_source:'data'},r.range_kw_used !==undefined?{range_kw_used:r.range_kw_used}:{range_between_kw:r.range_between_kw});
+Object.assign(out,{type,range_source:'data',low_confidence:r.low_confidence},r.range_kw_used !==undefined?{range_kw_used:r.range_kw_used}:{range_between_kw:r.range_between_kw});
 }
 if(lo !==undefined){
 if(lo > hi)throw new CalcError('range_invalid','range_low');
@@ -183,6 +194,7 @@ const type=pick(i,'type',['on-grid','hybrid'],'on-grid');
 const r=priceRange(d,type,kwp);
 const out={kwp,type,rs_per_w_low:r.lo,rs_per_w_high:r.hi,price_low_rs:r.lo * kwp * 1000,price_high_rs:r.hi * kwp * 1000,price_mid_rs:((r.lo + r.hi)/ 2)* kwp * 1000};
 if(r.range_kw_used !==undefined)out.range_kw_used=r.range_kw_used;else out.range_between_kw=r.range_between_kw;
+out.low_confidence=r.low_confidence;
 const panel=d?.solar_prices?.panel_rs_per_w;
 if(panel?.low > 0 && panel?.high > 0)Object.assign(out,{panel_rs_per_w_low:panel.low,panel_rs_per_w_high:panel.high,panels_low_rs:kwp * 1000 * panel.low,panels_high_rs:kwp * 1000 * panel.high});
 if(has(i,'monthly_saving_rs')){

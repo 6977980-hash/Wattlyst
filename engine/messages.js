@@ -33,6 +33,8 @@ const EXACT = {
   load_above_standard_breakers: 'This load needs more than the largest single-phase MCB. Split it into separate circuits or ask a licensed electrician about a three-phase connection.',
   load_above_cable_table: 'This load is above the largest cable in our table. Split it into separate circuits and consult a licensed electrician.',
   run_too_long_for_table: 'This run is too long for the cables in our table: the voltage drop would exceed the limit. Shorten the run, split the load or consult a licensed electrician.',
+  solar_above_sanctioned: 'Your solar array is larger than your sanctioned load. Net billing allows an array up to the sanctioned kW, so the bill step counts only the panels that fit within it. Apply for a higher sanctioned load or plan fewer panels.',
+  price_low_confidence: 'The typical price range for this size rests on a single published price list, so treat it as a rough guide and compare at least two more quotes.',
   above_standard_sizes: 'This is above the largest standard size we list. Split the array or circuit into two, or ask a licensed electrician or engineer; the sizes shown are the calculated minimums.',
   price_data_missing: 'Price data could not be loaded. Enter the typical price range yourself or refresh the page.',
   internal_non_finite: 'These numbers are outside a realistic range. Please check your inputs.',
@@ -51,6 +53,14 @@ const PATTERNS = [
 ];
 
 const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+
+/** Notice for a valid result that carries a warning flag (shown above the results, same text in build and browser). */
+export function noticeCode(out) {
+  if (Object.keys(out).some((k) => k.endsWith('above_standard_sizes') && out[k] === true)) return 'above_standard_sizes';
+  if (out.solar_above_sanctioned === true) return 'solar_above_sanctioned';
+  if (out.low_confidence === true) return 'price_low_confidence';
+  return '';
+}
 
 export function errorMessage(code, labels = {}) {
   if (EXACT[code]) return EXACT[code];

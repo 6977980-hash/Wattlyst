@@ -135,7 +135,7 @@
   {
    "h2": "How many watts is a 1 hp motor?",
    "p": [
-    "One hp is {{d.w_per_hp|1}} W of shaft power, the mechanical power the motor delivers to the pump. A small single-phase motor is only about {{d.motor_eff|pct}} efficient, so the electrical input it draws from the socket is higher: typical 1 hp donkey pumps sold in Pakistan under makes such as Golden, Pedrollo, Grundfos or Shahzad draw about {{appliance.running_w|int}} W, with real motors ranging from about {{appliance.running_w_range.0|int}} W to {{appliance.running_w_range.1|int}} W.",
+    "One hp is {{d.w_per_hp|1}} W of shaft power, the mechanical power the motor delivers to the pump. A small single-phase motor is only about {{d.motor_eff|pct}} efficient, so the electrical input it draws from the socket is higher: a typical 1 hp donkey pump sold in Pakistan draws about {{appliance.running_w|int}} W, with real motors ranging from about {{appliance.running_w_range.0|int}} W to {{appliance.running_w_range.1|int}} W.",
     "If the nameplate gives input watts or kW, enter that in the watts column. If it gives only hp and amps, the amps × {{out.volts|int}} V × power factor is a good estimate of the input watts."
    ]
   },

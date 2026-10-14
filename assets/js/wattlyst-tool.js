@@ -1,7 +1,7 @@
 // Live calculator runner (progressive enhancement: the default result is already in the HTML).
 // It only reads the form, calls the engine and prints the engine's numbers. No formula lives here.
 import { fmt, render } from '../../engine/format.js';
-import { errorMessage } from '../../engine/messages.js';
+import { errorMessage, noticeCode } from '../../engine/messages.js';
 
 const ver = new URL(import.meta.url).searchParams.get('ver') || '';
 
@@ -128,10 +128,10 @@ async function init(form) {
       return;
     }
     results.hidden = false;
-    // A size above the largest standard item in data/ has no "standard" output: say so instead of a blank (formulas.md contract).
-    const above = Object.keys(out).some((k) => k.endsWith('above_standard_sizes') && out[k] === true);
-    errorEl.textContent = above ? errorMessage('above_standard_sizes') : '';
-    errorEl.hidden = !above;
+    // Warning flags (size above the standard list, solar above the sanctioned load) print a notice, not a blank.
+    const notice = noticeCode(out);
+    errorEl.textContent = notice ? errorMessage(notice) : '';
+    errorEl.hidden = !notice;
     for (const o of cfg.outputs) {
       const node = results.querySelector(`[data-out="${o.key}"] .wl-val`);
       if (node) node.textContent = fmt(out[o.key], o.spec) || 'n/a';
