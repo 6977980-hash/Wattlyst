@@ -6,13 +6,14 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { calculators } from '../engine/index.js';
-import { stripJs } from '../tools/lib/strip.js';
+import { stripJs, stampImports } from '../tools/lib/strip.js';
 import { data, cases, root } from './load-data.js';
 
 // The browser loads the stripped copies in dist/ (tools/build.js). Strip the current engine into a temp
-// folder and run every case there as well, so a stripping mistake can never reach the site.
+// folder (with the ?ver= stamped imports, as shipped) and run every case there as well, so a stripping or
+// stamping mistake can never reach the site.
 const tmp = mkdtempSync(join(tmpdir(), 'wl-dist-'));
-for (const f of readdirSync(join(root, 'engine')).filter((x) => x.endsWith('.js'))) writeFileSync(join(tmp, f), stripJs(readFileSync(join(root, 'engine', f), 'utf8')));
+for (const f of readdirSync(join(root, 'engine')).filter((x) => x.endsWith('.js'))) writeFileSync(join(tmp, f), stampImports(stripJs(readFileSync(join(root, 'engine', f), 'utf8')), 'test'));
 const { calculators: shipped } = await import(pathToFileURL(join(tmp, 'index.js')).href);
 
 for (const c of cases) {

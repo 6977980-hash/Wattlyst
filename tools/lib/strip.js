@@ -121,3 +121,21 @@ export function stripJs(src) {
   }
   return out.trim() + '\n';
 }
+
+// Static relative imports in shipped code: `from'./core.js'` and `import('../../engine/x.js')` with a literal path.
+const IMPORT_RE = /((?:\bfrom|\bimport)\s*\(?\s*)(['"])(\.{1,2}\/[^'"?]+\.js)\2/g;
+
+/** Relative module paths a file imports statically, as written (e.g. ['./core.js', './sizing.js']). */
+export function staticImports(code) {
+  return [...code.matchAll(IMPORT_RE)].map((m) => m[3]);
+}
+
+/**
+ * Adds ?ver=<ver> to every static relative import, so a browser that cached an older module under the
+ * long asset cache can never mix it with a newer one after a deploy (audit WL-56), and every module is
+ * requested under the one URL the page preloads (WL-55). The dynamic engine import in wattlyst-tool.js
+ * appends the same ver read from its own script URL.
+ */
+export function stampImports(code, ver) {
+  return code.replace(IMPORT_RE, (_, pre, q, path) => `${pre}${q}${path}?ver=${ver}${q}`);
+}

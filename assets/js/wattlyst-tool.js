@@ -47,10 +47,12 @@ function loadsField(form, f, cfg, onChange) {
   // The server renders only the chosen option per row; build the full grouped list once and copy it into every select.
   const full = document.createElement('select');
   full.append(new Option('Custom (enter watts)', 'custom'));
-  let group = null;
-  for (const a of f.catalog || []) {
-    if (!group || group.label !== a.category) { group = document.createElement('optgroup'); group.label = a.category.replace(/-/g, ' ').replace(/^\w/, (m) => m.toUpperCase()); full.append(group); }
-    group.append(new Option(a.name, a.id));
+  // catalog: [[category, [id, ...]], ...]; names come from cfg.data.appliances (shipped once).
+  for (const [cat, ids] of f.catalog || []) {
+    const group = document.createElement('optgroup');
+    group.label = cat.replace(/-/g, ' ').replace(/^\w/, (m) => m.toUpperCase());
+    for (const id of ids) group.append(new Option(cfg.data.appliances[id].name, id));
+    full.append(group);
   }
   // Filled lazily on first focus, so a page with several rows does not carry hundreds of <option>s in the DOM.
   const populate = (sel) => {
