@@ -37,6 +37,10 @@ const EXACT = {
   price_low_confidence: 'The typical price range for this size rests on a single published price list, so treat it as a rough guide and compare at least two more quotes.',
   above_standard_sizes: 'This is above the largest standard size we list. Split the array or circuit into two, or ask a licensed electrician or engineer; the sizes shown are the calculated minimums.',
   price_data_missing: 'Price data could not be loaded. Enter the typical price range yourself or refresh the page.',
+  load_above_generator: 'This load is more than the generator can deliver (kVA × power factor). Enter a bigger generator or a smaller load.',
+  fuel_data_missing: 'Fuel data could not be loaded. Please refresh the page.',
+  panels_must_be_whole: 'Number of panels must be a whole number.',
+  forecast_invalid: 'The solar forecast could not be read. The typical day is shown instead.',
   internal_non_finite: 'These numbers are outside a realistic range. Please check your inputs.',
 };
 

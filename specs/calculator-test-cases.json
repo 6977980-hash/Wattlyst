@@ -4728,5 +4728,285 @@
     },
     "tolerance": 0.01,
     "note": ""
+  },
+  {
+    "calc": "generator_fuel",
+    "name": "C8: 5 kVA petrol at 2,000 W for 6 h a day",
+    "inputs": {
+      "fuel": "petrol",
+      "kva": 5,
+      "load_w": 2000,
+      "hours": 6,
+      "days": 30,
+      "price": 400
+    },
+    "expected": {
+      "rated_kw": 4,
+      "l_per_h": 1.36,
+      "l_per_day": 8.16,
+      "l_per_month": 244.8,
+      "rs_per_h": 544,
+      "rs_per_month": 97920,
+      "l_per_kwh": 0.68,
+      "rs_per_unit": 272,
+      "load_pct": 50
+    },
+    "tolerance": 0.001,
+    "note": "L/h = 0.10 x 4 kW rated + 0.48 x 2 kW load"
+  },
+  {
+    "calc": "generator_fuel",
+    "name": "C8: 20 kVA diesel at 8 kW",
+    "inputs": {
+      "fuel": "diesel",
+      "kva": 20,
+      "load_w": 8000,
+      "hours": 1,
+      "price": 396.24
+    },
+    "expected": {
+      "rated_kw": 16,
+      "l_per_h": 2.8,
+      "idle_l_per_h": 0.8,
+      "rs_per_h": 1109.472
+    },
+    "tolerance": 0.001,
+    "note": "0.05 x 16 + 0.25 x 8"
+  },
+  {
+    "calc": "generator_fuel",
+    "name": "C8: idle generator burns the no-load fuel only, no cost per unit",
+    "inputs": {
+      "fuel": "petrol",
+      "kva": 2.5,
+      "load_w": 0,
+      "hours": 1,
+      "price": 400
+    },
+    "expected": {
+      "l_per_h": 0.2,
+      "rs_per_h": 80
+    },
+    "tolerance": 0.001,
+    "note": ""
+  },
+  {
+    "calc": "generator_fuel",
+    "name": "C8: load above the generator rating is an error",
+    "inputs": {
+      "fuel": "petrol",
+      "kva": 5,
+      "load_w": 4500,
+      "hours": 2
+    },
+    "expected": {
+      "error": "load_above_generator"
+    },
+    "tolerance": 0,
+    "note": "5 kVA x 0.8 = 4 kW"
+  },
+  {
+    "calc": "generator_fuel",
+    "name": "C8: default fuel price comes from data/generator-fuel.json",
+    "inputs": {
+      "fuel": "petrol",
+      "kva": 5,
+      "load_w": 2000
+    },
+    "expected": {
+      "price": 398.3,
+      "hours": 1
+    },
+    "tolerance": 0.001,
+    "note": ""
+  },
+  {
+    "calc": "panel_price",
+    "name": "D9: ten 585 W panels at the typical Rs per watt",
+    "inputs": {
+      "panel_w": 585,
+      "panels": 10
+    },
+    "expected": {
+      "kw": 5.85,
+      "rs_per_w_low": 40,
+      "rs_per_w_high": 46,
+      "panel_low_rs": 23400,
+      "panel_high_rs": 26910,
+      "total_low_rs": 234000,
+      "total_high_rs": 269100
+    },
+    "tolerance": 0.01,
+    "note": "reads data/solar-prices.json panel_rs_per_w (re-check at each monthly refresh)"
+  },
+  {
+    "calc": "panel_price",
+    "name": "D9: panels must be a whole number",
+    "inputs": {
+      "panel_w": 585,
+      "panels": 2.5
+    },
+    "expected": {
+      "error": "panels_must_be_whole"
+    },
+    "tolerance": 0,
+    "note": ""
+  },
+  {
+    "calc": "solar_forecast",
+    "name": "N6: typical day for 5 kWp in Lahore = kWp x city yield",
+    "inputs": {
+      "kwp": 5,
+      "city": "lahore"
+    },
+    "expected": {
+      "units": 20,
+      "typical_units": 20,
+      "pct_of_typical": 100,
+      "source": "typical",
+      "sky": "Typical day"
+    },
+    "tolerance": 0.001,
+    "note": ""
+  },
+  {
+    "calc": "solar_forecast",
+    "name": "N6: sunny forecast day",
+    "inputs": {
+      "kwp": 5,
+      "city": "lahore",
+      "gti_wm2": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        50,
+        200,
+        400,
+        600,
+        750,
+        850,
+        880,
+        850,
+        750,
+        600,
+        400,
+        200,
+        50,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "forecast_date": "2026-10-15",
+      "tariff": 50
+    },
+    "expected": {
+      "psh": 6.58,
+      "units": 25.662,
+      "pct_of_typical": 128.31,
+      "sky": "Sunny",
+      "source": "forecast",
+      "rs_value": 1283.1,
+      "forecast_date": "2026-10-15"
+    },
+    "tolerance": 0.001,
+    "note": "5 x 6.58 x 0.78"
+  },
+  {
+    "calc": "solar_forecast",
+    "name": "N6: half the sun is partly cloudy",
+    "inputs": {
+      "kwp": 5,
+      "city": "lahore",
+      "gti_wm2": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        25.0,
+        100.0,
+        200.0,
+        300.0,
+        375.0,
+        425.0,
+        440.0,
+        425.0,
+        375.0,
+        300.0,
+        200.0,
+        100.0,
+        25.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "expected": {
+      "units": 12.831,
+      "pct_of_typical": 64.155,
+      "sky": "Partly cloudy"
+    },
+    "tolerance": 0.001,
+    "note": ""
+  },
+  {
+    "calc": "solar_forecast",
+    "name": "N6: negative irradiance is rejected",
+    "inputs": {
+      "kwp": 5,
+      "city": "lahore",
+      "gti_wm2": [
+        -5,
+        0,
+        0,
+        0,
+        0,
+        0,
+        50,
+        200,
+        400,
+        600,
+        750,
+        850,
+        880,
+        850,
+        750,
+        600,
+        400,
+        200,
+        50,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "expected": {
+      "error": "forecast_invalid"
+    },
+    "tolerance": 0,
+    "note": ""
+  },
+  {
+    "calc": "solar_forecast",
+    "name": "N6: unknown city",
+    "inputs": {
+      "kwp": 5,
+      "city": "atlantis"
+    },
+    "expected": {
+      "error": "city_unknown"
+    },
+    "tolerance": 0,
+    "note": ""
   }
 ]

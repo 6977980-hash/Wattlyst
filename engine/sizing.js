@@ -1,5 +1,5 @@
 // C. Inverter & generator sizing (specs/formulas.md section C), sanctioned load (G, N4).
-import { calculator, CalcError, num, pos, frac, nonneg, ceilSafe, dflt, appliance, has } from './core.js';
+import { calculator, CalcError, num, pos, frac, nonneg, ceilSafe, dflt, appliance, has, pick } from './core.js';
 
 /**
  * loads: [{ name, run, start, qty }] for appliances ON AT THE SAME TIME. start defaults to run.
@@ -168,4 +168,33 @@ export const load_check = calculator((i, d) => {
   const volts = pos(i, 'volts', dflt(d, 'v_1ph'));
   const pf = frac(i, 'pf', dflt(d, 'pf_mixed'));
   return { total_w, sanctioned_kw, volts, pf, total_kw: total_w / 1000, amps: total_w / (volts * pf), within_sanctioned: total_w / 1000 <= sanctioned_kw, load_pct: (total_w / 1000 / sanctioned_kw) * 100 };
+});
+
+/**
+ * C8: generator fuel use from the straight-line fuel curve in data/generator-fuel.json:
+ * L/h = intercept × rated kW + slope × load kW, rated kW = kVA × PF (pf_generator).
+ * Cost = litres × fuel price (Rs per litre, default the dated price in the same file); cost per unit = Rs/h ÷ load kW.
+ */
+export const generator_fuel = calculator((i, d) => {
+  const fuel = pick(i, 'fuel', ['petrol', 'diesel'], 'petrol');
+  const curve = d?.generator_fuel?.fuels?.[fuel];
+  if (!(curve?.slope_l_per_kwh > 0) || !(curve?.intercept_l_per_h_per_kw_rated >= 0)) throw new CalcError('fuel_data_missing', 'fuel');
+  const kva = pos(i, 'kva');
+  const pf = frac(i, 'pf', dflt(d, 'pf_generator'));
+  const rated_kw = kva * pf;
+  const load_w = nonneg(i, 'load_w');
+  const load_kw = load_w / 1000;
+  if (load_kw > rated_kw + 1e-9) throw new CalcError('load_above_generator', 'load_w');
+  const hours = num(i, 'hours', { def: 1, min: 0, max: 24 });
+  const days = nonneg(i, 'days', dflt(d, 'days_per_month'));
+  const price = nonneg(i, 'price', d.generator_fuel.prices?.[fuel]?.rs_per_litre);
+  const l_per_h = curve.intercept_l_per_h_per_kw_rated * rated_kw + curve.slope_l_per_kwh * load_kw;
+  const out = {
+    fuel, kva, pf, rated_kw, load_w, load_kw, load_pct: (load_kw / rated_kw) * 100, hours, days, price,
+    intercept: curve.intercept_l_per_h_per_kw_rated, slope: curve.slope_l_per_kwh, idle_l_per_h: curve.intercept_l_per_h_per_kw_rated * rated_kw,
+    l_per_h, l_per_day: l_per_h * hours, l_per_month: l_per_h * hours * days,
+    rs_per_h: l_per_h * price, rs_per_day: l_per_h * hours * price, rs_per_month: l_per_h * hours * days * price,
+  };
+  if (load_kw > 0) Object.assign(out, { l_per_kwh: l_per_h / load_kw, rs_per_unit: (l_per_h * price) / load_kw });
+  return out;
 });

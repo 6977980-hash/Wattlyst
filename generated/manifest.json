@@ -48,7 +48,8 @@
      "gas_cv_mj_m3",
      "start_factors",
      "standard_generator_kva",
-     "planner_day_share"
+     "planner_day_share",
+     "forecast_sky_bands"
     ]
    },
    "v_1ph": 230,
@@ -158,7 +159,27 @@
     30
    ],
    "battery_v_default": 24,
-   "planner_day_share": 0.5
+   "planner_day_share": 0.5,
+   "forecast_tilt_deg": 25,
+   "forecast_max_wm2": 1500,
+   "forecast_sky_bands": [
+    {
+     "min_pct": 85,
+     "label": "Sunny"
+    },
+    {
+     "min_pct": 60,
+     "label": "Partly cloudy"
+    },
+    {
+     "min_pct": 30,
+     "label": "Cloudy"
+    },
+    {
+     "min_pct": 0,
+     "label": "Overcast or rain"
+    }
+   ]
   },
   "tariff": {
    "_meta": {
@@ -239,7 +260,42 @@
     "offpeak": 34.53,
     "fixed_per_kw": 675,
     "fixed_basis": "higher of 50% sanctioned load or MDI",
-    "fixed_min_fraction": 0.5
+    "fixed_min_fraction": 0.5,
+    "peak_hours": {
+     "seasons": [
+      {
+       "months": "December to February",
+       "from": "5 pm",
+       "to": "9 pm",
+       "hours": 4
+      },
+      {
+       "months": "March to May",
+       "from": "6 pm",
+       "to": "10 pm",
+       "hours": 4
+      },
+      {
+       "months": "June to August",
+       "from": "7 pm",
+       "to": "11 pm",
+       "hours": 4
+      },
+      {
+       "months": "September to November",
+       "from": "6 pm",
+       "to": "10 pm",
+       "hours": 4
+      }
+     ],
+     "applies_to": "ex-WAPDA DISCOs (LESCO, IESCO, MEPCO, GEPCO, FESCO, PESCO, HESCO, SEPCO, QESCO, TESCO), consumers on a Time-of-Use meter (5 kW or more sanctioned load); every other hour is off-peak",
+     "source": "NEPRA tariff determination for IESCO FY2023-24 (schedule of peak and off-peak timings for ToU tariffs); the December to February window is also published by PITC's bill portal",
+     "source_url": "https://nepra.org.pk/tariff/Tariff/DISCOs/IESCO/2023/TRF-607%20&TRF%20608%20IESCO%20FY%202023%2024%2014-07-2023%2018263-69.PDF",
+     "source_secondary_url": "https://bill.pitc.com.pk/peak-offpeak-timing",
+     "checked": "2026-10-14",
+     "verified": false,
+     "note": "Latest NEPRA schedule found is dated 2023; an August 2025 news report says NEPRA asked DISCOs to propose peak hours up to 11 pm only, adoption not confirmed. K-Electric publishes its own timings. Re-check against the current DISCO tariff schedule."
+    }
    },
    "addons_secondary": {
     "fc_surcharge_per_unit": {
@@ -366,32 +422,44 @@
    "lahore": {
     "ghi": 1690,
     "psh": 5.1,
-    "yield": 4
+    "yield": 4,
+    "lat": 31.5497,
+    "lon": 74.3436
    },
    "karachi": {
     "ghi": 1981,
     "psh": 5.9,
-    "yield": 4.6
+    "yield": 4.6,
+    "lat": 24.8608,
+    "lon": 67.0104
    },
    "islamabad": {
     "ghi": 1756,
     "psh": 5.4,
-    "yield": 4.3
+    "yield": 4.3,
+    "lat": 33.6844,
+    "lon": 73.0479
    },
    "peshawar": {
     "ghi": 1704,
     "psh": 5.2,
-    "yield": 4.1
+    "yield": 4.1,
+    "lat": 34.008,
+    "lon": 71.5785
    },
    "quetta": {
     "ghi": 2176,
     "psh": 6.8,
-    "yield": 5.3
+    "yield": 5.3,
+    "lat": 30.1798,
+    "lon": 66.975
    },
    "multan": {
     "ghi": 1872,
     "psh": 5.7,
-    "yield": 4.4
+    "yield": 4.4,
+    "lat": 30.1984,
+    "lon": 71.4687
    }
   },
   "cables": {

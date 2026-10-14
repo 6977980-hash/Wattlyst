@@ -6,7 +6,9 @@ import * as bill from './bill.js';
 import * as load from './load.js';
 import * as wiring from './wiring.js';
 import * as planner from './planner.js';
-const modules={conversions,battery,sizing,solar,bill,load,wiring,planner};
+import * as prices from './prices.js';
+import * as forecast from './forecast.js';
+const modules={conversions,battery,sizing,solar,bill,load,wiring,planner,prices,forecast};
 export const calculators={};
 for(const mod of Object.values(modules)){
 for(const[name,fn]of Object.entries(mod)){

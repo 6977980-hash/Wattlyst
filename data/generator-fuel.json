@@ -1,0 +1,36 @@
+{
+ "_meta": {
+  "source": "Fuel curve fitted by Wattlyst from manufacturer run-time specifications (petrol) and the industry approximate diesel fuel consumption chart (diesel); fuel prices from news reports of the Petroleum Division notification",
+  "checked": "2026-10-14",
+  "method": "Fuel use in litres per hour = intercept x rated kW + slope x load kW (the straight-line fuel curve used by HOMER microgrid software: no-load fuel per rated kW plus marginal fuel per kWh). Rated kW = generator kVA x the generator power factor (data/defaults.json pf_generator). Petrol: each source point is litres per hour at quarter load and at rated load from tank size / run time; both generators were normalised per rated kW and averaged, then the line through the two averaged points gives the coefficients. Diesel: the line through the quarter-load and full-load points of the chart (the same coefficients fit every size row of the chart within a few percent). Small generators sold in Pakistan vary; a worn or open-frame generator burns more. Engineer to confirm.",
+  "status": "Planning estimates, not a measured figure for any one generator. Fuel prices change every few days in Pakistan (short-period pricing since 2026); refresh monthly and let the user enter today's price.",
+  "engineer_confirm": ["fuels"]
+ },
+ "fuels": {
+  "petrol": {
+   "intercept_l_per_h_per_kw_rated": 0.1,
+   "slope_l_per_kwh": 0.48,
+   "points": [
+    {"model": "Honda EU2200i (EU22i), 1.8 kW rated, 0.95 gal (3.6 L) tank", "quarter_load_hours": 8.1, "rated_load_hours": 3.2, "tank_l": 3.6, "rated_kw": 1.8, "source": "Honda EU2200i dealer specification (run time per tankful)", "source_url": "https://www.sloans.adpearance.com/catalog/products-for-mowing/honda-mowing-equipment/honda-generators/eu2200i"},
+    {"model": "Honda EU7000iS, 5.5 kW rated, 5.1 gal (19.3 L) tank", "quarter_load_hours": 18, "rated_load_hours": 6.5, "tank_l": 19.3, "rated_kw": 5.5, "source": "Honda EU7000iS dealer specification (run time per tankful)", "source_url": "https://www.sloans.adpearance.com/catalog/products-for-mowing/honda-mowing-equipment/honda-generators/eu7000is"}
+   ]
+  },
+  "diesel": {
+   "intercept_l_per_h_per_kw_rated": 0.05,
+   "slope_l_per_kwh": 0.25,
+   "points": [
+    {"model": "20 kW diesel generator, approximate chart", "quarter_load_l_per_h": 2.3, "full_load_l_per_h": 6.1, "rated_kw": 20, "source": "Approximate diesel fuel consumption chart (metric version)", "source_url": "https://oer.enviraj.com/general/diesel-generator-fuel-consumption-chart/"},
+    {"model": "20 kW diesel generator, approximate chart (US gallons: 0.6 at 1/4 load, 1.6 at full load)", "quarter_load_l_per_h": 2.27, "full_load_l_per_h": 6.06, "rated_kw": 20, "source": "Approximate diesel fuel consumption chart", "source_url": "https://www.bigrentz.com/blog/diesel-generator-fuel-consumption-chart"}
+   ]
+  }
+ },
+ "prices": {
+  "petrol": {"rs_per_litre": 398.30, "effective": "2026-10-10 to 2026-10-12"},
+  "diesel": {"rs_per_litre": 396.24, "effective": "2026-10-10 to 2026-10-12"},
+  "source": "Gari.pk report of the Petroleum Division notification (petrol and high-speed diesel, 10 to 12 October 2026)",
+  "source_url": "https://www.gari.pk/news/petrol-price-update-new-rates-effective-from-october-10-5641/",
+  "checked": "2026-10-14",
+  "verified": false,
+  "note": "Secondary source; prices are now revised every few days. Replace with the Petroleum Division / OGRA notification when fetched."
+ }
+}

@@ -1,0 +1,35 @@
+// N6 solar output forecast (formulas.md Phase 5). Pure: the browser fetches the hourly forecast and passes it in.
+import { calculator, CalcError, has, pos, frac, nonneg, num, dflt } from './core.js';
+
+/**
+ * N6: solar output for one day. Typical day = kWp × city yield (Global Solar Atlas). With an hourly
+ * plane-of-array forecast (W/m², hourly means, e.g. Open-Meteo global_tilted_irradiance):
+ * peak sun hours = Σ GTI / 1000; units = kWp × peak sun hours × PR. pct_of_typical = units ÷ typical units;
+ * sky = the first band in data/defaults.json forecast_sky_bands whose min_pct the day reaches.
+ */
+export const solar_forecast = calculator((i, d) => {
+  const kwp = pos(i, 'kwp');
+  const city = String(i.city ?? '').trim().toLowerCase();
+  const c = d?.cities?.[city];
+  if (!c || !(c.yield > 0)) throw new CalcError('city_unknown', 'city');
+  const pr = frac(i, 'pr', dflt(d, 'pr'));
+  const typical_units = kwp * c.yield;
+  const out = { kwp, city, pr, typical_psh: c.psh, typical_units };
+  if (Array.isArray(i.gti_wm2) && i.gti_wm2.length) {
+    if (i.gti_wm2.length > 48) throw new CalcError('forecast_invalid', 'gti_wm2');
+    const hours = i.gti_wm2.map((w, k) => num({ w }, 'w', { min: 0, max: dflt(d, 'forecast_max_wm2'), code: 'forecast_invalid' }));
+    const psh = hours.reduce((s, w) => s + w, 0) / 1000;
+    const units = kwp * psh * pr;
+    const pct = (units / typical_units) * 100;
+    const band = dflt(d, 'forecast_sky_bands').find((b) => pct >= b.min_pct);
+    Object.assign(out, { source: 'forecast', psh, units, pct_of_typical: pct, sky: band ? band.label : 'Overcast' });
+    if (typeof i.forecast_date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(i.forecast_date)) out.forecast_date = i.forecast_date;
+  } else {
+    Object.assign(out, { source: 'typical', psh: c.psh, units: typical_units, pct_of_typical: 100, sky: 'Typical day' });
+  }
+  if (has(i, 'tariff')) {
+    out.tariff = nonneg(i, 'tariff');
+    out.rs_value = out.units * out.tariff;
+  }
+  return out;
+});
