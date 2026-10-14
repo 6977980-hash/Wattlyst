@@ -11,8 +11,8 @@
 .wl-tool{background:var(--wl-bg-soft);border:1px solid var(--wl-line);border-radius:10px;padding:1rem;margin:0 0 1.5rem}
 .wl-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr));gap:.9rem 1rem}
 .wl-field label{display:block;font-weight:600;margin-bottom:.25rem}
-.wl-field input[type=text],.wl-field select{width:100%;min-height:44px;font-size:1rem;padding:.5rem .65rem;border:1px solid #7d8c85;border-radius:6px;background:#fff;color:var(--wl-ink);box-sizing:border-box}
-.wl-field input:focus,.wl-field select:focus{outline:3px solid #ffbf47;outline-offset:1px}
+.wl-field input[type=text],.wl-field input[type=tel],.wl-field select,.wl-field textarea{width:100%;min-height:44px;font-size:1rem;padding:.5rem .65rem;border:1px solid #7d8c85;border-radius:6px;background:#fff;color:var(--wl-ink);box-sizing:border-box}
+.wl-field input:focus,.wl-field select:focus,.wl-field textarea:focus{outline:3px solid #ffbf47;outline-offset:1px}
 .wl-field [aria-invalid=true]{border-color:#b00020;border-width:2px}
 .wl-unit{font-weight:400;color:var(--wl-muted)}
 .wl-hint{font-size:.875rem;color:var(--wl-muted);margin:.25rem 0 0}
@@ -74,7 +74,7 @@
 .wl-share{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-top:.75rem}
 .wl-share .wl-btn-secondary{margin:0;text-decoration:none;display:inline-flex;align-items:center}
 .wl-share-note{font-size:.9rem;color:var(--wl-muted);word-break:break-all}
-@media print{.site-header,.site-footer,.main-navigation,.wl-share,.wl-btn,.wl-advanced,.wl-ad,.wl-remove-row,.wl-add-row,.wl-related,.wl-cards,.wl-breadcrumb{display:none!important}.wl-tool{border:0;background:none;padding:0}.wl-page{color:#000}.wl-result output{color:#000}.wl-page a{text-decoration:none;color:#000}.wl-dates::after{content:" · wattlyst.com"}}
+@media print{.site-header,.site-footer,.main-navigation,.wl-share,.wl-btn,.wl-advanced,.wl-ad,.wl-lead,.wl-buy,.wl-remove-row,.wl-add-row,.wl-related,.wl-cards,.wl-breadcrumb{display:none!important}.wl-tool{border:0;background:none;padding:0}.wl-page{color:#000}.wl-result output{color:#000}.wl-page a{text-decoration:none;color:#000}.wl-dates::after{content:" · wattlyst.com"}}
 .wl-download{display:flex;flex-wrap:wrap;gap:.5rem 1rem;align-items:center;font-size:.95rem;color:var(--wl-muted);margin:0 0 1.25rem}
 .wl-chart{margin:1.5rem 0;padding:1rem;border:1px solid var(--wl-line);border-radius:10px}
 .wl-chart figcaption{font-weight:700;margin-bottom:.75rem}
@@ -108,3 +108,14 @@
 .wl-more{font-size:.8rem;color:var(--wl-muted)}
 .wl-embedded .wl-embed-title{margin:0 0 .5rem}
 .wl-credit{font-size:.9rem;margin:.75rem 0 0}
+.wl-lead{background:var(--wl-bg-soft);border:1px solid var(--wl-line);border-radius:10px;padding:1rem;margin:2rem 0}
+.wl-lead h2{margin-top:0}
+.wl-lead>.wl-field,.wl-lead form>.wl-field{margin-top:.9rem}
+.wl-lead .wl-check{align-items:flex-start;margin-top:.9rem}
+.wl-lead .wl-check input{width:1.25rem;height:1.25rem;margin-top:.2rem;flex:none}
+.wl-lead-ok{font-weight:600}
+.wl-note{font-size:.875rem;color:var(--wl-muted);margin:.5rem 0 0}
+.wl-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.wl-buy{border:1px solid var(--wl-line);border-radius:10px;padding:1rem;margin:2rem 0}
+.wl-buy h2{margin-top:0}
+.wl-disclosure{font-size:.875rem;color:var(--wl-muted)}

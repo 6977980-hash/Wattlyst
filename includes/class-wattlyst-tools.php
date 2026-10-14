@@ -30,11 +30,13 @@ final class Wattlyst_Tools {
 		require_once WATTLYST_TOOLS_DIR . 'includes/class-wattlyst-head.php';
 		require_once WATTLYST_TOOLS_DIR . 'includes/class-wattlyst-endpoints.php';
 		require_once WATTLYST_TOOLS_DIR . 'includes/class-wattlyst-ads.php';
+		require_once WATTLYST_TOOLS_DIR . 'includes/class-wattlyst-leads.php';
 
 		add_action( 'init', array( $this, 'register_shortcodes' ) );
 		new Wattlyst_Pages( $this );
 		new Wattlyst_Head( $this );
 		new Wattlyst_Endpoints( $this );
+		new Wattlyst_Leads( $this );
 	}
 
 	public function register_shortcodes(): void {

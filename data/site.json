@@ -1,7 +1,7 @@
 {
  "_meta": {
-  "source": "Owner (Ali Ahmad), project chat 2026-10-13",
-  "checked": "2026-10-13",
+  "source": "Owner (Ali Ahmad), project chat 2026-10-13; ads slots and leads added in Phase 6 (build-plan.md), 2026-10-14",
+  "checked": "2026-10-14",
   "use": "Single source for brand, contact and people on About/Contact/author box and Organization/Person schema (seo-rules.md 6-7)."
  },
  "brand": "Wattlyst",
@@ -42,12 +42,37 @@
  "ads": {
   "enabled": false,
   "adsense_pub_id": null,
-  "note": "Stays false until AdSense approves the site (seo-rules.md 8). When approved: set adsense_pub_id (pub-...) so /ads.txt is served, then enabled true."
+  "slots": {
+   "content-1": null,
+   "content-2": null,
+   "content-3": null
+  },
+  "note": "Stays false until AdSense approves the site (seo-rules.md 8). When approved: set adsense_pub_id (pub-...) so /ads.txt is served, create three display ad units in AdSense and put their data-ad-slot numbers in slots, then enabled true. A slot with no number prints nothing. Ads show only on tool, appliance, guide and lookup pages (max three, never near inputs or the Calculate button), never on the home page, data, embed, trust or thank-you pages."
  },
  "consent": {
   "cmp": null,
   "note": "Name of the Google-certified CMP once installed (seo-rules.md 8); shown in the privacy policy."
  },
  "organization_same_as_note": "Add brand profile URLs (YouTube, Facebook, X, LinkedIn page) to organization_same_as as each one goes live; they appear in Organization schema sameAs.",
- "twitter_image": "assets/brand/twitter-card.png"
+ "twitter_image": "assets/brand/twitter-card.png",
+ "leads": {
+  "enabled": false,
+  "pages": [
+   "H1",
+   "D3",
+   "D7",
+   "D8",
+   "D9",
+   "D12",
+   "D13",
+   "D14",
+   "D15",
+   "N3",
+   "N13"
+  ],
+  "retention_days": 180,
+  "rate_limit_per_hour": 5,
+  "token_max_age_days": 14,
+  "note": "Solar quote request form (build-plan Phase 6). Turn on only when someone answers the requests: each one is saved privately in WordPress (Solar leads menu, admins only) and emailed to contact_email. Text lives in content/lead-form.json; the privacy policy section appears only while enabled is true. Requests older than retention_days are deleted automatically."
+ }
 }

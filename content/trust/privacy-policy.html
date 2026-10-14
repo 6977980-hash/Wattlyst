@@ -3,6 +3,10 @@
 <p>Calculations happen on your device. When you press Calculate, your inputs are added to the page address (after <code>?load=</code>) so you can bookmark or share the result. Anyone you share that link with can see those inputs. We do not store them in a database.</p>
 <h2>Solar forecast and embedded calculators</h2>
 <p>The solar output forecast page asks <a href="https://open-meteo.com/" rel="noopener">Open-Meteo</a>, a free weather service, for tomorrow's sunshine at the city you choose. Your browser sends only that city's coordinates; Open-Meteo, like any website, can see your IP address. When another website embeds one of our calculators, the calculator loads from our site inside their page; it carries no ads and sets no cookies.</p>
+<!--if:leads.enabled-->
+<h2>Solar quote requests</h2>
+<p>Some solar pages have a form to request installer quotes. If you send it, we collect your name, mobile number, city and anything optional you add (system size, monthly units, a message), plus the page you sent it from. We use these details only to arrange quotes: they are saved privately on our site and shared only with a solar installer near you that we pass your request to, who may call or message you about a quote. Our team gets an email notice without your details. We do not sell them to advertisers. Requests are deleted automatically after {{site.leads.retention_days}} days. To have yours deleted sooner, email us from the contact page with the number you used. To stop repeated spam, a one-way hash of your IP address is kept for one hour.</p>
+<!--endif-->
 <h2>Information collected automatically</h2>
 <p>Like most websites, our hosting provider records standard server logs (IP address, browser type, page requested, date and time) to keep the site secure and working. Logs are kept only as long as needed for that purpose.</p>
 <!--if:analytics.enabled-->
@@ -28,4 +32,4 @@
 <h2>Email</h2>
 <p>If you email us, we use your address and message only to reply and to fix any error you report. We do not sell or share it.</p>
 <h2>Changes and contact</h2>
-<p>We will update this policy when our use of analytics, ads or cookies changes. Questions: <a href="mailto:{{site.contact_email}}">{{site.contact_email}}</a>.</p>
+<p>We will update this policy when our use of analytics, ads, cookies or quote requests changes. Questions: <a href="mailto:{{site.contact_email}}">{{site.contact_email}}</a>.</p>

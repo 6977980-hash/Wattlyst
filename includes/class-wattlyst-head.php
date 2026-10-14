@@ -126,6 +126,7 @@ final class Wattlyst_Head {
 		}
 		$this->json_ld( $page['schema'] ?? null );
 		$this->styles();
+		echo Wattlyst_Ads::loader( $site, $page ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in loader()
 		if ( ! empty( $page['content']['tool'] ) ) {
 			$this->preload( $page['content']['tool']['module'] );
 		}
