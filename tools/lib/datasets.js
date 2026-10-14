@@ -36,7 +36,8 @@ export function billIndex(ctx, fail) {
   const levels = ix.levels.map((l) => {
     const a = run(cur, l);
     const b = run(prev, l);
-    const diff = a.total_rs - b.total_rs;
+    // Bills are paid in whole rupees, so the change is taken between the rounded totals the table shows.
+    const diff = Math.round(a.total_rs) - Math.round(b.total_rs);
     const pct = (diff / b.total_rs) * 100;
     return { ...l, key: `${l.category === 'protected' ? 'p' : 'u'}${l.units}`, label: `${fmt(l.units, 'int')} units, ${l.category}`, cur: a, prev: b, diff, pct };
   });
