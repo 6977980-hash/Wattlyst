@@ -6,7 +6,7 @@
  "author": "ali-ahmad",
  "published": "2026-10-13",
  "reviewed": "2026-10-13",
- "answer": "The Home Power Planner sizes everything from one appliance list: a typical home running {{out.running_w|int}} W needs about a {{out.inverter_kw|up1}} kW inverter, a {{out.battery_ah|up}} Ah battery for {{in.backup_hours|1}} hours of backup, a {{out.installed_kw|2}} kW solar system of {{out.panels|int}} panels that saves about {{out.saving_rs|rs}} a month in energy charge under net billing, and a {{out.generator_pick_kva|1}} kVA generator. Edit the list and every size updates. Each number links to the full calculator with its formula.",
+ "answer": "The Home Power Planner sizes everything from one appliance list: a typical home running {{out.running_w|int}} W needs about a {{out.inverter_kw|up1}} kW inverter, a {{out.battery_ah|up}} Ah battery bank at {{out.battery_v}} V for {{in.backup_hours|1}} hours of backup, a {{out.installed_kw|2}} kW solar system of {{out.panels|int}} panels that saves about {{out.saving_rs|rs}} a month in energy charge under net billing, and a {{out.generator_pick_kva|1}} kVA generator. Edit the list and every size updates.",
  "key_facts": [
   "The planner carries one appliance list through the whole chain: running load, inverter, battery, solar, net billing and generator, each with the formula of its own calculator, so the sizes never contradict each other.",
   "Inverter size = running watts × {{d.margin|2}}, raised if needed so the solar array is at most {{d.dc_ac_ratio_max|1}} times it; battery Ah = backup watts × hours ÷ (bank volts × usable depth of discharge × inverter efficiency); solar kW = the larger of daily units ÷ city yield and running watts ÷ performance ratio, with net billing counting the array only up to the sanctioned load; generator kVA = the larger of running × {{d.margin|2}} and the starting peak, ÷ {{d.pf_generator|1}}.",
@@ -243,6 +243,13 @@
    "label_ur": "Backup ke liye battery",
    "spec": "up",
    "unit": "Ah"
+  },
+  {
+   "key": "battery_v",
+   "label": "Battery bank voltage",
+   "label_ur": "Battery bank ka voltage",
+   "spec": "int",
+   "unit": "V"
   },
   {
    "key": "installed_kw",
