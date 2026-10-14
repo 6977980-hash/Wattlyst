@@ -42,13 +42,13 @@
    {
     "h2": "Amps to kW on single-phase and three-phase",
     "p": [
-     "Multiply the amps by the volts and the power factor, then divide by 1,000. 32 A on 230 V single-phase is 5.89 kW. On three-phase the same current in each line carries √3 times more power at the higher line voltage: 16 A per line at 400 V is 8.87 kW."
+     "Multiply the amps by the volts and the power factor, then divide by 1,000. 32 A on 230 V single-phase is 5.89 kW. On three-phase the same current in each line carries √3 times more power at the higher line voltage: 32 A per line at 400 V is 17.74 kW."
     ]
    },
    {
     "h2": "kW to amps formula",
     "p": [
-     "Reverse the same formula: amps = kW × 1,000 ÷ (volts × power factor) on single-phase, and amps = kW × 1,000 ÷ (√3 × volts × power factor) on three-phase. In the table below, find the kW nearest your load and read the current on the same row. For an exact figure, the watts to amps calculator does single-phase and DC, and the 3 phase amps calculator takes kW or kVA directly."
+     "Reverse the same formula: amps = kW × 1,000 ÷ (volts × power factor) on single-phase, and amps = kW × 1,000 ÷ (√3 × volts × power factor) on three-phase. Choose kW to amps in the calculator above for an exact figure: 5 kW at 230 V single-phase and a power factor of 0.8 draws 27.17 A. The chart below also reads either way, and the 3 phase amps calculator takes kVA as well."
     ]
    },
    {
@@ -67,7 +67,7 @@
   "faq": [
    {
     "q": "How many kW is 32 amps?",
-    "a": "5.89 kW on 230 V single-phase at a power factor of 0.8, or 7.36 kW for a heating load. On three-phase 400 V, 63 A per line is 34.92 kW at the same power factor."
+    "a": "5.89 kW on 230 V single-phase at a power factor of 0.8, or 7.36 kW for a heating load. On three-phase 400 V, 32 A per line is 17.74 kW at the same power factor."
    },
    {
     "q": "What is the kW to amps formula?",
@@ -75,15 +75,15 @@
    },
    {
     "q": "How many amps is one kW?",
-    "a": "It depends on the voltage and power factor: amps = kW × 1,000 ÷ (volts × power factor). On 230 V single-phase that is a few amps per kW, on 400 V three-phase fewer per line, and on a battery many more. The table above gives exact pairs."
+    "a": "It depends on the voltage and power factor: amps = kW × 1,000 ÷ (volts × power factor). On 230 V single-phase that is a few amps per kW, on 400 V three-phase fewer per line, and on a battery many more. Choose kW to amps in the calculator for the exact figure: 5 kW is 27.17 A on 230 V single-phase at a power factor of 0.8."
    },
    {
     "q": "How many kW is 63 amps on three-phase?",
-    "a": "34.92 kW at 400 V and a power factor of 0.8. On single-phase 230 V, 63 A is much less; the table shows both."
+    "a": "34.92 kW at 400 V and a power factor of 0.8. On single-phase 230 V, 63 A is much less; the chart on this page shows both."
    },
    {
     "q": "How do I convert amps to kW on three-phase?",
-    "a": "Multiply √3 × line-to-line volts × amps per line × power factor, then divide by 1,000. 16 A at 400 V and 0.8 is 8.87 kW."
+    "a": "Multiply √3 × line-to-line volts × amps per line × power factor, then divide by 1,000. 32 A at 400 V and 0.8 is 17.74 kW."
    },
    {
     "q": "What is the difference between kW, kVA and amps?",
@@ -92,8 +92,8 @@
   ],
   "key_facts": [
    "kW = amps × volts × power factor ÷ 1,000 (single-phase). 32 A at 230 V and a power factor of 0.8 is 5.89 kW.",
-   "On a three-phase 400 V supply, 16 A per line at a power factor of 0.8 is 8.87 kW, about three times the single-phase figure for the same amps.",
-   "A 25 A single-phase supply at 230 V carries 4.6 kW at a power factor of 0.8.",
+   "On a three-phase 400 V supply, 32 A per line at a power factor of 0.8 is 17.74 kW, about three times the single-phase figure for the same amps.",
+   "Going the other way, 5 kW on a 230 V single-phase supply at a power factor of 0.8 draws 27.17 A.",
    "kW is real power, kVA is apparent power and amps is current: kW = kVA × power factor, and amps follow from kVA and the voltage."
   ],
   "mistakes": [
@@ -123,11 +123,35 @@
    "appliances": {},
    "fields": [
     {
+     "name": "direction",
+     "label": "Convert",
+     "type": "select",
+     "default": "amps_to_kw",
+     "options": [
+      [
+       "amps_to_kw",
+       "Amps to kW"
+      ],
+      [
+       "kw_to_amps",
+       "kW to amps"
+      ]
+     ],
+     "hint": "Amps to kW uses the current below; kW to amps uses the power below."
+    },
+    {
      "name": "amps",
      "label": "Current",
      "unit": "A",
      "default": 32,
-     "hint": "Measured or rated current. For three-phase, the current in one line wire."
+     "hint": "Measured or rated current, for amps to kW. For three-phase, the current in one line wire."
+    },
+    {
+     "name": "kw",
+     "label": "Power",
+     "unit": "kW",
+     "default": 5,
+     "hint": "Real power in kW, for kW to amps (the whole load; for three-phase, all three lines together)."
     },
     {
      "name": "mode",
@@ -176,6 +200,14 @@
      "value": "5.89"
     },
     {
+     "key": "amps",
+     "label": "Current per line",
+     "spec": "2",
+     "unit": "A",
+     "label_ur": "Fi line current",
+     "value": "32"
+    },
+    {
      "key": "va",
      "label": "Apparent power",
      "spec": "int",
@@ -185,8 +217,8 @@
     }
    ],
    "how": {
-    "tpl": "{{in.amps|int}} A × {{out.volts|int}} V × {{out.pf|2}} ÷ 1,000 = {{out.kw|2}} kW of real power. The apparent power is {{out.va|int}} VA, the load the cable, breaker and any generator or UPS must carry. On three-phase the result is multiplied by √3; on DC the power factor is one.",
-    "text": "32 A × 230 V × 0.8 ÷ 1,000 = 5.89 kW of real power. The apparent power is 7,360 VA, the load the cable, breaker and any generator or UPS must carry. On three-phase the result is multiplied by √3; on DC the power factor is one."
+    "tpl": "{{out.k|4}} × {{out.amps|2}} A × {{out.volts|int}} V × {{out.pf|2}} ÷ 1,000 = {{out.kw|2}} kW of real power, so kW to amps is the same sum turned round. The first factor is one for DC and single-phase and √3 for three-phase, where the volts are line-to-line and the amps are per line. The apparent power is {{out.va|int}} VA, the load the cable, breaker and any generator or UPS must carry. On DC the power factor is one.",
+    "text": "1 × 32 A × 230 V × 0.8 ÷ 1,000 = 5.89 kW of real power, so kW to amps is the same sum turned round. The first factor is one for DC and single-phase and √3 for three-phase, where the volts are line-to-line and the amps are per line. The apparent power is 7,360 VA, the load the cable, breaker and any generator or UPS must carry. On DC the power factor is one."
    },
    "submit": "Calculate",
    "notice": "",
@@ -198,12 +230,12 @@
     "text": "32 A × 230 V × 1 ÷ 1,000 = 7.36 kW. A geyser or heater has a power factor of one, so kW and kVA are the same."
    },
    {
-    "title": "25 A single-phase, mixed home load",
-    "text": "25 A × 230 V × 0.8 ÷ 1,000 = 4.6 kW of real power, while the cable carries 5,750 VA."
+    "title": "5 kW to amps on single-phase 230 V",
+    "text": "5 kW × 1,000 ÷ (230 V × 0.8) = 27.17 A."
    },
    {
-    "title": "16 A per line, three-phase 400 V",
-    "text": "√3 × 400 V × 16 A × 0.8 ÷ 1,000 = 8.87 kW."
+    "title": "32 A per line, three-phase 400 V",
+    "text": "√3 × 400 V × 32 A × 0.8 ÷ 1,000 = 17.74 kW, the most a 32 A three-phase supply passes at this power factor."
    },
    {
     "title": "63 amp to kW on three-phase",
@@ -273,7 +305,7 @@
     ]
    ]
   },
-  "answer": "32 amps on a 230 V single-phase supply is 5.89 kW at a power factor of 0.8. kW = amps × volts × power factor ÷ 1,000, with √3 added for three-phase, where 16 A per line at 400 V is 8.87 kW. For kW to amps, reverse it: amps = kW × 1,000 ÷ (volts × power factor).",
+  "answer": "32 amps on a 230 V single-phase supply is 5.89 kW at a power factor of 0.8. kW = amps × volts × power factor ÷ 1,000, with √3 added for three-phase, where 32 A per line at 400 V is 17.74 kW. For kW to amps, choose kW to amps above: amps = kW × 1,000 ÷ (volts × power factor), so 5 kW on single-phase is 27.17 A.",
   "formula": {
    "text": "Amps to kW: kW = V × I × PF ÷ 1,000 (×√3 for three-phase).  kW to amps: I = kW × 1,000 ÷ (V × PF) (÷√3 for three-phase)",
    "lines": [
@@ -369,7 +401,7 @@
       "name": "How many kW is 32 amps?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "5.89 kW on 230 V single-phase at a power factor of 0.8, or 7.36 kW for a heating load. On three-phase 400 V, 63 A per line is 34.92 kW at the same power factor."
+       "text": "5.89 kW on 230 V single-phase at a power factor of 0.8, or 7.36 kW for a heating load. On three-phase 400 V, 32 A per line is 17.74 kW at the same power factor."
       }
      },
      {
@@ -385,7 +417,7 @@
       "name": "How many amps is one kW?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "It depends on the voltage and power factor: amps = kW × 1,000 ÷ (volts × power factor). On 230 V single-phase that is a few amps per kW, on 400 V three-phase fewer per line, and on a battery many more. The table above gives exact pairs."
+       "text": "It depends on the voltage and power factor: amps = kW × 1,000 ÷ (volts × power factor). On 230 V single-phase that is a few amps per kW, on 400 V three-phase fewer per line, and on a battery many more. Choose kW to amps in the calculator for the exact figure: 5 kW is 27.17 A on 230 V single-phase at a power factor of 0.8."
       }
      },
      {
@@ -393,7 +425,7 @@
       "name": "How many kW is 63 amps on three-phase?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "34.92 kW at 400 V and a power factor of 0.8. On single-phase 230 V, 63 A is much less; the table shows both."
+       "text": "34.92 kW at 400 V and a power factor of 0.8. On single-phase 230 V, 63 A is much less; the chart on this page shows both."
       }
      },
      {
@@ -401,7 +433,7 @@
       "name": "How do I convert amps to kW on three-phase?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Multiply √3 × line-to-line volts × amps per line × power factor, then divide by 1,000. 16 A at 400 V and 0.8 is 8.87 kW."
+       "text": "Multiply √3 × line-to-line volts × amps per line × power factor, then divide by 1,000. 32 A at 400 V and 0.8 is 17.74 kW."
       }
      },
      {

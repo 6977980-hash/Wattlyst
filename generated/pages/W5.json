@@ -48,7 +48,8 @@
    {
     "h2": "Maximum voltage drop allowed",
     "p": [
-     "This calculator uses 3% for lighting circuits and 5% for other circuits, the values given in an informative annex of IEC 60364-5-52 for installations supplied from the public low-voltage network. Solar DC strings are usually kept to 3% so the panels lose little output. Above the limit, motors run hot, lights dim and inverters may trip on low voltage."
+     "This calculator uses 3% for lighting circuits and 5% for other circuits, the values given in an informative annex of IEC 60364-5-52 for installations supplied from the public low-voltage network. Solar DC strings are usually kept to 3% so the panels lose little output. Above the limit, motors run hot, lights dim and inverters may trip on low voltage.",
+     "The drop limit is not the only test. A thin cable on a short run can show a tiny drop while carrying far more current than it is rated for, and overheat. For copper the calculator also compares the current with the cable's rating in conduit and warns when it is exceeded."
     ]
    },
    {
@@ -72,7 +73,7 @@
    {
     "h2": "Copper and aluminium cables",
     "p": [
-     "The calculator uses copper by default. Aluminium conducts less well than copper, so an aluminium cable of the same size drops more voltage; that is why aluminium service and feeder cables are usually a size or two larger. To check an aluminium cable, open the advanced settings and replace the resistivity with the aluminium value at working temperature from the cable maker's datasheet. Copper and aluminium must never be joined directly; use bimetallic lugs or connectors."
+     "Choose the conductor above. The calculator uses a resistivity of 0.0225 Ω·mm²/m for copper and 0.036 Ω·mm²/m for aluminium, both at working temperature. Aluminium conducts less well than copper, so an aluminium cable of the same size drops more voltage: 4 mm² aluminium over 30 m drops 3.83% where copper drops 2.39%. That is why aluminium service and feeder cables are usually a size or two larger. The current rating is checked here for copper only; for aluminium, take it from the cable maker's datasheet. Copper and aluminium must never be joined directly; use bimetallic lugs or connectors."
     ]
    }
   ],
@@ -99,7 +100,7 @@
    },
    {
     "q": "Can I calculate voltage drop for aluminium cable?",
-    "a": "Yes, by replacing the copper resistivity in the advanced settings with the aluminium value at working temperature from the cable maker's datasheet. The calculator does not hold an aluminium value itself."
+    "a": "Yes. Choose Aluminium as the conductor; the calculator then uses 0.036 Ω·mm²/m at working temperature instead of copper's 0.0225. 4 mm² aluminium over 30 m drops 3.83% with the default load. Check the aluminium cable's current rating in the maker's datasheet."
    },
    {
     "q": "What happens if the voltage drop is too high?",
@@ -114,8 +115,8 @@
   ],
   "mistakes": [
    "Entering the total out-and-back length. Enter the one-way run; the calculator already counts the return conductor.",
-   "Checking only the current rating. A cable can carry the current safely and still drop too much voltage over a long run; check both, as the wire size calculator does.",
-   "Using copper resistivity for an aluminium cable. Aluminium drops more; enter its resistivity from the datasheet in the advanced settings.",
+   "Checking only one of the two. A cable can carry the current safely and still drop too much voltage over a long run, and a thin cable on a short run can pass the drop test while overheating; check both, as the wire size calculator does.",
+   "Leaving the conductor on copper for an aluminium cable. Aluminium drops more; choose Aluminium above.",
    "Ignoring the drop on low-voltage DC. A drop that is trivial at 230 V can be several percent at 12 V over the same cable."
   ],
   "sources": [
@@ -124,7 +125,7 @@
     "url": "https://webstore.iec.ch/publication/1878"
    },
    {
-    "label": "Wattlyst methodology and default values (copper resistivity, drop limits)",
+    "label": "Wattlyst methodology and default values (copper and aluminium resistivity, drop limits)",
     "url": "/methodology/"
    }
   ],
@@ -162,7 +163,24 @@
      "label": "Cable size",
      "unit": "mm²",
      "default": 2.5,
-     "hint": "Conductor cross-section. Pakistani sizes: 3/29 is about 1.5 mm², 7/29 is 2.5, 7/36 is 4, 7/44 is 6, 7/52 is 10."
+     "hint": "Conductor cross-section. Pakistani n/d cables are not exact metric sizes; enter the real conductor area: 3/29 is 1.28 mm², 7/29 is 2.98, 7/36 is 4.6, 7/44 is 6.87, 7/52 is 9.59. The current rating is checked at the next smaller standard size."
+    },
+    {
+     "name": "conductor",
+     "label": "Conductor",
+     "type": "select",
+     "default": "copper",
+     "options": [
+      [
+       "copper",
+       "Copper"
+      ],
+      [
+       "aluminium",
+       "Aluminium"
+      ]
+     ],
+     "hint": "Aluminium conducts less well, so the same size drops more voltage."
     },
     {
      "name": "mode",
@@ -221,9 +239,9 @@
      "name": "rho",
      "label": "Conductor resistivity",
      "unit": "Ω·mm²/m",
-     "default": 0.0225,
      "advanced": true,
-     "hint": "The default is copper at working temperature. For an aluminium cable, replace it with the aluminium resistivity at working temperature from the cable maker's datasheet."
+     "hint": "Leave blank to use the conductor chosen above: copper 0.0225 or aluminium 0.036 Ω·mm²/m at working temperature. Enter a datasheet value to override it.",
+     "placeholder": "From the conductor"
     }
    ],
    "fixed_inputs": {},
@@ -254,9 +272,9 @@
     },
     {
      "key": "within_limit",
-     "label": "Within the limit?",
+     "label": "Voltage drop within the limit?",
      "spec": "yesno",
-     "label_ur": "Had ke andar?",
+     "label_ur": "Voltage drop had ke andar?",
      "value": "Yes"
     },
     {
@@ -269,8 +287,8 @@
     }
    ],
    "how": {
-    "tpl": "Current: {{out.amps|1}} A (the watts ÷ ({{out.volts|int}} V × {{out.pf|2}} power factor), unless you entered the amps). Drop = 2 × {{in.length_m|int}} m × {{out.amps|1}} A × {{out.rho|4}} Ω·mm²/m ÷ {{in.area_mm2|1}} mm² = {{out.drop_v|1}} V, which is {{out.drop_pct|2}}% of {{out.volts|int}} V, leaving {{out.voltage_at_load|int}} V at the load. The limit you chose is {{out.limit_pct|int}}%. On three-phase the factor of two is replaced by √3; if the drop is over the limit, try the next cable size.",
-    "text": "Current: 16.3 A (the watts ÷ (230 V × 0.8 power factor), unless you entered the amps). Drop = 2 × 30 m × 16.3 A × 0.0225 Ω·mm²/m ÷ 2.5 mm² = 8.8 V, which is 3.83% of 230 V, leaving 221 V at the load. The limit you chose is 5%. On three-phase the factor of two is replaced by √3; if the drop is over the limit, try the next cable size."
+    "tpl": "Current: {{out.amps|1}} A (the watts ÷ ({{out.k|4}} × {{out.volts|int}} V × {{out.pf|2}} power factor), unless you entered the amps). Drop = {{out.kv|4}} × {{in.length_m|int}} m × {{out.amps|1}} A × {{out.rho|4}} Ω·mm²/m ÷ {{in.area_mm2|2}} mm² = {{out.drop_v|1}} V, which is {{out.drop_pct|2}}% of {{out.volts|int}} V, leaving {{out.voltage_at_load|int}} V at the load. The current factor is one for single-phase and DC and √3 for three-phase; the drop factor is two (out and back) for single-phase and DC and √3 for three-phase. The limit you chose is {{out.limit_pct|int}}%; if the drop is over it, try the next cable size. A small drop does not make a cable safe: it must also be rated for the current.",
+    "text": "Current: 16.3 A (the watts ÷ (1 × 230 V × 0.8 power factor), unless you entered the amps). Drop = 2 × 30 m × 16.3 A × 0.0225 Ω·mm²/m ÷ 2.5 mm² = 8.8 V, which is 3.83% of 230 V, leaving 221 V at the load. The current factor is one for single-phase and DC and √3 for three-phase; the drop factor is two (out and back) for single-phase and DC and √3 for three-phase. The limit you chose is 5%; if the drop is over it, try the next cable size. A small drop does not make a cable safe: it must also be rated for the current."
    },
    "submit": "Calculate",
    "notice": "",
@@ -296,12 +314,12 @@
     "text": "2 × 5 m × 20 A × 0.0225 ÷ 6 mm² = 0.75 V, which is 6.3% of 12 V. Within the 5% limit: No. A thicker or shorter cable, or a higher battery voltage, fixes it."
    },
    {
-    "title": "A 3.3 A lighting circuit, 40 m of 1.5 mm²",
-    "text": "40 m loses 3.9 V, 1.7% against the 3% lighting limit. Within the limit: Yes."
-   },
-   {
     "title": "A 16.3 A pump 100 m away on 4 mm²",
     "text": "2 × 100 m × 16.3 A × 0.0225 ÷ 4 mm² = 18.3 V, 7.97%. Within the 5% limit: No. Long runs to a motor need a larger cable than the current alone suggests."
+   },
+   {
+    "title": "The same 16.3 A load on 4 mm² aluminium",
+    "text": "2 × 30 m × 16.3 A × 0.036 ÷ 4 mm² = 8.8 V, a 3.83% drop. Aluminium's higher resistivity makes the drop larger than on copper of the same size."
    }
   ],
   "table": {
@@ -311,21 +329,21 @@
     "Run",
     "Volts lost",
     "Drop",
-    "Within the limit"
+    "Drop within the limit"
    ],
    "rows": [
-    [
-     "2.5 mm²",
-     "20 m",
-     "5.9 V",
-     "2.55%",
-     "Yes"
-    ],
     [
      "2.5 mm²",
      "10 m",
      "2.9 V",
      "1.28%",
+     "Yes"
+    ],
+    [
+     "2.5 mm²",
+     "20 m",
+     "5.9 V",
+     "2.55%",
      "Yes"
     ],
     [
@@ -365,14 +383,14 @@
     ]
    ]
   },
-  "answer": "A 16.3 A load on 2.5 mm² copper cable over 30 m at 230 V loses 8.8 V, a voltage drop of 3.83%, under the 5% limit. Voltage drop = two × length × current × resistivity ÷ cable area for single-phase and DC; three-phase uses √3 instead of two.",
+  "answer": "A 16.3 A load on 2.5 mm² copper cable over 30 m at 230 V loses 8.8 V, a voltage drop of 3.83%, under the 5% limit. Voltage drop = two × length × current × resistivity ÷ cable area for single-phase and DC; three-phase uses √3 instead of two. The cable must also be rated for the current, which the calculator checks for copper.",
   "formula": {
    "text": "ΔV = 2 × L × I × ρ ÷ A (single-phase, DC);  ΔV = √3 × L × I × ρ ÷ A (three-phase);  drop % = ΔV ÷ V × 100",
    "lines": [
     "ΔV = volts lost in the cable",
     "L = one-way cable length in metres",
-    "I = current in amps (from watts ÷ (V × PF) if not entered; per line for three-phase)",
-    "ρ = conductor resistivity in Ω·mm²/m at working temperature (copper by default)",
+    "I = current in amps (from watts ÷ (V × PF), or watts ÷ (√3 × V × PF) on three-phase, if not entered; per line for three-phase)",
+    "ρ = conductor resistivity in Ω·mm²/m at working temperature (copper or aluminium)",
     "A = conductor cross-section in mm²; V = supply voltage (line-to-line for three-phase)"
    ]
   },
@@ -501,7 +519,7 @@
       "name": "Can I calculate voltage drop for aluminium cable?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Yes, by replacing the copper resistivity in the advanced settings with the aluminium value at working temperature from the cable maker's datasheet. The calculator does not hold an aluminium value itself."
+       "text": "Yes. Choose Aluminium as the conductor; the calculator then uses 0.036 Ω·mm²/m at working temperature instead of copper's 0.0225. 4 mm² aluminium over 30 m drops 3.83% with the default load. Check the aluminium cable's current rating in the maker's datasheet."
       }
      },
      {

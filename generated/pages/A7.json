@@ -175,16 +175,16 @@
     },
     {
      "key": "va",
-     "label": "Volts × amps",
+     "label": "Apparent power (VA)",
      "spec": "int",
      "unit": "VA",
-     "label_ur": "Volts × amps (VA)",
+     "label_ur": "Zahiri power (VA)",
      "value": "1,150"
     }
    ],
    "how": {
-    "tpl": "{{out.volts|int}} V × {{in.amps|int}} A = {{out.va|int}} VA. × {{out.pf|2}} power factor = {{out.watts|int}} W of real power. On DC the power factor is one, so watts = volts × amps exactly; on three-phase the product is multiplied by √3 as well.",
-    "text": "230 V × 5 A = 1,150 VA. × 0.8 power factor = 920 W of real power. On DC the power factor is one, so watts = volts × amps exactly; on three-phase the product is multiplied by √3 as well."
+    "tpl": "{{out.k|4}} × {{out.volts|int}} V × {{in.amps|int}} A = {{out.va|int}} VA of apparent power, and × {{out.pf|2}} power factor = {{out.watts|int}} W of real power. The first factor is one for DC and single-phase and √3 for three-phase, where the volts are line-to-line and the amps are per line. On DC the power factor is one, so watts = volts × amps exactly.",
+    "text": "1 × 230 V × 5 A = 1,150 VA of apparent power, and × 0.8 power factor = 920 W of real power. The first factor is one for DC and single-phase and √3 for three-phase, where the volts are line-to-line and the amps are per line. On DC the power factor is one, so watts = volts × amps exactly."
    },
    "submit": "Calculate",
    "notice": "",
@@ -217,7 +217,7 @@
    "head": [
     "Voltage",
     "Power factor",
-    "Volts × amps",
+    "Apparent power (VA)",
     "Watts"
    ],
    "rows": [

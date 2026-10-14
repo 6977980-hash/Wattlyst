@@ -43,7 +43,7 @@
     "h2": "What is 1,500 W in amps?",
     "p": [
      "On a 230 V home supply, 1,500 W is 6.52 A for a heater, kettle or iron (power factor one) and 8.15 A for a motor or AC at a power factor of 0.8. The watts are the same; the motor draws more current because part of it flows back and forth without doing work.",
-     "On a 120 V US supply the same heater draws twice as much current, so always enter the voltage of the supply the load actually runs on."
+     "On a 120 V US supply the same heater draws 12.5 A, close to twice as much current, so always enter the voltage of the supply the load actually runs on."
     ]
    },
    {
@@ -100,7 +100,7 @@
   "key_facts": [
    "Amps = watts ÷ (volts × power factor). On a 230 V single-phase supply, 1,500 W at a power factor of 0.8 draws 8.15 A.",
    "Watts alone do not give amps: the same 1,000 W draws 83.33 A from a 12 V battery but only 4.35 A at 230 V mains with a power factor of one.",
-   "At 120 V (US and Canada) a 1,500 W heater draws 12.5 A, about twice the current of the same heater on a 230 V supply.",
+   "At 120 V (US and Canada) a 1,500 W heater draws 12.5 A, close to twice the 6.52 A the same heater draws on a 230 V supply.",
    "On three-phase 400 V, 10,000 W at a power factor of 0.8 draws 18.04 A in each line wire."
   ],
   "mistakes": [
@@ -192,8 +192,8 @@
     }
    ],
    "how": {
-    "tpl": "{{in.watts|int}} W ÷ ({{out.volts|int}} V × {{out.pf|2}} power factor) = {{out.amps|2}} A. On DC the power factor is always one, so amps are simply watts ÷ volts. On three-phase the divisor is √3 × the line-to-line voltage × power factor, because the power is shared by three wires.",
-    "text": "1,500 W ÷ (230 V × 0.8 power factor) = 8.15 A. On DC the power factor is always one, so amps are simply watts ÷ volts. On three-phase the divisor is √3 × the line-to-line voltage × power factor, because the power is shared by three wires."
+    "tpl": "{{in.watts|int}} W ÷ ({{out.k|4}} × {{out.volts|int}} V × {{out.pf|2}} power factor) = {{out.amps|2}} A. The first factor is one for DC and single-phase and √3 for three-phase, where the volts are the line-to-line voltage and the result is the current in each line. On DC the power factor is always one, so amps are simply watts ÷ volts.",
+    "text": "1,500 W ÷ (1 × 230 V × 0.8 power factor) = 8.15 A. The first factor is one for DC and single-phase and √3 for three-phase, where the volts are the line-to-line voltage and the result is the current in each line. On DC the power factor is always one, so amps are simply watts ÷ volts."
    },
    "submit": "Calculate",
    "notice": "",
