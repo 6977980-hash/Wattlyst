@@ -65,10 +65,10 @@ export function loadsField(form, f, cfg, onChange) {
     if (!btn || body.children.length <= 1) return;
     btn.closest('tr').remove();
     cap();
-    onChange();
+    onChange(true);
   });
   box.addEventListener('change', (e) => {
-    if (e.target.matches('[data-k="id"]')) { fill(e.target.closest('tr')); onChange(); }
+    if (e.target.matches('[data-k="id"]')) { fill(e.target.closest('tr')); onChange(true); } else onChange(false);
   });
   const rows = () => [...body.querySelectorAll('tr')].map((tr) => Object.fromEntries(['id', ...keys].map((k) => [k, tr.querySelector(`[data-k="${k}"]`).value.trim()])));
   const set = (list) => { body.innerHTML = ''; list.slice(0, MAX_ROWS).forEach(add); cap(); };

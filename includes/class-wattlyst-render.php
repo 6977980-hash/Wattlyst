@@ -12,6 +12,7 @@ final class Wattlyst_Render {
 	private Wattlyst_Tools $plugin;
 	private array $page;
 	private array $c;
+	private int $tables = 0; // numbers the reference table headings on this page (unique ids)
 
 	public function __construct( Wattlyst_Tools $plugin, array $page ) {
 		$this->plugin = $plugin;
@@ -269,7 +270,10 @@ final class Wattlyst_Render {
 		// Without JavaScript the button does nothing (onsubmit), instead of reloading the page with the defaults (audit WL-27).
 		$form .= '<noscript><p class="wl-hint">Turn on JavaScript to calculate with your own numbers. The result below uses the default inputs.</p></noscript>';
 		$notice = (string) ( $t['notice'] ?? '' ); // a warning on the default result, same text the browser prints
-		$form  .= '<p class="wl-error" id="' . esc_attr( $id ) . '-error" role="alert"' . ( '' === $notice ? ' hidden' : '' ) . '>' . esc_html( $notice ) . '</p>';
+		// An empty box waits for errors (role=alert); a notice on the default result is amber and polite (audit WL-54, WL-61).
+		$form  .= '' === $notice
+			? '<p class="wl-error" id="' . esc_attr( $id ) . '-error" role="alert" hidden></p>'
+			: '<p class="wl-error wl-notice" id="' . esc_attr( $id ) . '-error" role="status">' . esc_html( $notice ) . '</p>';
 		$form .= '<div class="wl-results" aria-live="polite">' . $results . '</div>' . $this->diagram( $t ) . $share;
 		$form .= '<script type="application/json" class="wl-config">' . wp_json_encode( $config, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ) . '</script>';
 		$form .= '</form>';
@@ -456,15 +460,22 @@ final class Wattlyst_Render {
 
 	private function table(): string {
 		$t = $this->c['table'] ?? null;
-		if ( ! $t ) {
-			return '';
-		}
+		return $t ? $this->ref_table( $t ) : '';
+	}
+
+	/**
+	 * One reference table under its H2. The table is named by the heading (aria-labelledby, audit WL-60) and its
+	 * scroll box is a focusable, named region, so keyboard users can scroll a wide table on a phone.
+	 */
+	private function ref_table( array $t, string $attrs = '' ): string {
+		$id   = 'wl-t' . ( ++$this->tables ) . '-' . substr( sanitize_title( $t['caption'] ), 0, 40 );
 		$head = implode( '', array_map( static fn( $h ) => '<th scope="col">' . esc_html( $h ) . '</th>', $t['head'] ) );
 		$rows = '';
 		foreach ( $t['rows'] as $r ) {
 			$rows .= '<tr>' . implode( '', array_map( static fn( $v ) => '<td>' . esc_html( $v ) . '</td>', $r ) ) . '</tr>';
 		}
-		return '<section class="wl-ref"><h2>' . esc_html( $t['caption'] ) . '</h2><div class="wl-table-wrap"><table class="wl-table"><thead><tr>' . $head . '</tr></thead><tbody>' . $rows . '</tbody></table></div></section>';
+		return '<section class="wl-ref"' . $attrs . '><h2 id="' . esc_attr( $id ) . '">' . esc_html( $t['caption'] ) . '</h2>' .
+			'<div class="wl-table-wrap" role="region" tabindex="0" aria-labelledby="' . esc_attr( $id ) . '"><table class="wl-table" aria-labelledby="' . esc_attr( $id ) . '"><thead><tr>' . $head . '</tr></thead><tbody>' . $rows . '</tbody></table></div></section>';
 	}
 
 	/** Lookup page (error codes): brand select + text filter over the tables below; the tables are complete without JavaScript. */
@@ -481,24 +492,17 @@ final class Wattlyst_Render {
 		return '<form class="wl-tool wl-lookup" data-wl-lookup onsubmit="return false"><div class="wl-fields">' .
 			'<div class="wl-field"><label for="' . esc_attr( $id ) . '-brand">' . esc_html( $l['label'] ) . '</label><select id="' . esc_attr( $id ) . '-brand" data-wl-group-select>' . $opts . '</select></div>' .
 			'<div class="wl-field"><label for="' . esc_attr( $id ) . '-q">' . esc_html( $l['text_label'] ) . '</label><input type="search" id="' . esc_attr( $id ) . '-q" data-wl-filter autocomplete="off" placeholder="For example 02, 1010, F03, grid"><p class="wl-hint">Type the code as the display shows it, or a word such as battery, fan or grid. ' . esc_html( (string) $l['count'] ) . ' codes from manufacturer manuals, last checked <time datetime="' . esc_attr( $l['checked'] ) . '">' . esc_html( self::date( $l['checked'] ) ) . '</time>.</p></div>' .
-			'</div><p class="wl-error" data-wl-nomatch role="status" hidden>No code matches. Check the brand, or try a shorter text such as the code alone.</p></form>';
+			'</div><p class="wl-error wl-notice" data-wl-nomatch role="status" hidden>No code matches. Check the brand, or try a shorter text such as the code alone.</p></form>';
 	}
 
 	private function tables(): string {
 		$out = '';
 		foreach ( $this->c['tables'] ?? array() as $t ) {
-			$head = implode( '', array_map( static fn( $h ) => '<th scope="col">' . esc_html( $h ) . '</th>', $t['head'] ) );
-			$rows = '';
-			foreach ( $t['rows'] as $r ) {
-				$rows .= '<tr>' . implode( '', array_map( static fn( $v ) => '<td>' . esc_html( $v ) . '</td>', $r ) ) . '</tr>';
-			}
-			$group = isset( $t['key'] ) ? ' data-wl-group="' . esc_attr( $t['key'] ) . '"' : '';
-			$out .= '<section class="wl-ref"' . $group . '><h2>' . esc_html( $t['caption'] ) . '</h2><div class="wl-table-wrap"><table class="wl-table"><thead><tr>' . $head . '</tr></thead><tbody>' . $rows . '</tbody></table></div></section>';
+			$out .= $this->ref_table( $t, isset( $t['key'] ) ? ' data-wl-group="' . esc_attr( $t['key'] ) . '"' : '' );
 		}
 		return $out;
 	}
 
-	/** CSV download, licence and checked date of a data page. */
 	private function download(): string {
 		$d = $this->c['download'] ?? null;
 		if ( ! $d ) {

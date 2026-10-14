@@ -208,9 +208,11 @@ test('a tool page loads under 30 KB of JavaScript (seo-rules.md 4)', () => {
   for (const m of ['conversions', 'battery', 'sizing', 'solar', 'bill', 'load', 'wiring', 'planner', 'prices', 'forecast', 'fuel', 'solartools']) {
     assert.ok(base + size(`engine/${m}.js`) < 30 * 1024, `${m}: ${base + size(`engine/${m}.js`)} bytes`);
   }
-  // Pages with an appliance list also load assets/js/wattlyst-loads.js (audit Phase 3 split it out of the tool script).
-  for (const p of pages.filter((x) => x.content?.tool?.fields?.some((f) => f.type === 'loads'))) {
-    const total = base + size(`engine/${p.content.tool.module}`) + size('assets/js/wattlyst-loads.js');
+  // Pages with an appliance list also load assets/js/wattlyst-loads.js (audit Phase 3 split it out of the tool script);
+  // the live forecast (N6) and diagram (N11) pages load assets/js/wattlyst-extra.js (audit Phase 6).
+  for (const p of pages.filter((x) => x.content?.tool)) {
+    const t = p.content.tool;
+    const total = base + size(`engine/${t.module}`) + (t.fields.some((f) => f.type === 'loads') ? size('assets/js/wattlyst-loads.js') : 0) + (t.live || t.diagram ? size('assets/js/wattlyst-extra.js') : 0);
     assert.ok(total < 30 * 1024, `${p.id}: ${total} bytes`);
   }
 });

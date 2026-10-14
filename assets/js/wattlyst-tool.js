@@ -5,56 +5,28 @@ import { errorMessage, noticeCode } from '../../engine/messages.js';
 
 const ver = new URL(import.meta.url).searchParams.get('ver') || '';
 
-/** N11 battery diagram: same markup as Wattlyst_Render::battery_grid() (one row per parallel string, minus bus left, fused plus lead right). */
-function drawGrid(box, series, parallel) {
-  const max = 8;
-  const L = '<span class="wl-wire"></span>';
-  let rows = '';
-  for (let p = 1; p <= Math.min(parallel, max); p++) {
-    rows += `<div class="wl-string"><span class="wl-string-label">String ${p}</span><div class="wl-row">${L}${'<span class="wl-cell">&minus; +</span>'.repeat(Math.min(series, max))}${series > max ? `<span class="wl-more">+${series - max}</span>` : ''}${L}<span class="wl-fuse">fuse</span>${L}</div></div>`;
-  }
-  box.innerHTML = `<div class="wl-grid"><span class="wl-bus wl-bus-neg">Negative bus</span><div class="wl-strings">${rows}${parallel > max ? `<div class="wl-more">+${parallel - max} more strings</div>` : ''}</div><span class="wl-bus wl-bus-pos">Positive bus</span></div>`;
-}
-
-/**
- * N6: tomorrow's hourly plane-of-array irradiance for the chosen city from Open-Meteo (free, no key; only the
- * city's coordinates are sent). Returns { gti, date } or null; the page keeps the typical day when it fails.
- */
-const forecasts = {};
-async function forecastFor(c, tilt) {
-  const key = `${c.lat},${c.lon},${tilt}`;
-  if (!forecasts[key]) {
-    forecasts[key] = fetch(`https://api.open-meteo.com/v1/forecast?latitude=${c.lat}&longitude=${c.lon}&hourly=global_tilted_irradiance&tilt=${tilt}&azimuth=0&timezone=Asia%2FKarachi&forecast_days=2`)
-      .then((r) => (r.ok ? r.json() : null))
-      .then((j) => {
-        const v = j?.hourly?.global_tilted_irradiance?.slice(24, 48);
-        const date = j?.hourly?.time?.[24]?.slice(0, 10);
-        return v && v.length === 24 && v.every((x) => typeof x === 'number') && date ? { gti: v, date } : null;
-      })
-      .catch(() => null);
-  }
-  return forecasts[key];
-}
-
 async function init(form) {
   const cfgEl = form.querySelector('.wl-config');
   if (!cfgEl) return;
   const cfg = JSON.parse(cfgEl.textContent);
   const q = ver ? `?ver=${ver}` : '';
   const hasList = cfg.fields.some((f) => f.type === 'loads');
-  const [mod, list] = await Promise.all([import(`../../engine/${cfg.module}${q}`), hasList && import(`./wattlyst-loads.js${q}`)]);
+  // The appliance list, the N6 live forecast and the N11 diagram live in their own modules, loaded only where used.
+  const [mod, list, extra] = await Promise.all([import(`../../engine/${cfg.module}${q}`), hasList && import(`./wattlyst-loads.js${q}`), (cfg.live || cfg.diagram) && import(`./wattlyst-extra.js${q}`)]);
   const calc = mod[cfg.calc];
   if (typeof calc !== 'function') return;
   const labels = Object.fromEntries(cfg.fields.map((f) => [f.name, f.label.replace(/^[A-Z](?=[a-z])/, (c) => c.toLowerCase())]));
+  const choices = cfg.fields.filter((f) => f.options).map((f) => f.name);
   const errorEl = form.querySelector('.wl-error');
   const results = form.querySelector('.wl-results');
   const howEl = form.parentElement.querySelector('[data-wl-how]');
   const el = (name) => form.elements.namedItem(name);
   const lists = {};
   let show;
-  for (const f of cfg.fields) if (f.type === 'loads') lists[f.name] = list.loadsField(form, f, cfg, () => show && show(true));
+  for (const f of cfg.fields) if (f.type === 'loads') lists[f.name] = list.loadsField(form, f, cfg, (focus) => show && show(focus));
 
   let live = null;
+  let liveFailed = false;
   const read = () => {
     const inputs = { ...cfg.fixed };
     if (live && live.city === el('city')?.value) Object.assign(inputs, { gti_wm2: live.gti, forecast_date: live.date });
@@ -81,6 +53,13 @@ async function init(form) {
   const share = form.querySelector('.wl-share');
   const diagram = form.querySelector('[data-wl-diagram]');
 
+  // One element carries an error (red, role=alert) or a notice on a valid result (amber, role=status) (audit WL-54, WL-61).
+  const say = (text, isError) => {
+    errorEl.textContent = text;
+    errorEl.hidden = !text;
+    errorEl.classList.toggle('wl-notice', !isError);
+    errorEl.setAttribute('role', isError ? 'alert' : 'status');
+  };
   show = (pushState) => {
     const out = calc(read(), cfg.data);
     form.querySelectorAll('[aria-invalid]').forEach((n) => {
@@ -89,8 +68,7 @@ async function init(form) {
       if (ids.length) n.setAttribute('aria-describedby', ids.join(' ')); else n.removeAttribute('aria-describedby');
     });
     if (!out.ok) {
-      errorEl.textContent = errorMessage(out.error, labels);
-      errorEl.hidden = false;
+      say(errorMessage(out.error, labels, choices), true);
       results.hidden = true;
       if (howEl) howEl.hidden = true;
       // Nothing from the last good result stays on screen or in a shared link (audit WL-30).
@@ -111,14 +89,16 @@ async function init(form) {
     if (share) share.hidden = false;
     if (diagram) diagram.hidden = false;
     // Warning flags (size above the standard list, solar above the sanctioned load) print a notice, not a blank.
-    const notice = noticeCode(out);
-    errorEl.textContent = notice ? errorMessage(notice) : '';
-    errorEl.hidden = !notice;
+    const notice = noticeCode(out) || (liveFailed && out.source === 'typical' ? 'forecast_unavailable' : '');
+    say(notice ? errorMessage(notice) : '');
     for (const o of cfg.outputs) {
       const node = results.querySelector(`[data-out="${o.key}"] .wl-val`);
-      if (node) node.textContent = fmt(out[o.key], o.spec) || 'n/a';
+      if (!node) continue;
+      // An optional result the inputs leave out (N6 value with no tariff) hides its card instead of printing n/a (WL-31).
+      node.textContent = fmt(out[o.key], o.spec);
+      node.closest('.wl-result').hidden = !node.textContent;
     }
-    if (diagram && cfg.diagram === 'battery_grid') drawGrid(diagram, Math.round(out.n_series), Math.round(out.n_parallel));
+    if (diagram && cfg.diagram === 'battery_grid') extra.drawGrid(diagram, Math.round(out.n_series), Math.round(out.n_parallel));
     if (howEl && cfg.how) {
       const text = render(form.dataset.lang === 'ur' && cfg.how_ur ? cfg.how_ur : cfg.how, { in: out, out, d: cfg.data.defaults, data: cfg.data });
       howEl.hidden = text === null;
@@ -148,7 +128,7 @@ async function init(form) {
   if (share) {
     share.hidden = false;
     const note = share.querySelector('.wl-share-note');
-    const summary = () => [...results.querySelectorAll('.wl-result')].map((r) => `${r.querySelector('.wl-result-label').textContent}: ${r.querySelector('output').textContent.trim()}`).join('\n');
+    const summary = () => [...results.querySelectorAll('.wl-result:not([hidden])')].map((r) => `${r.querySelector('.wl-result-label').textContent}: ${r.querySelector('output').textContent.trim()}`).join('\n');
     share.querySelector('[data-wl-share="print"]').addEventListener('click', () => { show(true); window.print(); });
     const wa = share.querySelector('[data-wl-share="whatsapp"]');
     const setWa = () => { wa.href = `https://wa.me/?text=${encodeURIComponent(`${cfg.h1} (Wattlyst)\n${summary()}\n${shareUrl()}`)}`; };
@@ -214,15 +194,20 @@ async function init(form) {
       const city = el('city')?.value;
       const c = cfg.data.cities?.[city];
       if (!c?.lat) return;
-      const f = await forecastFor(c, cfg.data.defaults.forecast_tilt_deg);
-      if (f && el('city').value === city) { live = { ...f, city }; show(false); }
+      const f = await extra.forecastFor(c, cfg.data.defaults.forecast_tilt_deg);
+      liveFailed = !f;
+      if (el('city').value !== city) return;
+      if (f) live = { ...f, city };
+      show(false);
     };
     el('city')?.addEventListener('change', getLive);
     getLive();
   }
 
   form.addEventListener('submit', (e) => { e.preventDefault(); show(true); });
-  form.addEventListener('change', (e) => { if (!e.target.closest('.wl-loads') && (e.target.tagName === 'SELECT' || e.target.type === 'checkbox')) show(true); });
+  // Every committed change recalculates, typed or picked, in a list row or not (audit WL-35); only a pick moves
+  // focus to an error, so leaving a typed field never pulls the cursor back.
+  form.addEventListener('change', (e) => { if (!e.target.closest('.wl-loads')) show(e.target.tagName === 'SELECT' || e.target.type === 'checkbox'); });
 }
 
 // A calculator that fails to start says so instead of failing silently (audit WL-06).

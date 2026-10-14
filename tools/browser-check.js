@@ -1,6 +1,6 @@
 // Browser smoke test for CI (audit WL-74: no browser test besides Lighthouse). Opens each URL in headless
 // Chrome at phone width and fails on: a JavaScript error, any script fetched twice (WL-55), the WordPress
-// emoji script (WL-57), or a calculator whose result after Calculate is blank or shows NaN / Infinity / undefined.
+// emoji script (WL-57), or a calculator whose result after Calculate is blank, an error, or shows NaN / Infinity / undefined.
 // On pages with an appliance list it also picks an appliance from the picker and adds a row. Every page must
 // fit the phone width with no sideways scroll (audit WL-05).
 // Usage: node tools/browser-check.js <node_modules dir with puppeteer-core + chrome-launcher> <url>... | --all=<base url>
@@ -57,6 +57,10 @@ for (const url of urls) {
     const text = await page.$eval('.wl-results', (el) => el.innerText.trim());
     if (!text) fail('result is blank after Calculate');
     if (/NaN|Infinity|undefined/.test(text)) fail(`bad result text: ${text.slice(0, 120)}`);
+    // The default inputs must give a result, not an error (C8 once said "Fuel data could not be loaded"); an amber
+    // notice on a valid result is fine. innerText above reads hidden results too, so check the state itself.
+    const state = await page.$eval('form[data-wl-tool]', (f) => ({ hidden: f.querySelector('.wl-results').hidden, error: (() => { const e = f.querySelector('.wl-error'); return e && !e.hidden && !e.classList.contains('wl-notice') ? e.textContent : ''; })() }));
+    if (state.hidden || state.error) fail(`default inputs give an error: ${state.error || 'results hidden'}`);
   }
   const bare = scripts.map((u) => u.split('?')[0]);
   const twice = [...new Set(bare.filter((u, i) => bare.indexOf(u) !== i))];
