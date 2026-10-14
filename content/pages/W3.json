@@ -80,9 +80,9 @@
    "name": "pf",
    "label": "Power factor",
    "unit": "0 to 1",
-   "default": "@pf_mixed",
    "advanced": true,
-   "hint": "Mixed loads about 0.8; heaters and lights 1.0; inverter ACs about 0.9."
+   "hint": "Leave blank to use the load type: {{d.pf_by_load_type.inverter_compressor|1}} for an inverter AC, {{d.pf_by_load_type.compressor|1}} for a non-inverter compressor, {{d.pf_mixed|1}} for mixed loads and motors. Heaters are 1.0; enter it for them.",
+   "placeholder": "From the load type"
   },
   {
    "name": "margin",

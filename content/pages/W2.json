@@ -133,9 +133,9 @@
    "name": "pf",
    "label": "Power factor",
    "unit": "0 to 1",
-   "default": "@pf_mixed",
    "advanced": true,
-   "hint": "Mixed loads about 0.8; heaters 1.0; inverter ACs about 0.9. Ignored for DC."
+   "hint": "Leave blank to use the load type: {{d.pf_by_load_type.inverter_compressor|1}} for an inverter AC, {{d.pf_by_load_type.compressor|1}} for a non-inverter compressor, {{d.pf_mixed|1}} for mixed loads and motors. Heaters are 1.0; enter it for them. Ignored for DC.",
+   "placeholder": "From the load type"
   },
   {
    "name": "margin",
@@ -367,8 +367,8 @@
    "a": "{{ex.0.out.area_mm2|1}} mm² copper ({{ex.0.out.pk_size|raw}}) with a {{ex.0.out.breaker_a|int}} A MCB: the load draws {{ex.0.out.ib_a|1}} A and the cable is rated {{ex.0.out.ampacity_a|int}} A."
   },
   {
-   "q": "Which wire for a {{ex.0.out.breaker_a|int}} A MCB?",
-   "a": "At least {{ex.0.out.area_mm2|1}} mm² ({{ex.0.out.pk_size|raw}}), rated {{ex.0.out.ampacity_a|int}} A in conduit in {{ex.0.out.ambient_c|int}} °C air, so that the cable rating stays above the breaker and the breaker protects the cable."
+   "q": "Which wire for a {{ex.0.in.watts|int}} W load on a {{ex.0.out.breaker_a|int}} A MCB?",
+   "a": "{{ex.0.out.area_mm2|1}} mm² ({{ex.0.out.pk_size|raw}}), rated {{ex.0.out.ampacity_a|int}} A in conduit in {{ex.0.out.ambient_c|int}} °C air. The cable must cover both the MCB and the design current × {{ex.0.out.margin|2}} ({{ex.0.out.min_cable_a|1}} A here, which is what decides it), so that the breaker always protects the cable."
   },
   {
    "q": "Does cable length change the wire size?",

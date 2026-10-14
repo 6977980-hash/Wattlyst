@@ -62,7 +62,7 @@ test('calculators never throw on missing data or inputs', () => {
 });
 
 // Audit 2026-10-14 (WL-10): the AC wire page (W1) and the add-an-AC check (E4) must print the same circuit for every AC.
-test('W1 and E4 give every AC the same MCB, curve and cable', () => {
+test('W1, W3 and E4 give every AC the same MCB, curve and cable', () => {
   const acs = Object.keys(data.appliances).filter((id) => ['inverter_compressor', 'compressor'].includes(data.appliances[id].load_type) && /^ac-/.test(id));
   assert.ok(acs.length >= 6);
   for (const ac of acs) {
@@ -72,6 +72,9 @@ test('W1 and E4 give every AC the same MCB, curve and cable', () => {
       const e = calculators.add_ac_check({ current_w: 1000, ac, sanctioned_kw: 5, ambient_c }, data);
       assert.ok(w.ok && b.ok && e.ok, ac);
       assert.deepEqual([e.ac_breaker_a, e.ac_curve, e.ac_cable_mm2, e.ac_pf], [w.breaker_a, b.curve, w.area_mm2, w.pf], `${ac} at ${ambient_c ?? 'default'} C`);
+      // W3 with the load type and rated watts typed by hand gives the same circuit.
+      const h = calculators.breaker_size({ watts: w.watts, load_type: data.appliances[ac].load_type, ambient_c }, data);
+      assert.deepEqual([h.breaker_a, h.curve, h.area_mm2, h.pf], [b.breaker_a, b.curve, b.area_mm2, b.pf], `W3 by hand: ${ac}`);
     }
   }
 });

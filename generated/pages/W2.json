@@ -94,8 +94,8 @@
     "a": "10 mm² copper (7/64) with a 32 A MCB: the load draws 27.2 A and the cable is rated 45 A."
    },
    {
-    "q": "Which wire for a 32 A MCB?",
-    "a": "At least 10 mm² (7/64), rated 45 A in conduit in 45 °C air, so that the cable rating stays above the breaker and the breaker protects the cable."
+    "q": "Which wire for a 5,000 W load on a 32 A MCB?",
+    "a": "10 mm² (7/64), rated 45 A in conduit in 45 °C air. The cable must cover both the MCB and the design current × 1.25 (34 A here, which is what decides it), so that the breaker always protects the cable."
    },
    {
     "q": "Does cable length change the wire size?",
@@ -270,9 +270,9 @@
      "name": "pf",
      "label": "Power factor",
      "unit": "0 to 1",
-     "default": 0.8,
      "advanced": true,
-     "hint": "Mixed loads about 0.8; heaters 1.0; inverter ACs about 0.9. Ignored for DC."
+     "hint": "Leave blank to use the load type: 0.9 for an inverter AC, 0.8 for a non-inverter compressor, 0.8 for mixed loads and motors. Heaters are 1.0; enter it for them. Ignored for DC.",
+     "placeholder": "From the load type"
     },
     {
      "name": "margin",
@@ -555,10 +555,10 @@
      },
      {
       "@type": "Question",
-      "name": "Which wire for a 32 A MCB?",
+      "name": "Which wire for a 5,000 W load on a 32 A MCB?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "At least 10 mm² (7/64), rated 45 A in conduit in 45 °C air, so that the cable rating stays above the breaker and the breaker protects the cable."
+       "text": "10 mm² (7/64), rated 45 A in conduit in 45 °C air. The cable must cover both the MCB and the design current × 1.25 (34 A here, which is what decides it), so that the breaker always protects the cable."
       }
      },
      {

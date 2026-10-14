@@ -80,7 +80,8 @@ function derating(i, t) {
  * Design current for a load given as watts, amps or an appliance id; k = √3 for three-phase.
  * An appliance sets the load type too; an inverter AC is designed at its maximum rated input
  * (starting_w = full-speed draw), other appliances at their running watts. A blank PF on an appliance takes
- * the PF of its load type (data/defaults.json pf_by_load_type), so W1 and E4 print the same breaker.
+ * the PF of its load type (data/defaults.json pf_by_load_type), as does a load type picked by hand, so W1, W3 and E4
+ * print the same breaker for the same AC.
  * DC has no standard voltage: a blank voltage is an error, never a silent 230 V.
  */
 function designCurrent(i, d, t) {
@@ -89,7 +90,8 @@ function designCurrent(i, d, t) {
     ? pos(i, 'volts', undefined, has(i, 'volts') ? undefined : 'volts_required_dc')
     : pos(i, 'volts', mode === 'ac3' ? dflt(d, 'v_3ph') : dflt(d, 'v_1ph'));
   const a = has(i, 'appliance') && String(i.appliance).trim() !== 'custom' ? appliance(d, i.appliance) : null;
-  const pf = mode === 'dc' ? 1 : frac(i, 'pf', (a && d?.defaults?.pf_by_load_type?.[a.load_type]) || dflt(d, 'pf_mixed'));
+  const load_type = pick(i, 'load_type', Object.keys(t.curve_by_load), a?.load_type ?? 'sockets');
+  const pf = mode === 'dc' ? 1 : frac(i, 'pf', d?.defaults?.pf_by_load_type?.[load_type] || dflt(d, 'pf_mixed'));
   const k = mode === 'ac3' ? Math.sqrt(3) : 1;
   const out = { mode, volts, pf, k };
   let watts;
@@ -105,7 +107,6 @@ function designCurrent(i, d, t) {
     watts = pos(i, 'watts');
     ib = watts / (k * volts * pf);
   }
-  const load_type = pick(i, 'load_type', Object.keys(t.curve_by_load), out.appliance_load_type ?? 'sockets');
   return { ...out, watts, ib_a: ib, load_type };
 }
 
