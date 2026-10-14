@@ -257,7 +257,7 @@ final class Wattlyst_Pages {
 		}
 		printf(
 			'<script type="module" src="%s"></script>' . "\n",
-			esc_url( add_query_arg( 'ver', WATTLYST_TOOLS_VERSION, Wattlyst_Tools::asset( 'dist/assets/js/wattlyst-tool.js' ) ) )
+			esc_url( $this->plugin->script_url( 'dist/assets/js/wattlyst-tool.js' ) )
 		);
 	}
 }

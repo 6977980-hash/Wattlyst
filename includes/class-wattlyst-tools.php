@@ -97,6 +97,21 @@ final class Wattlyst_Tools {
 		return $this->manifest()['site'] ?? array();
 	}
 
+	/**
+	 * URL of a shipped script with the build's asset version (manifest assets.ver, a hash of all dist/ JS).
+	 * The same ver is stamped on every relative import inside dist/, so the script tag, each modulepreload
+	 * and each import name one URL per module (fetched once) and a deploy never mixes old and new modules.
+	 */
+	public function script_url( string $rel ): string {
+		$ver = (string) ( $this->manifest()['assets']['ver'] ?? WATTLYST_TOOLS_VERSION );
+		return add_query_arg( 'ver', $ver, self::asset( $rel ) );
+	}
+
+	/** Nested engine modules a dist/engine file imports (manifest assets.deps), for modulepreload. */
+	public function module_deps( string $file ): array {
+		return (array) ( $this->manifest()['assets']['deps'][ $file ] ?? array() );
+	}
+
 	/** Absolute URL of a site path on the current host (keeps local/staging hosts working). */
 	public static function link( string $path ): string {
 		return home_url( $path );

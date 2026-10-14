@@ -244,7 +244,7 @@ final class Wattlyst_Render {
 						'type'    => $f['type'] ?? 'number',
 						'options' => isset( $f['options'] ) ? array_map( static fn( $o ) => (string) $o[0], $f['options'] ) : null,
 						'default' => $f['default'] ?? null,
-						'catalog' => $f['catalog'] ?? null,
+						'catalog' => isset( $f['catalog'] ) ? self::catalog_groups( $f['catalog'] ) : null,
 						'start'   => empty( $f['start'] ) ? null : true,
 					),
 					static fn( $v ) => null !== $v
@@ -308,6 +308,23 @@ final class Wattlyst_Render {
 		}
 		$more_rows = $parallel > $max ? '<div class="wl-more">+' . ( $parallel - $max ) . ' more strings</div>' : '';
 		return '<div class="wl-grid"><span class="wl-bus wl-bus-neg">Negative bus</span><div class="wl-strings">' . $rows . $more_rows . '</div><span class="wl-bus wl-bus-pos">Positive bus</span></div>';
+	}
+
+	/**
+	 * Appliance picker list for the browser as [[category, [id, ...]], ...]: names come from the appliance data
+	 * already in the config, so the catalog is not shipped twice (audit WL-58, homepage weight).
+	 */
+	private static function catalog_groups( array $catalog ): array {
+		$groups = array();
+		foreach ( $catalog as $a ) {
+			$last = count( $groups ) - 1;
+			if ( $last < 0 || $groups[ $last ][0] !== $a['category'] ) {
+				$groups[] = array( $a['category'], array() );
+				++$last;
+			}
+			$groups[ $last ][1][] = $a['id'];
+		}
+		return $groups;
 	}
 
 	private function tool_data( array $keys, array $appliances ): array {

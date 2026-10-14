@@ -91,7 +91,7 @@ final class Wattlyst_Endpoints {
 		echo '<link rel="canonical" href="' . esc_url( Wattlyst_Tools::link( $page['url'] ) ) . '">';
 		echo '<style>body{margin:0;padding:12px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;line-height:1.5;color:#1d2327;background:#fff}' . ( is_readable( $css ) ? wp_strip_all_tags( (string) file_get_contents( $css ) ) : '' ) . '</style>';
 		echo '</head><body data-wl-embed>' . $body; // phpcs:ignore WordPress.Security.EscapeOutput -- built from escaped parts in Wattlyst_Render.
-		printf( '<script type="module" src="%s"></script>', esc_url( add_query_arg( 'ver', WATTLYST_TOOLS_VERSION, Wattlyst_Tools::asset( 'dist/assets/js/wattlyst-tool.js' ) ) ) );
+		printf( '<script type="module" src="%s"></script>', esc_url( $this->plugin->script_url( 'dist/assets/js/wattlyst-tool.js' ) ) );
 		echo '</body></html>';
 		exit;
 	}

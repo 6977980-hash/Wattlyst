@@ -16,6 +16,7 @@ final class Wattlyst_Head {
 
 	public function __construct( Wattlyst_Tools $plugin ) {
 		$this->plugin = $plugin;
+		add_action( 'init', array( $this, 'no_emoji' ) );
 		add_action( 'wp', array( $this, 'take_over' ) );
 		add_filter( 'pre_get_document_title', array( $this, 'title' ), 99 );
 		add_action( 'wp_head', array( $this, 'head' ), 1 );
@@ -150,10 +151,30 @@ final class Wattlyst_Head {
 
 	private function preload( string $module ): void {
 		// dist/ holds the stripped copies built by tools/build.js (same code, no comments or indentation).
-		$files = array( 'dist/assets/js/wattlyst-tool.js?ver=' . WATTLYST_TOOLS_VERSION, 'dist/engine/format.js', 'dist/engine/messages.js', 'dist/engine/core.js', 'dist/engine/' . basename( $module ) );
+		// Whole import chain (tool script, shared modules, the calculator module and its nested imports), each
+		// under the exact versioned URL the import uses, so nothing is fetched twice or discovered late.
+		$module  = basename( $module );
+		$engine  = array_unique( array_merge( array( 'format.js', 'messages.js', 'core.js', $module ), $this->plugin->module_deps( $module ) ) );
+		$files   = array_merge( array( 'dist/assets/js/wattlyst-tool.js' ), array_map( static fn( $f ) => 'dist/engine/' . $f, $engine ) );
 		foreach ( $files as $f ) {
-			printf( '<link rel="modulepreload" href="%s">' . "\n", esc_url( Wattlyst_Tools::asset( $f ) ) );
+			printf( '<link rel="modulepreload" href="%s">' . "\n", esc_url( $this->plugin->script_url( $f ) ) );
 		}
+	}
+
+	/**
+	 * WordPress's emoji detection script and styles (audit WL-57): every browser we serve draws emoji itself,
+	 * so they only cost a script download and main-thread time on every page. Front end, feeds and email.
+	 */
+	public function no_emoji(): void {
+		remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+		remove_action( 'embed_head', 'print_emoji_detection_script' );
+		remove_action( 'wp_enqueue_scripts', 'wp_enqueue_emoji_styles' );
+		remove_action( 'enqueue_embed_scripts', 'wp_enqueue_emoji_styles' );
+		remove_action( 'wp_print_styles', 'print_emoji_styles' );
+		remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
+		remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
+		remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
+		add_filter( 'emoji_svg_url', '__return_false' );
 	}
 
 	public function icons(): void {
