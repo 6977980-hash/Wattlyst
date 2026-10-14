@@ -121,11 +121,13 @@ const node=results.querySelector(`[data-out="${o.key}"] .wl-val`);
 if(node)node.textContent=fmt(out[o.key],o.spec);
 }
 if(howEl && cfg.how){
-const text=render(cfg.how,{in:out,out,d:cfg.data.defaults});
+const text=render(form.dataset.lang==='ur' && cfg.how_ur?cfg.how_ur:cfg.how,{in:out,out,d:cfg.data.defaults});
 howEl.hidden=text===null;
 if(text !==null)howEl.textContent=text;
 }
-if(pushState){
+if(pushState)history.replaceState(null,'',shareUrl());
+};
+const shareUrl=()=>{
 const load=cfg.fields
 .map((f)=>{
 if(lists[f.name])return `${f.name}:${encodeURIComponent(lists[f.name].encode())}`;
@@ -136,9 +138,42 @@ return v?`${f.name}:${encodeURIComponent(v)}`:'';
 .join(',');
 const url=new URL(window.location.href);
 url.search=load?`?load=${load}`:'';
-history.replaceState(null,'',url);
-}
+return url.href;
 };
+const share=form.querySelector('.wl-share');
+if(share){
+share.hidden=false;
+const note=share.querySelector('.wl-share-note');
+const summary=()=>[...results.querySelectorAll('.wl-result')].map((r)=> `${r.querySelector('.wl-result-label').textContent}: ${r.querySelector('output').textContent.trim()}`).join('\n');
+share.querySelector('[data-wl-share="print"]').addEventListener('click',()=>{show(true);window.print();});
+const wa=share.querySelector('[data-wl-share="whatsapp"]');
+const setWa=()=>{wa.href=`https://wa.me/?text=${encodeURIComponent(`${cfg.h1} (Wattlyst)\n${summary()}\n${shareUrl()}`)}`;};
+wa.addEventListener('pointerdown',setWa);
+wa.addEventListener('focus',setWa);
+setWa();
+share.querySelector('[data-wl-share="copy"]').addEventListener('click',async()=>{
+show(true);
+try{await navigator.clipboard.writeText(shareUrl());note.textContent='Link copied.';}catch{note.textContent=shareUrl();}
+});
+const lang=share.querySelector('[data-wl-lang]');
+if(lang){
+const apply=(ur)=>{
+lang.setAttribute('aria-pressed',String(ur));
+lang.textContent=ur?'English':'Roman Urdu';
+results.querySelectorAll('.wl-result-label[data-ur]').forEach((l)=>{l.textContent=ur?l.dataset.ur:l.dataset.en;});
+form.dataset.lang=ur?'ur':'en';
+show(false);
+};
+lang.addEventListener('click',()=>{
+const ur=form.dataset.lang !=='ur';
+try{localStorage.setItem('wl-lang',ur?'ur':'en');}catch{}
+apply(ur);
+});
+let saved=null;
+try{saved=localStorage.getItem('wl-lang');}catch{}
+if(saved==='ur')apply(true);
+}
+}
 const load=new URLSearchParams(window.location.search).get('load');
 if(load){
 let changed=false;

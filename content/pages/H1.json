@@ -6,14 +6,22 @@
  "author": "ali-ahmad",
  "published": "2026-10-13",
  "reviewed": "2026-10-13",
- "answer": "Wattlyst answers the electricity questions a home owner actually has: how long a battery will last, what size inverter, generator or solar system to buy, which wire and breaker to use, and what the bill will be. Pick a task below. Every calculator shows its formula and assumptions, and the defaults fit Pakistan's {{d.v_1ph|int}} V supply.",
+ "answer": "The Home Power Planner sizes everything from one appliance list: a typical home running {{out.running_w|int}} W needs about a {{out.inverter_kw|1}} kW inverter, a {{out.battery_ah|int}} Ah battery for {{in.backup_hours|1}} hours of backup, a {{out.installed_kw|2}} kW solar system of {{out.panels|int}} panels that saves about {{out.saving_rs|rs}} a month under net billing, and a {{out.generator_pick_kva|1}} kVA generator. Edit the list and every size updates. Each number links to the full calculator with its formula.",
  "key_facts": [
-  "Every Wattlyst result shows the formula it used with your numbers, so you can check it or change an assumption.",
-  "Default values (inverter efficiency {{d.inverter_eff_ups|pct}}, usable battery capacity {{d.dod_lead_acid|pct}} for tubular and {{d.dod_lifepo4|pct}} for lithium, power factor {{d.pf_mixed|2}}, safety margin {{d.margin|2}} ×) are listed on the methodology page and can be edited in each calculator.",
-  "Pakistan electricity tariff slabs, peak sun hours by city and appliance wattages live in dated data files; the date each was last checked is printed on the pages that use it.",
+  "The planner carries one appliance list through the whole chain: running load, inverter, battery, solar, net billing and generator, each with the formula of its own calculator, so the sizes never contradict each other.",
+  "Inverter size = running watts × {{d.margin|2}}; battery Ah = backup watts × hours ÷ (bank volts × usable depth of discharge × inverter efficiency); solar kW = daily units ÷ city yield; generator kVA = the larger of running × {{d.margin|2}} and the starting peak, ÷ {{d.pf_generator|1}}.",
+  "Default values (inverter efficiency {{d.inverter_eff_ups|pct}} UPS and {{d.inverter_eff_hybrid|pct}} hybrid, usable battery capacity {{d.dod_lead_acid|pct}} tubular and {{d.dod_lifepo4|pct}} lithium, power factor {{d.pf_mixed|2}}) are listed on the methodology page and editable in each calculator.",
+  "Pakistan tariff slabs, peak sun hours by city and appliance wattages live in dated data files; the net-billing buyback rate is not yet confirmed on a NEPRA page and stays editable.",
   "Results are planning estimates, not an official bill or an engineer's design; wiring and solar work must be confirmed by a licensed electrician."
  ],
  "sections": [
+  {
+   "h2": "What the planner does, step by step",
+   "p": [
+    "Step one adds up the appliances you tick: the watts that run at once and the units they use in a day. Step two sizes the inverter for that running load with a safety margin. Step three sizes the battery for only the load you want to keep on during loadshedding, for the hours you choose. Step four sizes the solar array for your daily units and your city's sun. Step five splits a month's solar between what you use while the sun is up and what you export, and compares the energy charge with and without net billing. Step six sizes a generator for the whole list, in case you want one for long outages.",
+    "Every step is a calculator on this site. Open any of them from the task cards below to change its assumptions, see worked examples and read the formula."
+   ]
+  },
   {
    "h2": "How to use the calculators",
    "p": [
@@ -31,6 +39,14 @@
  ],
  "faq": [
   {
+   "q": "Can I save or share my plan?",
+   "a": "Yes. Press the plan button, then use Save as PDF to print or keep the page, WhatsApp to send the sizes and a link to your installer, or copy the link: it carries your appliance list, so whoever opens it sees the same plan."
+  },
+  {
+   "q": "Why is the saving an energy-charge estimate only?",
+   "a": "Fixed charge, surcharges and tax are the same with or without solar, so the planner compares only the energy charge of {{out.monthly_units|int}} units with the net-billing energy charge after {{out.self_used_units|int}} self-used and {{out.export_units|int}} exported units. The buyback rate is editable because it is not yet confirmed on a NEPRA page."
+  },
+  {
    "q": "Are the calculators free?",
    "a": "Yes. Every tool runs in your browser, needs no sign-up and stores nothing about you. You can share a result by copying the page link after you press Calculate."
   },
@@ -47,9 +63,211 @@
    "a": "Wattlyst is written by its founder, Ali Ahmad, with formulas documented on the methodology page. Technical review by a PEC-registered electrical engineer is in progress and will be named on each page once complete."
   }
  ],
- "related": [],
+ "related": [
+  "E1",
+  "D4",
+  "B1",
+  "D8",
+  "D10",
+  "C6"
+ ],
  "literal_numbers": [],
  "sources": [
-  {"label": "Wattlyst methodology and default values", "url": "/methodology/"}
- ]
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  },
+  {
+   "label": "Global Solar Atlas (peak sun hours by city)",
+   "url": "https://globalsolaratlas.info/"
+  }
+ ],
+ "calc": "home_plan",
+ "submit": "Plan my home power",
+ "fields": [
+  {
+   "name": "loads",
+   "label": "Appliances you run (edit the list)",
+   "type": "loads",
+   "catalog": "all",
+   "default": [
+    {
+     "id": "ceiling-fan-ac",
+     "qty": 4
+    },
+    {
+     "id": "led-bulb",
+     "qty": 10
+    },
+    {
+     "id": "ac-split-1-5ton-inverter",
+     "qty": 1,
+     "hours": 8
+    },
+    {
+     "id": "refrigerator-inverter",
+     "qty": 1
+    },
+    {
+     "id": "led-tv-43",
+     "qty": 1
+    },
+    {
+     "id": "water-motor-1hp",
+     "qty": 1,
+     "hours": 1
+    }
+   ],
+   "hint": "Watts and hours fill in from our appliance data; change any value to match your home."
+  },
+  {
+   "name": "city",
+   "label": "City (for sun hours)",
+   "type": "select",
+   "options_from": "cities",
+   "default": "lahore",
+   "hint": "Sets the solar yield from Global Solar Atlas data. Pick the nearest city."
+  },
+  {
+   "name": "sanctioned_kw",
+   "label": "Sanctioned load",
+   "unit": "kW",
+   "default": 4,
+   "hint": "The kW printed on your electricity bill. Below five keeps the flat tariff; it also caps net billing."
+  },
+  {
+   "name": "backup_w",
+   "label": "Load to keep on during loadshedding",
+   "unit": "W",
+   "default": 500,
+   "hint": "Fans, lights, Wi-Fi and TV are a few hundred watts; an inverter AC adds over a thousand."
+  },
+  {
+   "name": "backup_hours",
+   "label": "Backup hours wanted",
+   "unit": "h",
+   "default": 4,
+   "hint": "The longest outage you want to cover from the battery."
+  },
+  {
+   "name": "chemistry",
+   "label": "Battery type",
+   "type": "select",
+   "default": "lifepo4",
+   "options": [
+    [
+     "lifepo4",
+     "Lithium (LiFePO4)"
+    ],
+    [
+     "tubular",
+     "Tubular / lead-acid"
+    ]
+   ]
+  },
+  {
+   "name": "battery_v",
+   "label": "Battery bank voltage",
+   "unit": "V",
+   "type": "select",
+   "default": "@battery_v_default",
+   "advanced": true,
+   "options": [
+    [
+     12,
+     "12 V"
+    ],
+    [
+     24,
+     "24 V"
+    ],
+    [
+     48,
+     "48 V"
+    ]
+   ]
+  },
+  {
+   "name": "buyback_rs",
+   "label": "Net-billing buyback rate",
+   "unit": "Rs per unit",
+   "default": "@data.tariff.net_billing.buyback_rs_per_unit_default",
+   "advanced": true,
+   "hint": "Not yet confirmed on a NEPRA page; change it when your DISCO quotes a rate."
+  },
+  {
+   "name": "day_share",
+   "label": "Share of use while the sun is up",
+   "unit": "0 to 1",
+   "default": "@planner_day_share",
+   "advanced": true,
+   "hint": "How much of the day's electricity you use between sunrise and sunset. Half is typical for a home."
+  },
+  {
+   "name": "margin",
+   "label": "Sizing margin",
+   "unit": "×",
+   "default": "@margin",
+   "advanced": true,
+   "hint": "Inverter and generator are sized at the running load times this margin."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "running_w",
+   "label": "Running load",
+   "label_ur": "Chalta hua load",
+   "spec": "int",
+   "unit": "W"
+  },
+  {
+   "key": "monthly_units",
+   "label": "Monthly use",
+   "label_ur": "Mahana units",
+   "spec": "int",
+   "unit": "units"
+  },
+  {
+   "key": "inverter_kw",
+   "label": "Inverter size",
+   "label_ur": "Inverter ka size",
+   "spec": "1",
+   "unit": "kW"
+  },
+  {
+   "key": "battery_ah",
+   "label": "Battery for backup",
+   "label_ur": "Backup ke liye battery",
+   "spec": "int",
+   "unit": "Ah"
+  },
+  {
+   "key": "installed_kw",
+   "label": "Solar system",
+   "label_ur": "Solar system",
+   "spec": "2",
+   "unit": "kW"
+  },
+  {
+   "key": "panels",
+   "label": "Panels",
+   "label_ur": "Panels",
+   "spec": "int"
+  },
+  {
+   "key": "saving_rs",
+   "label": "Monthly saving with net billing",
+   "label_ur": "Net billing se mahana bachat",
+   "spec": "rs"
+  },
+  {
+   "key": "generator_pick_kva",
+   "label": "Generator if you want one",
+   "label_ur": "Generator (agar chahiye)",
+   "spec": "1",
+   "unit": "kVA"
+  }
+ ],
+ "how": "Your list runs {{out.running_w|int}} W at once ({{out.peak_w|int}} W when the biggest motor starts) and uses {{out.daily_kwh|1}} units a day, {{out.monthly_units|int}} a month. Inverter: {{out.running_w|int}} W × {{in.margin|2}} = {{out.inverter_kw|1}} kW. Battery: {{in.backup_w|int}} W × {{in.backup_hours|1}} h = {{out.backup_kwh|2}} kWh ÷ ({{out.battery_v|int}} V × {{out.battery_dod|pct}} usable × {{d.inverter_eff_hybrid|pct}} inverter) = {{out.battery_ah|int}} Ah. Solar: {{out.daily_kwh|1}} kWh ÷ {{out.city_yield|1}} kWh per kW per day = {{out.solar_kw|2}} kW, so {{out.panels|int}} panels of {{out.panel_w|int}} W = {{out.installed_kw|2}} kW making about {{out.monthly_solar_kwh|int}} units a month. Net billing: you use {{out.self_used_units|int}} of those units yourself, export {{out.export_units|int}} at {{out.buyback_rs|rs2}} and import {{out.import_units|int}}; energy charge {{out.bill_before_rs|rs}} before solar, {{out.bill_after_rs|rs}} after, saving {{out.saving_rs|rs}} a month. Generator for the whole list: {{out.generator_kva|1}} kVA, next standard size {{out.generator_pick_kva|1}} kVA.",
+ "how_ur": "Aap ki list ek waqt mein {{out.running_w|int}} W chalti hai (sab se bara motor start hone par {{out.peak_w|int}} W) aur roz {{out.daily_kwh|1}} units, mahine ke {{out.monthly_units|int}} units lagti hai. Inverter: {{out.running_w|int}} W × {{in.margin|2}} = {{out.inverter_kw|1}} kW. Battery: {{in.backup_w|int}} W × {{in.backup_hours|1}} h = {{out.backup_kwh|2}} kWh ÷ ({{out.battery_v|int}} V × {{out.battery_dod|pct}} qabil-e-istemal × {{d.inverter_eff_hybrid|pct}} inverter) = {{out.battery_ah|int}} Ah. Solar: {{out.daily_kwh|1}} kWh ÷ {{out.city_yield|1}} kWh fi kW roz = {{out.solar_kw|2}} kW, yani {{out.panel_w|int}} W ke {{out.panels|int}} panels = {{out.installed_kw|2}} kW, mahine ke taqreeban {{out.monthly_solar_kwh|int}} units. Net billing: {{out.self_used_units|int}} units khud istemal, {{out.export_units|int}} export {{out.buyback_rs|rs2}} par, {{out.import_units|int}} import; solar se pehle energy charge {{out.bill_before_rs|rs}}, baad mein {{out.bill_after_rs|rs}}, bachat {{out.saving_rs|rs}} mahana. Poori list ke liye generator: {{out.generator_kva|1}} kVA, agla standard size {{out.generator_pick_kva|1}} kVA."
 }

@@ -86,7 +86,7 @@ test('content: numbers in page text come from the engine or data/, never typed (
   for (const f of readdirSync(dir).filter((x) => x.endsWith('.json'))) {
     const c = JSON.parse(readFileSync(join(dir, f), 'utf8'));
     const allowed = c.literal_numbers || [];
-    const texts = [c.answer, c.intro, c.how, c.safety, ...(c.key_facts || []), ...(c.mistakes || []),
+    const texts = [c.answer, c.intro, c.how, c.how_ur, c.safety, ...(c.key_facts || []), ...(c.mistakes || []),
       ...(c.faq || []).flatMap((x) => [x.q, x.a]), ...(c.examples || []).flatMap((x) => [x.title, x.text]),
       c.table?.caption, ...(c.sections || []).flatMap((s) => [s.h2, ...(s.p || [])])].filter(Boolean);
     for (const t of texts) {
@@ -100,7 +100,7 @@ test('content: numbers in page text come from the engine or data/, never typed (
 test('every rendered string is free of NaN, Infinity, undefined and negative results', () => {
   for (const p of pages) {
     const c = structuredClone(p.content || {});
-    if (c.tool?.how) delete c.tool.how.tpl; // the live template is meant to keep its {{placeholders}}
+    if (c.tool?.how) { delete c.tool.how.tpl; delete c.tool.how.tpl_ur; } // the live templates keep their {{placeholders}}
     const s = JSON.stringify(c);
     assert.ok(!/NaN|Infinity|undefined|null h|\{\{/.test(s), `${p.id}: bad value in content`);
   }

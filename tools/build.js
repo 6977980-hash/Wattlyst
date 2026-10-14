@@ -170,7 +170,7 @@ function buildContent(c, ctx) {
         if (typeof v !== 'number' && typeof v !== 'string') fail(`${c.id}: output ${o.key} missing from ${c.calc}`);
         return { ...o, value: fmt(v, o.spec || '2') };
       }),
-      how: c.how ? { tpl: c.how, text: text(ctx, c.how, scope, 'how') } : null,
+      how: c.how ? { tpl: c.how, text: text(ctx, c.how, scope, 'how'), ...(c.how_ur ? { tpl_ur: c.how_ur, text_ur: text(ctx, c.how_ur, scope, 'how_ur') } : {}) } : null,
       submit: c.submit || 'Calculate',
       data_checked: dataChecked(module, { ...ctx, usesAppliances: fields.some((f) => f.type === 'appliance' || f.type === 'loads') }),
     };

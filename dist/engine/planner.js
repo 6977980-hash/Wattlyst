@@ -15,7 +15,7 @@ const lithium=(i.chemistry??'lifepo4')==='lifepo4';
 if(!['lifepo4','tubular'].includes(i.chemistry??'lifepo4'))throw new CalcError('chemistry_invalid','chemistry');
 const out={
 running_w:inv.running_w,peak_w:inv.surge_w,daily_kwh:sun.daily_kwh,monthly_units,
-inverter_w:inv.continuous_w,inverter_kw:inv.continuous_w / 1000,inverter_kva:inv.kva,inverter_surge_w:inv.surge_w,
+margin:inv.margin,inverter_w:inv.continuous_w,inverter_kw:inv.continuous_w / 1000,inverter_kva:inv.kva,inverter_surge_w:inv.surge_w,
 backup_w,backup_hours,battery_v,chemistry:lithium?'lifepo4':'tubular',
 city_yield:sun.yield_kwh_per_kwp_day,panel_w:sun.panel_w,solar_kw:sun.kw,panels:sun.panels,installed_kw:sun.installed_kw,
 roof_m2:sun.roof_m2,solar_limited_by:sun.limited_by,monthly_solar_kwh:sun.monthly_kwh_estimate,
