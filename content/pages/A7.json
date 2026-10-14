@@ -1,0 +1,265 @@
+{
+ "id": "A7",
+ "status": "publish",
+ "template": "tool",
+ "h1": "Volts to Watts Calculator (Volts × Amps)",
+ "author": "ali-ahmad",
+ "published": "2026-10-14",
+ "reviewed": "2026-10-14",
+ "calc": "amps_to_watts",
+ "fields": [
+  {
+   "name": "volts",
+   "label": "Voltage",
+   "unit": "V",
+   "default": "@v_1ph",
+   "hint": "The supply voltage: 12, 24 or 48 for a battery, 230 for Pakistani mains, 120 in the US, 400 line to line for three-phase."
+  },
+  {
+   "name": "amps",
+   "label": "Current",
+   "unit": "A",
+   "default": 5,
+   "hint": "Amps from the label or a clamp meter. Volts alone cannot give watts; you need the current too."
+  },
+  {
+   "name": "mode",
+   "label": "Supply type",
+   "type": "select",
+   "default": "ac1",
+   "options": [
+    [
+     "ac1",
+     "Single-phase AC"
+    ],
+    [
+     "dc",
+     "DC (battery, solar, car)"
+    ],
+    [
+     "ac3",
+     "Three-phase AC (line-to-line volts)"
+    ]
+   ],
+   "hint": "DC ignores power factor. For three-phase, enter the line-to-line voltage and the current in one line."
+  },
+  {
+   "name": "pf",
+   "label": "Power factor",
+   "unit": "0 to 1",
+   "default": "@pf_mixed",
+   "hint": "1 for heaters and bulbs, about 0.8 for motors and mixed loads. Ignored for DC."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "watts",
+   "label": "Real power",
+   "spec": "int",
+   "unit": "W"
+  },
+  {
+   "key": "va",
+   "label": "Apparent power (VA)",
+   "spec": "int",
+   "unit": "VA"
+  }
+ ],
+ "answer": "{{in.volts|int}} volts at {{in.amps|int}} amps is {{out.va|int}} VA, which is {{out.watts|int}} watts at a power factor of {{out.pf|2}} or {{out.va|int}} W for a heater. Watts = volts × amps × power factor. Volts alone do not give watts: you need the current too. On DC the power factor is one, so {{ex.0.in.volts|int}} V at {{ex.0.in.amps|int}} A is {{ex.0.out.watts|int}} W.",
+ "how": "{{out.k|4}} × {{out.volts|int}} V × {{in.amps|int}} A = {{out.va|int}} VA of apparent power, and × {{out.pf|2}} power factor = {{out.watts|int}} W of real power. The first factor is one for DC and single-phase and √3 for three-phase, where the volts are line-to-line and the amps are per line. On DC the power factor is one, so watts = volts × amps exactly.",
+ "key_facts": [
+  "Watts = volts × amps × power factor. {{in.volts|int}} V × {{in.amps|int}} A at a power factor of {{out.pf|2}} is {{out.watts|int}} W.",
+  "On DC there is no power factor: {{ex.0.in.volts|int}} V × {{ex.0.in.amps|int}} A = {{ex.0.out.watts|int}} W and {{ex.1.in.volts|int}} V × {{ex.1.in.amps|int}} A = {{ex.1.out.watts|int}} W.",
+  "At the same {{ex.2.in.amps|int}} A, a {{ex.2.in.volts|int}} V heater gives {{ex.2.out.watts|int}} W, while a {{ex.0.in.volts|int}} V battery load gives a small fraction of that: higher voltage moves more power through the same current.",
+  "Voltage on its own is not power. A {{d.v_1ph|int}} V socket supplies only as many watts as the connected load draws in amps."
+ ],
+ "formula": {
+  "text": "P = V × I (DC);  P = V × I × PF (single-phase AC);  P = √3 × V × I × PF (three-phase AC);  Ohm's law: V = I × R",
+  "lines": [
+   "P = real power in watts (W)",
+   "V = voltage in volts (V)",
+   "I = current in amps (A)",
+   "PF = power factor (1 for DC and heaters)",
+   "R = resistance in ohms (Ω); V × I without PF is the apparent power in VA"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "Volts, amps and watts formula",
+   "p": [
+    "Watts are volts times amps, adjusted by the power factor on AC. {{in.volts|int}} V × {{in.amps|int}} A = {{out.va|int}} VA; a heater turns all of it into {{out.va|int}} W, a motor at a power factor of {{out.pf|2}} only {{out.watts|int}} W of useful power.",
+    "Rearranged, the same formula gives amps = watts ÷ volts and volts = watts ÷ amps. The watts to amps calculator and the amps to watts calculator do those directions."
+   ]
+  },
+  {
+   "h2": "How many watts is {{d.v_1ph|int}} volts?",
+   "p": [
+    "Volts alone have no watts. Voltage is the electrical pressure; watts appear only when current flows. A {{d.v_1ph|int}} V socket with nothing plugged in delivers zero watts; with {{in.amps|int}} A of heating load it delivers {{out.va|int}} W. The same applies to an older {{ex.4.in.volts|int}} V figure: {{ex.4.in.amps|int}} A there is {{ex.4.out.watts|int}} W at a power factor of one."
+   ]
+  },
+  {
+   "h2": "{{ex.0.in.volts|int}} volts to watts and other DC systems",
+   "p": [
+    "For batteries, solar panels and car circuits choose DC. {{ex.0.in.volts|int}} V × {{ex.0.in.amps|int}} A = {{ex.0.out.watts|int}} W, and {{ex.1.in.volts|int}} V × {{ex.1.in.amps|int}} A = {{ex.1.out.watts|int}} W. A higher battery voltage carries the same power with fewer amps, which is why larger inverters run on higher-voltage banks."
+   ]
+  },
+  {
+   "h2": "Watts, volts, amps triangle and Ohm's law",
+   "p": [
+    "The power triangle (P = V × I) links watts, volts and amps: cover the one you want and the other two show how to get it. Ohm's law (V = I × R) links volts, amps and resistance. Together they answer most circuit questions: for a pure resistance such as a heater element, watts also equal amps squared × ohms, and volts squared ÷ ohms.",
+    "Ohm's law applies directly only to resistive loads. Motors, chargers and LED drivers do not behave like a fixed resistance, so for them measure or read the current and use watts = volts × amps × power factor."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "volts": 12,
+    "amps": 5,
+    "mode": "dc"
+   },
+   "title": "{{in.volts|int}} volts to watts at {{in.amps|int}} A (DC)",
+   "text": "{{in.volts|int}} V × {{in.amps|int}} A = {{out.watts|int}} W, about what a small DC fan or a router with a few lights draws."
+  },
+  {
+   "inputs": {
+    "volts": 24,
+    "amps": 10,
+    "mode": "dc"
+   },
+   "title": "{{in.volts|int}} V system at {{in.amps|int}} A",
+   "text": "{{in.volts|int}} V × {{in.amps|int}} A = {{out.watts|int}} W from a {{in.volts|int}} V battery bank."
+  },
+  {
+   "inputs": {
+    "amps": 5,
+    "pf": 1
+   },
+   "title": "{{in.volts|int}} V and {{in.amps|int}} A, heating load",
+   "text": "{{in.volts|int}} V × {{in.amps|int}} A × {{in.pf|int}} = {{out.watts|int}} W, roughly an electric iron or small room heater."
+  },
+  {
+   "inputs": {
+    "amps": 5,
+    "pf": 0.8
+   },
+   "title": "{{in.volts|int}} V and {{in.amps|int}} A, motor or mixed load",
+   "text": "{{in.volts|int}} V × {{in.amps|int}} A = {{out.va|int}} VA; × {{in.pf|2}} = {{out.watts|int}} W of real power. The cable still carries the full {{in.amps|int}} A."
+  },
+  {
+   "inputs": {
+    "volts": 220,
+    "amps": 10,
+    "pf": 1
+   },
+   "title": "How many watts is {{in.volts|int}} volts at {{in.amps|int}} A?",
+   "text": "{{in.volts|int}} V × {{in.amps|int}} A × {{in.pf|int}} = {{out.watts|int}} W for a resistive load."
+  }
+ ],
+ "table": {
+  "caption": "Volts to watts at {{in.amps|int}} A: how the voltage changes the power for the same current",
+  "rows": [
+   {
+    "volts": 12,
+    "mode": "dc"
+   },
+   {
+    "volts": 24,
+    "mode": "dc"
+   },
+   {
+    "volts": 48,
+    "mode": "dc"
+   },
+   {
+    "volts": 120,
+    "pf": 1
+   },
+   {
+    "volts": 230,
+    "pf": 1
+   },
+   {
+    "volts": 230,
+    "pf": 0.8
+   },
+   {
+    "volts": 400,
+    "mode": "ac3",
+    "pf": 0.8
+   }
+  ],
+  "columns": [
+   {
+    "label": "Voltage",
+    "tpl": "{{out.volts|int}} V"
+   },
+   {
+    "label": "Power factor",
+    "tpl": "{{out.pf|2}}"
+   },
+   {
+    "label": "Apparent power (VA)",
+    "tpl": "{{out.va|int}} VA"
+   },
+   {
+    "label": "Watts",
+    "tpl": "{{out.watts|int}} W"
+   }
+  ]
+ },
+ "mistakes": [
+  "Asking how many watts a voltage is. Voltage alone has no power; you need the current the load draws.",
+  "Multiplying volts × amps for a motor and calling it watts. That is VA; the real watts are lower by the power factor (about {{d.pf_mixed|2}}).",
+  "Using Ohm's law with a fixed resistance for a motor, charger or LED driver. Their resistance is not constant; use the measured current instead.",
+  "Forgetting √3 on three-phase. The {{d.v_3ph|int}} V row in the table already includes it."
+ ],
+ "safety": "Measuring live voltage and current at the mains is dangerous. Use a clamp meter rated for the circuit, keep to battery and plug-in measurements yourself, and let a licensed electrician take readings inside a distribution board.",
+ "faq": [
+  {
+   "q": "How do I convert volts to watts?",
+   "a": "Multiply volts by amps, then by the power factor on AC. {{in.volts|int}} V × {{in.amps|int}} A × {{out.pf|2}} = {{out.watts|int}} W. Without the current there is no answer."
+  },
+  {
+   "q": "How many watts is {{d.v_1ph|int}} volts?",
+   "a": "None on its own. Watts depend on the current: {{in.amps|int}} A at {{d.v_1ph|int}} V is {{out.va|int}} W for a heater and {{out.watts|int}} W for a motor at a power factor of {{out.pf|2}}."
+  },
+  {
+   "q": "How many watts is {{ex.0.in.volts|int}} volts?",
+   "a": "It depends on the amps. At {{ex.0.in.amps|int}} A, {{ex.0.in.volts|int}} V gives {{ex.0.out.watts|int}} W; double the current and the watts double."
+  },
+  {
+   "q": "How do I convert volts to amps?",
+   "a": "Divide the watts by the volts (and the power factor on AC): amps = watts ÷ (volts × power factor). The watts to amps calculator does this for DC, single-phase and three-phase."
+  },
+  {
+   "q": "What is the watts, volts, amps triangle?",
+   "a": "Watts = volts × amps, volts = watts ÷ amps, amps = watts ÷ volts. On AC multiply the volts × amps side by the power factor."
+  },
+  {
+   "q": "Is this an Ohm's law calculator?",
+   "a": "It covers the power side of Ohm's law: watts from volts and amps. Ohm's law itself, V = I × R, links volts, amps and resistance and holds exactly only for resistive loads such as heater elements."
+  }
+ ],
+ "related": [
+  "A2",
+  "A1",
+  "A3",
+  "A6",
+  "W5"
+ ],
+ "next": "E6",
+ "literal_numbers": [
+  "√3"
+ ],
+ "sources": [
+  {
+   "label": "IEC 60038:2009, IEC standard voltages (230/400 V, 120/240 V systems)",
+   "url": "https://webstore.iec.ch/publication/153"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

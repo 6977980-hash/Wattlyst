@@ -1,0 +1,229 @@
+{
+ "id": "N9",
+ "status": "publish",
+ "template": "tool",
+ "h1": "AC Temperature Saving Calculator",
+ "author": "ali-ahmad",
+ "published": "2026-10-14",
+ "reviewed": "2026-10-14",
+ "calc": "ac_temp",
+ "fields": [
+  {
+   "name": "t_old",
+   "label": "Set temperature now",
+   "unit": "°C",
+   "default": 22,
+   "hint": "The temperature on your AC remote today."
+  },
+  {
+   "name": "t_new",
+   "label": "New set temperature",
+   "unit": "°C",
+   "default": 26,
+   "hint": "The temperature you plan to set instead. A lower number than today shows the extra units instead of a saving."
+  },
+  {
+   "name": "monthly_units",
+   "label": "Units the AC uses a month",
+   "unit": "units (kWh)",
+   "default": 240,
+   "hint": "The AC's own share of the bill, not the whole bill. The default is a 1.5 ton inverter AC at its average draw for 8 hours a day; get your own figure from the AC units calculator."
+  },
+  {
+   "name": "per_degree",
+   "label": "Saving per degree (rule of thumb)",
+   "unit": "0 to 0.2",
+   "default": "@ac_saving_per_degree",
+   "advanced": true,
+   "hint": "Approximate share of AC units saved for each degree you raise the set point. A rule of thumb, not a measured value for your AC; enter a lower figure for a cautious estimate."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "saving_pct",
+   "label": "Approximate saving on AC units",
+   "spec": "pct"
+  },
+  {
+   "key": "units_saved",
+   "label": "Units saved a month",
+   "spec": "int"
+  }
+ ],
+ "answer": "Raising the AC from {{in.t_old|int}} °C to {{in.t_new|int}} °C saves roughly {{out.saving_pct|pct}} of the AC's units, about {{out.units_saved|int}} of {{in.monthly_units|int}} units a month. The rule of thumb is saving = about {{d.ac_saving_per_degree|pct}} per degree raised × degrees raised × the AC's monthly units. It is an approximation, not a measurement of your AC.",
+ "how": "Degrees raised: {{out.t_new|int}} °C − {{out.t_old|int}} °C. Saving share: {{out.per_degree|pct}} per degree × the degrees raised = {{out.saving_pct|pct}} (never more than all of the AC's units). Units saved: {{out.monthly_units|int}} units a month × {{out.saving_pct|pct}} = {{out.units_saved|int}} units. Multiply by your slab rate for the rupee saving.",
+ "key_facts": [
+  "Each degree Celsius you raise an AC's set point saves roughly {{d.ac_saving_per_degree|pct}} of the AC's units; this is a planning rule of thumb, and the real saving depends on the room, the outdoor heat and the AC.",
+  "Moving a 1.5 ton inverter AC that uses {{in.monthly_units|int}} units a month from {{in.t_old|int}} °C to {{in.t_new|int}} °C saves about {{out.units_saved|int}} units a month by the rule of thumb.",
+  "Going from {{ex.1.in.t_old|int}} °C to {{ex.1.in.t_new|int}} °C saves about {{ex.1.out.saving_pct|pct}} of the AC's units by the same rule; over such a large gap the figure is the least certain, because at very low settings many ACs run flat out without ever reaching the set point, so the real difference between the two settings is smaller.",
+  "The saving applies to the AC's units only, not to the whole bill; fans, the fridge and lights use the same units at any AC setting."
+ ],
+ "formula": {
+  "text": "Units saved = monthly AC units × min(1, per-degree saving × (T_new − T_old))",
+  "lines": [
+   "T_old, T_new = set temperature now and the new one, in °C",
+   "per-degree saving = approximate share of AC units saved per degree raised (editable rule of thumb)",
+   "monthly AC units = the AC's own units a month, from the AC units calculator or a plug-in meter",
+   "If T_new is lower than T_old, the same rule gives the extra units instead of a saving"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "AC temperature saving calculator: what the number means",
+   "p": [
+    "The result is an estimate from a rule of thumb: each degree you raise the set point cuts the AC's units by roughly {{d.ac_saving_per_degree|pct}}. The rule exists because the compressor works against the gap between outdoor and indoor temperature; a smaller gap means less heat to pump out of the room. It is not a measured value for your AC, your room or your city, so the per-degree figure is an input you can change.",
+    "Use the result to compare settings and decide, not as a promise of a bill. The only exact saving is a measured one: note the meter reading over a few similar days at each setting."
+   ]
+  },
+  {
+   "h2": "AC at 26 degrees: how much does it save?",
+   "p": [
+    "Moving from {{in.t_old|int}} °C to {{in.t_new|int}} °C saves about {{out.saving_pct|pct}} of the AC's units by the rule of thumb, {{out.units_saved|int}} units a month for an AC that uses {{in.monthly_units|int}}. From {{ex.1.in.t_old|int}} °C the rule gives {{ex.1.out.saving_pct|pct}}, but treat that as an upper figure: at very low settings many ACs already run flat out and never reach the set point, so the real gap between the two settings is smaller than the numbers on the remote.",
+    "A ceiling fan running with the AC makes a warmer setting feel cooler, because moving air helps sweat evaporate. That is why the higher setting is usually comfortable with the fan on."
+   ]
+  },
+  {
+   "h2": "Best AC temperature to save electricity",
+   "p": [
+    "The warmest setting that keeps you comfortable is the cheapest. For most people with a fan running that is the {{in.t_new|int}} °C used as the default here, which is also the common energy-saving advice. Every degree lower costs roughly another {{d.ac_saving_per_degree|pct}} of the AC's units.",
+    "A low setting does not cool the room faster: the AC cools at the same rate until it reaches the setting, it just keeps going longer. Setting {{ex.3.in.t_new|int}} °C instead of {{ex.3.in.t_old|int}} °C to cool down quickly only adds about {{ex.3.out.extra_pct|pct}} more units by the same rule."
+   ]
+  },
+  {
+   "h2": "Does the rule work for inverter and non-inverter ACs?",
+   "p": [
+    "The rule of thumb is used for both. An inverter AC slows its compressor as the room nears the setting, so a warmer setting lets it run slower for longer; a non-inverter AC switches its compressor off more often. In both cases the units fall as the set point rises. The size of the effect varies with the model, the insulation and the outdoor heat, which is why the per-degree figure is editable."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {},
+   "title": "1.5 ton inverter AC from {{in.t_old|int}} °C to {{in.t_new|int}} °C",
+   "text": "{{out.per_degree|pct}} per degree for the degrees raised = {{out.saving_pct|pct}}; {{out.monthly_units|int}} units a month × {{out.saving_pct|pct}} = about {{out.units_saved|int}} units saved a month."
+  },
+  {
+   "inputs": {
+    "t_old": 18,
+    "t_new": 26
+   },
+   "title": "From {{in.t_old|int}} °C to {{in.t_new|int}} °C",
+   "text": "The rule gives {{out.saving_pct|pct}} of the AC's units, {{out.units_saved|int}} units a month. Over this large a gap, treat it as an upper estimate: at very low settings many ACs never reach the set point."
+  },
+  {
+   "inputs": {
+    "per_degree": 0.03
+   },
+   "title": "A cautious estimate at {{in.per_degree|pct}} per degree",
+   "text": "With half the default rule, the same move from {{out.t_old|int}} °C to {{out.t_new|int}} °C saves {{out.saving_pct|pct}}, about {{out.units_saved|int}} units a month. Use this when your room is well shaded and the AC rarely runs at full power."
+  },
+  {
+   "inputs": {
+    "t_old": 24,
+    "t_new": 18
+   },
+   "title": "Turning the AC down from {{in.t_old|int}} °C to {{in.t_new|int}} °C",
+   "text": "Lowering the set point costs units instead of saving them: about {{out.extra_pct|pct}} more, roughly {{out.extra_units|int}} extra units a month for an AC that used {{out.monthly_units|int}}."
+  }
+ ],
+ "table": {
+  "caption": "Approximate saving on an AC that uses {{in.monthly_units|int}} units a month, by the rule of thumb of {{d.ac_saving_per_degree|pct}} per degree raised",
+  "rows": [
+   {
+    "t_old": 18,
+    "t_new": 26
+   },
+   {
+    "t_old": 20,
+    "t_new": 26
+   },
+   {},
+   {
+    "t_old": 24,
+    "t_new": 26
+   },
+   {
+    "t_old": 25,
+    "t_new": 26
+   },
+   {
+    "t_old": 24,
+    "t_new": 27
+   },
+   {
+    "t_old": 26,
+    "t_new": 28
+   }
+  ],
+  "columns": [
+   {
+    "label": "Setting now",
+    "tpl": "{{out.t_old|int}} °C"
+   },
+   {
+    "label": "New setting",
+    "tpl": "{{out.t_new|int}} °C"
+   },
+   {
+    "label": "Approximate saving",
+    "tpl": "{{out.saving_pct|pct}}"
+   },
+   {
+    "label": "Units saved a month",
+    "tpl": "{{out.units_saved|int}}"
+   }
+  ]
+ },
+ "mistakes": [
+  "Applying the saving to the whole bill. It applies to the AC's own units; the fridge, fans and lights do not change.",
+  "Treating the rule of thumb as exact. The {{d.ac_saving_per_degree|pct}} per degree is an approximation; your AC, room and weather decide the real figure.",
+  "Setting the AC very low to cool the room faster. It cools at the same speed and simply runs longer; by the same rule the drop from {{ex.3.in.t_old|int}} °C to {{ex.3.in.t_new|int}} °C costs about {{ex.3.out.extra_pct|pct}} more units.",
+  "Raising the setting but closing the fan. Without moving air the warmer setting feels less comfortable, and people turn it back down."
+ ],
+ "safety": "Changing the set point is safe. If the AC trips its breaker, smells of burning or the outdoor unit makes grinding noises, switch it off and call a qualified AC technician or a licensed electrician.",
+ "faq": [
+  {
+   "q": "How much electricity does raising the AC temperature save?",
+   "a": "Roughly {{d.ac_saving_per_degree|pct}} of the AC's units for each degree raised, by a common rule of thumb. From {{in.t_old|int}} °C to {{in.t_new|int}} °C that is about {{out.saving_pct|pct}}, {{out.units_saved|int}} units a month for an AC using {{in.monthly_units|int}}."
+  },
+  {
+   "q": "Is 26 degrees the best AC temperature to save electricity?",
+   "a": "It is the usual energy-saving advice and comfortable for most people with a ceiling fan on. Any warmer setting you are comfortable with saves more; each degree lower costs roughly another {{d.ac_saving_per_degree|pct}} of the AC's units."
+  },
+  {
+   "q": "How much do I save running the AC at 26 instead of 18?",
+   "a": "The rule of thumb gives {{ex.1.out.saving_pct|pct}} of the AC's units, {{ex.1.out.units_saved|int}} units a month for an AC using {{ex.1.out.monthly_units|int}}. Treat it as an upper estimate: at very low settings many ACs run flat out without reaching the set point."
+  },
+  {
+   "q": "Does a low setting cool the room faster?",
+   "a": "No. The AC removes heat at the same rate whatever the setting; a lower setting only makes it run longer and use more units."
+  },
+  {
+   "q": "How do I find how many units my AC uses a month?",
+   "a": "Use the AC units calculator: average kW × hours a day × days. A plug-in energy meter or the daily reading on a smart meter over a few days gives a measured figure."
+  },
+  {
+   "q": "How much money will I save?",
+   "a": "Units saved × your slab rate. Because Pakistani bills are billed in slabs, a saving that keeps you below a slab limit can save more than the units alone suggest; check the full bill with the electricity bill calculator."
+  }
+ ],
+ "related": [
+  "N10",
+  "E5",
+  "N8",
+  "F1",
+  "N5"
+ ],
+ "next": "N10",
+ "literal_numbers": [
+  "1.5 ton",
+  "26 degrees",
+  "26 instead of 18"
+ ],
+ "sources": [
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

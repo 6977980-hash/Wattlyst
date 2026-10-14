@@ -54,7 +54,7 @@ const kwRows = parseCsv(readFileSync(join(root, 'specs/keyword-map.csv'), 'utf8'
 test('site-pages.csv: titles, metas and URLs follow seo-rules.md 2 and never clash with keyword-map.csv', () => {
   const seen = new Map(kwRows.flatMap((r) => [[`url:${r.url}`, r.id], [`title:${r.title.toLowerCase()}`, r.id], [`meta:${r.meta_description.toLowerCase()}`, r.id]]));
   for (const r of siteRows) {
-    assert.ok(['trust', 'pillar'].includes(r.type), `${r.id}: type`);
+    assert.ok(['trust', 'pillar', 'data', 'embed'].includes(r.type), `${r.id}: type`);
     assert.ok(r.title.length >= 30 && r.title.length <= 60, `${r.id}: title ${r.title.length}`);
     assert.ok(r.title.endsWith('| Wattlyst'), `${r.id}: brand suffix`);
     assert.ok(r.meta_description.length >= 120 && r.meta_description.length <= 155, `${r.id}: meta ${r.meta_description.length}`);
@@ -194,7 +194,7 @@ test('a tool page loads under 30 KB of JavaScript (seo-rules.md 4)', () => {
   // Measured on what the browser actually loads: the stripped copies in dist/.
   const size = (p) => Buffer.byteLength(files[`dist/${p}`]);
   const base = ['assets/js/wattlyst-tool.js', 'engine/format.js', 'engine/messages.js', 'engine/core.js'].reduce((s, p) => s + size(p), 0);
-  for (const m of ['conversions', 'battery', 'sizing', 'solar', 'bill', 'load', 'wiring', 'planner']) {
+  for (const m of ['conversions', 'battery', 'sizing', 'solar', 'bill', 'load', 'wiring', 'planner', 'prices', 'forecast', 'fuel', 'solartools']) {
     assert.ok(base + size(`engine/${m}.js`) < 30 * 1024, `${m}: ${base + size(`engine/${m}.js`)} bytes`);
   }
 });

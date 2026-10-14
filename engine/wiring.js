@@ -2,26 +2,38 @@
 import { calculator, CalcError, has, num, pos, frac, pick, dflt, appliance } from './core.js';
 
 /**
- * I = P / (k_I × V × PF); ΔV = k_v × L × I × ρ / A with k_v = 2 (single-phase, there and back) or √3 (three-phase).
- * drop_pct = ΔV / V × 100; limit 3% lighting, 5% other circuits.
+ * I = P / (k_I × V × PF), k_I = 1 (single-phase, DC) or √3 (three-phase); ΔV = k_v × L × I × ρ / A with
+ * k_v = 2 (single-phase and DC, there and back) or √3 (three-phase). ρ from the conductor (copper or aluminium)
+ * unless entered. drop_pct = ΔV / V × 100; limit 3% lighting, 5% other circuits. DC needs the voltage entered.
+ * Current check (copper only, data/cable-ampacity.json): the rated size is the largest table cable ≤ the entered
+ * area; over_cable_rating = I > its ampacity for the method (default B1), or the cable is below the table.
  */
 export const voltage_drop = calculator((i, d) => {
   const mode = pick(i, 'mode', ['ac1', 'ac3', 'dc'], 'ac1');
-  const volts = pos(i, 'volts', mode === 'ac3' ? dflt(d, 'v_3ph') : dflt(d, 'v_1ph'));
+  const volts = mode === 'dc'
+    ? pos(i, 'volts', undefined, has(i, 'volts') ? undefined : 'volts_required_dc')
+    : pos(i, 'volts', mode === 'ac3' ? dflt(d, 'v_3ph') : dflt(d, 'v_1ph'));
   const pf = mode === 'dc' ? 1 : frac(i, 'pf', dflt(d, 'pf_mixed'));
   const length_m = pos(i, 'length_m');
   const area_mm2 = pos(i, 'area_mm2');
-  const rho = pos(i, 'rho', dflt(d, 'rho_copper'));
+  const conductor = pick(i, 'conductor', ['copper', 'aluminium'], 'copper');
+  const rho = pos(i, 'rho', dflt(d, conductor === 'aluminium' ? 'rho_aluminium' : 'rho_copper'));
   const circuit = pick(i, 'circuit', ['lighting', 'other'], 'other');
-  const amps = has(i, 'amps')
-    ? pos(i, 'amps')
-    : pos(i, 'watts') / ((mode === 'ac3' ? Math.sqrt(3) : 1) * volts * pf);
+  const k = mode === 'ac3' ? Math.sqrt(3) : 1;
+  const amps = has(i, 'amps') ? pos(i, 'amps') : pos(i, 'watts') / (k * volts * pf);
   const kv = mode === 'ac3' ? Math.sqrt(3) : 2;
   const drop_v = (kv * length_m * amps * rho) / area_mm2;
   if (drop_v >= volts) throw new CalcError('cable_far_too_small_for_load', 'area_mm2');
   const drop_pct = (drop_v / volts) * 100;
   const limit_pct = circuit === 'lighting' ? dflt(d, 'vdrop_limit_lighting_pct') : dflt(d, 'vdrop_limit_other_pct');
-  return { mode, volts, pf, length_m, area_mm2, rho, amps, drop_v, drop_pct, limit_pct, within_limit: drop_pct <= limit_pct, voltage_at_load: volts - drop_v };
+  const out = { mode, volts, pf, k, kv, length_m, area_mm2, conductor, rho, amps, drop_v, drop_pct, limit_pct, within_limit: drop_pct <= limit_pct, voltage_at_load: volts - drop_v };
+  if (conductor === 'aluminium') return { ...out, ampacity_checked: false };
+  const t = cableTable(d);
+  const method = pick(i, 'method', Object.keys(t.methods), 'B1');
+  const rated = [...t.cables].reverse().find((c) => c.area_mm2 <= area_mm2 + 1e-9);
+  if (!rated) return { ...out, ampacity_checked: true, method, over_cable_rating: true };
+  const ampacity_a = rated.ampacity_a[method];
+  return { ...out, ampacity_checked: true, method, rated_mm2: rated.area_mm2, ampacity_a, over_cable_rating: amps > ampacity_a + 1e-9 };
 });
 
 /** PK designation n/d: n strands of diameter d inches. A = n × π × (d × 25.4 / 2)² mm². */

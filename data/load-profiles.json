@@ -1,0 +1,55 @@
+{
+ "_meta": {
+  "source": "Wattlyst estimate from typical small mosque and shop fit-outs in Pakistan (appliance watts from data/appliances.json); hours assume summer use",
+  "checked": "2026-10-14",
+  "status": "Starting templates only: every row can be changed on the page. Mosque hours follow the five prayer times (fans and lights through each congregation, ACs mainly for Zuhr, Asr and Isha, a longer Friday Jummah block averaged over the week). Engineer to confirm.",
+  "engineer_confirm": ["profiles"]
+ },
+ "profiles": {
+  "mosque_small": {
+   "name": "Small mosque (one hall, about 100 worshippers)",
+   "loads": [
+    {"id": "ceiling-fan-ac", "qty": 10, "hours": 5},
+    {"id": "led-tube-light", "qty": 12, "hours": 6},
+    {"id": "ac-split-1-5ton-inverter", "qty": 2, "hours": 3},
+    {"id": "water-motor-1hp", "qty": 1, "hours": 1.5},
+    {"id": "water-dispenser", "qty": 1, "hours": 6},
+    {"id": "sound-system", "qty": 1, "hours": 3}
+   ]
+  },
+  "mosque_large": {
+   "name": "Larger mosque (main hall and veranda)",
+   "loads": [
+    {"id": "ceiling-fan-ac", "qty": 24, "hours": 5},
+    {"id": "led-tube-light", "qty": 30, "hours": 6},
+    {"id": "ac-split-2ton-inverter", "qty": 4, "hours": 3},
+    {"id": "water-motor-1-5hp", "qty": 1, "hours": 2},
+    {"id": "water-dispenser", "qty": 2, "hours": 6},
+    {"id": "sound-system", "qty": 1, "hours": 3}
+   ]
+  },
+  "shop_small": {
+   "name": "Small shop (lights, fans, fridge, open 12 hours)",
+   "loads": [
+    {"id": "led-tube-light", "qty": 6, "hours": 12},
+    {"id": "ceiling-fan-ac", "qty": 2, "hours": 12},
+    {"id": "deep-freezer", "qty": 1, "hours": 12},
+    {"id": "desktop-pc", "qty": 1, "hours": 12},
+    {"id": "cctv-dvr-4cam", "qty": 1, "hours": 24},
+    {"id": "wifi-router", "qty": 1, "hours": 24}
+   ]
+  },
+  "shop_ac": {
+   "name": "Shop with an AC (open 12 hours)",
+   "loads": [
+    {"id": "led-tube-light", "qty": 8, "hours": 12},
+    {"id": "ceiling-fan-ac", "qty": 2, "hours": 12},
+    {"id": "ac-split-1-5ton-inverter", "qty": 1, "hours": 8},
+    {"id": "deep-freezer", "qty": 1, "hours": 12},
+    {"id": "desktop-pc", "qty": 1, "hours": 12},
+    {"id": "cctv-dvr-4cam", "qty": 1, "hours": 24},
+    {"id": "wifi-router", "qty": 1, "hours": 24}
+   ]
+  }
+ }
+}

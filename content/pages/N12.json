@@ -1,0 +1,254 @@
+{
+  "id": "N12",
+  "status": "publish",
+  "template": "tool",
+  "h1": "Solar Panel Cleaning Loss Calculator: Dust and When to Clean",
+  "author": "ali-ahmad",
+  "published": "2026-10-14",
+  "reviewed": "2026-10-14",
+  "calc": "cleaning_loss",
+  "fields": [
+    {
+      "name": "kwp",
+      "label": "Solar system size",
+      "unit": "kW",
+      "default": 10,
+      "hint": "Total panel kW on the roof (panels × panel watts ÷ 1000), from your installer's quote."
+    },
+    {
+      "name": "yield",
+      "label": "Units one kW of panels makes a day",
+      "unit": "kWh per kW",
+      "default": "@data.cities.lahore.yield",
+      "hint": "The default is the yearly average for Lahore. Your inverter app shows your own: units a day ÷ system kW on a clear day after cleaning."
+    },
+    {
+      "name": "days",
+      "label": "Days since the last cleaning or good rain",
+      "unit": "days",
+      "default": 30,
+      "hint": "A heavy rain washes most dust off; count from then if it was more recent than the last cleaning."
+    },
+    {
+      "name": "tariff",
+      "label": "Value of one unit",
+      "unit": "Rs per unit",
+      "default": "@data.tariff.unprotected.3.rate",
+      "hint": "Units you use yourself are worth your slab rate (the default is the Pakistan unprotected rate for 301 to 400 units). Exported units are worth the buyback rate instead."
+    },
+    {
+      "name": "cleaning_cost",
+      "label": "Cost of one cleaning",
+      "unit": "Rs",
+      "default": 2000,
+      "hint": "Example figure. Enter what a cleaner charges for your roof, or the cost of water and your own time."
+    },
+    {
+      "name": "rate",
+      "label": "Dust loss per day",
+      "unit": "0 to 1",
+      "default": "@soiling_rate_per_day",
+      "advanced": true,
+      "hint": "Share of output lost to dust each day without rain, as a decimal, not a percent: 0.003 means 0.3% a day; typing 0.3 would mean 30% a day and is rejected. The default is an estimate for dusty Pakistani cities, not a measurement; measure your own by comparing output before and after a cleaning on two clear days."
+    }
+  ],
+  "outputs": [
+    {
+      "key": "soiling",
+      "label": "Output lost to dust",
+      "spec": "pct"
+    },
+    {
+      "key": "loss_kwh_day",
+      "label": "Units lost a day",
+      "spec": "1",
+      "unit": "kWh"
+    },
+    {
+      "key": "rs_lost_day",
+      "label": "Money lost a day",
+      "spec": "rs"
+    },
+    {
+      "key": "clean_after_days",
+      "label": "Cleaning pays for itself after",
+      "spec": "int",
+      "unit": "days"
+    },
+    {
+      "key": "clean_worth_it_within_year",
+      "label": "Worth cleaning within a year?",
+      "spec": "yesno"
+    }
+  ],
+  "answer": "Dust left for {{in.days|int}} days on a {{in.kwp|int}} kW solar system in Lahore cuts output by about {{out.soiling|pct}}: {{out.loss_kwh_day|1}} units a day, worth {{out.rs_lost_day|rs}} at {{in.tariff|rs2}} per unit. Loss = kW × daily yield × dust share, with the dust share growing about {{d.soiling_rate_per_day|pct}} a day. A {{in.cleaning_cost|rs}} cleaning pays for itself about every {{out.clean_after_days|int}} days.",
+  "how": "Dust share: {{out.rate|pct}} a day × {{out.days|int}} days = {{out.soiling|pct}} (never more than {{d.soiling_cap|pct}}, where dust stops building up much). Units lost: {{out.kwp|1}} kW × {{out.yield|1}} units per kW a day × {{out.soiling|pct}} = {{out.loss_kwh_day|1}} units a day. Money lost: {{out.loss_kwh_day|1}} × {{out.tariff|rs2}} = {{out.rs_lost_day|rs}} a day. Cleaning pays when the money lost since the last cleaning, added up day by day, passes the cost of one cleaning.",
+  "key_facts": [
+    "Solar output lost to dust = system kW × units per kW a day × dust share; by Wattlyst's estimate for dusty Pakistani cities the dust share grows about {{d.soiling_rate_per_day|pct}} a day without rain, up to about {{d.soiling_cap|pct}}.",
+    "A {{in.kwp|int}} kW system in Lahore left {{in.days|int}} days without cleaning loses about {{out.loss_kwh_day|1}} units a day, {{out.rs_lost_day|rs}} a day at the unprotected rate of {{in.tariff|rs2}} per unit.",
+    "With a cleaning cost of {{in.cleaning_cost|rs}}, cleaning a {{in.kwp|int}} kW system in Lahore pays for itself about every {{out.clean_after_days|int}} days; a {{ex.2.in.kwp|int}} kW system that exports most of its units, valued at the buyback rate, takes about {{ex.2.out.clean_after_days|int}} days.",
+    "The dust rate is an estimate: dust in a city next to a busy road, a brick kiln or a construction site builds faster, and a monsoon shower resets it; compare your inverter app's output on clear days before and after a cleaning to measure your own."
+  ],
+  "formula": {
+    "text": "Loss a day = kWp × yield × min(rate × days, cap); clean when Σ daily loss × tariff > cleaning cost",
+    "lines": [
+      "kWp = panel kW installed; yield = units one kW makes a day in your city",
+      "rate = share of output lost to dust per day without rain (estimate, editable)",
+      "days = days since the last cleaning or heavy rain; cap = the most dust takes off",
+      "tariff = Rs per unit: your slab rate for units you use, the buyback rate for units you export",
+      "Cleaning interval = first day the money lost since cleaning, added day by day, passes the cleaning cost"
+    ]
+  },
+  "sections": [
+    {
+      "h2": "Solar panel dust loss: how much does dust really cost?",
+      "p": [
+        "For the default {{in.kwp|int}} kW system in Lahore after {{in.days|int}} dry days, about {{out.soiling|pct}} of the output, {{out.loss_kwh_day|1}} units a day. The loss starts small and grows each day, because dust builds up until wind or rain removes it. After a few dry months it levels off near {{d.soiling_cap|pct}} in our estimate, as the last row of the table below shows.",
+        "Pakistan's dry months, from October to June outside the monsoon, are when dust matters most. Smog in the Punjab winter adds a sticky film that rain alone does not always remove."
+      ]
+    },
+    {
+      "h2": "How often to clean solar panels",
+      "p": [
+        "Clean when the money lost since the last cleaning passes the cost of a cleaning. For the default system at {{in.cleaning_cost|rs}} a cleaning, that is about every {{out.clean_after_days|int}} days. A larger system loses more units each day, so it pays to clean it more often; a cheaper cleaning (your own hose and soft brush) also shortens the interval.",
+        "In the monsoon a heavy shower does much of the work, so count days from the last good rain. In a dusty dry spell, a cleaning every couple of weeks pays on large systems."
+      ]
+    },
+    {
+      "h2": "Exported units: use the buyback rate",
+      "p": [
+        "If most of your daytime units are exported under net billing, each unit lost to dust is a unit you would have sold at the buyback rate, not one you would have bought at your slab rate. The third worked example values the loss at {{data.tariff.net_billing.buyback_rs_per_unit_default|rs2}} per unit, an estimate because NEPRA had not notified the rate when we checked: the loss in rupees is smaller and the cleaning interval longer."
+      ]
+    },
+    {
+      "h2": "How to clean solar panels safely",
+      "p": [
+        "Clean early in the morning or in the evening, when the glass is cool: cold water on hot glass can crack it. Use clean water and a soft brush or sponge, no detergent, no pressure washer and no metal scraper; hard tap water can leave spots, so a final rinse with filtered water helps. Never walk on panels.",
+        "Most rooftops are reachable only from a ladder or a parapet. If yours is not safe to reach, a cleaning service is cheaper than a fall."
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "inputs": {},
+      "title": "{{in.kwp|int}} kW system in Lahore after {{in.days|int}} dry days",
+      "text": "{{out.rate|pct}} a day × {{out.days|int}} days = {{out.soiling|pct}} lost; {{out.kwp|int}} kW × {{out.yield|1}} × {{out.soiling|pct}} = {{out.loss_kwh_day|1}} units a day, {{out.rs_lost_day|rs}} a day. A {{out.cleaning_cost|rs}} cleaning pays for itself after about {{out.clean_after_days|int}} days."
+    },
+    {
+      "inputs": {
+        "kwp": 5,
+        "yield": "@data.cities.karachi.yield",
+        "days": 14
+      },
+      "title": "{{in.kwp|int}} kW system in Karachi, two weeks after cleaning",
+      "text": "After {{out.days|int}} days the dust share is {{out.soiling|pct}}: {{out.loss_kwh_day|2}} units a day at Karachi's yield of {{out.yield|1}} units per kW, {{out.rs_lost_day|rs}} a day. Cleaning at {{out.cleaning_cost|rs}} pays after about {{out.clean_after_days|int}} days."
+    },
+    {
+      "inputs": {
+        "kwp": 20,
+        "tariff": "@data.tariff.net_billing.buyback_rs_per_unit_default"
+      },
+      "title": "{{in.kwp|int}} kW system exporting most units under net billing",
+      "text": "Valued at the estimated buyback rate of {{out.tariff|rs2}}, the {{out.loss_kwh_day|1}} units lost a day after {{out.days|int}} days are worth {{out.rs_lost_day|rs}}. A cleaning at {{out.cleaning_cost|rs}} pays after about {{out.clean_after_days|int}} days."
+    },
+    {
+      "inputs": {
+        "days": 90
+      },
+      "title": "Three dry months without cleaning",
+      "text": "The dust share reaches its estimated ceiling of {{out.soiling|pct}}: {{out.loss_kwh_day|1}} units, {{out.rs_lost_day|rs}}, lost every day on the default system. Capped at the ceiling: {{out.soiling_capped|yesno}}."
+    }
+  ],
+  "table": {
+    "caption": "Units and rupees lost a day to dust on a {{in.kwp|int}} kW system in Lahore at {{in.tariff|rs2}} per unit, by days since the last cleaning (dust rate is a Wattlyst estimate)",
+    "rows": [
+      {
+        "days": 7
+      },
+      {
+        "days": 14
+      },
+      {},
+      {
+        "days": 45
+      },
+      {
+        "days": 60
+      },
+      {
+        "days": 90
+      }
+    ],
+    "columns": [
+      {
+        "label": "Days since cleaning",
+        "tpl": "{{out.days|int}}"
+      },
+      {
+        "label": "Output lost",
+        "tpl": "{{out.soiling|pct}}"
+      },
+      {
+        "label": "Units lost a day",
+        "tpl": "{{out.loss_kwh_day|1}}"
+      },
+      {
+        "label": "Rupees lost a day",
+        "tpl": "{{out.rs_lost_day|rs}}"
+      }
+    ]
+  },
+  "mistakes": [
+    "Judging by eye. A thin even film of dust is hard to see and still costs output; compare the inverter app's units on two clear days before and after cleaning.",
+    "Cleaning at noon. Cold water on hot glass can crack a panel; clean in the early morning or evening.",
+    "Using detergent, a pressure washer or a hard brush. They can damage the anti-reflective coating and the frame seals, which costs more output than the dust did.",
+    "Valuing every lost unit at the slab rate on a system that exports most of its output. Exported units are worth the buyback rate."
+  ],
+  "safety": "Panels sit on a roof, often at the edge: use a safe ladder, a harness where there is no parapet, and never stand on the panels. Do not spray water on the inverter, junction boxes or cable joints. If a panel is cracked or a cable is damaged, keep off it and call your installer or a licensed electrician.",
+  "faq": [
+    {
+      "q": "How much power do dirty solar panels lose?",
+      "a": "By our estimate about {{d.soiling_rate_per_day|pct}} of output for each dry day, levelling off near {{d.soiling_cap|pct}}. After {{in.days|int}} days that is {{out.soiling|pct}}, {{out.loss_kwh_day|1}} units a day on a {{in.kwp|int}} kW system in Lahore."
+    },
+    {
+      "q": "How often should I clean my solar panels in Pakistan?",
+      "a": "When the money lost since the last cleaning passes the cleaning cost: about every {{out.clean_after_days|int}} days for a {{in.kwp|int}} kW system in Lahore at {{in.cleaning_cost|rs}} a cleaning. Large systems and dusty dry spells call for more often; the monsoon for less."
+    },
+    {
+      "q": "Is it worth paying someone to clean solar panels?",
+      "a": "Yes when the system is large enough. A {{ex.2.in.kwp|int}} kW system recovers a {{ex.2.out.cleaning_cost|rs}} cleaning in about {{ex.2.out.clean_after_days|int}} days even at the buyback rate; a small system takes longer, so cleaning it yourself is cheaper."
+    },
+    {
+      "q": "Does rain clean solar panels?",
+      "a": "A heavy rain removes most loose dust, so count days from the last good rain. A light drizzle can turn dust into mud spots, and winter smog leaves a film that needs a wipe."
+    },
+    {
+      "q": "What is the best time to clean solar panels?",
+      "a": "Early morning or evening, when the glass is cool and the panels make little power. Use plain water and a soft brush, never detergent or a pressure washer."
+    },
+    {
+      "q": "How do I measure my own dust loss?",
+      "a": "Note the units your inverter app shows on a clear day, clean the panels, and note the next clear day. The difference ÷ the first figure is your dust share; divide it by the days since the last cleaning for your own daily rate."
+    }
+  ],
+  "related": [
+    "N13",
+    "N14",
+    "D2",
+    "D7",
+    "N3",
+    "N6"
+  ],
+  "next": "D10",
+  "literal_numbers": [],
+  "sources": [
+    {
+      "label": "Global Solar Atlas (sun yield by city)",
+      "url": "https://globalsolaratlas.info/"
+    },
+    {
+      "label": "Wattlyst methodology and default values",
+      "url": "/methodology/"
+    }
+  ]
+}

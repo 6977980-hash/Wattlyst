@@ -3,15 +3,24 @@
  "type": "tool",
  "silo": "E",
  "url": "/load/ebike-charging-cost-calculator/",
- "h1": "Electric Bike Charging Cost Per Km",
+ "h1": "Electric Bike Charging Cost per km Calculator",
  "title": "Electric Bike Charging Cost per km | Wattlyst",
  "meta": "Find what it costs to charge your electric bike, e-scooter or EV per charge and per km, at your electricity tariff or from solar.",
  "primary_keyword": "electric bike charging cost per km",
  "wave": 3,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-14",
+ "published": "2026-10-14",
  "author": "ali-ahmad",
+ "related": [
+  "N9",
+  "N10",
+  "F1",
+  "D7"
+ ],
+ "next": "E6",
  "parent": "P-E",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
@@ -22,11 +31,258 @@
    "url": "/load/"
   },
   {
-   "name": "Electric Bike Charging Cost Per Km",
+   "name": "Electric Bike Charging Cost per km Calculator",
    "url": "/load/ebike-charging-cost-calculator/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "Electric bike charging cost per km: the short answer",
+    "p": [
+     "For the default bike, Rs 0.82 per km. The figure depends on three things you can read off your own bike and bill: the battery size in volts and amp hours, the real range on a full charge, and the rate per unit you pay. What sets the cost per km is how far each unit takes you, not the battery size; a heavy rider, a passenger or a lot of stop-start riding raises the cost because the same charge covers fewer km.",
+     "The calculator counts a full charge from empty. If you top up from half, you pay for half the units; the cost per km stays the same because it is the units per km that matter."
+    ]
+   },
+   {
+    "h2": "How many units does an e-scooter take to charge?",
+    "p": [
+     "Multiply the pack volts by the amp hours and divide by a thousand for the units stored in the battery, then divide by the charger efficiency for the units the meter counts. The default 48 V 24 Ah pack takes 1.36 units from empty; a 72 V 32 Ah scooter takes 2.71 units.",
+     "That is a small share of a home's monthly use, but a scooter charged every day adds 30 charges a month to the bill. In Pakistan's slab system those extra units can push a home into the next slab, so check the monthly total with the electricity bill calculator before you assume the rate stays the same."
+    ]
+   },
+   {
+    "h2": "EV charging cost calculator: does it work for an electric car?",
+    "p": [
+     "Yes, the sum is the same for any battery. Enter the car's pack voltage and amp hours (or the kWh × 1000 ÷ volts), its real range and your rate. The example below of a car with a 66.7-unit charge gives Rs 6.08 per km at home rates. Public fast chargers bill at their own price per unit, so enter that rate instead of your home tariff.",
+     "A car charger at home draws far more power than a scooter charger, so its circuit, cable and breaker must be sized for it by a licensed electrician; the calculator only counts the cost."
+    ]
+   },
+   {
+    "h2": "Charging an e-bike from solar",
+    "p": [
+     "On a grid-tied solar system under net billing, a unit used to charge the bike is a unit you would otherwise sell at the buyback rate, so the honest cost is that rate: Rs 0.25 per km for the default bike at Rs 11.00 per unit. The buyback rate had not been notified by NEPRA when we last checked, so treat it as an estimate. On an off-grid system with spare daytime power, enter zero.",
+     "Charge in daylight to use solar units; a bike plugged in after sunset charges from the grid or from your battery, which costs more."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "How much does it cost to charge an electric bike in Pakistan?",
+    "a": "About Rs 49 for a full charge of a 48 V 24 Ah bike at Rs 36.46 per unit, or Rs 0.82 per km over 60 km. Enter your own battery, range and slab rate for your figure."
+   },
+   {
+    "q": "How many units does an electric scooter use per charge?",
+    "a": "Volts × amp hours ÷ 1000 ÷ charger efficiency: 1.36 units for a 48 V 24 Ah pack and 2.71 units for a 72 V 32 Ah pack, from empty."
+   },
+   {
+    "q": "Is an e-bike cheaper to run than a petrol bike?",
+    "a": "Usually yes on running cost. Petrol cost per km = petrol price per litre ÷ km per litre of your bike; compare that with Rs 0.82 per km for the default e-bike. Add battery replacement and servicing for a fair long-run comparison."
+   },
+   {
+    "q": "How much does it cost to charge an electric car at home?",
+    "a": "The same sum with a bigger battery: the example 400 V 150 Ah pack takes 66.7 units, Rs 2,431 at Rs 36.46 per unit, about Rs 6.08 per km. Public chargers charge their own rate per unit."
+   },
+   {
+    "q": "Will charging an e-scooter every day raise my electricity slab?",
+    "a": "It can. Daily charging adds about 30 charges a month, each of 1.36 units for the default bike. If your home is near a slab limit, run the new monthly total through the electricity bill calculator."
+   },
+   {
+    "q": "What does it cost to charge an e-bike from solar panels?",
+    "a": "On net billing, value the units at the buyback rate you give up: about Rs 0.25 per km for the default bike at an estimated Rs 11.00 per unit. Off-grid with spare daytime power, close to nothing."
+   }
+  ],
+  "key_facts": [
+   "Units to charge an electric bike from empty = battery volts × amp hours ÷ 1000 ÷ charger efficiency; a 48 V 24 Ah pack takes about 1.36 units from the wall with a charger at 85% efficiency.",
+   "At Rs 36.46 per unit, the Pakistan unprotected slab rate for a home using more than 300 and up to 400 units a month, a 48 V 24 Ah e-scooter with 60 km of range costs about Rs 0.82 per km to charge.",
+   "A 72 V 32 Ah e-scooter that goes 90 km on a charge costs about Rs 99 per full charge and Rs 1.10 per km at the same rate.",
+   "Charging from rooftop solar under net billing is not free: each unit you use is a unit you do not export, so its cost is the buyback rate, about Rs 0.25 per km for the default bike at Rs 11.00 per unit (a rate not yet notified by NEPRA)."
+  ],
+  "mistakes": [
+   "Using the brochure range. Advertised range is measured light and slow; with a passenger, traffic and hills the real figure is lower, and the cost per km rises in the same proportion.",
+   "Forgetting the charger loss. The meter counts more units than the battery stores; dividing by 85% is what turns battery size into units on the bill.",
+   "Using the average bill rate for a scooter that pushes the home into a higher slab. The extra units are billed at the rate of the slab you land in, and in an unprotected bill all units move to that rate.",
+   "Treating solar charging as free on a net-billing connection. Every unit used is a unit not exported, worth the buyback rate."
+  ],
+  "sources": [
+   {
+    "label": "NEPRA domestic tariff decision, February 2026",
+    "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf"
+   },
+   {
+    "label": "Wattlyst methodology and default values",
+    "url": "/methodology/"
+   }
+  ],
+  "tool": {
+   "calc": "ebike",
+   "module": "battery.js",
+   "data_keys": [],
+   "appliances": {},
+   "fields": [
+    {
+     "name": "v",
+     "label": "Battery voltage",
+     "unit": "V",
+     "default": 48,
+     "hint": "Printed on the battery pack or in the bike's manual (common e-bikes and e-scooters use 48 V, 60 V or 72 V packs)."
+    },
+    {
+     "name": "ah",
+     "label": "Battery capacity",
+     "unit": "Ah",
+     "default": 24,
+     "hint": "Amp hours of the whole pack, from the same label. For a car, enter the pack voltage and Ah, or kWh × 1000 ÷ voltage."
+    },
+    {
+     "name": "range_km",
+     "label": "Distance on one full charge",
+     "unit": "km",
+     "default": 60,
+     "hint": "Your real range in your riding, not the brochure figure. Riders with a passenger, hills or high speed get less."
+    },
+    {
+     "name": "tariff",
+     "label": "Electricity rate",
+     "unit": "Rs per unit",
+     "default": 36.46,
+     "hint": "Energy rate of your slab from the bill. The default is the Pakistan unprotected rate for 301 to 400 units a month. Enter 0 for charging only from your own daytime solar."
+    },
+    {
+     "name": "eta",
+     "label": "Charger efficiency",
+     "unit": "0 to 1",
+     "default": 0.85,
+     "advanced": true,
+     "hint": "Share of the wall units that ends up in the battery. Leave the default unless you have measured it with a plug-in energy meter."
+    }
+   ],
+   "fixed_inputs": {},
+   "outputs": [
+    {
+     "key": "rs_per_km",
+     "label": "Cost per km",
+     "spec": "rs2",
+     "label_ur": "Fi kilometer kharcha",
+     "value": "Rs 0.82"
+    },
+    {
+     "key": "rs_per_charge",
+     "label": "Cost per full charge",
+     "spec": "rs",
+     "label_ur": "Aik full charge ka kharcha",
+     "value": "Rs 49"
+    },
+    {
+     "key": "kwh",
+     "label": "Units per full charge",
+     "spec": "2",
+     "unit": "kWh",
+     "label_ur": "Aik full charge ke units",
+     "value": "1.36"
+    }
+   ],
+   "how": {
+    "tpl": "Battery energy: {{out.v|int}} V × {{out.ah|1}} Ah ÷ 1000 = the stored units; the charger loses some on the way, so the wall meter counts that ÷ {{out.eta|2}} = {{out.kwh|2}} units for a full charge from empty. Cost of a charge: {{out.kwh|2}} units × {{out.tariff|rs2}} = {{out.rs_per_charge|rs}}. Cost per km: {{out.rs_per_charge|rs}} ÷ {{out.range_km|int}} km = {{out.rs_per_km|rs2}}.",
+    "text": "Battery energy: 48 V × 24 Ah ÷ 1000 = the stored units; the charger loses some on the way, so the wall meter counts that ÷ 0.85 = 1.36 units for a full charge from empty. Cost of a charge: 1.36 units × Rs 36.46 = Rs 49. Cost per km: Rs 49 ÷ 60 km = Rs 0.82."
+   },
+   "submit": "Calculate",
+   "notice": "",
+   "data_checked": []
+  },
+  "examples": [
+   {
+    "title": "48 V 24 Ah electric bike on the grid",
+    "text": "48 V × 24 Ah ÷ 1000 ÷ 0.85 = 1.36 units a charge × Rs 36.46 = Rs 49; over 60 km that is Rs 0.82 per km."
+   },
+   {
+    "title": "Larger 72 V 32 Ah e-scooter",
+    "text": "2.71 units a charge cost Rs 99 at Rs 36.46 per unit. With 90 km of range, the cost per km is Rs 1.10: a bigger, faster scooter carries more battery for each km it gives, so it costs more per charge and somewhat more per km."
+   },
+   {
+    "title": "The same bike charged from rooftop solar under net billing",
+    "text": "Valued at the buyback rate of Rs 11.00 per unit you give up by not exporting, a charge of 1.36 units costs Rs 15, or Rs 0.25 per km. The buyback rate is an estimate until NEPRA notifies it."
+   },
+   {
+    "title": "Electric car charged at home",
+    "text": "A 400 V 150 Ah car pack with a home charger at 90% takes 66.7 units from empty, Rs 2,431 at Rs 36.46 per unit. Over 400 km of real range that is Rs 6.08 per km. Example pack, not a specific car."
+   }
+  ],
+  "table": {
+   "caption": "Charging cost per charge and per km at Rs 36.46 per unit for common e-bike and e-scooter packs with a typical real range (example ranges; enter your own)",
+   "head": [
+    "Battery",
+    "Range",
+    "Units per charge",
+    "Cost per charge",
+    "Cost per km"
+   ],
+   "rows": [
+    [
+     "48 V 12 Ah",
+     "35 km",
+     "0.68",
+     "Rs 25",
+     "Rs 0.71"
+    ],
+    [
+     "48 V 20 Ah",
+     "50 km",
+     "1.13",
+     "Rs 41",
+     "Rs 0.82"
+    ],
+    [
+     "48 V 24 Ah",
+     "60 km",
+     "1.36",
+     "Rs 49",
+     "Rs 0.82"
+    ],
+    [
+     "60 V 20 Ah",
+     "60 km",
+     "1.41",
+     "Rs 51",
+     "Rs 0.86"
+    ],
+    [
+     "60 V 32 Ah",
+     "80 km",
+     "2.26",
+     "Rs 82",
+     "Rs 1.03"
+    ],
+    [
+     "72 V 32 Ah",
+     "90 km",
+     "2.71",
+     "Rs 99",
+     "Rs 1.10"
+    ],
+    [
+     "72 V 40 Ah",
+     "110 km",
+     "3.39",
+     "Rs 124",
+     "Rs 1.12"
+    ]
+   ]
+  },
+  "answer": "A 48 V 24 Ah electric bike that goes 60 km on a charge costs about Rs 0.82 per km at Rs 36.46 per unit, or Rs 49 for a full charge of 1.36 units. Units per charge = volts × amp hours ÷ 1000 ÷ charger efficiency; cost per km = units × tariff ÷ km per charge.",
+  "formula": {
+   "text": "Rs per km = (V × Ah ÷ 1000 ÷ η) × tariff ÷ range",
+   "lines": [
+    "V = battery pack voltage; Ah = pack capacity in amp hours",
+    "η = charger efficiency (share of wall units that reaches the battery)",
+    "V × Ah ÷ 1000 ÷ η = units (kWh) the meter counts for one full charge from empty",
+    "tariff = Rs per unit of your slab, or the buyback rate when the units come from your own solar",
+    "range = km you really ride on one full charge"
+   ]
+  },
+  "safety": "Charge with the charger made for your battery, on a sound socket with an earth pin, away from where people sleep and away from flammable items; a damaged or swollen lithium pack can catch fire. A home car charger needs its own circuit, cable and breaker fitted by a licensed electrician."
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -49,7 +305,7 @@
      {
       "@type": "ListItem",
       "position": 3,
-      "name": "Electric Bike Charging Cost Per Km",
+      "name": "Electric Bike Charging Cost per km Calculator",
       "item": "https://wattlyst.com/load/ebike-charging-cost-calculator/"
      }
     ]
@@ -66,12 +322,14 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/load/ebike-charging-cost-calculator/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-14",
+    "lastReviewed": "2026-10-14"
    },
    {
     "@type": "WebApplication",
     "@id": "https://wattlyst.com/load/ebike-charging-cost-calculator/#app",
-    "name": "Electric Bike Charging Cost Per Km",
+    "name": "Electric Bike Charging Cost per km Calculator",
     "url": "https://wattlyst.com/load/ebike-charging-cost-calculator/",
     "description": "Find what it costs to charge your electric bike, e-scooter or EV per charge and per km, at your electricity tariff or from solar.",
     "applicationCategory": "UtilitiesApplication",
@@ -98,6 +356,60 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/load/ebike-charging-cost-calculator/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "How much does it cost to charge an electric bike in Pakistan?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "About Rs 49 for a full charge of a 48 V 24 Ah bike at Rs 36.46 per unit, or Rs 0.82 per km over 60 km. Enter your own battery, range and slab rate for your figure."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many units does an electric scooter use per charge?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Volts × amp hours ÷ 1000 ÷ charger efficiency: 1.36 units for a 48 V 24 Ah pack and 2.71 units for a 72 V 32 Ah pack, from empty."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Is an e-bike cheaper to run than a petrol bike?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Usually yes on running cost. Petrol cost per km = petrol price per litre ÷ km per litre of your bike; compare that with Rs 0.82 per km for the default e-bike. Add battery replacement and servicing for a fair long-run comparison."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How much does it cost to charge an electric car at home?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "The same sum with a bigger battery: the example 400 V 150 Ah pack takes 66.7 units, Rs 2,431 at Rs 36.46 per unit, about Rs 6.08 per km. Public chargers charge their own rate per unit."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Will charging an e-scooter every day raise my electricity slab?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "It can. Daily charging adds about 30 charges a month, each of 1.36 units for the default bike. If your home is near a slab limit, run the new monthly total through the electricity bill calculator."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What does it cost to charge an e-bike from solar panels?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "On net billing, value the units at the buyback rate you give up: about Rs 0.25 per km for the default bike at an estimated Rs 11.00 per unit. Off-grid with spare daytime power, close to nothing."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

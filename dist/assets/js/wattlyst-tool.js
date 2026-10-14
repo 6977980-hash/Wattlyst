@@ -1,10 +1,36 @@
 import{fmt,render}from '../../engine/format.js';
 import{errorMessage,noticeCode}from '../../engine/messages.js';
 const ver=new URL(import.meta.url).searchParams.get('ver')|| '';
+function drawGrid(box,series,parallel){
+const max=8;
+const L='<span class="wl-lead"></span>';
+let rows='';
+for(let p=1;p <=Math.min(parallel,max);p++){
+rows +=`<div class="wl-string"><span class="wl-string-label">String ${p}</span><div class="wl-row">${L}${'<span class="wl-cell">&minus; +</span>'.repeat(Math.min(series,max))}${series > max?`<span class="wl-more">+${series - max}</span>`:''}${L}<span class="wl-fuse">fuse</span>${L}</div></div>`;
+}
+box.innerHTML=`<div class="wl-grid"><span class="wl-bus wl-bus-neg">Negative bus</span><div class="wl-strings">${rows}${parallel > max?`<div class="wl-more">+${parallel - max} more strings</div>`:''}</div><span class="wl-bus wl-bus-pos">Positive bus</span></div>`;
+}
+
+const forecasts={};
+async function forecastFor(c,tilt){
+const key=`${c.lat},${c.lon},${tilt}`;
+if(!forecasts[key]){
+forecasts[key]=fetch(`https://api.open-meteo.com/v1/forecast?latitude=${c.lat}&longitude=${c.lon}&hourly=global_tilted_irradiance&tilt=${tilt}&azimuth=0&timezone=Asia%2FKarachi&forecast_days=2`)
+.then((r)=>(r.ok?r.json():null))
+.then((j)=>{
+const v=j?.hourly?.global_tilted_irradiance?.slice(24,48);
+const date=j?.hourly?.time?.[24]?.slice(0,10);
+return v && v.length===24 && v.every((x)=> typeof x==='number')&& date?{gti:v,date}:null;
+})
+.catch(()=> null);
+}
+return forecasts[key];
+}
 function loadsField(form,f,cfg,onChange){
 const box=form.querySelector(`[data-wl-loads="${f.name}"]`);
 if(!box)return null;
 const body=box.querySelector('tbody');
+const keys=f.start?['watts','start','qty','hours']:['watts','qty','hours'];
 const tmpl=box.querySelector('.wl-loads-template');
 let n=body.children.length;
 const full=document.createElement('select');
@@ -30,6 +56,8 @@ const a=cfg.data.appliances?.[id];
 if(!a)return;
 tr.querySelector('[data-k="watts"]').value=a.running_w;
 tr.querySelector('[data-k="hours"]').value=a.typical_hours_per_day??'';
+const st=tr.querySelector('[data-k="start"]');
+if(st)st.value='';
 };
 const add=(row)=>{
 const tr=tmpl.content.firstElementChild.cloneNode(true);
@@ -42,7 +70,7 @@ populate(sel);
 sel.value=row.id || 'custom';
 if(sel.value !==(row.id || 'custom'))sel.value='custom';
 fill(tr);
-for(const k of['watts','qty','hours'])if(row[k]!==undefined && row[k]!=='')tr.querySelector(`[data-k="${k}"]`).value=row[k];
+for(const k of keys)if(row[k]!==undefined && row[k]!=='')tr.querySelector(`[data-k="${k}"]`).value=row[k];
 }
 body.appendChild(tr);
 return tr;
@@ -57,12 +85,10 @@ onChange();
 box.addEventListener('change',(e)=>{
 if(e.target.matches('[data-k="id"]')){fill(e.target.closest('tr'));onChange();}
 });
-const rows=()=>[...body.querySelectorAll('tr')].map((tr)=>{
-const v=(k)=> tr.querySelector(`[data-k="${k}"]`).value.trim();
-return{id:v('id'),watts:v('watts'),qty:v('qty'),hours:v('hours')};
-});
+const rows=()=>[...body.querySelectorAll('tr')].map((tr)=> Object.fromEntries(['id',...keys].map((k)=>[k,tr.querySelector(`[data-k="${k}"]`).value.trim()])));
 const set=(list)=>{body.innerHTML='';list.forEach(add);};
-return{rows,set,encode:()=> rows().map((r)=>[r.id,r.watts,r.qty,r.hours].join('~')).join(';'),decode:(s)=> s.split(';').map((p)=>{const[id,watts,qty,hours]=p.split('~');return{id,watts,qty,hours};})};
+const order=['id','watts','qty','hours','start'];
+return{rows,set,encode:()=> rows().map((r)=> order.filter((k)=> k in r).map((k)=> r[k]).join('~')).join(';'),decode:(s)=> s.split(';').map((p)=>{const v=p.split('~');return Object.fromEntries(order.map((k,i)=>[k,v[i]]));})};
 }
 async function init(form){
 const cfgEl=form.querySelector('.wl-config');
@@ -79,8 +105,10 @@ const el=(name)=> form.elements.namedItem(name);
 const lists={};
 let show;
 for(const f of cfg.fields)if(f.type==='loads')lists[f.name]=loadsField(form,f,cfg,()=> show && show(true));
+let live=null;
 const read=()=>{
 const inputs={...cfg.fixed};
+if(live && live.city===el('city')?.value)Object.assign(inputs,{gti_wm2:live.gti,forecast_date:live.date});
 for(const f of cfg.fields){
 if(lists[f.name]){inputs[f.name]=lists[f.name].rows();continue;}
 const input=el(f.name);
@@ -122,6 +150,8 @@ for(const o of cfg.outputs){
 const node=results.querySelector(`[data-out="${o.key}"] .wl-val`);
 if(node)node.textContent=fmt(out[o.key],o.spec)|| 'n/a';
 }
+const grid=cfg.diagram==='battery_grid' && form.querySelector('[data-wl-diagram]');
+if(grid)drawGrid(grid,Math.round(out.n_series),Math.round(out.n_parallel));
 if(howEl && cfg.how){
 const text=render(form.dataset.lang==='ur' && cfg.how_ur?cfg.how_ur:cfg.how,{in:out,out,d:cfg.data.defaults});
 howEl.hidden=text===null;
@@ -200,10 +230,31 @@ changed=true;
 }
 if(changed)show(false);
 }
+if(cfg.live==='open_meteo'){
+const getLive=async()=>{
+const city=el('city')?.value;
+const c=cfg.data.cities?.[city];
+if(!c?.lat)return;
+const f=await forecastFor(c,cfg.data.defaults.forecast_tilt_deg);
+if(f && el('city').value===city){live={...f,city};show(false);}
+};
+el('city')?.addEventListener('change',getLive);
+getLive();
+}
 form.addEventListener('submit',(e)=>{e.preventDefault();show(true);});
 form.addEventListener('change',(e)=>{if(!e.target.closest('.wl-loads')&&(e.target.tagName==='SELECT' || e.target.type==='checkbox'))show(true);});
 }
 document.querySelectorAll('form[data-wl-tool]').forEach((form)=>{init(form).catch(()=>{});});
+document.querySelectorAll('[data-wl-copy]').forEach((btn)=>{
+btn.addEventListener('click',async()=>{
+const box=document.getElementById(btn.dataset.wlCopy);
+box.select();
+try{await navigator.clipboard.writeText(box.value);btn.textContent='Copied';}catch{document.execCommand('copy');}
+});
+});
+if(document.body.hasAttribute('data-wl-embed')&& window.parent !==window && 'ResizeObserver' in window){
+new ResizeObserver(()=> window.parent.postMessage({wattlyst:'height',h:document.documentElement.scrollHeight},'*')).observe(document.body);
+}
 document.querySelectorAll('form[data-wl-lookup]').forEach((form)=>{
 const page=form.closest('.wl-page');
 const groups=[...page.querySelectorAll('[data-wl-group]')];

@@ -51,7 +51,7 @@
     "h2": "How many kW solar for a 10 marla house?",
     "p": [
      "For the typical house above the answer is 9.95 kW of panels with a 9.32 kW inverter. The panel count is rounded up to 17 panels of 585 W, which takes about 44 square metres of roof; a 10 marla roof has room for that, but check for water tanks, stairs and shade from the parapet before you order.",
-     "The inverter is sized from the running load with a 1.25 margin, not from the panel kW, and it must carry a surge of at least 9,252 W when the water pump starts. Installers quote by inverter size, so this house is sold as a ten kW system."
+     "The inverter is sized from the running load with a 1.25 margin and is never smaller than the panel kW ÷ 1.3; here the load rule gives the larger figure. It must carry a surge of at least 9,252 W when the water pump starts. Installers quote by inverter size, so this house is sold as a ten kW system."
     ]
    },
    {
@@ -1399,8 +1399,8 @@
     }
    ],
    "how": {
-    "tpl": "Energy: watts × quantity × hours a day for each appliance (inverter ACs count at their average draw, not their rated watts), added up = {{out.daily_kwh|1}} units a day; ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW of panels a day in your city = {{out.kw_energy|2}} kW. Power: {{out.running_w|int}} W running load ÷ {{out.pr|2}} performance ratio = {{out.kw_power|2}} kW, so the panels alone carry every listed appliance at midday. The larger of the two, {{out.kw|2}} kW, needs {{out.panels|int}} panels of {{out.panel_w|int}} W = {{out.installed_kw|2}} kW installed, which makes about {{out.monthly_kwh_estimate|int}} units a month on about {{out.roof_m2|int}} square metres of roof. Inverter = {{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_kw|2}} kW, with a surge rating of at least {{out.inverter_surge_w|int}} W for the water pump.",
-    "text": "Energy: watts × quantity × hours a day for each appliance (inverter ACs count at their average draw, not their rated watts), added up = 33 units a day; ÷ 4 units per kW of panels a day in your city = 8.25 kW. Power: 7,452 W running load ÷ 0.78 performance ratio = 9.55 kW, so the panels alone carry every listed appliance at midday. The larger of the two, 9.55 kW, needs 17 panels of 585 W = 9.95 kW installed, which makes about 1,193 units a month on about 44 square metres of roof. Inverter = 7,452 W × 1.25 = 9.32 kW, with a surge rating of at least 9,252 W for the water pump."
+    "tpl": "Energy: watts × quantity × hours a day for each appliance (inverter ACs count at their average draw, not their rated watts), added up = {{out.daily_kwh|1}} units a day; ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW of panels a day in your city = {{out.kw_energy|2}} kW. Power: {{out.running_w|int}} W running load ÷ {{out.pr|2}} performance ratio = {{out.kw_power|2}} kW, so the panels alone carry every listed appliance at midday. The larger of the two, {{out.kw|2}} kW, needs {{out.panels|int}} panels of {{out.panel_w|int}} W = {{out.installed_kw|2}} kW installed, which makes about {{out.monthly_kwh_estimate|int}} units a month on about {{out.roof_m2|int}} square metres of roof. Inverter: the larger of {{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_kw_load|2}} kW for the load and {{out.installed_kw|2}} kW of panels ÷ {{out.dc_ac_ratio_max|1}} = {{out.inverter_kw_array|2}} kW, so the panels are never more than {{out.dc_ac_ratio_max|1}} times the inverter: {{out.inverter_kw|2}} kW continuous, with a surge rating of at least {{out.inverter_surge_w|int}} W for the water pump.",
+    "text": "Energy: watts × quantity × hours a day for each appliance (inverter ACs count at their average draw, not their rated watts), added up = 33 units a day; ÷ 4 units per kW of panels a day in your city = 8.25 kW. Power: 7,452 W running load ÷ 0.78 performance ratio = 9.55 kW, so the panels alone carry every listed appliance at midday. The larger of the two, 9.55 kW, needs 17 panels of 585 W = 9.95 kW installed, which makes about 1,193 units a month on about 44 square metres of roof. Inverter: the larger of 7,452 W × 1.25 = 9.32 kW for the load and 9.95 kW of panels ÷ 1.3 = 7.65 kW, so the panels are never more than 1.3 times the inverter: 9.32 kW continuous, with a surge rating of at least 9,252 W for the water pump."
    },
    "submit": "Calculate",
    "notice": "",
@@ -1504,7 +1504,7 @@
     "yield = units one kW of panels makes a day in your city",
     "P_run = total running watts, PR = performance ratio",
     "W_panel = watts of one panel",
-    "Inverter kW = P_run × margin ÷ 1000; surge ≥ largest starting load",
+    "Inverter W = max(P_run × margin, kW × 1000 ÷ r_max), r_max = largest panel-to-inverter (DC/AC) ratio; surge ≥ largest starting load",
     "Battery Ah = P_run × night hours ÷ (V × DoD × η)"
    ]
   },

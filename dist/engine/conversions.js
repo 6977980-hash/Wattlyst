@@ -1,8 +1,11 @@
 import{calculator,has,pos,frac,pick,nonneg,dflt}from './core.js';
 const MODES=['dc','ac1','ac3'];
+
 function circuit(inputs,data){
 const mode=pick(inputs,'mode',MODES,'ac1');
-const volts=pos(inputs,'volts',mode==='ac3'?dflt(data,'v_3ph'):dflt(data,'v_1ph'));
+const volts=mode==='dc'
+?pos(inputs,'volts',undefined,has(inputs,'volts')?undefined:'volts_required_dc')
+:pos(inputs,'volts',mode==='ac3'?dflt(data,'v_3ph'):dflt(data,'v_1ph'));
 const pf=mode==='dc'?1:frac(inputs,'pf',dflt(data,'pf_mixed'));
 const k=mode==='ac3'?Math.sqrt(3):1;
 return{mode,volts,pf,k};
@@ -10,22 +13,27 @@ return{mode,volts,pf,k};
 export const watts_to_amps=calculator((i,d)=>{
 const{mode,volts,pf,k}=circuit(i,d);
 const watts=nonneg(i,'watts');
-return{mode,volts,pf,watts,amps:watts /(k * volts * pf)};
+return{mode,volts,pf,k,watts,amps:watts /(k * volts * pf)};
 });
 export const amps_to_watts=calculator((i,d)=>{
 const{mode,volts,pf,k}=circuit(i,d);
 const amps=nonneg(i,'amps');
 const watts=k * volts * amps * pf;
-return{mode,volts,pf,amps,watts,kw:watts / 1000,va:k * volts * amps};
-});
-export const amps_to_kw=calculator((i,d)=>{
-const r=amps_to_watts.raw(i,d);
-return{...r,kw:r.watts / 1000};
+return{mode,volts,pf,k,amps,watts,kw:watts / 1000,va:k * volts * amps};
 });
 export const kw_to_amps=calculator((i,d)=>{
 const{mode,volts,pf,k}=circuit(i,d);
 const kw=nonneg(i,'kw');
-return{mode,volts,pf,kw,amps:(kw * 1000)/(k * volts * pf)};
+return{mode,volts,pf,k,kw,amps:(kw * 1000)/(k * volts * pf)};
+});
+export const amps_to_kw=calculator((i,d)=>{
+const direction=pick(i,'direction',['amps_to_kw','kw_to_amps'],'amps_to_kw');
+if(direction==='kw_to_amps'){
+const r=kw_to_amps.raw(i,d);
+return{...r,direction,watts:r.kw * 1000,va:r.k * r.volts * r.amps};
+}
+const r=amps_to_watts.raw(i,d);
+return{...r,direction,kw:r.watts / 1000};
 });
 export const kva_to_kw=calculator((i,d)=>{
 const kva=nonneg(i,'kva');

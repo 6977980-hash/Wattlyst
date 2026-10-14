@@ -164,7 +164,7 @@
   }
  ],
  "answer": "A typical 10 marla house with six fans, lights, an inverter fridge, a deep freezer, two TVs, three inverter ACs, a water pump, an iron and a washing machine needs a solar system of about {{out.installed_kw|2}} kW ({{out.panels|int}} panels) with a {{out.inverter_kw|2}} kW inverter. Size = the larger of daily units ÷ sun yield and running watts ÷ performance ratio.",
- "how": "Energy: watts × quantity × hours a day for each appliance (inverter ACs count at their average draw, not their rated watts), added up = {{out.daily_kwh|1}} units a day; ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW of panels a day in your city = {{out.kw_energy|2}} kW. Power: {{out.running_w|int}} W running load ÷ {{out.pr|2}} performance ratio = {{out.kw_power|2}} kW, so the panels alone carry every listed appliance at midday. The larger of the two, {{out.kw|2}} kW, needs {{out.panels|int}} panels of {{out.panel_w|int}} W = {{out.installed_kw|2}} kW installed, which makes about {{out.monthly_kwh_estimate|int}} units a month on about {{out.roof_m2|int}} square metres of roof. Inverter = {{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_kw|2}} kW, with a surge rating of at least {{out.inverter_surge_w|int}} W for the water pump.",
+ "how": "Energy: watts × quantity × hours a day for each appliance (inverter ACs count at their average draw, not their rated watts), added up = {{out.daily_kwh|1}} units a day; ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW of panels a day in your city = {{out.kw_energy|2}} kW. Power: {{out.running_w|int}} W running load ÷ {{out.pr|2}} performance ratio = {{out.kw_power|2}} kW, so the panels alone carry every listed appliance at midday. The larger of the two, {{out.kw|2}} kW, needs {{out.panels|int}} panels of {{out.panel_w|int}} W = {{out.installed_kw|2}} kW installed, which makes about {{out.monthly_kwh_estimate|int}} units a month on about {{out.roof_m2|int}} square metres of roof. Inverter: the larger of {{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_kw_load|2}} kW for the load and {{out.installed_kw|2}} kW of panels ÷ {{out.dc_ac_ratio_max|1}} = {{out.inverter_kw_array|2}} kW, so the panels are never more than {{out.dc_ac_ratio_max|1}} times the inverter: {{out.inverter_kw|2}} kW continuous, with a surge rating of at least {{out.inverter_surge_w|int}} W for the water pump.",
  "key_facts": [
   "A typical 10 marla house with three inverter ACs (two 1.5 ton, one 1 ton) has a running load of about {{out.running_w|int}} W and uses about {{out.daily_kwh|1}} units a day, so it needs a solar system of about {{out.installed_kw|2}} kW with a {{out.inverter_kw|2}} kW inverter.",
   "With two 1.5 ton inverter ACs and no third AC the same house needs about {{ex.1.out.installed_kw|2}} kW of panels ({{ex.1.out.panels|int}} panels) and an inverter of {{ex.1.out.inverter_kw|2}} kW; each extra inverter AC adds roughly its running watts ÷ performance ratio to the array.",
@@ -179,7 +179,7 @@
    "yield = units one kW of panels makes a day in your city",
    "P_run = total running watts, PR = performance ratio",
    "W_panel = watts of one panel",
-   "Inverter kW = P_run × margin ÷ 1000; surge ≥ largest starting load",
+   "Inverter W = max(P_run × margin, kW × 1000 ÷ r_max), r_max = largest panel-to-inverter (DC/AC) ratio; surge ≥ largest starting load",
    "Battery Ah = P_run × night hours ÷ (V × DoD × η)"
   ]
  },
@@ -195,7 +195,7 @@
    "h2": "How many kW solar for a 10 marla house?",
    "p": [
     "For the typical house above the answer is {{out.installed_kw|2}} kW of panels with a {{out.inverter_kw|2}} kW inverter. The panel count is rounded up to {{out.panels|int}} panels of {{out.panel_w|int}} W, which takes about {{out.roof_m2|int}} square metres of roof; a 10 marla roof has room for that, but check for water tanks, stairs and shade from the parapet before you order.",
-    "The inverter is sized from the running load with a {{out.margin|2}} margin, not from the panel kW, and it must carry a surge of at least {{out.inverter_surge_w|int}} W when the water pump starts. Installers quote by inverter size, so this house is sold as a ten kW system."
+    "The inverter is sized from the running load with a {{out.margin|2}} margin and is never smaller than the panel kW ÷ {{out.dc_ac_ratio_max|1}}; here the load rule gives the larger figure. It must carry a surge of at least {{out.inverter_surge_w|int}} W when the water pump starts. Installers quote by inverter size, so this house is sold as a ten kW system."
    ]
   },
   {

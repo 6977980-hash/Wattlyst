@@ -1,0 +1,364 @@
+{
+ "id": "C8",
+ "status": "publish",
+ "template": "tool",
+ "h1": "Generator Fuel Consumption Calculator",
+ "author": "ali-ahmad",
+ "published": "2026-10-14",
+ "reviewed": "2026-10-14",
+ "calc": "generator_fuel",
+ "submit": "Work out the fuel cost",
+ "fields": [
+  {
+   "name": "fuel",
+   "label": "Fuel",
+   "type": "select",
+   "default": "petrol",
+   "options": [
+    [
+     "petrol",
+     "Petrol"
+    ],
+    [
+     "diesel",
+     "Diesel"
+    ]
+   ],
+   "hint": "The fuel your generator runs on. Gas (natural gas or LPG) generators are not in the calculator yet."
+  },
+  {
+   "name": "kva",
+   "label": "Generator size",
+   "unit": "kVA",
+   "type": "select",
+   "default": 5,
+   "options": [
+    [
+     2.5,
+     "2.5 kVA"
+    ],
+    [
+     3,
+     "3 kVA"
+    ],
+    [
+     3.5,
+     "3.5 kVA"
+    ],
+    [
+     5,
+     "5 kVA"
+    ],
+    [
+     6.5,
+     "6.5 kVA"
+    ],
+    [
+     7.5,
+     "7.5 kVA"
+    ],
+    [
+     10,
+     "10 kVA"
+    ],
+    [
+     12.5,
+     "12.5 kVA"
+    ],
+    [
+     15,
+     "15 kVA"
+    ]
+   ],
+   "hint": "The kVA on the nameplate. A bigger generator burns more fuel even at the same load."
+  },
+  {
+   "name": "load_w",
+   "label": "Load the generator carries",
+   "unit": "W",
+   "default": 2000,
+   "hint": "The running watts of what is on while the generator runs, not the starting surge. The home generator size calculator adds this up for you."
+  },
+  {
+   "name": "hours",
+   "label": "Hours it runs a day",
+   "unit": "h",
+   "default": 4,
+   "hint": "Your usual loadshedding or outage hours a day."
+  },
+  {
+   "name": "price",
+   "label": "Fuel price",
+   "unit": "Rs per litre",
+   "placeholder": "Latest price for the fuel chosen",
+   "hint": "Leave blank to use the latest petrol or diesel price in our data (dated under Sources), or type today's pump price."
+  },
+  {
+   "name": "days",
+   "label": "Days a month",
+   "unit": "days",
+   "default": "@days_per_month",
+   "advanced": true,
+   "hint": "Days in the month the generator runs."
+  },
+  {
+   "name": "pf",
+   "label": "Generator power factor",
+   "unit": "0 to 1",
+   "default": "@pf_generator",
+   "advanced": true,
+   "hint": "Turns the kVA rating into rated kW. Leave the default unless the nameplate says otherwise."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "l_per_h",
+   "label": "Fuel per hour",
+   "spec": "2",
+   "unit": "litres"
+  },
+  {
+   "key": "rs_per_h",
+   "label": "Cost per hour",
+   "spec": "rs"
+  },
+  {
+   "key": "l_per_month",
+   "label": "Fuel a month",
+   "spec": "int",
+   "unit": "litres"
+  },
+  {
+   "key": "rs_per_month",
+   "label": "Cost a month",
+   "spec": "rs"
+  },
+  {
+   "key": "rs_per_unit",
+   "label": "Cost per unit of electricity",
+   "spec": "rs"
+  },
+  {
+   "key": "load_pct",
+   "label": "Load on the generator",
+   "spec": "int",
+   "unit": "%"
+  }
+ ],
+ "answer": "A {{out.kva|1}} kVA petrol generator carrying {{in.load_w|int}} W burns about {{out.l_per_h|2}} litres an hour, {{out.rs_per_h|rs}} an hour at {{out.price|rs2}} a litre; a diesel set of the same size uses about {{ex.0.out.l_per_h|2}} litres. Fuel per hour = an idle amount per rated kW + an amount per kW of load; cost per hour = litres × fuel price.",
+ "how": "Rated output: {{out.kva|1}} kVA × {{out.pf|2}} = {{out.rated_kw|1}} kW. Your load: {{out.load_kw|2}} kW, {{out.load_pct|int}}% of rated. Fuel = {{out.intercept|2}} L × {{out.rated_kw|1}} rated kW (idle burn, {{out.idle_l_per_h|2}} L/h) + {{out.slope|2}} L × {{out.load_kw|2}} kW of load = {{out.l_per_h|2}} litres an hour. × {{out.hours|1}} h = {{out.l_per_day|1}} L a day, × {{out.days|int}} days = {{out.l_per_month|int}} L a month. Cost: {{out.l_per_h|2}} L × {{out.price|rs2}} = {{out.rs_per_h|rs}} an hour, {{out.rs_per_month|rs}} a month, or {{out.rs_per_unit|rs}} per unit (kWh) delivered.",
+ "key_facts": [
+  "Generator fuel use per hour = (idle fuel per rated kW × rated kW) + (fuel per kWh × load kW); in our petrol data that is {{out.intercept|2}} L per rated kW plus {{out.slope|2}} L per kWh, and in our diesel data {{ex.0.out.intercept|2}} L plus {{ex.0.out.slope|2}} L.",
+  "A {{out.kva|1}} kVA petrol generator at {{in.load_w|int}} W uses about {{out.l_per_h|2}} litres an hour, about {{out.rs_per_h|rs}} an hour at a petrol price of {{out.price|rs2}} a litre ({{data.generator_fuel.prices.petrol.effective}}).",
+  "Running {{out.hours|1}} hours a day for {{out.days|int}} days, the same generator burns about {{out.l_per_month|int}} litres a month, {{out.rs_per_month|rs}} in petrol, or {{out.rs_per_unit|rs}} per unit of electricity, against a grid energy rate of {{data.tariff.unprotected.3.rate|rs2}} per unit in the unprotected 301 to 400 unit slab.",
+  "A generator burns fuel even with nothing connected: about {{out.idle_l_per_h|2}} litres an hour for a {{out.kva|1}} kVA petrol set, which is why an oversized generator costs more to run at the same load.",
+  "These are planning estimates from manufacturer run-time data and a published diesel fuel chart, not a measurement of any one generator; an old or poorly tuned engine burns more."
+ ],
+ "formula": {
+  "text": "L/h = F0 × kW_rated + F1 × kW_load; kW_rated = kVA × PF; Rs/h = L/h × price; Rs/unit = Rs/h ÷ kW_load",
+  "lines": [
+   "F0 = idle fuel in litres an hour per rated kW; F1 = fuel in litres per kWh of output (both from data/generator-fuel.json, by fuel)",
+   "kW_rated = generator kVA × power factor; kW_load = the load you enter ÷ 1000, never above kW_rated",
+   "Litres a day = L/h × hours; litres a month = litres a day × days",
+   "price = fuel price in Rs per litre (latest dated price, or the price you type)",
+   "Rs/unit = what one kWh from the generator costs in fuel alone"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "Generator fuel consumption per hour: what it depends on",
+   "p": [
+    "Two things set the fuel a generator burns: its size and the load on it. Even with nothing plugged in the engine burns fuel to keep turning, about {{out.idle_l_per_h|2}} litres an hour for a {{out.kva|1}} kVA petrol set. Every kilowatt of load then adds a fixed amount on top. This straight-line fuel curve is the form used by microgrid planning software, fitted here to published run-time data.",
+    "Because of the idle part, a lightly loaded large generator wastes fuel. A {{ex.2.out.kva|1}} kVA petrol set carrying the same {{ex.2.in.load_w|int}} W uses {{ex.2.out.l_per_h|2}} litres an hour against {{out.l_per_h|2}} for a {{out.kva|1}} kVA set, and each unit it makes costs {{ex.2.out.rs_per_unit|rs}} instead of {{out.rs_per_unit|rs}}."
+   ]
+  },
+  {
+   "h2": "Petrol generator fuel consumption",
+   "p": [
+    "A {{out.kva|1}} kVA petrol generator at {{out.load_pct|int}}% load, {{in.load_w|int}} W, burns about {{out.l_per_h|2}} litres an hour. At full rated load, {{ex.1.in.load_w|int}} W, it burns about {{ex.1.out.l_per_h|2}} litres an hour, but each unit gets cheaper, {{ex.1.out.rs_per_unit|rs}} instead of {{out.rs_per_unit|rs}}, because the idle burn is spread over more output.",
+    "Small portable sets follow the same curve: a {{ex.3.out.kva|1}} kVA petrol generator running {{ex.3.in.load_w|int}} W of fans, lights and a fridge uses about {{ex.3.out.l_per_h|2}} litres an hour. Generators sold in Pakistan vary a lot in build; an open-frame set or a worn engine can burn noticeably more than these figures."
+   ]
+  },
+  {
+   "h2": "Diesel generator fuel calculator: petrol vs diesel",
+   "p": [
+    "Diesel engines burn less fuel per unit of output. At the same {{out.kva|1}} kVA size and {{in.load_w|int}} W load, our diesel curve gives {{ex.0.out.l_per_h|2}} litres an hour, about {{ex.0.out.rs_per_h|rs}} at {{ex.0.out.price|rs2}} a litre, against {{out.rs_per_h|rs}} for petrol at {{out.price|rs2}} a litre. The difference comes from both the litres burned and the price of each fuel.",
+    "Diesel sets cost more to buy and are heavier and louder, so they pay off with long daily running. A {{ex.4.out.kva|1}} kVA diesel generator carrying {{ex.4.in.load_w|int}} W for {{ex.4.out.hours|1}} hours a day uses about {{ex.4.out.l_per_month|int}} litres a month, {{ex.4.out.rs_per_month|rs}}."
+   ]
+  },
+  {
+   "h2": "Generator cost per hour in Pakistan",
+   "p": [
+    "Cost per hour is litres an hour × the price per litre. With the latest prices in our data, petrol at {{data.generator_fuel.prices.petrol.rs_per_litre|rs2}} and diesel at {{data.generator_fuel.prices.diesel.rs_per_litre|rs2}} a litre, the default {{out.kva|1}} kVA petrol generator costs {{out.rs_per_h|rs}} an hour and {{out.rs_per_month|rs}} a month at {{out.hours|1}} hours a day. Fuel prices are now revised every few days, so type today's price for an exact figure.",
+    "Per unit of electricity, that is {{out.rs_per_unit|rs}} for fuel alone, several times the grid energy rate of {{data.tariff.unprotected.3.rate|rs2}} in the unprotected 301 to 400 unit slab, before oil changes, servicing and engine wear."
+   ]
+  },
+  {
+   "h2": "Gas vs petrol generator cost per hour",
+   "p": [
+    "Gas generators, on natural gas or LPG, are not in this calculator yet. We have not yet collected checked fuel-use data for them, and gas is priced per cubic metre or per kilogram rather than per litre, so we do not print a gas figure we cannot back up.",
+    "To compare a gas generator yourself, take its gas use at your load from the manual (cubic metres or kilograms an hour), multiply by your gas price, and compare that cost per hour with the petrol figure above for the same size and load."
+   ]
+  },
+  {
+   "h2": "Generator vs UPS cost",
+   "p": [
+    "A generator is cheap to buy and expensive to run; a UPS with batteries costs more up front, then mostly the electricity to recharge it and a battery replacement every few years. With petrol at {{out.rs_per_unit|rs}} per unit delivered, the generator's running cost decides the comparison for long daily cuts.",
+    "The UPS vs solar vs generator cost calculator adds purchase price, running cost, servicing and replacements over several years; enter the yearly fuel cost from this page there."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "fuel": "diesel"
+   },
+   "title": "{{out.kva|1}} kVA diesel at {{in.load_w|int}} W for {{out.hours|1}} hours a day",
+   "text": "{{out.intercept|2}} × {{out.rated_kw|1}} kW + {{out.slope|2}} × {{out.load_kw|2}} kW = {{out.l_per_h|2}} L an hour; × {{out.price|rs2}} = {{out.rs_per_h|rs}} an hour, {{out.l_per_month|int}} L and {{out.rs_per_month|rs}} a month, {{out.rs_per_unit|rs}} per unit."
+  },
+  {
+   "inputs": {
+    "load_w": 4000
+   },
+   "title": "{{out.kva|1}} kVA petrol at full load, {{in.load_w|int}} W",
+   "text": "{{out.intercept|2}} × {{out.rated_kw|1}} kW + {{out.slope|2}} × {{out.load_kw|2}} kW = {{out.l_per_h|2}} L an hour, {{out.rs_per_h|rs}} an hour. Each unit costs {{out.rs_per_unit|rs}} in fuel; a month at {{out.hours|1}} hours a day is {{out.rs_per_month|rs}}."
+  },
+  {
+   "inputs": {
+    "kva": 10
+   },
+   "title": "An oversized {{out.kva|1}} kVA petrol set carrying {{in.load_w|int}} W",
+   "text": "Only {{out.load_pct|int}}% loaded. Idle burn {{out.idle_l_per_h|2}} L an hour + {{out.slope|2}} × {{out.load_kw|2}} kW = {{out.l_per_h|2}} L an hour, {{out.rs_per_h|rs}} an hour and {{out.rs_per_unit|rs}} per unit."
+  },
+  {
+   "inputs": {
+    "kva": 2.5,
+    "load_w": 1000
+   },
+   "title": "Small {{out.kva|1}} kVA petrol set at {{in.load_w|int}} W",
+   "text": "{{out.intercept|2}} × {{out.rated_kw|1}} kW + {{out.slope|2}} × {{out.load_kw|2}} kW = {{out.l_per_h|2}} L an hour, {{out.rs_per_h|rs}} an hour; {{out.l_per_month|int}} L and {{out.rs_per_month|rs}} a month at {{out.hours|1}} hours a day."
+  },
+  {
+   "inputs": {
+    "fuel": "diesel",
+    "kva": 10,
+    "load_w": 5000,
+    "hours": 6
+   },
+   "title": "{{out.kva|1}} kVA diesel at {{in.load_w|int}} W for {{out.hours|1}} hours a day",
+   "text": "{{out.intercept|2}} × {{out.rated_kw|1}} kW + {{out.slope|2}} × {{out.load_kw|2}} kW = {{out.l_per_h|2}} L an hour, {{out.rs_per_h|rs}} an hour; {{out.l_per_day|1}} L a day and {{out.rs_per_month|rs}} a month."
+  }
+ ],
+ "table": {
+  "caption": "Generator fuel consumption chart at half load, {{out.hours|1}} hours a day for {{out.days|int}} days, at the latest fuel prices in our data",
+  "rows": [
+   {
+    "kva": 2.5,
+    "load_w": 1000
+   },
+   {
+    "kva": 3.5,
+    "load_w": 1400
+   },
+   {
+    "kva": 5,
+    "load_w": 2000
+   },
+   {
+    "kva": 5,
+    "load_w": 2000,
+    "fuel": "diesel"
+   },
+   {
+    "kva": 7.5,
+    "load_w": 3000
+   },
+   {
+    "kva": 10,
+    "load_w": 4000
+   },
+   {
+    "kva": 10,
+    "load_w": 4000,
+    "fuel": "diesel"
+   }
+  ],
+  "columns": [
+   {
+    "label": "Generator",
+    "tpl": "{{out.kva|1}} kVA {{out.fuel}}"
+   },
+   {
+    "label": "Load",
+    "tpl": "{{out.load_w|int}} W"
+   },
+   {
+    "label": "Fuel per hour",
+    "tpl": "{{out.l_per_h|2}} L"
+   },
+   {
+    "label": "Cost per hour",
+    "tpl": "{{out.rs_per_h|rs}}"
+   },
+   {
+    "label": "Cost a month",
+    "tpl": "{{out.rs_per_month|rs}}"
+   },
+   {
+    "label": "Fuel a month",
+    "tpl": "{{out.l_per_month|int}} L"
+   }
+  ]
+ },
+ "mistakes": [
+  "Entering the starting watts as the load. Fuel follows the running load; the starting surge lasts a second or two.",
+  "Buying a much bigger generator than the load needs. The idle burn grows with the size, so an oversized set costs more every hour it runs.",
+  "Comparing generator fuel with the electricity bill per unit without counting servicing. Oil, filters and engine wear add to the fuel cost per unit.",
+  "Using an old fuel price. Petrol and diesel prices change every few days; type today's price for an exact cost."
+ ],
+ "safety": "Refuel only with the engine off and cool, store petrol and diesel in approved cans away from the house, and run the generator outdoors away from windows because of carbon monoxide. Connect it to the house only through a changeover switch fitted by a licensed electrician.",
+ "faq": [
+  {
+   "q": "How much petrol does a 5 kVA generator use per hour?",
+   "a": "About {{out.l_per_h|2}} litres an hour at {{in.load_w|int}} W ({{out.load_pct|int}}% load) and about {{ex.1.out.l_per_h|2}} litres at its full {{ex.1.in.load_w|int}} W, by our planning curve. That is {{out.rs_per_h|rs}} and {{ex.1.out.rs_per_h|rs}} an hour at {{out.price|rs2}} a litre."
+  },
+  {
+   "q": "Is a diesel or petrol generator cheaper to run?",
+   "a": "Diesel. At {{out.kva|1}} kVA and {{in.load_w|int}} W a diesel set costs about {{ex.0.out.rs_per_h|rs}} an hour against {{out.rs_per_h|rs}} for petrol, because it burns much less fuel for the same output. A petrol set is cheaper to buy."
+  },
+  {
+   "q": "What is the gas generator running cost?",
+   "a": "We do not have checked fuel-use data for gas generators yet, so this calculator covers petrol and diesel only. Multiply the gas use from the generator's manual at your load by your gas price to compare with the petrol cost per hour here."
+  },
+  {
+   "q": "What does generator electricity cost per unit in Pakistan?",
+   "a": "For a {{out.kva|1}} kVA petrol set at {{in.load_w|int}} W, about {{out.rs_per_unit|rs}} per unit in fuel alone; diesel about {{ex.0.out.rs_per_unit|rs}}. The grid energy rate in the unprotected 301 to 400 unit slab is {{data.tariff.unprotected.3.rate|rs2}}."
+  },
+  {
+   "q": "Does a bigger generator use more fuel for the same load?",
+   "a": "Yes. A {{ex.2.out.kva|1}} kVA petrol set at {{ex.2.in.load_w|int}} W burns about {{ex.2.out.l_per_h|2}} litres an hour against {{out.l_per_h|2}} for a {{out.kva|1}} kVA set, because its idle burn is larger. Size the generator for your load, not bigger."
+  },
+  {
+   "q": "Is a generator or a UPS cheaper?",
+   "a": "A generator is cheaper to buy, a UPS cheaper to run: the generator's fuel alone costs about {{out.rs_per_unit|rs}} per unit here. Use the UPS vs solar vs generator cost calculator to compare the totals over several years."
+  }
+ ],
+ "related": [
+  "C1",
+  "C7",
+  "C6",
+  "E1"
+ ],
+ "next": "N7",
+ "literal_numbers": [
+  "1000",
+  "301 to 400",
+  "5 kVA"
+ ],
+ "sources": [
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

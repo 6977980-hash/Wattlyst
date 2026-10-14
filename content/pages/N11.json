@@ -1,0 +1,271 @@
+{
+ "id": "N11",
+ "status": "publish",
+ "template": "tool",
+ "h1": "Battery Series and Parallel Calculator with Wiring Diagram",
+ "author": "ali-ahmad",
+ "published": "2026-10-14",
+ "reviewed": "2026-10-14",
+ "calc": "series_parallel",
+ "diagram": "battery_grid",
+ "fields": [
+  {
+   "name": "v",
+   "label": "Voltage of one battery",
+   "unit": "V",
+   "default": 12,
+   "hint": "From the battery label: 12 V for most tubular and car batteries, 12.8 V for a lithium block, 3.2 V for a single LiFePO4 cell."
+  },
+  {
+   "name": "ah",
+   "label": "Capacity of one battery",
+   "unit": "Ah",
+   "default": 200,
+   "hint": "Amp hours from the same label. All batteries in the bank must be the same model, capacity and age."
+  },
+  {
+   "name": "n_series",
+   "label": "Batteries in series in each string",
+   "unit": "batteries",
+   "default": 2,
+   "hint": "Series adds voltage: two 12 V batteries make 24 V, four make 48 V. Match your inverter's battery voltage."
+  },
+  {
+   "name": "n_parallel",
+   "label": "Strings in parallel",
+   "unit": "strings",
+   "default": 2,
+   "hint": "Parallel adds amp hours at the same voltage. Use 1 for a single string; keep parallel strings to as few as you can."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "v_total",
+   "label": "Bank voltage",
+   "spec": "1",
+   "unit": "V"
+  },
+  {
+   "key": "ah_total",
+   "label": "Battery bank capacity",
+   "spec": "int",
+   "unit": "Ah"
+  },
+  {
+   "key": "kwh",
+   "label": "Battery bank energy",
+   "spec": "2",
+   "unit": "kWh"
+  },
+  {
+   "key": "batteries",
+   "label": "Batteries to buy",
+   "spec": "int"
+  },
+  {
+   "key": "n_series",
+   "label": "In series per string",
+   "spec": "int"
+  },
+  {
+   "key": "n_parallel",
+   "label": "Strings in parallel",
+   "spec": "int"
+  }
+ ],
+ "answer": "{{out.batteries|int}} batteries of {{ex.2.out.v_total|int}} V {{ex.0.out.ah_total|int}} Ah, {{out.n_series|int}} in series in each of {{out.n_parallel|int}} parallel strings, make a {{out.v_total|1}} V {{out.ah_total|int}} Ah bank storing {{out.kwh|2}} kWh. Series adds the volts (bank V = batteries in series × battery V), parallel adds the amp hours (bank Ah = strings × battery Ah), and kWh = bank V × bank Ah ÷ 1000.",
+ "how": "Voltage: {{out.n_series|int}} batteries in series × the voltage of one battery = {{out.v_total|1}} V. Capacity: {{out.n_parallel|int}} strings × the Ah of one battery = {{out.ah_total|int}} Ah (series does not add amp hours). Energy: {{out.v_total|1}} V × {{out.ah_total|int}} Ah ÷ 1000 = {{out.kwh|2}} kWh. Batteries: {{out.n_series|int}} × {{out.n_parallel|int}} = {{out.batteries|int}}. The diagram shows each string as a row, wired plus to minus, with the strings joined at common positive and negative bus bars.",
+ "key_facts": [
+  "Batteries in series add their voltage and keep the amp hours of one battery; batteries in parallel keep the voltage and add the amp hours; the stored energy in kWh = bank volts × bank amp hours ÷ 1000 either way.",
+  "{{ex.0.out.n_series|int}} × {{ex.2.out.v_total|int}} V {{ex.0.out.ah_total|int}} Ah batteries in series make {{ex.0.out.v_total|int}} V {{ex.0.out.ah_total|int}} Ah, {{ex.0.out.kwh|2}} kWh; the same two in parallel make {{ex.2.out.v_total|int}} V {{ex.2.out.ah_total|int}} Ah and store the same {{ex.2.out.kwh|2}} kWh.",
+  "A {{ex.1.out.v_total|int}} V inverter on {{ex.2.out.v_total|int}} V {{ex.1.out.ah_total|int}} Ah batteries needs {{ex.1.out.n_series|int}} batteries in series, storing {{ex.1.out.kwh|2}} kWh, of which about {{d.dod_lead_acid|pct}} is usable from tubular lead-acid batteries.",
+  "Only identical batteries may share a bank: the same chemistry, model, capacity and age. A weak battery in a series string is overcharged and over-discharged by the others and drags the whole bank down."
+ ],
+ "formula": {
+  "text": "V_bank = N_series × V; Ah_bank = N_parallel × Ah; kWh = V_bank × Ah_bank ÷ 1000",
+  "lines": [
+   "V, Ah = voltage and capacity of one battery (all identical)",
+   "N_series = batteries in series in each string; N_parallel = number of strings in parallel",
+   "Batteries needed = N_series × N_parallel",
+   "Usable kWh = kWh × depth of discharge (about half for tubular lead-acid, most of it for LiFePO4)"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "Battery series and parallel calculator: the two rules",
+   "p": [
+    "Series raises the voltage: the plus of one battery goes to the minus of the next, and the volts add up while the amp hours stay those of one battery. Parallel raises the capacity: all the pluses join and all the minuses join, the volts stay those of one battery and the amp hours add up. The stored energy is the same for the same batteries; only the voltage and current change.",
+    "The inverter decides the voltage. A {{ex.0.out.v_total|int}} V inverter needs {{ex.0.out.n_series|int}} batteries of {{ex.2.out.v_total|int}} V in series, a {{ex.1.out.v_total|int}} V inverter needs {{ex.1.out.n_series|int}}. Parallel strings are then added for more backup time."
+   ]
+  },
+  {
+   "h2": "How to connect batteries in series",
+   "p": [
+    "Step one: switch off the inverter and the charger, and remove the bank fuse or open the battery breaker. Step two: place the batteries side by side and connect the plus of the first battery to the minus of the second, then the plus of the second to the minus of the third, and so on. Step three: the free minus of the first battery and the free plus of the last battery are the string's terminals. Step four: check with a multimeter that the string reads about {{out.n_series|int}} × the battery voltage before you connect it to anything.",
+    "Use links of the same cable size and length between batteries, and tighten every terminal to the torque the battery maker gives. A loose link heats up under load."
+   ]
+  },
+  {
+   "h2": "Series-parallel wiring diagram: joining several strings",
+   "p": [
+    "Build each series string first and check its voltage. Then bring each string's plus to a common positive bus bar and each string's minus to a common negative bus bar, with a fuse or DC breaker in the positive lead of every string. Take the inverter cables from opposite ends of the bus bars (plus from one end, minus from the other) so every string sees the same cable length and shares the load evenly.",
+    "The wiring diagram with the result draws the bank you entered: {{out.n_series|int}} batteries across in each string and {{out.n_parallel|int}} strings down, with the minus of each string led to the negative bus and its plus led through a fuse to the positive bus. Keep parallel strings to as few as the backup you need allows: the more strings, the harder it is to keep them balanced."
+   ]
+  },
+  {
+   "h2": "Can I mix old and new batteries or different sizes?",
+   "p": [
+    "No. In series, the weakest battery limits the string and is pushed past full and past empty by the others. In parallel, a battery with a different voltage or age makes current flow between the strings even with no load. Never mix lead-acid with lithium, or batteries of different Ah, in one bank; replace a whole string together."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "n_series": 2,
+    "n_parallel": 1
+   },
+   "title": "Two {{ex.2.out.v_total|int}} V batteries in series for a {{out.v_total|int}} V inverter",
+   "text": "{{out.n_series|int}} × {{ex.2.out.v_total|int}} V = {{out.v_total|int}} V; capacity stays {{out.ah_total|int}} Ah; energy {{out.kwh|2}} kWh from {{out.batteries|int}} batteries."
+  },
+  {
+   "inputs": {
+    "n_series": 4,
+    "n_parallel": 1
+   },
+   "title": "Four batteries in series for a {{out.v_total|int}} V inverter",
+   "text": "{{out.n_series|int}} × {{ex.2.out.v_total|int}} V = {{out.v_total|int}} V at {{out.ah_total|int}} Ah, {{out.kwh|2}} kWh. Doubling the bank voltage halves the battery current for the same load, so the battery cables can be thinner."
+  },
+  {
+   "inputs": {
+    "n_series": 1,
+    "n_parallel": 2
+   },
+   "title": "Two {{ex.2.out.v_total|int}} V batteries in parallel",
+   "text": "Voltage stays {{out.v_total|int}} V; capacity doubles to {{out.ah_total|int}} Ah; energy {{out.kwh|2}} kWh, the same as two in series. Use this only for a {{out.v_total|int}} V inverter or a {{out.v_total|int}} V DC system."
+  },
+  {
+   "inputs": {},
+   "title": "{{in.n_series|int}} in series × {{in.n_parallel|int}} in parallel",
+   "text": "Two strings of two batteries: {{out.v_total|int}} V {{out.ah_total|int}} Ah, {{out.kwh|2}} kWh from {{out.batteries|int}} batteries. Fuse each string before the bus bar."
+  },
+  {
+   "inputs": {
+    "v": 3.2,
+    "ah": 100,
+    "n_series": 16,
+    "n_parallel": 1
+   },
+   "title": "LiFePO4 pack from {{in.n_series|int}} cells of 3.2 V",
+   "text": "{{out.n_series|int}} cells × 3.2 V = {{out.v_total|1}} V nominal at {{out.ah_total|int}} Ah, {{out.kwh|2}} kWh: this is how a lithium battery sold for a {{ex.1.out.v_total|int}} V inverter is built inside. A cell pack needs a battery management system (BMS); do not build one without it."
+  }
+ ],
+ "table": {
+  "caption": "Bank voltage, capacity and energy for common series and parallel layouts of {{ex.2.out.v_total|int}} V {{ex.0.out.ah_total|int}} Ah batteries",
+  "rows": [
+   {
+    "n_series": 1,
+    "n_parallel": 1
+   },
+   {
+    "n_series": 1,
+    "n_parallel": 2
+   },
+   {
+    "n_series": 2,
+    "n_parallel": 1
+   },
+   {},
+   {
+    "n_series": 4,
+    "n_parallel": 1
+   },
+   {
+    "n_series": 4,
+    "n_parallel": 2
+   },
+   {
+    "n_series": 2,
+    "n_parallel": 3
+   }
+  ],
+  "columns": [
+   {
+    "label": "Layout",
+    "tpl": "{{out.n_series|int}} in series × {{out.n_parallel|int}} in parallel"
+   },
+   {
+    "label": "Batteries",
+    "tpl": "{{out.batteries|int}}"
+   },
+   {
+    "label": "Bank voltage",
+    "tpl": "{{out.v_total|int}} V"
+   },
+   {
+    "label": "Capacity",
+    "tpl": "{{out.ah_total|int}} Ah"
+   },
+   {
+    "label": "Energy",
+    "tpl": "{{out.kwh|2}} kWh"
+   }
+  ]
+ },
+ "mistakes": [
+  "Adding amp hours in series. Two {{ex.0.out.ah_total|int}} Ah batteries in series are still {{ex.0.out.ah_total|int}} Ah; only the voltage doubles.",
+  "Mixing an old battery with new ones. The old one fails first and takes the new ones with it; replace a whole string at once.",
+  "Taking both inverter cables from the same end of a parallel bank. The nearest string does most of the work and wears out first; take plus and minus from opposite ends.",
+  "Leaving out the fuse. Every parallel string needs its own fuse or DC breaker, because a shorted battery would otherwise draw current from all the others.",
+  "Matching the bank to the battery count instead of the inverter. The inverter's battery voltage sets the number in series; check it on the inverter label first."
+ ],
+ "safety": "A battery bank can deliver thousands of amps into a short circuit. Remove rings and watches, use insulated tools, connect the last link only after checking polarity, and fuse each string. Lead-acid batteries give off hydrogen while charging, so keep them ventilated and away from sparks. Have a licensed electrician fit the fuses, breaker and inverter cables.",
+ "faq": [
+  {
+   "q": "What happens when you connect batteries in series?",
+   "a": "The voltages add and the amp hours stay those of one battery: two {{ex.2.out.v_total|int}} V {{ex.0.out.ah_total|int}} Ah batteries make {{ex.0.out.v_total|int}} V {{ex.0.out.ah_total|int}} Ah."
+  },
+  {
+   "q": "What happens when you connect batteries in parallel?",
+   "a": "The voltage stays the same and the amp hours add: two {{ex.2.out.v_total|int}} V {{ex.0.out.ah_total|int}} Ah batteries make {{ex.2.out.v_total|int}} V {{ex.2.out.ah_total|int}} Ah. The stored energy, {{ex.2.out.kwh|2}} kWh, is the same as in series."
+  },
+  {
+   "q": "Is series or parallel better for backup time?",
+   "a": "Neither: the same batteries store the same kWh either way. Choose series to match your inverter's voltage, then add parallel strings for more backup."
+  },
+  {
+   "q": "How many batteries do I need for a 48 V inverter?",
+   "a": "Four {{ex.2.out.v_total|int}} V batteries in series, giving {{ex.1.out.v_total|int}} V {{ex.1.out.ah_total|int}} Ah and {{ex.1.out.kwh|2}} kWh with {{ex.1.out.ah_total|int}} Ah batteries. For more backup, add a second string of four in parallel."
+  },
+  {
+   "q": "Can I connect a 150 Ah and a 200 Ah battery together?",
+   "a": "No. Batteries of different capacity or age in one bank charge and discharge unevenly, and the smaller one is damaged. Use identical batteries only."
+  },
+  {
+   "q": "Do I need a fuse between parallel batteries?",
+   "a": "Yes, one fuse or DC breaker on the positive lead of each string, sized for the string's cable. Without it a short in one battery is fed by all the others."
+  }
+ ],
+ "related": [
+  "B4",
+  "D1",
+  "A10",
+  "N14",
+  "H8"
+ ],
+ "next": "B1",
+ "literal_numbers": [
+  "1000",
+  "150 Ah",
+  "200 Ah",
+  "3.2",
+  "48 V",
+  "LiFePO4"
+ ],
+ "sources": [
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

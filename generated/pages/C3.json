@@ -8,10 +8,20 @@
  "meta": "Work out the peak starting watts your generator must handle for ACs, fridges and pumps, and why only the biggest motor's surge counts.",
  "primary_keyword": "generator starting watts calculator",
  "wave": 3,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-14",
+ "published": "2026-10-14",
  "author": "ali-ahmad",
+ "related": [
+  "C4",
+  "C5",
+  "C6",
+  "H5",
+  "C2"
+ ],
+ "next": "C1",
  "parent": "P-C",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
@@ -26,7 +36,1340 @@
    "url": "/generator/generator-starting-watts-calculator/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "Why only the largest starting surge counts",
+    "p": [
+     "A motor draws its big surge for a second or two while it gets up to speed, then settles to its running watts. The chance that two motors start in exactly the same second is small, and you can make it zero by switching them on one after the other. So the generator needs the running watts of everything plus one surge, the biggest. In the default list the 1 hp pump has the biggest jump, which gives 3,840 W.",
+     "Adding every starting figure together would size the generator for a moment that never happens and push you to a set one or two sizes larger than you need. The exception is after a power cut, when everything restarts at once; the safe habit is to switch loads on one at a time once the generator is running."
+    ]
+   },
+   {
+    "h2": "Starting watts of a refrigerator",
+    "p": [
+     "A non-inverter fridge or chest freezer runs at about 200 W, but its compressor starts at about 1,200 W in our appliance data, and it restarts many times a day as the thermostat cycles. On its own that needs a 1.5 kVA generator, so the smallest common size, 2.5 kVA, is plenty.",
+     "An inverter fridge starts softly at about 200 W and barely moves the peak. If a small generator stalls each time the fridge clicks on, the fridge's start, not its running load, is the cause."
+    ]
+   },
+   {
+    "h2": "Starting watts of an AC",
+    "p": [
+     "Non-inverter ACs have the largest starting surge in a home: a 1.5 ton unit starts at about 5,400 W and a 2 ton unit at about 7,200 W. With a fridge, a pump, fans and lights also on, the AC's jump sets a peak of 7,040 W and a 10 kVA generator.",
+     "Inverter ACs ramp the compressor up gradually, so their highest draw is their maximum rated input, about 1,900 W for 1.5 ton. In the same house the pump's jump then becomes the largest and the generator drops to 6.5 kVA."
+    ]
+   },
+   {
+    "h2": "Motor starting current and inrush current of appliances",
+    "p": [
+     "Starting current is the same surge seen in amps: divide the starting watts by the supply voltage, about 230 V in Pakistan, for a rough figure. That current is what dims the lights and trips a weak generator's breaker when a pump starts; the 1 hp water motor page shows it in amps.",
+     "Electronics such as TVs, computers and LED drivers also draw an inrush current when switched on, but it lasts a few thousandths of a second as their capacitors charge. Generators ride through it, so the calculator does not add it; only motors and compressors carry a starting surge here."
+    ]
+   },
+   {
+    "h2": "Peak watts vs rated watts on a generator",
+    "p": [
+     "Many generators print two numbers: a rated (running) output and a higher peak or maximum output that lasts only seconds. This calculator sizes so that the rated kVA covers the starting peak, which leaves the generator's own peak reserve as extra head-room for a motor that starts harder than our planning figure.",
+     "If you size on the generator's peak figure instead, a pump or AC that starts while the set is already loaded can push it past its limit, and the voltage dip can trip the AC's protection or burn a motor that keeps trying to start."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "What are the starting watts of a refrigerator?",
+    "a": "About 1,200 W for a typical non-inverter fridge that runs at 200 W, and about 200 W for an inverter fridge. Your fridge's own figure may differ; type its label watts into the list."
+   },
+   {
+    "q": "What are the starting watts of an AC?",
+    "a": "For non-inverter split ACs about 3,600 W (1 ton), 5,400 W (1.5 ton) and 7,200 W (2 ton). Inverter ACs have no hard start; their highest draw is the maximum input, about 1,900 W for 1.5 ton."
+   },
+   {
+    "q": "How do I calculate surge watts for a generator?",
+    "a": "Add the running watts of everything that will be on, then add the largest single jump (starting watts minus running watts) of any one motor or compressor. That total is the surge the generator must supply."
+   },
+   {
+    "q": "Do I add the starting watts of all my appliances?",
+    "a": "No. Add all running watts, then only the biggest starting jump. In the default list the pump, the fridge and the washer all have a jump, but only the pump's is added, giving 3,840 W."
+   },
+   {
+    "q": "How long do starting watts last?",
+    "a": "Usually a second or two for a fridge, pump or AC compressor, a little longer for a heavily loaded pump. Short as it is, the generator must deliver it or the voltage collapses and the motor stalls."
+   },
+   {
+    "q": "Is there a starting watts chart?",
+    "a": "Yes, the table above lists eight motors and compressors with their running watts, starting watts and the generator each needs alone, from a deep freezer (1,200 W at start) to a 2 ton non-inverter AC (7,200 W)."
+   }
+  ],
+  "key_facts": [
+   "Generator starting watts = the running watts of everything on + the largest single starting jump; a second motor's surge is not added because two motors almost never start in the same second.",
+   "In this site's appliance data non-inverter AC compressors and pump motors start at about 3 times their running watts for a second or two; a non-inverter fridge jumps from 200 W to about 1,200 W.",
+   "A 1.5 ton non-inverter AC runs at 1,800 W but starts at about 5,400 W, so on its own it needs a 7.5 kVA generator, while the fridge alone fits the smallest common size, 2.5 kVA.",
+   "In a house with a fridge, a water pump and a non-inverter AC, the AC sets the starting peak (7,040 W); swap it for an inverter AC and the pump sets a much lower peak of 4,890 W."
+  ],
+  "mistakes": [
+   "Adding the starting watts of every motor together. Only the largest jump is added to the running total; summing them all oversizes the generator.",
+   "Leaving out the running load of everything else. The surge comes on top of the fans, lights and fridge that are already running, not on an idle generator.",
+   "Switching everything on at once after a cut. Several motors starting together really do add their surges; start the biggest motor first, then the rest one by one.",
+   "Trusting the generator's peak rating to cover motor starts. Size the rated output for the starting peak and keep the generator's own peak as reserve."
+  ],
+  "sources": [
+   {
+    "label": "Virginia Tech Extension: appliance wattage table (running and starting watts)",
+    "url": "https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html"
+   },
+   {
+    "label": "Wattlyst methodology and default values",
+    "url": "/methodology/"
+   }
+  ],
+  "tool": {
+   "calc": "generator_size",
+   "module": "sizing.js",
+   "data_keys": [],
+   "appliances": {
+    "ceiling-fan-ac": {
+     "name": "Ceiling fan (AC, 56 inch)",
+     "running_w": 80,
+     "starting_w": 120,
+     "typical_hours_per_day": 12,
+     "load_type": "motor"
+    },
+    "ceiling-fan-dc-inverter": {
+     "name": "Ceiling fan (DC / inverter BLDC)",
+     "running_w": 35,
+     "starting_w": 35,
+     "typical_hours_per_day": 12,
+     "load_type": "electronic"
+    },
+    "pedestal-fan": {
+     "name": "Pedestal fan (AC)",
+     "running_w": 75,
+     "starting_w": 110,
+     "typical_hours_per_day": 8,
+     "load_type": "motor"
+    },
+    "pedestal-fan-dc": {
+     "name": "Pedestal fan (DC / inverter)",
+     "running_w": 30,
+     "starting_w": 30,
+     "typical_hours_per_day": 8,
+     "load_type": "electronic"
+    },
+    "bracket-fan": {
+     "name": "Bracket / wall fan",
+     "running_w": 70,
+     "starting_w": 100,
+     "typical_hours_per_day": 8,
+     "load_type": "motor"
+    },
+    "exhaust-fan": {
+     "name": "Exhaust fan (10-12 inch)",
+     "running_w": 40,
+     "starting_w": 60,
+     "typical_hours_per_day": 4,
+     "load_type": "motor"
+    },
+    "air-cooler": {
+     "name": "Room air cooler (evaporative)",
+     "running_w": 200,
+     "starting_w": 300,
+     "typical_hours_per_day": 8,
+     "load_type": "motor"
+    },
+    "ac-split-1ton-inverter": {
+     "name": "Split AC 1 ton inverter",
+     "running_w": 900,
+     "starting_w": 1200,
+     "typical_hours_per_day": 8,
+     "avg_w": 650,
+     "load_type": "inverter_compressor"
+    },
+    "ac-split-1ton-non-inverter": {
+     "name": "Split AC 1 ton non-inverter",
+     "running_w": 1200,
+     "starting_w": 3600,
+     "typical_hours_per_day": 8,
+     "avg_w": 960,
+     "load_type": "compressor"
+    },
+    "ac-split-1-5ton-inverter": {
+     "name": "Split AC 1.5 ton inverter",
+     "running_w": 1450,
+     "starting_w": 1900,
+     "typical_hours_per_day": 8,
+     "avg_w": 1000,
+     "load_type": "inverter_compressor"
+    },
+    "ac-split-1-5ton-non-inverter": {
+     "name": "Split AC 1.5 ton non-inverter",
+     "running_w": 1800,
+     "starting_w": 5400,
+     "typical_hours_per_day": 8,
+     "avg_w": 1440,
+     "load_type": "compressor"
+    },
+    "ac-split-2ton-inverter": {
+     "name": "Split AC 2 ton inverter",
+     "running_w": 1900,
+     "starting_w": 2500,
+     "typical_hours_per_day": 8,
+     "avg_w": 1300,
+     "load_type": "inverter_compressor"
+    },
+    "ac-split-2ton-non-inverter": {
+     "name": "Split AC 2 ton non-inverter",
+     "running_w": 2400,
+     "starting_w": 7200,
+     "typical_hours_per_day": 8,
+     "avg_w": 1920,
+     "load_type": "compressor"
+    },
+    "ac-window-1ton": {
+     "name": "Window AC (about 1 ton / 12-13k BTU)",
+     "running_w": 1350,
+     "starting_w": 4000,
+     "typical_hours_per_day": 8,
+     "avg_w": 1080,
+     "load_type": "compressor"
+    },
+    "ac-floor-standing-4ton": {
+     "name": "Floor-standing AC (4 ton)",
+     "running_w": 4500,
+     "starting_w": 13500,
+     "typical_hours_per_day": 8,
+     "avg_w": 3600,
+     "load_type": "compressor"
+    },
+    "heat-pump-3ton": {
+     "name": "Heat pump / central AC 3 ton",
+     "running_w": 3400,
+     "starting_w": 10200,
+     "typical_hours_per_day": 8,
+     "avg_w": 2720,
+     "load_type": "compressor"
+    },
+    "dehumidifier": {
+     "name": "Dehumidifier",
+     "running_w": 785,
+     "starting_w": 1600,
+     "typical_hours_per_day": 8,
+     "load_type": "compressor"
+    },
+    "refrigerator-non-inverter": {
+     "name": "Refrigerator (non-inverter, 12-16 cu ft)",
+     "running_w": 200,
+     "starting_w": 1200,
+     "typical_hours_per_day": 8,
+     "load_type": "compressor"
+    },
+    "refrigerator-inverter": {
+     "name": "Refrigerator (inverter)",
+     "running_w": 120,
+     "starting_w": 200,
+     "typical_hours_per_day": 10,
+     "load_type": "inverter_compressor"
+    },
+    "deep-freezer": {
+     "name": "Deep freezer (chest)",
+     "running_w": 200,
+     "starting_w": 1200,
+     "typical_hours_per_day": 10,
+     "load_type": "compressor"
+    },
+    "water-dispenser": {
+     "name": "Water dispenser (hot and cold)",
+     "running_w": 500,
+     "starting_w": 900,
+     "typical_hours_per_day": 6,
+     "load_type": "compressor"
+    },
+    "electric-geyser-storage": {
+     "name": "Electric geyser (storage, 40-gallon class)",
+     "running_w": 3000,
+     "starting_w": 3000,
+     "typical_hours_per_day": 3,
+     "load_type": "resistive"
+    },
+    "instant-water-heater": {
+     "name": "Instant electric water heater",
+     "running_w": 3500,
+     "starting_w": 3500,
+     "typical_hours_per_day": 1,
+     "load_type": "resistive"
+    },
+    "room-heater-oil-filled": {
+     "name": "Room heater (oil-filled radiator)",
+     "running_w": 1500,
+     "starting_w": 1500,
+     "typical_hours_per_day": 6,
+     "load_type": "resistive"
+    },
+    "room-heater-fan": {
+     "name": "Room heater (fan heater)",
+     "running_w": 2000,
+     "starting_w": 2000,
+     "typical_hours_per_day": 4,
+     "load_type": "resistive"
+    },
+    "room-heater-halogen": {
+     "name": "Room heater (halogen / quartz rod)",
+     "running_w": 1200,
+     "starting_w": 1200,
+     "typical_hours_per_day": 4,
+     "load_type": "resistive"
+    },
+    "electric-blanket": {
+     "name": "Electric blanket (double)",
+     "running_w": 100,
+     "starting_w": 100,
+     "typical_hours_per_day": 6,
+     "load_type": "resistive"
+    },
+    "electric-iron": {
+     "name": "Electric iron (dry / steam)",
+     "running_w": 1000,
+     "starting_w": 1000,
+     "typical_hours_per_day": 0.5,
+     "load_type": "resistive"
+    },
+    "washing-machine-twin-tub": {
+     "name": "Washing machine (twin tub, semi-automatic)",
+     "running_w": 400,
+     "starting_w": 1200,
+     "typical_hours_per_day": 1,
+     "load_type": "motor"
+    },
+    "washing-machine-automatic": {
+     "name": "Washing machine (automatic, top/front load, no heater)",
+     "running_w": 500,
+     "starting_w": 2250,
+     "typical_hours_per_day": 1,
+     "load_type": "motor"
+    },
+    "clothes-dryer": {
+     "name": "Clothes dryer (electric)",
+     "running_w": 3000,
+     "starting_w": 3500,
+     "typical_hours_per_day": 1,
+     "load_type": "resistive"
+    },
+    "microwave-oven": {
+     "name": "Microwave oven",
+     "running_w": 1100,
+     "starting_w": 1100,
+     "typical_hours_per_day": 0.3,
+     "load_type": "electronic"
+    },
+    "electric-oven": {
+     "name": "Electric oven (baking / toaster oven, large)",
+     "running_w": 1500,
+     "starting_w": 1500,
+     "typical_hours_per_day": 0.5,
+     "load_type": "resistive"
+    },
+    "air-fryer": {
+     "name": "Air fryer",
+     "running_w": 1500,
+     "starting_w": 1500,
+     "typical_hours_per_day": 0.5,
+     "load_type": "resistive"
+    },
+    "electric-kettle": {
+     "name": "Electric kettle",
+     "running_w": 2000,
+     "starting_w": 2000,
+     "typical_hours_per_day": 0.3,
+     "load_type": "resistive"
+    },
+    "toaster": {
+     "name": "Toaster",
+     "running_w": 1000,
+     "starting_w": 1000,
+     "typical_hours_per_day": 0.2,
+     "load_type": "resistive"
+    },
+    "sandwich-maker": {
+     "name": "Sandwich maker",
+     "running_w": 750,
+     "starting_w": 750,
+     "typical_hours_per_day": 0.2,
+     "load_type": "resistive"
+    },
+    "blender-juicer": {
+     "name": "Blender / juicer",
+     "running_w": 300,
+     "starting_w": 650,
+     "typical_hours_per_day": 0.2,
+     "load_type": "motor"
+    },
+    "food-processor": {
+     "name": "Food processor",
+     "running_w": 600,
+     "starting_w": 1200,
+     "typical_hours_per_day": 0.2,
+     "load_type": "motor"
+    },
+    "rice-cooker": {
+     "name": "Rice cooker",
+     "running_w": 700,
+     "starting_w": 700,
+     "typical_hours_per_day": 0.5,
+     "load_type": "resistive"
+    },
+    "slow-cooker": {
+     "name": "Slow cooker",
+     "running_w": 200,
+     "starting_w": 200,
+     "typical_hours_per_day": 4,
+     "load_type": "resistive"
+    },
+    "coffee-maker": {
+     "name": "Coffee maker",
+     "running_w": 1000,
+     "starting_w": 1000,
+     "typical_hours_per_day": 0.3,
+     "load_type": "resistive"
+    },
+    "induction-cooker": {
+     "name": "Induction cooker (single zone)",
+     "running_w": 1800,
+     "starting_w": 1800,
+     "typical_hours_per_day": 1,
+     "load_type": "electronic"
+    },
+    "hot-plate": {
+     "name": "Electric stove / hot plate (single)",
+     "running_w": 1500,
+     "starting_w": 1500,
+     "typical_hours_per_day": 1,
+     "load_type": "resistive"
+    },
+    "electric-grill": {
+     "name": "Electric grill",
+     "running_w": 1650,
+     "starting_w": 1650,
+     "typical_hours_per_day": 0.5,
+     "load_type": "resistive"
+    },
+    "dishwasher": {
+     "name": "Dishwasher (with drying)",
+     "running_w": 1800,
+     "starting_w": 1800,
+     "typical_hours_per_day": 1,
+     "load_type": "resistive"
+    },
+    "water-motor-0-5hp": {
+     "name": "Water pump / donkey motor 0.5 hp",
+     "running_w": 600,
+     "starting_w": 1800,
+     "typical_hours_per_day": 1,
+     "load_type": "motor"
+    },
+    "water-motor-1hp": {
+     "name": "Water pump / donkey motor 1 hp",
+     "running_w": 1000,
+     "starting_w": 2800,
+     "typical_hours_per_day": 1,
+     "load_type": "motor"
+    },
+    "water-motor-1-5hp": {
+     "name": "Water pump 1.5 hp",
+     "running_w": 1500,
+     "starting_w": 4500,
+     "typical_hours_per_day": 1,
+     "load_type": "motor"
+    },
+    "water-motor-2hp": {
+     "name": "Water pump 2 hp",
+     "running_w": 2000,
+     "starting_w": 6000,
+     "typical_hours_per_day": 1,
+     "load_type": "motor"
+    },
+    "submersible-pump-1hp": {
+     "name": "Submersible / deep-well pump 1 hp",
+     "running_w": 1100,
+     "starting_w": 3300,
+     "typical_hours_per_day": 2,
+     "load_type": "motor"
+    },
+    "tubewell-submersible-5hp": {
+     "name": "Tubewell submersible pump 5 hp",
+     "running_w": 4800,
+     "starting_w": 14400,
+     "typical_hours_per_day": 4,
+     "load_type": "motor"
+    },
+    "led-bulb": {
+     "name": "LED bulb (9-12 W)",
+     "running_w": 12,
+     "starting_w": 12,
+     "typical_hours_per_day": 6,
+     "load_type": "lighting"
+    },
+    "led-tube-light": {
+     "name": "LED tube light (4 ft)",
+     "running_w": 20,
+     "starting_w": 20,
+     "typical_hours_per_day": 6,
+     "load_type": "lighting"
+    },
+    "cfl-energy-saver": {
+     "name": "Energy saver (CFL)",
+     "running_w": 25,
+     "starting_w": 25,
+     "typical_hours_per_day": 6,
+     "load_type": "lighting"
+    },
+    "fluorescent-tube-40w": {
+     "name": "Fluorescent tube light (40 W, magnetic choke)",
+     "running_w": 50,
+     "starting_w": 50,
+     "typical_hours_per_day": 6,
+     "load_type": "lighting"
+    },
+    "led-tv-32": {
+     "name": "LED TV 32 inch",
+     "running_w": 40,
+     "starting_w": 40,
+     "typical_hours_per_day": 6,
+     "load_type": "electronic"
+    },
+    "led-tv-43": {
+     "name": "LED TV 43 inch",
+     "running_w": 75,
+     "starting_w": 75,
+     "typical_hours_per_day": 6,
+     "load_type": "electronic"
+    },
+    "led-tv-55": {
+     "name": "LED TV 55 inch",
+     "running_w": 120,
+     "starting_w": 120,
+     "typical_hours_per_day": 6,
+     "load_type": "electronic"
+    },
+    "laptop": {
+     "name": "Laptop",
+     "running_w": 50,
+     "starting_w": 50,
+     "typical_hours_per_day": 6,
+     "load_type": "electronic"
+    },
+    "desktop-pc": {
+     "name": "Desktop PC (CPU only)",
+     "running_w": 120,
+     "starting_w": 120,
+     "typical_hours_per_day": 6,
+     "load_type": "electronic"
+    },
+    "gaming-pc": {
+     "name": "Gaming PC (CPU + GPU, under load)",
+     "running_w": 400,
+     "starting_w": 400,
+     "typical_hours_per_day": 4,
+     "load_type": "electronic"
+    },
+    "monitor": {
+     "name": "Computer monitor (LED, 24 inch)",
+     "running_w": 30,
+     "starting_w": 30,
+     "typical_hours_per_day": 6,
+     "load_type": "electronic"
+    },
+    "wifi-router": {
+     "name": "WiFi router / modem",
+     "running_w": 10,
+     "starting_w": 10,
+     "typical_hours_per_day": 24,
+     "load_type": "electronic"
+    },
+    "phone-charger": {
+     "name": "Phone charger (fast charge, while charging)",
+     "running_w": 15,
+     "starting_w": 15,
+     "typical_hours_per_day": 3,
+     "load_type": "electronic"
+    },
+    "printer-laser": {
+     "name": "Printer (laser, printing)",
+     "running_w": 400,
+     "starting_w": 1000,
+     "typical_hours_per_day": 0.3,
+     "load_type": "electronic"
+    },
+    "printer-inkjet": {
+     "name": "Printer (inkjet)",
+     "running_w": 25,
+     "starting_w": 25,
+     "typical_hours_per_day": 0.3,
+     "load_type": "electronic"
+    },
+    "ups-idle": {
+     "name": "UPS / home inverter idle draw (no load)",
+     "running_w": 30,
+     "starting_w": 30,
+     "typical_hours_per_day": 24,
+     "load_type": "electronic"
+    },
+    "cctv-dvr-4cam": {
+     "name": "CCTV DVR + 4 cameras",
+     "running_w": 40,
+     "starting_w": 40,
+     "typical_hours_per_day": 24,
+     "load_type": "electronic"
+    },
+    "gaming-console": {
+     "name": "Gaming console (PS5 / Xbox Series X)",
+     "running_w": 200,
+     "starting_w": 200,
+     "typical_hours_per_day": 3,
+     "load_type": "electronic"
+    },
+    "sound-system": {
+     "name": "Sound system / stereo",
+     "running_w": 100,
+     "starting_w": 100,
+     "typical_hours_per_day": 3,
+     "load_type": "electronic"
+    },
+    "set-top-box": {
+     "name": "Set-top box / Android TV box",
+     "running_w": 10,
+     "starting_w": 10,
+     "typical_hours_per_day": 6,
+     "load_type": "electronic"
+    },
+    "vacuum-cleaner": {
+     "name": "Vacuum cleaner",
+     "running_w": 1200,
+     "starting_w": 1800,
+     "typical_hours_per_day": 0.3,
+     "load_type": "motor"
+    },
+    "hair-dryer": {
+     "name": "Hair dryer",
+     "running_w": 1500,
+     "starting_w": 1500,
+     "typical_hours_per_day": 0.2,
+     "load_type": "resistive"
+    },
+    "hair-straightener": {
+     "name": "Hair straightener",
+     "running_w": 50,
+     "starting_w": 50,
+     "typical_hours_per_day": 0.3,
+     "load_type": "resistive"
+    },
+    "trimmer-shaver": {
+     "name": "Trimmer / shaver (charging)",
+     "running_w": 5,
+     "starting_w": 5,
+     "typical_hours_per_day": 1,
+     "load_type": "electronic"
+    },
+    "sewing-machine": {
+     "name": "Sewing machine (electric)",
+     "running_w": 100,
+     "starting_w": 200,
+     "typical_hours_per_day": 2,
+     "load_type": "motor"
+    },
+    "aquarium": {
+     "name": "Aquarium (pump, light, heater)",
+     "running_w": 100,
+     "starting_w": 100,
+     "typical_hours_per_day": 24,
+     "load_type": "electronic"
+    },
+    "treadmill": {
+     "name": "Treadmill",
+     "running_w": 1000,
+     "starting_w": 2000,
+     "typical_hours_per_day": 1,
+     "load_type": "motor"
+    },
+    "drill": {
+     "name": "Electric drill / grinder (hand)",
+     "running_w": 600,
+     "starting_w": 900,
+     "typical_hours_per_day": 0.3,
+     "load_type": "motor"
+    },
+    "angle-grinder": {
+     "name": "Angle grinder (4-5 inch)",
+     "running_w": 900,
+     "starting_w": 1800,
+     "typical_hours_per_day": 0.3,
+     "load_type": "motor"
+    },
+    "circular-saw": {
+     "name": "Circular saw",
+     "running_w": 1200,
+     "starting_w": 2000,
+     "typical_hours_per_day": 0.3,
+     "load_type": "motor"
+    },
+    "air-compressor-1hp": {
+     "name": "Air compressor 1 hp",
+     "running_w": 1100,
+     "starting_w": 4500,
+     "typical_hours_per_day": 1,
+     "load_type": "motor"
+    },
+    "pressure-washer": {
+     "name": "Pressure washer",
+     "running_w": 1200,
+     "starting_w": 2400,
+     "typical_hours_per_day": 0.5,
+     "load_type": "motor"
+    },
+    "welding-machine-small": {
+     "name": "Welding machine (small inverter, 160-200 A)",
+     "running_w": 4000,
+     "starting_w": 4000,
+     "typical_hours_per_day": 1,
+     "load_type": "electronic"
+    },
+    "ebike-charger": {
+     "name": "E-bike / e-scooter charger",
+     "running_w": 250,
+     "starting_w": 250,
+     "typical_hours_per_day": 4,
+     "load_type": "electronic"
+    },
+    "ev-charger-level2": {
+     "name": "EV charger level 2 (7.4 kW, single phase)",
+     "running_w": 7400,
+     "starting_w": 7400,
+     "typical_hours_per_day": 4,
+     "load_type": "electronic"
+    }
+   },
+   "fields": [
+    {
+     "name": "loads",
+     "label": "Motors, compressors and everything else on at the same time",
+     "type": "loads",
+     "start": true,
+     "catalog": [
+      {
+       "id": "ceiling-fan-ac",
+       "name": "Ceiling fan (AC, 56 inch)",
+       "category": "cooling"
+      },
+      {
+       "id": "ceiling-fan-dc-inverter",
+       "name": "Ceiling fan (DC / inverter BLDC)",
+       "category": "cooling"
+      },
+      {
+       "id": "pedestal-fan",
+       "name": "Pedestal fan (AC)",
+       "category": "cooling"
+      },
+      {
+       "id": "pedestal-fan-dc",
+       "name": "Pedestal fan (DC / inverter)",
+       "category": "cooling"
+      },
+      {
+       "id": "bracket-fan",
+       "name": "Bracket / wall fan",
+       "category": "cooling"
+      },
+      {
+       "id": "exhaust-fan",
+       "name": "Exhaust fan (10-12 inch)",
+       "category": "cooling"
+      },
+      {
+       "id": "air-cooler",
+       "name": "Room air cooler (evaporative)",
+       "category": "cooling"
+      },
+      {
+       "id": "ac-split-1ton-inverter",
+       "name": "Split AC 1 ton inverter",
+       "category": "cooling"
+      },
+      {
+       "id": "ac-split-1ton-non-inverter",
+       "name": "Split AC 1 ton non-inverter",
+       "category": "cooling"
+      },
+      {
+       "id": "ac-split-1-5ton-inverter",
+       "name": "Split AC 1.5 ton inverter",
+       "category": "cooling"
+      },
+      {
+       "id": "ac-split-1-5ton-non-inverter",
+       "name": "Split AC 1.5 ton non-inverter",
+       "category": "cooling"
+      },
+      {
+       "id": "ac-split-2ton-inverter",
+       "name": "Split AC 2 ton inverter",
+       "category": "cooling"
+      },
+      {
+       "id": "ac-split-2ton-non-inverter",
+       "name": "Split AC 2 ton non-inverter",
+       "category": "cooling"
+      },
+      {
+       "id": "ac-window-1ton",
+       "name": "Window AC (about 1 ton / 12-13k BTU)",
+       "category": "cooling"
+      },
+      {
+       "id": "ac-floor-standing-4ton",
+       "name": "Floor-standing AC (4 ton)",
+       "category": "cooling"
+      },
+      {
+       "id": "heat-pump-3ton",
+       "name": "Heat pump / central AC 3 ton",
+       "category": "cooling"
+      },
+      {
+       "id": "dehumidifier",
+       "name": "Dehumidifier",
+       "category": "cooling"
+      },
+      {
+       "id": "refrigerator-non-inverter",
+       "name": "Refrigerator (non-inverter, 12-16 cu ft)",
+       "category": "kitchen"
+      },
+      {
+       "id": "refrigerator-inverter",
+       "name": "Refrigerator (inverter)",
+       "category": "kitchen"
+      },
+      {
+       "id": "deep-freezer",
+       "name": "Deep freezer (chest)",
+       "category": "kitchen"
+      },
+      {
+       "id": "water-dispenser",
+       "name": "Water dispenser (hot and cold)",
+       "category": "kitchen"
+      },
+      {
+       "id": "electric-geyser-storage",
+       "name": "Electric geyser (storage, 40-gallon class)",
+       "category": "heating"
+      },
+      {
+       "id": "instant-water-heater",
+       "name": "Instant electric water heater",
+       "category": "heating"
+      },
+      {
+       "id": "room-heater-oil-filled",
+       "name": "Room heater (oil-filled radiator)",
+       "category": "heating"
+      },
+      {
+       "id": "room-heater-fan",
+       "name": "Room heater (fan heater)",
+       "category": "heating"
+      },
+      {
+       "id": "room-heater-halogen",
+       "name": "Room heater (halogen / quartz rod)",
+       "category": "heating"
+      },
+      {
+       "id": "electric-blanket",
+       "name": "Electric blanket (double)",
+       "category": "heating"
+      },
+      {
+       "id": "electric-iron",
+       "name": "Electric iron (dry / steam)",
+       "category": "laundry"
+      },
+      {
+       "id": "washing-machine-twin-tub",
+       "name": "Washing machine (twin tub, semi-automatic)",
+       "category": "laundry"
+      },
+      {
+       "id": "washing-machine-automatic",
+       "name": "Washing machine (automatic, top/front load, no heater)",
+       "category": "laundry"
+      },
+      {
+       "id": "clothes-dryer",
+       "name": "Clothes dryer (electric)",
+       "category": "laundry"
+      },
+      {
+       "id": "microwave-oven",
+       "name": "Microwave oven",
+       "category": "kitchen"
+      },
+      {
+       "id": "electric-oven",
+       "name": "Electric oven (baking / toaster oven, large)",
+       "category": "kitchen"
+      },
+      {
+       "id": "air-fryer",
+       "name": "Air fryer",
+       "category": "kitchen"
+      },
+      {
+       "id": "electric-kettle",
+       "name": "Electric kettle",
+       "category": "kitchen"
+      },
+      {
+       "id": "toaster",
+       "name": "Toaster",
+       "category": "kitchen"
+      },
+      {
+       "id": "sandwich-maker",
+       "name": "Sandwich maker",
+       "category": "kitchen"
+      },
+      {
+       "id": "blender-juicer",
+       "name": "Blender / juicer",
+       "category": "kitchen"
+      },
+      {
+       "id": "food-processor",
+       "name": "Food processor",
+       "category": "kitchen"
+      },
+      {
+       "id": "rice-cooker",
+       "name": "Rice cooker",
+       "category": "kitchen"
+      },
+      {
+       "id": "slow-cooker",
+       "name": "Slow cooker",
+       "category": "kitchen"
+      },
+      {
+       "id": "coffee-maker",
+       "name": "Coffee maker",
+       "category": "kitchen"
+      },
+      {
+       "id": "induction-cooker",
+       "name": "Induction cooker (single zone)",
+       "category": "kitchen"
+      },
+      {
+       "id": "hot-plate",
+       "name": "Electric stove / hot plate (single)",
+       "category": "kitchen"
+      },
+      {
+       "id": "electric-grill",
+       "name": "Electric grill",
+       "category": "kitchen"
+      },
+      {
+       "id": "dishwasher",
+       "name": "Dishwasher (with drying)",
+       "category": "kitchen"
+      },
+      {
+       "id": "water-motor-0-5hp",
+       "name": "Water pump / donkey motor 0.5 hp",
+       "category": "water"
+      },
+      {
+       "id": "water-motor-1hp",
+       "name": "Water pump / donkey motor 1 hp",
+       "category": "water"
+      },
+      {
+       "id": "water-motor-1-5hp",
+       "name": "Water pump 1.5 hp",
+       "category": "water"
+      },
+      {
+       "id": "water-motor-2hp",
+       "name": "Water pump 2 hp",
+       "category": "water"
+      },
+      {
+       "id": "submersible-pump-1hp",
+       "name": "Submersible / deep-well pump 1 hp",
+       "category": "water"
+      },
+      {
+       "id": "tubewell-submersible-5hp",
+       "name": "Tubewell submersible pump 5 hp",
+       "category": "water"
+      },
+      {
+       "id": "led-bulb",
+       "name": "LED bulb (9-12 W)",
+       "category": "lighting"
+      },
+      {
+       "id": "led-tube-light",
+       "name": "LED tube light (4 ft)",
+       "category": "lighting"
+      },
+      {
+       "id": "cfl-energy-saver",
+       "name": "Energy saver (CFL)",
+       "category": "lighting"
+      },
+      {
+       "id": "fluorescent-tube-40w",
+       "name": "Fluorescent tube light (40 W, magnetic choke)",
+       "category": "lighting"
+      },
+      {
+       "id": "led-tv-32",
+       "name": "LED TV 32 inch",
+       "category": "electronics"
+      },
+      {
+       "id": "led-tv-43",
+       "name": "LED TV 43 inch",
+       "category": "electronics"
+      },
+      {
+       "id": "led-tv-55",
+       "name": "LED TV 55 inch",
+       "category": "electronics"
+      },
+      {
+       "id": "laptop",
+       "name": "Laptop",
+       "category": "electronics"
+      },
+      {
+       "id": "desktop-pc",
+       "name": "Desktop PC (CPU only)",
+       "category": "electronics"
+      },
+      {
+       "id": "gaming-pc",
+       "name": "Gaming PC (CPU + GPU, under load)",
+       "category": "electronics"
+      },
+      {
+       "id": "monitor",
+       "name": "Computer monitor (LED, 24 inch)",
+       "category": "electronics"
+      },
+      {
+       "id": "wifi-router",
+       "name": "WiFi router / modem",
+       "category": "electronics"
+      },
+      {
+       "id": "phone-charger",
+       "name": "Phone charger (fast charge, while charging)",
+       "category": "electronics"
+      },
+      {
+       "id": "printer-laser",
+       "name": "Printer (laser, printing)",
+       "category": "electronics"
+      },
+      {
+       "id": "printer-inkjet",
+       "name": "Printer (inkjet)",
+       "category": "electronics"
+      },
+      {
+       "id": "ups-idle",
+       "name": "UPS / home inverter idle draw (no load)",
+       "category": "electronics"
+      },
+      {
+       "id": "cctv-dvr-4cam",
+       "name": "CCTV DVR + 4 cameras",
+       "category": "electronics"
+      },
+      {
+       "id": "gaming-console",
+       "name": "Gaming console (PS5 / Xbox Series X)",
+       "category": "electronics"
+      },
+      {
+       "id": "sound-system",
+       "name": "Sound system / stereo",
+       "category": "electronics"
+      },
+      {
+       "id": "set-top-box",
+       "name": "Set-top box / Android TV box",
+       "category": "electronics"
+      },
+      {
+       "id": "vacuum-cleaner",
+       "name": "Vacuum cleaner",
+       "category": "other"
+      },
+      {
+       "id": "hair-dryer",
+       "name": "Hair dryer",
+       "category": "personal-care"
+      },
+      {
+       "id": "hair-straightener",
+       "name": "Hair straightener",
+       "category": "personal-care"
+      },
+      {
+       "id": "trimmer-shaver",
+       "name": "Trimmer / shaver (charging)",
+       "category": "personal-care"
+      },
+      {
+       "id": "sewing-machine",
+       "name": "Sewing machine (electric)",
+       "category": "other"
+      },
+      {
+       "id": "aquarium",
+       "name": "Aquarium (pump, light, heater)",
+       "category": "other"
+      },
+      {
+       "id": "treadmill",
+       "name": "Treadmill",
+       "category": "other"
+      },
+      {
+       "id": "drill",
+       "name": "Electric drill / grinder (hand)",
+       "category": "workshop"
+      },
+      {
+       "id": "angle-grinder",
+       "name": "Angle grinder (4-5 inch)",
+       "category": "workshop"
+      },
+      {
+       "id": "circular-saw",
+       "name": "Circular saw",
+       "category": "workshop"
+      },
+      {
+       "id": "air-compressor-1hp",
+       "name": "Air compressor 1 hp",
+       "category": "workshop"
+      },
+      {
+       "id": "pressure-washer",
+       "name": "Pressure washer",
+       "category": "workshop"
+      },
+      {
+       "id": "welding-machine-small",
+       "name": "Welding machine (small inverter, 160-200 A)",
+       "category": "workshop"
+      },
+      {
+       "id": "ebike-charger",
+       "name": "E-bike / e-scooter charger",
+       "category": "transport"
+      },
+      {
+       "id": "ev-charger-level2",
+       "name": "EV charger level 2 (7.4 kW, single phase)",
+       "category": "transport"
+      }
+     ],
+     "default": [
+      {
+       "id": "ceiling-fan-ac",
+       "qty": 4
+      },
+      {
+       "id": "led-bulb",
+       "qty": 10
+      },
+      {
+       "id": "refrigerator-non-inverter",
+       "qty": 1
+      },
+      {
+       "id": "water-motor-1hp",
+       "qty": 1
+      },
+      {
+       "id": "washing-machine-twin-tub",
+       "qty": 1
+      }
+     ],
+     "hint": "List every appliance that can be running when a motor starts. Fridges, freezers, pumps, washing machines, compressors and non-inverter ACs carry a starting surge; the calculator finds the largest one. Starting watts: leave it blank for an appliance picked from the list (its own starting watts are used); for a custom motor or compressor type its starting watts."
+    },
+    {
+     "name": "margin",
+     "label": "Safety margin on the running load",
+     "unit": "times",
+     "default": 1.25,
+     "advanced": true,
+     "hint": "Compared with the starting peak; whichever is larger sizes the generator. A decimal like one point two five."
+    },
+    {
+     "name": "pf",
+     "label": "Generator power factor",
+     "unit": "0 to 1",
+     "default": 0.8,
+     "advanced": true,
+     "hint": "Turns the watts into the kVA printed on generators. Leave the default unless the nameplate says otherwise."
+    }
+   ],
+   "fixed_inputs": {},
+   "outputs": [
+    {
+     "key": "peak_w",
+     "label": "Starting watts the generator must supply",
+     "spec": "int",
+     "unit": "W",
+     "label_ur": "Start par generator ko kitne watts dene honge",
+     "value": "3,840"
+    },
+    {
+     "key": "running_w",
+     "label": "Total running watts",
+     "spec": "int",
+     "unit": "W",
+     "label_ur": "Kul chalne ke watts",
+     "value": "2,040"
+    },
+    {
+     "key": "recommended_kva",
+     "label": "Calculated minimum",
+     "spec": "2",
+     "unit": "kVA",
+     "label_ur": "Hisab se kam az kam",
+     "value": "4.8"
+    },
+    {
+     "key": "standard_kva",
+     "label": "Generator size to buy",
+     "spec": "1",
+     "unit": "kVA",
+     "label_ur": "Kaunsa generator lein",
+     "value": "5"
+    }
+   ],
+   "how": {
+    "tpl": "Running watts of everything on: {{out.running_w|int}} W. Each motor's jump at start is its starting watts minus its running watts; only the largest jump is added, because one motor starts at a time: {{out.running_w|int}} W + the largest jump = {{out.peak_w|int}} W. The larger of that peak and {{out.running_w|int}} W × {{out.margin|2}} is {{out.sized_w|int}} W; ÷ {{out.pf|2}} ÷ 1,000 = {{out.recommended_kva|2}} kVA, so {{out.standard_kva|1}} kVA.",
+    "text": "Running watts of everything on: 2,040 W. Each motor's jump at start is its starting watts minus its running watts; only the largest jump is added, because one motor starts at a time: 2,040 W + the largest jump = 3,840 W. The larger of that peak and 2,040 W × 1.25 is 3,840 W; ÷ 0.8 ÷ 1,000 = 4.8 kVA, so 5 kVA."
+   },
+   "submit": "Find the starting watts",
+   "notice": "",
+   "data_checked": [
+    {
+     "label": "Appliance running and starting watts (Wattlyst appliance data, sources listed on the appliance list page)",
+     "url": "https://wattlyst.com/appliances/",
+     "checked": "2026-10-13"
+    }
+   ]
+  },
+  "examples": [
+   {
+    "title": "A non-inverter fridge on its own",
+    "text": "Running 200 W, starting 1,200 W. The start is larger than 200 W × 1.25, so it sets the size: 1,200 W ÷ 0.8 ÷ 1,000 = 1.5 kVA, the smallest common size of 2.5 kVA."
+   },
+   {
+    "title": "A 1.5 ton non-inverter AC on its own",
+    "text": "Running 1,800 W, starting 5,400 W. The compressor start needs 6.75 kVA, so a 7.5 kVA generator just for the AC."
+   },
+   {
+    "title": "Fridge, pump and a 1.5 ton non-inverter AC with fans and lights",
+    "text": "Running 3,440 W. The fans, the fridge, the pump and the AC all have motors, but only the biggest jump, the AC compressor's, is added: peak 7,040 W, 8.8 kVA, so 10 kVA."
+   },
+   {
+    "title": "The same house with a 1.5 ton inverter AC",
+    "text": "Running 3,090 W. The inverter AC has almost no jump, so the pump's start is now the largest: peak 4,890 W, 6.11 kVA, so 6.5 kVA instead of 10 kVA."
+   }
+  ],
+  "table": {
+   "caption": "Starting watts chart for motors and compressors, each on its own, from the top: chest deep freezer, half hp water pump, 1 hp submersible pump, 2 hp water pump, 1 hp air compressor, 1 ton window AC, 1.5 ton non-inverter split AC, 2 ton non-inverter split AC",
+   "head": [
+    "Running watts",
+    "Starting watts",
+    "Calculated kVA",
+    "Generator to buy"
+   ],
+   "rows": [
+    [
+     "200 W",
+     "1,200 W",
+     "1.5 kVA",
+     "2.5 kVA"
+    ],
+    [
+     "600 W",
+     "1,800 W",
+     "2.25 kVA",
+     "2.5 kVA"
+    ],
+    [
+     "1,100 W",
+     "3,300 W",
+     "4.13 kVA",
+     "5 kVA"
+    ],
+    [
+     "2,000 W",
+     "6,000 W",
+     "7.5 kVA",
+     "7.5 kVA"
+    ],
+    [
+     "1,100 W",
+     "4,500 W",
+     "5.63 kVA",
+     "6.5 kVA"
+    ],
+    [
+     "1,350 W",
+     "4,000 W",
+     "5 kVA",
+     "5 kVA"
+    ],
+    [
+     "1,800 W",
+     "5,400 W",
+     "6.75 kVA",
+     "7.5 kVA"
+    ],
+    [
+     "2,400 W",
+     "7,200 W",
+     "9 kVA",
+     "10 kVA"
+    ]
+   ]
+  },
+  "answer": "With four fans, ten bulbs, a non-inverter fridge, a 1 hp water motor and a twin-tub washer on, the generator must supply 3,840 W when the pump starts, against 2,040 W running, so 5 kVA. Starting watts = total running watts + the largest single starting jump (starting minus running watts of the biggest motor), not the sum of every surge.",
+  "formula": {
+   "text": "P_peak = Σ (W_run × qty) + max(W_start − W_run); kVA = max(P_run × m, P_peak) ÷ PF ÷ 1000",
+   "lines": [
+    "W_run, W_start = running and starting watts of one appliance",
+    "max(W_start − W_run) = the largest starting jump among the appliances on the list",
+    "P_run = total running watts; P_peak = starting watts the generator must supply",
+    "m = safety margin on the running load; PF = generator power factor",
+    "Resistive loads (heaters, irons, kettles) have no jump: W_start = W_run"
+   ]
+  },
+  "safety": "A motor that cannot start draws its full starting current until a breaker opens or it overheats, so do not keep retrying on an undersized generator. Use a changeover switch fitted by a licensed electrician, earth the set, and keep it outdoors away from windows because of carbon monoxide."
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -66,7 +1409,9 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/generator/generator-starting-watts-calculator/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-14",
+    "lastReviewed": "2026-10-14"
    },
    {
     "@type": "WebApplication",
@@ -98,6 +1443,60 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/generator/generator-starting-watts-calculator/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "What are the starting watts of a refrigerator?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "About 1,200 W for a typical non-inverter fridge that runs at 200 W, and about 200 W for an inverter fridge. Your fridge's own figure may differ; type its label watts into the list."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What are the starting watts of an AC?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "For non-inverter split ACs about 3,600 W (1 ton), 5,400 W (1.5 ton) and 7,200 W (2 ton). Inverter ACs have no hard start; their highest draw is the maximum input, about 1,900 W for 1.5 ton."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How do I calculate surge watts for a generator?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Add the running watts of everything that will be on, then add the largest single jump (starting watts minus running watts) of any one motor or compressor. That total is the surge the generator must supply."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Do I add the starting watts of all my appliances?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "No. Add all running watts, then only the biggest starting jump. In the default list the pump, the fridge and the washer all have a jump, but only the pump's is added, giving 3,840 W."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How long do starting watts last?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Usually a second or two for a fridge, pump or AC compressor, a little longer for a heavily loaded pump. Short as it is, the generator must deliver it or the voltage collapses and the motor stalls."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Is there a starting watts chart?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Yes, the table above lists eight motors and compressors with their running watts, starting watts and the generator each needs alone, from a deep freezer (1,200 W at start) to a 2 ton non-inverter AC (7,200 W)."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

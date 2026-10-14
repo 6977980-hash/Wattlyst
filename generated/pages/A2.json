@@ -3,15 +3,25 @@
  "type": "tool",
  "silo": "A",
  "url": "/converters/amps-to-watts-calculator/",
- "h1": "Amps To Watts Calculator",
+ "h1": "Amps to Watts Calculator (DC, AC and 3-Phase)",
  "title": "Amps to Watts Calculator (DC, AC & 3-Phase) | Wattlyst",
  "meta": "Convert amps to watts for DC, single-phase or three-phase supply. Enter current, voltage and power factor; get watts with a step-by-step formula.",
  "primary_keyword": "amps to watts calculator",
  "wave": 3,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-14",
+ "published": "2026-10-14",
  "author": "ali-ahmad",
+ "related": [
+  "A1",
+  "A6",
+  "A7",
+  "A9",
+  "E3"
+ ],
+ "next": "W3",
  "parent": "P-A",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
@@ -22,11 +32,264 @@
    "url": "/converters/"
   },
   {
-   "name": "Amps To Watts Calculator",
+   "name": "Amps to Watts Calculator (DC, AC and 3-Phase)",
    "url": "/converters/amps-to-watts-calculator/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "One amp is how many watts?",
+    "p": [
+     "It depends on the voltage. On 230 V mains with a heating load, one amp is 230 W. On a 12 V battery, one amp is just 12 W. For motors and ACs, multiply by the power factor as well, so one amp delivers less real power than the volts suggest."
+    ]
+   },
+   {
+    "h2": "How many watts can a circuit or breaker handle?",
+    "p": [
+     "Multiply the breaker's amps by the voltage. A 16 A circuit on 230 V carries 3,680 VA, which is 3,680 W of heaters but only 2,944 W of motors and ACs at a power factor of 0.8. The chart below lists the common breaker sizes.",
+     "That figure is the ceiling, not a target. A load that runs for hours should stay well under it: the wiring calculators on this site size cables at 1.25 times the running current, and starting surges of motors and compressors come on top."
+    ]
+   },
+   {
+    "h2": "Amps to watts on three-phase",
+    "p": [
+     "Choose three-phase and enter the current in one line. The calculator uses the line-to-line voltage (400 V in Pakistan) and the square root of three: 10 A per line at a power factor of 0.8 is 5,543 W. If you know the kW and need the current, the 3 phase amps calculator works the other way."
+    ]
+   },
+   {
+    "h2": "Watts versus VA: why there are two answers",
+    "p": [
+     "Volts × amps gives volt-amperes (VA), the apparent power the cable and breaker carry. Real watts are VA × power factor, the power that turns into heat, light or motion and that the meter counts. For a heater both are equal; for a motor the watts are lower. UPS and generator ratings in VA or kVA follow the same rule."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "1 amp is how many watts?",
+    "a": "230 W on a 230 V supply with a heating load. With a power factor of 0.8 (motors, mixed loads) it is less, and on a 12 V battery one amp is only 12 W."
+   },
+   {
+    "q": "What is 10 amps in watts?",
+    "a": "2,300 W at 230 V with a power factor of one, or 2.3 kW."
+   },
+   {
+    "q": "How many watts is 16 A at 230 V?",
+    "a": "3,680 W for heating loads and 2,944 W at a power factor of 0.8. A 16 A socket circuit can carry one large heater or AC, but not several at once."
+   },
+   {
+    "q": "How many watts can a 15 amp circuit handle?",
+    "a": "At 120 V the ceiling is 1,800 W for heating loads. Loads that run for hours should stay well below it, and motors and ACs need room for their starting surge."
+   },
+   {
+    "q": "What is the amps to watts formula?",
+    "a": "Watts = volts × amps for DC; watts = volts × amps × power factor for single-phase AC; watts = √3 × line-to-line volts × amps × power factor for three-phase."
+   },
+   {
+    "q": "How do I convert amps to watts on three-phase?",
+    "a": "Multiply √3 × line-to-line volts × the current in one line × power factor. 10 A per line at 400 V and a power factor of 0.8 is 5,543 W."
+   },
+   {
+    "q": "How many watts is 20 amps at 12 V DC?",
+    "a": "240 W. On DC the watts are simply volts × amps, with no power factor."
+   }
+  ],
+  "key_facts": [
+   "Watts = amps × volts × power factor. 16 A at 230 V and a power factor of 0.8 is 2,944 W, out of 3,680 VA of apparent power.",
+   "One amp on a 230 V supply carries 230 W of heating load; on a 12 V battery one amp carries only 12 W.",
+   "A 15 A circuit at 120 V (common in the US) carries at most 1,800 W of heating load before the breaker's rating is reached.",
+   "On three-phase, 10 A per line at 400 V and a power factor of 0.8 is 5,543 W, because three lines share the load."
+  ],
+  "mistakes": [
+   "Multiplying amps by volts for a motor or AC and calling it watts. That is VA; the real watts are lower by the power factor (about 0.8).",
+   "Loading a circuit right up to the watts in the chart. Those are ceilings; a heater or AC running for hours should leave a margin, and motors surge above their running current at start-up.",
+   "Using 230 V with the three-phase formula. Three-phase uses the line-to-line voltage (400 V) and the square root of three, with the current of one line.",
+   "Copying a US chart for a 230 V supply. The same amps carry about twice the watts at 230 V as at 120 V, so always use the voltage of your own supply."
+  ],
+  "sources": [
+   {
+    "label": "IEC 60038:2009, IEC standard voltages (230/400 V, 120/240 V systems)",
+    "url": "https://webstore.iec.ch/publication/153"
+   },
+   {
+    "label": "NEPRA, National Electric Power Regulatory Authority of Pakistan (supply standards: 230 V single-phase, 400 V three-phase, 50 Hz)",
+    "url": "https://www.nepra.org.pk/"
+   },
+   {
+    "label": "Wattlyst methodology and default values",
+    "url": "/methodology/"
+   }
+  ],
+  "tool": {
+   "calc": "amps_to_watts",
+   "module": "conversions.js",
+   "data_keys": [],
+   "appliances": {},
+   "fields": [
+    {
+     "name": "amps",
+     "label": "Current",
+     "unit": "A",
+     "default": 16,
+     "hint": "Amps from a clamp meter, the appliance label, or the breaker or socket rating you want to check."
+    },
+    {
+     "name": "mode",
+     "label": "Supply type",
+     "type": "select",
+     "default": "ac1",
+     "options": [
+      [
+       "ac1",
+       "Single-phase AC (normal home supply)"
+      ],
+      [
+       "dc",
+       "DC (battery, solar panel, car)"
+      ],
+      [
+       "ac3",
+       "Three-phase AC (current per line)"
+      ]
+     ],
+     "hint": "For three-phase enter the current in one line wire; the calculator adds the other two."
+    },
+    {
+     "name": "volts",
+     "label": "Voltage",
+     "unit": "V",
+     "placeholder": "Auto by supply type",
+     "hint": "Leave blank for standard mains: 230 V single-phase or 400 V three-phase line to line. For DC enter the battery voltage; for the US enter 120."
+    },
+    {
+     "name": "pf",
+     "label": "Power factor",
+     "unit": "0 to 1",
+     "default": 0.8,
+     "hint": "1 for heaters and other resistive loads; about 0.8 for motors, ACs and mixed home loads. Ignored for DC."
+    }
+   ],
+   "fixed_inputs": {},
+   "outputs": [
+    {
+     "key": "watts",
+     "label": "Real power",
+     "spec": "int",
+     "unit": "W",
+     "label_ur": "Asal power",
+     "value": "2,944"
+    },
+    {
+     "key": "va",
+     "label": "Apparent power",
+     "spec": "int",
+     "unit": "VA",
+     "label_ur": "Zahiri power (VA)",
+     "value": "3,680"
+    },
+    {
+     "key": "kw",
+     "label": "Real power in kW",
+     "spec": "2",
+     "unit": "kW",
+     "label_ur": "Asal power kW mein",
+     "value": "2.94"
+    }
+   ],
+   "how": {
+    "tpl": "{{out.k|4}} × {{in.amps|int}} A × {{out.volts|int}} V × {{out.pf|2}} power factor = {{out.watts|int}} W ({{out.kw|2}} kW). The first factor is one for DC and single-phase and √3 for three-phase, where the volts are line-to-line and the amps are per line. Without the power factor the result is {{out.va|int}} VA, the apparent power the wires carry. On DC the power factor is one.",
+    "text": "1 × 16 A × 230 V × 0.8 power factor = 2,944 W (2.94 kW). The first factor is one for DC and single-phase and √3 for three-phase, where the volts are line-to-line and the amps are per line. Without the power factor the result is 3,680 VA, the apparent power the wires carry. On DC the power factor is one."
+   },
+   "submit": "Calculate",
+   "notice": "",
+   "data_checked": []
+  },
+  "examples": [
+   {
+    "title": "1 amp at 230 V: how many watts?",
+    "text": "1 A × 230 V × 1 = 230 W for a heating load. With a power factor below one, the same amp carries fewer real watts."
+   },
+   {
+    "title": "10 amps to watts at 230 V",
+    "text": "10 A × 230 V × 1 = 2,300 W (2.3 kW). That is roughly one large room heater or a kettle and an iron together."
+   },
+   {
+    "title": "How many watts can a 15 A circuit at 120 V handle?",
+    "text": "15 A × 120 V × 1 = 1,800 W at most for heating loads. Long-running loads should stay well below this so the cable and breaker do not run at their limit."
+   },
+   {
+    "title": "20 amps from a 12 V battery",
+    "text": "20 A × 12 V = 240 W. DC has no power factor, so the watts are simply volts times amps."
+   },
+   {
+    "title": "10 amps per line on three-phase 400 V",
+    "text": "√3 × 400 V × 10 A × 0.8 = 5,543 W (5.54 kW). The apparent power is 6,928 VA."
+   }
+  ],
+  "table": {
+   "caption": "Amps to watts chart for common breaker and socket ratings on single-phase 230 V (heating load, power factor one)",
+   "head": [
+    "Breaker or socket rating",
+    "Most watts it can carry",
+    "In kW"
+   ],
+   "rows": [
+    [
+     "6 A",
+     "1,380 W",
+     "1.38 kW"
+    ],
+    [
+     "10 A",
+     "2,300 W",
+     "2.3 kW"
+    ],
+    [
+     "13 A",
+     "2,990 W",
+     "2.99 kW"
+    ],
+    [
+     "16 A",
+     "3,680 W",
+     "3.68 kW"
+    ],
+    [
+     "20 A",
+     "4,600 W",
+     "4.6 kW"
+    ],
+    [
+     "32 A",
+     "7,360 W",
+     "7.36 kW"
+    ],
+    [
+     "40 A",
+     "9,200 W",
+     "9.2 kW"
+    ],
+    [
+     "63 A",
+     "14,490 W",
+     "14.49 kW"
+    ]
+   ]
+  },
+  "answer": "16 amps on a 230 V single-phase supply is 2,944 watts at a power factor of 0.8, and 3,680 W for a heater with a power factor of one. Watts = amps × volts × power factor; DC uses a power factor of one, and three-phase multiplies by the square root of three.",
+  "formula": {
+   "text": "DC: P = V × I;  single-phase AC: P = V × I × PF;  three-phase AC: P = √3 × V × I × PF",
+   "lines": [
+    "P = real power in watts (W); kW = W ÷ 1,000",
+    "I = current in amps (A), per line for three-phase",
+    "V = voltage: battery voltage for DC, phase-to-neutral for single-phase, line-to-line for three-phase",
+    "PF = power factor between 0 and 1; V × I without PF is the apparent power in VA",
+    "√3 ≈ 1.732, three-phase only"
+   ]
+  },
+  "safety": "The watts a breaker allows are a ceiling for the circuit, not permission to add loads. Before putting a heater, AC or motor on an existing circuit, check the cable size with the wire size calculator and have a licensed electrician confirm the circuit."
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -49,7 +312,7 @@
      {
       "@type": "ListItem",
       "position": 3,
-      "name": "Amps To Watts Calculator",
+      "name": "Amps to Watts Calculator (DC, AC and 3-Phase)",
       "item": "https://wattlyst.com/converters/amps-to-watts-calculator/"
      }
     ]
@@ -66,12 +329,14 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/converters/amps-to-watts-calculator/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-14",
+    "lastReviewed": "2026-10-14"
    },
    {
     "@type": "WebApplication",
     "@id": "https://wattlyst.com/converters/amps-to-watts-calculator/#app",
-    "name": "Amps To Watts Calculator",
+    "name": "Amps to Watts Calculator (DC, AC and 3-Phase)",
     "url": "https://wattlyst.com/converters/amps-to-watts-calculator/",
     "description": "Convert amps to watts for DC, single-phase or three-phase supply. Enter current, voltage and power factor; get watts with a step-by-step formula.",
     "applicationCategory": "UtilitiesApplication",
@@ -98,6 +363,68 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/converters/amps-to-watts-calculator/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "1 amp is how many watts?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "230 W on a 230 V supply with a heating load. With a power factor of 0.8 (motors, mixed loads) it is less, and on a 12 V battery one amp is only 12 W."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What is 10 amps in watts?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "2,300 W at 230 V with a power factor of one, or 2.3 kW."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many watts is 16 A at 230 V?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "3,680 W for heating loads and 2,944 W at a power factor of 0.8. A 16 A socket circuit can carry one large heater or AC, but not several at once."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many watts can a 15 amp circuit handle?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "At 120 V the ceiling is 1,800 W for heating loads. Loads that run for hours should stay well below it, and motors and ACs need room for their starting surge."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What is the amps to watts formula?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Watts = volts × amps for DC; watts = volts × amps × power factor for single-phase AC; watts = √3 × line-to-line volts × amps × power factor for three-phase."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How do I convert amps to watts on three-phase?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Multiply √3 × line-to-line volts × the current in one line × power factor. 10 A per line at 400 V and a power factor of 0.8 is 5,543 W."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many watts is 20 amps at 12 V DC?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "240 W. On DC the watts are simply volts × amps, with no power factor."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

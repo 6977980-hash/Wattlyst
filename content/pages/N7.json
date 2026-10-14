@@ -104,7 +104,7 @@
   {
    "h2": "Generator vs UPS running cost",
    "p": [
-    "A generator's running cost is fuel plus servicing. We do not yet have a fuel-use table by generator size on this site, so the fuel cost a year is a figure you enter: litres an hour from the generator manual at your usual load, times the hours it runs a year, times the price a litre. For the example petrol set run two hours a day, fuel and servicing over {{ex.3.out.years|int}} years come to {{ex.3.out.running_rs|rs}}, and with an engine replacement the total is {{ex.3.out.tco_rs|rs}}.",
+    "A generator's running cost is fuel plus servicing. The fuel cost a year is a figure you enter: the generator fuel consumption calculator gives the litres an hour and the cost a month for your generator size, load and fuel, and twelve months of that is the yearly figure. For the example petrol set run two hours a day, fuel and servicing over {{ex.3.out.years|int}} years come to {{ex.3.out.running_rs|rs}}, and with an engine replacement the total is {{ex.3.out.tco_rs|rs}}.",
     "A UPS's running cost is the electricity it takes to refill the battery. Every unit delivered on backup costs more than a unit from the grid because the charger and the inverter each lose a share: with a tubular battery the charger returns about {{d.charge_eff_lead_acid|pct}} and the UPS inverter about {{d.inverter_eff_ups|pct}} of what goes in. Multiply your backup units a year by that loss and by your tariff for the energy cost field; a lithium battery charged at about {{d.charge_eff_lifepo4|pct}} loses less, which is why the lithium example has the lower energy cost."
    ]
   },
@@ -301,7 +301,8 @@
   "H9",
   "D15",
   "C6",
-  "D10"
+  "D10",
+  "C8"
  ],
  "next": "B1",
  "literal_numbers": [],

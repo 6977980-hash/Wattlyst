@@ -35,8 +35,8 @@
  "data": {
   "defaults": {
    "_meta": {
-    "source": "specs/formulas.md 'Global defaults' table and section notes; NEPRA Performance Standards (400/230 V, 50 Hz)",
-    "checked": "2026-10-13",
+    "source": "specs/formulas.md 'Global defaults' table and section notes; NEPRA Performance Standards (400/230 V, 50 Hz); rho_copper and rho_aluminium from IEC 60364-5-52 Annex G (rho1 = 1.25 x rho20 at working temperature)",
+    "checked": "2026-10-14",
     "status": "Engineering defaults, every one editable on the page. Items marked engineer_confirm need PEC engineer sign-off before launch.",
     "engineer_confirm": [
      "diversity_home",
@@ -48,7 +48,12 @@
      "gas_cv_mj_m3",
      "start_factors",
      "standard_generator_kva",
-     "planner_day_share"
+     "planner_day_share",
+     "forecast_sky_bands",
+     "rho_aluminium",
+     "dc_ac_ratio_max",
+     "forecast_max_day_whm2",
+     "soiling_rate_max_per_day"
     ]
    },
    "v_1ph": 230,
@@ -117,6 +122,7 @@
     "resistive": 1
    },
    "rho_copper": 0.0225,
+   "rho_aluminium": 0.036,
    "vdrop_limit_lighting_pct": 3,
    "vdrop_limit_other_pct": 5,
    "tou_threshold_kw": 5,
@@ -139,6 +145,8 @@
    ],
    "soiling_rate_per_day": 0.003,
    "soiling_cap": 0.25,
+   "soiling_rate_max_per_day": 0.05,
+   "soiling_rate_max_per_day_source": "Upper guard for the dust-loss input (5% of output a day, far above the 0.3%/day planning rate and reported dust-storm losses) so a percent typed as a share (0.3 for 0.3%) is rejected; engineer to confirm",
    "ebike_charger_eff": 0.85,
    "ac_inverter_avg_kw_1_5_ton": 1,
    "ac_noninverter_kw_1_5_ton": 1.8,
@@ -158,7 +166,31 @@
     30
    ],
    "battery_v_default": 24,
-   "planner_day_share": 0.5
+   "planner_day_share": 0.5,
+   "forecast_tilt_deg": 25,
+   "forecast_max_wm2": 1500,
+   "forecast_max_day_whm2": 12000,
+   "dc_ac_ratio_max": 1.3,
+   "dc_ac_ratio_max_source": "Typical string/hybrid inverter DC/AC oversize 1.1-1.3 (manufacturer datasheets' maximum recommended PV input, e.g. 130% of rated AC power); engineer to confirm",
+   "forecast_max_day_whm2_source": "Plane-of-array daily irradiation above about 9 kWh/m2 does not occur at Pakistani latitudes (clear-sky maximum); 12,000 Wh/m2 is a safety cap against bad forecast data; engineer to confirm",
+   "forecast_sky_bands": [
+    {
+     "min_pct": 85,
+     "label": "Sunny"
+    },
+    {
+     "min_pct": 60,
+     "label": "Partly cloudy"
+    },
+    {
+     "min_pct": 30,
+     "label": "Cloudy"
+    },
+    {
+     "min_pct": 0,
+     "label": "Overcast or rain"
+    }
+   ]
   },
   "tariff": {
    "_meta": {
@@ -239,7 +271,42 @@
     "offpeak": 34.53,
     "fixed_per_kw": 675,
     "fixed_basis": "higher of 50% sanctioned load or MDI",
-    "fixed_min_fraction": 0.5
+    "fixed_min_fraction": 0.5,
+    "peak_hours": {
+     "seasons": [
+      {
+       "months": "December to February",
+       "from": "5 pm",
+       "to": "9 pm",
+       "hours": 4
+      },
+      {
+       "months": "March to May",
+       "from": "6 pm",
+       "to": "10 pm",
+       "hours": 4
+      },
+      {
+       "months": "June to August",
+       "from": "7 pm",
+       "to": "11 pm",
+       "hours": 4
+      },
+      {
+       "months": "September to November",
+       "from": "6 pm",
+       "to": "10 pm",
+       "hours": 4
+      }
+     ],
+     "applies_to": "ex-WAPDA DISCOs (LESCO, IESCO, MEPCO, GEPCO, FESCO, PESCO, HESCO, SEPCO, QESCO, TESCO), consumers on a Time-of-Use meter (5 kW or more sanctioned load); every other hour is off-peak",
+     "source": "NEPRA tariff determination for IESCO FY2023-24 (schedule of peak and off-peak timings for ToU tariffs); the December to February window is also published by PITC's bill portal",
+     "source_url": "https://nepra.org.pk/tariff/Tariff/DISCOs/IESCO/2023/TRF-607%20&TRF%20608%20IESCO%20FY%202023%2024%2014-07-2023%2018263-69.PDF",
+     "source_secondary_url": "https://bill.pitc.com.pk/peak-offpeak-timing",
+     "checked": "2026-10-14",
+     "verified": false,
+     "note": "Latest NEPRA schedule found is dated 2023; an August 2025 news report says NEPRA asked DISCOs to propose peak hours up to 11 pm only, adoption not confirmed. K-Electric publishes its own timings. Re-check against the current DISCO tariff schedule."
+    }
    },
    "addons_secondary": {
     "fc_surcharge_per_unit": {
@@ -366,32 +433,44 @@
    "lahore": {
     "ghi": 1690,
     "psh": 5.1,
-    "yield": 4
+    "yield": 4,
+    "lat": 31.5497,
+    "lon": 74.3436
    },
    "karachi": {
     "ghi": 1981,
     "psh": 5.9,
-    "yield": 4.6
+    "yield": 4.6,
+    "lat": 24.8608,
+    "lon": 67.0104
    },
    "islamabad": {
     "ghi": 1756,
     "psh": 5.4,
-    "yield": 4.3
+    "yield": 4.3,
+    "lat": 33.6844,
+    "lon": 73.0479
    },
    "peshawar": {
     "ghi": 1704,
     "psh": 5.2,
-    "yield": 4.1
+    "yield": 4.1,
+    "lat": 34.008,
+    "lon": 71.5785
    },
    "quetta": {
     "ghi": 2176,
     "psh": 6.8,
-    "yield": 5.3
+    "yield": 5.3,
+    "lat": 30.1798,
+    "lon": 66.975
    },
    "multan": {
     "ghi": 1872,
     "psh": 5.7,
-    "yield": 4.4
+    "yield": 4.4,
+    "lat": 30.1984,
+    "lon": 71.4687
    }
   },
   "cables": {
@@ -663,24 +742,40 @@
    "id": "A1",
    "type": "tool",
    "url": "/converters/watts-to-amps-calculator/",
-   "h1": "Watts To Amps Calculator",
+   "h1": "Watts to Amps Calculator for DC, Single-Phase and Three-Phase",
    "title": "Watts to Amps Calculator (DC, 1-Phase, 3-Phase) | Wattlyst",
    "meta": "Convert watts to amps for DC, single-phase and three-phase circuits. Pick 12V, 230V or any voltage, add power factor and see the formula with your numbers.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-A",
+   "related": [
+    "A2",
+    "A4",
+    "A3",
+    "A6",
+    "A5"
+   ],
+   "next": "W3",
    "wave": 3
   },
   {
    "id": "A2",
    "type": "tool",
    "url": "/converters/amps-to-watts-calculator/",
-   "h1": "Amps To Watts Calculator",
+   "h1": "Amps to Watts Calculator (DC, AC and 3-Phase)",
    "title": "Amps to Watts Calculator (DC, AC & 3-Phase) | Wattlyst",
    "meta": "Convert amps to watts for DC, single-phase or three-phase supply. Enter current, voltage and power factor; get watts with a step-by-step formula.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-A",
+   "related": [
+    "A1",
+    "A6",
+    "A7",
+    "A9",
+    "E3"
+   ],
+   "next": "W3",
    "wave": 3
   },
   {
@@ -727,36 +822,60 @@
    "id": "A5",
    "type": "tool",
    "url": "/converters/3-phase-current-calculator/",
-   "h1": "3 Phase Amps Calculator",
+   "h1": "3 Phase Amps Calculator (kW and kVA to Amps)",
    "title": "3 Phase Amps Calculator (kW, kVA to Amps, 400V) | Wattlyst",
    "meta": "Calculate three-phase current from kW or kVA at 400V or any line voltage. Uses I = P / (√3 × V × PF) and shows each step with your values.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-A",
+   "related": [
+    "A6",
+    "A1",
+    "A8",
+    "W5",
+    "W2"
+   ],
+   "next": "W3",
    "wave": 3
   },
   {
    "id": "A6",
    "type": "tool",
    "url": "/converters/amps-to-kw-calculator/",
-   "h1": "Amps To Kw Calculator",
+   "h1": "Amps to kW Calculator (and kW to Amps)",
    "title": "Amps to kW and kW to Amps Calculator | Wattlyst",
    "meta": "Convert amps to kilowatts and back for DC, single-phase and three-phase supply. Add power factor, see the formula and a quick reference table.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-A",
+   "related": [
+    "A5",
+    "A2",
+    "A8",
+    "A1",
+    "A7"
+   ],
+   "next": "E3",
    "wave": 3
   },
   {
    "id": "A7",
    "type": "tool",
    "url": "/converters/volts-to-watts-calculator/",
-   "h1": "Volts To Watts Calculator",
+   "h1": "Volts to Watts Calculator (Volts × Amps)",
    "title": "Volts to Watts Calculator (with Amps) | Wattlyst",
    "meta": "Turn volts and amps into watts for DC or AC circuits. Includes power factor for AC loads and worked examples for 12V, 24V and 230V.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-A",
+   "related": [
+    "A2",
+    "A1",
+    "A3",
+    "A6",
+    "W5"
+   ],
+   "next": "E6",
    "wave": 3
   },
   {
@@ -896,7 +1015,8 @@
     "D4",
     "H9",
     "C7",
-    "E2"
+    "E2",
+    "N11"
    ],
    "next": "D4",
    "wave": 2
@@ -917,7 +1037,8 @@
     "H9",
     "D4",
     "P-G",
-    "N2"
+    "N2",
+    "H4"
    ],
    "next": "B1",
    "wave": 1
@@ -926,24 +1047,41 @@
    "id": "C1",
    "type": "tool",
    "url": "/generator/generator-size-calculator/",
-   "h1": "Generator Size Calculator For Home",
+   "h1": "Generator Size Calculator for Home",
    "title": "Generator Size Calculator for Home (kVA & Watts) | Wattlyst",
    "meta": "Find the right generator size in kVA and watts for your home. Add AC, fridge, motor and lights; starting surge and a safety margin included.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-C",
+   "related": [
+    "C2",
+    "C3",
+    "C6",
+    "C7",
+    "E1",
+    "N10"
+   ],
+   "next": "C8",
    "wave": 3
   },
   {
    "id": "C2",
    "type": "tool",
    "url": "/generator/generator-wattage-calculator/",
-   "h1": "Generator Watts Calculator For Appliances",
+   "h1": "Generator Watts Calculator for Appliances",
    "title": "Generator Wattage Calculator for Appliances | Wattlyst",
-   "meta": "Add up running and starting watts of your appliances to size a generator. Includes a Pakistani and US appliance list with typical watts.",
-   "status": "planned",
-   "live": false,
+   "meta": "Add up running and starting watts of your appliances to size a generator, using our list of common home appliances with typical watts.",
+   "status": "publish",
+   "live": true,
    "parent": "P-C",
+   "related": [
+    "C3",
+    "C4",
+    "C7",
+    "E2",
+    "H2"
+   ],
+   "next": "C1",
    "wave": 3
   },
   {
@@ -953,21 +1091,36 @@
    "h1": "Generator Starting Watts Calculator",
    "title": "Generator Starting Watts Calculator (Motor Surge) | Wattlyst",
    "meta": "Work out the peak starting watts your generator must handle for ACs, fridges and pumps, and why only the biggest motor's surge counts.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-C",
+   "related": [
+    "C4",
+    "C5",
+    "C6",
+    "H5",
+    "C2"
+   ],
+   "next": "C1",
    "wave": 3
   },
   {
    "id": "C4",
    "type": "tool",
    "url": "/generator/running-vs-starting-watts/",
-   "h1": "Running Watts Vs Starting Watts Calculator",
+   "h1": "Running Watts vs Starting Watts Calculator",
    "title": "Running Watts vs Starting Watts Calculator | Wattlyst",
    "meta": "See running and starting watts side by side for each appliance, and how they decide your generator or inverter size. Table and calculator.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-C",
+   "related": [
+    "C2",
+    "C3",
+    "D4",
+    "C7"
+   ],
+   "next": "C1",
    "wave": 3
   },
   {
@@ -984,7 +1137,8 @@
     "C6",
     "D4",
     "W3",
-    "E1"
+    "E1",
+    "C1"
    ],
    "next": "W3",
    "wave": 1
@@ -1026,7 +1180,8 @@
     "D4",
     "E1",
     "E2",
-    "B4"
+    "B4",
+    "C8"
    ],
    "next": "C6",
    "wave": 2
@@ -1037,10 +1192,17 @@
    "url": "/generator/generator-fuel-consumption-calculator/",
    "h1": "Generator Fuel Consumption Calculator",
    "title": "Generator Fuel Consumption Calculator (Cost/Hour) | Wattlyst",
-   "meta": "Estimate petrol, diesel or gas use per hour and cost in PKR for your generator size and load. Compare with UPS and solar running cost.",
-   "status": "planned",
-   "live": false,
+   "meta": "Estimate petrol or diesel use per hour and the running cost in PKR for your generator size and load, with the cost per unit compared to the grid.",
+   "status": "publish",
+   "live": true,
    "parent": "P-C",
+   "related": [
+    "C1",
+    "C7",
+    "C6",
+    "E1"
+   ],
+   "next": "N7",
    "wave": 3
   },
   {
@@ -1162,7 +1324,8 @@
     "D5",
     "D8",
     "B1",
-    "D16"
+    "D16",
+    "D9"
    ],
    "next": "B2",
    "wave": 1
@@ -1213,12 +1376,20 @@
    "id": "D9",
    "type": "tool",
    "url": "/solar/solar-panel-price-pakistan/",
-   "h1": "Solar Panel Price In Pakistan",
+   "h1": "Solar Panel Price in Pakistan Today: Per Watt and Per Panel",
    "title": "Solar Panel Price in Pakistan Today (Per Watt) | Wattlyst",
    "meta": "Today's solar panel prices in Pakistan per watt and per panel for 550W to 600W+ brands, with the date checked and a cost calculator.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-D",
+   "related": [
+    "D14",
+    "D7",
+    "D6",
+    "D8",
+    "D11"
+   ],
+   "next": "N3",
    "wave": 3
   },
   {
@@ -1237,7 +1408,8 @@
     "F1",
     "F2",
     "F12",
-    "N3"
+    "N3",
+    "D11"
    ],
    "next": "F1",
    "wave": 1
@@ -1246,12 +1418,21 @@
    "id": "D11",
    "type": "guide",
    "url": "/guides/net-billing-pakistan/",
-   "h1": "Net Billing Pakistan",
+   "h1": "Net Billing in Pakistan: Rules, Buyback Rate and Net Metering Compared",
    "title": "Net Billing Pakistan 2026: Rates & Rules | Wattlyst",
    "meta": "What changed from net metering to net billing in Pakistan, the export rate, who keeps old contracts and what it means for solar payback.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-G",
+   "related": [
+    "D10",
+    "N4",
+    "F13",
+    "D14",
+    "D9",
+    "D8"
+   ],
+   "next": "D10",
    "wave": 3
   },
   {
@@ -1312,7 +1493,8 @@
     "D10",
     "D8",
     "D12",
-    "D13"
+    "D13",
+    "D9"
    ],
    "next": "N3",
    "wave": 2
@@ -1514,7 +1696,8 @@
    "related": [
     "F1",
     "F12",
-    "E5"
+    "E5",
+    "F13"
    ],
    "next": "F1",
    "wave": 1
@@ -1721,12 +1904,21 @@
    "id": "F13",
    "type": "guide",
    "url": "/guides/peak-hours-pakistan/",
-   "h1": "Peak Hours Lesco 2026",
+   "h1": "Peak Hours LESCO 2026: Peak and Off-Peak Timings for Every DISCO",
    "title": "Peak Hours 2026 for LESCO, IESCO & All DISCOs | Wattlyst",
-   "meta": "Current peak and off-peak hours for every DISCO and K-Electric by season, and how much you save by shifting AC, iron and motor use.",
-   "status": "planned",
-   "live": false,
+   "meta": "Peak and off-peak hours by season for LESCO, IESCO and other DISCOs from NEPRA's latest schedule found, and what shifting AC, iron and motor use saves.",
+   "status": "publish",
+   "live": true,
    "parent": "P-G",
+   "related": [
+    "F1",
+    "F2",
+    "N4",
+    "D11",
+    "F12",
+    "E5"
+   ],
+   "next": "F1",
    "wave": 3
   },
   {
@@ -1822,7 +2014,8 @@
     "W2",
     "W1",
     "D16",
-    "D3"
+    "D3",
+    "W5"
    ],
    "next": "W3",
    "wave": 2
@@ -1831,12 +2024,19 @@
    "id": "W5",
    "type": "tool",
    "url": "/wiring/voltage-drop-calculator/",
-   "h1": "Voltage Drop Calculator",
+   "h1": "Voltage Drop Calculator for Any Cable, AC or DC",
    "title": "Voltage Drop Calculator (Copper & Aluminium) | Wattlyst",
    "meta": "Calculate voltage drop for any wire size, length and load, single or three phase, DC or AC. See if your cable stays under 3% or 5%.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-W",
+   "related": [
+    "W4",
+    "W3",
+    "W1",
+    "A5"
+   ],
+   "next": "W2",
    "wave": 3
   },
   {
@@ -1872,7 +2072,9 @@
    "parent": null,
    "children": [
     "H3",
+    "H4",
     "H5",
+    "H6",
     "H7"
    ],
    "related": [
@@ -1899,7 +2101,8 @@
     "E1",
     "D8",
     "H5",
-    "H7"
+    "H7",
+    "H4"
    ],
    "next": "B1",
    "wave": 2
@@ -1908,12 +2111,20 @@
    "id": "H4",
    "type": "appliance",
    "url": "/appliances/refrigerator/",
-   "h1": "Fridge Units Per Day",
+   "h1": "Fridge Units per Day: Inverter vs Non-Inverter Refrigerator and Deep Freezer",
    "title": "Fridge Units per Day (Inverter vs Non-Inverter) | Wattlyst",
    "meta": "Daily and monthly units of a refrigerator or deep freezer, inverter vs non-inverter, plus starting watts for UPS and generator sizing.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "H2",
+   "related": [
+    "H6",
+    "H3",
+    "H7",
+    "E1",
+    "D8"
+   ],
+   "next": "B5",
    "wave": 3
   },
   {
@@ -1940,12 +2151,20 @@
    "id": "H6",
    "type": "appliance",
    "url": "/appliances/electric-geyser/",
-   "h1": "Electric Geyser Units",
+   "h1": "Electric Geyser Units per Hour, Amps and Monthly Bill",
    "title": "Electric Geyser Units per Hour & Monthly Bill | Wattlyst",
-   "meta": "Units per hour of a 1500W to 3000W electric geyser and its monthly bill in PKR, compared with instant electric and gas geysers.",
-   "status": "planned",
-   "live": false,
+   "meta": "Units per hour of a 1500W to 3000W electric geyser and its monthly bill in PKR, plus the units and bill of an instant electric water heater.",
+   "status": "publish",
+   "live": true,
    "parent": "H2",
+   "related": [
+    "H4",
+    "N5",
+    "H7",
+    "W3",
+    "E1"
+   ],
+   "next": "F1",
    "wave": 3
   },
   {
@@ -1962,7 +2181,8 @@
     "D4",
     "B5",
     "H3",
-    "H5"
+    "H5",
+    "H6"
    ],
    "next": "E1",
    "wave": 2
@@ -2085,7 +2305,9 @@
     "E4",
     "D10",
     "F1",
-    "E2"
+    "E2",
+    "D11",
+    "F13"
    ],
    "next": "F1",
    "wave": 2
@@ -2104,7 +2326,8 @@
     "E5",
     "F1",
     "E6",
-    "E2"
+    "E2",
+    "H6"
    ],
    "next": "E5",
    "wave": 2
@@ -2113,12 +2336,20 @@
    "id": "N6",
    "type": "tool",
    "url": "/solar/solar-forecast-tomorrow/",
-   "h1": "Solar Output Forecast Tomorrow",
+   "h1": "Solar Output Forecast Tomorrow for Your City",
    "title": "Solar Output Forecast Tomorrow (By City) | Wattlyst",
-   "meta": "See how many units your solar system should make today and tomorrow in your city, based on the weather forecast and your system size.",
-   "status": "planned",
-   "live": false,
+   "meta": "See how many units your solar system should make tomorrow in your city, based on the weather forecast and your system size, against a typical day.",
+   "status": "publish",
+   "live": true,
    "parent": "P-D",
+   "related": [
+    "D7",
+    "N12",
+    "N14",
+    "D10",
+    "D8"
+   ],
+   "next": "N12",
    "wave": 3
   },
   {
@@ -2136,7 +2367,8 @@
     "H9",
     "D15",
     "C6",
-    "D10"
+    "D10",
+    "C8"
    ],
    "next": "B1",
    "wave": 2
@@ -2145,84 +2377,140 @@
    "id": "N8",
    "type": "tool",
    "url": "/load/ebike-charging-cost-calculator/",
-   "h1": "Electric Bike Charging Cost Per Km",
+   "h1": "Electric Bike Charging Cost per km Calculator",
    "title": "Electric Bike Charging Cost per km | Wattlyst",
    "meta": "Find what it costs to charge your electric bike, e-scooter or EV per charge and per km, at your electricity tariff or from solar.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-E",
+   "related": [
+    "N9",
+    "N10",
+    "F1",
+    "D7"
+   ],
+   "next": "E6",
    "wave": 3
   },
   {
    "id": "N9",
    "type": "tool",
    "url": "/load/ac-temperature-saving-calculator/",
-   "h1": "Ac Temperature Saving Calculator",
+   "h1": "AC Temperature Saving Calculator",
    "title": "AC Temperature Saving Calculator (26° vs 18°) | Wattlyst",
-   "meta": "See how much you can save each month by raising your AC temperature, with units and PKR for your AC size, set point and daily hours.",
-   "status": "planned",
-   "live": false,
+   "meta": "See how much you can save each month by raising your AC temperature, as a percent and in units, for your old and new set points and monthly AC units.",
+   "status": "publish",
+   "live": true,
    "parent": "P-E",
+   "related": [
+    "N10",
+    "E5",
+    "N8",
+    "F1",
+    "N5"
+   ],
+   "next": "N10",
    "wave": 3
   },
   {
    "id": "N10",
    "type": "tool",
    "url": "/load/inverter-ac-payback-calculator/",
-   "h1": "Inverter Ac Vs Non Inverter Ac Savings",
+   "h1": "Inverter AC vs Non-Inverter AC: Savings and Payback",
    "title": "Inverter vs Non-Inverter AC: Savings & Payback | Wattlyst",
    "meta": "Compare yearly units and bill of an inverter and a non-inverter AC, and how many months the extra price takes to pay back.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-E",
+   "related": [
+    "N9",
+    "E5",
+    "D5",
+    "N5",
+    "N8"
+   ],
+   "next": "E4",
    "wave": 3
   },
   {
    "id": "N11",
    "type": "tool",
    "url": "/troubleshoot/battery-series-parallel-calculator/",
-   "h1": "Battery Series Parallel Calculator",
+   "h1": "Battery Series and Parallel Calculator with Wiring Diagram",
    "title": "Battery Series & Parallel Calculator with Diagram | Wattlyst",
    "meta": "Pick your batteries and see the total voltage, Ah and kWh in series or parallel, with a live wiring diagram and safety notes.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-T",
+   "related": [
+    "B4",
+    "D1",
+    "A10",
+    "N14",
+    "H8"
+   ],
+   "next": "B1",
    "wave": 3
   },
   {
    "id": "N12",
    "type": "tool",
    "url": "/solar/solar-panel-cleaning-loss-calculator/",
-   "h1": "Solar Panel Cleaning Loss Calculator",
+   "h1": "Solar Panel Cleaning Loss Calculator: Dust and When to Clean",
    "title": "Solar Panel Dust & Cleaning Loss Calculator | Wattlyst",
-   "meta": "Estimate how many units and rupees dust is costing your solar system, and how often cleaning pays for itself in your city.",
-   "status": "planned",
-   "live": false,
+   "meta": "Estimate how many units and rupees dust is costing your solar system each day, and after how many days a cleaning pays for itself.",
+   "status": "publish",
+   "live": true,
    "parent": "P-D",
+   "related": [
+    "N13",
+    "N14",
+    "D2",
+    "D7",
+    "N3",
+    "N6"
+   ],
+   "next": "D10",
    "wave": 3
   },
   {
    "id": "N13",
    "type": "tool",
    "url": "/solar/solar-for-mosque-and-shop/",
-   "h1": "Solar System For Mosque",
-   "title": "Solar System for Mosque or Shop: Size & Cost | Wattlyst",
-   "meta": "Size solar for a mosque (fans and ACs at prayer times, Jummah peak) or a shop (daytime load), with panels, inverter and cost.",
-   "status": "planned",
-   "live": false,
+   "h1": "Solar System for Mosque or Shop: Size, Panels and Inverter",
+   "title": "Solar System for Mosque or Shop: Size Calculator | Wattlyst",
+   "meta": "Size solar for a mosque (fans and ACs at prayer times, Jummah peak) or a shop (daytime load), with kW, panels and inverter, then check the price.",
+   "status": "publish",
+   "live": true,
    "parent": "P-D",
+   "related": [
+    "N12",
+    "N14",
+    "D8",
+    "D12",
+    "N3"
+   ],
+   "next": "D14",
    "wave": 3
   },
   {
    "id": "N14",
    "type": "tool",
    "url": "/solar/solar-autonomy-calculator/",
-   "h1": "Solar Battery Autonomy Calculator",
+   "h1": "Solar Battery Autonomy Calculator: Days on Cloudy Weather",
    "title": "Solar Battery Autonomy Calculator (Cloudy Days) | Wattlyst",
    "meta": "Find how many cloudy or smoggy days your solar battery bank can carry your load, and the bank size for the autonomy you want.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-D",
+   "related": [
+    "N11",
+    "B4",
+    "N12",
+    "N13",
+    "H8"
+   ],
+   "next": "D1",
    "wave": 3
   },
   {
@@ -2320,8 +2608,13 @@
    "live": true,
    "parent": null,
    "children": [
+    "A1",
+    "A2",
     "A3",
     "A4",
+    "A5",
+    "A6",
+    "A7",
     "A8",
     "A9",
     "A10"
@@ -2358,9 +2651,14 @@
    "live": true,
    "parent": null,
    "children": [
+    "C1",
+    "C2",
+    "C3",
+    "C4",
     "C5",
     "C6",
-    "C7"
+    "C7",
+    "C8"
    ],
    "wave": 0
   },
@@ -2383,13 +2681,18 @@
     "D6",
     "D7",
     "D8",
+    "D9",
     "D10",
     "D12",
     "D13",
     "D14",
     "D15",
     "D16",
-    "N3"
+    "N3",
+    "N6",
+    "N12",
+    "N13",
+    "N14"
    ],
    "wave": 0
   },
@@ -2411,7 +2714,10 @@
     "E5",
     "E6",
     "N5",
-    "N7"
+    "N7",
+    "N8",
+    "N9",
+    "N10"
    ],
    "wave": 0
   },
@@ -2457,7 +2763,8 @@
     "W1",
     "W2",
     "W3",
-    "W4"
+    "W4",
+    "W5"
    ],
    "wave": 0
   },
@@ -2472,6 +2779,8 @@
    "live": true,
    "parent": null,
    "children": [
+    "D11",
+    "F13",
     "F14",
     "H8",
     "H9"
@@ -2489,8 +2798,80 @@
    "live": true,
    "parent": null,
    "children": [
-    "N2"
+    "N2",
+    "N11"
    ],
+   "wave": 0
+  },
+  {
+   "id": "P-X",
+   "type": "pillar",
+   "url": "/data/",
+   "h1": "Pakistan Electricity Data",
+   "title": "Pakistan Electricity Data: Bill Index and Prices | Wattlyst",
+   "meta": "Original Pakistan electricity data: a monthly bill index for every DISCO and a solar price tracker, each with a chart, the method and a CSV download.",
+   "status": "auto",
+   "live": true,
+   "parent": null,
+   "children": [
+    "bill-index",
+    "solar-price-tracker"
+   ],
+   "wave": 0
+  },
+  {
+   "id": "bill-index",
+   "type": "data",
+   "url": "/data/pakistan-electricity-bill-index/",
+   "h1": "Pakistan Electricity Bill Index",
+   "title": "Pakistan Electricity Bill Index (Monthly) | Wattlyst",
+   "meta": "Monthly bill for 100, 200, 300 and 500 units in LESCO, IESCO, K-Electric and every DISCO, with the change from last month, method and a free CSV download.",
+   "status": "publish",
+   "live": true,
+   "parent": "P-X",
+   "related": [
+    "F1",
+    "F2",
+    "F12",
+    "F14",
+    "N1",
+    "solar-price-tracker"
+   ],
+   "next": "F1",
+   "wave": 0
+  },
+  {
+   "id": "solar-price-tracker",
+   "type": "data",
+   "url": "/data/pakistan-solar-price-tracker/",
+   "h1": "Pakistan Solar Price Tracker",
+   "title": "Pakistan Solar Price Tracker: Panels, Inverters | Wattlyst",
+   "meta": "Monthly tracker of solar system, panel, inverter and battery prices in Pakistan from dealer price lists, each with its source and date, and a CSV.",
+   "status": "publish",
+   "live": true,
+   "parent": "P-X",
+   "related": [
+    "D14",
+    "N3",
+    "D9",
+    "D7",
+    "bill-index"
+   ],
+   "next": "N3",
+   "wave": 0
+  },
+  {
+   "id": "embed",
+   "type": "embed",
+   "url": "/embed-calculators/",
+   "h1": "Embed Our Calculators",
+   "title": "Free Embeddable Electricity Calculators | Wattlyst",
+   "meta": "Add any Wattlyst calculator to your blog, installer site or forum for free: copy the iframe or script code. Every embed shows a visible credit link.",
+   "status": "publish",
+   "live": true,
+   "parent": null,
+   "related": [],
+   "next": null,
    "wave": 0
   }
  ],
@@ -2539,6 +2920,11 @@
    "id": "P-T",
    "label": "Troubleshoot",
    "url": "/troubleshoot/"
+  },
+  {
+   "id": "P-X",
+   "label": "Data",
+   "url": "/data/"
   }
  ],
  "website_schema": {

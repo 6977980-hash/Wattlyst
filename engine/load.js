@@ -3,6 +3,9 @@ import { calculator, CalcError, has, pos, frac, nonneg, num, dflt, appliance } f
 import { sumLoads, loadRows } from './sizing.js';
 import { breaker_size } from './wiring.js';
 
+/** Hours in a (non-leap) year: the most an AC can run in one (N10). A calendar fact, not an editable default. */
+const HOURS_PER_YEAR = 365 * 24;
+
 /**
  * E5: units_day = avg_kW × hours; monthly = daily × days.
  * `ac` = an air conditioner id from data/appliances.json (its avg_w is the planning average, formulas.md E)
@@ -117,17 +120,30 @@ export const ac_temp = calculator((i, d) => {
   return { t_old, t_new, per_degree, monthly_units, saving_pct: 0, units_saved: 0, extra_pct: pct, extra_units: monthly_units * pct };
 });
 
-/** N10: annual saving = (kW_noninv − kW_inv) × hours/yr × tariff; payback months = price diff / (saving / 12). */
-export const ac_payback = calculator((i) => {
+/**
+ * N10: both ACs compared on their average draw. Non-inverter average = kW while the compressor runs × duty
+ * (data/defaults.json ac_noninverter_duty; 1 = compressor never cycles off, peak summer); inverter average = kW_inv.
+ * units a year = average kW × hours_year (≤ 8,760, the hours in a year); saving = (units_noninv − units_inv) × tariff;
+ * payback in calendar months = price diff ÷ (saving ÷ 12) (formulas.md N10).
+ */
+export const ac_payback = calculator((i, d) => {
   const kw_noninv = pos(i, 'kw_noninv');
+  const duty = frac(i, 'duty', dflt(d, 'ac_noninverter_duty'), 'duty_invalid');
+  const kw_noninv_avg = kw_noninv * duty;
   const kw_inv = pos(i, 'kw_inv');
-  if (kw_inv >= kw_noninv) throw new CalcError('inverter_ac_must_use_less', 'kw_inv');
-  const hours_year = pos(i, 'hours_year');
+  if (kw_inv >= kw_noninv_avg) throw new CalcError('inverter_ac_must_use_less', 'kw_inv');
+  const hours_year = num(i, 'hours_year', { gt: 0, max: HOURS_PER_YEAR, code: 'hours_year_invalid' });
   const tariff = pos(i, 'tariff');
   const price_diff = nonneg(i, 'price_diff');
-  const annual_units_saved = (kw_noninv - kw_inv) * hours_year;
+  const units_noninv = kw_noninv_avg * hours_year;
+  const units_inv = kw_inv * hours_year;
+  const annual_units_saved = units_noninv - units_inv;
   const annual_saving = annual_units_saved * tariff;
-  return { kw_noninv, kw_inv, hours_year, tariff, price_diff, annual_units_saved, annual_saving, payback_months: price_diff / (annual_saving / 12) };
+  return {
+    kw_noninv, duty, kw_noninv_avg, kw_inv, hours_year, tariff, price_diff,
+    units_noninv, units_inv, rs_noninv: units_noninv * tariff, rs_inv: units_inv * tariff,
+    annual_units_saved, annual_saving, payback_months: price_diff / (annual_saving / 12),
+  };
 });
 
 /**

@@ -17,6 +17,7 @@ export const data = {
   appliances: appliancesMap,
   cables: readJson('data/cable-ampacity.json'),
   solar_prices: readJson('data/solar-prices.json'),
+  generator_fuel: readJson('data/generator-fuel.json'),
 };
 export const cases = readJson('specs/calculator-test-cases.json');
 export { root };

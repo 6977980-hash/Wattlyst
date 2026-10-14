@@ -5,13 +5,22 @@
  "url": "/generator/generator-fuel-consumption-calculator/",
  "h1": "Generator Fuel Consumption Calculator",
  "title": "Generator Fuel Consumption Calculator (Cost/Hour) | Wattlyst",
- "meta": "Estimate petrol, diesel or gas use per hour and cost in PKR for your generator size and load. Compare with UPS and solar running cost.",
+ "meta": "Estimate petrol or diesel use per hour and the running cost in PKR for your generator size and load, with the cost per unit compared to the grid.",
  "primary_keyword": "generator fuel consumption calculator",
  "wave": 3,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-14",
+ "published": "2026-10-14",
  "author": "ali-ahmad",
+ "related": [
+  "C1",
+  "C7",
+  "C6",
+  "E1"
+ ],
+ "next": "N7",
  "parent": "P-C",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
@@ -26,7 +35,393 @@
    "url": "/generator/generator-fuel-consumption-calculator/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "Generator fuel consumption per hour: what it depends on",
+    "p": [
+     "Two things set the fuel a generator burns: its size and the load on it. Even with nothing plugged in the engine burns fuel to keep turning, about 0.4 litres an hour for a 5 kVA petrol set. Every kilowatt of load then adds a fixed amount on top. This straight-line fuel curve is the form used by microgrid planning software, fitted here to published run-time data.",
+     "Because of the idle part, a lightly loaded large generator wastes fuel. A 10 kVA petrol set carrying the same 2,000 W uses 1.76 litres an hour against 1.36 for a 5 kVA set, and each unit it makes costs Rs 351 instead of Rs 271."
+    ]
+   },
+   {
+    "h2": "Petrol generator fuel consumption",
+    "p": [
+     "A 5 kVA petrol generator at 50% load, 2,000 W, burns about 1.36 litres an hour. At full rated load, 4,000 W, it burns about 2.32 litres an hour, but each unit gets cheaper, Rs 231 instead of Rs 271, because the idle burn is spread over more output.",
+     "Small portable sets follow the same curve: a 2.5 kVA petrol generator running 1,000 W of fans, lights and a fridge uses about 0.68 litres an hour. Generators sold in Pakistan vary a lot in build; an open-frame set or a worn engine can burn noticeably more than these figures."
+    ]
+   },
+   {
+    "h2": "Diesel generator fuel calculator: petrol vs diesel",
+    "p": [
+     "Diesel engines burn less fuel per unit of output. At the same 5 kVA size and 2,000 W load, our diesel curve gives 0.7 litres an hour, about Rs 277 at Rs 396.24 a litre, against Rs 542 for petrol at Rs 398.30 a litre. The difference comes from both the litres burned and the price of each fuel.",
+     "Diesel sets cost more to buy and are heavier and louder, so they pay off with long daily running. A 10 kVA diesel generator carrying 5,000 W for 6 hours a day uses about 297 litres a month, Rs 117,683."
+    ]
+   },
+   {
+    "h2": "Generator cost per hour in Pakistan",
+    "p": [
+     "Cost per hour is litres an hour × the price per litre. With the latest prices in our data, petrol at Rs 398.30 and diesel at Rs 396.24 a litre, the default 5 kVA petrol generator costs Rs 542 an hour and Rs 65,003 a month at 4 hours a day. Fuel prices are now revised every few days, so type today's price for an exact figure.",
+     "Per unit of electricity, that is Rs 271 for fuel alone, several times the grid energy rate of Rs 36.46 in the unprotected 301 to 400 unit slab, before oil changes, servicing and engine wear."
+    ]
+   },
+   {
+    "h2": "Gas vs petrol generator cost per hour",
+    "p": [
+     "Gas generators, on natural gas or LPG, are not in this calculator yet. We have not yet collected checked fuel-use data for them, and gas is priced per cubic metre or per kilogram rather than per litre, so we do not print a gas figure we cannot back up.",
+     "To compare a gas generator yourself, take its gas use at your load from the manual (cubic metres or kilograms an hour), multiply by your gas price, and compare that cost per hour with the petrol figure above for the same size and load."
+    ]
+   },
+   {
+    "h2": "Generator vs UPS cost",
+    "p": [
+     "A generator is cheap to buy and expensive to run; a UPS with batteries costs more up front, then mostly the electricity to recharge it and a battery replacement every few years. With petrol at Rs 271 per unit delivered, the generator's running cost decides the comparison for long daily cuts.",
+     "The UPS vs solar vs generator cost calculator adds purchase price, running cost, servicing and replacements over several years; enter the yearly fuel cost from this page there."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "How much petrol does a 5 kVA generator use per hour?",
+    "a": "About 1.36 litres an hour at 2,000 W (50% load) and about 2.32 litres at its full 4,000 W, by our planning curve. That is Rs 542 and Rs 924 an hour at Rs 398.30 a litre."
+   },
+   {
+    "q": "Is a diesel or petrol generator cheaper to run?",
+    "a": "Diesel. At 5 kVA and 2,000 W a diesel set costs about Rs 277 an hour against Rs 542 for petrol, because it burns much less fuel for the same output. A petrol set is cheaper to buy."
+   },
+   {
+    "q": "What is the gas generator running cost?",
+    "a": "We do not have checked fuel-use data for gas generators yet, so this calculator covers petrol and diesel only. Multiply the gas use from the generator's manual at your load by your gas price to compare with the petrol cost per hour here."
+   },
+   {
+    "q": "What does generator electricity cost per unit in Pakistan?",
+    "a": "For a 5 kVA petrol set at 2,000 W, about Rs 271 per unit in fuel alone; diesel about Rs 139. The grid energy rate in the unprotected 301 to 400 unit slab is Rs 36.46."
+   },
+   {
+    "q": "Does a bigger generator use more fuel for the same load?",
+    "a": "Yes. A 10 kVA petrol set at 2,000 W burns about 1.76 litres an hour against 1.36 for a 5 kVA set, because its idle burn is larger. Size the generator for your load, not bigger."
+   },
+   {
+    "q": "Is a generator or a UPS cheaper?",
+    "a": "A generator is cheaper to buy, a UPS cheaper to run: the generator's fuel alone costs about Rs 271 per unit here. Use the UPS vs solar vs generator cost calculator to compare the totals over several years."
+   }
+  ],
+  "key_facts": [
+   "Generator fuel use per hour = (idle fuel per rated kW × rated kW) + (fuel per kWh × load kW); in our petrol data that is 0.1 L per rated kW plus 0.48 L per kWh, and in our diesel data 0.05 L plus 0.25 L.",
+   "A 5 kVA petrol generator at 2,000 W uses about 1.36 litres an hour, about Rs 542 an hour at a petrol price of Rs 398.30 a litre (2026-10-10 to 2026-10-12).",
+   "Running 4 hours a day for 30 days, the same generator burns about 163 litres a month, Rs 65,003 in petrol, or Rs 271 per unit of electricity, against a grid energy rate of Rs 36.46 per unit in the unprotected 301 to 400 unit slab.",
+   "A generator burns fuel even with nothing connected: about 0.4 litres an hour for a 5 kVA petrol set, which is why an oversized generator costs more to run at the same load.",
+   "These are planning estimates from manufacturer run-time data and a published diesel fuel chart, not a measurement of any one generator; an old or poorly tuned engine burns more."
+  ],
+  "mistakes": [
+   "Entering the starting watts as the load. Fuel follows the running load; the starting surge lasts a second or two.",
+   "Buying a much bigger generator than the load needs. The idle burn grows with the size, so an oversized set costs more every hour it runs.",
+   "Comparing generator fuel with the electricity bill per unit without counting servicing. Oil, filters and engine wear add to the fuel cost per unit.",
+   "Using an old fuel price. Petrol and diesel prices change every few days; type today's price for an exact cost."
+  ],
+  "sources": [
+   {
+    "label": "Wattlyst methodology and default values",
+    "url": "/methodology/"
+   },
+   {
+    "label": "Honda EU2200i dealer specification (run time per tankful): Honda EU2200i (EU22i), 1.8 kW rated, 0.95 gal (3.6 L) tank",
+    "url": "https://www.sloans.adpearance.com/catalog/products-for-mowing/honda-mowing-equipment/honda-generators/eu2200i"
+   },
+   {
+    "label": "Honda EU7000iS dealer specification (run time per tankful): Honda EU7000iS, 5.5 kW rated, 5.1 gal (19.3 L) tank",
+    "url": "https://www.sloans.adpearance.com/catalog/products-for-mowing/honda-mowing-equipment/honda-generators/eu7000is"
+   },
+   {
+    "label": "Approximate diesel fuel consumption chart (metric version): 20 kW diesel generator, approximate chart",
+    "url": "https://oer.enviraj.com/general/diesel-generator-fuel-consumption-chart/"
+   },
+   {
+    "label": "Approximate diesel fuel consumption chart: 20 kW diesel generator, approximate chart (US gallons: 0.6 at 1/4 load, 1.6 at full load)",
+    "url": "https://www.bigrentz.com/blog/diesel-generator-fuel-consumption-chart"
+   }
+  ],
+  "tool": {
+   "calc": "generator_fuel",
+   "module": "fuel.js",
+   "data_keys": [
+    "generator_fuel"
+   ],
+   "appliances": {},
+   "fields": [
+    {
+     "name": "fuel",
+     "label": "Fuel",
+     "type": "select",
+     "default": "petrol",
+     "options": [
+      [
+       "petrol",
+       "Petrol"
+      ],
+      [
+       "diesel",
+       "Diesel"
+      ]
+     ],
+     "hint": "The fuel your generator runs on. Gas (natural gas or LPG) generators are not in the calculator yet."
+    },
+    {
+     "name": "kva",
+     "label": "Generator size",
+     "unit": "kVA",
+     "type": "select",
+     "default": 5,
+     "options": [
+      [
+       2.5,
+       "2.5 kVA"
+      ],
+      [
+       3,
+       "3 kVA"
+      ],
+      [
+       3.5,
+       "3.5 kVA"
+      ],
+      [
+       5,
+       "5 kVA"
+      ],
+      [
+       6.5,
+       "6.5 kVA"
+      ],
+      [
+       7.5,
+       "7.5 kVA"
+      ],
+      [
+       10,
+       "10 kVA"
+      ],
+      [
+       12.5,
+       "12.5 kVA"
+      ],
+      [
+       15,
+       "15 kVA"
+      ]
+     ],
+     "hint": "The kVA on the nameplate. A bigger generator burns more fuel even at the same load."
+    },
+    {
+     "name": "load_w",
+     "label": "Load the generator carries",
+     "unit": "W",
+     "default": 2000,
+     "hint": "The running watts of what is on while the generator runs, not the starting surge. The home generator size calculator adds this up for you."
+    },
+    {
+     "name": "hours",
+     "label": "Hours it runs a day",
+     "unit": "h",
+     "default": 4,
+     "hint": "Your usual loadshedding or outage hours a day."
+    },
+    {
+     "name": "price",
+     "label": "Fuel price",
+     "unit": "Rs per litre",
+     "placeholder": "Latest price for the fuel chosen",
+     "hint": "Leave blank to use the latest petrol or diesel price in our data (dated under Sources), or type today's pump price."
+    },
+    {
+     "name": "days",
+     "label": "Days a month",
+     "unit": "days",
+     "default": 30,
+     "advanced": true,
+     "hint": "Days in the month the generator runs."
+    },
+    {
+     "name": "pf",
+     "label": "Generator power factor",
+     "unit": "0 to 1",
+     "default": 0.8,
+     "advanced": true,
+     "hint": "Turns the kVA rating into rated kW. Leave the default unless the nameplate says otherwise."
+    }
+   ],
+   "fixed_inputs": {},
+   "outputs": [
+    {
+     "key": "l_per_h",
+     "label": "Fuel per hour",
+     "spec": "2",
+     "unit": "litres",
+     "label_ur": "Fi ghanta fuel",
+     "value": "1.36"
+    },
+    {
+     "key": "rs_per_h",
+     "label": "Cost per hour",
+     "spec": "rs",
+     "label_ur": "Fi ghanta kharcha",
+     "value": "Rs 542"
+    },
+    {
+     "key": "l_per_month",
+     "label": "Fuel a month",
+     "spec": "int",
+     "unit": "litres",
+     "label_ur": "Mahana fuel",
+     "value": "163"
+    },
+    {
+     "key": "rs_per_month",
+     "label": "Cost a month",
+     "spec": "rs",
+     "label_ur": "Mahana kharcha",
+     "value": "Rs 65,003"
+    },
+    {
+     "key": "rs_per_unit",
+     "label": "Cost per unit of electricity",
+     "spec": "rs",
+     "label_ur": "Bijli ke fi unit ka kharcha",
+     "value": "Rs 271"
+    },
+    {
+     "key": "load_pct",
+     "label": "Load on the generator",
+     "spec": "int",
+     "unit": "%",
+     "label_ur": "Generator par load",
+     "value": "50"
+    }
+   ],
+   "how": {
+    "tpl": "Rated output: {{out.kva|1}} kVA × {{out.pf|2}} = {{out.rated_kw|1}} kW. Your load: {{out.load_kw|2}} kW, {{out.load_pct|int}}% of rated. Fuel = {{out.intercept|2}} L × {{out.rated_kw|1}} rated kW (idle burn, {{out.idle_l_per_h|2}} L/h) + {{out.slope|2}} L × {{out.load_kw|2}} kW of load = {{out.l_per_h|2}} litres an hour. × {{out.hours|1}} h = {{out.l_per_day|1}} L a day, × {{out.days|int}} days = {{out.l_per_month|int}} L a month. Cost: {{out.l_per_h|2}} L × {{out.price|rs2}} = {{out.rs_per_h|rs}} an hour, {{out.rs_per_month|rs}} a month, or {{out.rs_per_unit|rs}} per unit (kWh) delivered.",
+    "text": "Rated output: 5 kVA × 0.8 = 4 kW. Your load: 2 kW, 50% of rated. Fuel = 0.1 L × 4 rated kW (idle burn, 0.4 L/h) + 0.48 L × 2 kW of load = 1.36 litres an hour. × 4 h = 5.4 L a day, × 30 days = 163 L a month. Cost: 1.36 L × Rs 398.30 = Rs 542 an hour, Rs 65,003 a month, or Rs 271 per unit (kWh) delivered."
+   },
+   "submit": "Work out the fuel cost",
+   "notice": "",
+   "data_checked": [
+    {
+     "label": "Generator fuel curve (fitted from manufacturer run-time data, listed under Sources)",
+     "url": null,
+     "checked": "2026-10-14"
+    },
+    {
+     "label": "Petrol and diesel price (Gari.pk report of the Petroleum Division notification (petrol and high-speed diesel, 10 to 12 October 2026))",
+     "url": "https://www.gari.pk/news/petrol-price-update-new-rates-effective-from-october-10-5641/",
+     "checked": "2026-10-14"
+    }
+   ]
+  },
+  "examples": [
+   {
+    "title": "5 kVA diesel at 2,000 W for 4 hours a day",
+    "text": "0.05 × 4 kW + 0.25 × 2 kW = 0.7 L an hour; × Rs 396.24 = Rs 277 an hour, 84 L and Rs 33,284 a month, Rs 139 per unit."
+   },
+   {
+    "title": "5 kVA petrol at full load, 4,000 W",
+    "text": "0.1 × 4 kW + 0.48 × 4 kW = 2.32 L an hour, Rs 924 an hour. Each unit costs Rs 231 in fuel; a month at 4 hours a day is Rs 110,887."
+   },
+   {
+    "title": "An oversized 10 kVA petrol set carrying 2,000 W",
+    "text": "Only 25% loaded. Idle burn 0.8 L an hour + 0.48 × 2 kW = 1.76 L an hour, Rs 701 an hour and Rs 351 per unit."
+   },
+   {
+    "title": "Small 2.5 kVA petrol set at 1,000 W",
+    "text": "0.1 × 2 kW + 0.48 × 1 kW = 0.68 L an hour, Rs 271 an hour; 82 L and Rs 32,501 a month at 4 hours a day."
+   },
+   {
+    "title": "10 kVA diesel at 5,000 W for 6 hours a day",
+    "text": "0.05 × 8 kW + 0.25 × 5 kW = 1.65 L an hour, Rs 654 an hour; 9.9 L a day and Rs 117,683 a month."
+   }
+  ],
+  "table": {
+   "caption": "Generator fuel consumption chart at half load, 4 hours a day for 30 days, at the latest fuel prices in our data",
+   "head": [
+    "Generator",
+    "Load",
+    "Fuel per hour",
+    "Cost per hour",
+    "Cost a month",
+    "Fuel a month"
+   ],
+   "rows": [
+    [
+     "2.5 kVA petrol",
+     "1,000 W",
+     "0.68 L",
+     "Rs 271",
+     "Rs 32,501",
+     "82 L"
+    ],
+    [
+     "3.5 kVA petrol",
+     "1,400 W",
+     "0.95 L",
+     "Rs 379",
+     "Rs 45,502",
+     "114 L"
+    ],
+    [
+     "5 kVA petrol",
+     "2,000 W",
+     "1.36 L",
+     "Rs 542",
+     "Rs 65,003",
+     "163 L"
+    ],
+    [
+     "5 kVA diesel",
+     "2,000 W",
+     "0.7 L",
+     "Rs 277",
+     "Rs 33,284",
+     "84 L"
+    ],
+    [
+     "7.5 kVA petrol",
+     "3,000 W",
+     "2.04 L",
+     "Rs 813",
+     "Rs 97,504",
+     "245 L"
+    ],
+    [
+     "10 kVA petrol",
+     "4,000 W",
+     "2.72 L",
+     "Rs 1,083",
+     "Rs 130,005",
+     "326 L"
+    ],
+    [
+     "10 kVA diesel",
+     "4,000 W",
+     "1.4 L",
+     "Rs 555",
+     "Rs 66,568",
+     "168 L"
+    ]
+   ]
+  },
+  "answer": "A 5 kVA petrol generator carrying 2,000 W burns about 1.36 litres an hour, Rs 542 an hour at Rs 398.30 a litre; a diesel set of the same size uses about 0.7 litres. Fuel per hour = an idle amount per rated kW + an amount per kW of load; cost per hour = litres × fuel price.",
+  "formula": {
+   "text": "L/h = F0 × kW_rated + F1 × kW_load; kW_rated = kVA × PF; Rs/h = L/h × price; Rs/unit = Rs/h ÷ kW_load",
+   "lines": [
+    "F0 = idle fuel in litres an hour per rated kW; F1 = fuel in litres per kWh of output (both from data/generator-fuel.json, by fuel)",
+    "kW_rated = generator kVA × power factor; kW_load = the load you enter ÷ 1000, never above kW_rated",
+    "Litres a day = L/h × hours; litres a month = litres a day × days",
+    "price = fuel price in Rs per litre (latest dated price, or the price you type)",
+    "Rs/unit = what one kWh from the generator costs in fuel alone"
+   ]
+  },
+  "safety": "Refuel only with the engine off and cool, store petrol and diesel in approved cans away from the house, and run the generator outdoors away from windows because of carbon monoxide. Connect it to the house only through a changeover switch fitted by a licensed electrician."
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -59,21 +454,23 @@
     "@id": "https://wattlyst.com/generator/generator-fuel-consumption-calculator/#webpage",
     "url": "https://wattlyst.com/generator/generator-fuel-consumption-calculator/",
     "name": "Generator Fuel Consumption Calculator (Cost/Hour) | Wattlyst",
-    "description": "Estimate petrol, diesel or gas use per hour and cost in PKR for your generator size and load. Compare with UPS and solar running cost.",
+    "description": "Estimate petrol or diesel use per hour and the running cost in PKR for your generator size and load, with the cost per unit compared to the grid.",
     "inLanguage": "en",
     "isPartOf": {
      "@id": "https://wattlyst.com/#website"
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/generator/generator-fuel-consumption-calculator/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-14",
+    "lastReviewed": "2026-10-14"
    },
    {
     "@type": "WebApplication",
     "@id": "https://wattlyst.com/generator/generator-fuel-consumption-calculator/#app",
     "name": "Generator Fuel Consumption Calculator",
     "url": "https://wattlyst.com/generator/generator-fuel-consumption-calculator/",
-    "description": "Estimate petrol, diesel or gas use per hour and cost in PKR for your generator size and load. Compare with UPS and solar running cost.",
+    "description": "Estimate petrol or diesel use per hour and the running cost in PKR for your generator size and load, with the cost per unit compared to the grid.",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Any",
     "browserRequirements": "Requires JavaScript for live results",
@@ -98,6 +495,60 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/generator/generator-fuel-consumption-calculator/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "How much petrol does a 5 kVA generator use per hour?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "About 1.36 litres an hour at 2,000 W (50% load) and about 2.32 litres at its full 4,000 W, by our planning curve. That is Rs 542 and Rs 924 an hour at Rs 398.30 a litre."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Is a diesel or petrol generator cheaper to run?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Diesel. At 5 kVA and 2,000 W a diesel set costs about Rs 277 an hour against Rs 542 for petrol, because it burns much less fuel for the same output. A petrol set is cheaper to buy."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What is the gas generator running cost?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "We do not have checked fuel-use data for gas generators yet, so this calculator covers petrol and diesel only. Multiply the gas use from the generator's manual at your load by your gas price to compare with the petrol cost per hour here."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What does generator electricity cost per unit in Pakistan?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "For a 5 kVA petrol set at 2,000 W, about Rs 271 per unit in fuel alone; diesel about Rs 139. The grid energy rate in the unprotected 301 to 400 unit slab is Rs 36.46."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Does a bigger generator use more fuel for the same load?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Yes. A 10 kVA petrol set at 2,000 W burns about 1.76 litres an hour against 1.36 for a 5 kVA set, because its idle burn is larger. Size the generator for your load, not bigger."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Is a generator or a UPS cheaper?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "A generator is cheaper to buy, a UPS cheaper to run: the generator's fuel alone costs about Rs 271 per unit here. Use the UPS vs solar vs generator cost calculator to compare the totals over several years."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

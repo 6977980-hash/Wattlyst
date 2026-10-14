@@ -1,0 +1,352 @@
+{
+ "id": "C3",
+ "status": "publish",
+ "template": "tool",
+ "h1": "Generator Starting Watts Calculator",
+ "author": "ali-ahmad",
+ "published": "2026-10-14",
+ "reviewed": "2026-10-14",
+ "calc": "generator_size",
+ "submit": "Find the starting watts",
+ "fields": [
+  {
+   "name": "loads",
+   "label": "Motors, compressors and everything else on at the same time",
+   "type": "loads",
+   "start": true,
+   "catalog": "all",
+   "default": [
+    {
+     "id": "ceiling-fan-ac",
+     "qty": 4
+    },
+    {
+     "id": "led-bulb",
+     "qty": 10
+    },
+    {
+     "id": "refrigerator-non-inverter",
+     "qty": 1
+    },
+    {
+     "id": "water-motor-1hp",
+     "qty": 1
+    },
+    {
+     "id": "washing-machine-twin-tub",
+     "qty": 1
+    }
+   ],
+   "hint": "List every appliance that can be running when a motor starts. Fridges, freezers, pumps, washing machines, compressors and non-inverter ACs carry a starting surge; the calculator finds the largest one. Starting watts: leave it blank for an appliance picked from the list (its own starting watts are used); for a custom motor or compressor type its starting watts."
+  },
+  {
+   "name": "margin",
+   "label": "Safety margin on the running load",
+   "unit": "times",
+   "default": "@margin",
+   "advanced": true,
+   "hint": "Compared with the starting peak; whichever is larger sizes the generator. A decimal like one point two five."
+  },
+  {
+   "name": "pf",
+   "label": "Generator power factor",
+   "unit": "0 to 1",
+   "default": "@pf_generator",
+   "advanced": true,
+   "hint": "Turns the watts into the kVA printed on generators. Leave the default unless the nameplate says otherwise."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "peak_w",
+   "label": "Starting watts the generator must supply",
+   "spec": "int",
+   "unit": "W"
+  },
+  {
+   "key": "running_w",
+   "label": "Total running watts",
+   "spec": "int",
+   "unit": "W"
+  },
+  {
+   "key": "recommended_kva",
+   "label": "Calculated minimum",
+   "spec": "2",
+   "unit": "kVA"
+  },
+  {
+   "key": "standard_kva",
+   "label": "Generator size to buy",
+   "spec": "1",
+   "unit": "kVA"
+  }
+ ],
+ "answer": "With four fans, ten bulbs, a non-inverter fridge, a 1 hp water motor and a twin-tub washer on, the generator must supply {{out.peak_w|int}} W when the pump starts, against {{out.running_w|int}} W running, so {{out.standard_kva|1}} kVA. Starting watts = total running watts + the largest single starting jump (starting minus running watts of the biggest motor), not the sum of every surge.",
+ "how": "Running watts of everything on: {{out.running_w|int}} W. Each motor's jump at start is its starting watts minus its running watts; only the largest jump is added, because one motor starts at a time: {{out.running_w|int}} W + the largest jump = {{out.peak_w|int}} W. The larger of that peak and {{out.running_w|int}} W × {{out.margin|2}} is {{out.sized_w|int}} W; ÷ {{out.pf|2}} ÷ 1,000 = {{out.recommended_kva|2}} kVA, so {{out.standard_kva|1}} kVA.",
+ "key_facts": [
+  "Generator starting watts = the running watts of everything on + the largest single starting jump; a second motor's surge is not added because two motors almost never start in the same second.",
+  "In this site's appliance data non-inverter AC compressors and pump motors start at about {{d.start_factors.motor|int}} times their running watts for a second or two; a non-inverter fridge jumps from {{a.refrigerator-non-inverter.running_w|int}} W to about {{a.refrigerator-non-inverter.starting_w|int}} W.",
+  "A 1.5 ton non-inverter AC runs at {{a.ac-split-1-5ton-non-inverter.running_w|int}} W but starts at about {{a.ac-split-1-5ton-non-inverter.starting_w|int}} W, so on its own it needs a {{ex.1.out.standard_kva|1}} kVA generator, while the fridge alone fits the smallest common size, {{ex.0.out.standard_kva|1}} kVA.",
+  "In a house with a fridge, a water pump and a non-inverter AC, the AC sets the starting peak ({{ex.2.out.peak_w|int}} W); swap it for an inverter AC and the pump sets a much lower peak of {{ex.3.out.peak_w|int}} W."
+ ],
+ "formula": {
+  "text": "P_peak = Σ (W_run × qty) + max(W_start − W_run); kVA = max(P_run × m, P_peak) ÷ PF ÷ 1000",
+  "lines": [
+   "W_run, W_start = running and starting watts of one appliance",
+   "max(W_start − W_run) = the largest starting jump among the appliances on the list",
+   "P_run = total running watts; P_peak = starting watts the generator must supply",
+   "m = safety margin on the running load; PF = generator power factor",
+   "Resistive loads (heaters, irons, kettles) have no jump: W_start = W_run"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "Why only the largest starting surge counts",
+   "p": [
+    "A motor draws its big surge for a second or two while it gets up to speed, then settles to its running watts. The chance that two motors start in exactly the same second is small, and you can make it zero by switching them on one after the other. So the generator needs the running watts of everything plus one surge, the biggest. In the default list the 1 hp pump has the biggest jump, which gives {{out.peak_w|int}} W.",
+    "Adding every starting figure together would size the generator for a moment that never happens and push you to a set one or two sizes larger than you need. The exception is after a power cut, when everything restarts at once; the safe habit is to switch loads on one at a time once the generator is running."
+   ]
+  },
+  {
+   "h2": "Starting watts of a refrigerator",
+   "p": [
+    "A non-inverter fridge or chest freezer runs at about {{a.refrigerator-non-inverter.running_w|int}} W, but its compressor starts at about {{a.refrigerator-non-inverter.starting_w|int}} W in our appliance data, and it restarts many times a day as the thermostat cycles. On its own that needs a {{ex.0.out.recommended_kva|2}} kVA generator, so the smallest common size, {{ex.0.out.standard_kva|1}} kVA, is plenty.",
+    "An inverter fridge starts softly at about {{a.refrigerator-inverter.starting_w|int}} W and barely moves the peak. If a small generator stalls each time the fridge clicks on, the fridge's start, not its running load, is the cause."
+   ]
+  },
+  {
+   "h2": "Starting watts of an AC",
+   "p": [
+    "Non-inverter ACs have the largest starting surge in a home: a 1.5 ton unit starts at about {{a.ac-split-1-5ton-non-inverter.starting_w|int}} W and a 2 ton unit at about {{a.ac-split-2ton-non-inverter.starting_w|int}} W. With a fridge, a pump, fans and lights also on, the AC's jump sets a peak of {{ex.2.out.peak_w|int}} W and a {{ex.2.out.standard_kva|1}} kVA generator.",
+    "Inverter ACs ramp the compressor up gradually, so their highest draw is their maximum rated input, about {{a.ac-split-1-5ton-inverter.starting_w|int}} W for 1.5 ton. In the same house the pump's jump then becomes the largest and the generator drops to {{ex.3.out.standard_kva|1}} kVA."
+   ]
+  },
+  {
+   "h2": "Motor starting current and inrush current of appliances",
+   "p": [
+    "Starting current is the same surge seen in amps: divide the starting watts by the supply voltage, about {{d.v_1ph|int}} V in Pakistan, for a rough figure. That current is what dims the lights and trips a weak generator's breaker when a pump starts; the 1 hp water motor page shows it in amps.",
+    "Electronics such as TVs, computers and LED drivers also draw an inrush current when switched on, but it lasts a few thousandths of a second as their capacitors charge. Generators ride through it, so the calculator does not add it; only motors and compressors carry a starting surge here."
+   ]
+  },
+  {
+   "h2": "Peak watts vs rated watts on a generator",
+   "p": [
+    "Many generators print two numbers: a rated (running) output and a higher peak or maximum output that lasts only seconds. This calculator sizes so that the rated kVA covers the starting peak, which leaves the generator's own peak reserve as extra head-room for a motor that starts harder than our planning figure.",
+    "If you size on the generator's peak figure instead, a pump or AC that starts while the set is already loaded can push it past its limit, and the voltage dip can trip the AC's protection or burn a motor that keeps trying to start."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "refrigerator-non-inverter"
+     }
+    ]
+   },
+   "title": "A non-inverter fridge on its own",
+   "text": "Running {{out.running_w|int}} W, starting {{out.peak_w|int}} W. The start is larger than {{out.running_w|int}} W × {{out.margin|2}}, so it sets the size: {{out.peak_w|int}} W ÷ {{out.pf|2}} ÷ 1,000 = {{out.recommended_kva|2}} kVA, the smallest common size of {{out.standard_kva|1}} kVA."
+  },
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "ac-split-1-5ton-non-inverter"
+     }
+    ]
+   },
+   "title": "A 1.5 ton non-inverter AC on its own",
+   "text": "Running {{out.running_w|int}} W, starting {{out.peak_w|int}} W. The compressor start needs {{out.recommended_kva|2}} kVA, so a {{out.standard_kva|1}} kVA generator just for the AC."
+  },
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 4
+     },
+     {
+      "id": "led-bulb",
+      "qty": 10
+     },
+     {
+      "id": "refrigerator-non-inverter"
+     },
+     {
+      "id": "water-motor-1hp"
+     },
+     {
+      "id": "ac-split-1-5ton-non-inverter"
+     }
+    ]
+   },
+   "title": "Fridge, pump and a 1.5 ton non-inverter AC with fans and lights",
+   "text": "Running {{out.running_w|int}} W. The fans, the fridge, the pump and the AC all have motors, but only the biggest jump, the AC compressor's, is added: peak {{out.peak_w|int}} W, {{out.recommended_kva|2}} kVA, so {{out.standard_kva|1}} kVA."
+  },
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac",
+      "qty": 4
+     },
+     {
+      "id": "led-bulb",
+      "qty": 10
+     },
+     {
+      "id": "refrigerator-non-inverter"
+     },
+     {
+      "id": "water-motor-1hp"
+     },
+     {
+      "id": "ac-split-1-5ton-inverter"
+     }
+    ]
+   },
+   "title": "The same house with a 1.5 ton inverter AC",
+   "text": "Running {{out.running_w|int}} W. The inverter AC has almost no jump, so the pump's start is now the largest: peak {{out.peak_w|int}} W, {{out.recommended_kva|2}} kVA, so {{out.standard_kva|1}} kVA instead of {{ex.2.out.standard_kva|1}} kVA."
+  }
+ ],
+ "table": {
+  "caption": "Starting watts chart for motors and compressors, each on its own, from the top: chest deep freezer, half hp water pump, 1 hp submersible pump, 2 hp water pump, 1 hp air compressor, 1 ton window AC, 1.5 ton non-inverter split AC, 2 ton non-inverter split AC",
+  "rows": [
+   {
+    "loads": [
+     {
+      "id": "deep-freezer"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "water-motor-0-5hp"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "submersible-pump-1hp"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "water-motor-2hp"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "air-compressor-1hp"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "ac-window-1ton"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "ac-split-1-5ton-non-inverter"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "ac-split-2ton-non-inverter"
+     }
+    ]
+   }
+  ],
+  "columns": [
+   {
+    "label": "Running watts",
+    "tpl": "{{out.running_w|int}} W"
+   },
+   {
+    "label": "Starting watts",
+    "tpl": "{{out.peak_w|int}} W"
+   },
+   {
+    "label": "Calculated kVA",
+    "tpl": "{{out.recommended_kva|2}} kVA"
+   },
+   {
+    "label": "Generator to buy",
+    "tpl": "{{out.standard_kva|1}} kVA"
+   }
+  ]
+ },
+ "mistakes": [
+  "Adding the starting watts of every motor together. Only the largest jump is added to the running total; summing them all oversizes the generator.",
+  "Leaving out the running load of everything else. The surge comes on top of the fans, lights and fridge that are already running, not on an idle generator.",
+  "Switching everything on at once after a cut. Several motors starting together really do add their surges; start the biggest motor first, then the rest one by one.",
+  "Trusting the generator's peak rating to cover motor starts. Size the rated output for the starting peak and keep the generator's own peak as reserve."
+ ],
+ "safety": "A motor that cannot start draws its full starting current until a breaker opens or it overheats, so do not keep retrying on an undersized generator. Use a changeover switch fitted by a licensed electrician, earth the set, and keep it outdoors away from windows because of carbon monoxide.",
+ "faq": [
+  {
+   "q": "What are the starting watts of a refrigerator?",
+   "a": "About {{a.refrigerator-non-inverter.starting_w|int}} W for a typical non-inverter fridge that runs at {{a.refrigerator-non-inverter.running_w|int}} W, and about {{a.refrigerator-inverter.starting_w|int}} W for an inverter fridge. Your fridge's own figure may differ; type its label watts into the list."
+  },
+  {
+   "q": "What are the starting watts of an AC?",
+   "a": "For non-inverter split ACs about {{a.ac-split-1ton-non-inverter.starting_w|int}} W (1 ton), {{a.ac-split-1-5ton-non-inverter.starting_w|int}} W (1.5 ton) and {{a.ac-split-2ton-non-inverter.starting_w|int}} W (2 ton). Inverter ACs have no hard start; their highest draw is the maximum input, about {{a.ac-split-1-5ton-inverter.starting_w|int}} W for 1.5 ton."
+  },
+  {
+   "q": "How do I calculate surge watts for a generator?",
+   "a": "Add the running watts of everything that will be on, then add the largest single jump (starting watts minus running watts) of any one motor or compressor. That total is the surge the generator must supply."
+  },
+  {
+   "q": "Do I add the starting watts of all my appliances?",
+   "a": "No. Add all running watts, then only the biggest starting jump. In the default list the pump, the fridge and the washer all have a jump, but only the pump's is added, giving {{out.peak_w|int}} W."
+  },
+  {
+   "q": "How long do starting watts last?",
+   "a": "Usually a second or two for a fridge, pump or AC compressor, a little longer for a heavily loaded pump. Short as it is, the generator must deliver it or the voltage collapses and the motor stalls."
+  },
+  {
+   "q": "Is there a starting watts chart?",
+   "a": "Yes, the table above lists eight motors and compressors with their running watts, starting watts and the generator each needs alone, from a deep freezer ({{a.deep-freezer.starting_w|int}} W at start) to a 2 ton non-inverter AC ({{a.ac-split-2ton-non-inverter.starting_w|int}} W)."
+  }
+ ],
+ "related": [
+  "C4",
+  "C5",
+  "C6",
+  "H5",
+  "C2"
+ ],
+ "next": "C1",
+ "literal_numbers": [
+  "1,000",
+  "1.5 ton",
+  "1 ton",
+  "2 ton",
+  "1 hp",
+  "2 hp"
+ ],
+ "sources": [
+  {
+   "label": "Virginia Tech Extension: appliance wattage table (running and starting watts)",
+   "url": "https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

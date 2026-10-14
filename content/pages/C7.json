@@ -58,6 +58,7 @@
    "name": "loads",
    "label": "Your own list: appliances to run at the same time",
    "type": "loads",
+   "start": true,
    "catalog": "all",
    "default": [
     {
@@ -81,7 +82,7 @@
      "qty": 1
     }
    ],
-   "hint": "Add everything you want on the generator at once. The check uses running watts and the starting surge of the largest motor or compressor."
+   "hint": "Add everything you want on the generator at once. The check uses running watts and the starting surge of the largest motor or compressor. Starting watts: leave it blank for an appliance picked from the list (its own starting watts are used); for a custom motor or compressor type its starting watts."
   },
   {
    "name": "appliance",
@@ -428,7 +429,8 @@
   "D4",
   "E1",
   "E2",
-  "B4"
+  "B4",
+  "C8"
  ],
  "next": "C6",
  "literal_numbers": [

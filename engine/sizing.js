@@ -1,5 +1,5 @@
 // C. Inverter & generator sizing (specs/formulas.md section C), sanctioned load (G, N4).
-import { calculator, CalcError, num, pos, frac, nonneg, ceilSafe, dflt, appliance, has } from './core.js';
+import { calculator, CalcError, num, pos, frac, nonneg, ceilSafe, dflt, appliance, has, pick } from './core.js';
 
 /**
  * loads: [{ name, run, start, qty }] for appliances ON AT THE SAME TIME. start defaults to run.
@@ -22,9 +22,10 @@ export function sumLoads(loads) {
 }
 
 /**
- * Appliance rows for the load, inverter, generator and solar tools: [{ id, watts, qty, hours }] (or plain { run, start, qty } rows). `id` picks running/starting watts and the
+ * Appliance rows for the load, inverter, generator and solar tools: [{ id, watts, start, qty, hours }] (or plain { run, start, qty } rows). `id` picks running/starting watts and the
  * typical hours from data/appliances.json ("custom" or blank = the watts entered); `watts` overrides the
- * running watts (starting watts scale with it); qty defaults to 1; hours per day defaults to the appliance's typical hours.
+ * running watts (starting watts scale with it); `start` (optional, blank = auto) sets the starting watts, e.g. a custom
+ * motor's surge (custom rows otherwise start at their running watts); qty defaults to 1; hours per day defaults to the appliance's typical hours.
  */
 export function loadRows(loads, d) {
   if (!Array.isArray(loads) || loads.length === 0) throw new CalcError('loads_required', 'loads');
@@ -74,7 +75,7 @@ function generatorFor(loads, i, d) {
   const recommended_kva = sized_w / pf / 1000;
   const sizes = dflt(d, 'standard_generator_kva');
   const standard_kva = sizes.find((s) => s >= recommended_kva - 1e-9);
-  const out = { running_w, peak_w: surge_w, margin, pf, sized_w, recommended_kva, recommended_kw: sized_w / 1000, above_standard_sizes: standard_kva === undefined };
+  const out = { running_w, peak_w: surge_w, margin, pf, running_margin_w: running_w * margin, sized_w, recommended_kva, recommended_kw: sized_w / 1000, above_standard_sizes: standard_kva === undefined };
   if (standard_kva !== undefined) out.standard_kva = standard_kva;
   return out;
 }

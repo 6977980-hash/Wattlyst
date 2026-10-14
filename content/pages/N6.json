@@ -1,0 +1,305 @@
+{
+ "id": "N6",
+ "status": "publish",
+ "template": "tool",
+ "h1": "Solar Output Forecast Tomorrow for Your City",
+ "author": "ali-ahmad",
+ "published": "2026-10-14",
+ "reviewed": "2026-10-14",
+ "calc": "solar_forecast",
+ "live": "open_meteo",
+ "submit": "Show my solar output",
+ "fields": [
+  {
+   "name": "city",
+   "label": "City",
+   "type": "select",
+   "options_from": "cities",
+   "default": "lahore",
+   "hint": "The forecast is for the city centre; choose the nearest listed city."
+  },
+  {
+   "name": "kwp",
+   "label": "Solar system size",
+   "unit": "kW",
+   "default": 5,
+   "hint": "Total panel watts ÷ 1,000, for example ten 585 W panels = 5.85 kW."
+  },
+  {
+   "name": "tariff",
+   "label": "Value of one unit",
+   "unit": "Rs per unit",
+   "default": "@data.tariff.unprotected.3.rate",
+   "hint": "What a unit saves you: your slab rate if you use the power yourself, or the buyback rate if you export it."
+  },
+  {
+   "name": "pr",
+   "label": "Performance ratio",
+   "unit": "0 to 1",
+   "default": "@pr",
+   "advanced": true,
+   "hint": "Share of the sunlight's energy your system turns into units after heat, dust, wiring and inverter losses."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "day_label",
+   "label": "Showing",
+   "spec": "raw",
+   "label_ur": "Kis din ka andaza"
+  },
+  {
+   "key": "units",
+   "label": "Units your panels should make",
+   "spec": "1",
+   "unit": "kWh",
+   "label_ur": "Panel kitne unit banayenge"
+  },
+  {
+   "key": "sky",
+   "label": "Sky",
+   "spec": "raw",
+   "label_ur": "Mausam"
+  },
+  {
+   "key": "pct_of_typical",
+   "label": "Compared with a typical day",
+   "spec": "int",
+   "unit": "%",
+   "label_ur": "Aam din ke muqable mein"
+  },
+  {
+   "key": "psh",
+   "label": "Peak sun hours",
+   "spec": "1",
+   "unit": "h",
+   "label_ur": "Dhoop ke peak ghante"
+  },
+  {
+   "key": "rs_value",
+   "label": "Value of those units",
+   "spec": "rs",
+   "label_ur": "Un units ki qeemat"
+  }
+ ],
+ "answer": "A {{in.kwp|int}} kW solar system in {{out.city_name}} makes about {{out.units|1}} units on a typical day; tomorrow's figure comes from a live sunshine forecast for your city and moves with the clouds. Units = system kW × forecast peak sun hours × performance ratio ({{d.pr|2}}). A sunny day can beat the average; a cloudy day can halve it.",
+ "how": "{{out.day_label}}: {{out.kwp|2}} kW × {{out.kwh_per_kwp|2}} kWh per kW ({{out.psh|1}} peak sun hours, {{out.sky}}) = {{out.units|1}} units, {{out.pct_of_typical|int}}% of a typical day. At {{out.tariff|rs2}} a unit that is worth {{out.rs_value|rs}}.",
+ "key_facts": [
+  "Solar output on a given day = system kW × peak sun hours on the panels that day × performance ratio; Wattlyst uses a ratio of {{d.pr|2}}.",
+  "A typical day in Lahore gives {{data.cities.lahore.yield|1}} units per kW of panels, Karachi {{data.cities.karachi.yield|1}} and Quetta {{data.cities.quetta.yield|1}} (long-term Global Solar Atlas averages).",
+  "The live forecast is the hourly sunshine on a south-facing panel tilted at {{d.forecast_tilt_deg|int}} degrees, from the free Open-Meteo weather service, added up for tomorrow.",
+  "A day at {{d.forecast_sky_bands.0.min_pct|int}}% or more of the typical output is shown as sunny; below {{d.forecast_sky_bands.2.min_pct|int}}% it is overcast or rainy.",
+  "Forecasts are estimates: haze, dust storms and passing clouds are hard to predict, and the panel temperature and inverter limits are not modelled."
+ ],
+ "formula": {
+  "text": "Units = kW × (Σ hourly irradiance on the panel ÷ 1,000) × PR; typical day = kW × city yield",
+  "lines": [
+   "Σ hourly irradiance = tomorrow's forecast sunshine on the tilted panel, watts per square metre for each hour, added up",
+   "÷ 1,000 turns it into peak sun hours (kWh per square metre)",
+   "PR = performance ratio for losses from heat, dust, wiring and the inverter",
+   "city yield = long-term average units per kW per day (Global Solar Atlas)"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "How many units will my solar make today or tomorrow?",
+   "p": [
+    "Multiply your system size by the day's peak sun hours and by about {{d.pr|2}} for losses. On an average day in {{out.city_name}} a {{in.kwp|int}} kW system makes {{out.units|1}} units. On a clear spring day the forecast can be well above that, as in the sunny example below ({{ex.0.out.units|1}} units); on a day of thick cloud it can drop to {{ex.1.out.units|1}} units.",
+    "The calculator loads tomorrow's hourly forecast for your city as soon as the page opens. If the forecast service cannot be reached, it shows the typical day so you still get a sensible figure."
+   ]
+  },
+  {
+   "h2": "Solar generation forecast for Lahore, Karachi and other cities",
+   "p": [
+    "Each listed city has its own long-term yield and its own live forecast. Sunnier, drier cities such as Quetta make more per kW than Lahore or Peshawar, which see more haze and winter fog; Karachi sits in between. The table below shows a typical day for a {{in.kwp|int}} kW system in each city.",
+    "Use the forecast to plan heavy loads: run the washing machine, water motor or iron on a sunny day and between late morning and mid-afternoon, when the panels produce most."
+   ]
+  },
+  {
+   "h2": "Why is my real output different from the forecast?",
+   "p": [
+    "Dust on the panels, shade from a water tank or a neighbour's wall, a hot day (panels lose output as they heat up), an inverter that limits export, or a grid outage that switches an on-grid inverter off. If your output is regularly below the forecast on sunny days, check for dust first: the cleaning loss calculator shows what dirty panels cost."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "gti_wm2": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     50,
+     200,
+     400,
+     600,
+     750,
+     850,
+     880,
+     850,
+     750,
+     600,
+     400,
+     200,
+     50,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "title": "Clear sunny day, {{in.kwp|int}} kW in Lahore",
+   "text": "The hourly sunshine adds up to {{out.psh|1}} peak sun hours: {{out.kwp|2}} kW × {{out.psh|1}} × {{out.pr|2}} = {{out.units|1}} units, {{out.pct_of_typical|int}}% of a typical day ({{out.sky}})."
+  },
+  {
+   "inputs": {
+    "gti_wm2": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     20,
+     80,
+     150,
+     220,
+     260,
+     280,
+     300,
+     280,
+     240,
+     180,
+     120,
+     60,
+     20,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "title": "Cloudy day, {{in.kwp|int}} kW in Lahore",
+   "text": "Only {{out.psh|1}} peak sun hours reach the panels: {{out.kwp|2}} kW × {{out.psh|1}} × {{out.pr|2}} = {{out.units|1}} units, {{out.pct_of_typical|int}}% of a typical day ({{out.sky}})."
+  },
+  {
+   "inputs": {
+    "city": "karachi",
+    "kwp": 10
+   },
+   "title": "Typical day, {{in.kwp|int}} kW in Karachi",
+   "text": "{{out.kwp|int}} kW × {{out.kwh_per_kwp|1}} units per kW = {{out.units|1}} units, worth {{out.rs_value|rs}} at {{out.tariff|rs2}} a unit."
+  },
+  {
+   "inputs": {
+    "city": "quetta",
+    "kwp": 3
+   },
+   "title": "Typical day, {{in.kwp|int}} kW in Quetta",
+   "text": "{{out.kwp|int}} kW × {{out.kwh_per_kwp|1}} units per kW = {{out.units|1}} units on an average day."
+  }
+ ],
+ "table": {
+  "caption": "Typical daily solar output for a {{in.kwp|int}} kW system by city",
+  "rows": [
+   {
+    "city": "lahore"
+   },
+   {
+    "city": "karachi"
+   },
+   {
+    "city": "islamabad"
+   },
+   {
+    "city": "peshawar"
+   },
+   {
+    "city": "quetta"
+   },
+   {
+    "city": "multan"
+   }
+  ],
+  "columns": [
+   {
+    "label": "City",
+    "tpl": "{{out.city_name}}"
+   },
+   {
+    "label": "Units per kW a day",
+    "tpl": "{{out.kwh_per_kwp|1}}"
+   },
+   {
+    "label": "Units a day",
+    "tpl": "{{out.units|1}}"
+   }
+  ]
+ },
+ "mistakes": [
+  "Expecting the panel rating every hour. A {{in.kwp|int}} kW system gives close to its rating only around midday on a clear, cool day.",
+  "Comparing one day with the monthly average. One cloudy day says little; compare a week of real output with a week of forecasts.",
+  "Forgetting losses. Irradiance × kW alone, without the {{out.pr|2}} performance ratio, overstates output by about {{out.no_loss_overstatement|pct}} (one ÷ {{out.pr|2}}, minus one).",
+  "Ignoring dust. A few weeks without cleaning in a dusty city can cost more output than a cloudy day."
+ ],
+ "safety": "Do not climb onto the roof or open the inverter to check output; read it from the inverter display or app, and leave DC wiring work to a licensed electrician.",
+ "faq": [
+  {
+   "q": "How many units will my solar make tomorrow?",
+   "a": "Pick your city and system size above: the page loads tomorrow's hourly sunshine forecast and shows the units. On a typical day a {{in.kwp|int}} kW system in Lahore makes about {{out.units|1}} units."
+  },
+  {
+   "q": "How many units does a 5 kW solar system make per day in Pakistan?",
+   "a": "About {{ex.2.out.kwh_per_kwp|1}} units per kW a day in Karachi and {{data.cities.lahore.yield|1}} in Lahore on average, so around {{out.units|int}} units a day in Lahore, more in summer and on clear days, less in foggy winter weeks."
+  },
+  {
+   "q": "Where does the forecast come from?",
+   "a": "From Open-Meteo, a free weather service that publishes hourly forecasts of sunshine on a tilted panel. Your browser asks for the chosen city only; no personal data is sent."
+  },
+  {
+   "q": "Why does the forecast say cloudy when it looks sunny?",
+   "a": "Thin high cloud and haze cut sunshine more than they seem to, and the forecast covers the whole day, not the current hour. Check again the evening before for the latest run."
+  },
+  {
+   "q": "Is the forecast accurate enough to plan loads?",
+   "a": "Good enough to decide which day to run heavy loads; not a guarantee. Forecast error grows with cloud and dust, and the calculator does not model panel heat or inverter limits."
+  },
+  {
+   "q": "How many units does my solar make on a cloudy day?",
+   "a": "The calculator calls a day {{d.forecast_sky_bands.2.label}} when the forecast gives from {{d.forecast_sky_bands.2.min_pct|int}}% to under {{d.forecast_sky_bands.1.min_pct|int}}% of a typical day's units; thick overcast or rain gives less. In the cloudy example above, a {{in.kwp|int}} kW system makes {{ex.1.out.units|1}} units against {{out.units|1}} on an average day."
+  }
+ ],
+ "related": [
+  "D7",
+  "N12",
+  "N14",
+  "D10",
+  "D8"
+ ],
+ "next": "N12",
+ "literal_numbers": [
+  "1,000",
+  "585 W",
+  "5.85 kW",
+  "5 kW"
+ ],
+ "sources": [
+  {
+   "label": "Open-Meteo weather forecast API (hourly global tilted irradiance)",
+   "url": "https://open-meteo.com/en/docs"
+  },
+  {
+   "label": "Global Solar Atlas long-term solar data",
+   "url": "https://globalsolaratlas.info/"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

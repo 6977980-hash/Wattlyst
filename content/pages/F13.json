@@ -1,0 +1,276 @@
+{
+ "id": "F13",
+ "status": "publish",
+ "template": "tool",
+ "h1": "Peak Hours LESCO 2026: Peak and Off-Peak Timings for Every DISCO",
+ "author": "ali-ahmad",
+ "published": "2026-10-14",
+ "reviewed": "2026-10-14",
+ "calc": "bill_tou",
+ "submit": "Work out the ToU bill",
+ "fields": [
+  {
+   "name": "peak_units",
+   "label": "Peak units",
+   "unit": "units",
+   "default": 150,
+   "hint": "Units used in peak hours this month: the peak reading on a ToU bill."
+  },
+  {
+   "name": "offpeak_units",
+   "label": "Off-peak units",
+   "unit": "units",
+   "default": 650,
+   "hint": "Units used in all other hours: the off-peak reading on the bill."
+  },
+  {
+   "name": "sanctioned_kw",
+   "label": "Sanctioned load",
+   "unit": "kW",
+   "default": "@tou_threshold_kw",
+   "hint": "The kW printed on the bill. ToU meters are fitted to domestic connections at this size and above."
+  },
+  {
+   "name": "mdi_kw",
+   "label": "MDI (maximum demand)",
+   "unit": "kW",
+   "advanced": true,
+   "hint": "The MDI reading on the bill, if shown. Leave blank if your bill has none; the fixed charge then uses half the sanctioned load."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "energy_rs",
+   "label": "Energy charge",
+   "spec": "rs"
+  },
+  {
+   "key": "fixed_rs",
+   "label": "Fixed charge",
+   "spec": "rs"
+  },
+  {
+   "key": "units",
+   "label": "Units a month",
+   "spec": "int",
+   "unit": "units"
+  },
+  {
+   "key": "billable_kw",
+   "label": "Fixed charge billed on",
+   "spec": "1",
+   "unit": "kW"
+  }
+ ],
+ "answer": "Peak hours for LESCO and the other ex-WAPDA DISCOs are {{data.tariff.tou.peak_hours.seasons.2.from}} to {{data.tariff.tou.peak_hours.seasons.2.to}} in {{data.tariff.tou.peak_hours.seasons.2.months}} and {{data.tariff.tou.peak_hours.seasons.0.from}} to {{data.tariff.tou.peak_hours.seasons.0.to}} in {{data.tariff.tou.peak_hours.seasons.0.months}}, per NEPRA's 2023 IESCO schedule, not yet re-confirmed for 2026. They matter on time-of-use meters ({{d.tou_threshold_kw|int}} kW and above): energy charge = peak units × {{data.tariff.tou.peak|rs2}} + off-peak units × {{data.tariff.tou.offpeak|rs2}}.",
+ "how": "Energy: {{out.peak_units|int}} peak units at the peak rate + {{out.offpeak_units|int}} off-peak units at the off-peak rate = {{out.energy_rs|rs}} for {{out.units|int}} units. Fixed charge: billed on {{out.billable_kw|1}} kW, the higher of half the {{out.sanctioned_kw|1}} kW sanctioned load and the MDI entered ({{out.mdi_kw|1}} kW) = {{out.fixed_rs|rs}}. FC surcharge, QTA, FPA and GST come on top; this tool works out the energy and fixed charge only.",
+ "key_facts": [
+  "Under the latest NEPRA schedule found (the 2023 IESCO tariff determination; PITC's bill portal confirms only the {{data.tariff.tou.peak_hours.seasons.0.months}} window), peak hours are {{data.tariff.tou.peak_hours.seasons.0.from}} to {{data.tariff.tou.peak_hours.seasons.0.to}} in {{data.tariff.tou.peak_hours.seasons.0.months}}, {{data.tariff.tou.peak_hours.seasons.1.from}} to {{data.tariff.tou.peak_hours.seasons.1.to}} in {{data.tariff.tou.peak_hours.seasons.1.months}}, {{data.tariff.tou.peak_hours.seasons.2.from}} to {{data.tariff.tou.peak_hours.seasons.2.to}} in {{data.tariff.tou.peak_hours.seasons.2.months}} and {{data.tariff.tou.peak_hours.seasons.3.from}} to {{data.tariff.tou.peak_hours.seasons.3.to}} in {{data.tariff.tou.peak_hours.seasons.3.months}}; every other hour is off-peak.",
+  "Peak hours change the price only on a time-of-use (ToU) meter, which domestic connections of {{d.tou_threshold_kw|int}} kW sanctioned load or more must have; smaller connections pay the normal slab rate at any hour.",
+  "On the A-1 domestic ToU tariff a peak unit costs {{data.tariff.tou.peak|rs2}} and an off-peak unit {{data.tariff.tou.offpeak|rs2}}, so every unit moved out of peak hours saves the difference between the two.",
+  "A ToU home using {{out.peak_units|int}} peak and {{out.offpeak_units|int}} off-peak units pays {{out.energy_rs|rs}} in energy charges; with only {{ex.1.in.peak_units|int}} of the same units in peak hours the charge falls to {{ex.1.out.energy_rs|rs}}.",
+  "K-Electric publishes its own peak-hour timings, so Karachi consumers should check K-Electric's schedule rather than the DISCO one."
+ ],
+ "formula": {
+  "text": "ToU energy charge = peak units × peak rate + off-peak units × off-peak rate; fixed charge = fixed rate per kW × max(half the sanctioned load, MDI)",
+  "lines": [
+   "peak and off-peak rates = A-1 domestic ToU rates in the NEPRA tariff (data/tariff-pk-2026.json)",
+   "peak window = the season's peak hours; every other hour is off-peak",
+   "MDI = maximum demand indicator reading in kW",
+   "FC surcharge, QTA, FPA and GST are added on the real bill"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "LESCO peak hours 2026 by season",
+   "p": [
+    "The latest peak-hour schedule we could find on NEPRA's site is the one in its 2023 tariff determination for IESCO. The PITC bill portal (the billing system the government DISCOs share) currently shows only the {{data.tariff.tou.peak_hours.seasons.0.months}} window, which matches it; the other three seasons below come from the 2023 determination alone. It gives four seasons, each with a {{data.tariff.tou.peak_hours.seasons.0.hours|int}}-hour evening peak.",
+    "{{data.tariff.tou.peak_hours.seasons.0.months}}: peak {{data.tariff.tou.peak_hours.seasons.0.from}} to {{data.tariff.tou.peak_hours.seasons.0.to}}. {{data.tariff.tou.peak_hours.seasons.1.months}}: peak {{data.tariff.tou.peak_hours.seasons.1.from}} to {{data.tariff.tou.peak_hours.seasons.1.to}}. {{data.tariff.tou.peak_hours.seasons.2.months}}: peak {{data.tariff.tou.peak_hours.seasons.2.from}} to {{data.tariff.tou.peak_hours.seasons.2.to}}. {{data.tariff.tou.peak_hours.seasons.3.months}}: peak {{data.tariff.tou.peak_hours.seasons.3.from}} to {{data.tariff.tou.peak_hours.seasons.3.to}}.",
+    "This schedule has not been re-confirmed for 2026. An August 2025 news report said NEPRA asked the DISCOs to propose peak hours ending no later than eleven at night; we have not found a decision adopting a new schedule. The time printed on your own ToU bill or your DISCO's notice overrides this page."
+   ]
+  },
+  {
+   "h2": "Peak hours IESCO, MEPCO and the other DISCOs",
+   "p": [
+    "We expect the same schedule to apply to all ex-WAPDA DISCOs: LESCO, IESCO, MEPCO, GEPCO, FESCO, PESCO, HESCO, SEPCO, QESCO and TESCO. The 2023 determination we found is IESCO's, but the DISCOs bill through the same PITC system, which shows one {{data.tariff.tou.peak_hours.seasons.0.months}} window for all of them. That is an inference for the other seasons, not a published fact, so check the peak time printed on your own ToU bill.",
+    "K-Electric is the exception. It sets and publishes its own peak-hour timings for Karachi, so check K-Electric's schedule or your bill rather than the schedule above."
+   ]
+  },
+  {
+   "h2": "Off peak hours: when is electricity cheaper?",
+   "p": [
+    "Every hour outside the peak window is off-peak: in {{data.tariff.tou.peak_hours.seasons.2.months}} that means before {{data.tariff.tou.peak_hours.seasons.2.from}} and after {{data.tariff.tou.peak_hours.seasons.2.to}}, the whole night and the whole day included. An off-peak unit costs {{data.tariff.tou.offpeak|rs2}} against {{data.tariff.tou.peak|rs2}} for a peak unit on the domestic ToU tariff."
+   ]
+  },
+  {
+   "h2": "Peak hours in summer and winter",
+   "p": [
+    "The peak moves with sunset. In summer ({{data.tariff.tou.peak_hours.seasons.2.months}}) it is latest, {{data.tariff.tou.peak_hours.seasons.2.from}} to {{data.tariff.tou.peak_hours.seasons.2.to}}, when evening AC use is highest. In winter ({{data.tariff.tou.peak_hours.seasons.0.months}}) it is earliest, {{data.tariff.tou.peak_hours.seasons.0.from}} to {{data.tariff.tou.peak_hours.seasons.0.to}}, when lights, heaters and geysers come on after dark. Spring and autumn sit in between."
+   ]
+  },
+  {
+   "h2": "Who pays peak rates: ToU meter rates explained",
+   "p": [
+    "Only connections on a time-of-use meter. NEPRA's domestic tariff puts every connection with a sanctioned load of {{d.tou_threshold_kw|int}} kW or more on a ToU meter, which records peak and off-peak units separately. A smaller connection on a normal meter pays its slab rate whatever the hour, so shifting use to the night does not change its bill.",
+    "A ToU bill has two energy lines, peak units at {{data.tariff.tou.peak|rs2}} and off-peak units at {{data.tariff.tou.offpeak|rs2}}, and a fixed charge of {{data.tariff.tou.fixed_per_kw|rs}} per kW on the higher of half the sanctioned load and the MDI. The FC surcharge, quarterly adjustment, fuel adjustment and GST are added after that, as on any bill."
+   ]
+  },
+  {
+   "h2": "How much you save by shifting AC, iron and motor use",
+   "p": [
+    "Every unit moved out of the peak window saves the gap between {{data.tariff.tou.peak|rs2}} and {{data.tariff.tou.offpeak|rs2}}. For the default month, {{out.peak_units|int}} peak and {{out.offpeak_units|int}} off-peak units cost {{out.energy_rs|rs}}; with only {{ex.1.in.peak_units|int}} units in the peak, the same total costs {{ex.1.out.energy_rs|rs}}.",
+    "The easy moves: iron, run the washing machine and fill the water tank with the motor before the peak starts; pre-cool rooms before the peak and raise the AC set point by a degree or two during it; charge UPS batteries off-peak. The ToU calculator above shows the bill for your own peak and off-peak readings."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {},
+   "title": "{{in.peak_units|int}} peak and {{in.offpeak_units|int}} off-peak units on a {{in.sanctioned_kw|int}} kW connection",
+   "text": "Energy {{out.energy_rs|rs}} for {{out.units|int}} units; fixed charge on {{out.billable_kw|1}} kW = {{out.fixed_rs|rs}}."
+  },
+  {
+   "inputs": {
+    "peak_units": 50,
+    "offpeak_units": 750
+   },
+   "title": "Same {{out.units|int}} units, peak use cut to {{in.peak_units|int}}",
+   "text": "Energy {{out.energy_rs|rs}} instead of {{ex.0.out.energy_rs|rs}}, by moving the iron, the water motor and some AC hours out of the peak window. The fixed charge stays {{out.fixed_rs|rs}}."
+  },
+  {
+   "inputs": {
+    "peak_units": 300,
+    "offpeak_units": 500
+   },
+   "title": "Evening AC in the peak: {{in.peak_units|int}} peak units",
+   "text": "Energy {{out.energy_rs|rs}} for the same {{out.units|int}} units, the most expensive way to use them."
+  },
+  {
+   "inputs": {
+    "peak_units": 250,
+    "offpeak_units": 1150,
+    "sanctioned_kw": 10,
+    "mdi_kw": 7
+   },
+   "title": "Large house: {{in.sanctioned_kw|int}} kW sanctioned, MDI {{in.mdi_kw|int}} kW",
+   "text": "Energy {{out.energy_rs|rs}} for {{out.units|int}} units. The MDI of {{out.mdi_kw|int}} kW is above half the sanctioned load, so the fixed charge is billed on {{out.billable_kw|1}} kW: {{out.fixed_rs|rs}}."
+  }
+ ],
+ "table": {
+  "caption": "Energy charge for the same {{out.units|int}} units with more or less of it in peak hours ({{in.sanctioned_kw|int}} kW ToU connection, energy and fixed charge only)",
+  "rows": [
+   {
+    "peak_units": 0,
+    "offpeak_units": 800
+   },
+   {
+    "peak_units": 50,
+    "offpeak_units": 750
+   },
+   {
+    "peak_units": 100,
+    "offpeak_units": 700
+   },
+   {
+    "peak_units": 150,
+    "offpeak_units": 650
+   },
+   {
+    "peak_units": 200,
+    "offpeak_units": 600
+   },
+   {
+    "peak_units": 300,
+    "offpeak_units": 500
+   }
+  ],
+  "columns": [
+   {
+    "label": "Peak units",
+    "tpl": "{{in.peak_units|int}}"
+   },
+   {
+    "label": "Off-peak units",
+    "tpl": "{{in.offpeak_units|int}}"
+   },
+   {
+    "label": "Energy charge",
+    "tpl": "{{out.energy_rs|rs}}"
+   },
+   {
+    "label": "Fixed charge",
+    "tpl": "{{out.fixed_rs|rs}}"
+   }
+  ]
+ },
+ "mistakes": [
+  "Shifting use to the night on a normal meter. Below {{d.tou_threshold_kw|int}} kW sanctioned load the bill uses slab rates at every hour, so the time of use does not change the price.",
+  "Using another DISCO's or K-Electric's timings. K-Electric publishes its own schedule; check the time on your own bill.",
+  "Treating this schedule as confirmed for 2026. It is NEPRA's 2023 schedule; a newer one may apply, and your DISCO's notice overrides it.",
+  "Forgetting the fixed charge. On a ToU meter it is billed on the higher of half the sanctioned load and the MDI, so a high evening MDI raises it too."
+ ],
+ "safety": "Running the water motor, washing machine or geyser on a timer to beat the peak is fine, but timers and contactors on motor and geyser circuits must be rated for the load and fitted by a licensed electrician.",
+ "faq": [
+  {
+   "q": "What are the peak hours for LESCO in 2026?",
+   "a": "Under NEPRA's latest schedule found, from 2023: {{data.tariff.tou.peak_hours.seasons.0.from}} to {{data.tariff.tou.peak_hours.seasons.0.to}} in {{data.tariff.tou.peak_hours.seasons.0.months}}, {{data.tariff.tou.peak_hours.seasons.1.from}} to {{data.tariff.tou.peak_hours.seasons.1.to}} in {{data.tariff.tou.peak_hours.seasons.1.months}}, {{data.tariff.tou.peak_hours.seasons.2.from}} to {{data.tariff.tou.peak_hours.seasons.2.to}} in {{data.tariff.tou.peak_hours.seasons.2.months}} and {{data.tariff.tou.peak_hours.seasons.3.from}} to {{data.tariff.tou.peak_hours.seasons.3.to}} in {{data.tariff.tou.peak_hours.seasons.3.months}}. It is not yet re-confirmed for 2026; check your bill."
+  },
+  {
+   "q": "What are the peak hours for IESCO and MEPCO?",
+   "a": "Most likely the same as LESCO. The schedule here is from NEPRA's 2023 IESCO determination; the PITC bill portal, shared by all ex-WAPDA DISCOs, confirms only the {{data.tariff.tou.peak_hours.seasons.0.months}} window, so check your bill for the other seasons. By the 2023 schedule, in {{data.tariff.tou.peak_hours.seasons.2.months}} the peak is {{data.tariff.tou.peak_hours.seasons.2.from}} to {{data.tariff.tou.peak_hours.seasons.2.to}}."
+  },
+  {
+   "q": "What are the off-peak hours?",
+   "a": "Every hour outside the evening peak window, including the whole day and night. Off-peak units cost {{data.tariff.tou.offpeak|rs2}} on the domestic ToU tariff."
+  },
+  {
+   "q": "What are the peak hours in winter?",
+   "a": "{{data.tariff.tou.peak_hours.seasons.0.from}} to {{data.tariff.tou.peak_hours.seasons.0.to}} in {{data.tariff.tou.peak_hours.seasons.0.months}} under the 2023 schedule, the earliest window of the year."
+  },
+  {
+   "q": "What are the ToU meter rates?",
+   "a": "{{data.tariff.tou.peak|rs2}} per peak unit and {{data.tariff.tou.offpeak|rs2}} per off-peak unit on the A-1 domestic tariff, plus a fixed charge of {{data.tariff.tou.fixed_per_kw|rs}} per kW on the higher of half the sanctioned load and the MDI."
+  },
+  {
+   "q": "Do peak hours matter if I do not have a ToU meter?",
+   "a": "No. Below {{d.tou_threshold_kw|int}} kW sanctioned load the bill is worked out on slab rates whatever the time, so use the normal bill calculator instead."
+  },
+  {
+   "q": "Are K-Electric peak hours different?",
+   "a": "K-Electric publishes its own peak-hour timings, so check its schedule or your Karachi bill rather than the DISCO schedule on this page."
+  }
+ ],
+ "related": [
+  "F1",
+  "F2",
+  "N4",
+  "D11",
+  "F12",
+  "E5"
+ ],
+ "next": "F1",
+ "literal_numbers": [
+  "2023",
+  "2025",
+  "2026",
+  "A-1"
+ ],
+ "sources": [
+  {
+   "label": "NEPRA tariff determination for IESCO (schedule of peak and off-peak timings for ToU tariffs, 2023)",
+   "url": "https://nepra.org.pk/tariff/Tariff/DISCOs/IESCO/2023/TRF-607%20&TRF%20608%20IESCO%20FY%202023%2024%2014-07-2023%2018263-69.PDF"
+  },
+  {
+   "label": "PITC bill portal: peak and off-peak timings",
+   "url": "https://bill.pitc.com.pk/peak-offpeak-timing"
+  },
+  {
+   "label": "NEPRA tariff decision 11 Feb 2026, A-1 domestic (ToU rates and fixed charge per kW)",
+   "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}
