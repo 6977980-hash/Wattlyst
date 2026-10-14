@@ -197,6 +197,11 @@ test('a tool page loads under 30 KB of JavaScript (seo-rules.md 4)', () => {
   for (const m of ['conversions', 'battery', 'sizing', 'solar', 'bill', 'load', 'wiring', 'planner', 'prices', 'forecast', 'fuel', 'solartools']) {
     assert.ok(base + size(`engine/${m}.js`) < 30 * 1024, `${m}: ${base + size(`engine/${m}.js`)} bytes`);
   }
+  // Pages with an appliance list also load assets/js/wattlyst-loads.js (audit Phase 3 split it out of the tool script).
+  for (const p of pages.filter((x) => x.content?.tool?.fields?.some((f) => f.type === 'loads'))) {
+    const total = base + size(`engine/${p.content.tool.module}`) + size('assets/js/wattlyst-loads.js');
+    assert.ok(total < 30 * 1024, `${p.id}: ${total} bytes`);
+  }
 });
 
 test('PHP files have no syntax errors', (t) => {

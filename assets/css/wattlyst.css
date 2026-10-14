@@ -29,7 +29,7 @@
 .wl-result output{display:block;font-size:1.5rem;font-weight:700;color:var(--wl-accent)}
 .wl-how,.wl-facts{border-left:4px solid var(--wl-accent-2);padding:.25rem 0 .25rem 1rem}
 .wl-eq code{font-size:1.05rem;background:var(--wl-bg-soft);padding:.25rem .5rem;border-radius:4px;color:var(--wl-ink)}
-.wl-table-wrap{overflow-x:auto}
+.wl-table-wrap{overflow-x:auto;position:relative}
 .wl-table{border-collapse:collapse;width:100%;font-size:.95rem}
 .wl-table caption{text-align:left;font-weight:600;padding:.5rem 0}
 .wl-table th,.wl-table td{border:1px solid var(--wl-line);padding:.5rem .6rem;text-align:left}
@@ -98,8 +98,8 @@
 .wl-bus-pos{border-left:4px solid var(--wl-warn);padding-left:.2rem}
 .wl-string-label{display:block;font-size:.75rem;color:var(--wl-muted);margin-left:1rem}
 .wl-row{display:flex;align-items:center}
-.wl-lead{flex:0 0 .9rem;border-top:2px solid var(--wl-accent)}
-.wl-lead:last-child{flex-grow:1}
+.wl-wire{flex:0 0 .9rem;border-top:2px solid var(--wl-accent)}
+.wl-wire:last-child{flex-grow:1}
 .wl-fuse{padding:0 .25rem;border:2px solid var(--wl-warn);border-radius:8px;font-size:.7rem;font-weight:700;color:var(--wl-warn);background:#fff}
 .wl-row .wl-more{margin:0 .3rem}
 .wl-cell{display:inline-block;padding:.3rem .45rem;border:2px solid var(--wl-accent);border-radius:4px;font-size:.75rem;font-weight:700;background:#fff}

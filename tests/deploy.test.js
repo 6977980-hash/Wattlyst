@@ -85,7 +85,7 @@ test('WordPress emoji script and styles are removed (WL-57)', () => {
 test('the appliance picker catalog ships ids only; names come from the appliance data (WL-58)', () => {
   const render = php('class-wattlyst-render.php');
   assert.match(render, /'catalog' => isset\( \$f\['catalog'\] \) \? self::catalog_groups\(/);
-  const js = readFileSync(join(root, 'assets/js/wattlyst-tool.js'), 'utf8');
+  const js = readFileSync(join(root, 'assets/js/wattlyst-loads.js'), 'utf8');
   assert.match(js, /for \(const \[cat, ids\] of f\.catalog/);
   assert.match(js, /cfg\.data\.appliances\[id\]\.name/);
   // Every catalog id must be in the page's appliance data, or the picker would throw.

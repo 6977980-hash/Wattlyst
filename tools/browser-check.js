@@ -1,7 +1,8 @@
 // Browser smoke test for CI (audit WL-74: no browser test besides Lighthouse). Opens each URL in headless
 // Chrome at phone width and fails on: a JavaScript error, any script fetched twice (WL-55), the WordPress
 // emoji script (WL-57), or a calculator whose result after Calculate is blank or shows NaN / Infinity / undefined.
-// On pages with an appliance list it also picks an appliance from the picker and adds a row.
+// On pages with an appliance list it also picks an appliance from the picker and adds a row. Every page must
+// fit the phone width with no sideways scroll (audit WL-05).
 // Usage: node tools/browser-check.js <node_modules dir with puppeteer-core + chrome-launcher> <url>... | --all=<base url>
 // (--all checks every live page in generated/manifest.json plus /embed/<id>/ of one tool.)
 // (both come with the lighthouse install in CI; set CHROME_PATH to use a specific Chrome.)
@@ -36,6 +37,8 @@ for (const url of urls) {
   page.on('request', (r) => { if (r.resourceType() === 'script' || r.url().endsWith('.js') || r.url().includes('.js?')) scripts.push(r.url()); });
   const res = await page.goto(url, { waitUntil: 'networkidle0' });
   if (!res || res.status() !== 200) fail(`HTTP ${res && res.status()}`);
+  const wide = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  if (wide > 0) fail(`page scrolls sideways by ${wide} px at phone width`);
   if (await page.$('form[data-wl-tool]')) {
     const picker = await page.$('.wl-load-row select');
     if (picker) {

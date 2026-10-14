@@ -13,6 +13,7 @@ const EXACT = {
   range_invalid: 'The low end of the price range must be below the high end.',
   solar_covers_load: 'Your solar covers the whole daily load even on a cloudy day, so the battery does not run down.',
   tariff_data_missing: 'Tariff data could not be loaded. Please refresh the page.',
+  calculator_failed: 'The calculator could not start. Please refresh the page.',
   tou_required_at_5kw: 'Connections of 5 kW or more are billed on a Time-of-Use (peak/off-peak) meter. Use the ToU bill option.',
   type_invalid: 'Choose MPPT or PWM.',
   usage_required: 'Enter your monthly units or daily kWh.',
