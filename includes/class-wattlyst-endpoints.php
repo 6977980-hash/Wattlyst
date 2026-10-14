@@ -41,10 +41,59 @@ final class Wattlyst_Endpoints {
 				$this->text( 'google.com, ' . $pub . ", DIRECT, f08c47fec0942fa0\n" );
 			}
 		}
+		// Data page downloads: /data/{name}.csv from generated/data/ (built with the page, same numbers).
+		if ( preg_match( '#^data/([a-z0-9-]+)\.csv$#', $file, $m ) ) {
+			$csv = WATTLYST_TOOLS_DIR . 'generated/data/' . $m[1] . '.csv';
+			if ( is_readable( $csv ) ) {
+				status_header( 200 );
+				header( 'Content-Type: text/csv; charset=utf-8' );
+				header( 'Content-Disposition: attachment; filename="' . $m[1] . '.csv"' );
+				header( 'Cache-Control: public, max-age=3600' );
+				header( 'X-Robots-Tag: noindex' );
+				readfile( $csv ); // phpcs:ignore WordPress.WP.AlternativeFunctions
+				exit;
+			}
+		}
+		// Embeddable calculators: /embed/{id}/ (see the embed page for the codes).
+		if ( preg_match( '#^embed/([a-z0-9-]+)/?$#', $file, $m ) ) {
+			$this->embed( $m[1] );
+		}
 		$key = $this->indexnow_key();
 		if ( $file === $key . '.txt' ) {
 			$this->text( $key );
 		}
+	}
+
+	/**
+	 * A calculator on its own for an iframe on another site: no theme, no ads, noindex, canonical to the full
+	 * page, and a visible credit link. Unknown or unpublished ids fall through to WordPress (404).
+	 */
+	private function embed( string $slug ): void {
+		$row = null;
+		foreach ( $this->plugin->manifest()['pages'] ?? array() as $r ) {
+			if ( strtolower( $r['id'] ) === $slug && ! empty( $r['live'] ) ) {
+				$row = $r;
+			}
+		}
+		$page = $row ? $this->plugin->page( $row['id'] ) : null;
+		if ( ! $page || empty( $page['content']['tool'] ) ) {
+			return;
+		}
+		require_once WATTLYST_TOOLS_DIR . 'includes/class-wattlyst-render.php';
+		$body = ( new Wattlyst_Render( $this->plugin, $page ) )->embed_html();
+		$css  = WATTLYST_TOOLS_DIR . 'assets/css/wattlyst.css';
+		status_header( 200 );
+		header( 'Content-Type: text/html; charset=utf-8' );
+		header( 'Cache-Control: public, max-age=3600' );
+		header( 'X-Robots-Tag: noindex, follow' );
+		echo '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">';
+		echo '<title>' . esc_html( $page['h1'] ) . '</title><meta name="robots" content="noindex, follow">';
+		echo '<link rel="canonical" href="' . esc_url( Wattlyst_Tools::link( $page['url'] ) ) . '">';
+		echo '<style>body{margin:0;padding:12px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;line-height:1.5;color:#1d2327;background:#fff}' . ( is_readable( $css ) ? wp_strip_all_tags( (string) file_get_contents( $css ) ) : '' ) . '</style>';
+		echo '</head><body data-wl-embed>' . $body; // phpcs:ignore WordPress.Security.EscapeOutput -- built from escaped parts in Wattlyst_Render.
+		printf( '<script type="module" src="%s"></script>', esc_url( add_query_arg( 'ver', WATTLYST_TOOLS_VERSION, Wattlyst_Tools::asset( 'dist/assets/js/wattlyst-tool.js' ) ) ) );
+		echo '</body></html>';
+		exit;
 	}
 
 	private function text( string $body ): void {

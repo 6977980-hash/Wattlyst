@@ -54,7 +54,7 @@ const kwRows = parseCsv(readFileSync(join(root, 'specs/keyword-map.csv'), 'utf8'
 test('site-pages.csv: titles, metas and URLs follow seo-rules.md 2 and never clash with keyword-map.csv', () => {
   const seen = new Map(kwRows.flatMap((r) => [[`url:${r.url}`, r.id], [`title:${r.title.toLowerCase()}`, r.id], [`meta:${r.meta_description.toLowerCase()}`, r.id]]));
   for (const r of siteRows) {
-    assert.ok(['trust', 'pillar'].includes(r.type), `${r.id}: type`);
+    assert.ok(['trust', 'pillar', 'data', 'embed'].includes(r.type), `${r.id}: type`);
     assert.ok(r.title.length >= 30 && r.title.length <= 60, `${r.id}: title ${r.title.length}`);
     assert.ok(r.title.endsWith('| Wattlyst'), `${r.id}: brand suffix`);
     assert.ok(r.meta_description.length >= 120 && r.meta_description.length <= 155, `${r.id}: meta ${r.meta_description.length}`);

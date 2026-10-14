@@ -40,6 +40,22 @@ final class Wattlyst_Render {
 			$out .= $this->faq();
 			$out .= $this->author_box();
 			$out .= $this->dates();
+		} elseif ( 'data' === $type ) { // Bill Index, Solar Price Tracker (Phase 5)
+			$out .= $this->answer( $this->c['answer'] ?? '' );
+			$out .= $this->download();
+			$out .= $this->key_facts();
+			$out .= $this->chart();
+			$out .= $this->tables();
+			$out .= $this->sections();
+			$out .= $this->faq();
+			$out .= $this->related();
+			$out .= $this->author_box();
+			$out .= $this->sources();
+		} elseif ( 'embed' === $type ) {
+			$out .= $this->answer( $this->c['answer'] ?? '' );
+			$out .= $this->embeds();
+			$out .= $this->sections();
+			$out .= $this->sources();
 		} elseif ( 'lookup' === $type ) {
 			$out .= $this->answer( $this->c['answer'] ?? '' );
 			$out .= $this->lookup();
@@ -161,6 +177,8 @@ final class Wattlyst_Render {
 			'how'     => $t['how']['tpl'] ?? '',
 			'how_ur'  => $t['how']['tpl_ur'] ?? '',
 			'h1'      => $this->page['h1'],
+			'live'    => $t['live'] ?? '',
+			'diagram' => $t['diagram'] ?? '',
 			'data'    => $this->tool_data( $t['data_keys'] ?? array(), $t['appliances'] ?? array() ),
 		);
 		$form  = '<form class="wl-tool" id="' . esc_attr( $id ) . '" data-wl-tool novalidate>';
@@ -171,10 +189,45 @@ final class Wattlyst_Render {
 		$form .= '<button type="submit" class="wl-btn">' . esc_html( $t['submit'] ?? 'Calculate' ) . '</button>';
 		$notice = (string) ( $t['notice'] ?? '' ); // a warning on the default result, same text the browser prints
 		$form  .= '<p class="wl-error" id="' . esc_attr( $id ) . '-error" role="alert"' . ( '' === $notice ? ' hidden' : '' ) . '>' . esc_html( $notice ) . '</p>';
-		$form .= '<div class="wl-results" aria-live="polite">' . $results . '</div>' . $share;
+		$form .= '<div class="wl-results" aria-live="polite">' . $results . '</div>' . $this->diagram( $t ) . $share;
 		$form .= '<script type="application/json" class="wl-config">' . wp_json_encode( $config, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ) . '</script>';
 		$form .= '</form>';
 		return $form;
+	}
+
+	/**
+	 * N11 battery diagram: one row per parallel string, one box per battery in series, drawn from the result
+	 * values already printed above (the browser redraws it on every calculation). Capped for readability.
+	 */
+	private function diagram( array $t ): string {
+		if ( 'battery_grid' !== ( $t['diagram'] ?? '' ) ) {
+			return '';
+		}
+		$val = static function ( string $key ) use ( $t ): int {
+			foreach ( $t['outputs'] as $o ) {
+				if ( $o['key'] === $key ) {
+					return (int) str_replace( ',', '', (string) $o['value'] );
+				}
+			}
+			return 0;
+		};
+		return '<div class="wl-diagram" data-wl-diagram="battery_grid" role="img" aria-label="Battery wiring diagram">' . self::battery_grid( $val( 'n_series' ), $val( 'n_parallel' ) ) . '</div>';
+	}
+
+	/** Same markup as the browser's drawGrid() in assets/js/wattlyst-tool.js. */
+	public static function battery_grid( int $series, int $parallel ): string {
+		$max  = 8;
+		$rows = '';
+		for ( $p = 1; $p <= min( $parallel, $max ); $p++ ) {
+			$cells = '';
+			for ( $n = 1; $n <= min( $series, $max ); $n++ ) {
+				$cells .= '<span class="wl-cell">+ &minus;</span>';
+			}
+			$more  = $series > $max ? '<span class="wl-more">+' . ( $series - $max ) . '</span>' : '';
+			$rows .= '<div class="wl-string"><span class="wl-string-label">String ' . $p . '</span>' . $cells . $more . '</div>';
+		}
+		$more_rows = $parallel > $max ? '<div class="wl-more">+' . ( $parallel - $max ) . ' more strings</div>' : '';
+		return '<div class="wl-grid"><span class="wl-bus">Positive bus</span>' . $rows . $more_rows . '<span class="wl-bus">Negative bus</span></div>';
 	}
 
 	private function tool_data( array $keys, array $appliances ): array {
@@ -342,6 +395,61 @@ final class Wattlyst_Render {
 			$out .= '<section class="wl-ref"' . $group . '><h2>' . esc_html( $t['caption'] ) . '</h2><div class="wl-table-wrap"><table class="wl-table"><thead><tr>' . $head . '</tr></thead><tbody>' . $rows . '</tbody></table></div></section>';
 		}
 		return $out;
+	}
+
+	/** CSV download, licence and checked date of a data page. */
+	private function download(): string {
+		$d = $this->c['download'] ?? null;
+		if ( ! $d ) {
+			return '';
+		}
+		return '<p class="wl-download"><a class="wl-btn-secondary" href="' . esc_url( Wattlyst_Tools::link( $d['url'] ) ) . '" download>' . esc_html( $d['label'] ) . '</a> <span>Data checked <time datetime="' . esc_attr( $d['checked'] ) . '">' . esc_html( self::date( $d['checked'] ) ) . '</time>. ' . esc_html( $d['license'] ) . '.</span></p>';
+	}
+
+	/** Horizontal bar chart in plain HTML and CSS (no image, no script): each bar's width is its share of the largest value. */
+	private function chart(): string {
+		$ch = $this->c['chart'] ?? null;
+		if ( ! $ch ) {
+			return '';
+		}
+		$out = '<figure class="wl-chart"><figcaption>' . esc_html( $ch['caption'] ) . '</figcaption><dl>';
+		foreach ( $ch['groups'] as $g ) {
+			$out .= '<dt>' . esc_html( $g['label'] ) . '</dt>';
+			foreach ( $g['bars'] as $n => $b ) {
+				$from  = isset( $b['from_pct'] ) ? (float) $b['from_pct'] : 0.0;
+				$style = 'margin-left:' . $from . '%;width:' . max( 0.5, (float) $b['pct'] - $from ) . '%';
+				$out  .= '<dd class="wl-bar wl-bar-' . ( (int) $n % 2 ) . '"><span class="wl-bar-fill" style="' . esc_attr( $style ) . '"></span><span class="wl-bar-text">' . esc_html( ( count( $g['bars'] ) > 1 ? $b['name'] . ': ' : '' ) . $b['text'] ) . '</span></dd>';
+			}
+		}
+		return $out . '</dl></figure>';
+	}
+
+	/** Embed page: one block per live calculator with its iframe and script code, ready to copy. */
+	private function embeds(): string {
+		$out = '';
+		foreach ( $this->c['embeds'] ?? array() as $e ) {
+			$id   = 'wl-embed-' . strtolower( $e['id'] );
+			$out .= '<details class="wl-embed"><summary>' . esc_html( $e['h1'] ) . '</summary>' .
+				'<p><a href="' . esc_url( Wattlyst_Tools::link( $e['url'] ) ) . '">Open the full page</a></p>' .
+				'<label for="' . esc_attr( $id ) . '-iframe">Iframe code</label><textarea id="' . esc_attr( $id ) . '-iframe" readonly rows="4">' . esc_textarea( $e['iframe'] ) . '</textarea>' .
+				'<button type="button" class="wl-btn-secondary" data-wl-copy="' . esc_attr( $id ) . '-iframe">Copy iframe code</button>' .
+				'<label for="' . esc_attr( $id ) . '-script">Script code (resizes itself)</label><textarea id="' . esc_attr( $id ) . '-script" readonly rows="3">' . esc_textarea( $e['script'] ) . '</textarea>' .
+				'<button type="button" class="wl-btn-secondary" data-wl-copy="' . esc_attr( $id ) . '-script">Copy script code</button></details>';
+		}
+		return $out ? '<section class="wl-embeds"><h2>Calculators you can embed</h2>' . $out . '</section>' : '';
+	}
+
+	/**
+	 * The calculator alone, for /embed/{id}/: the tool, its "how" text and the credit link back to the full page.
+	 * No ads, no header or footer; the page itself is noindex with a canonical to the full page.
+	 */
+	public function embed_html(): string {
+		if ( empty( $this->c['tool'] ) ) {
+			return '';
+		}
+		$site = $this->plugin->site();
+		return '<div class="wl-page wl-embedded"><p class="wl-embed-title"><strong>' . esc_html( $this->page['h1'] ) . '</strong></p>' . $this->tool() . $this->how() .
+			'<p class="wl-credit"><a href="' . esc_url( Wattlyst_Tools::link( $this->page['url'] ) ) . '" target="_blank" rel="noopener">Calculator by ' . esc_html( $site['brand'] ?? 'Wattlyst' ) . '</a></p></div>';
 	}
 
 	/** Home page: "What do you want to do?" task cards, one per live hub, each listing its live tools. */

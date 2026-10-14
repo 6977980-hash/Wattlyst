@@ -9,6 +9,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parseCsv } from './lib/csv.js';
 import { stripJs } from './lib/strip.js';
+import { billIndex, solarTracker, embedList } from './lib/datasets.js';
 import { render, fmt, placeholders, isSpec, lookup } from '../engine/format.js';
 import { errorMessage, noticeCode } from '../engine/messages.js';
 
@@ -31,7 +32,8 @@ export async function loadInputs() {
   const cables = readJson('data/cable-ampacity.json');
   const solarPrices = readJson('data/solar-prices.json');
   const inverterCodes = readJson('data/inverter-codes.json');
-  const data = { defaults: readJson('data/defaults.json'), tariff: readJson('data/tariff-pk-2026.json'), cities, appliances: Object.fromEntries(appliances.items.map((a) => [a.id, a])), cables, solar_prices: solarPrices, generator_fuel: readJson('data/generator-fuel.json'), load_profiles: readJson('data/load-profiles.json').profiles };
+  const data = { defaults: readJson('data/defaults.json'), tariff: readJson('data/tariff-pk-2026.json'), cities, appliances: Object.fromEntries(appliances.items.map((a) => [a.id, a])), cables, solar_prices: solarPrices, generator_fuel: readJson('data/generator-fuel.json'), load_profiles: readJson('data/load-profiles.json').profiles,
+    bill_index: readJson('data/bill-index.json'), component_prices: readJson('data/component-prices.json'), solar_price_history: readJson('data/solar-price-history.json') };
   const modules = {};
   for (const m of ENGINE_MODULES) modules[m] = await import(pathToFileURL(join(root, 'engine', `${m}.js`)).href);
   const keywordRows = parseCsv(read('specs/keyword-map.csv'));
@@ -180,6 +182,8 @@ function buildContent(c, ctx) {
       }),
       how: c.how ? { tpl: c.how, text: text(ctx, c.how, scope, 'how'), ...(c.how_ur ? { tpl_ur: c.how_ur, text_ur: text(ctx, c.how_ur, scope, 'how_ur') } : {}) } : null,
       submit: c.submit || 'Calculate',
+      ...(c.diagram ? { diagram: c.diagram } : {}),
+      ...(c.live ? { live: c.live } : {}),
       notice: noticeCode(result) ? errorMessage(noticeCode(result)) : '',
       data_checked: dataChecked(module, { ...ctx, usesAppliances: fields.some((f) => f.type === 'appliance' || f.type === 'loads') }),
     };
@@ -196,6 +200,18 @@ function buildContent(c, ctx) {
     }
   }
   if (c.appliance_table) out.tables = applianceTables(ctx);
+  if (c.dataset) {
+    const make = { bill_index: billIndex, solar_tracker: solarTracker }[c.dataset];
+    if (!make) fail(`${c.id}: unknown dataset ${c.dataset}`);
+    const ds = make(ctx, fail);
+    scope.ds = ds.scope;
+    out.tables = ds.tables;
+    out.chart = ds.chart;
+    out.download = { url: `/data/${ds.csv_name}`, label: 'Download the data (CSV)', checked: ds.checked, license: ds.license };
+    out.sources = [...out.sources, ...ds.sources];
+    ctx.dataset = { csv: ds.csv, csv_name: ds.csv_name, temporal: ds.temporal, measured: ds.measured, license: ds.license, checked: ds.checked };
+  }
+  if (c.embeds) out.embeds = embedList(ctx.allRows, ctx.site, ctx.pluginUrl);
   if (c.codes_table) Object.assign(out, codeTables(ctx, out.sources));
   if (c.calc === 'quote_checker' || c.calc === 'solar_price_estimate') out.sources = [...out.sources, ...priceSources(ctx)];
   if (c.calc === 'panel_price') out.sources = [...out.sources, ...priceSources(ctx, { panelsOnly: true })];
@@ -359,6 +375,25 @@ function schemaFor(page, built, ctx) {
       ...(site.reviewer.status === 'signed_off' ? { reviewedBy: { '@id': `${site.url}#/person/reviewer` } } : {}),
     });
   }
+  if (page.type === 'data' && ctx.dataset) {
+    graph.push({
+      '@type': 'Dataset',
+      '@id': `${abs(page.url)}#dataset`,
+      name: page.h1,
+      description: page.meta,
+      url: abs(page.url),
+      creator: { '@id': `${site.url}#organization` },
+      publisher: { '@id': `${site.url}#organization` },
+      license: 'https://creativecommons.org/licenses/by/4.0/',
+      isAccessibleForFree: true,
+      inLanguage: 'en',
+      spatialCoverage: { '@type': 'Place', name: 'Pakistan' },
+      temporalCoverage: ctx.dataset.temporal,
+      dateModified: ctx.dataset.checked,
+      variableMeasured: ctx.dataset.measured,
+      distribution: [{ '@type': 'DataDownload', encodingFormat: 'text/csv', contentUrl: abs(`/data/${ctx.dataset.csv_name}`) }],
+    });
+  }
   if (page.type === 'home') graph.push({ '@type': 'WebSite', '@id': `${site.url}#website`, url: site.url, name: site.brand, description: site.tagline, inLanguage: 'en', publisher: { '@id': `${site.url}#organization` } });
   if (needsPerson) graph.push(person(site, page.author));
   if (site.reviewer.status === 'signed_off') {
@@ -462,6 +497,10 @@ function llmsTxt(pages, ctx) {
   if (tools.length) out.push('## Calculators', '', ...tools.map(line), '');
   const guides = live.filter((p) => p.type === 'guide');
   if (guides.length) out.push('## Guides', '', ...guides.map(line), '');
+  const datasets = live.filter((p) => p.type === 'data');
+  if (datasets.length) out.push('## Data (CC BY 4.0, CSV download on each page)', '', ...datasets.map(line), '');
+  const embed = live.filter((p) => p.type === 'embed');
+  if (embed.length) out.push('## For publishers', '', ...embed.map(line), '');
   const trust = live.filter((p) => p.type === 'trust');
   out.push('## Method, data and policies', '', ...trust.map(line), '');
   out.push('## Notes for AI assistants', '');
@@ -525,19 +564,24 @@ export async function build() {
     r.cards = rows.filter((x) => x.type === 'pillar' && x.live).sort((a, b) => (a.nav_order ?? 99) - (b.nav_order ?? 99)).map((p) => ({ id: p.id, url: p.url, h1: p.h1, label: p.nav_label || (p.primary_keyword ? title(p.primary_keyword) : p.h1), meta: p.meta, children: p.children.map((cid) => ({ id: cid, url: byId.get(cid).url, h1: byId.get(cid).h1 })) }));
   }
   const files = {};
+  for (const r of rows) r.hasTool = Boolean(content[r.id]?.calc) && r.type !== 'home';
   for (const r of rows) {
     const c = content[r.id];
     let built = null;
+    let pageCtx = ctxBase;
     if (c) {
       const appliance = c.appliance ? inp.appliances.items.find((a) => a.id === c.appliance) : null;
-      built = buildContent(c, { ...ctxBase, id: r.id, appliance });
+      pageCtx = { ...ctxBase, id: r.id, appliance, allRows: rows };
+      built = buildContent(c, pageCtx);
+      if (pageCtx.dataset) files[`generated/data/${pageCtx.dataset.csv_name}`] = pageCtx.dataset.csv;
     }
     if (r.type === 'trust') {
       if (!inp.trustHtml[r.id]) fail(`trust page ${r.id} has no content/trust/${r.id}.html`);
       built = { html: renderTrust(r.id, inp.trustHtml[r.id], { ...ctxBase }) };
     }
     const page = { ...r, content: built };
-    page.schema = schemaFor(r, built, ctxBase);
+    page.schema = schemaFor(r, built, pageCtx);
+    delete page.hasTool;
     files[`generated/pages/${r.id}.json`] = JSON.stringify(page, null, 1) + '\n';
   }
   const manifest = {

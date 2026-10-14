@@ -222,7 +222,7 @@ final class Wattlyst_Pages {
 	public function footer( $html ): string {
 		$links = array();
 		foreach ( $this->plugin->manifest()['pages'] as $row ) {
-			if ( 'trust' === $row['type'] && ! empty( $row['live'] ) ) {
+			if ( in_array( $row['type'], array( 'trust', 'embed' ), true ) && ! empty( $row['live'] ) ) {
 				$links[] = sprintf( '<a href="%s">%s</a>', esc_url( Wattlyst_Tools::link( $row['url'] ) ), esc_html( $row['h1'] ) );
 			}
 		}
@@ -245,7 +245,7 @@ final class Wattlyst_Pages {
 		}
 		require_once WATTLYST_TOOLS_DIR . 'includes/class-wattlyst-render.php';
 		$render = new Wattlyst_Render( $this->plugin, $page );
-		if ( ! empty( $page['content']['tool'] ) || ! empty( $page['content']['lookup'] ) ) {
+		if ( ! empty( $page['content']['tool'] ) || ! empty( $page['content']['lookup'] ) || ! empty( $page['content']['embeds'] ) ) {
 			self::$tool_rendered = true; // the same script also drives the lookup filter
 		}
 		return $render->html();

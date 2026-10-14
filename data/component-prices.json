@@ -1,0 +1,372 @@
+{
+ "_meta": {
+  "source": "Pakistani retailer listings and installer price guides (URLs, dates and quotes on every item); no official price list exists",
+  "checked": "2026-10-14",
+  "currency": "PKR",
+  "method": "Equipment only, no installation. With 1-3 publishers: lowest low and highest high; with 4+ publishers: median of each publisher's low and high. n_sources counts distinct publishers; an item with one publisher is low confidence.",
+  "notes": "Sources are retailer listings and installer price guides; no ProPakistani, Business Recorder, Dawn or Tribune price article for 2026 inverters/batteries was found. n_sources counts distinct publishers; low/high use each publisher's own min/max, and the median rule is applied only where 4+ publishers exist (on-grid 10 kW, hybrid 6 kW).\nW11stop (w11stop.com) returns HTTP 403 to direct fetching, so its figures/dates come from search-engine snippets of the pages and are not verified on the live page; W11stop pages often show a second, different price in the spec table and different 'updated on' dates on duplicate URLs. Treat W11stop as weakest.\nPowerhouse Express collection pages show no update date (only '2026' in title, images dated Jul 31 2026); many items there are 'Price on Request'.\nHybrid 4 kW rests on one publisher (W11stop, five products) - n_sources 1; Inverex/Growatt/Solis 4 kW prices not found. Knox Krypton 5600 4 kW elsewhere at Rs 117,000-156,000 but those pages were undated/2025 or discontinued; not counted.\nLithium per kWh: one source only (Solar Citizen). Aston Energy (astonenergy.com.pk) gives Rs 28,000-74,218 per kWh and 5.12 kWh Rs 195,000-320,000 but shows no page date, so excluded. Per-kWh not derived from pack prices (would be ~42,000-61,000 if divided by 5.12 kWh, but that is a derivation, not a quote).\nExcluded outliers: W11stop Knox Krypton 11008 8 kW at Rs 1,950,000 (data error); pakistansolartraders Huawei 10 kW on-grid PKR 450,000-600,000 (undated, ~1.5-2x every dated listing); solar-price.pk tubular tables (updated July 17, 2026; Phoenix UGLT-255 200 Ah at Rs 28,500-30,500, about half every other source incl. Phoenix's own list); solarhubofficial.com 200 Ah tubular Rs 67,000-78,000 (dated Mar/Apr 2026, outside the preferred window); icons.com.pk Phoenix UGLT-255 200 Ah Rs 52,250 (April 8, 2026, outside window, consistent with included range).\nHybrid 6 kW includes a low Crown Xavier II at Rs 140,000 (solarpanelrates) - kept because the median absorbs it. On-grid 5 kW range is wide: Solis single-phase Rs 120,000 vs Huawei three-phase Rs 350,000.\nNo Deye price found for any size. No Sungrow 5 kW on-grid price found. Prices are equipment only unless stated; installation, Wi-Fi dongle, and meters excluded.",
+  "status": "Secondary sources only; refresh monthly with data/solar-prices.json."
+ },
+ "items": [
+  {
+   "category": "ongrid_inverter",
+   "label": "On-grid inverter, 5 kW",
+   "size": "5 kW",
+   "unit": "PKR per unit",
+   "low": 120000,
+   "high": 350000,
+   "n_sources": 3,
+   "sources": [
+    {
+     "url": "https://w11stop.com/huawei-solar/huawei-sun2000-5ktl-m1-on-grid-solar-inverter",
+     "publisher": "W11stop (w11stop.com)",
+     "date": "updated on July 23, 2026 (another copy of the page shows July 19, 2026)",
+     "quote": "350,000/- updated on July 23, 2026",
+     "low": 350000,
+     "high": 350000,
+     "note": "Huawei SUN2000-5KTL-M1 (three-phase). Page blocks direct fetch (HTTP 403); figure and date taken from search-engine snippet of the page, not verified on the live page. W11stop pages often show a different price in their spec table."
+    },
+    {
+     "url": "https://w11stop.com/goodwe-on-grid-inverters-price-in-pakistan/goodwe-5kw-on-grid-inverter",
+     "publisher": "W11stop (w11stop.com)",
+     "date": "updated on September 21, 2026",
+     "quote": "295,000/- updated on September 21, 2026",
+     "low": 295000,
+     "high": 295000,
+     "note": "GoodWe 5 kW on-grid. Same page's table shows Rs. 140,000/-. Page blocks direct fetch (HTTP 403); figure and date taken from search-engine snippet of the page, not verified on the live page. W11stop pages often show a different price in their spec table."
+    },
+    {
+     "url": "https://solarpanelrates.net/category/inverter-prices/",
+     "publisher": "Solar Panel Rates (solarpanelrates.net)",
+     "date": "post April 24, 2026; updated July 14, 2026",
+     "quote": "Rs. 120,000 for a 5kW on-grid model",
+     "low": 120000,
+     "high": 120000,
+     "note": "Solis 5 kW on-grid."
+    },
+    {
+     "url": "https://pakistansolartraders.com/solar-inverter-prices-in-pakistan-2026/",
+     "publisher": "Pakistan Solar Traders (pakistansolartraders.com)",
+     "date": "2026 (page says 'Updated 2026 price ranges'; no exact date)",
+     "quote": "5kW On-GridPKR 170,000 – 240,000 (Solis); 5kW On-GridPKR 180,000 – 250,000 (Growatt); 5kW On-GridPKR 220,000 – 300,000 (Huawei)",
+     "low": 170000,
+     "high": 300000,
+     "note": "No exact date on page."
+    }
+   ]
+  },
+  {
+   "category": "ongrid_inverter",
+   "label": "On-grid inverter, 10 kW",
+   "size": "10 kW",
+   "unit": "PKR per unit",
+   "low": 192500,
+   "high": 277500,
+   "n_sources": 4,
+   "sources": [
+    {
+     "url": "https://powerhouseexpress.com.pk/collections/solar-inverters",
+     "publisher": "Powerhouse Express (powerhouseexpress.com.pk)",
+     "date": "2026 (page title 'Price in Pakistan 2026'; no update date shown; product images dated Jul 31 2026)",
+     "quote": "Sungrow Inverter On Grid 10Kw 3 Phase Rs.207,000; Sungrow 10Kw On-Grid Solar Inverter Rs.200,000 (Out of Stock)",
+     "low": 200000,
+     "high": 207000
+    },
+    {
+     "url": "https://solarpanelmarket.pk/solar-inverter-price-in-pakistan/",
+     "publisher": "Solar Panel Market (solarpanelmarket.pk)",
+     "date": "Updated October 2026",
+     "quote": "Growatt 10kw on gird solar inverter 295000",
+     "low": 295000,
+     "high": 295000
+    },
+    {
+     "url": "https://solarpanelrates.net/category/inverter-prices/",
+     "publisher": "Solar Panel Rates (solarpanelrates.net)",
+     "date": "Growatt post Sep 25, 2025 updated July 18, 2026; Solis post Apr 24, 2026 updated July 14, 2026",
+     "quote": "Growatt 10kW on-grid Pro: PKR 162,000 to 200,000; Solis 10kW on-grid: Rs. 232,000 to Rs. 260,000",
+     "low": 162000,
+     "high": 260000
+    },
+    {
+     "url": "https://w11stop.com/huawei-solar/huawei-10kw-on-grid-inverter",
+     "publisher": "W11stop (w11stop.com)",
+     "date": "July 23, 2026 (Huawei); GoodWe Jul 17 or Sep 21, 2026 (copies differ); Solis July 21, 2026",
+     "quote": "Huawei SUN2000-10KTL-M0 Rs. 336,000; GoodWe 10kW (GW10KT-DT) Rs. 185,000; Solis 10kW Rs. 200,000",
+     "low": 185000,
+     "high": 336000,
+     "note": "Three product pages (Huawei, GoodWe https://w11stop.com/goodwe/goodwe-10kw-on-grid-inverter, Solis https://w11stop.com/solis-10kw-on-grid-inverter). Tables on same pages show Rs. 275,000 / 165,000 / 181,500. Page blocks direct fetch (HTTP 403); figure and date taken from search-engine snippet of the page, not verified on the live page. W11stop pages often show a different price in their spec table."
+    }
+   ]
+  },
+  {
+   "category": "hybrid_inverter",
+   "label": "Hybrid inverter, 4 kW",
+   "size": "4 kW",
+   "unit": "PKR per unit",
+   "low": 91000,
+   "high": 117000,
+   "n_sources": 1,
+   "sources": [
+    {
+     "url": "https://w11stop.com/hybrid-inverter/knox-krypton-4kw-pv-5600wat-solar-inverter",
+     "publisher": "W11stop (w11stop.com)",
+     "date": "July 21, 2026 (copies show Jul 20 / Jul 23)",
+     "quote": "Knox Krypton 4kW PV5600: Rs. 97,000 listed; page stamp Rs. 117,000",
+     "low": 97000,
+     "high": 117000,
+     "note": "Page blocks direct fetch (HTTP 403); figure and date taken from search-engine snippet of the page, not verified on the live page. W11stop pages often show a different price in their spec table."
+    },
+    {
+     "url": "https://w11stop.com/luminey-hybrid-solar-inverters-price-in-pakistan/luminey-elecra-pv-5600-4kw-24v-single-phase-hybrid-solar-inverter-price-in-pakistan",
+     "publisher": "W11stop (w11stop.com)",
+     "date": "September 19, 2026",
+     "quote": "Luminey Elecra 4kW 24V PV5600: Rs. 91,000",
+     "low": 91000,
+     "high": 91000,
+     "note": "Page blocks direct fetch (HTTP 403); figure and date taken from search-engine snippet of the page, not verified on the live page. W11stop pages often show a different price in their spec table."
+    },
+    {
+     "url": "https://w11stop.com/fixon/fixon-lexus-4kw-pv5600-hybrid-solar-inverter-price-in-pakistan",
+     "publisher": "W11stop (w11stop.com)",
+     "date": "July 21, 2026",
+     "quote": "Fixon Lexus 4kW PV5600: Rs. 114,500",
+     "low": 114500,
+     "high": 114500,
+     "note": "Page blocks direct fetch (HTTP 403); figure and date taken from search-engine snippet of the page, not verified on the live page. W11stop pages often show a different price in their spec table."
+    },
+    {
+     "url": "https://w11stop.com/solarmax-hybrid-inverters-price-in-pakistan/solarmax-sm-orion-dual-4kw-hybrid-solar-inverter",
+     "publisher": "W11stop (w11stop.com)",
+     "date": "July 21, 2026",
+     "quote": "SolarMax SM-ORION-DUAL-4KW: Rs. 105,000",
+     "low": 105000,
+     "high": 105000,
+     "note": "Page blocks direct fetch (HTTP 403); figure and date taken from search-engine snippet of the page, not verified on the live page. W11stop pages often show a different price in their spec table."
+    },
+    {
+     "url": "https://w11stop.com/fronus/fronus-infineon-5200-solar-inverter",
+     "publisher": "W11stop (w11stop.com)",
+     "date": "updated July 21, 2026",
+     "quote": "Fronus Infineon 5200 (4.2 kW): Rs. 95,000/-",
+     "low": 95000,
+     "high": 95000,
+     "note": "Page blocks direct fetch (HTTP 403); figure and date taken from search-engine snippet of the page, not verified on the live page. W11stop pages often show a different price in their spec table."
+    }
+   ]
+  },
+  {
+   "category": "hybrid_inverter",
+   "label": "Hybrid inverter, 6 kW",
+   "size": "6 kW",
+   "unit": "PKR per unit",
+   "low": 229000,
+   "high": 265500,
+   "n_sources": 4,
+   "sources": [
+    {
+     "url": "https://powerhouseexpress.com.pk/collections/solar-hybrid-inverters",
+     "publisher": "Powerhouse Express (powerhouseexpress.com.pk)",
+     "date": "2026 (page title 'Price in Pakistan 2026'; no update date shown; product images dated Jul 31 2026)",
+     "quote": "Ziewnic Lenox 6kw PV8000 Hybrid Solar Inverter Rs.250,000; Solis 6kw Single Phase Low Voltage Hybrid Solar Inverter Rs.260,000; SOLAX 6KW IP65 Hybrid Solar Inverter Rs.265,000",
+     "low": 250000,
+     "high": 265000,
+     "note": "SolaX price is on ?page=3 of the same collection."
+    },
+    {
+     "url": "https://solarpanelmarket.pk/solar-inverter-price-in-pakistan/",
+     "publisher": "Solar Panel Market (solarpanelmarket.pk)",
+     "date": "Updated October 2026",
+     "quote": "Knox Pv7200 Hybrid Solar Inverter 208000; Knox PV8000 Hybrid Solar Inverter 225000; Crown Elego Hybrid solar inverter 228000; Tesla HLE on gird & Hybrid inverter 238000",
+     "low": 208000,
+     "high": 238000
+    },
+    {
+     "url": "https://solarpanelrates.net/category/inverter-prices/",
+     "publisher": "Solar Panel Rates (solarpanelrates.net)",
+     "date": "Crown post May 9, 2026 upd. Jul 14, 2026; Solis upd. Jul 14, 2026; Inverex upd. Jul 18, 2026",
+     "quote": "Crown Xavier II 6kW: Rs. 140,000; Solis 6kW: approximately Rs. 228,000 to Rs. 250,000; Inverex 6kW hybrid: PKR 270,000 to 330,000",
+     "low": 140000,
+     "high": 330000
+    },
+    {
+     "url": "https://w11stop.com/hybrid-inverter/inverex-nitrox-6kw-hybrid-solar-inverter",
+     "publisher": "W11stop (w11stop.com)",
+     "date": "updated July 14, 2026",
+     "quote": "Inverex Nitrox 6kW 48V: Rs. 266,000/- (same page table: Rs 365,000/-)",
+     "low": 266000,
+     "high": 266000,
+     "note": "Knox Zapher 6.6kW listed Rs. 195,000/- updated July 17, 2026 (https://w11stop.com/knox-zapher-6-6kw-ip54-hybrid-solar-inverter-price-in-pakistan), not counted because 6.6 kW. Page blocks direct fetch (HTTP 403); figure and date taken from search-engine snippet of the page, not verified on the live page. W11stop pages often show a different price in their spec table."
+    }
+   ]
+  },
+  {
+   "category": "hybrid_inverter",
+   "label": "Hybrid inverter, 8 kW",
+   "size": "8 kW",
+   "unit": "PKR per unit",
+   "low": 234000,
+   "high": 370000,
+   "n_sources": 3,
+   "sources": [
+    {
+     "url": "https://powerhouseexpress.com.pk/collections/solar-hybrid-inverters",
+     "publisher": "Powerhouse Express (powerhouseexpress.com.pk)",
+     "date": "2026 (page title 'Price in Pakistan 2026'; no update date shown; product images dated Jul 31 2026)",
+     "quote": "Solis 8kw Single Phase Low Voltage Hybrid Solar Inverter Rs.350,000; SOLAX 8KW Hybrid Solar Inverter Rs.370,000",
+     "low": 350000,
+     "high": 370000
+    },
+    {
+     "url": "https://solarpanelmarket.pk/solar-inverter-price-in-pakistan/",
+     "publisher": "Solar Panel Market (solarpanelmarket.pk)",
+     "date": "Updated October 2026",
+     "quote": "Crown Xavier Nova 8.2KW Hybrid inverter 360000",
+     "low": 360000,
+     "high": 360000,
+     "note": "8.2 kW unit."
+    },
+    {
+     "url": "https://w11stop.com/hybrid-inverter/knox-krypton-8kw-hybrid-solar-inverter",
+     "publisher": "W11stop (w11stop.com)",
+     "date": "Knox: July 2026 (copies show Jul 1 / Jul 9); others: 2026, exact date not captured",
+     "quote": "Knox Krypton 8kW PV11000W Rs. 289,000; SolarMax SM-Orion Ultra 8kW Rs. 234,000; GoodWe 8kW IP65 Rs. 355,000",
+     "low": 234000,
+     "high": 355000,
+     "note": "Also SES Power 8kW Rs. 350,000, Power Square Axpert Ultra 8kW Rs. 275,000. Knox Krypton 11008 page shows Rs. 1,950,000 (Oct 2026) = data error, excluded. Page blocks direct fetch (HTTP 403); figure and date taken from search-engine snippet of the page, not verified on the live page. W11stop pages often show a different price in their spec table."
+    }
+   ]
+  },
+  {
+   "category": "hybrid_inverter",
+   "label": "Hybrid inverter, 10 kW",
+   "size": "10 kW",
+   "unit": "PKR per unit",
+   "low": 375000,
+   "high": 550000,
+   "n_sources": 3,
+   "sources": [
+    {
+     "url": "https://powerhouseexpress.com.pk/collections/solar-hybrid-inverters",
+     "publisher": "Powerhouse Express (powerhouseexpress.com.pk)",
+     "date": "2026 (page title 'Price in Pakistan 2026'; no update date shown; product images dated Jul 31 2026)",
+     "quote": "Sungrow 10KW Single phase Hybrid Inverter Rs.440,000; Solis 10KW 3 Phase High Voltage Hybrid Solar Inverter Rs.450,000",
+     "low": 440000,
+     "high": 450000
+    },
+    {
+     "url": "https://solarpanelrates.net/category/inverter-prices/",
+     "publisher": "Solar Panel Rates (solarpanelrates.net)",
+     "date": "Knox post August 19, 2026, updated October 1, 2026; Growatt updated July 18, 2026",
+     "quote": "Knox 10kW IP66 hybrid (Zynex): Rs. 375,000; Growatt 10kW three-phase SPH hybrid: roughly PKR 550,000",
+     "low": 375000,
+     "high": 550000
+    },
+    {
+     "url": "https://pakistansolartraders.com/solar-inverter-prices-in-pakistan-2026/",
+     "publisher": "Pakistan Solar Traders (pakistansolartraders.com)",
+     "date": "2026 (page says 'Updated 2026 price ranges'; no exact date)",
+     "quote": "10kW HybridPKR 450,000 – 550,000 (Inverex); 10kW HybridPKR 400,000 – 520,000 (Growatt)",
+     "low": 400000,
+     "high": 550000,
+     "note": "No exact date on page."
+    }
+   ]
+  },
+  {
+   "category": "lithium_battery",
+   "label": "Lithium (LiFePO4) battery, 5 kWh (51.2 V 100 Ah, ~5.12 kWh)",
+   "size": "5 kWh (51.2 V 100 Ah, ~5.12 kWh)",
+   "unit": "PKR per unit",
+   "low": 215000,
+   "high": 310000,
+   "n_sources": 3,
+   "sources": [
+    {
+     "url": "https://powerhouseexpress.com.pk/collections/lithium-batteries",
+     "publisher": "Powerhouse Express (powerhouseexpress.com.pk)",
+     "date": "2026 (page title 'Price in Pakistan 2026'; no update date shown; product images dated Jul 31 2026)",
+     "quote": "Power Square Everon 51.2v 100Ah Lithium Battery Rs.235,000; SES Powerwall 5.12kWh 51.2V 100Ah Rs.237,000; Lecxo 5.12kWh 51.2V 100Ah LiFePO4 Rs.255,000; Crown Solar Energy 5.12KW 51.2V 100Ah (IP21) Rs.263,920; Ziewnic Li-Wall V2 51.2V 100Ah Rs.270,000; Ziewnic Z-Box 51.2V 100AH Rs.310,000",
+     "low": 235000,
+     "high": 310000,
+     "note": "Pylontech 5.12 kWh listed Rs.275,000 (Fidus) and Rs.315,000 (Force H3, high-voltage stack module) not counted as 51.2V 100Ah packs."
+    },
+    {
+     "url": "https://www.solarcitizen.com.pk/lithium-battery-price-pakistan/",
+     "publisher": "Solar Citizen (solarcitizen.com.pk)",
+     "date": "Published August 9, 2026; updated October 2nd, 2026",
+     "quote": "5 kWh | Rs 258,000–Rs 262,000 | Rs 262,000 | 5–6kW hybrid system",
+     "low": 258000,
+     "high": 262000,
+     "note": "Battery only, GST-inclusive; voltage/Ah not stated."
+    },
+    {
+     "url": "https://w11stop.com/solar/solar-batteries-storage/power-square-sunwoda-51v-100ah-lithium-battery-price-in-pakistan",
+     "publisher": "W11stop (w11stop.com)",
+     "date": "July 17-23, 2026 (Dyness: June 28, 2026)",
+     "quote": "Stabimatic Rs 215,000 (Jul 17, 2026); Sacred Sun Rs 222,000 (Jul 21); Triex Rs 230,000 (Jul 22); Sunwoda Power Square Rs 230,000 (Jul 23); 'The latest Dyness DL5.0C 5.12KWH Lithium Ion Battery 51V 100Ah price in Pakistan is Rs. 255,000/- updated on June 28, 2026.'",
+     "low": 215000,
+     "high": 255000,
+     "note": "Five product pages, all 51V/51.2V 100Ah. Page blocks direct fetch (HTTP 403); figure and date taken from search-engine snippet of the page, not verified on the live page. W11stop pages often show a different price in their spec table."
+    }
+   ]
+  },
+  {
+   "category": "lithium_battery",
+   "label": "Lithium (LiFePO4) battery, per kWh",
+   "size": "per kWh",
+   "unit": "PKR per kWh",
+   "low": 45000,
+   "high": 65000,
+   "n_sources": 1,
+   "sources": [
+    {
+     "url": "https://www.solarcitizen.com.pk/lithium-battery-price-pakistan/",
+     "publisher": "Solar Citizen (solarcitizen.com.pk)",
+     "date": "Published August 9, 2026; updated October 2nd, 2026",
+     "quote": "the working range is Rs 45,000 to Rs 65,000 per kWh ... with most systems landing near Rs 52,000 per kWh",
+     "low": 45000,
+     "high": 65000,
+     "note": "Installed, GST-inclusive; brand table runs Rs 44,800 (Sunwoda) to Rs 97,800 (Sungrow)."
+    }
+   ]
+  },
+  {
+   "category": "tubular_battery",
+   "label": "Tubular battery, 12 V 180-220 Ah",
+   "size": "12 V 180-220 Ah",
+   "unit": "PKR per unit",
+   "low": 40620,
+   "high": 72500,
+   "n_sources": 3,
+   "sources": [
+    {
+     "url": "https://solarpriceinpakistan.com.pk/battery-price-in-pakistan/",
+     "publisher": "Solar Price in Pakistan (solarpriceinpakistan.com.pk)",
+     "date": "October 14, 2026 (page date equals today; may be an auto-updating date)",
+     "quote": "Volta TA-1800 Supreme 185 Ah 56,500; Osaka TA-2000 Supreme 200 Ah 62,100; Volta TA-2000 200 Ah 72,500",
+     "low": 56500,
+     "high": 72500
+    },
+    {
+     "url": "https://solarapp.pk/product-category/tubular-battery/",
+     "publisher": "Solar App (solarapp.pk)",
+     "date": "2026 (title 'Price in Pakistan 2026'; no exact date)",
+     "quote": "Osaka HT 1800 5 Plates 185AH 20HR ₨ 40,620; Osaka Pro 200 AH Tubular Battery ₨ 44,000; Osaka HT 2000 6 Plates 200AH 20HR ₨ 48,300; TX-2000 200 AH 9 Plates Per Cell ₨ 51,082; Osaka TA 1800 185AH Tubular Battery ₨ 63,600",
+     "low": 40620,
+     "high": 63600,
+     "note": "No exact date."
+    },
+    {
+     "url": "https://w11stop.com/power-sources-batteries-and-regulators/batteries/phoenix-batteries/phoenix-tx1800-tubular-battery",
+     "publisher": "W11stop (w11stop.com)",
+     "date": "updated July 21, 2026",
+     "quote": "Phoenix TX1800 (185 Ah tubular): PKR 53,000",
+     "low": 53000,
+     "high": 53000,
+     "note": "Page blocks direct fetch (HTTP 403); figure and date taken from search-engine snippet of the page, not verified on the live page. W11stop pages often show a different price in their spec table."
+    }
+   ]
+  }
+ ]
+}

@@ -1,6 +1,30 @@
 import{fmt,render}from '../../engine/format.js';
 import{errorMessage,noticeCode}from '../../engine/messages.js';
 const ver=new URL(import.meta.url).searchParams.get('ver')|| '';
+function drawGrid(box,series,parallel){
+const max=8;
+let rows='';
+for(let p=1;p <=Math.min(parallel,max);p++){
+rows +=`<div class="wl-string"><span class="wl-string-label">String ${p}</span>${'<span class="wl-cell">+ &minus;</span>'.repeat(Math.min(series,max))}${series > max?`<span class="wl-more">+${series - max}</span>`:''}</div>`;
+}
+box.innerHTML=`<div class="wl-grid"><span class="wl-bus">Positive bus</span>${rows}${parallel > max?`<div class="wl-more">+${parallel - max} more strings</div>`:''}<span class="wl-bus">Negative bus</span></div>`;
+}
+
+const forecasts={};
+async function forecastFor(c,tilt){
+const key=`${c.lat},${c.lon},${tilt}`;
+if(!forecasts[key]){
+forecasts[key]=fetch(`https://api.open-meteo.com/v1/forecast?latitude=${c.lat}&longitude=${c.lon}&hourly=global_tilted_irradiance&tilt=${tilt}&azimuth=0&timezone=Asia%2FKarachi&forecast_days=2`)
+.then((r)=>(r.ok?r.json():null))
+.then((j)=>{
+const v=j?.hourly?.global_tilted_irradiance?.slice(24,48);
+const date=j?.hourly?.time?.[24]?.slice(0,10);
+return v && v.length===24 && v.every((x)=> typeof x==='number')&& date?{gti:v,date}:null;
+})
+.catch(()=> null);
+}
+return forecasts[key];
+}
 function loadsField(form,f,cfg,onChange){
 const box=form.querySelector(`[data-wl-loads="${f.name}"]`);
 if(!box)return null;
@@ -79,8 +103,10 @@ const el=(name)=> form.elements.namedItem(name);
 const lists={};
 let show;
 for(const f of cfg.fields)if(f.type==='loads')lists[f.name]=loadsField(form,f,cfg,()=> show && show(true));
+let live=null;
 const read=()=>{
 const inputs={...cfg.fixed};
+if(live && live.city===el('city')?.value)Object.assign(inputs,{gti_wm2:live.gti,forecast_date:live.date});
 for(const f of cfg.fields){
 if(lists[f.name]){inputs[f.name]=lists[f.name].rows();continue;}
 const input=el(f.name);
@@ -122,6 +148,8 @@ for(const o of cfg.outputs){
 const node=results.querySelector(`[data-out="${o.key}"] .wl-val`);
 if(node)node.textContent=fmt(out[o.key],o.spec)|| 'n/a';
 }
+const grid=cfg.diagram==='battery_grid' && form.querySelector('[data-wl-diagram]');
+if(grid)drawGrid(grid,Math.round(out.n_series),Math.round(out.n_parallel));
 if(howEl && cfg.how){
 const text=render(form.dataset.lang==='ur' && cfg.how_ur?cfg.how_ur:cfg.how,{in:out,out,d:cfg.data.defaults});
 howEl.hidden=text===null;
@@ -200,10 +228,31 @@ changed=true;
 }
 if(changed)show(false);
 }
+if(cfg.live==='open_meteo'){
+const getLive=async()=>{
+const city=el('city')?.value;
+const c=cfg.data.cities?.[city];
+if(!c?.lat)return;
+const f=await forecastFor(c,cfg.data.defaults.forecast_tilt_deg);
+if(f && el('city').value===city){live={...f,city};show(false);}
+};
+el('city')?.addEventListener('change',getLive);
+getLive();
+}
 form.addEventListener('submit',(e)=>{e.preventDefault();show(true);});
 form.addEventListener('change',(e)=>{if(!e.target.closest('.wl-loads')&&(e.target.tagName==='SELECT' || e.target.type==='checkbox'))show(true);});
 }
 document.querySelectorAll('form[data-wl-tool]').forEach((form)=>{init(form).catch(()=>{});});
+document.querySelectorAll('[data-wl-copy]').forEach((btn)=>{
+btn.addEventListener('click',async()=>{
+const box=document.getElementById(btn.dataset.wlCopy);
+box.select();
+try{await navigator.clipboard.writeText(box.value);btn.textContent='Copied';}catch{document.execCommand('copy');}
+});
+});
+if(document.body.hasAttribute('data-wl-embed')&& window.parent !==window && 'ResizeObserver' in window){
+new ResizeObserver(()=> window.parent.postMessage({wattlyst:'height',h:document.documentElement.scrollHeight},'*')).observe(document.body);
+}
 document.querySelectorAll('form[data-wl-lookup]').forEach((form)=>{
 const page=form.closest('.wl-page');
 const groups=[...page.querySelectorAll('[data-wl-group]')];

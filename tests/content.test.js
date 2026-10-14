@@ -17,7 +17,7 @@ const STOP = new Set('a an the to for of in on and or my do i is can what how mu
 const tokens = (s) => (s.toLowerCase().match(/[a-z0-9.]+/g) || []).filter((t) => !STOP.has(t));
 const words = (s) => String(s).trim().split(/\s+/).filter(Boolean).length;
 
-for (const p of live.filter((x) => ['tool', 'appliance', 'guide', 'pillar', 'home', 'lookup'].includes(x.type) && x.content)) {
+for (const p of live.filter((x) => ['tool', 'appliance', 'guide', 'pillar', 'home', 'lookup', 'data'].includes(x.type) && x.content)) {
   test(`content checklist: ${p.id} ${p.url}`, () => {
     const c = p.content;
     const row = kw.get(p.id);
@@ -32,6 +32,14 @@ for (const p of live.filter((x) => ['tool', 'appliance', 'guide', 'pillar', 'hom
     assert.ok((c.faq || []).length >= 4 && c.faq.length <= 8, `${(c.faq || []).length} FAQs (4-8)`);
     assert.ok(p.reviewed, 'last reviewed date');
     assert.ok((c.sources || []).length >= 1, 'sources');
+    if (p.type === 'data') {
+      assert.ok(c.chart?.groups?.length >= 3, 'data page chart');
+      assert.ok(c.tables?.length >= 2 && c.tables.every((t) => t.rows.length >= 5), 'data tables with 5+ rows');
+      assert.ok(c.download?.url && files[`generated${c.download.url}`], 'CSV download built');
+      assert.ok(c.sections.some((s) => /journalists/i.test(s.h2)) && c.sections.some((s) => /method/i.test(s.h2)), 'method and press summary sections');
+      const age = (Date.parse(p.reviewed) - Date.parse(c.download.checked)) / 864e5;
+      assert.ok(age <= 35, `data checked ${c.download.checked} is more than 35 days before the review date`);
+    }
     if (p.type === 'lookup') {
       assert.ok(c.lookup && c.tables?.length >= 3 && c.tables.every((t) => t.rows.length >= 5), 'lookup tables with 5+ rows each');
       for (const t of c.tables) for (const r of t.rows) assert.ok(r.every((v) => String(v).trim() !== ''), `${t.key}: empty cell`);
@@ -64,9 +72,9 @@ test('link graph: every live page has 3+ inbound links and tool pages link out t
   }
   const problems = [];
   for (const p of live) {
-    if (p.type === 'trust' || p.type === 'home') continue;
+    if (p.type === 'trust' || p.type === 'home' || p.type === 'embed') continue; // linked from every page's footer
     if (inbound.get(p.id).size < 3) problems.push(`${p.id} has only ${inbound.get(p.id).size} inbound links (${[...inbound.get(p.id)].join(', ')})`);
-    if (['tool', 'appliance', 'guide', 'lookup'].includes(p.type)) {
+    if (['tool', 'appliance', 'guide', 'lookup', 'data'].includes(p.type)) {
       const n = outbound.get(p.id).size;
       if (n < 4 || n > 8) problems.push(`${p.id} links out to ${n} live pages (4-8)`);
     }
