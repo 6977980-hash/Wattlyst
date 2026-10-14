@@ -217,7 +217,7 @@
     "volts": 12
    },
    "title": "Amp hours: a {{out.ah|int}} Ah, {{out.volts|int}} V battery",
-   "text": "{{out.ah|int}} Ah × {{out.volts|int}} V ÷ 1,000 = {{out.units|1}} units of stored energy. About half is usable on a tubular battery and about ninety percent on lithium."
+   "text": "{{out.ah|int}} Ah × {{out.volts|int}} V ÷ 1,000 = {{out.units|1}} units of stored energy. About half is usable on a tubular battery and about {{d.dod_lifepo4|pct}} on lithium."
   }
  ],
  "table": {
@@ -326,7 +326,11 @@
   "1 kWh",
   "1 unit",
   "1.5 ton",
-  "200 Ah"
+  "200 Ah",
+  "a hundred-watt",
+  "a hundred hours",
+  "A thousand-watt",
+  "a hundred-watt load"
  ],
  "sources": [
   {

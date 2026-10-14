@@ -36,6 +36,10 @@
      "6.5 kVA"
     ],
     [
+     7,
+     "7 kVA"
+    ],
+    [
      7.5,
      "7.5 kVA"
     ],
@@ -216,7 +220,7 @@
   {
    "h2": "7 kVA and 10 kVA generator capacity for a whole home",
    "p": [
-    "At {{ex.3.out.kva|1}} kVA ({{ex.3.out.capacity_w|int}} W) a generator can start one 1.5 ton non-inverter AC with fans and lights: the list runs at {{ex.3.out.running_w|int}} W and peaks at {{ex.3.out.peak_w|int}} W. Add a running non-inverter fridge and the start peak of {{ex.2.out.peak_w|int}} W is above the capacity, so either stagger the starts or choose {{ex.4.out.kva|1}} kVA. Two non-inverter ACs do not fit until the second one's start is covered on top of the first one running.",
+    "At {{table.4.out.kva|1}} kVA ({{table.4.out.capacity_w|int}} W) a generator runs fans, lights and the running draw of a 1.5 ton non-inverter AC, but the AC's start peak of {{ex.3.out.peak_w|int}} W is above the capacity. At {{ex.3.out.kva|1}} kVA ({{ex.3.out.capacity_w|int}} W) the same list starts: it runs at {{ex.3.out.running_w|int}} W and peaks at {{ex.3.out.peak_w|int}} W. Add a running non-inverter fridge and the start peak of {{ex.2.out.peak_w|int}} W is above that capacity too, so either stagger the starts or choose {{ex.4.out.kva|1}} kVA. Two non-inverter ACs do not fit until the second one's start is covered on top of the first one running.",
     "At {{ex.4.out.kva|1}} kVA ({{ex.4.out.capacity_w|int}} W, {{ex.4.out.max_running_w|int}} W steady) two 1.5 ton inverter ACs, six fans, twelve bulbs, an inverter fridge and a 1 hp water pump run together at {{ex.4.out.running_w|int}} W, peaking at {{ex.4.out.peak_w|int}} W when the pump starts; on its own it runs {{ex.4.out.appliance_count|int}} inverter ACs of 1.5 ton. Above this size most homes should look at three-phase sets and a changeover switch fitted by a licensed electrician."
    ]
   }
@@ -357,6 +361,9 @@
     "kva": 6.5
    },
    {
+    "kva": 7
+   },
+   {
     "kva": 7.5
    },
    {
@@ -416,7 +423,7 @@
   },
   {
    "q": "What can a 7 kVA generator run?",
-   "a": "A {{ex.3.out.kva|1}} kVA set gives {{ex.3.out.capacity_w|int}} W and about {{ex.3.out.max_running_w|int}} W of steady load: one 1.5 ton non-inverter AC with fans and lights ({{ex.3.out.running_w|int}} W, peak {{ex.3.out.peak_w|int}} W). A non-inverter fridge running at the same time lifts the AC's start peak to {{ex.2.out.peak_w|int}} W, past that capacity; a {{ex.4.out.kva|1}} kVA set covers it and runs {{ex.4.out.appliance_count|int}} inverter ACs of 1.5 ton on their own."
+   "a": "A {{table.4.out.kva|1}} kVA set gives {{table.4.out.capacity_w|int}} W and about {{table.4.out.max_running_w|int}} W of steady load, enough for the running draw of a 1.5 ton non-inverter AC with fans and lights ({{ex.3.out.running_w|int}} W) but not for its start, which peaks at {{ex.3.out.peak_w|int}} W. A {{ex.3.out.kva|1}} kVA set ({{ex.3.out.capacity_w|int}} W) starts it; with a non-inverter fridge also running the peak becomes {{ex.2.out.peak_w|int}} W, so stagger the starts or choose {{ex.4.out.kva|1}} kVA."
   },
   {
    "q": "Why does my generator trip when the AC starts even though the watts add up?",

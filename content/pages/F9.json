@@ -256,7 +256,7 @@
   },
   {
    "q": "What is the SEPCO tariff for 2026?",
-   "a": "The uniform A-1 domestic tariff notified as SRO 279(I)/2026: two lifeline slabs up to one hundred units, two protected slabs up to {{d.protected_max_units|int}} units, unprotected slabs of a hundred units each up to seven hundred and an open-ended slab above, each with its own fixed charge per kW. Connections of {{d.tou_threshold_kw|int}} kW and above are billed on ToU rates."
+   "a": "The uniform A-1 domestic tariff notified as SRO 279(I)/2026: two lifeline slabs up to {{data.tariff.lifeline.1.upto|int}} units, two protected slabs up to {{d.protected_max_units|int}} units, unprotected slabs of {{data.tariff.unprotected.0.upto|int}} units each up to {{data.tariff.unprotected.6.upto|int}} and an open-ended slab above, each with its own fixed charge per kW. Connections of {{d.tou_threshold_kw|int}} kW and above are billed on ToU rates."
   },
   {
    "q": "Is SEPCO part of HESCO?",

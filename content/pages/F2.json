@@ -125,7 +125,7 @@
    "h2": "What is the LESCO per unit rate in 2026?",
    "p": [
     "LESCO, the Lahore Electric Supply Company, does not set its own rates. It bills the uniform A-1 domestic tariff that NEPRA determined and the Government notified for 2026, the same slabs as every other DISCO. For an unprotected home the rate of the slab the month's units reach applies to every unit: {{out.units|int}} units are all billed at {{out.rate|rs2}}, the top slab is the most expensive, and the first hundred units are the cheapest.",
-    "The worked examples below print the rate for the protected, the three-hundred-unit, the five-hundred-unit and the lifeline cases, and the table lists the rate for each slab. Add the FPA from your bill for the month's exact figure."
+    "The worked examples below print the rate for the protected, the {{ex.1.in.units|int}}-unit, the {{ex.2.in.units|int}}-unit and the lifeline cases, and the table lists the rate for each slab. Add the FPA from your bill for the month's exact figure."
    ]
   },
   {
@@ -249,7 +249,7 @@
   },
   {
    "q": "What is the LESCO tariff for 2026?",
-   "a": "The uniform A-1 domestic tariff notified as SRO 279(I)/2026: lifeline slabs up to one hundred units, protected slabs up to {{d.protected_max_units|int}} units and unprotected slabs of a hundred units each up to seven hundred, then an open-ended top slab; connections of {{d.tou_threshold_kw|int}} kW and above are billed on ToU rates."
+   "a": "The uniform A-1 domestic tariff notified as SRO 279(I)/2026: lifeline slabs up to {{data.tariff.lifeline.1.upto|int}} units, protected slabs up to {{d.protected_max_units|int}} units and unprotected slabs of {{data.tariff.unprotected.0.upto|int}} units each up to {{data.tariff.unprotected.6.upto|int}}, then an open-ended top slab; connections of {{d.tou_threshold_kw|int}} kW and above are billed on ToU rates."
   },
   {
    "q": "How do I check my LESCO bill online?",

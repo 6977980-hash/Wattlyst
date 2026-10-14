@@ -110,7 +110,7 @@
   "A protected consumer is billed slab-wise with the benefit of the lower slab, and the category needs every one of the last {{d.protected_months|int}} months at or under {{d.protected_max_units|int}} units.",
   "The fixed charge is Rs per kW of sanctioned load and rises with the slab; a {{out.sanctioned_kw|int}} kW connection using {{out.units|int}} units pays {{out.fixed_rs|rs}} a month before using a single unit.",
   "GST at {{out.gst_pct|int}}% is applied to the subtotal of energy, fixed charge and surcharges, which adds {{out.gst_rs|rs}} to a {{out.units|int}} unit bill; the surcharge and GST figures are from secondary sources and change monthly.",
-  "Lifeline rates apply only up to one hundred units, with no fixed charge, and a connection of {{d.tou_threshold_kw|int}} kW or more is billed on a peak and off-peak (ToU) meter instead of slabs."
+  "Lifeline rates apply only up to {{data.tariff.lifeline.1.upto|int}} units, with no fixed charge, and a connection of {{d.tou_threshold_kw|int}} kW or more is billed on a peak and off-peak (ToU) meter instead of slabs."
  ],
  "formula": {
   "text": "Bill = units × slab rate + fixed Rs/kW × sanctioned kW + (FC + QTA + FPA) × units, then + GST",
@@ -153,7 +153,7 @@
   {
    "h2": "What is the bill for 300 units?",
    "p": [
-    "{{out.units|int}} units is the default above: all units at {{out.rate|rs2}} = {{out.energy_rs|rs}}, plus {{out.fixed_rs|rs}} fixed charge for {{out.sanctioned_kw|int}} kW, {{out.fc_rs|rs}} FC surcharge, {{out.qta_rs|rs}} QTA and {{out.gst_rs|rs}} GST, for about {{out.total_rs|rs}}. One unit over three hundred moves every unit to the next slab, so {{out.units|int}} units is a line worth staying under."
+    "{{out.units|int}} units is the default above: all units at {{out.rate|rs2}} = {{out.energy_rs|rs}}, plus {{out.fixed_rs|rs}} fixed charge for {{out.sanctioned_kw|int}} kW, {{out.fc_rs|rs}} FC surcharge, {{out.qta_rs|rs}} QTA and {{out.gst_rs|rs}} GST, for about {{out.total_rs|rs}}. One unit over {{out.units|int}} moves every unit to the next slab, so {{out.units|int}} units is a line worth staying under."
    ]
   }
  ],
@@ -275,7 +275,7 @@
   },
   {
    "q": "What are the electricity slab rates in Pakistan?",
-   "a": "The unprotected domestic tariff has slabs of a hundred units up to seven hundred, then one open-ended slab, each with its own rate and fixed charge. Protected consumers have two slabs up to {{d.protected_max_units|int}} units and lifeline consumers two slabs up to one hundred units. The table above shows each slab's rate from the tariff file."
+   "a": "The unprotected domestic tariff has slabs of {{data.tariff.unprotected.0.upto|int}} units up to {{data.tariff.unprotected.6.upto|int}}, then one open-ended slab, each with its own rate and fixed charge. Protected consumers have two slabs up to {{d.protected_max_units|int}} units and lifeline consumers two slabs up to {{data.tariff.lifeline.1.upto|int}} units. The table above shows each slab's rate from the tariff file."
   },
   {
    "q": "What does protected consumer mean on my bill?",

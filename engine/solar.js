@@ -1,5 +1,5 @@
 // D. Solar (specs/formulas.md section D) and solar tools from section G.
-import { calculator, CalcError, has, pos, frac, nonneg, ceilSafe, dflt, num, appliance } from './core.js';
+import { calculator, CalcError, has, pos, frac, nonneg, ceilSafe, dflt, num, appliance, bool } from './core.js';
 import { sumLoads, loadRows } from './sizing.js';
 
 /** Specific yield (kWh/kWp/day): explicit input > city from data/cities-pk.json > PSH × PR. */
@@ -20,15 +20,19 @@ function yieldFor(i, d) {
 /** E = monthly_units / 30 (or daily_kwh); kWp = E / yield; panels = ceil(kWp × 1000 / panel_W). */
 export const solar_size = calculator((i, d) => {
   let daily_kwh;
+  const echo = {}; // the monthly units entered, for the page text (audit WL-23)
   if (has(i, 'daily_kwh')) daily_kwh = pos(i, 'daily_kwh');
-  else daily_kwh = pos(i, 'monthly_units', undefined, 'usage_required') / dflt(d, 'days_per_month');
+  else {
+    echo.monthly_units = pos(i, 'monthly_units', undefined, 'usage_required');
+    daily_kwh = echo.monthly_units / dflt(d, 'days_per_month');
+  }
   const y = yieldFor(i, d);
   const panel_w = pos(i, 'panel_w', dflt(d, 'panel_w'));
   const kw = daily_kwh / y.yield_kwh_per_kwp_day;
   const panels = ceilSafe((kw * 1000) / panel_w);
   const installed_kw = (panels * panel_w) / 1000;
   return {
-    daily_kwh, ...y, panel_w, kw, panels, installed_kw,
+    ...echo, daily_kwh, ...y, panel_w, kw, panels, installed_kw,
     roof_m2: panels * dflt(d, 'panel_area_m2'),
     monthly_kwh_estimate: installed_kw * y.yield_kwh_per_kwp_day * dflt(d, 'days_per_month'),
   };
@@ -97,7 +101,7 @@ function solarSystem(daily_kwh, running_w, surge_w, i, d) {
   // with E_load = max(E_day, E_night) so the night assumption can never exceed the whole day.
   let array_kwh = daily_kwh;
   let offgrid = {};
-  if (i.off_grid === true && bat) {
+  if (bool(i.off_grid) && bat) {
     const charge_eff = frac(i, 'charge_eff', bat.dod > dflt(d, 'dod_lead_acid') ? dflt(d, 'charge_eff_lifepo4') : dflt(d, 'charge_eff_lead_acid'));
     const load_kwh = Math.max(daily_kwh, night_kwh);
     array_kwh = load_kwh - night_kwh + night_kwh / (bat.inverter_eff * charge_eff);

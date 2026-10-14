@@ -131,7 +131,7 @@
   {
    "h2": "What is the K-Electric tariff for 2026?",
    "p": [
-    "The tariff is the uniform domestic schedule notified as SRO 279(I)/2026: two lifeline slabs up to one hundred units, two protected slabs up to {{d.protected_max_units|int}} units, unprotected slabs of a hundred units each up to seven hundred and one open-ended slab above. Each slab carries its own fixed charge per kW of sanctioned load, and connections of {{d.tou_threshold_kw|int}} kW and above are billed on peak and off-peak ToU rates instead.",
+    "The tariff is the uniform domestic schedule notified as SRO 279(I)/2026: two lifeline slabs up to {{data.tariff.lifeline.1.upto|int}} units, two protected slabs up to {{d.protected_max_units|int}} units, unprotected slabs of {{data.tariff.unprotected.0.upto|int}} units each up to {{data.tariff.unprotected.6.upto|int}} and one open-ended slab above. Each slab carries its own fixed charge per kW of sanctioned load, and connections of {{d.tou_threshold_kw|int}} kW and above are billed on peak and off-peak ToU rates instead.",
     "On top of the energy and fixed charges, the bill adds the FC surcharge, the quarterly tariff adjustment, the monthly FCA and GST. The surcharge, QTA and GST defaults here come from secondary sources and change over time, and how GST and the FC surcharge apply to lifeline bills is still being verified, so copy those lines from your bill."
    ]
   },

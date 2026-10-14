@@ -140,10 +140,13 @@ export const ac_payback = calculator((i, d) => {
   const units_inv = kw_inv * hours_year;
   const annual_units_saved = units_noninv - units_inv;
   const annual_saving = annual_units_saved * tariff;
+  const payback_months = price_diff / (annual_saving / 12);
+  // A saving too small to repay the extra price within an AC's working life is no payback (audit WL-22).
+  if (payback_months > dflt(d, 'ac_life_years') * 12) throw new CalcError('inverter_ac_no_payback', 'price_diff');
   return {
     kw_noninv, duty, kw_noninv_avg, kw_inv, hours_year, tariff, price_diff,
     units_noninv, units_inv, rs_noninv: units_noninv * tariff, rs_inv: units_inv * tariff,
-    annual_units_saved, annual_saving, payback_months: price_diff / (annual_saving / 12),
+    annual_units_saved, annual_saving, payback_months,
   };
 });
 

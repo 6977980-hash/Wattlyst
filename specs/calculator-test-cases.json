@@ -6035,5 +6035,65 @@
     },
     "tolerance": 0.01,
     "note": "Audit 2026-10-14 Phase 1 (WL-07, WL-08): 4 mm2 three-phase 28 A x 0.79 = 22.1 A < 25 A"
+  },
+  {
+    "calc": "ac_payback",
+    "name": "near-zero saving is no payback, not millions of months (WL-22)",
+    "inputs": {
+      "kw_noninv": 1.8,
+      "kw_inv": 1.4399,
+      "hours_year": 1200,
+      "tariff": 40,
+      "price_diff": 40000
+    },
+    "expected": {
+      "error": "inverter_ac_no_payback"
+    },
+    "tolerance": 0,
+    "note": "avg 1.8 x 0.8 = 1.44 kW; saving 0.0001 kW x 1200 h x Rs 40 = Rs 4.8 a year -> 100,000 months, longer than ac_life_years"
+  },
+  {
+    "calc": "ac_payback",
+    "name": "payback exactly at the AC life is still shown (WL-22)",
+    "inputs": {
+      "kw_noninv": 1.8,
+      "kw_inv": 1,
+      "hours_year": 1200,
+      "tariff": 40,
+      "price_diff": 316800
+    },
+    "expected": {
+      "payback_months": 180
+    },
+    "tolerance": 0.001,
+    "note": "saving (1.44 - 1.0) x 1200 x 40 = Rs 21,120 a year = Rs 1,760 a month; 316,800 / 1,760 = 180 months = 15 years x 12"
+  },
+  {
+    "calc": "solar_from_loads",
+    "name": "off-grid flag sent as text 'true' counts like true (WL-18)",
+    "inputs": {
+      "loads": [
+        {
+          "id": "led-bulb",
+          "qty": 10,
+          "hours": 6
+        },
+        {
+          "id": "ceiling-fan-ac",
+          "qty": 2,
+          "hours": 12
+        }
+      ],
+      "city": "lahore",
+      "night_hours": 4,
+      "battery_v": 24,
+      "off_grid": "true"
+    },
+    "expected": {
+      "array_kwh": 2.8299,
+      "panels": 2
+    },
+    "tolerance": 0.001,
+    "note": "same as the off-grid case above; the flag is read with bool() like every other checkbox"
   }
 ]

@@ -79,10 +79,10 @@
    "unit": "m²"
   }
  ],
- "answer": "For a bill of three hundred units a month in Lahore you need about {{out.kw|2}} kW of solar panel wattage, which is {{out.panels|int}} panels of {{out.panel_w|int}} W ({{out.installed_kw|2}} kW installed) on about {{out.roof_m2|1}} m² of roof. Panel watts = daily units ÷ the units one kW of panels makes a day in your city, rounded up to whole panels.",
+ "answer": "For a bill of {{in.monthly_units|int}} units a month in Lahore you need about {{out.kw|2}} kW of solar panel wattage, which is {{out.panels|int}} panels of {{out.panel_w|int}} W ({{out.installed_kw|2}} kW installed) on about {{out.roof_m2|1}} m² of roof. Panel watts = daily units ÷ the units one kW of panels makes a day in your city, rounded up to whole panels.",
  "how": "Monthly units ÷ {{d.days_per_month|int}} days = {{out.daily_kwh|1}} units a day. Each kW of panels in your city makes about {{out.yield_kwh_per_kwp_day|1}} units a day over the year (sun hours with heat, dust and wiring losses already taken off). {{out.daily_kwh|1}} ÷ {{out.yield_kwh_per_kwp_day|1}} = {{out.kw|2}} kW of panels. At {{out.panel_w|int}} W a panel that is {{out.panels|int}} panels after rounding up, {{out.installed_kw|2}} kW installed, which should make about {{out.monthly_kwh_estimate|int}} units a month on about {{out.roof_m2|1}} m² of roof.",
  "key_facts": [
-  "Solar panel wattage for a home = daily units ÷ the units each kW of panels makes a day in the city: three hundred units a month in Lahore is {{out.daily_kwh|1}} units a day and needs {{out.kw|2}} kW of panels, or {{out.panels|int}} panels of {{out.panel_w|int}} W.",
+  "Solar panel wattage for a home = daily units ÷ the units each kW of panels makes a day in the city: {{in.monthly_units|int}} units a month in Lahore is {{out.daily_kwh|1}} units a day and needs {{out.kw|2}} kW of panels, or {{out.panels|int}} panels of {{out.panel_w|int}} W.",
   "One kW of panels makes about {{out.yield_kwh_per_kwp_day|1}} units a day in Lahore and {{ex.2.out.yield_kwh_per_kwp_day|1}} in Karachi over the year (Global Solar Atlas), so the same bill needs {{out.panels|int}} panels in Lahore but {{ex.2.out.panels|int}} in Karachi.",
   "One {{ex.3.out.panel_w|int}} W panel makes about {{ex.3.out.monthly_kwh_estimate|int}} units a month in Lahore as a yearly average, after real-world losses; sixty units a month of usage is covered by exactly {{ex.3.out.panels|int}} panel.",
   "Panel size does not change the total watts: {{out.kw|2}} kW is {{out.panels|int}} panels of {{out.panel_w|int}} W or {{ex.1.out.panels|int}} panels of {{ex.1.out.panel_w|int}} W, but the smaller panels take {{ex.1.out.roof_m2|1}} m² of roof instead of {{out.roof_m2|1}} m²."
@@ -101,7 +101,7 @@
   {
    "h2": "How many watts of solar panel do I need?",
    "p": [
-    "Take the units on your bill, turn them into units a day, and divide by what one kW of panels really makes a day where you live. For three hundred units a month in Lahore that is {{out.daily_kwh|1}} units a day ÷ {{out.yield_kwh_per_kwp_day|1}} = {{out.kw|2}} kW of panels. The yield figure already includes the losses from heat, dust, wiring and the inverter, so you do not add another margin on top.",
+    "Take the units on your bill, turn them into units a day, and divide by what one kW of panels really makes a day where you live. For {{in.monthly_units|int}} units a month in Lahore that is {{out.daily_kwh|1}} units a day ÷ {{out.yield_kwh_per_kwp_day|1}} = {{out.kw|2}} kW of panels. The yield figure already includes the losses from heat, dust, wiring and the inverter, so you do not add another margin on top.",
     "The calculator then rounds up to whole panels of the size you chose: {{out.panels|int}} panels of {{out.panel_w|int}} W, or {{out.installed_kw|2}} kW installed, which makes about {{out.monthly_kwh_estimate|int}} units a month. The extra over your bill is normal; the next whole panel always adds a little."
    ]
   },
@@ -120,15 +120,15 @@
    ]
   },
   {
-   "h2": "How many solar panels for ten units a day?",
+   "h2": "How many solar panels for {{out.daily_kwh|1}} units a day?",
    "p": [
-    "Ten units a day is three hundred units a month, the default above: {{out.panels|int}} panels of {{out.panel_w|int}} W in Lahore, {{out.installed_kw|2}} kW. The same ten units in Karachi need {{ex.2.out.panels|int}} panels ({{ex.2.out.installed_kw|2}} kW) because each kW makes {{ex.2.out.yield_kwh_per_kwp_day|1}} units a day there. For any other daily figure, multiply by thirty and enter it as monthly units, or use the solar system size calculator, which takes daily kWh directly."
+    "{{out.daily_kwh|1}} units a day is {{in.monthly_units|int}} units a month, the default above: {{out.panels|int}} panels of {{out.panel_w|int}} W in Lahore, {{out.installed_kw|2}} kW. The same {{ex.2.out.daily_kwh|1}} units a day in Karachi need {{ex.2.out.panels|int}} panels ({{ex.2.out.installed_kw|2}} kW) because each kW makes {{ex.2.out.yield_kwh_per_kwp_day|1}} units a day there. For any other daily figure, multiply by {{d.days_per_month|int}} and enter it as monthly units, or use the solar system size calculator, which takes daily kWh directly."
    ]
   },
   {
    "h2": "Solar watts calculator for a bigger bill",
    "p": [
-    "The watts grow in a straight line with the units: a thousand units a month in Lahore is {{ex.4.out.daily_kwh|1}} units a day and needs {{ex.4.out.kw|2}} kW, {{ex.4.out.panels|int}} panels of {{ex.4.out.panel_w|int}} W on about {{ex.4.out.roof_m2|1}} m² of roof. Above five kW the connection and net-billing rules change, so check the sanctioned load with your DISCO before buying.",
+    "The watts grow in a straight line with the units: {{ex.4.in.monthly_units|int}} units a month in Lahore is {{ex.4.out.daily_kwh|1}} units a day and needs {{ex.4.out.kw|2}} kW, {{ex.4.out.panels|int}} panels of {{ex.4.out.panel_w|int}} W on about {{ex.4.out.roof_m2|1}} m² of roof. Above five kW the connection and net-billing rules change, so check the sanctioned load with your DISCO before buying.",
     "This page sizes panels from the units you use. It does not check whether the panels can carry your AC at noon without the grid; for that, size from the appliance list with the solar system from loads calculator."
    ]
   }
@@ -138,21 +138,21 @@
    "inputs": {
     "panel_w": 550
    },
-   "title": "Three hundred units a month with {{out.panel_w|int}} W panels",
+   "title": "{{in.monthly_units|int}} units a month with {{out.panel_w|int}} W panels",
    "text": "{{out.daily_kwh|1}} units a day ÷ {{out.yield_kwh_per_kwp_day|1}} = {{out.kw|2}} kW. At {{out.panel_w|int}} W a panel: {{out.panels|int}} panels, {{out.installed_kw|2}} kW installed, {{out.roof_m2|1}} m² of roof, about {{out.monthly_kwh_estimate|int}} units a month."
   },
   {
    "inputs": {
     "panel_w": 400
    },
-   "title": "Three hundred units a month with {{out.panel_w|int}} W panels",
+   "title": "{{in.monthly_units|int}} units a month with {{out.panel_w|int}} W panels",
    "text": "Same {{out.kw|2}} kW, but at {{out.panel_w|int}} W a panel it takes {{out.panels|int}} panels, {{out.installed_kw|2}} kW installed on {{out.roof_m2|1}} m² of roof. More panels, more mounting and cable, same energy."
   },
   {
    "inputs": {
     "city": "karachi"
    },
-   "title": "Three hundred units a month in Karachi",
+   "title": "{{in.monthly_units|int}} units a month in Karachi",
    "text": "Karachi makes {{out.yield_kwh_per_kwp_day|1}} units per kW a day, so {{out.daily_kwh|1}} ÷ {{out.yield_kwh_per_kwp_day|1}} = {{out.kw|2}} kW: {{out.panels|int}} panels of {{out.panel_w|int}} W, {{out.installed_kw|2}} kW installed, about {{out.monthly_kwh_estimate|int}} units a month."
   },
   {
@@ -166,7 +166,7 @@
    "inputs": {
     "monthly_units": 1000
    },
-   "title": "A thousand units a month in Lahore",
+   "title": "{{in.monthly_units|int}} units a month in Lahore",
    "text": "{{out.daily_kwh|1}} units a day ÷ {{out.yield_kwh_per_kwp_day|1}} = {{out.kw|2}} kW. {{out.panels|int}} panels of {{out.panel_w|int}} W, {{out.installed_kw|2}} kW installed on about {{out.roof_m2|1}} m² of roof, making about {{out.monthly_kwh_estimate|int}} units a month."
   }
  ],
@@ -229,12 +229,12 @@
  "safety": "Panels on a roof produce dangerous DC voltage in daylight even when switched off at the inverter; the DC wiring, isolators, earthing and grid connection must be done by a licensed electrician or a certified solar installer.",
  "faq": [
   {
-   "q": "How many watts of solar panels do I need for three hundred units a month?",
+   "q": "How many watts of solar panels do I need for {{in.monthly_units|int}} units a month?",
    "a": "About {{out.kw|2}} kW in Lahore: {{out.panels|int}} panels of {{out.panel_w|int}} W, {{out.installed_kw|2}} kW installed, on about {{out.roof_m2|1}} m² of roof. Karachi needs {{ex.2.out.panels|int}} panels for the same bill because of its stronger sun."
   },
   {
-   "q": "How many solar panels for ten kWh a day?",
-   "a": "Ten kWh a day is three hundred units a month, so {{out.panels|int}} panels of {{out.panel_w|int}} W in Lahore or {{ex.2.out.panels|int}} in Karachi. Multiply any daily figure by thirty to enter it as monthly units."
+   "q": "How many solar panels for {{out.daily_kwh|1}} kWh a day?",
+   "a": "{{out.daily_kwh|1}} kWh a day is {{in.monthly_units|int}} units a month, so {{out.panels|int}} panels of {{out.panel_w|int}} W in Lahore or {{ex.2.out.panels|int}} in Karachi. Multiply any daily figure by {{d.days_per_month|int}} to enter it as monthly units."
   },
   {
    "q": "How much power does a {{ex.3.out.panel_w|int}} W solar panel produce per day?",

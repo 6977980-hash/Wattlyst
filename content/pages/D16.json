@@ -91,12 +91,12 @@
    "unit": "A"
   }
  ],
- "answer": "A thousand watts of solar panels on a 24 V battery needs an MPPT solar charge controller of at least {{out.amps|1}} A, so buy the next size sold, a {{out.standard_a|int}} A controller. MPPT amps = total panel watts ÷ battery volts × a safety margin of {{out.margin|2}}; a PWM controller is sized from the panel short-circuit current × panels in parallel × the same margin.",
+ "answer": "{{in.panel_w|int}} W of solar panels on a {{in.battery_v}} V battery needs an MPPT solar charge controller of at least {{out.amps|1}} A, so buy the next size sold, a {{out.standard_a|int}} A controller. MPPT amps = total panel watts ÷ battery volts × a safety margin of {{out.margin|2}}; a PWM controller is sized from the panel short-circuit current × panels in parallel × the same margin.",
  "how": "MPPT: total panel watts ÷ battery bank volts gives the charging current the controller must deliver; × the {{out.margin|2}} safety margin for cold bright days = {{out.amps|1}} A. Controllers are sold in fixed sizes, so the next size up is {{out.standard_a|int}} A. PWM: the controller passes the panel current through, so amps = Isc of one panel × panels in parallel × {{out.margin|2}}, rounded up to the next size.",
  "key_facts": [
-  "MPPT charge controller amps = total panel watts ÷ battery voltage × a {{d.margin|2}} margin: a thousand watts on 24 V needs {{out.amps|1}} A, so a {{out.standard_a|int}} A controller; the same watts on 12 V would need twice the amps.",
-  "A {{ex.2.out.standard_a|int}} A MPPT handles about two thousand watts of panels on a 48 V bank ({{ex.2.out.amps|1}} A needed) but only about a thousand watts on 24 V ({{out.amps|1}} A), because the amps are set by watts ÷ volts.",
-  "PWM charge controller amps = panel short-circuit current × panels in parallel × {{d.margin|2}}: two panels of ten amps Isc need {{ex.3.out.amps|1}} A, so a {{ex.3.out.standard_a|int}} A PWM controller.",
+  "MPPT charge controller amps = total panel watts ÷ battery voltage × a {{d.margin|2}} margin: {{in.panel_w|int}} W on {{in.battery_v}} V needs {{out.amps|1}} A, so a {{out.standard_a|int}} A controller; the same watts on half the voltage would need twice the amps.",
+  "A {{ex.2.out.standard_a|int}} A MPPT handles about {{ex.2.in.panel_w|int}} W of panels on a {{ex.2.in.battery_v}} V bank ({{ex.2.out.amps|1}} A needed) but only about {{in.panel_w|int}} W on {{in.battery_v}} V ({{out.amps|1}} A), because the amps are set by watts ÷ volts.",
+  "PWM charge controller amps = panel short-circuit current × panels in parallel × {{d.margin|2}}: {{ex.3.in.n_parallel|int}} panels of {{ex.3.in.isc}} A Isc need {{ex.3.out.amps|1}} A, so a {{ex.3.out.standard_a|int}} A PWM controller.",
   "Standard controller sizes are limited; above the largest size the array must be split over two controllers or moved to a higher bank voltage."
  ],
  "formula": {
@@ -113,57 +113,57 @@
   {
    "h2": "What size charge controller do I need?",
    "p": [
-    "For an MPPT controller, divide the total panel watts by the battery bank voltage and add the safety margin. A thousand watts on a 24 V bank is {{out.amps|1}} A after the {{out.margin|2}} margin, so the controller to buy is the next size sold, {{out.standard_a|int}} A. The amps are the current going into the battery, which is why the bank voltage matters so much: the same array on 48 V needs half the amps.",
+    "For an MPPT controller, divide the total panel watts by the battery bank voltage and add the safety margin. {{in.panel_w|int}} W on a {{in.battery_v}} V bank is {{out.amps|1}} A after the {{out.margin|2}} margin, so the controller to buy is the next size sold, {{out.standard_a|int}} A. The amps are the current going into the battery, which is why the bank voltage matters so much: the same array on twice the voltage needs half the amps.",
     "The second check is voltage. Panels in series add their open-circuit voltage, and on a cold clear morning it rises above the label value. The controller's maximum PV input voltage on its datasheet must stay above the string's open-circuit voltage on the coldest morning in your area; this calculator sizes the amps only, so count the panels in series against the datasheet before you buy."
    ]
   },
   {
    "h2": "MPPT charge controller size for 12 V, 24 V and 48 V",
    "p": [
-    "The examples below show how fast the amps climb on a low bank voltage: six hundred watts on 12 V already needs {{ex.4.out.amps|1}} A and an {{ex.4.out.standard_a|int}} A controller, while two thousand watts on 48 V needs only {{ex.2.out.amps|1}} A and a {{ex.2.out.standard_a|int}} A controller. Large MPPT controllers are expensive, so a bigger array is usually paired with a higher bank voltage rather than a bigger controller. The table shows the controller for arrays from five hundred to three and a half thousand watts on a 48 V bank.",
+    "The examples below show how fast the amps climb on a low bank voltage: {{ex.4.in.panel_w|int}} W on {{ex.4.in.battery_v}} V already needs {{ex.4.out.amps|1}} A and an {{ex.4.out.standard_a|int}} A controller, while {{ex.2.in.panel_w|int}} W on {{ex.2.in.battery_v}} V needs only {{ex.2.out.amps|1}} A and a {{ex.2.out.standard_a|int}} A controller. Large MPPT controllers are expensive, so a bigger array is usually paired with a higher bank voltage rather than a bigger controller. The table shows the controller for arrays from {{table.0.in.panel_w|int}} W to {{table.5.in.panel_w|int}} W on a {{table.0.in.battery_v}} V bank.",
     "A hybrid solar inverter has its MPPT built in; check its maximum PV watts and voltage the same way. This page is for a separate controller on a battery system."
    ]
   },
   {
-   "h2": "How many watts can a 60 A MPPT handle?",
+   "h2": "How many watts can a {{out.standard_a|int}} A MPPT handle?",
    "p": [
-    "Work the formula backwards: controller amps × bank volts ÷ the margin. A {{out.standard_a|int}} A MPPT on 24 V covers the thousand-watt array above with {{out.amps|1}} A needed, and on 48 V it covers about two thousand watts ({{ex.2.out.amps|1}} A). On 12 V it is limited to roughly half of the 24 V figure. Most makers also print a maximum PV watts per bank voltage on the datasheet; the lower of the two numbers is the limit."
+    "Work the formula backwards: controller amps × bank volts ÷ the margin. A {{out.standard_a|int}} A MPPT on {{in.battery_v}} V covers the {{in.panel_w|int}} W array above with {{out.amps|1}} A needed, and on {{ex.2.in.battery_v}} V it covers about {{ex.2.in.panel_w|int}} W ({{ex.2.out.amps|1}} A). On half the voltage it is limited to roughly half the watts. Most makers also print a maximum PV watts per bank voltage on the datasheet; the lower of the two numbers is the limit."
    ]
   },
   {
    "h2": "PWM vs MPPT: which charge controller and how is each sized?",
    "p": [
-    "A PWM controller connects the panel almost directly to the battery, so the panel runs at the battery voltage and the controller only has to carry the panel current. It is sized from the short-circuit current: two panels of ten amps Isc in parallel need {{ex.3.out.amps|1}} A with the margin, so a {{ex.3.out.standard_a|int}} A PWM. It only suits panels whose working voltage matches the battery, which rules out today's large high-voltage panels on a 12 V or 24 V bank.",
+    "A PWM controller connects the panel almost directly to the battery, so the panel runs at the battery voltage and the controller only has to carry the panel current. It is sized from the short-circuit current: {{ex.3.in.n_parallel|int}} panels of {{ex.3.in.isc}} A Isc in parallel need {{ex.3.out.amps|1}} A with the margin, so a {{ex.3.out.standard_a|int}} A PWM. It only suits panels whose working voltage matches the battery, which rules out today's large high-voltage panels on a 12 V or 24 V bank.",
     "An MPPT controller converts a higher panel voltage down to the battery voltage and turns the spare volts into extra amps, so it harvests more from the same panels, especially in winter and in the morning. It costs more per amp, but for any array over a few hundred watts, or any modern panel on a small bank, MPPT is the right choice."
    ]
   },
   {
-   "h2": "Charge controller for a thousand watts of solar",
+   "h2": "Charge controller for {{in.panel_w|int}} W of solar",
    "p": [
-    "On a 24 V bank a thousand watts needs {{out.amps|1}} A, so a {{out.standard_a|int}} A MPPT controller; on 48 V the same array needs half that. Fifteen hundred watts on 24 V needs {{ex.1.out.amps|1}} A and an {{ex.1.out.standard_a|int}} A controller. If you plan to add panels later, buy the controller for the final array, because the amps rise with every panel."
+    "On a {{in.battery_v}} V bank {{in.panel_w|int}} W needs {{out.amps|1}} A, so a {{out.standard_a|int}} A MPPT controller; on twice the voltage the same array needs half that. {{ex.1.in.panel_w|int}} W on {{ex.1.in.battery_v}} V needs {{ex.1.out.amps|1}} A and an {{ex.1.out.standard_a|int}} A controller. If you plan to add panels later, buy the controller for the final array, because the amps rise with every panel."
    ]
   }
  ],
  "examples": [
   {
    "inputs": {},
-   "title": "A thousand watts on a 24 V bank, MPPT",
-   "text": "Thousand watts ÷ twenty-four volts × {{out.margin|2}} = {{out.amps|1}} A. Next size sold: {{out.standard_a|int}} A MPPT."
+   "title": "{{in.panel_w|int}} W on a {{in.battery_v}} V bank, MPPT",
+   "text": "{{in.panel_w|int}} W ÷ {{in.battery_v}} V × {{out.margin|2}} = {{out.amps|1}} A. Next size sold: {{out.standard_a|int}} A MPPT."
   },
   {
    "inputs": {
     "panel_w": 1500
    },
-   "title": "Fifteen hundred watts on a 24 V bank, MPPT",
-   "text": "Fifteen hundred watts ÷ twenty-four volts × {{out.margin|2}} = {{out.amps|1}} A, so an {{out.standard_a|int}} A MPPT. Moving the bank to 48 V would halve the amps."
+   "title": "{{in.panel_w|int}} W on a {{in.battery_v}} V bank, MPPT",
+   "text": "{{in.panel_w|int}} W ÷ {{in.battery_v}} V × {{out.margin|2}} = {{out.amps|1}} A, so an {{out.standard_a|int}} A MPPT. Moving the bank to twice the voltage would halve the amps."
   },
   {
    "inputs": {
     "panel_w": 2000,
     "battery_v": 48
    },
-   "title": "Two thousand watts on a 48 V bank, MPPT",
-   "text": "Two thousand watts ÷ forty-eight volts × {{out.margin|2}} = {{out.amps|1}} A, so a {{out.standard_a|int}} A MPPT. The same array on 24 V would need twice the amps and a bigger controller."
+   "title": "{{in.panel_w|int}} W on a {{in.battery_v}} V bank, MPPT",
+   "text": "{{in.panel_w|int}} W ÷ {{in.battery_v}} V × {{out.margin|2}} = {{out.amps|1}} A, so a {{out.standard_a|int}} A MPPT. The same array on half the voltage would need twice the amps and a bigger controller."
   },
   {
    "inputs": {
@@ -171,20 +171,20 @@
     "isc": 10,
     "n_parallel": 2
    },
-   "title": "Two panels of ten amps Isc in parallel, PWM",
-   "text": "Ten amps × two in parallel × {{out.margin|2}} = {{out.amps|1}} A, so a {{out.standard_a|int}} A PWM controller. The panel voltage must match the battery bank for PWM to work well."
+   "title": "{{in.n_parallel|int}} panels of {{in.isc}} A Isc in parallel, PWM",
+   "text": "{{in.isc}} A × {{in.n_parallel|int}} in parallel × {{out.margin|2}} = {{out.amps|1}} A, so a {{out.standard_a|int}} A PWM controller. The panel voltage must match the battery bank for PWM to work well."
   },
   {
    "inputs": {
     "panel_w": 600,
     "battery_v": 12
    },
-   "title": "Six hundred watts on a 12 V bank, MPPT",
-   "text": "Six hundred watts ÷ twelve volts × {{out.margin|2}} = {{out.amps|1}} A, so an {{out.standard_a|int}} A MPPT. A small bank voltage makes even a modest array expensive to control; 24 V would need half the amps."
+   "title": "{{in.panel_w|int}} W on a {{in.battery_v}} V bank, MPPT",
+   "text": "{{in.panel_w|int}} W ÷ {{in.battery_v}} V × {{out.margin|2}} = {{out.amps|1}} A, so an {{out.standard_a|int}} A MPPT. A small bank voltage makes even a modest array expensive to control; twice the voltage would need half the amps."
   }
  ],
  "table": {
-  "caption": "MPPT charge controller size on a 48 V bank with the {{out.margin|2}} safety margin; rows in order: five hundred, one thousand, fifteen hundred, two thousand, three thousand and three and a half thousand watts of panels",
+  "caption": "MPPT charge controller size on a {{table.0.in.battery_v}} V bank with the {{out.margin|2}} safety margin, for arrays from {{table.0.in.panel_w|int}} W to {{table.5.in.panel_w|int}} W of panels",
   "rows": [
    {
     "panel_w": 500,
@@ -232,16 +232,16 @@
  "safety": "The controller, DC fuses or breakers, cables and battery connections carry high DC current; have a licensed electrician or a certified solar installer wire them, connect the battery before the panels, and never exceed the controller's maximum PV voltage.",
  "faq": [
   {
-   "q": "What size charge controller do I need for a thousand watts of solar?",
-   "a": "On a 24 V bank, {{out.amps|1}} A with the margin, so a {{out.standard_a|int}} A MPPT controller. On 48 V the same panels need about half the amps; on 12 V about twice."
+   "q": "What size charge controller do I need for {{in.panel_w|int}} W of solar?",
+   "a": "On a {{in.battery_v}} V bank, {{out.amps|1}} A with the margin, so a {{out.standard_a|int}} A MPPT controller. On twice the voltage the same panels need about half the amps; on half the voltage about twice."
   },
   {
-   "q": "How many watts can a 60 A MPPT charge controller handle?",
-   "a": "About a thousand watts on a 24 V bank ({{out.amps|1}} A needed) and about two thousand watts on 48 V ({{ex.2.out.amps|1}} A). Check the maker's maximum PV watts per bank voltage as well; the lower figure is the limit."
+   "q": "How many watts can a {{out.standard_a|int}} A MPPT charge controller handle?",
+   "a": "About {{in.panel_w|int}} W on a {{in.battery_v}} V bank ({{out.amps|1}} A needed) and about {{ex.2.in.panel_w|int}} W on {{ex.2.in.battery_v}} V ({{ex.2.out.amps|1}} A). Check the maker's maximum PV watts per bank voltage as well; the lower figure is the limit."
   },
   {
    "q": "How do I size a PWM charge controller?",
-   "a": "Multiply the short-circuit current of one panel by the number of panels in parallel and by the {{ex.3.out.margin|2}} margin. Two panels of ten amps Isc need {{ex.3.out.amps|1}} A, so a {{ex.3.out.standard_a|int}} A PWM."
+   "a": "Multiply the short-circuit current of one panel by the number of panels in parallel and by the {{ex.3.out.margin|2}} margin. {{ex.3.in.n_parallel|int}} panels of {{ex.3.in.isc}} A Isc need {{ex.3.out.amps|1}} A, so a {{ex.3.out.standard_a|int}} A PWM."
   },
   {
    "q": "PWM or MPPT: which should I buy?",
@@ -249,7 +249,7 @@
   },
   {
    "q": "Does the charge controller size depend on the battery voltage?",
-   "a": "Yes, for MPPT: amps = watts ÷ bank volts. Two thousand watts needs {{ex.2.out.amps|1}} A on 48 V but would need twice that on 24 V, so a higher bank voltage means a smaller, cheaper controller."
+   "a": "Yes, for MPPT: amps = watts ÷ bank volts. {{ex.2.in.panel_w|int}} W needs {{ex.2.out.amps|1}} A on {{ex.2.in.battery_v}} V but would need twice that on half the voltage, so a higher bank voltage means a smaller, cheaper controller."
   },
   {
    "q": "Does this calculator check the panel voltage (Voc)?",
@@ -257,7 +257,7 @@
   },
   {
    "q": "What if the result is above the largest controller size?",
-   "a": "Split the array over two controllers, or move to a higher bank voltage, which halves the amps. Standard sizes end at a hundred amps in this calculator."
+   "a": "Split the array over two controllers, or move to a higher bank voltage, which halves the amps. Standard sizes end at {{d.standard_controller_a.7|int}} A in this calculator."
   }
  ],
  "related": [

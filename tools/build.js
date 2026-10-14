@@ -169,6 +169,11 @@ function buildContent(c, ctx) {
       const r = runCalc(ctx, exIn, `example ${n + 1}`);
       return { in: r, out: r };
     });
+    // Table rows run once; captions and page text can name a row's inputs as {{table.N.in.x}} (audit WL-23).
+    scope.table = (c.table?.rows || []).map((r, n) => {
+      const res = runCalc(ctx, { ...inputs, ...Object.fromEntries(Object.entries(r).map(([k, v]) => [k, resolveDefault(v, ctx)])) }, `table row ${n + 1}`);
+      return { in: res, out: res };
+    });
     out.tool = {
       calc: c.calc,
       module: `${module}.js`,
@@ -197,10 +202,7 @@ function buildContent(c, ctx) {
       text: text(ctx, ex.text, { ...scope, ...scope.ex[n] }, `example ${n + 1}`),
     }));
     if (c.table) {
-      const rows = c.table.rows.map((r, n) => {
-        const res = runCalc(ctx, { ...inputs, ...Object.fromEntries(Object.entries(r).map(([k, v]) => [k, resolveDefault(v, ctx)])) }, `table row ${n + 1}`);
-        return c.table.columns.map((col) => text(ctx, col.tpl, { ...scope, in: res, out: res }, `table row ${n + 1}`));
-      });
+      const rows = scope.table.map((res, n) => c.table.columns.map((col) => text(ctx, col.tpl, { ...scope, ...res }, `table row ${n + 1}`)));
       out.table = { caption: text(ctx, c.table.caption, scope, 'table caption'), head: c.table.columns.map((col) => col.label), rows };
     }
   }
