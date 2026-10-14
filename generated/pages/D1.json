@@ -3,15 +3,25 @@
  "type": "tool",
  "silo": "D",
  "url": "/solar/solar-battery-size-calculator/",
- "h1": "Solar Battery Size Calculator For Home",
+ "h1": "Solar Battery Size Calculator for Home",
  "title": "Solar Battery Size Calculator for Home | Wattlyst",
  "meta": "Size the battery bank for your solar system from night-time load, backup days and battery type. Lithium and tubular, 12V to 48V.",
  "primary_keyword": "solar battery size calculator for home",
  "wave": 2,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-13",
+ "published": "2026-10-13",
  "author": "ali-ahmad",
+ "related": [
+  "D3",
+  "D7",
+  "D4",
+  "H8",
+  "B1"
+ ],
+ "next": "B4",
  "parent": "P-D",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
@@ -22,11 +32,284 @@
    "url": "/solar/"
   },
   {
-   "name": "Solar Battery Size Calculator For Home",
+   "name": "Solar Battery Size Calculator for Home",
    "url": "/solar/solar-battery-size-calculator/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "How many batteries do I need for a solar system?",
+    "p": [
+     "Start with the night energy, not the solar size. The panels only matter while the sun is up; the battery carries whatever runs after sunset. For 5 units a night the bank must hold 6.2 kWh, which is 129 Ah at 48 V with lithium batteries. Divide that Ah by the Ah of one battery and round up to get the number of batteries in parallel; a 48 V bank made of twelve volt batteries also needs four in series per string. The battery bank size calculator does that count for your exact battery.",
+     "Lithium packs are usually sold as a whole bank at the inverter voltage, so you buy one or two packs whose Ah add up to 129 Ah. Tubular batteries are twelve volt units, so a 24 V tubular bank for the same night needs 463 Ah: that is several parallel strings of two batteries each."
+    ]
+   },
+   {
+    "h2": "What size battery for a 5 kW solar system?",
+    "p": [
+     "The solar size does not fix the battery size; the night load does. A five kW system usually belongs to a house that runs fans, a fridge, lights, a TV and one inverter AC into the evening, which draws about 10 units a night. That needs 257 Ah at 48 V, about 12.3 kWh of lithium. The same house without the AC at night needs about half: enter your own night units above.",
+     "If you want the battery to also run the AC through a full summer night, measure the evening units on your meter for a week and use the highest night, not the average."
+    ]
+   },
+   {
+    "h2": "Lithium battery for solar versus tubular",
+    "p": [
+     "A lithium (LiFePO4) bank can be used to 90% each night and still reach its rated cycles; a tubular or lead-acid bank should only be used to 50%. That is why the same 5 units need 6.2 kWh of lithium but 11.1 kWh of tubular. Lithium also charges faster from the panels and loses less in the round trip, so the solar array can be smaller for the same backup.",
+     "Tubular wins only on purchase price per Ah. Over the life of the system the lithium bank usually costs less per usable unit, which the lithium versus tubular guide works through."
+    ]
+   },
+   {
+    "h2": "How many days of autonomy should a solar battery have?",
+    "p": [
+     "Days of autonomy means how many nights the battery can carry the house with no sun to recharge it. With the grid available, one day is enough: a cloudy day is covered by the grid, and the battery is sized for one night. Off-grid, two days is a common planning figure and three in a monsoon or winter-fog area. Each day adds a whole night of storage: 2 days of autonomy for 5 units a night needs 257 Ah at 48 V, twice the bank for one day.",
+     "More autonomy also means the panels must put back more than one night's energy on the first sunny day, so size the array with that in mind. The off-grid solar calculator sizes panels, battery and inverter together."
+    ]
+   },
+   {
+    "h2": "Solar battery storage size in kWh or Ah?",
+    "p": [
+     "Both describe the same bank. Ah depends on the bank voltage: 129 Ah at 48 V is the same energy as twice that Ah at half the voltage. kWh is what you pay for and what the house uses, so compare quotes in kWh at the inverter's bank voltage. The result shows both; the usable share of the battery is already built in, so a 6.2 kWh bank gives back the 5 units you entered, not the full nameplate."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "How do I calculate the solar battery size for my home?",
+    "a": "Count the units the house uses after sunset, multiply by the days of autonomy, then divide by the bank voltage, the usable depth of discharge and the inverter efficiency. For 5 units a night at 48 V with lithium that is 129 Ah, about 6.2 kWh."
+   },
+   {
+    "q": "How many batteries do I need for a solar system?",
+    "a": "Divide the Ah from this calculator by the Ah of one battery and round up; a 48 V bank built from twelve volt batteries needs four in series per string. The battery bank size calculator gives the exact count for your battery model."
+   },
+   {
+    "q": "What battery do I need for a 5 kW solar system?",
+    "a": "It depends on the night load, not the array. A typical house with a five kW system uses about 10 units in the evening with an inverter AC, which needs about 257 Ah at 48 V (12.3 kWh) of lithium."
+   },
+   {
+    "q": "Is a lithium battery better for solar than tubular?",
+    "a": "For the same night load a lithium bank is about half the kWh of a tubular bank (6.2 kWh against 11.1 kWh for 5 units) because it can be used to 90% instead of 50%, and it lasts more cycles."
+   },
+   {
+    "q": "Can I use this as a solar battery backup calculator for load shedding?",
+    "a": "Yes. Enter the units used during the outage hours as the night load, keep one day of autonomy, and the result is the bank that covers that outage. For the backup hours a given battery gives, use the battery backup time calculator."
+   },
+   {
+    "q": "Does the battery bank voltage change the energy I need?",
+    "a": "No. 129 Ah at 48 V and 463 Ah at 24 V are different Ah for the same type of night, but the kWh is set by the night load and the battery type. Higher bank voltage means lower current and thinner cables."
+   },
+   {
+    "q": "Do I need to size the solar panels bigger for the battery?",
+    "a": "Yes. The panels must make the day's units plus the night's units plus charging losses, so a house with a battery needs a larger array than a daytime-only system. The off-grid solar calculator sizes both together."
+   }
+  ],
+  "key_facts": [
+   "A solar battery bank for 5 units a night is about 129 Ah at 48 V (6.2 kWh) in lithium, using 90% of the battery, or 463 Ah at 24 V (11.1 kWh) in tubular, which should only be used to 50%.",
+   "Solar battery size in Ah = night kWh × days of autonomy × 1,000 ÷ (bank voltage × depth of discharge × inverter efficiency), with a hybrid inverter efficiency of 90%.",
+   "Each extra day of autonomy adds a full night of storage: 2 days for the same 5 units a night needs 257 Ah at 48 V, twice the one-day bank.",
+   "A home with a five kW solar system that runs fans, a fridge, lights and one inverter AC through the evening uses about 10 units a night and needs about 257 Ah of lithium at 48 V, about 12.3 kWh."
+  ],
+  "mistakes": [
+   "Sizing the battery from the solar kW. A five kW array says nothing about the night load; count the units used after sunset instead.",
+   "Using the full nameplate of a tubular battery. Only about 50% of a tubular battery is usable night after night; the calculator already allows for it.",
+   "Forgetting inverter losses. About 90% of the stored energy reaches the appliances; the rest is lost as heat in the inverter.",
+   "Mixing battery voltages. The bank voltage must match the hybrid inverter; a 48 V inverter cannot use a 24 V bank.",
+   "Planning for the average night. Size for the longest night of use in the season you need backup most, or the battery runs flat before morning."
+  ],
+  "sources": [
+   {
+    "label": "Wattlyst methodology and default values (depth of discharge, inverter efficiency)",
+    "url": "/methodology/"
+   },
+   {
+    "label": "Battery University: depth of discharge and cycle life of lead-acid and lithium batteries",
+    "url": "https://batteryuniversity.com/"
+   }
+  ],
+  "tool": {
+   "calc": "solar_battery",
+   "module": "solar.js",
+   "data_keys": [
+    "cities"
+   ],
+   "appliances": {},
+   "fields": [
+    {
+     "name": "night_kwh",
+     "label": "Units the house uses from the battery each night",
+     "unit": "kWh",
+     "default": 5,
+     "hint": "Energy drawn after sunset until the panels take over in the morning. Fans, lights, a fridge and a TV for a night use about three to six units; add an AC and it doubles. The home load calculator gives this from your appliance list."
+    },
+    {
+     "name": "days",
+     "label": "Days of autonomy",
+     "unit": "days",
+     "default": 1,
+     "hint": "Nights the battery must carry without any sun. One is normal with the grid as backup; two or three for an off-grid house in a cloudy season."
+    },
+    {
+     "name": "volts",
+     "label": "Battery bank voltage",
+     "unit": "V",
+     "type": "select",
+     "default": 48,
+     "options": [
+      [
+       48,
+       "48 V"
+      ],
+      [
+       24,
+       "24 V"
+      ],
+      [
+       12,
+       "12 V"
+      ]
+     ],
+     "hint": "Match the hybrid inverter: most 3 kW and larger solar inverters use a 48 V bank, small ones 24 V or 12 V."
+    },
+    {
+     "name": "dod",
+     "label": "Battery type (usable depth of discharge)",
+     "unit": "0 to 1",
+     "type": "select",
+     "default": 0.9,
+     "options": [
+      [
+       0.9,
+       "Lithium (LiFePO4)"
+      ],
+      [
+       0.5,
+       "Tubular / lead-acid"
+      ]
+     ],
+     "hint": "Lithium can be used almost fully each night; tubular should only be run to about half to last its rated cycles."
+    },
+    {
+     "name": "inverter_eff",
+     "label": "Inverter efficiency",
+     "unit": "0 to 1",
+     "default": 0.9,
+     "advanced": true,
+     "hint": "Share of battery energy that reaches the appliances through the hybrid inverter. As a decimal."
+    }
+   ],
+   "fixed_inputs": {},
+   "outputs": [
+    {
+     "key": "ah",
+     "label": "Battery bank capacity",
+     "spec": "int",
+     "unit": "Ah",
+     "label_ur": "Battery bank ki capacity",
+     "value": "129"
+    },
+    {
+     "key": "kwh",
+     "label": "Battery bank energy",
+     "spec": "1",
+     "unit": "kWh",
+     "label_ur": "Battery bank ki energy",
+     "value": "6.2"
+    },
+    {
+     "key": "dod",
+     "label": "Usable share of the battery",
+     "spec": "pct",
+     "label_ur": "Battery ka qabil-e-istemal hissa",
+     "value": "90%"
+    }
+   ],
+   "how": {
+    "tpl": "Energy to store = {{in.night_kwh|1}} kWh a night × {{in.days|int}} day of autonomy. The battery can only give back part of that: the usable share is {{out.dod|pct}} for this battery type and the inverter passes on {{out.inverter_eff|pct}}. So Ah = {{in.night_kwh|1}} kWh × {{in.days|int}} × 1,000 ÷ ({{in.volts|int}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}}) = {{out.ah|int}} Ah, which is a bank of {{out.kwh|1}} kWh at {{in.volts|int}} V. Buy batteries whose Ah add up to at least this at the bank voltage.",
+    "text": "Energy to store = 5 kWh a night × 1 day of autonomy. The battery can only give back part of that: the usable share is 90% for this battery type and the inverter passes on 90%. So Ah = 5 kWh × 1 × 1,000 ÷ (48 V × 90% × 90%) = 129 Ah, which is a bank of 6.2 kWh at 48 V. Buy batteries whose Ah add up to at least this at the bank voltage."
+   },
+   "submit": "Calculate",
+   "notice": "",
+   "data_checked": [
+    {
+     "label": "Peak sun hours by city (Global Solar Atlas)",
+     "url": "https://globalsolaratlas.info/",
+     "checked": "2026-10-13"
+    }
+   ]
+  },
+  "examples": [
+   {
+    "title": "Same night load on a 24 V tubular bank",
+    "text": "5 kWh × 1 × 1,000 ÷ (24 V × 50% × 90%) = 463 Ah, a bank of 11.1 kWh. Tubular needs almost twice the energy of lithium because only half of it may be used each night."
+   },
+   {
+    "title": "2 days of autonomy, 48 V lithium",
+    "text": "5 kWh × 2 days ÷ (48 V × 90% × 90%) = 257 Ah, a 12.3 kWh bank. The second cloudy night doubles the battery, which is why off-grid banks are large."
+   },
+   {
+    "title": "House with a five kW solar system and an inverter AC in the evening",
+    "text": "Fans, fridge, lights, TV and an inverter AC for the evening use about 10 units a night. At 48 V lithium that is 257 Ah, a 12.3 kWh bank, for 1 day of autonomy."
+   },
+   {
+    "title": "Small 12 V tubular setup for lights and fans",
+    "text": "1.5 units a night ÷ (12 V × 50% × 90%) = 278 Ah of tubular at 12 V, a 3.3 kWh bank. Two of the common tubular sizes in parallel cover it."
+   }
+  ],
+  "table": {
+   "caption": "Solar battery bank for different night loads at 48 V with lithium batteries used to 90%, one day of autonomy",
+   "head": [
+    "Units a night",
+    "Battery bank",
+    "Energy"
+   ],
+   "rows": [
+    [
+     "2",
+     "51 Ah",
+     "2.5 kWh"
+    ],
+    [
+     "3",
+     "77 Ah",
+     "3.7 kWh"
+    ],
+    [
+     "5",
+     "129 Ah",
+     "6.2 kWh"
+    ],
+    [
+     "8",
+     "206 Ah",
+     "9.9 kWh"
+    ],
+    [
+     "10",
+     "257 Ah",
+     "12.3 kWh"
+    ],
+    [
+     "15",
+     "386 Ah",
+     "18.5 kWh"
+    ]
+   ]
+  },
+  "answer": "A home that uses 5 units from the battery each night needs a solar battery bank of about 129 Ah at 48 V (6.2 kWh) with lithium batteries, for 1 day of autonomy. Battery Ah = night units × days ÷ (bank volts × usable depth of discharge × inverter efficiency); a tubular bank must be almost twice as large.",
+  "formula": {
+   "text": "Ah = E_night × days × 1000 ÷ (V_bank × DoD × η_inv); kWh = Ah × V_bank ÷ 1000",
+   "lines": [
+    "E_night = units used from the battery each night",
+    "days = days of autonomy (nights without sun)",
+    "V_bank = battery bank voltage",
+    "DoD = usable depth of discharge of the battery type",
+    "η_inv = hybrid inverter efficiency",
+    "kWh = the same bank expressed as energy"
+   ]
+  },
+  "safety": "Battery banks store enough energy to start a fire if shorted; have a licensed electrician or a certified solar installer fit the DC fuse or breaker, the cables and the battery wiring, and keep lead-acid batteries in a ventilated space."
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -49,7 +332,7 @@
      {
       "@type": "ListItem",
       "position": 3,
-      "name": "Solar Battery Size Calculator For Home",
+      "name": "Solar Battery Size Calculator for Home",
       "item": "https://wattlyst.com/solar/solar-battery-size-calculator/"
      }
     ]
@@ -66,12 +349,14 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/solar/solar-battery-size-calculator/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-13",
+    "lastReviewed": "2026-10-13"
    },
    {
     "@type": "WebApplication",
     "@id": "https://wattlyst.com/solar/solar-battery-size-calculator/#app",
-    "name": "Solar Battery Size Calculator For Home",
+    "name": "Solar Battery Size Calculator for Home",
     "url": "https://wattlyst.com/solar/solar-battery-size-calculator/",
     "description": "Size the battery bank for your solar system from night-time load, backup days and battery type. Lithium and tubular, 12V to 48V.",
     "applicationCategory": "UtilitiesApplication",
@@ -98,6 +383,68 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/solar/solar-battery-size-calculator/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "How do I calculate the solar battery size for my home?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Count the units the house uses after sunset, multiply by the days of autonomy, then divide by the bank voltage, the usable depth of discharge and the inverter efficiency. For 5 units a night at 48 V with lithium that is 129 Ah, about 6.2 kWh."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many batteries do I need for a solar system?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Divide the Ah from this calculator by the Ah of one battery and round up; a 48 V bank built from twelve volt batteries needs four in series per string. The battery bank size calculator gives the exact count for your battery model."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What battery do I need for a 5 kW solar system?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "It depends on the night load, not the array. A typical house with a five kW system uses about 10 units in the evening with an inverter AC, which needs about 257 Ah at 48 V (12.3 kWh) of lithium."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Is a lithium battery better for solar than tubular?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "For the same night load a lithium bank is about half the kWh of a tubular bank (6.2 kWh against 11.1 kWh for 5 units) because it can be used to 90% instead of 50%, and it lasts more cycles."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Can I use this as a solar battery backup calculator for load shedding?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Yes. Enter the units used during the outage hours as the night load, keep one day of autonomy, and the result is the bank that covers that outage. For the backup hours a given battery gives, use the battery backup time calculator."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Does the battery bank voltage change the energy I need?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "No. 129 Ah at 48 V and 463 Ah at 24 V are different Ah for the same type of night, but the kWh is set by the night load and the battery type. Higher bank voltage means lower current and thinner cables."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Do I need to size the solar panels bigger for the battery?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Yes. The panels must make the day's units plus the night's units plus charging losses, so a house with a battery needs a larger array than a daytime-only system. The off-grid solar calculator sizes both together."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

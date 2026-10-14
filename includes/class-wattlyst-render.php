@@ -30,12 +30,27 @@ final class Wattlyst_Render {
 			$out .= $this->dates();
 		} elseif ( 'home' === $type ) {
 			$out .= $this->answer( $this->c['answer'] ?? $this->page['meta'] );
+			if ( ! empty( $this->c['tool'] ) ) { // Home Power Planner (Phase 4)
+				$out .= $this->tool();
+				$out .= $this->how();
+			}
 			$out .= $this->cards();
 			$out .= $this->key_facts();
 			$out .= $this->sections();
 			$out .= $this->faq();
 			$out .= $this->author_box();
 			$out .= $this->dates();
+		} elseif ( 'lookup' === $type ) {
+			$out .= $this->answer( $this->c['answer'] ?? '' );
+			$out .= $this->lookup();
+			$out .= $this->key_facts();
+			$out .= $this->sections();
+			$out .= $this->tables();
+			$out .= $this->mistakes();
+			$out .= $this->faq();
+			$out .= $this->related();
+			$out .= $this->author_box();
+			$out .= $this->sources();
 		} elseif ( 'pillar' === $type ) {
 			$out .= $this->answer( ( $this->c['answer'] ?? '' ) ?: ( $this->c['intro'] ?? '' ) ?: $this->page['meta'] );
 			$out .= $this->children();
@@ -102,16 +117,28 @@ final class Wattlyst_Render {
 			}
 		}
 		$results = '';
+		$has_ur  = false;
 		foreach ( $t['outputs'] as $o ) {
 			$unit     = isset( $o['unit'] ) ? ' <span class="wl-unit">' . esc_html( $o['unit'] ) . '</span>' : '';
+			$ur       = isset( $o['label_ur'] ) ? ' data-ur="' . esc_attr( $o['label_ur'] ) . '" data-en="' . esc_attr( $o['label'] ) . '"' : '';
+			$has_ur   = $has_ur || '' !== $ur;
 			$results .= sprintf(
-				'<div class="wl-result"><span class="wl-result-label">%s</span> <output data-out="%s"><span class="wl-val">%s</span>%s</output></div>',
+				'<div class="wl-result"><span class="wl-result-label"%s>%s</span> <output data-out="%s"><span class="wl-val">%s</span>%s</output></div>',
+				$ur,
 				esc_html( $o['label'] ),
 				esc_attr( $o['key'] ),
 				esc_html( $o['value'] ),
 				$unit
 			);
 		}
+		// Share bar (build-plan Phase 4: PDF export + WhatsApp share) and the Roman Urdu result toggle; the buttons
+		// only work with JavaScript, so they are hidden until the script runs.
+		$share = '<div class="wl-share" hidden>' .
+			'<button type="button" class="wl-btn-secondary" data-wl-share="print">Save as PDF</button> ' .
+			'<a class="wl-btn-secondary" data-wl-share="whatsapp" href="https://wa.me/" target="_blank" rel="noopener">Share on WhatsApp</a> ' .
+			'<button type="button" class="wl-btn-secondary" data-wl-share="copy">Copy link</button>' .
+			( $has_ur ? ' <button type="button" class="wl-btn-secondary wl-lang" data-wl-lang aria-pressed="false">Roman Urdu</button>' : '' ) .
+			'<span class="wl-share-note" role="status" aria-live="polite"></span></div>';
 		$config = array(
 			'calc'    => $t['calc'],
 			'module'  => $t['module'],
@@ -132,6 +159,8 @@ final class Wattlyst_Render {
 			'fixed'   => (object) ( $t['fixed_inputs'] ?? array() ),
 			'outputs' => array_map( static fn( $o ) => array( 'key' => $o['key'], 'spec' => $o['spec'] ?? '2' ), $t['outputs'] ),
 			'how'     => $t['how']['tpl'] ?? '',
+			'how_ur'  => $t['how']['tpl_ur'] ?? '',
+			'h1'      => $this->page['h1'],
 			'data'    => $this->tool_data( $t['data_keys'] ?? array(), $t['appliances'] ?? array() ),
 		);
 		$form  = '<form class="wl-tool" id="' . esc_attr( $id ) . '" data-wl-tool novalidate>';
@@ -140,8 +169,9 @@ final class Wattlyst_Render {
 			$form .= '<details class="wl-advanced"><summary>Advanced settings</summary><div class="wl-fields">' . $adv . '</div></details>';
 		}
 		$form .= '<button type="submit" class="wl-btn">' . esc_html( $t['submit'] ?? 'Calculate' ) . '</button>';
-		$form .= '<p class="wl-error" id="' . esc_attr( $id ) . '-error" role="alert" hidden></p>';
-		$form .= '<div class="wl-results" aria-live="polite">' . $results . '</div>';
+		$notice = (string) ( $t['notice'] ?? '' ); // a warning on the default result, same text the browser prints
+		$form  .= '<p class="wl-error" id="' . esc_attr( $id ) . '-error" role="alert"' . ( '' === $notice ? ' hidden' : '' ) . '>' . esc_html( $notice ) . '</p>';
+		$form .= '<div class="wl-results" aria-live="polite">' . $results . '</div>' . $share;
 		$form .= '<script type="application/json" class="wl-config">' . wp_json_encode( $config, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ) . '</script>';
 		$form .= '</form>';
 		return $form;
@@ -283,6 +313,23 @@ final class Wattlyst_Render {
 		return '<section class="wl-ref"><h2>' . esc_html( $t['caption'] ) . '</h2><div class="wl-table-wrap"><table class="wl-table"><thead><tr>' . $head . '</tr></thead><tbody>' . $rows . '</tbody></table></div></section>';
 	}
 
+	/** Lookup page (error codes): brand select + text filter over the tables below; the tables are complete without JavaScript. */
+	private function lookup(): string {
+		$l    = $this->c['lookup'] ?? null;
+		if ( ! $l ) {
+			return '';
+		}
+		$id   = 'wl-' . strtolower( $this->page['id'] );
+		$opts = '<option value="">All brands</option>';
+		foreach ( $this->c['tables'] ?? array() as $t ) {
+			$opts .= '<option value="' . esc_attr( $t['key'] ) . '">' . esc_html( $t['label'] ) . '</option>';
+		}
+		return '<form class="wl-tool wl-lookup" data-wl-lookup onsubmit="return false"><div class="wl-fields">' .
+			'<div class="wl-field"><label for="' . esc_attr( $id ) . '-brand">' . esc_html( $l['label'] ) . '</label><select id="' . esc_attr( $id ) . '-brand" data-wl-group-select>' . $opts . '</select></div>' .
+			'<div class="wl-field"><label for="' . esc_attr( $id ) . '-q">' . esc_html( $l['text_label'] ) . '</label><input type="search" id="' . esc_attr( $id ) . '-q" data-wl-filter autocomplete="off" placeholder="For example 02, 1010, F03, grid"><p class="wl-hint">Type the code as the display shows it, or a word such as battery, fan or grid. ' . esc_html( (string) $l['count'] ) . ' codes from manufacturer manuals, last checked <time datetime="' . esc_attr( $l['checked'] ) . '">' . esc_html( self::date( $l['checked'] ) ) . '</time>.</p></div>' .
+			'</div><p class="wl-error" data-wl-nomatch hidden>No code matches. Check the brand, try a shorter text, or look at the full table below.</p></form>';
+	}
+
 	private function tables(): string {
 		$out = '';
 		foreach ( $this->c['tables'] ?? array() as $t ) {
@@ -291,7 +338,8 @@ final class Wattlyst_Render {
 			foreach ( $t['rows'] as $r ) {
 				$rows .= '<tr>' . implode( '', array_map( static fn( $v ) => '<td>' . esc_html( $v ) . '</td>', $r ) ) . '</tr>';
 			}
-			$out .= '<section class="wl-ref"><h2>' . esc_html( $t['caption'] ) . '</h2><div class="wl-table-wrap"><table class="wl-table"><thead><tr>' . $head . '</tr></thead><tbody>' . $rows . '</tbody></table></div></section>';
+			$group = isset( $t['key'] ) ? ' data-wl-group="' . esc_attr( $t['key'] ) . '"' : '';
+			$out .= '<section class="wl-ref"' . $group . '><h2>' . esc_html( $t['caption'] ) . '</h2><div class="wl-table-wrap"><table class="wl-table"><thead><tr>' . $head . '</tr></thead><tbody>' . $rows . '</tbody></table></div></section>';
 		}
 		return $out;
 	}

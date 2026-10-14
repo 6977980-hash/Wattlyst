@@ -3,26 +3,292 @@
  "type": "tool",
  "silo": "A",
  "url": "/converters/ah-to-wh-calculator/",
- "h1": "Amp Hours To Watt Hours",
+ "h1": "Amp Hours to Watt Hours (Ah to Wh) Calculator",
  "title": "Ah to Wh and kWh to Ah Calculator (Battery) | Wattlyst",
  "meta": "Convert battery amp-hours to watt-hours or kWh, and back. Pick 12V, 24V, 48V or 51.2V lithium and see usable energy after depth of discharge.",
  "primary_keyword": "amp hours to watt hours",
  "wave": 2,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-13",
+ "published": "2026-10-13",
  "author": "ali-ahmad",
+ "related": [
+  "A3",
+  "A9",
+  "B2",
+  "D6",
+  "D4"
+ ],
+ "next": "B1",
  "parent": "P-A",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
    "url": "/"
   },
   {
-   "name": "Amp Hours To Watt Hours",
+   "name": "Electrical Unit Converters",
+   "url": "/converters/"
+  },
+  {
+   "name": "Amp Hours to Watt Hours (Ah to Wh) Calculator",
    "url": "/converters/ah-to-wh-calculator/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "Ah vs Wh: why amp hours alone do not tell you the energy",
+    "p": [
+     "Amp hours say how much charge a battery holds, but energy is charge times voltage. A 100 Ah battery at 12 V holds 1.2 kWh; a 100 Ah battery at 48 V holds 4.8 kWh, four times as much, even though the Ah is the same. That is why comparing batteries by Ah only works at the same voltage, and why lithium packs for solar are usually sold by kWh.",
+     "Watt hours also match the rest of your system. Loads are in watts, solar production is in kWh and the electricity bill is in units (kWh), so converting the battery to Wh lets you compare all of them directly."
+    ]
+   },
+   {
+    "h2": "How many watts is a 200 Ah battery?",
+    "p": [
+     "A battery has no watt rating; watts is a rate of use, not an amount stored. What a 200 Ah, 12 V battery has is 2,400 Wh of energy, which could feed a one hundred watt load for many hours or a thousand watt inverter for well under an hour before the recommended depth of discharge is reached. The battery backup time calculator turns this energy and your load into hours.",
+     "If you want the current a load draws from the battery, that is amps, not watts: the 12V watts to amps calculator divides the watts by the battery voltage."
+    ]
+   },
+   {
+    "h2": "kWh to Ah: a five kWh battery is how many amp hours?",
+    "p": [
+     "Reverse the formula: Ah = Wh ÷ V. The voltage matters more than anything else. A 100 Ah lithium pack at 51.2 V is 5.12 kWh, which is what the market calls a five kWh battery. At 48 V nominal the same 100 Ah is 4.8 kWh, and at 24 V you need 150 Ah just to reach 3.6 kWh. Change the voltage in the calculator and adjust the Ah until the kWh matches the battery you are pricing.",
+     "The same reverse formula sizes a battery bank from a daily need in units, which the inverter size calculator and the solar panel for 12V battery tool use."
+    ]
+   },
+   {
+    "h2": "Usable energy: depth of discharge",
+    "p": [
+     "The calculator gives the total stored energy. A tubular or lead-acid battery should only be run down to about 50% of it, and a lithium (LiFePO4) battery to about 90%, or the battery ages fast. Multiply the Wh above by that share for the energy you can actually use; the battery backup time and 12V battery runtime calculators do this for you and add the inverter loss.",
+     "Lithium's higher usable share, together with its slightly higher nominal voltage (12.8 V against 12 V), is why a 200 Ah lithium battery gives far more usable energy than a 200 Ah tubular battery of the same label Ah."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "What is the Ah to Wh formula?",
+    "a": "Watt hours = amp hours × volts. For a 200 Ah battery at 12 V, that is 2,400 Wh, or 2.4 kWh after dividing by a thousand. The reverse is Ah = Wh ÷ V."
+   },
+   {
+    "q": "How many kWh is a 100 Ah 12 V battery?",
+    "a": "100 Ah × 12 V = 1,200 Wh, or 1.2 kWh. If it is a tubular battery, about 50% of that is usable; if lithium, about 90%."
+   },
+   {
+    "q": "How many kWh is a 48 V 100 Ah battery?",
+    "a": "100 Ah × 48 V = 4,800 Wh, or 4.8 kWh. A lithium pack of the same Ah is rated at 51.2 V and holds 5.12 kWh."
+   },
+   {
+    "q": "A 200 Ah battery is how many watts?",
+    "a": "Batteries store energy, not watts. A 200 Ah, 12 V battery holds 2,400 Wh; how many watts it can deliver depends on the inverter, and how long it lasts depends on the load. Use the battery backup time calculator for hours."
+   },
+   {
+    "q": "A five kWh battery is how many Ah?",
+    "a": "It depends on the voltage: Ah = Wh ÷ V. A 51.2 V lithium pack of 100 Ah is 5.12 kWh, the usual five kWh battery. At 12 V you would need about four times the Ah for the same energy."
+   },
+   {
+    "q": "How do I convert Wh to Ah?",
+    "a": "Divide the watt hours by the battery voltage. From the table, 4,800 Wh at 48 V is 100 Ah, and the same 4,800 Wh at 12 V would need four times as many amp hours."
+   },
+   {
+    "q": "Why does the seller's kWh differ from my calculation?",
+    "a": "Usually the voltage. Lithium batteries are rated at 12.8 V per twelve-volt block, not 12 V, so a 200 Ah lithium battery is 2.56 kWh rather than 2.4 kWh. Some sellers also quote usable kWh after depth of discharge rather than total."
+   }
+  ],
+  "key_facts": [
+   "Watt hours = amp hours × volts, so a 200 Ah 12 V battery stores 2,400 Wh (2.4 kWh) and a 100 Ah 12 V battery stores 1,200 Wh (1.2 kWh).",
+   "A 100 Ah battery on a 48 V bank holds 4.8 kWh, four times the energy of the same Ah at 12 V, because the voltage is four times higher.",
+   "A 100 Ah lithium (LiFePO4) pack at its nominal 51.2 V holds 5.12 kWh, which sellers round to a five kWh battery.",
+   "Only part of the stored energy is usable: about 50% of a tubular or lead-acid battery and about 90% of a lithium (LiFePO4) battery, to protect battery life."
+  ],
+  "mistakes": [
+   "Adding the Ah of batteries in series. Two 150 Ah batteries in series are still 150 Ah, at 24 V; the energy doubles through the voltage, not the Ah.",
+   "Treating all the Wh as usable. Only about 50% of a tubular battery and about 90% of a lithium battery should be used between charges.",
+   "Confusing amps with amp hours. Amps is the current flowing now; amp hours is the capacity. A 200 Ah label does not mean the battery can deliver 200 A.",
+   "Using 12 V for a lithium battery. LiFePO4 packs are nominally 12.8 V, so their kWh is slightly higher than a 12 V calculation shows."
+  ],
+  "sources": [
+   {
+    "label": "Victron Energy, Lithium Battery Smart 12,8 V and 25,6 V (nominal voltage, Ah and Wh ratings)",
+    "url": "https://www.victronenergy.com/batteries/lithium-battery-12-8v"
+   },
+   {
+    "label": "Wattlyst methodology and default values",
+    "url": "/methodology/"
+   }
+  ],
+  "tool": {
+   "calc": "ah_to_wh",
+   "module": "conversions.js",
+   "data_keys": [],
+   "appliances": {},
+   "fields": [
+    {
+     "name": "ah",
+     "label": "Battery capacity",
+     "unit": "Ah",
+     "default": 200,
+     "hint": "From the battery label, for example 100, 150 or 200 Ah. For batteries in series enter the Ah of one battery; in parallel add them up."
+    },
+    {
+     "name": "volts",
+     "label": "Battery or bank voltage",
+     "unit": "V",
+     "type": "select",
+     "default": 12,
+     "options": [
+      [
+       12,
+       "12 V (lead-acid / tubular)"
+      ],
+      [
+       12.8,
+       "12.8 V (lithium LiFePO4)"
+      ],
+      [
+       24,
+       "24 V (two lead-acid in series)"
+      ],
+      [
+       25.6,
+       "25.6 V (lithium)"
+      ],
+      [
+       48,
+       "48 V (four lead-acid in series)"
+      ],
+      [
+       51.2,
+       "51.2 V (lithium)"
+      ]
+     ],
+     "hint": "Use the nominal voltage on the label. Lithium (LiFePO4) packs are 12.8, 25.6 or 51.2 V, which is why their kWh is a little higher."
+    }
+   ],
+   "fixed_inputs": {},
+   "outputs": [
+    {
+     "key": "wh",
+     "label": "Energy stored",
+     "spec": "int",
+     "unit": "Wh",
+     "label_ur": "Mehfooz energy",
+     "value": "2,400"
+    },
+    {
+     "key": "kwh",
+     "label": "In kilowatt hours (units)",
+     "spec": "2",
+     "unit": "kWh",
+     "label_ur": "Kilowatt hours (units) mein",
+     "value": "2.4"
+    }
+   ],
+   "how": {
+    "tpl": "{{in.ah|int}} Ah × {{in.volts|1}} V = {{out.wh|int}} Wh. Divide by a thousand for kilowatt hours: {{out.kwh|2}} kWh. One kWh is one unit on the electricity bill. This is the total stored energy; multiply by the usable depth of discharge for the part you can actually draw.",
+    "text": "200 Ah × 12 V = 2,400 Wh. Divide by a thousand for kilowatt hours: 2.4 kWh. One kWh is one unit on the electricity bill. This is the total stored energy; multiply by the usable depth of discharge for the part you can actually draw."
+   },
+   "submit": "Calculate",
+   "notice": "",
+   "data_checked": []
+  },
+  "examples": [
+   {
+    "title": "A 100 Ah, 12 V battery",
+    "text": "100 Ah × 12 V = 1,200 Wh = 1.2 kWh. The common small UPS or solar battery."
+   },
+   {
+    "title": "Two 150 Ah batteries in series (24 V)",
+    "text": "150 Ah × 24 V = 3,600 Wh = 3.6 kWh. Series connection doubles the volts, and so the energy, while the Ah stays 150."
+   },
+   {
+    "title": "A 100 Ah, 48 V bank",
+    "text": "100 Ah × 48 V = 4,800 Wh = 4.8 kWh. Four lead-acid batteries in series, the usual bank for a hybrid solar inverter."
+   },
+   {
+    "title": "A 100 Ah, 51.2 V lithium pack",
+    "text": "100 Ah × 51.2 V = 5,120 Wh = 5.12 kWh, sold as a five kWh battery. The nominal voltage of lithium cells is a little higher, so the energy is too."
+   },
+   {
+    "title": "A 200 Ah, 12.8 V lithium battery",
+    "text": "200 Ah × 12.8 V = 2,560 Wh = 2.56 kWh total, of which about 90% is usable."
+   }
+  ],
+  "table": {
+   "caption": "Ah to Wh and kWh for common battery sizes and voltages",
+   "head": [
+    "Capacity",
+    "Voltage",
+    "Watt hours",
+    "Kilowatt hours"
+   ],
+   "rows": [
+    [
+     "100 Ah",
+     "12 V",
+     "1,200 Wh",
+     "1.2 kWh"
+    ],
+    [
+     "150 Ah",
+     "12 V",
+     "1,800 Wh",
+     "1.8 kWh"
+    ],
+    [
+     "200 Ah",
+     "12 V",
+     "2,400 Wh",
+     "2.4 kWh"
+    ],
+    [
+     "100 Ah",
+     "24 V",
+     "2,400 Wh",
+     "2.4 kWh"
+    ],
+    [
+     "200 Ah",
+     "24 V",
+     "4,800 Wh",
+     "4.8 kWh"
+    ],
+    [
+     "100 Ah",
+     "48 V",
+     "4,800 Wh",
+     "4.8 kWh"
+    ],
+    [
+     "100 Ah",
+     "51.2 V",
+     "5,120 Wh",
+     "5.12 kWh"
+    ],
+    [
+     "200 Ah",
+     "51.2 V",
+     "10,240 Wh",
+     "10.24 kWh"
+    ]
+   ]
+  },
+  "answer": "A 200 Ah battery at 12 V stores 2,400 Wh, which is 2.4 kWh or 2.4 units. Watt hours = amp hours × volts. A 100 Ah battery at the same voltage holds 1.2 kWh, and a 100 Ah battery on a 48 V bank holds 4.8 kWh. Only part of this is usable; see depth of discharge below.",
+  "formula": {
+   "text": "Wh = Ah × V;  kWh = Wh ÷ 1000;  usable Wh = Wh × DoD",
+   "lines": [
+    "Wh = energy stored in watt hours",
+    "Ah = battery capacity in amp hours (label rating)",
+    "V = nominal battery or bank voltage (12, 12.8, 24, 25.6, 48, 51.2)",
+    "DoD = usable depth of discharge: about 0.5 for lead-acid, 0.9 for LiFePO4",
+    "Reverse: Ah = Wh ÷ V"
+   ]
+  },
+  "safety": "Watt hours tell you the energy stored, not the safe current. Size battery cables and fuses for the amps the inverter draws, keep batteries in a ventilated place away from sparks, and have a licensed electrician connect a battery bank to an inverter and the house wiring."
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -39,7 +305,13 @@
      {
       "@type": "ListItem",
       "position": 2,
-      "name": "Amp Hours To Watt Hours",
+      "name": "Electrical Unit Converters",
+      "item": "https://wattlyst.com/converters/"
+     },
+     {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Amp Hours to Watt Hours (Ah to Wh) Calculator",
       "item": "https://wattlyst.com/converters/ah-to-wh-calculator/"
      }
     ]
@@ -56,12 +328,14 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/converters/ah-to-wh-calculator/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-13",
+    "lastReviewed": "2026-10-13"
    },
    {
     "@type": "WebApplication",
     "@id": "https://wattlyst.com/converters/ah-to-wh-calculator/#app",
-    "name": "Amp Hours To Watt Hours",
+    "name": "Amp Hours to Watt Hours (Ah to Wh) Calculator",
     "url": "https://wattlyst.com/converters/ah-to-wh-calculator/",
     "description": "Convert battery amp-hours to watt-hours or kWh, and back. Pick 12V, 24V, 48V or 51.2V lithium and see usable energy after depth of discharge.",
     "applicationCategory": "UtilitiesApplication",
@@ -88,6 +362,68 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/converters/ah-to-wh-calculator/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "What is the Ah to Wh formula?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Watt hours = amp hours × volts. For a 200 Ah battery at 12 V, that is 2,400 Wh, or 2.4 kWh after dividing by a thousand. The reverse is Ah = Wh ÷ V."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many kWh is a 100 Ah 12 V battery?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "100 Ah × 12 V = 1,200 Wh, or 1.2 kWh. If it is a tubular battery, about 50% of that is usable; if lithium, about 90%."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many kWh is a 48 V 100 Ah battery?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "100 Ah × 48 V = 4,800 Wh, or 4.8 kWh. A lithium pack of the same Ah is rated at 51.2 V and holds 5.12 kWh."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "A 200 Ah battery is how many watts?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Batteries store energy, not watts. A 200 Ah, 12 V battery holds 2,400 Wh; how many watts it can deliver depends on the inverter, and how long it lasts depends on the load. Use the battery backup time calculator for hours."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "A five kWh battery is how many Ah?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "It depends on the voltage: Ah = Wh ÷ V. A 51.2 V lithium pack of 100 Ah is 5.12 kWh, the usual five kWh battery. At 12 V you would need about four times the Ah for the same energy."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How do I convert Wh to Ah?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Divide the watt hours by the battery voltage. From the table, 4,800 Wh at 48 V is 100 Ah, and the same 4,800 Wh at 12 V would need four times as many amp hours."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Why does the seller's kWh differ from my calculation?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Usually the voltage. Lithium batteries are rated at 12.8 V per twelve-volt block, not 12 V, so a 200 Ah lithium battery is 2.56 kWh rather than 2.4 kWh. Some sellers also quote usable kWh after depth of discharge rather than total."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

@@ -8,10 +8,20 @@
  "meta": "Check if your electricity bill is wrong. Enter reading dates, units, slab and FPA to spot overbilling, detection units and slab jumps.",
  "primary_keyword": "electricity bill overbilling check",
  "wave": 2,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-13",
+ "published": "2026-10-13",
  "author": "ali-ahmad",
+ "related": [
+  "F14",
+  "F2",
+  "F12",
+  "F8",
+  "E5"
+ ],
+ "next": "F1",
  "parent": "P-F",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
@@ -26,7 +36,288 @@
    "url": "/bill/bill-audit-overbilling-checker/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "How does the overbilling check work?",
+    "p": [
+     "Under the unprotected domestic tariff every unit in the month is charged at the rate of the slab the month's total reaches. That makes the number of days between readings matter: a bill that covers 36 days instead of 30 collects more units, and if those extra units cross a slab boundary, the whole month is charged at the higher rate. The check scales your units to a thirty-day month, 267 units for the default bill, and works out what the same units would cost at the slab a normal month would reach.",
+     "The difference, Rs 1,125 on the default bill, is the amount a long cycle may have added in energy and fixed charge. GST and the per-unit surcharges would add to it. If the result is zero, the cycle did not change your slab and the bill is at least slab-correct."
+    ]
+   },
+   {
+    "h2": "What is a detection bill, and how do I check it?",
+    "p": [
+     "A detection bill is a charge for units the DISCO says you used but the meter did not record: a meter found slow or tampered, a direct connection, or a replaced meter whose old units were estimated. It is assessed, not read, usually from the connected load and an assumed number of hours over an assumed number of months. The law gives you the right to see that working: ask the sub-division for the detection proforma, which lists the load, hours and months used, and compare it with your actual appliances.",
+     "Common faults in a detection bill are a load far above what the house owns, hours that assume every appliance ran all day, a period that overlaps months already billed on a working meter, and the detected units being added to a normal month so the total lands in the top slab. Enter the detected units plus the metered units in the check above to see the slab effect, and contest the proforma in writing."
+    ]
+   },
+   {
+    "h2": "Signs of a wrong electricity bill",
+    "p": [
+     "Readings: the present reading on the bill should match the meter; photograph the meter on the reading date. A reading far above the meter is a plain error. Cycle: more than 31 days between readings is a long cycle; the check above shows what it cost. Slab: compare the rate on the bill with the slab the units should reach. Protected status: if your last 6 bills were all at or under 200 units and the category has changed, ask why.",
+     "FPA and QTA: both lines should equal the notified per-unit rate for the month times your units; protected and lifeline consumers should see no FPA at all. Spike: if the units are more than half above the same month last year with no new appliance, ask for a meter accuracy test. Enter last year's units under advanced settings and the check flags the spike."
+    ]
+   },
+   {
+    "h2": "How to complain about a wrong electricity bill",
+    "p": [
+     "Start with the DISCO. Take the bill, your meter photograph and, for a detection bill, the proforma to the sub-divisional officer (SDO) of your sub-division; the sub-division and its phone number are printed on the bill. If nothing changes, escalate in writing to the executive engineer (XEN) of the division. Keep copies and note the dates; pay the undisputed part of the bill on time so the connection is not cut while the dispute runs.",
+     "If the DISCO does not resolve the complaint, file it with NEPRA through its online complaint management system linked under sources. The form asks whether you approached the DISCO first and what the result was, takes your reference number and supporting documents, and must be filed within a year of the issue. NEPRA's consumer affairs department can direct the DISCO to revise the bill. This page is an estimate to help you decide whether to complain; it is not an official finding."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "How do I check if my electricity bill is wrong?",
+    "a": "Check the reading against the meter, count the days between readings, and enter the units and days above. A long cycle that changes the slab shows as a possible extra: 320 units over 36 days gives Rs 1,125. Then check the FPA, QTA and category lines against your last six bills."
+   },
+   {
+    "q": "What is a detection bill?",
+    "a": "A charge for units the DISCO says were used but not metered, assessed from an assumed load and hours rather than a reading. You can ask for the detection proforma that shows the assessment and contest it with the DISCO and, failing that, NEPRA."
+   },
+   {
+    "q": "Why does a long reading cycle cost more?",
+    "a": "Because the unprotected tariff charges every unit at the rate of the slab the month reaches. 320 units over 36 days are 267 units in a normal month, a lower slab; billed as one month they cost Rs 1,125 more in energy and fixed charge."
+   },
+   {
+    "q": "Can a long cycle make me lose protected status?",
+    "a": "Yes. If a stretched bill exceeds 200 units while the thirty-day equivalent is under it, the home is moved to unprotected rates for 6 months. Raise it with the DISCO with the reading dates as evidence."
+   },
+   {
+    "q": "Where do I complain about a wrong electricity bill?",
+    "a": "First the DISCO: the SDO of your sub-division, then the XEN, in writing with copies. If that fails, NEPRA's online complaint system, which needs your reference number, the DISCO's response and supporting documents, within a year of the issue."
+   },
+   {
+    "q": "Is this overbilling check an official finding?",
+    "a": "No. It is an estimate of the slab effect of a long cycle from the tariff slabs and your numbers. Only the DISCO or NEPRA can correct a bill; use the result to decide whether and what to complain about."
+   }
+  ],
+  "key_facts": [
+   "A reading cycle longer than 31 days can push a bill into a higher unprotected slab, and because every unit is then charged at the higher rate, the extra is not just the extra days: 320 units over 36 days carries about Rs 1,125 more than the same units billed at the normal-month slab.",
+   "The check scales the units to a 30-day month, 267 here, and compares the slab reached with the slab the bill used; a short cycle never produces an overcharge, only a long one.",
+   "A home loses protected status when a bill exceeds 200 units even if the thirty-day equivalent is under the limit; that bill, and the next 6 at unprotected rates, are the costliest form of cycle stretch.",
+   "A detection bill is a DISCO's charge for units it says were consumed but not metered; the consumer is entitled to ask for the detection proforma that shows how the units were assessed and to contest it.",
+   "The complaint path is the DISCO first (the sub-divisional officer, then the executive engineer), and NEPRA's consumer affairs complaint system if the DISCO does not resolve it; NEPRA asks whether the DISCO was approached before it takes a case."
+  ],
+  "mistakes": [
+   "Counting the days from bill date to bill date. Use the previous and present reading dates printed on the bill; the issue date is later than the reading.",
+   "Paying a detection bill without the proforma. Ask for the detection proforma first; the load, hours and months on it are the only basis of the charge and are often inflated.",
+   "Treating this result as a refund amount. It is an estimate of the slab effect on energy and fixed charge; the DISCO or NEPRA decides any correction, and surcharges and GST are not included.",
+   "Withholding the whole bill while complaining. Pay the undisputed part by the due date; a disconnection and reconnection fee is a second problem on top of the first.",
+   "Skipping the DISCO and going straight to NEPRA. NEPRA's form asks whether you approached the DISCO and what happened; a complaint with no DISCO step is sent back."
+  ],
+  "sources": [
+   {
+    "label": "NEPRA online complaint management system (register a consumer complaint)",
+    "url": "https://nepra.org.pk/CAD-Database/CMS-CAD/cregister.php"
+   },
+   {
+    "label": "NEPRA tariff decision and SRO for A-1 domestic consumers (tariff PDF)",
+    "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf"
+   },
+   {
+    "label": "Wattlyst methodology and default values",
+    "url": "/methodology/"
+   }
+  ],
+  "tool": {
+   "calc": "bill_audit",
+   "module": "bill.js",
+   "data_keys": [
+    "tariff"
+   ],
+   "appliances": {},
+   "fields": [
+    {
+     "name": "units",
+     "label": "Units billed",
+     "unit": "units",
+     "default": 320,
+     "hint": "The units (kWh) on the bill: present reading minus previous reading."
+    },
+    {
+     "name": "days",
+     "label": "Days between readings",
+     "unit": "days",
+     "default": 36,
+     "hint": "Count the days from the previous reading date to the present reading date printed on the bill. A normal cycle is about a month."
+    },
+    {
+     "name": "sanctioned_kw",
+     "label": "Sanctioned load",
+     "unit": "kW",
+     "default": 1,
+     "hint": "The kW printed on the bill; it sets the fixed charge, which also moves with the slab."
+    },
+    {
+     "name": "prev_year_units",
+     "label": "Units in the same month last year",
+     "unit": "units",
+     "placeholder": "Optional, from last year's bill",
+     "advanced": true,
+     "hint": "If you have last year's bill for the same month, enter its units; a jump of more than half is worth a meter check."
+    }
+   ],
+   "fixed_inputs": {},
+   "outputs": [
+    {
+     "key": "long_cycle",
+     "label": "Long billing cycle?",
+     "spec": "yesno",
+     "label_ur": "Lamba billing cycle?",
+     "value": "Yes"
+    },
+    {
+     "key": "slab_jump",
+     "label": "Slab pushed up by the long cycle?",
+     "spec": "yesno",
+     "label_ur": "Lambe cycle se slab oopar gayi?",
+     "value": "Yes"
+    },
+    {
+     "key": "extra_rs",
+     "label": "Possible extra from the long cycle",
+     "spec": "rs",
+     "label_ur": "Lambe cycle se mumkina izafi raqam",
+     "value": "Rs 1,125"
+    },
+    {
+     "key": "units_30",
+     "label": "Units in a normal thirty-day month",
+     "spec": "int",
+     "label_ur": "Aam tees din ke mahine ke units",
+     "value": "267"
+    },
+    {
+     "key": "billed_rs",
+     "label": "Energy + fixed as billed",
+     "spec": "rs",
+     "label_ur": "Energy + fixed jaisa bill mein hai",
+     "value": "Rs 12,067"
+    },
+    {
+     "key": "fair_rs",
+     "label": "Energy + fixed at the normal-month slab",
+     "spec": "rs",
+     "label_ur": "Energy + fixed aam mahine ki slab par",
+     "value": "Rs 10,942"
+    }
+   ],
+   "how": {
+    "tpl": "{{out.units|int}} units × {{d.days_per_month|int}} ÷ {{out.days|int}} days = {{out.units_30|int}} units in a normal month. Energy and fixed charge as billed, at the slab for {{out.units|int}} units: {{out.billed_rs|rs}}. The same {{out.units|int}} units at the slab {{out.units_30|int}} units would reach: {{out.fair_rs|rs}}. Possible extra from the long reading cycle: {{out.extra_rs|rs}} before surcharges and GST.",
+    "text": "320 units × 30 ÷ 36 days = 267 units in a normal month. Energy and fixed charge as billed, at the slab for 320 units: Rs 12,067. The same 320 units at the slab 267 units would reach: Rs 10,942. Possible extra from the long reading cycle: Rs 1,125 before surcharges and GST."
+   },
+   "submit": "Check the bill",
+   "notice": "",
+   "data_checked": [
+    {
+     "label": "Pakistan electricity tariff (NEPRA notification)",
+     "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf",
+     "checked": "2026-10-13"
+    }
+   ]
+  },
+  "examples": [
+   {
+    "title": "320 units over 36 days: slab jump from a long cycle",
+    "text": "267 units in a normal month. Billed at the slab for 320 units: Rs 12,067; at the slab 267 units would reach: Rs 10,942. Possible extra: Rs 1,125 before surcharges and GST."
+   },
+   {
+    "title": "210 units over 34 days: protected status at risk",
+    "text": "185 units in a normal month, under the protected limit, but the bill shows more than 200. Energy and fixed charge as billed Rs 7,301, at the normal-month slab Rs 6,371, extra Rs 930; losing protected status for the next 6 bills would cost far more."
+   },
+   {
+    "title": "450 units over 38 days on a two kW connection",
+    "text": "355 units in a normal month. Billed Rs 18,528 in energy and fixed charge; at the normal-month slab Rs 17,207. Possible extra Rs 1,321, including the higher fixed charge per kW of the top slab."
+   },
+   {
+    "title": "300 units over 30 days: a normal cycle",
+    "text": "300 units in a normal month, the same slab as billed. Energy and fixed charge Rs 10,280 both ways; extra Rs 0. The cycle is not the problem; check the reading, the FPA line and the category instead."
+   }
+  ],
+  "table": {
+   "caption": "Possible extra energy and fixed charge from a long reading cycle on a one kW unprotected connection, before surcharges and GST",
+   "head": [
+    "Units billed",
+    "Days",
+    "Normal-month units",
+    "As billed",
+    "At normal slab",
+    "Possible extra"
+   ],
+   "rows": [
+    [
+     "110",
+     "35",
+     "94",
+     "Rs 3,480",
+     "Rs 2,743",
+     "Rs 737"
+    ],
+    [
+     "210",
+     "33",
+     "191",
+     "Rs 7,301",
+     "Rs 6,371",
+     "Rs 930"
+    ],
+    [
+     "320",
+     "36",
+     "267",
+     "Rs 12,067",
+     "Rs 10,942",
+     "Rs 1,125"
+    ],
+    [
+     "420",
+     "34",
+     "371",
+     "Rs 16,859",
+     "Rs 15,713",
+     "Rs 1,146"
+    ],
+    [
+     "530",
+     "38",
+     "418",
+     "Rs 21,992",
+     "Rs 21,144",
+     "Rs 848"
+    ],
+    [
+     "620",
+     "33",
+     "564",
+     "Rs 26,622",
+     "Rs 25,611",
+     "Rs 1,011"
+    ],
+    [
+     "300",
+     "30",
+     "300",
+     "Rs 10,280",
+     "Rs 10,280",
+     "Rs 0"
+    ]
+   ]
+  },
+  "answer": "This electricity bill overbilling check converts the units on your bill to a normal thirty-day month (units × thirty ÷ days between readings) and recomputes the slab. A bill of 320 units read after 36 days is 267 units a month; billed at the higher slab it carries about Rs 1,125 more in energy and fixed charge than the normal-month slab would. An estimate, not an official finding.",
+  "formula": {
+   "text": "units_30 = units × 30 ÷ days; extra = (energy + fixed at the slab for units) − (units × rate of the slab units_30 reaches + that slab's fixed charge), minimum zero",
+   "lines": [
+    "long cycle = days between readings above the normal maximum",
+    "slab jump = the thirty-day equivalent falls in a lower unprotected slab than the billed units",
+    "protection at risk = billed units above the protected limit while the thirty-day equivalent is at or under it",
+    "spike = units above last year's same month by more than the spike threshold"
+   ]
+  },
+  "safety": ""
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -66,7 +357,9 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/bill/bill-audit-overbilling-checker/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-13",
+    "lastReviewed": "2026-10-13"
    },
    {
     "@type": "WebApplication",
@@ -98,6 +391,60 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/bill/bill-audit-overbilling-checker/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "How do I check if my electricity bill is wrong?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Check the reading against the meter, count the days between readings, and enter the units and days above. A long cycle that changes the slab shows as a possible extra: 320 units over 36 days gives Rs 1,125. Then check the FPA, QTA and category lines against your last six bills."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What is a detection bill?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "A charge for units the DISCO says were used but not metered, assessed from an assumed load and hours rather than a reading. You can ask for the detection proforma that shows the assessment and contest it with the DISCO and, failing that, NEPRA."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Why does a long reading cycle cost more?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Because the unprotected tariff charges every unit at the rate of the slab the month reaches. 320 units over 36 days are 267 units in a normal month, a lower slab; billed as one month they cost Rs 1,125 more in energy and fixed charge."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Can a long cycle make me lose protected status?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Yes. If a stretched bill exceeds 200 units while the thirty-day equivalent is under it, the home is moved to unprotected rates for 6 months. Raise it with the DISCO with the reading dates as evidence."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Where do I complain about a wrong electricity bill?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "First the DISCO: the SDO of your sub-division, then the XEN, in writing with copies. If that fails, NEPRA's online complaint system, which needs your reference number, the DISCO's response and supporting documents, within a year of the issue."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Is this overbilling check an official finding?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "No. It is an estimate of the slab effect of a long cycle from the tariff slabs and your numbers. Only the DISCO or NEPRA can correct a bill; use the result to decide whether and what to complain about."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

@@ -81,6 +81,33 @@ function generatorFor(loads, i, d) {
 
 export const generator_size = calculator((i, d) => generatorFor(loadRows(i.loads, d), i, d));
 
+/**
+ * C7: what a generator of a given kVA can run (the generator rule above, solved for the load).
+ * Capacity W = kVA × 1000 × PF. Running load must satisfy P_run × margin ≤ capacity and the peak
+ * (running + the largest starting step) P_surge ≤ capacity. Optional appliance rows are checked
+ * against both limits; optional `appliance` id gives how many of that appliance it runs:
+ * n = floor(min(capacity / (run × margin), (capacity − start) / run + 1)), never below 0.
+ */
+export const generator_capacity = calculator((i, d) => {
+  const kva = pos(i, 'kva');
+  const margin = num(i, 'margin', { def: dflt(d, 'margin'), min: 1 });
+  const pf = frac(i, 'pf', dflt(d, 'pf_generator'));
+  const capacity_w = kva * 1000 * pf;
+  const out = { kva, pf, margin, capacity_w, max_running_w: capacity_w / margin, max_start_w: capacity_w };
+  if (Array.isArray(i.loads) && i.loads.length) {
+    const { running_w, surge_w } = sumLoads(loadRows(i.loads, d));
+    const running_ok = running_w * margin <= capacity_w + 1e-9;
+    const start_ok = surge_w <= capacity_w + 1e-9;
+    Object.assign(out, { running_w, peak_w: surge_w, running_ok, start_ok, fits: running_ok && start_ok, load_pct: ((running_w * margin) / capacity_w) * 100, spare_running_w: Math.max(0, capacity_w / margin - running_w) });
+  }
+  if (has(i, 'appliance')) {
+    const a = appliance(d, i.appliance, 'appliance');
+    const n = Math.floor(Math.min(capacity_w / (a.running_w * margin), (capacity_w - a.starting_w) / a.running_w + 1) + 1e-9);
+    Object.assign(out, { appliance: String(i.appliance).trim(), appliance_name: a.name, appliance_run_w: a.running_w, appliance_start_w: a.starting_w, appliance_count: Math.max(0, n) });
+  }
+  return out;
+});
+
 /** Other loads running at the same time as the main appliance: run watts and (optional) starting watts. */
 function otherLoads(i) {
   const other_w = nonneg(i, 'other_w', 0);

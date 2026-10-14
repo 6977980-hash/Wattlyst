@@ -16,7 +16,8 @@
   "W1",
   "W3",
   "E3",
-  "C5"
+  "C5",
+  "A4"
  ],
  "next": "W3",
  "parent": "P-W",
@@ -275,12 +276,14 @@
      "label": "Cable size",
      "spec": "1",
      "unit": "mm²",
+     "label_ur": "Cable ka size",
      "value": "2.5"
     },
     {
      "key": "pk_size",
      "label": "Pakistani size",
      "spec": "raw",
+     "label_ur": "Pakistani size",
      "value": "7/29"
     },
     {
@@ -288,6 +291,7 @@
      "label": "Cable rating",
      "spec": "int",
      "unit": "A",
+     "label_ur": "Cable ki rating",
      "value": "24"
     },
     {
@@ -295,6 +299,7 @@
      "label": "MCB",
      "spec": "int",
      "unit": "A",
+     "label_ur": "MCB",
      "value": "20"
     },
     {
@@ -302,6 +307,7 @@
      "label": "Voltage drop",
      "spec": "1",
      "unit": "%",
+     "label_ur": "Voltage drop",
      "value": "2.6"
     }
    ],
@@ -310,6 +316,7 @@
     "text": "Design current = 3,000 W ÷ (1 × 230 V × 0.8 power factor) = 16.3 A (the first factor is one for single phase and DC, root three for three phase). MCB = next standard size above 16.3 A = 20 A. The cable must be rated at least 20.4 A, the larger of 16.3 A × 1.25 and the MCB, and be at least 2.5 mm² for this circuit type: 2.5 mm² (7/29) is rated 24 A. Voltage drop over the 20 m run = 5.9 V, which is 2.6% of 230 V, within the 5% limit."
    },
    "submit": "Calculate",
+   "notice": "",
    "data_checked": [
     {
      "label": "Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)",

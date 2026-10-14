@@ -17,7 +17,9 @@
   "E4",
   "D4",
   "H2",
-  "F1"
+  "F1",
+  "E2",
+  "N4"
  ],
  "next": "D4",
  "parent": "P-E",
@@ -1231,6 +1233,7 @@
      "label": "Total running load",
      "spec": "int",
      "unit": "W",
+     "label_ur": "Kul chalta load",
      "value": "3,085"
     },
     {
@@ -1238,6 +1241,7 @@
      "label": "Peak with the largest motor starting",
      "spec": "int",
      "unit": "W",
+     "label_ur": "Sab se bare motor ke start par peak",
      "value": "4,885"
     },
     {
@@ -1245,6 +1249,7 @@
      "label": "Current at full load",
      "spec": "1",
      "unit": "A",
+     "label_ur": "Poore load par current",
      "value": "16.8"
     },
     {
@@ -1252,26 +1257,30 @@
      "label": "Energy a day",
      "spec": "1",
      "unit": "units",
+     "label_ur": "Rozana energy",
      "value": "15.1"
     },
     {
      "key": "monthly_units",
      "label": "Units a month",
      "spec": "int",
+     "label_ur": "Mahana units",
      "value": "454"
     },
     {
      "key": "monthly_rs",
      "label": "Estimated energy cost a month",
      "spec": "rs",
+     "label_ur": "Mahana energy ka andazan kharcha",
      "value": "Rs 16,555"
     }
    ],
    "how": {
-    "tpl": "Running load = the watts of every appliance × its quantity, added up = {{out.running_w|int}} W. Peak load adds the starting surge of the largest motor = {{out.peak_w|int}} W. Current = {{out.running_w|int}} W ÷ ({{out.volts|int}} V × {{out.pf|2}} power factor) = {{out.amps|1}} A. Energy = each appliance's watts × hours a day (an inverter AC counts at its average draw, below its rated watts), added up = {{out.daily_kwh|1}} units a day, × {{out.days|int}} days = {{out.monthly_units|int}} units a month; × Rs {{out.tariff|2}} per unit = {{out.monthly_rs|rs}} before fixed charges and taxes.",
+    "tpl": "Running load = the watts of every appliance × its quantity, added up = {{out.running_w|int}} W. Peak load adds the starting surge of the largest motor = {{out.peak_w|int}} W. Current = {{out.running_w|int}} W ÷ ({{out.volts|int}} V × {{out.pf|2}} power factor) = {{out.amps|1}} A. Energy = each appliance's watts × hours a day (an inverter AC counts at its average draw, below its rated watts), added up = {{out.daily_kwh|1}} units a day, × {{out.days|int}} days = {{out.monthly_units|int}} units a month; × {{out.tariff|rs2}} per unit = {{out.monthly_rs|rs}} before fixed charges and taxes.",
     "text": "Running load = the watts of every appliance × its quantity, added up = 3,085 W. Peak load adds the starting surge of the largest motor = 4,885 W. Current = 3,085 W ÷ (230 V × 0.8 power factor) = 16.8 A. Energy = each appliance's watts × hours a day (an inverter AC counts at its average draw, below its rated watts), added up = 15.1 units a day, × 30 days = 454 units a month; × Rs 36.46 per unit = Rs 16,555 before fixed charges and taxes."
    },
    "submit": "Calculate",
+   "notice": "",
    "data_checked": [
     {
      "label": "Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)",

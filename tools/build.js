@@ -8,16 +8,19 @@ import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync, rmSync
 import { join, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parseCsv } from './lib/csv.js';
+import { stripJs } from './lib/strip.js';
 import { render, fmt, placeholders, isSpec, lookup } from '../engine/format.js';
-import { errorMessage } from '../engine/messages.js';
+import { errorMessage, noticeCode } from '../engine/messages.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => readFileSync(join(root, p), 'utf8');
 const readJson = (p) => JSON.parse(read(p));
 
-const ENGINE_MODULES = ['conversions', 'battery', 'sizing', 'solar', 'bill', 'load', 'wiring'];
+const ENGINE_MODULES = ['conversions', 'battery', 'sizing', 'solar', 'bill', 'load', 'wiring', 'planner'];
 /** Data each engine module needs in the browser (keeps page weight down). Appliances are added per page, only the ones its fields use. */
-const MODULE_DATA = { bill: ['tariff'], solar: ['cities'], wiring: ['cables'], load: ['cables'] };
+const MODULE_DATA = { bill: ['tariff'], solar: ['cities'], wiring: ['cables'], load: ['cables'], planner: ['tariff', 'cities'] };
+/** Extra data a single calculator needs (shipped only on its page). */
+const CALC_DATA = { quote_checker: ['solar_prices'], solar_price_estimate: ['solar_prices'] };
 /** Appliance fields the browser engine and the loads picker need. */
 const APPLIANCE_KEYS = ['name', 'running_w', 'starting_w', 'typical_hours_per_day', 'avg_w', 'load_type'];
 
@@ -26,7 +29,9 @@ export async function loadInputs() {
   const { _meta: citiesMeta, ...cities } = readJson('data/cities-pk.json');
   const appliances = readJson('data/appliances.json');
   const cables = readJson('data/cable-ampacity.json');
-  const data = { defaults: readJson('data/defaults.json'), tariff: readJson('data/tariff-pk-2026.json'), cities, appliances: Object.fromEntries(appliances.items.map((a) => [a.id, a])), cables };
+  const solarPrices = readJson('data/solar-prices.json');
+  const inverterCodes = readJson('data/inverter-codes.json');
+  const data = { defaults: readJson('data/defaults.json'), tariff: readJson('data/tariff-pk-2026.json'), cities, appliances: Object.fromEntries(appliances.items.map((a) => [a.id, a])), cables, solar_prices: solarPrices };
   const modules = {};
   for (const m of ENGINE_MODULES) modules[m] = await import(pathToFileURL(join(root, 'engine', `${m}.js`)).href);
   const keywordRows = parseCsv(read('specs/keyword-map.csv'));
@@ -36,11 +41,12 @@ export async function loadInputs() {
     const c = readJson(`content/pages/${f}`);
     content[c.id] = c;
   }
+  const labelsUr = readJson('content/labels-ur.json');
   const trustHtml = {};
   for (const f of readdirSync(join(root, 'content/trust')).filter((x) => x.endsWith('.html')).sort()) {
     trustHtml[f.replace(/\.html$/, '')] = read(`content/trust/${f}`);
   }
-  return { site, data, citiesMeta, appliances, cables, modules, keywordRows, siteRows, content, trustHtml };
+  return { site, data, citiesMeta, appliances, cables, solarPrices, inverterCodes, labelsUr, modules, keywordRows, siteRows, content, trustHtml };
 }
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -58,7 +64,7 @@ function fail(msg) {
   throw new Error(`build: ${msg}`);
 }
 
-/** Resolve "@key" (data/defaults.json), "@appliance.key" and "@data.tariff.unprotected.3.rate" in field defaults. */
+/** Resolve "@key" (data/defaults.json), "@appliance.key" and "@data.tariff.unprotected.3.rate" in field defaults and example inputs. */
 function resolveDefault(v, ctx) {
   if (typeof v !== 'string' || !v.startsWith('@')) return v;
   const path = v.slice(1);
@@ -152,25 +158,29 @@ function buildContent(c, ctx) {
     scope.in = result;
     scope.out = result;
     scope.ex = (c.examples || []).map((ex, n) => {
-      const exIn = { ...inputs, ...ex.inputs };
+      const exIn = { ...inputs, ...Object.fromEntries(Object.entries(ex.inputs || {}).map(([k, v]) => [k, resolveDefault(v, ctx)])) };
       const r = runCalc(ctx, exIn, `example ${n + 1}`);
       return { in: r, out: r };
     });
     out.tool = {
       calc: c.calc,
       module: `${module}.js`,
-      data_keys: MODULE_DATA[module] || [],
+      data_keys: [...(MODULE_DATA[module] || []), ...(CALC_DATA[c.calc] || [])],
       appliances: pageAppliances(fields, ctx),
       fields,
       fixed_inputs: fixed,
       outputs: (c.outputs || []).map((o) => {
         if (o.spec && !isSpec(o.spec)) fail(`${c.id}: output ${o.key} uses unknown format ${o.spec}`);
         const v = result[o.key];
-        if (typeof v !== 'number' && typeof v !== 'string') fail(`${c.id}: output ${o.key} missing from ${c.calc}`);
-        return { ...o, value: fmt(v, o.spec || '2') };
+        if (typeof v !== 'number' && typeof v !== 'string' && typeof v !== 'boolean') fail(`${c.id}: output ${o.key} missing from ${c.calc}`);
+        if (typeof v === 'boolean' && o.spec !== 'yesno') fail(`${c.id}: output ${o.key} is a flag and needs the yesno format`);
+        // Roman Urdu label: the page's own label_ur, else the shared glossary content/labels-ur.json.
+        const label_ur = o.label_ur || ctx.labelsUr[o.label];
+        return { ...o, ...(label_ur ? { label_ur } : {}), value: fmt(v, o.spec || '2') };
       }),
-      how: c.how ? { tpl: c.how, text: text(ctx, c.how, scope, 'how') } : null,
+      how: c.how ? { tpl: c.how, text: text(ctx, c.how, scope, 'how'), ...(c.how_ur ? { tpl_ur: c.how_ur, text_ur: text(ctx, c.how_ur, scope, 'how_ur') } : {}) } : null,
       submit: c.submit || 'Calculate',
+      notice: noticeCode(result) ? errorMessage(noticeCode(result)) : '',
       data_checked: dataChecked(module, { ...ctx, usesAppliances: fields.some((f) => f.type === 'appliance' || f.type === 'loads') }),
     };
     out.examples = (c.examples || []).map((ex, n) => ({
@@ -186,6 +196,8 @@ function buildContent(c, ctx) {
     }
   }
   if (c.appliance_table) out.tables = applianceTables(ctx);
+  if (c.codes_table) Object.assign(out, codeTables(ctx, out.sources));
+  if (c.calc === 'quote_checker' || c.calc === 'solar_price_estimate') out.sources = [...out.sources, ...priceSources(ctx)];
   out.answer = text(ctx, c.answer, scope, 'answer');
   out.intro = text(ctx, c.intro, scope, 'intro');
   out.key_facts = (c.key_facts || []).map((k, n) => text(ctx, k, scope, `key fact ${n + 1}`));
@@ -215,12 +227,43 @@ function applianceTables(ctx) {
   });
 }
 
+/** N2: one table per brand from data/inverter-codes.json (manufacturer manuals), filtered in the browser by brand and code text. */
+function codeTables(ctx, sources) {
+  const brands = ctx.inverterCodes.brands;
+  const tables = brands.map((b) => ({
+    key: b.id,
+    label: b.name,
+    caption: `${b.name} error codes (${b.models})`,
+    head: ['Code', 'Meaning', 'Likely cause', 'What to do', 'Call installer?'],
+    rows: b.codes.map((x) => [x.code, x.meaning, x.causes, x.action, x.call_installer ? 'Yes' : 'Usually not']),
+  }));
+  for (const b of brands) sources.push({ label: `${b.name}: ${b.codes[0]?.source_ref?.split(',')[0] || 'manufacturer manual'}`, url: b.manual_url });
+  return { tables, lookup: { label: 'Brand', text_label: 'Error code or word', checked: ctx.inverterCodes._meta.checked, count: brands.reduce((n, b) => n + b.codes.length, 0) } };
+}
+
+/** N3 / D14: every price source behind data/solar-prices.json (systems in use and panel prices), once per URL. */
+function priceSources(ctx) {
+  const seen = new Map();
+  const add = (s) => {
+    if (s.url && !seen.has(s.url)) seen.set(s.url, { label: `${s.publisher}, ${String(s.date).split(/ \(|;/)[0]} (price data)`, url: s.url });
+  };
+  for (const r of ctx.solarPrices.systems) for (const s of r.sources || []) add(s);
+  for (const s of ctx.solarPrices.panel_rs_per_w.sources || []) add(s);
+  return [...seen.values()];
+}
+
 /** "Last checked" lines for the data a tool depends on, so a data refresh re-dates the page. */
 function dataChecked(module, ctx) {
   const out = [];
   if (module === 'bill') out.push({ label: 'Pakistan electricity tariff (NEPRA notification)', url: ctx.data.tariff._meta.source_url || null, checked: ctx.data.tariff._meta.checked });
-  if (module === 'solar') out.push({ label: 'Peak sun hours by city (Global Solar Atlas)', url: 'https://globalsolaratlas.info/', checked: ctx.citiesMeta.checked });
-  if (module === 'wiring' || module === 'load') out.push({ label: 'Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)', url: 'https://webstore.iec.ch/publication/1878', checked: ctx.cables._meta.checked });
+  const prices = ctx.calc === 'quote_checker' || ctx.calc === 'solar_price_estimate';
+  if (module === 'solar' && !prices) out.push({ label: 'Peak sun hours by city (Global Solar Atlas)', url: 'https://globalsolaratlas.info/', checked: ctx.citiesMeta.checked });
+  if (ctx.calc === 'heating_cost') {
+    out.push({ label: 'Pakistan electricity tariff (NEPRA notification)', url: ctx.data.tariff._meta.source_url || null, checked: ctx.data.tariff._meta.checked });
+    const g = ctx.data.tariff.gas_domestic;
+    out.push({ label: `Domestic gas slab prices (${g.source}; not yet matched to the OGRA notification)`, url: g.source_url, checked: g.checked });
+  } else if (module === 'wiring' || module === 'load') out.push({ label: 'Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)', url: 'https://webstore.iec.ch/publication/1878', checked: ctx.cables._meta.checked });
+  if (prices) out.push({ label: 'Typical solar system prices in Pakistan (installer price lists and news reports, each listed under Sources on this page)', url: null, checked: ctx.solarPrices._meta.checked });
   if (ctx.usesAppliances) out.push({ label: 'Appliance running and starting watts (Wattlyst appliance data, sources listed on the appliance list page)', url: `${ctx.site.url.replace(/\/$/, '')}/appliances/`, checked: ctx.appliances._meta.checked });
   if (ctx.appliance) out.push({ label: `Typical wattage of ${ctx.appliance.name} (${ctx.appliance.source})`, url: ctx.appliance.source_url || null, checked: ctx.appliances._meta.checked });
   return out;
@@ -270,7 +313,7 @@ function schemaFor(page, built, ctx) {
     ...(site.reviewer.status === 'signed_off' && page.type !== 'trust' ? { reviewedBy: { '@id': `${site.url}#/person/reviewer` } } : {}),
   };
   graph.push(webPage);
-  if (page.type === 'tool' || page.type === 'appliance') {
+  if (page.type === 'tool' || page.type === 'appliance' || page.type === 'lookup') {
     graph.push({
       '@type': 'WebApplication',
       '@id': `${abs(page.url)}#app`,
@@ -399,7 +442,7 @@ function llmsTxt(pages, ctx) {
   if (pillars.length) out.push('## Sections', '', ...pillars.map(line), '');
   const home = live.find((p) => p.type === 'home');
   if (home) out.push(`## Start here`, '', line(home), '');
-  const tools = live.filter((p) => p.type === 'tool' || p.type === 'appliance');
+  const tools = live.filter((p) => p.type === 'tool' || p.type === 'appliance' || p.type === 'lookup');
   if (tools.length) out.push('## Calculators', '', ...tools.map(line), '');
   const guides = live.filter((p) => p.type === 'guide');
   if (guides.length) out.push('## Guides', '', ...guides.map(line), '');
@@ -416,7 +459,7 @@ export async function build() {
   const inp = await loadInputs();
   const { site, keywordRows, siteRows, content } = inp;
   const pluginUrl = `${site.url}wp-content/plugins/wattlyst-tools/`;
-  const ctxBase = { site, data: inp.data, modules: inp.modules, appliances: inp.appliances, cables: inp.cables, citiesMeta: inp.citiesMeta, pluginUrl };
+  const ctxBase = { site, data: inp.data, modules: inp.modules, appliances: inp.appliances, cables: inp.cables, solarPrices: inp.solarPrices, inverterCodes: inp.inverterCodes, labelsUr: inp.labelsUr, citiesMeta: inp.citiesMeta, pluginUrl };
 
   const rows = [
     ...keywordRows.map((r) => ({ id: r.id, type: typeOf(r), silo: r.silo, url: r.url, h1: '', title: r.title, meta: r.meta_description, primary_keyword: r.primary_keyword, wave: Number(r.wave), status: 'planned' })),
@@ -430,6 +473,7 @@ export async function build() {
     if (c) {
       if (!['draft', 'publish'].includes(c.status)) fail(`${r.id}: status must be draft or publish`);
       r.status = c.status;
+      if (c.template === 'lookup') r.type = 'lookup'; // data lookup (N2 error codes): tables + filter, no calculator
       r.h1 = c.h1 || r.h1;
       r.reviewed = c.reviewed || r.reviewed;
       r.published = c.published;
@@ -485,13 +529,18 @@ export async function build() {
     site: { brand: site.brand, url: site.url, tagline: site.tagline, contact_email: site.contact_email, logo: site.logo, og_image: site.og_image, twitter_image: site.twitter_image, ads: site.ads, people: site.people, reviewer: site.reviewer.status === 'signed_off'
       ? { status: 'signed_off', name: site.reviewer.name, credential: site.reviewer.credential, same_as: site.reviewer.same_as || [], signed_off: site.reviewer.signed_off }
       : { status: site.reviewer.status } },
-    data: { defaults: inp.data.defaults, tariff: inp.data.tariff, cities: inp.data.cities, cables: inp.cables },
+    data: { defaults: inp.data.defaults, tariff: inp.data.tariff, cities: inp.data.cities, cables: inp.cables,
+      // Browser copy of the price ranges: numbers only (sources and quotes stay on the quote-checker page).
+      solar_prices: { checked: inp.solarPrices._meta.checked, panel_rs_per_w: { low: inp.solarPrices.panel_rs_per_w.low, high: inp.solarPrices.panel_rs_per_w.high }, systems: inp.solarPrices.systems.map(({ type, kw, low_rs, high_rs }) => ({ type, kw, low_rs, high_rs })) } },
     pages: rows.map(({ id, type, url, h1, title, meta, status, live, parent, children, related, next, wave }) => ({ id, type, url, h1, title, meta, status, live, parent, children, related, next, wave })),
     nav: rows.filter((r) => r.nav_label).sort((a, b) => a.nav_order - b.nav_order).map((r) => ({ id: r.id, label: r.nav_label, url: r.url })),
     website_schema: websiteSchema(site, pluginUrl),
   };
   files['generated/manifest.json'] = JSON.stringify(manifest, null, 1) + '\n';
   files['generated/llms.txt'] = llmsTxt(rows, ctxBase);
+  // The browser loads dist/: the same modules with comments and indentation removed (tools/lib/strip.js).
+  for (const f of readdirSync(join(root, 'engine')).filter((x) => x.endsWith('.js')).sort()) files[`dist/engine/${f}`] = stripJs(read(`engine/${f}`));
+  files['dist/assets/js/wattlyst-tool.js'] = stripJs(read('assets/js/wattlyst-tool.js'));
   return files;
 }
 

@@ -103,10 +103,10 @@
    "spec": "rs"
   }
  ],
- "answer": "An unprotected home using {{in.units|int}} units a month on a {{in.sanctioned_kw|int}} kW connection pays about {{out.total_rs|rs}}: {{out.energy_rs|rs}} in energy charges at Rs {{out.rate|2}} per unit, plus the fixed charge, FC surcharge, QTA and {{out.gst_pct|int}}% GST. Bill = units × slab rate + fixed charge + surcharges, then GST on the subtotal.",
- "how": "Energy: {{out.units|int}} units × Rs {{out.rate|2}} (the {{out.category}} rate of the slab reached) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw|int}} kW = {{out.fixed_rs|rs}}. FC surcharge = {{out.fc_rs|rs}}, QTA = {{out.qta_rs|rs}}, FPA = {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}}; GST at {{out.gst_pct|int}}% = {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}.",
+ "answer": "An unprotected home using {{in.units|int}} units a month on a {{in.sanctioned_kw|int}} kW connection pays about {{out.total_rs|rs}}: {{out.energy_rs|rs}} in energy charges at {{out.rate|rs2}} per unit, plus the fixed charge, FC surcharge, QTA and {{out.gst_pct|int}}% GST. Bill = units × slab rate + fixed charge + surcharges, then GST on the subtotal.",
+ "how": "Energy: {{out.units|int}} units × {{out.rate|rs2}} (the {{out.category}} rate of the slab reached) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw|int}} kW = {{out.fixed_rs|rs}}. FC surcharge = {{out.fc_rs|rs}}, QTA = {{out.qta_rs|rs}}, FPA = {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}}; GST at {{out.gst_pct|int}}% = {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}.",
  "key_facts": [
-  "An unprotected consumer pays the rate of the slab the monthly total reaches on every unit: {{out.units|int}} units are all charged at Rs {{out.rate|2}}, giving {{out.energy_rs|rs}} in energy charges.",
+  "An unprotected consumer pays the rate of the slab the monthly total reaches on every unit: {{out.units|int}} units are all charged at {{out.rate|rs2}}, giving {{out.energy_rs|rs}} in energy charges.",
   "A protected consumer is billed slab-wise with the benefit of the lower slab, and the category needs every one of the last {{d.protected_months|int}} months at or under {{d.protected_max_units|int}} units.",
   "The fixed charge is Rs per kW of sanctioned load and rises with the slab; a {{out.sanctioned_kw|int}} kW connection using {{out.units|int}} units pays {{out.fixed_rs|rs}} a month before using a single unit.",
   "GST at {{out.gst_pct|int}}% is applied to the subtotal of energy, fixed charge and surcharges, which adds {{out.gst_rs|rs}} to a {{out.units|int}} unit bill; the surcharge and GST figures are from secondary sources and change monthly.",
@@ -153,7 +153,7 @@
   {
    "h2": "What is the bill for 300 units?",
    "p": [
-    "{{out.units|int}} units is the default above: all units at Rs {{out.rate|2}} = {{out.energy_rs|rs}}, plus {{out.fixed_rs|rs}} fixed charge for {{out.sanctioned_kw|int}} kW, {{out.fc_rs|rs}} FC surcharge, {{out.qta_rs|rs}} QTA and {{out.gst_rs|rs}} GST, for about {{out.total_rs|rs}}. One unit over three hundred moves every unit to the next slab, so {{out.units|int}} units is a line worth staying under."
+    "{{out.units|int}} units is the default above: all units at {{out.rate|rs2}} = {{out.energy_rs|rs}}, plus {{out.fixed_rs|rs}} fixed charge for {{out.sanctioned_kw|int}} kW, {{out.fc_rs|rs}} FC surcharge, {{out.qta_rs|rs}} QTA and {{out.gst_rs|rs}} GST, for about {{out.total_rs|rs}}. One unit over three hundred moves every unit to the next slab, so {{out.units|int}} units is a line worth staying under."
    ]
   }
  ],
@@ -172,14 +172,14 @@
     "protected": false
    },
    "title": "{{in.units|int}} units, unprotected consumer",
-   "text": "The same {{out.units|int}} units at the unprotected rate of Rs {{out.rate|2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}, about double the protected bill."
+   "text": "The same {{out.units|int}} units at the unprotected rate of {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}, about double the protected bill."
   },
   {
    "inputs": {
     "units": 300
    },
    "title": "{{in.units|int}} units, unprotected",
-   "text": "{{out.units|int}} units × Rs {{out.rate|2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}."
+   "text": "{{out.units|int}} units × {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}."
   },
   {
    "inputs": {
@@ -187,7 +187,7 @@
     "sanctioned_kw": 2
    },
    "title": "{{in.units|int}} units on a {{in.sanctioned_kw|int}} kW connection",
-   "text": "A summer bill with an AC: {{out.units|int}} units × Rs {{out.rate|2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}."
+   "text": "A summer bill with an AC: {{out.units|int}} units × {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}."
   },
   {
    "inputs": {
@@ -197,7 +197,7 @@
     "gst_pct": ""
    },
    "title": "{{in.units|int}} units, lifeline consumer",
-   "text": "A lifeline consumer using {{out.units|int}} units pays Rs {{out.rate|2}} per unit = {{out.energy_rs|rs}} with no fixed charge and no QTA. With the FC surcharge and GST fields left blank the calculator assumes neither applies to lifeline bills, which is still being verified, so the estimated bill is {{out.total_rs|rs}}."
+   "text": "A lifeline consumer using {{out.units|int}} units pays {{out.rate|rs2}} per unit = {{out.energy_rs|rs}} with no fixed charge and no QTA. With the FC surcharge and GST fields left blank the calculator assumes neither applies to lifeline bills, which is still being verified, so the estimated bill is {{out.total_rs|rs}}."
   }
  ],
  "table": {
@@ -233,7 +233,7 @@
    },
    {
     "label": "Rate",
-    "tpl": "Rs {{out.rate|2}}"
+    "tpl": "{{out.rate|rs2}}"
    },
    {
     "label": "Energy",
@@ -271,7 +271,7 @@
   },
   {
    "q": "What is the per unit rate of electricity in Pakistan?",
-   "a": "It depends on the slab and category. An unprotected home using {{out.units|int}} units pays Rs {{out.rate|2}} per unit on every unit; lower slabs pay less and the top slab pays the most. Protected and lifeline consumers pay far lower rates. The reference table above lists the rate for each slab."
+   "a": "It depends on the slab and category. An unprotected home using {{out.units|int}} units pays {{out.rate|rs2}} per unit on every unit; lower slabs pay less and the top slab pays the most. Protected and lifeline consumers pay far lower rates. The reference table above lists the rate for each slab."
   },
   {
    "q": "What are the electricity slab rates in Pakistan?",
@@ -294,7 +294,9 @@
   "F2",
   "F12",
   "E5",
-  "D10"
+  "D10",
+  "N1",
+  "F14"
  ],
  "next": "E5",
  "literal_numbers": [

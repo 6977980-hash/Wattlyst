@@ -1,0 +1,77 @@
+export class CalcError extends Error{
+constructor(code,field){
+super(code);
+this.code=code;
+this.field=field;
+}
+}
+const isNum=(v)=> typeof v==='number' && Number.isFinite(v);
+const MAX_INPUT=1e12;
+const MIN_FRACTION=0.05;
+export const bool=(v)=> v===true || v===1 ||(typeof v==='string' &&['true','on','yes','1'].includes(v.trim().toLowerCase()));
+export const has=(inputs,key)=> inputs?.[key]!==undefined && inputs?.[key]!==null && inputs?.[key]!=='';
+
+export function num(inputs,key,opts={}){
+let v=inputs?.[key];
+if(v===undefined || v===null || v==='')v=opts.def;
+if(typeof v==='string'){
+const t=v.trim();
+v=/^[+-]?(\d+\.?\d*|\.\d+)$/.test(t)?Number(t):NaN;
+}
+if(v===undefined || v===null)throw new CalcError(opts.code || `${key}_required`,key);
+if(!isNum(v))throw new CalcError(opts.code || `${key}_invalid`,key);
+if(opts.gt !==undefined && !(v > opts.gt))throw new CalcError(opts.code || `${key}_must_be_positive`,key);
+if(opts.min !==undefined && v < opts.min)throw new CalcError(opts.code || `${key}_too_small`,key);
+if(opts.max !==undefined && v > opts.max)throw new CalcError(opts.code || `${key}_too_large`,key);
+if(Math.abs(v)> MAX_INPUT)throw new CalcError(opts.code || `${key}_too_large`,key);
+return v;
+}
+export const pos=(inputs,key,def,code)=>{
+const v=num(inputs,key,{def,gt:0,code});
+if(['volts','v','battery_v'].includes(key)&& v < 1)throw new CalcError(code || `${key}_too_small`,key);
+return v;
+};
+export const nonneg=(inputs,key,def,code)=> num(inputs,key,{def,min:0,code});
+export const frac=(inputs,key,def,code)=> num(inputs,key,{def,min:MIN_FRACTION,max:1,code});
+export function pick(inputs,key,allowed,def){
+const v=inputs?.[key]??def;
+if(!allowed.includes(v))throw new CalcError(`${key}_invalid`,key);
+return v;
+}
+export const ceilSafe=(x)=> Math.ceil(x - 1e-9);
+export function appliance(data,id,field='appliance'){
+const key=typeof id==='string'?id.trim():'';
+const item=key?data?.appliances?.[key]:undefined;
+if(!item || !(item.running_w > 0))throw new CalcError('appliance_unknown',field);
+return item;
+}
+export function dflt(data,path){
+const v=path.split('.').reduce((o,k)=>(o==null?undefined:o[k]),data?.defaults);
+if(v===undefined)throw new CalcError(`missing_default_${path}`,path);
+return v;
+}
+function assertFinite(value,path,allowNegative){
+if(typeof value==='number'){
+if(!Number.isFinite(value))throw new CalcError('internal_non_finite',path);
+if(value < 0 && !allowNegative.includes(path))throw new CalcError('internal_negative',path);
+}else if(Array.isArray(value)){
+value.forEach((v,i)=> assertFinite(v,`${path}[${i}]`,allowNegative));
+}else if(value && typeof value==='object'){
+for(const[k,v]of Object.entries(value))assertFinite(v,path?`${path}.${k}`:k,allowNegative);
+}
+}
+
+export function calculator(fn,{allowNegative=[]}={}){
+const wrapped=(inputs={},data={})=>{
+try{
+const out=fn(inputs,data);
+assertFinite(out,'',allowNegative);
+return{ok:true,...out};
+}catch(e){
+if(e instanceof CalcError)return{ok:false,error:e.code,field:e.field};
+return{ok:false,error:'internal_error'};
+}
+};
+wrapped.raw=fn;
+return wrapped;
+}

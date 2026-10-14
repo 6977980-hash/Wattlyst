@@ -3,15 +3,24 @@
  "type": "tool",
  "silo": "E",
  "url": "/load/winter-heating-cost-calculator/",
- "h1": "Inverter Ac Heating Cost",
+ "h1": "Inverter AC Heating Cost vs Gas and Electric Heaters",
  "title": "Inverter AC Heating Cost vs Gas & Electric | Wattlyst",
  "meta": "Compare the cost per hour of heating with an inverter AC in heat mode, a gas heater and an electric heater, using your tariff and gas price.",
  "primary_keyword": "inverter ac heating cost",
  "wave": 2,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-13",
+ "published": "2026-10-13",
  "author": "ali-ahmad",
+ "related": [
+  "E5",
+  "F1",
+  "E6",
+  "E2"
+ ],
+ "next": "E5",
  "parent": "P-E",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
@@ -22,11 +31,284 @@
    "url": "/load/"
   },
   {
-   "name": "Inverter Ac Heating Cost",
+   "name": "Inverter AC Heating Cost vs Gas and Electric Heaters",
    "url": "/load/winter-heating-cost-calculator/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "Inverter AC heating cost per hour",
+    "p": [
+     "An inverter AC in heat mode does not make heat from electricity; it pumps heat from the outdoor air into the room. For each unit of electricity it moves about 3 units of heat on a mild winter day, which is what the COP means. So 2 kW of heat needs only a fraction of that in electricity, and the cost is about Rs 24 an hour at Rs 36.46 per unit. Over a four-hour evening that is roughly four times the hourly figure; over a month of such evenings, the AC units calculator turns the hours into units and a bill share.",
+     "The COP is the number to watch. It is highest when the outdoor air is mild and falls on frosty nights, when the outdoor coil ices up and the unit runs defrost cycles. The default 3 is a typical value near seven degrees outdoors; the second example shows the same room at a COP of 2. Your AC's spec sheet lists its rated heating COP, and the colder your city the lower the figure you should enter."
+    ]
+   },
+   {
+    "h2": "Gas heater vs electric heater cost",
+    "p": [
+     "An electric heater (fan, halogen, oil-filled) turns every unit into one unit of heat, no more, so its cost per hour is simply its kW × the rate: 2 kW costs Rs 73 an hour at the default rate, about three times the inverter AC. It is the most expensive way to heat a room on grid electricity, and a two-kilowatt heater also needs its own socket circuit.",
+     "A gas heater burns gas at a flat energy content of about 37 MJ per cubic metre, and a flued heater puts about 80% of that into the room. For 2 kW that is 0.24 m³ an hour, which at Rs 44 per m³ costs Rs 11. At that gas price gas is the cheapest of the three; the comparison turns around once the gas rate climbs past the higher winter slabs, which the third example shows, and gas is not an option at all when pressure drops in the evening."
+    ]
+   },
+   {
+    "h2": "Heat pump running cost in Pakistan: when the AC beats gas",
+    "p": [
+     "The break-even depends on your gas slab and your electricity slab. At Rs 44 per m³ and Rs 36.46 per unit, gas wins (Rs 11 against Rs 24 an hour). At Rs 147 per m³, the kind of rate a heavy winter gas user reaches in the upper slabs, gas costs Rs 36 an hour while the AC at a COP of 3 costs Rs 24, so the AC is close or ahead. On solar during the day the AC's electricity is nearly free and it wins outright.",
+     "Electricity slabs cut the other way: a home already in the top slab pays Rs 47.20 per unit, which raises the AC to Rs 31 an hour and the electric heater to Rs 94. Enter both of your rates to see your own answer; the defaults are typical, not yours."
+    ]
+   },
+   {
+    "h2": "How much heat does a room need?",
+    "p": [
+     "A closed bedroom of about twelve square metres with a ceiling fan off needs roughly 1.5 kW to feel warm on a cold Lahore or Islamabad night; a large living room with big windows needs 3 kW or more. A 1.5 ton inverter AC can deliver up to about five kilowatts of heat, so it covers most rooms; a 1 ton unit about three and a half. These are planning figures: a draughty room with single glazing loses heat faster, and the first hour costs more while the walls warm up.",
+     "The cost scales with the heat: 1.5 kW costs Rs 18 an hour on the AC and Rs 8 on gas, while 3 kW costs Rs 36 and Rs 16. Closing doors, drawing curtains and heating one room instead of the house do more for the bill than the choice of heater."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "How much does an inverter AC cost per hour in heating mode?",
+    "a": "About Rs 24 an hour for 2 kW of heat at Rs 36.46 per unit and a COP of 3. A larger room needing 3 kW costs about Rs 36 an hour."
+   },
+   {
+    "q": "Is an inverter AC cheaper than a gas heater for heating?",
+    "a": "At the default gas price of Rs 44 per m³ gas is cheaper (Rs 11 against Rs 24 an hour). At Rs 147 per m³, the top non-protected slab, the AC wins (Rs 24 against Rs 36). Enter your own gas slab to see which side you are on."
+   },
+   {
+    "q": "Is an inverter AC cheaper than an electric heater?",
+    "a": "Yes, by about the COP. For the same 2 kW of heat the AC costs Rs 24 an hour and an electric heater Rs 73, because the heater turns one unit of electricity into one unit of heat while the AC moves about 3 units."
+   },
+   {
+    "q": "What is the heating COP of an inverter AC?",
+    "a": "Typically around 3 at mild outdoor temperatures, falling towards 2 near freezing. It is the heat delivered divided by the electricity used; the spec sheet of your AC lists the rated value, and the calculator lets you edit it."
+   },
+   {
+    "q": "How much gas does a gas heater use per hour?",
+    "a": "For 2 kW of heat at 80% efficiency, about 0.24 cubic metres an hour. A 3 kW living-room heater uses about 0.36 m³ an hour."
+   },
+   {
+    "q": "What is the cost of a 2 kW electric heater per hour?",
+    "a": "Its kW times your rate: 2 kW × Rs 36.46 = Rs 73 an hour at the default slab, and Rs 94 in the top slab. Four hours an evening for a month is a large bill; the unit calculator converts the hours to units."
+   },
+   {
+    "q": "Does heating with the AC use more electricity than cooling?",
+    "a": "The figures here are for heating only, per hour of heat delivered. Cooling use depends on the outdoor temperature in the same way; the AC units calculator covers it."
+   }
+  ],
+  "key_facts": [
+   "An inverter AC in heat mode is a heat pump: with a COP of about 3 it delivers about 3 units of heat for each unit of electricity, so it costs about one third as much to run as an electric heater giving the same heat.",
+   "For 2 kW of heat at Rs 36.46 per unit, an inverter AC costs about Rs 24 an hour and an electric heater about Rs 73 an hour; the electric heater's cost per hour is simply its kW × the rate.",
+   "A gas heater's cost per hour = heat needed ÷ heater efficiency × 3.6 ÷ gas heating value × gas price: at 80% efficiency and 37 MJ per m³, 2 kW of heat burns 0.24 m³ an hour, Rs 11 at Rs 44 per m³.",
+   "The AC's COP falls as the outdoor temperature drops: at a COP of 2 on a cold night the same 2 kW costs Rs 36 an hour instead of Rs 24; the COP is an editable typical value, not a measured figure for your unit."
+  ],
+  "mistakes": [
+   "Entering the AC's electrical watts as the heat needed. The field is heat output; the AC draws about one third of it in electricity at a COP of 3.",
+   "Keeping the default COP on a frosty night. Below freezing the COP drops towards 2 and the AC's advantage shrinks; check your unit's spec sheet and your city's winter nights.",
+   "Comparing a 1 kW electric heater with a 2 kW gas heater. Compare at the same heat output; the calculator does that for you.",
+   "Using the wrong gas rate. Bills quote Rs per MMBtu by slab and the top winter slabs are many times the lowest; convert your own slab to Rs per cubic metre.",
+   "Running a non-inverter AC in heat mode and expecting the same cost. Only inverter units with a heat pump mode give these figures; a plain cooling-only AC has no heat mode."
+  ],
+  "sources": [
+   {
+    "label": "NEPRA tariff decision 11 Feb 2026, A-1 domestic energy rates",
+    "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf"
+   },
+   {
+    "label": "Wattlyst methodology and default values (COP, gas efficiency and heating value are typical values awaiting engineer confirmation)",
+    "url": "/methodology/"
+   }
+  ],
+  "tool": {
+   "calc": "heating_cost",
+   "module": "load.js",
+   "data_keys": [
+    "cables"
+   ],
+   "appliances": {},
+   "fields": [
+    {
+     "name": "q_kw",
+     "label": "Heat needed",
+     "unit": "kW",
+     "default": 2,
+     "hint": "Heat output, not electrical input. A small bedroom needs about 1 to 1.5 kW, a large living room 3 kW or more. A 1 ton AC gives up to about 3.5 kW of heat, a 1.5 ton about 5 kW."
+    },
+    {
+     "name": "cop",
+     "label": "AC heating COP (typical value, edit for your unit)",
+     "unit": "×",
+     "default": 3,
+     "hint": "Coefficient of performance: units of heat per unit of electricity. About 3 on a mild day near 7 °C outdoors; closer to 2 on a frosty night. Your AC's spec sheet lists its heating COP."
+    },
+    {
+     "name": "tariff",
+     "label": "Electricity rate",
+     "unit": "Rs per unit",
+     "default": 36.46,
+     "hint": "Energy rate of your slab from the bill. The default is the Pakistan unprotected rate for 301 to 400 units a month."
+    },
+    {
+     "name": "gas_price_mmbtu",
+     "label": "Gas price (from your bill)",
+     "unit": "Rs per MMBtu",
+     "default": 1250,
+     "hint": "The gas rate of your slab as printed on your Sui gas bill. The default is a middle non-protected domestic slab from a published price table that we could not yet match to the OGRA notification; edit it for your own bill."
+    },
+    {
+     "name": "eta_gas",
+     "label": "Gas heater efficiency",
+     "unit": "0 to 1",
+     "default": 0.8,
+     "advanced": true,
+     "hint": "Share of the gas's heat that reaches the room. About 0.8 for a flued heater; an open radiant heater in a draughty room is lower."
+    },
+    {
+     "name": "cv_mj_m3",
+     "label": "Gas heating value",
+     "unit": "MJ per m³",
+     "default": 37,
+     "advanced": true,
+     "hint": "Energy in one cubic metre of pipeline gas, about 37 MJ. Lower for weak winter gas pressure."
+    }
+   ],
+   "fixed_inputs": {},
+   "outputs": [
+    {
+     "key": "ac_rs_per_h",
+     "label": "Inverter AC in heat mode",
+     "spec": "rs",
+     "unit": "per hour",
+     "label_ur": "Inverter AC heat mode mein",
+     "value": "Rs 24"
+    },
+    {
+     "key": "gas_rs_per_h",
+     "label": "Gas heater",
+     "spec": "rs",
+     "unit": "per hour",
+     "label_ur": "Gas heater",
+     "value": "Rs 11"
+    },
+    {
+     "key": "heater_rs_per_h",
+     "label": "Electric heater",
+     "spec": "rs",
+     "unit": "per hour",
+     "label_ur": "Bijli ka heater",
+     "value": "Rs 73"
+    },
+    {
+     "key": "gas_m3_per_h",
+     "label": "Gas used",
+     "spec": "2",
+     "unit": "m³ per hour",
+     "label_ur": "Istemal shuda gas",
+     "value": "0.24"
+    }
+   ],
+   "how": {
+    "tpl": "Inverter AC: {{out.q_kw|1}} kW of heat ÷ COP {{out.cop|1}} = electricity drawn per hour, × {{out.tariff|rs2}} per unit = {{out.ac_rs_per_h|rs}} an hour. Electric heater: every unit becomes one unit of heat, so {{out.q_kw|1}} kW × {{out.tariff|rs2}} = {{out.heater_rs_per_h|rs}} an hour. Gas price: {{out.gas_price_mmbtu|rs}} per MMBtu on the bill × {{out.cv_mj_m3|int}} MJ per m³ ÷ {{d.mj_per_mmbtu|int}} MJ per MMBtu = {{out.gas_price|rs}} per m³. Gas heater: {{out.q_kw|1}} kW ÷ {{out.eta_gas|pct}} efficiency × 3.6 MJ per kWh ÷ {{out.cv_mj_m3|int}} MJ per m³ = {{out.gas_m3_per_h|2}} m³ an hour, × {{out.gas_price|rs}} = {{out.gas_rs_per_h|rs}} an hour.",
+    "text": "Inverter AC: 2 kW of heat ÷ COP 3 = electricity drawn per hour, × Rs 36.46 per unit = Rs 24 an hour. Electric heater: every unit becomes one unit of heat, so 2 kW × Rs 36.46 = Rs 73 an hour. Gas price: Rs 1,250 per MMBtu on the bill × 37 MJ per m³ ÷ 1,055 MJ per MMBtu = Rs 44 per m³. Gas heater: 2 kW ÷ 80% efficiency × 3.6 MJ per kWh ÷ 37 MJ per m³ = 0.24 m³ an hour, × Rs 44 = Rs 11 an hour."
+   },
+   "submit": "Calculate",
+   "notice": "",
+   "data_checked": [
+    {
+     "label": "Pakistan electricity tariff (NEPRA notification)",
+     "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf",
+     "checked": "2026-10-13"
+    },
+    {
+     "label": "Domestic gas slab prices (icons.com.pk, 'Domestic Gas Sale Prices and Minimum Charges (Effective July 1, 2025)', attributing the table to OGRA; not yet matched to the OGRA notification)",
+     "url": "https://icons.com.pk/?p=32346",
+     "checked": "2026-10-14"
+    }
+   ]
+  },
+  "examples": [
+   {
+    "title": "Small bedroom, 1.5 kW of heat",
+    "text": "AC: 1.5 ÷ 3 × Rs 36.46 = Rs 18 an hour. Electric heater: Rs 55. Gas: 0.18 m³ × Rs 44 = Rs 8 an hour."
+   },
+   {
+    "title": "Frosty night, COP down to 2",
+    "text": "Same 2 kW room, but the AC now moves only 2 units of heat per unit of electricity: Rs 36 an hour, up from the default-COP figure in the result above. Gas stays at Rs 11 and the electric heater at Rs 73."
+   },
+   {
+    "title": "Heavy gas user: the top slab, Rs 147 per m³",
+    "text": "In the top non-protected gas slab the same 0.24 m³ an hour costs Rs 36, while the inverter AC costs Rs 24 at a COP of 3. The AC is now the cheaper heater, and the electric heater is still Rs 73."
+   },
+   {
+    "title": "Top electricity slab at Rs 47.20 per unit",
+    "text": "At the highest unprotected rate the inverter AC costs Rs 31 an hour for 2 kW of heat and the electric heater Rs 94, while gas at Rs 44 per m³ stays at Rs 11."
+   },
+   {
+    "title": "Large living room, 3 kW of heat",
+    "text": "AC Rs 36 an hour, gas Rs 16 (0.36 m³ an hour), electric heater Rs 109. A 1.5 ton inverter AC can deliver this much heat; a small electric heater cannot."
+   }
+  ],
+  "table": {
+   "caption": "Cost per hour of heating by heat needed, at a COP of 3, Rs 36.46 per unit and Rs 44 per m³ of gas",
+   "head": [
+    "Heat needed",
+    "Inverter AC",
+    "Gas heater",
+    "Electric heater"
+   ],
+   "rows": [
+    [
+     "1 kW",
+     "Rs 12",
+     "Rs 5 (0.12 m³)",
+     "Rs 36"
+    ],
+    [
+     "1.5 kW",
+     "Rs 18",
+     "Rs 8 (0.18 m³)",
+     "Rs 55"
+    ],
+    [
+     "2 kW",
+     "Rs 24",
+     "Rs 11 (0.24 m³)",
+     "Rs 73"
+    ],
+    [
+     "2.5 kW",
+     "Rs 30",
+     "Rs 13 (0.3 m³)",
+     "Rs 91"
+    ],
+    [
+     "3 kW",
+     "Rs 36",
+     "Rs 16 (0.36 m³)",
+     "Rs 109"
+    ],
+    [
+     "4 kW",
+     "Rs 49",
+     "Rs 21 (0.49 m³)",
+     "Rs 146"
+    ]
+   ]
+  },
+  "answer": "For 2 kW of heat, an inverter AC in heat mode costs about Rs 24 an hour at Rs 36.46 per unit, a gas heater about Rs 11 an hour at Rs 44 per cubic metre, and an electric heater about Rs 73. AC cost = heat ÷ COP × tariff, because a heat pump moves about 3 units of heat for each unit of electricity.",
+  "formula": {
+   "text": "AC Rs/h = Q ÷ COP × tariff; heater Rs/h = Q × tariff; gas Rs/h = Q ÷ η × 3.6 ÷ CV × gas price",
+   "lines": [
+    "Q = heat needed in kW (heat output into the room)",
+    "COP = heating coefficient of performance of the AC (editable typical value)",
+    "tariff = electricity energy rate in Rs per unit",
+    "η = gas heater efficiency; CV = heating value of gas in MJ per m³; 3.6 MJ = 1 kWh",
+    "gas price in Rs per cubic metre (gas bills quote Rs per MMBtu; 1 MMBtu is about 28 m³)"
+   ]
+  },
+  "safety": "Never run a gas heater in a closed room without ventilation (carbon monoxide), keep electric heaters away from bedding, and have a licensed electrician check the socket and breaker before using a 2 kW heater; a heavy heater should not share a circuit with an AC."
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -49,7 +331,7 @@
      {
       "@type": "ListItem",
       "position": 3,
-      "name": "Inverter Ac Heating Cost",
+      "name": "Inverter AC Heating Cost vs Gas and Electric Heaters",
       "item": "https://wattlyst.com/load/winter-heating-cost-calculator/"
      }
     ]
@@ -66,12 +348,14 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/load/winter-heating-cost-calculator/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-13",
+    "lastReviewed": "2026-10-13"
    },
    {
     "@type": "WebApplication",
     "@id": "https://wattlyst.com/load/winter-heating-cost-calculator/#app",
-    "name": "Inverter Ac Heating Cost",
+    "name": "Inverter AC Heating Cost vs Gas and Electric Heaters",
     "url": "https://wattlyst.com/load/winter-heating-cost-calculator/",
     "description": "Compare the cost per hour of heating with an inverter AC in heat mode, a gas heater and an electric heater, using your tariff and gas price.",
     "applicationCategory": "UtilitiesApplication",
@@ -98,6 +382,68 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/load/winter-heating-cost-calculator/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "How much does an inverter AC cost per hour in heating mode?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "About Rs 24 an hour for 2 kW of heat at Rs 36.46 per unit and a COP of 3. A larger room needing 3 kW costs about Rs 36 an hour."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Is an inverter AC cheaper than a gas heater for heating?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "At the default gas price of Rs 44 per m³ gas is cheaper (Rs 11 against Rs 24 an hour). At Rs 147 per m³, the top non-protected slab, the AC wins (Rs 24 against Rs 36). Enter your own gas slab to see which side you are on."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Is an inverter AC cheaper than an electric heater?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Yes, by about the COP. For the same 2 kW of heat the AC costs Rs 24 an hour and an electric heater Rs 73, because the heater turns one unit of electricity into one unit of heat while the AC moves about 3 units."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What is the heating COP of an inverter AC?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Typically around 3 at mild outdoor temperatures, falling towards 2 near freezing. It is the heat delivered divided by the electricity used; the spec sheet of your AC lists the rated value, and the calculator lets you edit it."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How much gas does a gas heater use per hour?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "For 2 kW of heat at 80% efficiency, about 0.24 cubic metres an hour. A 3 kW living-room heater uses about 0.36 m³ an hour."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What is the cost of a 2 kW electric heater per hour?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Its kW times your rate: 2 kW × Rs 36.46 = Rs 73 an hour at the default slab, and Rs 94 in the top slab. Four hours an evening for a month is a large bill; the unit calculator converts the hours to units."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Does heating with the AC use more electricity than cooling?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "The figures here are for heating only, per hour of heat delivered. Cooling use depends on the outdoor temperature in the same way; the AC units calculator covers it."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

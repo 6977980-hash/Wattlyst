@@ -1,0 +1,301 @@
+{
+ "id": "F9",
+ "status": "publish",
+ "template": "tool",
+ "h1": "SEPCO Bill Calculator",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "calc": "bill_total",
+ "fields": [
+  {
+   "name": "units",
+   "label": "Units on the SEPCO bill",
+   "unit": "units",
+   "default": 400,
+   "hint": "Units (kWh) for the month, from the bill or from this and last month's meter readings."
+  },
+  {
+   "name": "sanctioned_kw",
+   "label": "Sanctioned load",
+   "unit": "kW",
+   "default": 2,
+   "hint": "The kW printed on the bill; one to three for most homes in Sukkur, Larkana and Khairpur. It sets the fixed charge."
+  },
+  {
+   "name": "protected",
+   "label": "Protected consumer",
+   "type": "checkbox",
+   "default": false,
+   "hint": "Tick if every one of your last six SEPCO bills was within the protected unit limit; the bill prints the category."
+  },
+  {
+   "name": "lifeline",
+   "label": "Lifeline consumer (up to one hundred units)",
+   "type": "checkbox",
+   "default": false,
+   "advanced": true,
+   "hint": "Only for very small consumers whose bill shows the lifeline category."
+  },
+  {
+   "name": "period",
+   "label": "Billing quarter for QTA",
+   "type": "select",
+   "options_from": "qta_periods",
+   "default": "2026-09..2026-11",
+   "advanced": true,
+   "hint": "The quarterly tariff adjustment depends on the quarter the bill falls in."
+  },
+  {
+   "name": "fc_surcharge_per_unit",
+   "label": "FC surcharge",
+   "unit": "Rs per unit",
+   "default": "@data.tariff.addons_secondary.fc_surcharge_per_unit.value",
+   "advanced": true,
+   "hint": "Financing cost surcharge per unit, from the bill. Secondary-source default."
+  },
+  {
+   "name": "fpa_per_unit",
+   "label": "FPA",
+   "unit": "Rs per unit",
+   "placeholder": "From your bill (FPA / FCA)",
+   "advanced": true,
+   "hint": "Monthly fuel price adjustment from the bill, positive or negative. Leave blank if unknown."
+  },
+  {
+   "name": "gst_pct",
+   "label": "GST",
+   "unit": "%",
+   "default": "@data.tariff.addons_secondary.gst_pct.value",
+   "advanced": true,
+   "hint": "Sales tax applied to the bill subtotal."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "total_rs",
+   "label": "Estimated bill",
+   "spec": "rs"
+  },
+  {
+   "key": "energy_rs",
+   "label": "Energy charge",
+   "spec": "rs"
+  },
+  {
+   "key": "fixed_rs",
+   "label": "Fixed charge",
+   "spec": "rs"
+  },
+  {
+   "key": "fc_rs",
+   "label": "FC surcharge",
+   "spec": "rs"
+  },
+  {
+   "key": "qta_rs",
+   "label": "QTA",
+   "spec": "rs"
+  },
+  {
+   "key": "gst_rs",
+   "label": "GST",
+   "spec": "rs"
+  }
+ ],
+ "answer": "A SEPCO home in Sukkur or upper Sindh using {{in.units|int}} units a month as an unprotected consumer on a {{in.sanctioned_kw|int}} kW connection pays about {{out.total_rs|rs}}: {{out.energy_rs|rs}} energy charge at {{out.rate|rs2}} per unit, plus {{out.fixed_rs|rs}} fixed charge, FC surcharge, QTA and GST. SEPCO bill = units × slab rate + fixed charge + surcharges + GST, with the month's FPA from your bill.",
+ "how": "{{out.units|int}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw|int}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct|int}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
+ "key_facts": [
+  "SEPCO, the Sukkur Electric Power Company Limited, bills the uniform NEPRA A-1 domestic tariff for 2026 from its head office at the old thermal power station in Sukkur; it has no slab rates of its own.",
+  "The SEPCO per unit rate for an unprotected home using {{out.units|int}} units is {{out.rate|rs2}} on every unit, giving {{out.energy_rs|rs}} in energy charges before the fixed charge, surcharges and GST.",
+  "The fixed charge on a SEPCO bill is Rs per kW of sanctioned load, set by the slab reached: a {{out.sanctioned_kw|int}} kW connection using {{out.units|int}} units pays {{out.fixed_rs|rs}}, and the per-kW figure rises with every slab.",
+  "A SEPCO consumer is protected only while all of the last {{d.protected_months|int}} bills are at or under {{d.protected_max_units|int}} units on a connection below {{d.tou_threshold_kw|int}} kW; the first summer month above the limit moves every unit to unprotected rates."
+ ],
+ "formula": {
+  "text": "Bill = units × slab rate + fixed Rs/kW × sanctioned kW + (FC + QTA + FPA) × units, then + GST",
+  "lines": [
+   "slab rate = rate of the band the month's units reach (unprotected) or slab-wise (protected)",
+   "fixed = Rs per kW of the band reached × sanctioned kW",
+   "FC, QTA, FPA = per-unit surcharges printed on the bill",
+   "GST = percentage of the subtotal"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "What is the SEPCO per unit rate in 2026?",
+   "p": [
+    "SEPCO is the Sukkur Electric Power Company Limited, the youngest of the ex-WAPDA distribution companies, with its head office in the administration block of the old thermal power station in Sukkur. It bills the same uniform A-1 domestic tariff that NEPRA determined and the Government notified for 2026 for every DISCO. For an unprotected home the rate of the slab the month reaches applies to all units: {{out.units|int}} units are billed at {{out.rate|rs2}} each, not slab by slab.",
+    "Because the rate steps up with every hundred units, the per unit figure a Sukkur household should look at is the one for its own slab, printed in the table below, not an average. Add the FPA from your bill; it changes every month and is not part of the uniform tariff."
+   ]
+  },
+  {
+   "h2": "Why does a SEPCO bill jump from one slab to the next in summer?",
+   "p": [
+    "Upper Sindh is among the hottest places in the country; Jacobabad and Sibi regularly top the national temperature table, and Sukkur, Larkana and Khairpur are not far behind. A home that ran fans and a fridge on {{ex.0.in.units|int}} units in March can need an air cooler or AC for most of the day in June, and the units double. Under unprotected billing all of them are charged at the higher slab rate, so the energy charge more than doubles: compare the {{ex.1.in.units|int}} unit example at {{ex.1.out.rate|rs2}} with the {{ex.2.in.units|int}} unit example at {{ex.2.out.rate|rs2}}.",
+    "The fixed charge moves with the slab too, and it is multiplied by the sanctioned kW, so a {{ex.2.in.sanctioned_kw|int}} kW connection pays {{ex.2.out.fixed_rs|rs}} in the top summer month. If the AC is new, check whether the sanctioned load on the bill still fits it with the AC load check linked below."
+   ]
+  },
+  {
+   "h2": "Which districts does SEPCO serve, and how is it different from HESCO?",
+   "p": [
+    "SEPCO serves upper Sindh: Sukkur, Khairpur, Ghotki, Larkana, Shikarpur, Jacobabad and the districts around them. It was carved out of HESCO, which kept Hyderabad and the southern districts, so an older bill or meter card may still carry the HESCO name. Karachi is served by K-Electric. All three bill the same uniform domestic slabs.",
+    "Rural consumers in SEPCO's area often have long gaps between meter readings. A bill that covers more than a month can land in a higher slab than the same use would in a normal month; that is the case the overbilling check linked below is built for."
+   ]
+  },
+  {
+   "h2": "SEPCO bill check: estimate here, confirm on the printed bill",
+   "p": [
+    "This SEPCO bill calculator estimates the bill from your units and category. It cannot see your account, arrears, the exact FPA for the month or any local charge, so treat the result as a planning estimate and as a check on the slab you were billed in. The printed bill and the payment status are available from SEPCO and through the online bill lookup by reference number.",
+    "The full electricity bill calculator for Pakistan, linked below, explains the slabs and the protected check in more depth; the maths is the same."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "units": 200,
+    "protected": true,
+    "sanctioned_kw": 1
+   },
+   "title": "{{in.units|int}} units, SEPCO protected consumer on {{in.sanctioned_kw|int}} kW",
+   "text": "Energy charge {{out.energy_rs|rs}} slab-wise at protected rates, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated SEPCO bill {{out.total_rs|rs}}."
+  },
+  {
+   "inputs": {
+    "units": 400
+   },
+   "title": "{{in.units|int}} units, unprotected, {{in.sanctioned_kw|int}} kW connection",
+   "text": "{{out.units|int}} units all at {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated SEPCO bill {{out.total_rs|rs}}."
+  },
+  {
+   "inputs": {
+    "units": 650,
+    "sanctioned_kw": 3
+   },
+   "title": "{{in.units|int}} units in a Jacobabad summer, two ACs, {{in.sanctioned_kw|int}} kW",
+   "text": "{{out.units|int}} × {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated SEPCO bill {{out.total_rs|rs}} before FPA."
+  },
+  {
+   "inputs": {
+    "units": 100,
+    "lifeline": true,
+    "sanctioned_kw": 1,
+    "fc_surcharge_per_unit": "",
+    "gst_pct": ""
+   },
+   "title": "{{in.units|int}} units, lifeline consumer",
+   "text": "{{out.units|int}} units at the lifeline rate of {{out.rate|rs2}} = {{out.energy_rs|rs}}, with no fixed charge and no QTA. With the FC surcharge and GST fields blank the estimate assumes neither applies to lifeline bills (still being verified): {{out.total_rs|rs}}."
+  }
+ ],
+ "table": {
+  "caption": "Estimated SEPCO bill by units on a {{in.sanctioned_kw|int}} kW connection with the default surcharges and GST, before FPA; unprotected unless marked",
+  "rows": [
+   {
+    "units": 120
+   },
+   {
+    "units": 200,
+    "protected": true
+   },
+   {
+    "units": 200
+   },
+   {
+    "units": 300
+   },
+   {
+    "units": 400
+   },
+   {
+    "units": 500
+   },
+   {
+    "units": 650
+   },
+   {
+    "units": 900
+   }
+  ],
+  "columns": [
+   {
+    "label": "Units",
+    "tpl": "{{out.units|int}} ({{out.category}})"
+   },
+   {
+    "label": "Per unit rate",
+    "tpl": "{{out.rate|rs2}}"
+   },
+   {
+    "label": "Energy",
+    "tpl": "{{out.energy_rs|rs}}"
+   },
+   {
+    "label": "Fixed",
+    "tpl": "{{out.fixed_rs|rs}}"
+   },
+   {
+    "label": "Estimated bill",
+    "tpl": "{{out.total_rs|rs}}"
+   }
+  ]
+ },
+ "mistakes": [
+  "Expecting a separate SEPCO tariff. SEPCO bills the uniform NEPRA domestic slabs; only the company name and the FPA line differ from the HESCO bill next door.",
+  "Averaging the rate over the year. The slab rate for a {{ex.2.in.units|int}} unit June is {{ex.2.out.rate|rs2}}; the rate for a {{ex.0.in.units|int}} unit protected winter month is a fraction of that. Estimate each month on its own units.",
+  "Ignoring the sanctioned load. The fixed charge is per kW and rises with the slab, so a {{ex.2.in.sanctioned_kw|int}} kW connection pays {{ex.2.out.fixed_rs|rs}} in a top-slab month.",
+  "Paying a bill for a long reading period without checking it. More than a month of units on one bill can land in a higher slab than the use deserves; run it through the overbilling check first."
+ ],
+ "faq": [
+  {
+   "q": "How do I get a SEPCO bill estimate from my units?",
+   "a": "Enter the units and sanctioned load from the bill, tick protected only if the bill says so, and add the FPA from the bill under advanced settings. For {{out.units|int}} units on {{out.sanctioned_kw|int}} kW the estimate is {{out.total_rs|rs}} before FPA."
+  },
+  {
+   "q": "What is the SEPCO per unit rate for a home?",
+   "a": "The uniform NEPRA domestic slab rate for the slab your month reaches: {{out.rate|rs2}} per unit for an unprotected home using {{out.units|int}} units. The table above lists the rate for every slab; protected and lifeline consumers pay less."
+  },
+  {
+   "q": "What is the SEPCO tariff for 2026?",
+   "a": "The uniform A-1 domestic tariff notified as SRO 279(I)/2026: two lifeline slabs up to one hundred units, two protected slabs up to {{d.protected_max_units|int}} units, unprotected slabs of a hundred units each up to seven hundred and an open-ended slab above, each with its own fixed charge per kW. Connections of {{d.tou_threshold_kw|int}} kW and above are billed on ToU rates."
+  },
+  {
+   "q": "Is SEPCO part of HESCO?",
+   "a": "Not any more. SEPCO was separated from HESCO to serve upper Sindh around Sukkur, Larkana and Khairpur, while HESCO kept Hyderabad and the south. Both bill the same uniform domestic tariff, so the estimate on this page and on the HESCO page is identical for the same units."
+  },
+  {
+   "q": "How do I check my SEPCO bill online?",
+   "a": "Through SEPCO's own bill lookup, which takes the reference number printed on the bill and shows the current bill, due date and payment status. This calculator estimates the bill from your units; it does not fetch your account."
+  },
+  {
+   "q": "Why is my SEPCO bill higher than the estimate here?",
+   "a": "The usual reasons are the month's FPA, arrears or a late-payment surcharge, or a bill covering more than a month of readings. Add the FPA in the advanced fields; for a long reading period use the overbilling check linked below."
+  }
+ ],
+ "related": [
+  "F8",
+  "F10",
+  "F1",
+  "F2",
+  "E4"
+ ],
+ "next": "N1",
+ "literal_numbers": [
+  "SRO 279(I)/2026",
+  "2026",
+  "A-1"
+ ],
+ "sources": [
+  {
+   "label": "NEPRA tariff decision and SRO for A-1 domestic consumers (tariff PDF)",
+   "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf"
+  },
+  {
+   "label": "SEPCO application to NEPRA for an electric power supply licence (company name and head office on the letterhead)",
+   "url": "https://www.nepra.org.pk/Admission%20Notices/2023/10%20Oct/SEPCO%20Power%20Supply%20Licence%20Application.PDF"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

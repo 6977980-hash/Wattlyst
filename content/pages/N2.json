@@ -1,0 +1,93 @@
+{
+ "id": "N2",
+ "status": "publish",
+ "template": "lookup",
+ "h1": "Solar Inverter Error Codes and What to Do",
+ "author": "ali-ahmad",
+ "published": "2026-10-14",
+ "reviewed": "2026-10-14",
+ "codes_table": true,
+ "answer": "Pick your inverter brand and type the code on the display to see what it means, its likely cause and what you can safely do yourself. The tables come from the manufacturers' own manuals for Growatt, Huawei, Solis, GoodWe, Sungrow, Fronius and the Voltronic Axpert design behind many Pakistani hybrid inverters. If the fix needs the DC side opened or wiring changed, the table says to call the installer.",
+ "key_facts": [
+  "An inverter error code is a message from the inverter's own protection: most codes mean the grid, the battery or the PV string is outside the range the inverter accepts, not that the inverter is broken.",
+  "Many Pakistani hybrid inverters are built on the Voltronic Axpert design, so their fault numbers (fan locked, over temperature, battery voltage too high, output short circuit, overload) follow the Axpert table; check your manual, the numbering can differ by model.",
+  "Grid-side codes on on-grid inverters (grid voltage or frequency out of range, no grid) clear on their own when the supply returns to normal; a code that returns every afternoon usually means high grid voltage on your street, which the DISCO must fix, not the inverter.",
+  "Anything that requires opening DC connectors, replacing a fan or a fuse, or changing settings inside the inverter is an installer job; PV strings carry lethal DC voltage whenever the sun is up, even with the AC switched off.",
+  "Every row in the tables below quotes the manufacturer's manual and links to it; the plain-English owner note is Wattlyst's reading of that text, not an extra manufacturer statement."
+ ],
+ "sections": [
+  {
+   "h2": "How to use the error code lookup",
+   "p": [
+    "Choose the brand, then type the code exactly as the display or app shows it: a number such as 02 or 1010, a letter code such as F03, or a word from the message such as battery, grid or fan. Matching rows stay on screen; everything else hides. Clear the box to see the full table for that brand again.",
+    "If your brand is not listed, try the Voltronic Axpert table: Inverex, Crown, Homage, Fronus and several other Pakistani brands use that platform for their hybrid models, and the fault numbers often match. Confirm against the manual that came with your unit before acting."
+   ]
+  },
+  {
+   "h2": "Inverex, Nitrox and other Pakistani brands",
+   "p": [
+    "We only list codes we could read in a manufacturer's manual. Inverex (Nitrox, Veyron, Aerox) and Knox manuals were not available from the makers' own sites when this page was checked, so their codes are not here yet. Most of these units are Voltronic-based hybrids: start with the Axpert table and your printed manual, and send us a copy of the manual's fault table through the contact page so we can add it with a source.",
+    "Growatt's off-grid SPF series uses a fault table very close to Axpert's; Growatt's on-grid MIN series uses three-digit error numbers instead. Both tables are below."
+   ]
+  },
+  {
+   "h2": "What you can safely check yourself",
+   "p": [
+    "Safe checks: the AC and DC isolators are on, the battery breaker is on, the display shows the grid voltage within the normal range, the fan vents are not blocked by dust, and the inverter is not in direct sun or a closed cupboard. A restart (AC off, DC off, wait a minute, DC on, AC on, in the order your manual gives) clears many one-off codes.",
+    "Call the installer for anything else: repeated over-temperature, insulation or earth-fault codes, arc-fault codes, battery communication errors, a blown fuse or a code that comes back after a restart. Never open the inverter or a DC connector yourself."
+   ]
+  }
+ ],
+ "mistakes": [
+  "Restarting again and again. A code that returns after one restart has a cause; repeated restarts can damage the inverter.",
+  "Ignoring grid over-voltage codes. If the inverter trips every afternoon, log the voltage it shows and report it to the DISCO; the inverter is doing its job.",
+  "Reading another brand's table as your own. Fault numbers differ between platforms; use your brand's table or your printed manual.",
+  "Opening DC connectors with the sun up. PV strings are live whenever there is light; only an installer with the right tools should touch them."
+ ],
+ "safety": "PV strings and batteries carry dangerous DC voltage and current. Switch off AC and DC isolators in the order your manual gives before touching anything, and leave any work inside the inverter or on the DC side to a licensed electrician or your installer.",
+ "faq": [
+  {
+   "q": "What does a solar inverter error code mean?",
+   "a": "It is the inverter reporting which protection tripped: grid voltage or frequency out of range, PV voltage too high, battery too low or too high, over temperature, overload, insulation fault and so on. Pick your brand above and type the code to read the manufacturer's meaning and remedy."
+  },
+  {
+   "q": "My Inverex error code is not in the list. What now?",
+   "a": "Inverex manuals were not available from the maker's site when we checked, so its codes are not listed yet. Most Inverex hybrids follow the Voltronic Axpert table; compare the number there and with your printed manual, and send us the manual's fault table through the contact page so we can add it."
+  },
+  {
+   "q": "Why does my on-grid inverter stop every afternoon with a grid voltage code?",
+   "a": "The street voltage rises when many solar systems export at once and the inverter must disconnect above its limit. Note the voltage shown on the display and report it to your DISCO; an installer can also check the AC cable size and connections, which add to the voltage the inverter sees."
+  },
+  {
+   "q": "Can I clear an error code by restarting the inverter?",
+   "a": "Often, for a one-off trip. Switch off AC then DC, wait about a minute, switch on in the order your manual gives. If the code returns, stop restarting and call the installer."
+  },
+  {
+   "q": "Which codes mean the battery is the problem?",
+   "a": "Battery voltage high or low, battery over-current, battery over-temperature and battery communication (BMS) errors. Check the battery breaker and connections are tight and the battery is not flat; lithium batteries also need the communication cable in place."
+  },
+  {
+   "q": "Where do these tables come from?",
+   "a": "From the manufacturers' own manuals and support pages, listed under Sources with a link for each brand and the date we last checked them. Rows quote the manual; the owner notes are our plain-English reading of that text."
+  }
+ ],
+ "related": [
+  "D4",
+  "H9",
+  "D16",
+  "B5",
+  "H8"
+ ],
+ "next": "D4",
+ "literal_numbers": [
+  "F03",
+  "1010",
+  "02"
+ ],
+ "sources": [
+  {
+   "label": "Wattlyst methodology and editorial policy",
+   "url": "/methodology/"
+  }
+ ]
+}

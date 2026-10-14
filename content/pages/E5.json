@@ -76,12 +76,12 @@
    "spec": "rs"
   }
  ],
- "answer": "A {{out.ac_name|raw}} uses about {{out.avg_kw|1}} unit (kWh) per hour on average in Pakistan, so {{in.hours|int}} hours a day is about {{out.daily_units|1}} units a day and {{out.monthly_units|int}} units a month, costing about {{out.monthly_rs|rs}} at Rs {{out.tariff|2}} per unit. Units = average kW × hours; an inverter AC's average is well below its {{out.ac_rated_w|int}} W rated input.",
- "how": "{{out.avg_kw|2}} kW average draw × {{in.hours|int}} hours = {{out.daily_units|1}} units a day. {{out.daily_units|1}} units × {{out.days|int}} days = {{out.monthly_units|int}} units a month. Cost: {{out.avg_kw|2}} kW × Rs {{out.tariff|2}} = {{out.hourly_rs|rs}} per hour; {{out.monthly_units|int}} units × Rs {{out.tariff|2}} = {{out.monthly_rs|rs}} a month in energy charges, before fixed charges, surcharges and taxes.",
+ "answer": "A {{out.ac_name|raw}} uses about {{out.avg_kw|1}} unit (kWh) per hour on average in Pakistan, so {{in.hours|int}} hours a day is about {{out.daily_units|1}} units a day and {{out.monthly_units|int}} units a month, costing about {{out.monthly_rs|rs}} at {{out.tariff|rs2}} per unit. Units = average kW × hours; an inverter AC's average is well below its {{out.ac_rated_w|int}} W rated input.",
+ "how": "{{out.avg_kw|2}} kW average draw × {{in.hours|int}} hours = {{out.daily_units|1}} units a day. {{out.daily_units|1}} units × {{out.days|int}} days = {{out.monthly_units|int}} units a month. Cost: {{out.avg_kw|2}} kW × {{out.tariff|rs2}} = {{out.hourly_rs|rs}} per hour; {{out.monthly_units|int}} units × {{out.tariff|rs2}} = {{out.monthly_rs|rs}} a month in energy charges, before fixed charges, surcharges and taxes.",
  "key_facts": [
   "A 1.5 ton inverter AC uses about {{out.avg_kw|1}} unit (kWh) per hour on average: its rated input is {{out.ac_rated_w|int}} W, but once the room is cool the compressor slows down and the draw falls to a few hundred watts.",
   "Running {{in.hours|int}} hours a day, a 1.5 ton inverter AC uses about {{out.daily_units|1}} units a day and {{out.monthly_units|int}} units a month.",
-  "At Rs {{out.tariff|2}} per unit the AC alone costs about {{out.hourly_rs|rs}} an hour and {{out.monthly_rs|rs}} a month in energy charges; the slab rate rises as the whole home's units go up.",
+  "At {{out.tariff|rs2}} per unit the AC alone costs about {{out.hourly_rs|rs}} an hour and {{out.monthly_rs|rs}} a month in energy charges; the slab rate rises as the whole home's units go up.",
   "A 1.5 ton non-inverter AC uses about {{ex.1.out.avg_kw|2}} units per hour, because its {{ex.1.out.ac_rated_w|int}} W compressor runs at full power about {{d.ac_noninverter_duty|pct}} of the time, so its monthly bill is {{ex.1.out.monthly_rs|rs}} for the same hours."
  ],
  "formula": {
@@ -104,7 +104,7 @@
   {
    "h2": "How does this AC bill calculator for Pakistan work?",
    "p": [
-    "It multiplies the average kW by the hours a day and the days in the month to get the AC's units, then by your slab rate: {{out.monthly_units|int}} units × Rs {{out.tariff|2}} = {{out.monthly_rs|rs}}. That is the energy charge of the AC on its own. Your real bill adds the rest of the home, fixed charges per sanctioned kW, surcharges and taxes.",
+    "It multiplies the average kW by the hours a day and the days in the month to get the AC's units, then by your slab rate: {{out.monthly_units|int}} units × {{out.tariff|rs2}} = {{out.monthly_rs|rs}}. That is the energy charge of the AC on its own. Your real bill adds the rest of the home, fixed charges per sanctioned kW, surcharges and taxes.",
     "On the unprotected domestic tariff all units are charged at the rate of the slab the whole home reaches, so an AC that pushes your monthly total into a higher slab raises the rate on every unit, not just its own. Enter the rate from your own bill for the closest estimate, and use the full bill calculator linked below for the total."
    ]
   },
@@ -148,7 +148,7 @@
     "hours": 8
    },
    "title": "{{out.ac_name|raw}}, {{in.hours|int}} hours a night",
-   "text": "{{out.avg_kw|2}} kW average × {{in.hours|int}} h = {{out.daily_units|1}} units a day and {{out.monthly_units|int}} units a month. At Rs {{out.tariff|2}} per unit that is {{out.hourly_rs|rs}} per hour and about {{out.monthly_rs|rs}} a month."
+   "text": "{{out.avg_kw|2}} kW average × {{in.hours|int}} h = {{out.daily_units|1}} units a day and {{out.monthly_units|int}} units a month. At {{out.tariff|rs2}} per unit that is {{out.hourly_rs|rs}} per hour and about {{out.monthly_rs|rs}} a month."
   },
   {
    "inputs": {
@@ -156,7 +156,7 @@
     "hours": 8
    },
    "title": "{{out.ac_name|raw}}, {{in.hours|int}} hours a night",
-   "text": "{{out.avg_kw|2}} kW average × {{in.hours|int}} h = {{out.daily_units|1}} units a day and {{out.monthly_units|int}} units a month, about {{out.monthly_rs|rs}} at Rs {{out.tariff|2}} per unit ({{out.hourly_rs|rs}} per hour). The compressor runs at its full {{out.ac_rated_w|int}} W about {{d.ac_noninverter_duty|pct}} of the time."
+   "text": "{{out.avg_kw|2}} kW average × {{in.hours|int}} h = {{out.daily_units|1}} units a day and {{out.monthly_units|int}} units a month, about {{out.monthly_rs|rs}} at {{out.tariff|rs2}} per unit ({{out.hourly_rs|rs}} per hour). The compressor runs at its full {{out.ac_rated_w|int}} W about {{d.ac_noninverter_duty|pct}} of the time."
   },
   {
    "inputs": {
@@ -164,7 +164,7 @@
     "hours": 10
    },
    "title": "{{out.ac_name|raw}} in a small bedroom, {{in.hours|int}} hours",
-   "text": "{{out.avg_kw|2}} kW average × {{in.hours|int}} h = {{out.daily_units|1}} units a day and {{out.monthly_units|int}} units a month, about {{out.monthly_rs|rs}} at Rs {{out.tariff|2}} per unit ({{out.hourly_rs|rs}} per hour)."
+   "text": "{{out.avg_kw|2}} kW average × {{in.hours|int}} h = {{out.daily_units|1}} units a day and {{out.monthly_units|int}} units a month, about {{out.monthly_rs|rs}} at {{out.tariff|rs2}} per unit ({{out.hourly_rs|rs}} per hour)."
   },
   {
    "inputs": {
@@ -172,11 +172,11 @@
     "hours": 6
    },
    "title": "{{out.ac_name|raw}} in a lounge, {{in.hours|int}} hours",
-   "text": "{{out.avg_kw|2}} kW average × {{in.hours|int}} h = {{out.daily_units|1}} units a day and {{out.monthly_units|int}} units a month, about {{out.monthly_rs|rs}} at Rs {{out.tariff|2}} per unit ({{out.hourly_rs|rs}} per hour)."
+   "text": "{{out.avg_kw|2}} kW average × {{in.hours|int}} h = {{out.daily_units|1}} units a day and {{out.monthly_units|int}} units a month, about {{out.monthly_rs|rs}} at {{out.tariff|rs2}} per unit ({{out.hourly_rs|rs}} per hour)."
   }
  ],
  "table": {
-  "caption": "Units and energy cost of common split ACs running {{in.hours|int}} hours a day, {{out.days|int}} days a month, at Rs {{out.tariff|2}} per unit",
+  "caption": "Units and energy cost of common split ACs running {{in.hours|int}} hours a day, {{out.days|int}} days a month, at {{out.tariff|rs2}} per unit",
   "rows": [
    {
     "ac": "ac-split-1ton-inverter"
@@ -234,11 +234,11 @@
   },
   {
    "q": "What is the AC bill per month for a 1.5 ton inverter AC?",
-   "a": "About {{out.monthly_rs|rs}} in energy charges for {{in.hours|int}} hours a day at Rs {{out.tariff|2}} per unit, before fixed charges and taxes. Fewer hours or a higher set point bring it down; a non-inverter model of the same size costs about {{ex.1.out.monthly_rs|rs}}."
+   "a": "About {{out.monthly_rs|rs}} in energy charges for {{in.hours|int}} hours a day at {{out.tariff|rs2}} per unit, before fixed charges and taxes. Fewer hours or a higher set point bring it down; a non-inverter model of the same size costs about {{ex.1.out.monthly_rs|rs}}."
   },
   {
    "q": "What is the AC electricity cost per hour?",
-   "a": "A 1.5 ton inverter costs about {{out.hourly_rs|rs}} an hour at Rs {{out.tariff|2}} per unit; a 1.5 ton non-inverter about {{ex.1.out.hourly_rs|rs}}; a 1 ton inverter about {{ex.2.out.hourly_rs|rs}}."
+   "a": "A 1.5 ton inverter costs about {{out.hourly_rs|rs}} an hour at {{out.tariff|rs2}} per unit; a 1.5 ton non-inverter about {{ex.1.out.hourly_rs|rs}}; a 1 ton inverter about {{ex.2.out.hourly_rs|rs}}."
   },
   {
    "q": "Does an inverter AC really use less electricity?",
@@ -262,7 +262,9 @@
   "D5",
   "E4",
   "C6",
-  "H2"
+  "H2",
+  "N5",
+  "H3"
  ],
  "next": "F1",
  "literal_numbers": [

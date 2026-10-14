@@ -90,7 +90,7 @@ export const units = calculator((i, d) => {
   if (input === 'ah') {
     const ah = nonneg(i, 'ah');
     const volts = pos(i, 'volts');
-    return { input, ah, volts, units: (ah * volts) / 1000 };
+    return withCost(i, { input, ah, volts, units: (ah * volts) / 1000 });
   }
   const hours = nonneg(i, 'hours');
   const days = nonneg(i, 'days', 1);
@@ -104,8 +104,15 @@ export const units = calculator((i, d) => {
   } else {
     watts = nonneg(i, 'watts');
   }
-  return { ...out, watts, units: (watts * hours * days) / 1000 };
+  return withCost(i, { ...out, watts, units: (watts * hours * days) / 1000 });
 });
+
+/** Optional cost line: rs = units × tariff (Rs per unit) when a tariff is given. */
+function withCost(i, out) {
+  if (!has(i, 'tariff')) return out;
+  const tariff = nonneg(i, 'tariff');
+  return { ...out, tariff, rs: out.units * tariff };
+}
 
 /** 1 HP = 745.7 W of shaft power; electrical input = shaft / motor efficiency. */
 export const hp_to_kw = calculator((i, d) => {

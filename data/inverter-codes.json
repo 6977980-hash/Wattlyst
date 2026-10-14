@@ -1,0 +1,1909 @@
+{
+ "_meta": {
+  "source": "manufacturer manuals listed per brand (PDF or manufacturer support page), all fetched 2026-10-13/14",
+  "checked": "2026-10-14",
+  "notes": "Skipped (no manufacturer manual found): Inverex (Nitrox/Veyron/Aerox) - inverex.com is a parked GoDaddy domain and no official PDF surfaced in search (only ManualsLib listings and retailer pages); Knox - no official site or manual found (retailer w11stop lists datasheets only). Growatt MOD/MID and Growatt SPH hybrids not read (MIN TL-X and SPF ES Plus only). GoodWe F41-F163 not extracted. Huawei alarm IDs come from the L1 (2-6 kW single-phase) manual Issue 10; newer issues exist. Fronius Symo/Primo Class 1-5 STATE codes were read from the Symo Hybrid online manual and GEN24 codes from the GEN24 PDF. 'causes' and 'action' fields quote the manual where quoted; sentences starting 'Owner:' are plain-English guidance derived from the quoted manual text, not additional manufacturer statements. call_installer=true where the manual says to contact dealer/service/repair center or the fix needs DC/AC wiring work.",
+  "installer_flags": "call_installer set to true on 2026-10-14 (engineer review) wherever the manual's remedy needs wiring, terminal, protection-setting or part replacement work."
+ },
+ "brands": [
+  {
+   "id": "growatt-spf",
+   "name": "Growatt SPF (off-grid / hybrid 'ES' series)",
+   "models": "SPF 3000-6000 ES / ES PLUS (codes table from SPF 6000 ES PLUS manual; same numbering family as other SPF units but verify per model)",
+   "manual_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+   "manual_note": "Growatt's own manual hosted by distributor Offgridtec (b2b.offgridtec.com); fetched and read 2026-10-13/14.",
+   "codes": [
+    {
+     "code": "Fault 01",
+     "meaning": "Fan is locked / fan fault",
+     "causes": "Manual: 'Fan fault.'",
+     "action": "Manual: '1.Check whether all fans are working properly. 2.Replace the fan.' Owner: check the fan is not blocked by dust; replacement is an installer job.",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Trouble Shooting table (pp. 41-42)"
+    },
+    {
+     "code": "Fault 02",
+     "meaning": "Over temperature",
+     "causes": "Manual: 'Internal temperature of component is over 100C.'",
+     "action": "Manual: '1. Check whether the air flow of the unit is blocked or whether the ambient temperature is too high. 2. Check whether the thermistor plug is loose.' Owner: clear vents, improve ventilation; if it repeats call installer.",
+     "call_installer": false,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Trouble Shooting table (pp. 41-42)"
+    },
+    {
+     "code": "Fault 03",
+     "meaning": "Battery voltage is too high (battery over-charged)",
+     "causes": "Manual: 'Battery is over-charged.' / 'The battery voltage is too high.'",
+     "action": "Manual: 'Restart the unit, if the error happens again, please return to repair center.' and 'Check if spec and quantity of batteries are meet requirements.'",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Trouble Shooting table (pp. 41-42)"
+    },
+    {
+     "code": "Warning 04",
+     "meaning": "Battery voltage / SOC is too low (low battery)",
+     "causes": "Manual: 'The battery voltage/SOC is too low.'",
+     "action": "Manual: '1. Measure battery voltage in DC input. 2. Check battery SOC in LCD when use Li battery 3. Recharge the battery.'",
+     "call_installer": false,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Trouble Shooting table (pp. 41-42)"
+    },
+    {
+     "code": "Fault 05",
+     "meaning": "Output short circuited",
+     "causes": "Manual: 'Output short circuited.'",
+     "action": "Manual: 'Check if wiring is connected well and remove abnormal load.' Owner: switch off loads, look for a faulty appliance; if the fault stays, call installer.",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Trouble Shooting table (pp. 41-42)"
+    },
+    {
+     "code": "Fault 06 / 58",
+     "meaning": "Output voltage abnormal (too high / too low)",
+     "causes": "Manual: 'Output abnormal (Inverter voltage is higher than 280Vac or lower than 80Vac).'",
+     "action": "Manual: '1. Reduce the connected load. 2. Restart the unit, if the error happens again, please return to repair center.'",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Trouble Shooting table (pp. 41-42)"
+    },
+    {
+     "code": "Fault 07",
+     "meaning": "Overload time out",
+     "causes": "Manual: 'The inverter is overload 110% and time is up.'",
+     "action": "Manual: 'Reduce the connected load by switching off some equipment.'",
+     "call_installer": false,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Trouble Shooting table (pp. 41-42)"
+    },
+    {
+     "code": "Fault 08",
+     "meaning": "Bus voltage is too high",
+     "causes": "Manual: '1. If you connect to a lithum battery without communication, check whether the voltage points of the program 19 and 21 are too high for the lithum battery.'",
+     "action": "Manual: '2. Restart the unit, if the error happens again, please return to repair center.'",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Trouble Shooting table (pp. 41-42)"
+    },
+    {
+     "code": "Fault 09 / 53 / 57",
+     "meaning": "Bus soft start failed / inverter soft start failed / current sensor failed",
+     "causes": "Manual: 'Internal components failed.'",
+     "action": "Manual: 'Restart the unit, if the error happens again, please return to repair center.'",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Trouble Shooting table (pp. 41-42)"
+    },
+    {
+     "code": "Warning 15",
+     "meaning": "Parallel input utility grid different",
+     "causes": "Manual: 'The input status is different in parallel system.'",
+     "action": "Manual: 'Check if AC input wires of all inverters are connected well.' (parallel systems only; installer task)",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Trouble Shooting table (pp. 41-42)"
+    },
+    {
+     "code": "Warning 16",
+     "meaning": "Parallel input phase error",
+     "causes": "Manual: 'Input phase is not correct.'",
+     "action": "Manual: 'Change the input phase S and T wiring.' (installer task)",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Trouble Shooting table (pp. 41-42)"
+    },
+    {
+     "code": "Warning 17",
+     "meaning": "Parallel output phase loss",
+     "causes": "Manual: 'The output phase not correct in parallel.'",
+     "action": "Manual: '1.Make sure the parallel setting are the same system(sigle or paralle; 3P1,3P2,3P3). 2.Make sure all phases inverters are power on.'",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Trouble Shooting table (pp. 41-42)"
+    },
+    {
+     "code": "Warning 20",
+     "meaning": "BMS communication error",
+     "causes": "Manual: 'Li battery can't communicate to the inverter.'",
+     "action": "Manual: '1. Check whether communication line is correct connection between inverter and battery. 2. Check whether BMS protocol type is correct setting.'",
+     "call_installer": false,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Trouble Shooting table (pp. 41-42)"
+    },
+    {
+     "code": "Fault 51",
+     "meaning": "Over current or surge",
+     "causes": "Manual: 'Over current or surge.'",
+     "action": "Manual: 'Restart the unit, if the error happens again, please return to repair center.'",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Trouble Shooting table (pp. 41-42)"
+    },
+    {
+     "code": "Fault 52",
+     "meaning": "Bus voltage is too low",
+     "causes": "Manual: 'Bus voltage is too low.'",
+     "action": "Manual: 'Restart the unit, if the error happens again, please return to repair center.'",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Trouble Shooting table (pp. 41-42)"
+    },
+    {
+     "code": "Fault 55",
+     "meaning": "Output voltage is unbalanced / over DC voltage in AC output",
+     "causes": "Manual (fault table): 'Over DC voltage in AC output'; (troubleshooting): 'Output voltage is unbalanced'",
+     "action": "Manual: 'Restart the unit, if the error happens again, please return to repair center.'",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Trouble Shooting table (pp. 41-42)"
+    },
+    {
+     "code": "Fault 56",
+     "meaning": "Battery connection is open",
+     "causes": "Manual: 'Battery is not connected well or fuse is burnt.' and, for lithium without communication, 'check whether the voltage points of the program 19 and 21 are too high for the lithum battery.'",
+     "action": "Manual: '2. If the battery is connected well, restart the unit. If the error happens again, please return to repair center.'",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Trouble Shooting table (pp. 41-42)"
+    },
+    {
+     "code": "Fault 60",
+     "meaning": "Negative power fault",
+     "causes": "Manual: '1. Check whether the AC output connected to the grid input. 2. Check whether Program 8 settings are the same for all parallel inverters 3. Check whether the current sharing cables are connected well in the same parallel phases. 4. Check whether all neutral wires of all parallel units are connected together.'",
+     "action": "Manual: '5. If problem still exists, contact repair center.' (wiring checks are installer work)",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Trouble Shooting table (pp. 41-42)"
+    },
+    {
+     "code": "Fault 61",
+     "meaning": "PV voltage is too high",
+     "causes": "Fault table entry only: 'PV voltage is too high'. (Manual gives no cause text for this code.)",
+     "action": "Not detailed in troubleshooting table. Installer must check PV string voltage against inverter limit.",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Fault Reference Code table (p. 35)"
+    },
+    {
+     "code": "Fault 62",
+     "meaning": "Internal communication error",
+     "causes": "Fault table entry only: 'Internal communication error'.",
+     "action": "Not detailed in troubleshooting table; treat like other internal faults (restart; if it repeats, repair center).",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Fault Reference Code table (p. 35)"
+    },
+    {
+     "code": "Fault 80 / 81",
+     "meaning": "CAN fault / Host loss (parallel communication)",
+     "causes": "Manual: '1. Check whether the parallel communication cables are connected well. 2. Check whether Program 23 settings are right for the parallel system.'",
+     "action": "Manual: '3. If problem still exists, contact repair center'",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Trouble Shooting table (pp. 41-42)"
+    },
+    {
+     "code": "Warning 01",
+     "meaning": "Fan is locked when inverter is on",
+     "causes": "Warning table: 'Fan is locked when inverter is on.' (Beep 3 times every second)",
+     "action": "Check the fan is free of dust/obstruction; if it stays locked, call installer.",
+     "call_installer": false,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Warning Indicator table (p. 36)"
+    },
+    {
+     "code": "Warning 02",
+     "meaning": "Over temperature",
+     "causes": "Warning table: 'Over temperature'",
+     "action": "Reduce load, improve ventilation; see Fault 02.",
+     "call_installer": false,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Warning Indicator table (p. 36)"
+    },
+    {
+     "code": "Warning 03",
+     "meaning": "Battery is over-charged",
+     "causes": "Warning table: 'Battery is over-charged'",
+     "action": "Check battery settings with installer (see Fault 03).",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Warning Indicator table (p. 36)"
+    },
+    {
+     "code": "Warning 07",
+     "meaning": "Overload",
+     "causes": "Warning table: 'Overload' (Beep once every 0.5 second)",
+     "action": "Switch off some loads.",
+     "call_installer": false,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Warning Indicator table (p. 36)"
+    },
+    {
+     "code": "Warning 10",
+     "meaning": "Output power derating",
+     "causes": "Warning table: 'Output power derating'",
+     "action": "Reduce load; usually from high temperature or high PV voltage. No cause text in manual.",
+     "call_installer": false,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Warning Indicator table (p. 36)"
+    },
+    {
+     "code": "Warning 12",
+     "meaning": "Solar charger stops due to low battery",
+     "causes": "Warning table: 'Solar charger stops due to low battery'",
+     "action": "Recharge the battery / check battery (no further text in manual).",
+     "call_installer": false,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Warning Indicator table (p. 36)"
+    },
+    {
+     "code": "Warning 13",
+     "meaning": "Solar charger stops due to high PV voltage",
+     "causes": "Warning table: 'Solar charger stops due to high PV voltage'",
+     "action": "Installer must check PV string configuration (no further text in manual).",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Warning Indicator table (p. 36)"
+    },
+    {
+     "code": "Warning 14",
+     "meaning": "Solar charger stops due to overload",
+     "causes": "Warning table: 'Solar charger stops due to overload'",
+     "action": "Reduce PV/charging load (no further text in manual).",
+     "call_installer": false,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Warning Indicator table (p. 36)"
+    },
+    {
+     "code": "Warning 19",
+     "meaning": "Battery disconnect",
+     "causes": "Warning table: 'Battery disconnect' (No beep)",
+     "action": "Check battery breaker/cables are connected; if unsure call installer.",
+     "call_installer": false,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Warning Indicator table (p. 36)"
+    },
+    {
+     "code": "Warning 21",
+     "meaning": "PV power insufficient",
+     "causes": "Warning table: 'PV power insufficient'",
+     "action": "Normal at low sun; no action in manual.",
+     "call_installer": false,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Warning Indicator table (p. 36)"
+    },
+    {
+     "code": "Warning 33",
+     "meaning": "BMS communication loss",
+     "causes": "Warning table: 'BMS communication loss'",
+     "action": "Check BMS cable and protocol setting (see Warning 20).",
+     "call_installer": false,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Warning Indicator table (p. 36)"
+    },
+    {
+     "code": "Warning 34-45",
+     "meaning": "Lithium battery BMS alarms: 34 Cell over voltage, 35 Cell under voltage, 36 Total over voltage, 37 Total under voltage, 38 Discharge over voltage, 39 Charge over voltage, 40 Discharge over temperature, 41 Charge over temperature, 42 Mosfet over temperature, 43 Battery over temperature, 44 Battery under temperature, 45 System shut down",
+     "causes": "Warning table lists only the event names (reported by the battery BMS).",
+     "action": "Manual gives no owner action; these come from the battery - contact battery supplier/installer.",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
+     "source_ref": "Growatt SPF 6000 ES PLUS User Manual v1.0, Warning Indicator table (p. 36)"
+    }
+   ]
+  },
+  {
+   "id": "growatt-min",
+   "name": "Growatt MIN / MOD on-grid (TL-X family)",
+   "models": "MIN 2500-6000TL-X (manual read); MOD/MID share the Error 2xx/4xx numbering family per Growatt but only MIN TL-X was verified",
+   "manual_url": "https://b2b.offgridtec.com/media/product_attachements/MIN 2500-6000 TL-X User Manual General EN 202206.pdf",
+   "manual_note": "Growatt manual GR-UM-155-A-04 (2022-06) hosted by distributor Offgridtec; the local copy read was the same revision (header 'GR-UM-155-A-04'). Grid-side codes (grid voltage/frequency 'Error 300-series') were not in the extracted table slice; only the entries above are verified.",
+   "codes": [
+    {
+     "code": "Error: 200",
+     "meaning": "AFCI fault (DC arc detected)",
+     "causes": "Manual: 'AFCI fault'",
+     "action": "Manual: '1.After shutdown,Check the PV panel terminal. 2.Restart inverter. 3.If error message still exists,contact Growatt.' Owner: do not open DC connectors yourself; call installer.",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/MIN 2500-6000 TL-X User Manual General EN 202206.pdf",
+     "source_ref": "Growatt MIN 2500-6000TL-X User Manual GR-UM-155-A-04, sections 11.2 System fault, 11.3 Inverter warning, 11.4 Inverter fault (pp. 37-40)"
+    },
+    {
+     "code": "Error: 201 (Residual I High)",
+     "meaning": "Leakage current too high",
+     "causes": "Manual: 'Leakage current too high'",
+     "action": "Manual: '1.Restart the invert. 2. If error message still exists, contact Growatt.'",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/MIN 2500-6000 TL-X User Manual General EN 202206.pdf",
+     "source_ref": "Growatt MIN 2500-6000TL-X User Manual GR-UM-155-A-04, sections 11.2 System fault, 11.3 Inverter warning, 11.4 Inverter fault (pp. 37-40)"
+    },
+    {
+     "code": "Warning 202",
+     "meaning": "DC SPD function abnormal",
+     "causes": "Manual: 'DC SPD function abnormal'",
+     "action": "Manual: '1.After shutdown,Check the DC SPD. 2.If error message still exists,contact manufacturer.'",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/MIN 2500-6000 TL-X User Manual General EN 202206.pdf",
+     "source_ref": "Growatt MIN 2500-6000TL-X User Manual GR-UM-155-A-04, sections 11.2 System fault, 11.3 Inverter warning, 11.4 Inverter fault (pp. 37-40)"
+    },
+    {
+     "code": "Warning 203",
+     "meaning": "PV1 or PV2 circuit short",
+     "causes": "Manual: 'PV1 or PV2 Circuit short'",
+     "action": "Manual: 'Check the PV panel polarity. Restart the inverter. If the warning still exist, please contact Growatt customer service to replace the POWER board.'",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/MIN 2500-6000 TL-X User Manual General EN 202206.pdf",
+     "source_ref": "Growatt MIN 2500-6000TL-X User Manual GR-UM-155-A-04, sections 11.2 System fault, 11.3 Inverter warning, 11.4 Inverter fault (pp. 37-40)"
+    },
+    {
+     "code": "Warning 204",
+     "meaning": "Dry-contact function abnormal",
+     "causes": "Manual: 'Dryconnect function abnormal'",
+     "action": "Manual: '1.After shutdown,Check the Dryconnect wiring. 2.If the error message still exists, contact manufacturer.'",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/MIN 2500-6000 TL-X User Manual General EN 202206.pdf",
+     "source_ref": "Growatt MIN 2500-6000TL-X User Manual GR-UM-155-A-04, sections 11.2 System fault, 11.3 Inverter warning, 11.4 Inverter fault (pp. 37-40)"
+    },
+    {
+     "code": "Warning 205",
+     "meaning": "PV1 or PV2 boost broken",
+     "causes": "Manual: 'PV1 or PV2 boost broken'",
+     "action": "Manual: 'Restart the inverter. If the warning still exist, please contact Growatt customer service to replace the power board.'",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/MIN 2500-6000 TL-X User Manual General EN 202206.pdf",
+     "source_ref": "Growatt MIN 2500-6000TL-X User Manual GR-UM-155-A-04, sections 11.2 System fault, 11.3 Inverter warning, 11.4 Inverter fault (pp. 37-40)"
+    },
+    {
+     "code": "Warning 207",
+     "meaning": "USB over-current",
+     "causes": "Manual: 'USB over-current'",
+     "action": "Manual: '1: Unplug the U disk or monitor. 2: Re-access U disk or monitor after shutdown. 3.If the error message still exists, contact manufacturer.'",
+     "call_installer": false,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/MIN 2500-6000 TL-X User Manual General EN 202206.pdf",
+     "source_ref": "Growatt MIN 2500-6000TL-X User Manual GR-UM-155-A-04, sections 11.2 System fault, 11.3 Inverter warning, 11.4 Inverter fault (pp. 37-40)"
+    },
+    {
+     "code": "Warning 401",
+     "meaning": "Inverter communicates with meter abnormal",
+     "causes": "Manual: 'Inverter communicates with Meter abnormal'",
+     "action": "Manual: '1: Check if the meter is on. 2: Check the inverter and the meter connection is normal .'",
+     "call_installer": false,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/MIN 2500-6000 TL-X User Manual General EN 202206.pdf",
+     "source_ref": "Growatt MIN 2500-6000TL-X User Manual GR-UM-155-A-04, sections 11.2 System fault, 11.3 Inverter warning, 11.4 Inverter fault (pp. 37-40)"
+    },
+    {
+     "code": "Error: 402",
+     "meaning": "Output high DCI (DC injection in AC output)",
+     "causes": "Manual: 'Output High DCI'",
+     "action": "Manual: 'Restart inverter, if problem still exist, Contact Growatt.'",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/MIN 2500-6000 TL-X User Manual General EN 202206.pdf",
+     "source_ref": "Growatt MIN 2500-6000TL-X User Manual GR-UM-155-A-04, sections 11.2 System fault, 11.3 Inverter warning, 11.4 Inverter fault (pp. 37-40)"
+    },
+    {
+     "code": "Error: 404",
+     "meaning": "Bus sample fault",
+     "causes": "Manual: 'Bus sample fault'",
+     "action": "Manual: 'Restart inverter, if problem still exist, Contact Growatt.'",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/MIN 2500-6000 TL-X User Manual General EN 202206.pdf",
+     "source_ref": "Growatt MIN 2500-6000TL-X User Manual GR-UM-155-A-04, sections 11.2 System fault, 11.3 Inverter warning, 11.4 Inverter fault (pp. 37-40)"
+    },
+    {
+     "code": "Warning 404",
+     "meaning": "EEPROM abnormal",
+     "causes": "Manual: 'EEPROM abnormal'",
+     "action": "Manual: 'Restart the inverter. If the warning still exist, please contact Growatt customer service to replace the M3 board.'",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/MIN 2500-6000 TL-X User Manual General EN 202206.pdf",
+     "source_ref": "Growatt MIN 2500-6000TL-X User Manual GR-UM-155-A-04, sections 11.2 System fault, 11.3 Inverter warning, 11.4 Inverter fault (pp. 37-40)"
+    },
+    {
+     "code": "Error: 405",
+     "meaning": "Relay fault",
+     "causes": "Manual: 'Relay fault'",
+     "action": "Manual: 'Restart inverter, if problem still exist, Contact Growatt.'",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/MIN 2500-6000 TL-X User Manual General EN 202206.pdf",
+     "source_ref": "Growatt MIN 2500-6000TL-X User Manual GR-UM-155-A-04, sections 11.2 System fault, 11.3 Inverter warning, 11.4 Inverter fault (pp. 37-40)"
+    },
+    {
+     "code": "Warning 405",
+     "meaning": "Firmware version is not consistent",
+     "causes": "Manual: 'Firmware version is not consistent'",
+     "action": "Manual: 'Uptate the right version firmware' (installer/Growatt service)",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/MIN 2500-6000 TL-X User Manual General EN 202206.pdf",
+     "source_ref": "Growatt MIN 2500-6000TL-X User Manual GR-UM-155-A-04, sections 11.2 System fault, 11.3 Inverter warning, 11.4 Inverter fault (pp. 37-40)"
+    },
+    {
+     "code": "Error: 407",
+     "meaning": "Auto test failed",
+     "causes": "Manual: 'Auto test didn't pass.'",
+     "action": "Manual: 'Restart inverter, repeat Auto Test, if problem still exist, contact Growatt.'",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/MIN 2500-6000 TL-X User Manual General EN 202206.pdf",
+     "source_ref": "Growatt MIN 2500-6000TL-X User Manual GR-UM-155-A-04, sections 11.2 System fault, 11.3 Inverter warning, 11.4 Inverter fault (pp. 37-40)"
+    },
+    {
+     "code": "Error: 408",
+     "meaning": "Over temperature",
+     "causes": "Manual: 'Over Temperature'",
+     "action": "Manual: 'If the ambient temperature of inverter is lower than 60C, restart inverter, if error message still exists, contact Growatt.' Owner: improve ventilation/shade first.",
+     "call_installer": false,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/MIN 2500-6000 TL-X User Manual General EN 202206.pdf",
+     "source_ref": "Growatt MIN 2500-6000TL-X User Manual GR-UM-155-A-04, sections 11.2 System fault, 11.3 Inverter warning, 11.4 Inverter fault (pp. 37-40)"
+    },
+    {
+     "code": "Error: 409",
+     "meaning": "Bus over voltage",
+     "causes": "Manual: 'Bus over voltage'",
+     "action": "Manual: 'Restart inverter, if problem still exist, Contact Growatt.'",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/MIN 2500-6000 TL-X User Manual General EN 202206.pdf",
+     "source_ref": "Growatt MIN 2500-6000TL-X User Manual GR-UM-155-A-04, sections 11.2 System fault, 11.3 Inverter warning, 11.4 Inverter fault (pp. 37-40)"
+    },
+    {
+     "code": "Error: 411",
+     "meaning": "DSP communicates with M3 abnormal (internal communication)",
+     "causes": "Manual: 'DSP communicates with M3 abnormal'",
+     "action": "Manual: 'Restart inverter, if problem still exist, contact Growatt.'",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/MIN 2500-6000 TL-X User Manual General EN 202206.pdf",
+     "source_ref": "Growatt MIN 2500-6000TL-X User Manual GR-UM-155-A-04, sections 11.2 System fault, 11.3 Inverter warning, 11.4 Inverter fault (pp. 37-40)"
+    },
+    {
+     "code": "Error: 414",
+     "meaning": "EEPROM fault",
+     "causes": "Manual: 'EEPROM fault.'",
+     "action": "Manual: 'Restart inverter, if problem still exist, Contact Growatt.'",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/MIN 2500-6000 TL-X User Manual General EN 202206.pdf",
+     "source_ref": "Growatt MIN 2500-6000TL-X User Manual GR-UM-155-A-04, sections 11.2 System fault, 11.3 Inverter warning, 11.4 Inverter fault (pp. 37-40)"
+    },
+    {
+     "code": "Error: 417",
+     "meaning": "DSP / redundant M3 sample mismatch",
+     "causes": "Manual: 'The data sampled by the DSP and redundant M3 is not the same.'",
+     "action": "Manual: 'Restart inverter, if problem still exist, Contact Growatt.'",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/MIN 2500-6000 TL-X User Manual General EN 202206.pdf",
+     "source_ref": "Growatt MIN 2500-6000TL-X User Manual GR-UM-155-A-04, sections 11.2 System fault, 11.3 Inverter warning, 11.4 Inverter fault (pp. 37-40)"
+    },
+    {
+     "code": "Error: 420",
+     "meaning": "GFCI fault",
+     "causes": "Manual: 'GFCI fault.'",
+     "action": "Manual: 'Restart inverter, if problem still exist, or contact Growatt.'",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/MIN 2500-6000 TL-X User Manual General EN 202206.pdf",
+     "source_ref": "Growatt MIN 2500-6000TL-X User Manual GR-UM-155-A-04, sections 11.2 System fault, 11.3 Inverter warning, 11.4 Inverter fault (pp. 37-40)"
+    },
+    {
+     "code": "Error: 425",
+     "meaning": "AFCI self-test fault",
+     "causes": "Manual: 'AFCI self-test fault'",
+     "action": "Manual: 'Restart inverter, if problem still exist, or contact Growatt.'",
+     "call_installer": true,
+     "source_url": "https://b2b.offgridtec.com/media/product_attachements/MIN 2500-6000 TL-X User Manual General EN 202206.pdf",
+     "source_ref": "Growatt MIN 2500-6000TL-X User Manual GR-UM-155-A-04, sections 11.2 System fault, 11.3 Inverter warning, 11.4 Inverter fault (pp. 37-40)"
+    }
+   ]
+  },
+  {
+   "id": "huawei",
+   "name": "Huawei SUN2000 (L1 single-phase residential)",
+   "models": "SUN2000-2KTL-L1 to 6KTL-L1 (alarm IDs are shared across SUN2000 families per Huawei, but only the L1 manual was read)",
+   "manual_url": "https://res.cloudinary.com/gpceurope/image/upload/v1690811120/eau10ickazhrwervcftj.pdf",
+   "manual_note": "English Issue 10 (2022-10-27) PDF copy; Huawei's official download area is solar.huawei.com (hosts other-language editions, e.g. https://solar.huawei.com/-/media/Solar/attachment/pdf/eu/service/download/SUN2000-2-6KTL-L1-UserManual-GR.pdf). Newer editions exist (Issue 20, 2024-05-30; Edition 24 ES, 2026-01-30) and were not read.",
+   "codes": [
+    {
+     "code": "2001 High String Input Voltage",
+     "meaning": "PV string open-circuit voltage exceeds the inverter maximum (too many modules in series)",
+     "causes": "Manual: 'The PV array is not properly configured. Excessive PV modules are connected in series to the PV string, and therefore the open-circuit voltage exceeds the maximum SUN2000 operating voltage.' Cause ID 1 = PV1, 2 = PV2.",
+     "action": "Manual: 'Check the serial connection configuration of the PV string and ensure that the PV string open-circuit voltage is not greater than the maximum operating voltage of the SUN2000.' Installer task.",
+     "call_installer": true,
+     "source_url": "https://res.cloudinary.com/gpceurope/image/upload/v1690811120/eau10ickazhrwervcftj.pdf",
+     "source_ref": "SUN2000-(2KTL-6KTL)-L1 User Manual Issue 10 (2022-10-27), 8.3 Troubleshooting, Table 8-2 Common alarms and troubleshooting measures (pp. 82-94)"
+    },
+    {
+     "code": "2002 DC Arc Fault",
+     "meaning": "Electric arc on PV string cables",
+     "causes": "Manual: 'The PV string power cables arc or are in poor contact.'",
+     "action": "Manual: 'Check whether the string cables arc or are in poor contact.' Owner: do not touch DC wiring; call installer.",
+     "call_installer": true,
+     "source_url": "https://res.cloudinary.com/gpceurope/image/upload/v1690811120/eau10ickazhrwervcftj.pdf",
+     "source_ref": "SUN2000-(2KTL-6KTL)-L1 User Manual Issue 10 (2022-10-27), 8.3 Troubleshooting, Table 8-2 Common alarms and troubleshooting measures (pp. 82-94)"
+    },
+    {
+     "code": "2011 String Reversed",
+     "meaning": "PV string connected with reversed polarity",
+     "causes": "Manual: 'The PV string is reversely connected.'",
+     "action": "Manual: 'wait until the PV string current decreases below 0.5 A, set DC switch to OFF, and adjust the PV string polarity.' Installer task.",
+     "call_installer": true,
+     "source_url": "https://res.cloudinary.com/gpceurope/image/upload/v1690811120/eau10ickazhrwervcftj.pdf",
+     "source_ref": "SUN2000-(2KTL-6KTL)-L1 User Manual Issue 10 (2022-10-27), 8.3 Troubleshooting, Table 8-2 Common alarms and troubleshooting measures (pp. 82-94)"
+    },
+    {
+     "code": "2021 AFCI Check Failure",
+     "meaning": "Arc-fault detection self-check failed",
+     "causes": "Manual: '1: The AFCI check circuit is abnormal. 2: The AFCI circuit is faulty.'",
+     "action": "Manual: 'Turn off the AC output switch and DC input switch, and then turn them on after 5 minutes. If the fault persists, contact your dealer or Huawei technical support.'",
+     "call_installer": true,
+     "source_url": "https://res.cloudinary.com/gpceurope/image/upload/v1690811120/eau10ickazhrwervcftj.pdf",
+     "source_ref": "SUN2000-(2KTL-6KTL)-L1 User Manual Issue 10 (2022-10-27), 8.3 Troubleshooting, Table 8-2 Common alarms and troubleshooting measures (pp. 82-94)"
+    },
+    {
+     "code": "2032 Grid Failure",
+     "meaning": "No grid (outage or AC breaker off)",
+     "causes": "Manual: 'The power grid experiences an outage. The AC circuit is disconnected or the AC circuit breaker is OFF.'",
+     "action": "Manual: '1. Check the AC voltage. 2. Check whether the AC circuit is disconnected or the AC circuit breaker is OFF.' Owner: check for load-shedding and the AC breaker.",
+     "call_installer": false,
+     "source_url": "https://res.cloudinary.com/gpceurope/image/upload/v1690811120/eau10ickazhrwervcftj.pdf",
+     "source_ref": "SUN2000-(2KTL-6KTL)-L1 User Manual Issue 10 (2022-10-27), 8.3 Troubleshooting, Table 8-2 Common alarms and troubleshooting measures (pp. 82-94)"
+    },
+    {
+     "code": "2033 Grid Undervoltage",
+     "meaning": "Grid voltage below lower threshold",
+     "causes": "Manual: 'The grid voltage is below the lower threshold or the low voltage duration has lasted for more than the value specified by low voltage ride-through (LVRT).'",
+     "action": "Manual: '1. If the alarm occurs occasionally, the power grid may be abnormal temporarily. The SUN2000 automatically recovers... 2. If the alarm occurs frequently, check whether the power grid voltage is within the allowed range. If no, contact the local power operator. If yes, modify the grid undervoltage protection threshold ... with the consent of the local power operator.'",
+     "call_installer": true,
+     "source_url": "https://res.cloudinary.com/gpceurope/image/upload/v1690811120/eau10ickazhrwervcftj.pdf",
+     "source_ref": "SUN2000-(2KTL-6KTL)-L1 User Manual Issue 10 (2022-10-27), 8.3 Troubleshooting, Table 8-2 Common alarms and troubleshooting measures (pp. 82-94)"
+    },
+    {
+     "code": "2034 Grid Overvoltage",
+     "meaning": "Grid voltage above upper threshold",
+     "causes": "Manual: 'The grid voltage exceeds the higher threshold or the high voltage has lasted for more than the value specified by high voltage ride-through (HVRT).'",
+     "action": "Manual: same as 2033 (occasional = wait; frequent = check grid voltage, contact power operator; threshold change only with operator consent); '3. Check whether the peak voltage of the power grid is too high.'",
+     "call_installer": false,
+     "source_url": "https://res.cloudinary.com/gpceurope/image/upload/v1690811120/eau10ickazhrwervcftj.pdf",
+     "source_ref": "SUN2000-(2KTL-6KTL)-L1 User Manual Issue 10 (2022-10-27), 8.3 Troubleshooting, Table 8-2 Common alarms and troubleshooting measures (pp. 82-94)"
+    },
+    {
+     "code": "2036 Grid Overfrequency",
+     "meaning": "Grid frequency too high",
+     "causes": "Manual: 'Power grid exception: The actual power grid frequency is higher than the standard requirement for the local power grid.'",
+     "action": "Manual: occasional = auto recovers; frequent = 'check whether the power grid frequency is within the allowed range. If no, contact the local power operator.'",
+     "call_installer": false,
+     "source_url": "https://res.cloudinary.com/gpceurope/image/upload/v1690811120/eau10ickazhrwervcftj.pdf",
+     "source_ref": "SUN2000-(2KTL-6KTL)-L1 User Manual Issue 10 (2022-10-27), 8.3 Troubleshooting, Table 8-2 Common alarms and troubleshooting measures (pp. 82-94)"
+    },
+    {
+     "code": "2037 Grid Underfrequency",
+     "meaning": "Grid frequency too low",
+     "causes": "Manual: 'Power grid exception: The actual power grid frequency is lower than the standard requirement for the local power grid.'",
+     "action": "Manual: occasional = auto recovers; frequent = check grid frequency / contact local power operator.",
+     "call_installer": false,
+     "source_url": "https://res.cloudinary.com/gpceurope/image/upload/v1690811120/eau10ickazhrwervcftj.pdf",
+     "source_ref": "SUN2000-(2KTL-6KTL)-L1 User Manual Issue 10 (2022-10-27), 8.3 Troubleshooting, Table 8-2 Common alarms and troubleshooting measures (pp. 82-94)"
+    },
+    {
+     "code": "2038 Unstable Grid Frequency",
+     "meaning": "Grid frequency changing too fast",
+     "causes": "Manual: 'Power grid exception: The actual grid frequency change rate does not comply with the local power grid standard.'",
+     "action": "Manual: occasional = auto recovers; frequent = check grid frequency / contact local power operator.",
+     "call_installer": false,
+     "source_url": "https://res.cloudinary.com/gpceurope/image/upload/v1690811120/eau10ickazhrwervcftj.pdf",
+     "source_ref": "SUN2000-(2KTL-6KTL)-L1 User Manual Issue 10 (2022-10-27), 8.3 Troubleshooting, Table 8-2 Common alarms and troubleshooting measures (pp. 82-94)"
+    },
+    {
+     "code": "2039 Output Overcurrent",
+     "meaning": "Inverter output current exceeded limit",
+     "causes": "Manual: 'The power grid voltage drops dramatically or the power grid is short-circuited. As a result, the SUN2000 transient output current exceeds the upper threshold and therefore the SUN2000 protection is triggered.'",
+     "action": "Manual: '1. ... After the fault is rectified, the SUN2000 automatically recovers. 2. If the alarm occurs frequently and affects the energy yield of the power plant, check whether the output is short-circuited. If the fault persists, contact your dealer or Huawei technical support.'",
+     "call_installer": true,
+     "source_url": "https://res.cloudinary.com/gpceurope/image/upload/v1690811120/eau10ickazhrwervcftj.pdf",
+     "source_ref": "SUN2000-(2KTL-6KTL)-L1 User Manual Issue 10 (2022-10-27), 8.3 Troubleshooting, Table 8-2 Common alarms and troubleshooting measures (pp. 82-94)"
+    },
+    {
+     "code": "2040 Output DC Component Overhigh",
+     "meaning": "Too much DC in AC output",
+     "causes": "Manual: 'The DC component of the SUN2000 output current exceeds the specified upper threshold.'",
+     "action": "Manual: auto recovers; 'If the alarm occurs frequently, contact your dealer or Huawei technical support.'",
+     "call_installer": true,
+     "source_url": "https://res.cloudinary.com/gpceurope/image/upload/v1690811120/eau10ickazhrwervcftj.pdf",
+     "source_ref": "SUN2000-(2KTL-6KTL)-L1 User Manual Issue 10 (2022-10-27), 8.3 Troubleshooting, Table 8-2 Common alarms and troubleshooting measures (pp. 82-94)"
+    },
+    {
+     "code": "2051 Abnormal Residual Current",
+     "meaning": "Leakage (residual) current too high",
+     "causes": "Manual: 'The insulation impedance of the input side to PE decreases when the SUN2000 is operating.'",
+     "action": "Manual: '1. If the alarm occurs occasionally, the external circuit may be abnormal temporarily. The SUN2000 automatically recovers... 2. If the alarm occurs frequently or persists, check whether the impedance between the PV string and the ground is too low.' Installer task.",
+     "call_installer": true,
+     "source_url": "https://res.cloudinary.com/gpceurope/image/upload/v1690811120/eau10ickazhrwervcftj.pdf",
+     "source_ref": "SUN2000-(2KTL-6KTL)-L1 User Manual Issue 10 (2022-10-27), 8.3 Troubleshooting, Table 8-2 Common alarms and troubleshooting measures (pp. 82-94)"
+    },
+    {
+     "code": "2062 Low Insulation Resistance",
+     "meaning": "PV array insulation to ground too low",
+     "causes": "Manual: 'A short circuit occurs between the PV array and the ground.' / 'The ambient air of the PV array is damp and the insulation between the PV array and the ground is poor.'",
+     "action": "Manual: '1. Check the output impedance of the PV array to ground... 2. Check that the PE cable of the SUN2000 is correctly connected. 3. If the impedance is lower than the specified protection threshold in rainy and cloudy days, set Insulation resistance protection using the mobile App...' Installer task; often appears after rain.",
+     "call_installer": true,
+     "source_url": "https://res.cloudinary.com/gpceurope/image/upload/v1690811120/eau10ickazhrwervcftj.pdf",
+     "source_ref": "SUN2000-(2KTL-6KTL)-L1 User Manual Issue 10 (2022-10-27), 8.3 Troubleshooting, Table 8-2 Common alarms and troubleshooting measures (pp. 82-94)"
+    },
+    {
+     "code": "2063 Overtemperature",
+     "meaning": "Inverter too hot (Minor)",
+     "causes": "Manual: 'The SUN2000 is installed in a place with poor ventilation.' / 'The ambient temperature is higher than the upper threshold.' / 'The SUN2000 is not working properly.'",
+     "action": "Manual: 'Check the ventilation and ambient temperature... improve the ventilation and heat dissipation. If the ventilation and ambient temperature both meet requirements, contact your dealer or Huawei technical support.'",
+     "call_installer": false,
+     "source_url": "https://res.cloudinary.com/gpceurope/image/upload/v1690811120/eau10ickazhrwervcftj.pdf",
+     "source_ref": "SUN2000-(2KTL-6KTL)-L1 User Manual Issue 10 (2022-10-27), 8.3 Troubleshooting, Table 8-2 Common alarms and troubleshooting measures (pp. 82-94)"
+    },
+    {
+     "code": "2064 Device Fault",
+     "meaning": "Unrecoverable internal fault (Cause ID 1-12: boost short/overcurrent, control circuit, inverter circuit, residual current sensor, temperature detection, EEPROM, auxiliary power, grid-tied relay, DC bus over/under-voltage/imbalance)",
+     "causes": "Manual: 'An unrecoverable fault has occurred on a circuit inside the SUN2000.'",
+     "action": "Manual: 'Turn off the AC output switch and DC input switch, and then turn them on after 5 minutes. If the fault persists, contact your dealer or Huawei technical support.'",
+     "call_installer": true,
+     "source_url": "https://res.cloudinary.com/gpceurope/image/upload/v1690811120/eau10ickazhrwervcftj.pdf",
+     "source_ref": "SUN2000-(2KTL-6KTL)-L1 User Manual Issue 10 (2022-10-27), 8.3 Troubleshooting, Table 8-2 Common alarms and troubleshooting measures (pp. 82-94)"
+    },
+    {
+     "code": "2065 Upgrade Failed or Version Mismatch",
+     "meaning": "Firmware upgrade failed",
+     "causes": "Manual: 'The upgrade does not complete normally.' Cause IDs 1-4, 7 (software/hardware mismatch, controller version mismatch, upgrade fails, optimizer upgrade fails).",
+     "action": "Manual: '1. Perform an upgrade again. 2. If the upgrade fails for multiple times, contact your dealer or Huawei technical support.'",
+     "call_installer": true,
+     "source_url": "https://res.cloudinary.com/gpceurope/image/upload/v1690811120/eau10ickazhrwervcftj.pdf",
+     "source_ref": "SUN2000-(2KTL-6KTL)-L1 User Manual Issue 10 (2022-10-27), 8.3 Troubleshooting, Table 8-2 Common alarms and troubleshooting measures (pp. 82-94)"
+    },
+    {
+     "code": "61440 Monitoring Unit Faulty",
+     "meaning": "Monitoring (communication) unit fault",
+     "causes": "Manual: 'The flash memory is insufficient.' / 'The flash memory has bad sectors.'",
+     "action": "Manual: 'Turn off the AC output switch and DC input switch, and then turn them on after 5 minutes. If the fault persists, replace the monitoring board or contact your dealer Huawei technical support.'",
+     "call_installer": true,
+     "source_url": "https://res.cloudinary.com/gpceurope/image/upload/v1690811120/eau10ickazhrwervcftj.pdf",
+     "source_ref": "SUN2000-(2KTL-6KTL)-L1 User Manual Issue 10 (2022-10-27), 8.3 Troubleshooting, Table 8-2 Common alarms and troubleshooting measures (pp. 82-94)"
+    },
+    {
+     "code": "2067 Faulty Power Collector",
+     "meaning": "Smart power sensor (meter) disconnected",
+     "causes": "Manual: 'The smart power sensor is disconnected.'",
+     "action": "Manual: '1. Check that the configured power meter model is the same as the actual model. 2. Check that the communications parameters ... are the same as the SUN2000 RS485 configurations. 3. Check whether the smart power sensor is powered on and whether the RS485 communications cable is connected.'",
+     "call_installer": true,
+     "source_url": "https://res.cloudinary.com/gpceurope/image/upload/v1690811120/eau10ickazhrwervcftj.pdf",
+     "source_ref": "SUN2000-(2KTL-6KTL)-L1 User Manual Issue 10 (2022-10-27), 8.3 Troubleshooting, Table 8-2 Common alarms and troubleshooting measures (pp. 82-94)"
+    },
+    {
+     "code": "2068 Battery Abnormal",
+     "meaning": "Battery fault, disconnected or breaker off (hybrid/LUNA systems)",
+     "causes": "Manual: 'The battery is faulty, disconnected, or the battery circuit breaker is OFF when the battery is running.' Cause IDs: communication abnormal, port overcurrent, enabling cable not connected, port voltage abnormal.",
+     "action": "Manual: '1. If the battery fault indicator is steady on or blinking, contact the battery supplier. 2. Check that the battery enabling/power/communications cable is correctly installed... 3. Check that the auxiliary power switch on the battery is set to ON. 4. Send a shutdown command on the App... turn on the battery switch, AC output switch, and DC input switch in sequence after 5 minutes. 5. If the fault persists, contact your dealer or Huawei technical support.'",
+     "call_installer": true,
+     "source_url": "https://res.cloudinary.com/gpceurope/image/upload/v1690811120/eau10ickazhrwervcftj.pdf",
+     "source_ref": "SUN2000-(2KTL-6KTL)-L1 User Manual Issue 10 (2022-10-27), 8.3 Troubleshooting, Table 8-2 Common alarms and troubleshooting measures (pp. 82-94)"
+    },
+    {
+     "code": "2070 Active Islanding",
+     "meaning": "Grid outage detected (anti-islanding)",
+     "causes": "Manual: 'When the power grid experiences an AC power outage, the SUN2000 detects islanding proactively.'",
+     "action": "Manual: 'Check that the grid connection voltage of the SUN2000 is normal.' Owner: usually load-shedding; wait for grid.",
+     "call_installer": false,
+     "source_url": "https://res.cloudinary.com/gpceurope/image/upload/v1690811120/eau10ickazhrwervcftj.pdf",
+     "source_ref": "SUN2000-(2KTL-6KTL)-L1 User Manual Issue 10 (2022-10-27), 8.3 Troubleshooting, Table 8-2 Common alarms and troubleshooting measures (pp. 82-94)"
+    },
+    {
+     "code": "2077 Off-grid output overload",
+     "meaning": "Backup output overloaded",
+     "causes": "Manual: 'The output is overloaded or short-circuited.'",
+     "action": "Manual: '1. Check whether the device output is short-circuited. 2. Check whether the device load configuration exceeds the rated value.' Owner: switch off loads on backup circuit.",
+     "call_installer": false,
+     "source_url": "https://res.cloudinary.com/gpceurope/image/upload/v1690811120/eau10ickazhrwervcftj.pdf",
+     "source_ref": "SUN2000-(2KTL-6KTL)-L1 User Manual Issue 10 (2022-10-27), 8.3 Troubleshooting, Table 8-2 Common alarms and troubleshooting measures (pp. 82-94)"
+    },
+    {
+     "code": "2080 Abnormal PV Module Configuration",
+     "meaning": "PV/optimizer string configuration wrong (Cause IDs 2,3,6,7,8,9)",
+     "causes": "Manual: 'PV module configuration does not meet requirements, or the PV module output is reversely connected or short-circuited.'",
+     "action": "Manual: 'Check whether the total number of PV modules, number of PV modules in a string, and number of PV strings meet requirements and whether the PV module output is reversely connected.' Installer task.",
+     "call_installer": true,
+     "source_url": "https://res.cloudinary.com/gpceurope/image/upload/v1690811120/eau10ickazhrwervcftj.pdf",
+     "source_ref": "SUN2000-(2KTL-6KTL)-L1 User Manual Issue 10 (2022-10-27), 8.3 Troubleshooting, Table 8-2 Common alarms and troubleshooting measures (pp. 82-94)"
+    },
+    {
+     "code": "2081 Optimizer Fault",
+     "meaning": "An optimizer is faulty (Warning)",
+     "causes": "Manual: 'An optimizer is faulty.'",
+     "action": "Manual: 'Go to the optimizer information screen to view the fault details.'",
+     "call_installer": true,
+     "source_url": "https://res.cloudinary.com/gpceurope/image/upload/v1690811120/eau10ickazhrwervcftj.pdf",
+     "source_ref": "SUN2000-(2KTL-6KTL)-L1 User Manual Issue 10 (2022-10-27), 8.3 Troubleshooting, Table 8-2 Common alarms and troubleshooting measures (pp. 82-94)"
+    },
+    {
+     "code": "2082 Grid-tied/Off-grid Controller Abnormal",
+     "meaning": "Backup Box communication/internal fault",
+     "causes": "Manual: 'The inverter fails to communicate with the Smart Backup Box.' / 'An unrecoverable fault occurs on a circuit inside the Smart Backup Box.'",
+     "action": "Manual: shutdown via App, turn off AC/DC/battery switches, check power and RS485 cables between Backup Box and inverter, restart after 5 minutes; '4. If the alarm persists, contact your dealer or Huawei technical support.'",
+     "call_installer": true,
+     "source_url": "https://res.cloudinary.com/gpceurope/image/upload/v1690811120/eau10ickazhrwervcftj.pdf",
+     "source_ref": "SUN2000-(2KTL-6KTL)-L1 User Manual Issue 10 (2022-10-27), 8.3 Troubleshooting, Table 8-2 Common alarms and troubleshooting measures (pp. 82-94)"
+    }
+   ]
+  },
+  {
+   "id": "solis",
+   "name": "Solis (Ginlong) on-grid and hybrid",
+   "models": "Solis 1P/3P string inverters and RHI/S5/S6 hybrids (article is Solis' complete display-message list; hybrid battery codes not extracted)",
+   "manual_url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-",
+   "manual_note": "Manufacturer support article (Solis North America / Ginlong), fetched 2026-10-13; it links the PDF 'Alarm Codes for Solis 1P _ 3P.pdf'.",
+   "codes": [
+    {
+     "code": "OV-G-V 01..05 (1010)",
+     "meaning": "Grid overvoltage",
+     "causes": "Article: 'Grid voltage is higher than standard code's 1st level overvoltage limit for the set period of time.' (02: 'transient value is over 1.35 times of rated voltage peak value'; 03: 10-min overvoltage; 04: 2nd level; 05: transient over 200ms)",
+     "action": "Article: '1. If it happens accidentally, it may be a short-term abnormality of the grid. The inverter will resume normal operation after detecting that the grid is normal, without manual intervention. 2. Check if the standard is set correctly. 3. If it occurs frequently, please check the grid voltage and the grid frequency... check whether the AC side circuit breaker and the output cable are connected properly. 4. ...After obtaining the approval from the local power operator, please contact customer service to modify the inverter grid Over and under voltage/frequency protection points.'",
+     "call_installer": true,
+     "source_url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-",
+     "source_ref": "Solis North America support article 'Solis Inverter Alarm Codes (Complete List)', section 'Alarm Messages (ordered by Alarm Code)'"
+    },
+    {
+     "code": "UN-G-V (1011)",
+     "meaning": "Grid undervoltage",
+     "causes": "Article: 'Grid voltage is lower than the limit.'",
+     "action": "Same steps as OV-G-V (wait if occasional; check grid/wiring and protection settings if frequent).",
+     "call_installer": true,
+     "source_url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-",
+     "source_ref": "Solis North America support article 'Solis Inverter Alarm Codes (Complete List)', section 'Alarm Messages (ordered by Alarm Code)'"
+    },
+    {
+     "code": "OV-G-F (1012)",
+     "meaning": "Grid overfrequency",
+     "causes": "Article: 'Grid frequency is higher the limit.'",
+     "action": "Same steps as OV-G-V.",
+     "call_installer": false,
+     "source_url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-",
+     "source_ref": "Solis North America support article 'Solis Inverter Alarm Codes (Complete List)', section 'Alarm Messages (ordered by Alarm Code)'"
+    },
+    {
+     "code": "UN-G-F (1013)",
+     "meaning": "Grid underfrequency",
+     "causes": "Article: 'Grid frequency is lower the limit.'",
+     "action": "Same steps as OV-G-V.",
+     "call_installer": false,
+     "source_url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-",
+     "source_ref": "Solis North America support article 'Solis Inverter Alarm Codes (Complete List)', section 'Alarm Messages (ordered by Alarm Code)'"
+    },
+    {
+     "code": "Backfeed_Iac (1014)",
+     "meaning": "AC backfeed current",
+     "causes": "Article: 'AC backfeed current'",
+     "action": "Article: '1. Restart the inverter, if it is still not ruled out, please contact the manufacturer's customer service.'",
+     "call_installer": true,
+     "source_url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-",
+     "source_ref": "Solis North America support article 'Solis Inverter Alarm Codes (Complete List)', section 'Alarm Messages (ordered by Alarm Code)'"
+    },
+    {
+     "code": "NO-Grid (1015)",
+     "meaning": "No grid detected",
+     "causes": "Article: 'No grid'",
+     "action": "Article: '1. Confirm whether the power grid is properly connected. 2. Confirm whether the connected power grid is normal. 3. Check if the Grid Standard is set correctly. 3. If the grid connection is normal, you need to contact manufacturer's customer service...' Owner: check for outage and AC breaker.",
+     "call_installer": false,
+     "source_url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-",
+     "source_ref": "Solis North America support article 'Solis Inverter Alarm Codes (Complete List)', section 'Alarm Messages (ordered by Alarm Code)'"
+    },
+    {
+     "code": "G-PHASE (1016)",
+     "meaning": "Grid 3-phase unbalanced",
+     "causes": "Article: 'Grid has unbalanced 3phase'",
+     "action": "Article: '1. Confirm whether the power grid is properly connected.2. Confirm whether the connected power grid is normal. 3. If the grid connection is normal, you need to contact manufacturer's customer service.'",
+     "call_installer": true,
+     "source_url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-",
+     "source_ref": "Solis North America support article 'Solis Inverter Alarm Codes (Complete List)', section 'Alarm Messages (ordered by Alarm Code)'"
+    },
+    {
+     "code": "G-F-FLU (1017)",
+     "meaning": "Grid frequency fluctuation",
+     "causes": "Article: 'Grid frequency is abnormal'",
+     "action": "Article: confirm grid connected/normal; if normal, contact customer service.",
+     "call_installer": false,
+     "source_url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-",
+     "source_ref": "Solis North America support article 'Solis Inverter Alarm Codes (Complete List)', section 'Alarm Messages (ordered by Alarm Code)'"
+    },
+    {
+     "code": "OV-G-I (1018)",
+     "meaning": "Grid output overcurrent",
+     "causes": "Article: 'Grid output overcurrent'",
+     "action": "Article: confirm grid connected/normal; if normal, contact customer service.",
+     "call_installer": true,
+     "source_url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-",
+     "source_ref": "Solis North America support article 'Solis Inverter Alarm Codes (Complete List)', section 'Alarm Messages (ordered by Alarm Code)'"
+    },
+    {
+     "code": "IGFOL-F (1019)",
+     "meaning": "Grid current tracking error",
+     "causes": "Article: 'Grid current tracking error'",
+     "action": "Article: '1. Restart the inverter, if it is still not ruled out, please contact the manufacturer's customer service.'",
+     "call_installer": true,
+     "source_url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-",
+     "source_ref": "Solis North America support article 'Solis Inverter Alarm Codes (Complete List)', section 'Alarm Messages (ordered by Alarm Code)'"
+    },
+    {
+     "code": "PHASE-FAULT (101A)",
+     "meaning": "Abnormal grid phase angle",
+     "causes": "Article: 'Abnormal grid phase angle'",
+     "action": "Article: '1. Check whether the AC side wiring is correct. 2. Check whether the grid phase angle is 120. 3. Restart the inverter. If it is still not resolved, please contact the manufacturer's customer service.'",
+     "call_installer": true,
+     "source_url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-",
+     "source_ref": "Solis North America support article 'Solis Inverter Alarm Codes (Complete List)', section 'Alarm Messages (ordered by Alarm Code)'"
+    },
+    {
+     "code": "OV-DC (1020)",
+     "meaning": "DC (PV) overvoltage",
+     "causes": "Article: 'DC overvoltage'",
+     "action": "Article: '1. Check whether the input voltage exceeds the maximum input voltage of the inverter;2. Restart the inverter 3. If it is still not ruled out, please contact the manufacturer's customer service.'",
+     "call_installer": true,
+     "source_url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-",
+     "source_ref": "Solis North America support article 'Solis Inverter Alarm Codes (Complete List)', section 'Alarm Messages (ordered by Alarm Code)'"
+    },
+    {
+     "code": "BoostFal (1020)",
+     "meaning": "DC boost circuit fault",
+     "causes": "Article: 'DC boost circuit fault'",
+     "action": "Article: 'Restart the inverter. If it is still not resolved, please contact the manufacturer's customer service.'",
+     "call_installer": true,
+     "source_url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-",
+     "source_ref": "Solis North America support article 'Solis Inverter Alarm Codes (Complete List)', section 'Alarm Messages (ordered by Alarm Code)'"
+    },
+    {
+     "code": "OV-BUS (1021)",
+     "meaning": "DC bus overvoltage",
+     "causes": "Article: 'DC bus overvoltage'",
+     "action": "Article: check input voltage vs max; restart; else contact customer service.",
+     "call_installer": true,
+     "source_url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-",
+     "source_ref": "Solis North America support article 'Solis Inverter Alarm Codes (Complete List)', section 'Alarm Messages (ordered by Alarm Code)'"
+    },
+    {
+     "code": "UNB-BUS (1022)",
+     "meaning": "DC bus unbalanced",
+     "causes": "Article: 'DC bus voltage and DC bus half voltage is not correct'",
+     "action": "Article: restart; if not resolved contact customer service.",
+     "call_installer": true,
+     "source_url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-",
+     "source_ref": "Solis North America support article 'Solis Inverter Alarm Codes (Complete List)', section 'Alarm Messages (ordered by Alarm Code)'"
+    },
+    {
+     "code": "UN-BUS (1023)",
+     "meaning": "DC bus voltage too low",
+     "causes": "Article: 'DC bus voltage is too low'",
+     "action": "Article: '1. Check whether the input voltage is too low 2. Restart the inverter 3. If it is still not ruled out, please contact the manufacturer's after sales engineer.'",
+     "call_installer": true,
+     "source_url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-",
+     "source_ref": "Solis North America support article 'Solis Inverter Alarm Codes (Complete List)', section 'Alarm Messages (ordered by Alarm Code)'"
+    },
+    {
+     "code": "DC-INTF. (1027)",
+     "meaning": "Abnormal DC input current",
+     "causes": "Article: 'Abnormal DC input current'",
+     "action": "Article: '1. Check whether the DC wiring is falsely connected or damaged.2. Restart the inverter. 3. If it is still not resolved, please contact the manufacturer's customer service.'",
+     "call_installer": true,
+     "source_url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-",
+     "source_ref": "Solis North America support article 'Solis Inverter Alarm Codes (Complete List)', section 'Alarm Messages (ordered by Alarm Code)'"
+    },
+    {
+     "code": "Reve-DC (1028)",
+     "meaning": "DC reversely connected",
+     "causes": "Article: 'DC reversely connected.'",
+     "action": "Article: '1. Check whether the DC wiring is reversed. 2. Check whether the wire has correct size. 3. Check if correct Grid Standard is set.4. Restart the inverter 5. If it is still not resolved, please contact the manufacturer's customer service.' Installer task.",
+     "call_installer": true,
+     "source_url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-",
+     "source_ref": "Solis North America support article 'Solis Inverter Alarm Codes (Complete List)', section 'Alarm Messages (ordered by Alarm Code)'"
+    },
+    {
+     "code": "PvMidIso / PVGndRun (1029)",
+     "meaning": "PV mid-point low insulation / PV grounded during operation",
+     "causes": "Article: 'PV middle point low insulation protection' / 'The PV terminal of the inverter is grounded during operation.'",
+     "action": "Article: check time of day (early morning/rain = moisture, normal); measure PV string to ground resistance (should be above 20k ohm); check N-to-ground; update software; else contact after-sales. Installer task.",
+     "call_installer": true,
+     "source_url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-",
+     "source_ref": "Solis North America support article 'Solis Inverter Alarm Codes (Complete List)', section 'Alarm Messages (ordered by Alarm Code)'"
+    },
+    {
+     "code": "GRID-INTF. (1030)",
+     "meaning": "Grid interference",
+     "causes": "Article: 'Grid interference' - '1. Multiple inverters installed in line and the grid voltage wave is non-ideal.'",
+     "action": "Article: '2. Grid filters need to be set... 3. Downstream equipment needs to be changed or repaired. Restart the inverter. If it is still not resolved, please contact the manufacturer's customer service.'",
+     "call_installer": true,
+     "source_url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-",
+     "source_ref": "Solis North America support article 'Solis Inverter Alarm Codes (Complete List)', section 'Alarm Messages (ordered by Alarm Code)'"
+    },
+    {
+     "code": "INI-FAULT (1031)",
+     "meaning": "DSP initializing fault",
+     "causes": "Article: 'DSP initializing fault.'",
+     "action": "Article: 'Restart the inverter. If it is still not resolved, please contact the manufacturer's customer service.'",
+     "call_installer": true,
+     "source_url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-",
+     "source_ref": "Solis North America support article 'Solis Inverter Alarm Codes (Complete List)', section 'Alarm Messages (ordered by Alarm Code)'"
+    },
+    {
+     "code": "OV-TEM (1032)",
+     "meaning": "Over temperature",
+     "causes": "Article: 'The internal temperature near IGBTs is beyond the limitation. Typically 90C for 1P inverters 115C for 3P inverters'",
+     "action": "Article: '1: Check whether the installation location of the inverter meets the requirements of the user manual. (Installation in direct sunlight?...) 2: Try to lower the ambient temperature 3: Turn off the inverter and restart it after 15 minutes 4: If the error still exists, please contact the manufacturer's customer service.'",
+     "call_installer": false,
+     "source_url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-",
+     "source_ref": "Solis North America support article 'Solis Inverter Alarm Codes (Complete List)', section 'Alarm Messages (ordered by Alarm Code)'"
+    },
+    {
+     "code": "PV ISO-PRO 01/02 (1033)",
+     "meaning": "Low PV insulation protection",
+     "causes": "Article: 'Low PV insulation protection'",
+     "action": "Article: '1. Check the time when the error is reported. If ... early morning or late afternoon or on a rainy day, it is a normal phenomenon... 2. Use the resistance level of the multimeter to measure the resistance of the PV string to the ground, and the resistance should be above 20k ohm... 3. ...measure the resistance of the N wire and the ground wire... 4. ...update the software... 5. If the above is normal, please contact after-sales service.' Installer task.",
+     "call_installer": true,
+     "source_url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-",
+     "source_ref": "Solis North America support article 'Solis Inverter Alarm Codes (Complete List)', section 'Alarm Messages (ordered by Alarm Code)'"
+    },
+    {
+     "code": "ILeak-PRO 01-04 (1034)",
+     "meaning": "Leakage current protection",
+     "causes": "Article: '1. Connect each string of components individually in turn to determine whether it is caused by a single string problem... A: Damaged PV wire insulation. B: PV wire is incorrect gauge. C: Faulty transformer downstream. D: Incorrect wiring of RSD. E: Buried AC wires are saturated with Water F: AC Wire is low quality 2. If this error occurs only on a rainy day or in the morning, the leakage current is too large due to the aging of the module...'",
+     "action": "Article: '3. This issue may be solved by remotely upgrading the software. Please contact our customer support team.' Installer task.",
+     "call_installer": true,
+     "source_url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-",
+     "source_ref": "Solis North America support article 'Solis Inverter Alarm Codes (Complete List)', section 'Alarm Messages (ordered by Alarm Code)'"
+    },
+    {
+     "code": "RelayChk-FAIL (1035)",
+     "meaning": "Relay check failed",
+     "causes": "Article lists the message and code; solution text not captured in the extracted slice.",
+     "action": "Restart; if persistent contact service (per article pattern for internal faults).",
+     "call_installer": true,
+     "source_url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-",
+     "source_ref": "Solis North America support article 'Solis Inverter Alarm Codes (Complete List)', section 'Alarm Messages (ordered by Alarm Code)'"
+    },
+    {
+     "code": "Fan Alarm / Fan_H Alarm",
+     "meaning": "Internal / external fan fault",
+     "causes": "Article: 'Internal Fan fault' / 'External Fan fault'",
+     "action": "Owner: check fan is unobstructed; replacement by installer.",
+     "call_installer": true,
+     "source_url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-",
+     "source_ref": "Solis North America support article 'Solis Inverter Alarm Codes (Complete List)', section 'Alarm Messages (ordered by Alarm Code)'"
+    },
+    {
+     "code": "Surge Alarm",
+     "meaning": "Grid surge recorded",
+     "causes": "Article: 'Grid has surge. It is for after-sale information analysis, doesn't affect inverter operation.'",
+     "action": "No action needed.",
+     "call_installer": false,
+     "source_url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-",
+     "source_ref": "Solis North America support article 'Solis Inverter Alarm Codes (Complete List)', section 'Alarm Messages (ordered by Alarm Code)'"
+    },
+    {
+     "code": "VgSpdFail",
+     "meaning": "AC SPD fault",
+     "causes": "Article: 'AC SPD fault'",
+     "action": "Article: 'Restart the inverter. If it is still not resolved, please contact the manufacturer's customer service.'",
+     "call_installer": true,
+     "source_url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-",
+     "source_ref": "Solis North America support article 'Solis Inverter Alarm Codes (Complete List)', section 'Alarm Messages (ordered by Alarm Code)'"
+    }
+   ]
+  },
+  {
+   "id": "goodwe",
+   "name": "GoodWe (ES Uniq hybrid; F-codes are shared across GoodWe residential inverters)",
+   "models": "GW ES Uniq 8-12K with LX A/U batteries (manual read); on-grid DNS/MS/SDT and other hybrids (ET/EH) use the same F01-F163 numbering per this manual's 'all PV inverters' wording - verify per model",
+   "manual_url": "https://en.goodwe.com/Ftp/EN/Downloads/User%20Manual/GW_Residential-Smart-Inverter-Solutions_User-Manual-ES-Uniq8-12K-LXA-LXU-EN.pdf",
+   "manual_note": "Official GoodWe manual from en.goodwe.com, V2.9 dated 2026-10-10. Only F01-F39 extracted; F41-F163 (battery, BMS, backup) not extracted in the time box.",
+   "codes": [
+    {
+     "code": "F01 Grid Power Outage",
+     "meaning": "No grid",
+     "causes": "Manual: '1. Grid power outage. 2. The AC line or AC Switch is disconnected.'",
+     "action": "Manual: '1. The alarm automatically disappears after grid power supply is restored. 2. Check whether the AC line or AC Switch is disconnected.'",
+     "call_installer": false,
+     "source_url": "https://en.goodwe.com/Ftp/EN/Downloads/User%20Manual/GW_Residential-Smart-Inverter-Solutions_User-Manual-ES-Uniq8-12K-LXA-LXU-EN.pdf",
+     "source_ref": "GoodWe Residential Smart Inverter Solutions User Manual (ES Uniq 8-12K, LX A/U batteries) V2.9 2026-10-10, 9.5.2.2.1 Fault Handling (Fault Codes F01-F40), pp. 266-283"
+    },
+    {
+     "code": "F02 Grid Overvoltage Protection",
+     "meaning": "Grid voltage too high",
+     "causes": "Manual: 'The grid voltage is higher than the allowable range, or the high-voltage Duration exceeds the high voltage ride-through setpoint.'",
+     "action": "Manual: '1. If it occurs occasionally, it may be a short-term grid abnormality. The inverter will resume normal operation after detecting that the grid is normal, and no manual intervention is required. 2. If it occurs frequently, check whether the grid voltage is within the allowable range. If not, contact the local power operator... 3. If it cannot recover for a long time, check whether the AC-side circuit breaker and output cable are connected properly.'",
+     "call_installer": false,
+     "source_url": "https://en.goodwe.com/Ftp/EN/Downloads/User%20Manual/GW_Residential-Smart-Inverter-Solutions_User-Manual-ES-Uniq8-12K-LXA-LXU-EN.pdf",
+     "source_ref": "GoodWe Residential Smart Inverter Solutions User Manual (ES Uniq 8-12K, LX A/U batteries) V2.9 2026-10-10, 9.5.2.2.1 Fault Handling (Fault Codes F01-F40), pp. 266-283"
+    },
+    {
+     "code": "F03 Grid Undervoltage Protection",
+     "meaning": "Grid voltage too low",
+     "causes": "Manual: 'The grid voltage is lower than the allowable range, or the Low Voltage Duration exceeds the Low Voltage Ride-Through setpoint.'",
+     "action": "Manual: '1. If it occurs occasionally, it may be a short-term grid abnormality. The inverter will resume normal operation after detecting that the grid is normal, and no manual intervention is required. 2. If it occurs frequently, check whether the grid voltage is within the allowable range. If not, contact the local power operator... 3. If it cannot recover for a long time, check whether the AC-side circuit breaker and output cable are connected properly.'",
+     "call_installer": false,
+     "source_url": "https://en.goodwe.com/Ftp/EN/Downloads/User%20Manual/GW_Residential-Smart-Inverter-Solutions_User-Manual-ES-Uniq8-12K-LXA-LXU-EN.pdf",
+     "source_ref": "GoodWe Residential Smart Inverter Solutions User Manual (ES Uniq 8-12K, LX A/U batteries) V2.9 2026-10-10, 9.5.2.2.1 Fault Handling (Fault Codes F01-F40), pp. 266-283"
+    },
+    {
+     "code": "F04 Grid Rapid Overvoltage Protection",
+     "meaning": "Sudden grid overvoltage",
+     "causes": "Manual: 'Abnormal grid voltage detection or ultra-high voltage triggers the fault.'",
+     "action": "Manual: '1. If it occurs occasionally, it may be a short-term grid abnormality. The inverter will resume normal operation after detecting that the grid is normal, and no manual intervention is required. 2. If it occurs frequently, check whether the grid voltage is within the allowable range. If not, contact the local power operator... 3. If it cannot recover for a long time, check whether the AC-side circuit breaker and output cable are connected properly.'",
+     "call_installer": false,
+     "source_url": "https://en.goodwe.com/Ftp/EN/Downloads/User%20Manual/GW_Residential-Smart-Inverter-Solutions_User-Manual-ES-Uniq8-12K-LXA-LXU-EN.pdf",
+     "source_ref": "GoodWe Residential Smart Inverter Solutions User Manual (ES Uniq 8-12K, LX A/U batteries) V2.9 2026-10-10, 9.5.2.2.1 Fault Handling (Fault Codes F01-F40), pp. 266-283"
+    },
+    {
+     "code": "F05 10min Overvoltage",
+     "meaning": "10-minute average grid voltage too high",
+     "causes": "Manual: 'Within 10min the grid voltage sliding average exceeds the range specified by safety regulations.'",
+     "action": "Manual: 'Check whether the grid voltage operates at a relatively high voltage for a long time... If not, contact your local power operator.'",
+     "call_installer": false,
+     "source_url": "https://en.goodwe.com/Ftp/EN/Downloads/User%20Manual/GW_Residential-Smart-Inverter-Solutions_User-Manual-ES-Uniq8-12K-LXA-LXU-EN.pdf",
+     "source_ref": "GoodWe Residential Smart Inverter Solutions User Manual (ES Uniq 8-12K, LX A/U batteries) V2.9 2026-10-10, 9.5.2.2.1 Fault Handling (Fault Codes F01-F40), pp. 266-283"
+    },
+    {
+     "code": "F06 Grid Overfrequency",
+     "meaning": "Grid frequency too high",
+     "causes": "Manual: 'Grid abnormal: The actual grid frequency is higher than the local grid standard requirements.'",
+     "action": "Manual: occasional = auto resume; frequent = check grid frequency, contact power operator; protection point change only with operator consent.",
+     "call_installer": false,
+     "source_url": "https://en.goodwe.com/Ftp/EN/Downloads/User%20Manual/GW_Residential-Smart-Inverter-Solutions_User-Manual-ES-Uniq8-12K-LXA-LXU-EN.pdf",
+     "source_ref": "GoodWe Residential Smart Inverter Solutions User Manual (ES Uniq 8-12K, LX A/U batteries) V2.9 2026-10-10, 9.5.2.2.1 Fault Handling (Fault Codes F01-F40), pp. 266-283"
+    },
+    {
+     "code": "F07 Grid Underfrequency",
+     "meaning": "Grid frequency too low",
+     "causes": "Manual: 'Grid abnormal: The actual grid frequency is lower than the local grid standard requirements.'",
+     "action": "Same as F06.",
+     "call_installer": false,
+     "source_url": "https://en.goodwe.com/Ftp/EN/Downloads/User%20Manual/GW_Residential-Smart-Inverter-Solutions_User-Manual-ES-Uniq8-12K-LXA-LXU-EN.pdf",
+     "source_ref": "GoodWe Residential Smart Inverter Solutions User Manual (ES Uniq 8-12K, LX A/U batteries) V2.9 2026-10-10, 9.5.2.2.1 Fault Handling (Fault Codes F01-F40), pp. 266-283"
+    },
+    {
+     "code": "F08 Grid Frequency Instability",
+     "meaning": "Grid frequency changing too fast",
+     "causes": "Manual: 'Grid abnormal: The actual grid frequency change rate does not comply with the local grid standard.'",
+     "action": "Manual: occasional = auto resume; frequent = contact local power operator.",
+     "call_installer": false,
+     "source_url": "https://en.goodwe.com/Ftp/EN/Downloads/User%20Manual/GW_Residential-Smart-Inverter-Solutions_User-Manual-ES-Uniq8-12K-LXA-LXU-EN.pdf",
+     "source_ref": "GoodWe Residential Smart Inverter Solutions User Manual (ES Uniq 8-12K, LX A/U batteries) V2.9 2026-10-10, 9.5.2.2.1 Fault Handling (Fault Codes F01-F40), pp. 266-283"
+    },
+    {
+     "code": "F09 Anti-islanding Protection",
+     "meaning": "Grid lost but voltage held by load; inverter stops grid connection",
+     "causes": "Manual: 'The grid has been disconnected; the grid voltage is maintained due to the presence of the load. According to safety code Protection requirements, stop grid connection.'",
+     "action": "Manual: occasional = auto resume; frequent = contact local power operator.",
+     "call_installer": false,
+     "source_url": "https://en.goodwe.com/Ftp/EN/Downloads/User%20Manual/GW_Residential-Smart-Inverter-Solutions_User-Manual-ES-Uniq8-12K-LXA-LXU-EN.pdf",
+     "source_ref": "GoodWe Residential Smart Inverter Solutions User Manual (ES Uniq 8-12K, LX A/U batteries) V2.9 2026-10-10, 9.5.2.2.1 Fault Handling (Fault Codes F01-F40), pp. 266-283"
+    },
+    {
+     "code": "F10 / F11 LVRT / HVRT fault",
+     "meaning": "Grid voltage abnormal longer than ride-through time",
+     "causes": "Manual: 'Grid abnormal: The duration of Grid Voltage Abnormal exceeds the time specified for high/low voltage ride-through.'",
+     "action": "Manual: occasional = auto resume; '2. If it occurs frequently, check whether the grid voltage and frequency are within the allowable range and stable. If not, contact your local power operator.'",
+     "call_installer": false,
+     "source_url": "https://en.goodwe.com/Ftp/EN/Downloads/User%20Manual/GW_Residential-Smart-Inverter-Solutions_User-Manual-ES-Uniq8-12K-LXA-LXU-EN.pdf",
+     "source_ref": "GoodWe Residential Smart Inverter Solutions User Manual (ES Uniq 8-12K, LX A/U batteries) V2.9 2026-10-10, 9.5.2.2.1 Fault Handling (Fault Codes F01-F40), pp. 266-283"
+    },
+    {
+     "code": "F12 / F13 / F14 / F15 GFCI Protection (30mA / 60mA / 150mA / slow change)",
+     "meaning": "Leakage current to ground",
+     "causes": "Manual: 'The input-to-ground insulation impedance becomes low during inverter operation.'",
+     "action": "Manual: '1. If it occurs occasionally, it may be caused by a sporadic external line abnormality... no manual intervention is required. 2. If it occurs frequently or cannot be recovered for a long time, check whether the PV string-to-ground impedance is too low.' Installer task.",
+     "call_installer": true,
+     "source_url": "https://en.goodwe.com/Ftp/EN/Downloads/User%20Manual/GW_Residential-Smart-Inverter-Solutions_User-Manual-ES-Uniq8-12K-LXA-LXU-EN.pdf",
+     "source_ref": "GoodWe Residential Smart Inverter Solutions User Manual (ES Uniq 8-12K, LX A/U batteries) V2.9 2026-10-10, 9.5.2.2.1 Fault Handling (Fault Codes F01-F40), pp. 266-283"
+    },
+    {
+     "code": "F16 / F17 DCI Protection Level 1 / 2",
+     "meaning": "DC component in AC output too high",
+     "causes": "Manual: 'High DC Component: The DC component of the inverter output current is higher than the allowable range specified by safety regulations or the machine default.'",
+     "action": "Manual: '1. If the abnormality is caused by an external fault, the inverter will automatically resume... 2. If this alarm occurs frequently and affects the normal power generation of the plant, please contact your distributor or after-sales service center.'",
+     "call_installer": true,
+     "source_url": "https://en.goodwe.com/Ftp/EN/Downloads/User%20Manual/GW_Residential-Smart-Inverter-Solutions_User-Manual-ES-Uniq8-12K-LXA-LXU-EN.pdf",
+     "source_ref": "GoodWe Residential Smart Inverter Solutions User Manual (ES Uniq 8-12K, LX A/U batteries) V2.9 2026-10-10, 9.5.2.2.1 Fault Handling (Fault Codes F01-F40), pp. 266-283"
+    },
+    {
+     "code": "F18 Low Insulation Resistance",
+     "meaning": "PV or battery insulation to ground too low",
+     "causes": "Manual: '1. The PV string is short-circuited to protective ground. 2. The environment where the PV strings are installed has been humid for a long time, and the line-to-ground insulation is poor. 3. Battery port line-to-ground Low Insulation Resistance.'",
+     "action": "Manual: '1. Check the impedance of the PV string/battery port to protective ground. If a short circuit occurs, identify the short-circuit point and rectify it. 2. Check whether the inverter's protective ground conductor is correctly connected. 3. If it is confirmed that this impedance is indeed lower than the default value in rainy weather, please use the App to reset the inverter's Insulation Resistance Protection Point.' Installer task.",
+     "call_installer": true,
+     "source_url": "https://en.goodwe.com/Ftp/EN/Downloads/User%20Manual/GW_Residential-Smart-Inverter-Solutions_User-Manual-ES-Uniq8-12K-LXA-LXU-EN.pdf",
+     "source_ref": "GoodWe Residential Smart Inverter Solutions User Manual (ES Uniq 8-12K, LX A/U batteries) V2.9 2026-10-10, 9.5.2.2.1 Fault Handling (Fault Codes F01-F40), pp. 266-283"
+    },
+    {
+     "code": "F19 Grounding Abnormal",
+     "meaning": "Protective earth not connected",
+     "causes": "Manual: '1. The inverter's protective ground conductor is Not Connected. 2. When the output of the PV string is grounded, no isolation transformer is connected on the inverter output side.'",
+     "action": "Manual: '1. Please confirm whether the inverter's protective ground conductor is Not Connected properly. 2. ...confirm whether an isolation transformer is connected on the inverter output side.' Installer task.",
+     "call_installer": true,
+     "source_url": "https://en.goodwe.com/Ftp/EN/Downloads/User%20Manual/GW_Residential-Smart-Inverter-Solutions_User-Manual-ES-Uniq8-12K-LXA-LXU-EN.pdf",
+     "source_ref": "GoodWe Residential Smart Inverter Solutions User Manual (ES Uniq 8-12K, LX A/U batteries) V2.9 2026-10-10, 9.5.2.2.1 Fault Handling (Fault Codes F01-F40), pp. 266-283"
+    },
+    {
+     "code": "F20 Hard Power Limit Protection",
+     "meaning": "Abnormal load fluctuation",
+     "causes": "Manual: 'Abnormal Load Fluctuation'",
+     "action": "Manual: auto resume if external; if frequent contact distributor/after-sales.",
+     "call_installer": false,
+     "source_url": "https://en.goodwe.com/Ftp/EN/Downloads/User%20Manual/GW_Residential-Smart-Inverter-Solutions_User-Manual-ES-Uniq8-12K-LXA-LXU-EN.pdf",
+     "source_ref": "GoodWe Residential Smart Inverter Solutions User Manual (ES Uniq 8-12K, LX A/U batteries) V2.9 2026-10-10, 9.5.2.2.1 Fault Handling (Fault Codes F01-F40), pp. 266-283"
+    },
+    {
+     "code": "F21 Internal Comm Loss",
+     "meaning": "Internal DSP communication timeout",
+     "causes": "Manual: 'Chip not powered on' / 'Chip firmware version error'",
+     "action": "Manual: 'Disconnect the AC output side switch and DC input side switch, 5 minutes later close the AC output side switch and DC input side switch. If the fault still exists, contact your dealer or after-sales service center.'",
+     "call_installer": true,
+     "source_url": "https://en.goodwe.com/Ftp/EN/Downloads/User%20Manual/GW_Residential-Smart-Inverter-Solutions_User-Manual-ES-Uniq8-12K-LXA-LXU-EN.pdf",
+     "source_ref": "GoodWe Residential Smart Inverter Solutions User Manual (ES Uniq 8-12K, LX A/U batteries) V2.9 2026-10-10, 9.5.2.2.1 Fault Handling (Fault Codes F01-F40), pp. 266-283"
+    },
+    {
+     "code": "F22-F27 Generator faults (waveform, abnormal connection, voltage low/high, frequency low/high)",
+     "meaning": "Generator input out of range",
+     "causes": "Manual (F26/F27): '1. When the generator is Not Connected, this fault will be displayed continuously; 2. When the generator is operating, failure to meet generator safety regulations will trigger this fault.'",
+     "action": "Manual: '1. When the generator is not connected, ignore this fault; 2. It is normal for this fault to occur when the generator has a fault. After the generator recovers, wait for a period of time and the fault will be automatically cleared; 3. This fault will not affect the normal operation of off-grid mode.'",
+     "call_installer": false,
+     "source_url": "https://en.goodwe.com/Ftp/EN/Downloads/User%20Manual/GW_Residential-Smart-Inverter-Solutions_User-Manual-ES-Uniq8-12K-LXA-LXU-EN.pdf",
+     "source_ref": "GoodWe Residential Smart Inverter Solutions User Manual (ES Uniq 8-12K, LX A/U batteries) V2.9 2026-10-10, 9.5.2.2.1 Fault Handling (Fault Codes F01-F40), pp. 266-283"
+    },
+    {
+     "code": "F28 Parallel I/O Self-check Abnormal",
+     "meaning": "Parallel communication cable / IO chip",
+     "causes": "Manual: 'Parallel communication cable is not securely connected or parallel IO chip is damaged'",
+     "action": "Manual: 'Check whether the parallel communication cable is securely connected, then check whether the IO chip is damaged; if so, replace the IO chip.' Installer task.",
+     "call_installer": true,
+     "source_url": "https://en.goodwe.com/Ftp/EN/Downloads/User%20Manual/GW_Residential-Smart-Inverter-Solutions_User-Manual-ES-Uniq8-12K-LXA-LXU-EN.pdf",
+     "source_ref": "GoodWe Residential Smart Inverter Solutions User Manual (ES Uniq 8-12K, LX A/U batteries) V2.9 2026-10-10, 9.5.2.2.1 Fault Handling (Fault Codes F01-F40), pp. 266-283"
+    },
+    {
+     "code": "F29 Parallel Grid Line Reversed",
+     "meaning": "Grid wires reversed between parallel units",
+     "causes": "Manual: 'Grid wires of some machines are reversed relative to others'",
+     "action": "Manual: 'Reconnect the grid wires.' Installer task.",
+     "call_installer": true,
+     "source_url": "https://en.goodwe.com/Ftp/EN/Downloads/User%20Manual/GW_Residential-Smart-Inverter-Solutions_User-Manual-ES-Uniq8-12K-LXA-LXU-EN.pdf",
+     "source_ref": "GoodWe Residential Smart Inverter Solutions User Manual (ES Uniq 8-12K, LX A/U batteries) V2.9 2026-10-10, 9.5.2.2.1 Fault Handling (Fault Codes F01-F40), pp. 266-283"
+    },
+    {
+     "code": "F30 AC HCT Check Abnormal",
+     "meaning": "AC current sensor sampling abnormal",
+     "causes": "Manual: 'AC sensor sampling abnormal'",
+     "action": "Manual: 'Disconnect the AC output side switch and DC input side switch, 5 minutes later close the AC output side switch and DC input side switch. If the fault still exists, contact your dealer or after-sales service center.'",
+     "call_installer": true,
+     "source_url": "https://en.goodwe.com/Ftp/EN/Downloads/User%20Manual/GW_Residential-Smart-Inverter-Solutions_User-Manual-ES-Uniq8-12K-LXA-LXU-EN.pdf",
+     "source_ref": "GoodWe Residential Smart Inverter Solutions User Manual (ES Uniq 8-12K, LX A/U batteries) V2.9 2026-10-10, 9.5.2.2.1 Fault Handling (Fault Codes F01-F40), pp. 266-283"
+    },
+    {
+     "code": "F31 GFCI HCT Check Abnormal",
+     "meaning": "Leakage current sensor sampling abnormal",
+     "causes": "Manual: 'Leakage current sensor sampling abnormal'",
+     "action": "Manual: 'Disconnect the AC output side switch and DC input side switch, 5 minutes later close the AC output side switch and DC input side switch. If the fault still exists, contact your dealer or after-sales service center.'",
+     "call_installer": true,
+     "source_url": "https://en.goodwe.com/Ftp/EN/Downloads/User%20Manual/GW_Residential-Smart-Inverter-Solutions_User-Manual-ES-Uniq8-12K-LXA-LXU-EN.pdf",
+     "source_ref": "GoodWe Residential Smart Inverter Solutions User Manual (ES Uniq 8-12K, LX A/U batteries) V2.9 2026-10-10, 9.5.2.2.1 Fault Handling (Fault Codes F01-F40), pp. 266-283"
+    },
+    {
+     "code": "F32 Inverter Internal Failure",
+     "meaning": "Internal fault detected",
+     "causes": "Manual: 'Inverter fault detected'",
+     "action": "Manual: 'Disconnect the AC output side switch and DC input side switch, 5 minutes later close the AC output side switch and DC input side switch. If the fault still exists, contact your dealer or after-sales service center.'",
+     "call_installer": true,
+     "source_url": "https://en.goodwe.com/Ftp/EN/Downloads/User%20Manual/GW_Residential-Smart-Inverter-Solutions_User-Manual-ES-Uniq8-12K-LXA-LXU-EN.pdf",
+     "source_ref": "GoodWe Residential Smart Inverter Solutions User Manual (ES Uniq 8-12K, LX A/U batteries) V2.9 2026-10-10, 9.5.2.2.1 Fault Handling (Fault Codes F01-F40), pp. 266-283"
+    },
+    {
+     "code": "F33 Flash R/W Abnormal",
+     "meaning": "Flash memory read/write error",
+     "causes": "Manual: 'flash content has changed; flash lifespan exhausted'",
+     "action": "Manual: '1. Upgrade to the latest firmware; 2. Contact the distributor or after-sales service center.'",
+     "call_installer": true,
+     "source_url": "https://en.goodwe.com/Ftp/EN/Downloads/User%20Manual/GW_Residential-Smart-Inverter-Solutions_User-Manual-ES-Uniq8-12K-LXA-LXU-EN.pdf",
+     "source_ref": "GoodWe Residential Smart Inverter Solutions User Manual (ES Uniq 8-12K, LX A/U batteries) V2.9 2026-10-10, 9.5.2.2.1 Fault Handling (Fault Codes F01-F40), pp. 266-283"
+    },
+    {
+     "code": "F34 AFCI Check Failure",
+     "meaning": "Arc-fault self-check failed",
+     "causes": "Manual: 'During the Arc Failure self-check, the Arc Failure module did not detect an Arc Failure as expected.'",
+     "action": "Manual: 'Disconnect the AC output side switch and DC input side switch, 5 minutes later close the AC output side switch and DC input side switch. If the fault still exists, contact your dealer or after-sales service center.'",
+     "call_installer": true,
+     "source_url": "https://en.goodwe.com/Ftp/EN/Downloads/User%20Manual/GW_Residential-Smart-Inverter-Solutions_User-Manual-ES-Uniq8-12K-LXA-LXU-EN.pdf",
+     "source_ref": "GoodWe Residential Smart Inverter Solutions User Manual (ES Uniq 8-12K, LX A/U batteries) V2.9 2026-10-10, 9.5.2.2.1 Fault Handling (Fault Codes F01-F40), pp. 266-283"
+    },
+    {
+     "code": "F35 Cabinet Overtemperature",
+     "meaning": "Inverter too hot",
+     "causes": "Manual: '1. Insufficient ventilation at the inverter installation location. 2. Ambient Overtemperature. 3. Internal fan operating abnormally.'",
+     "action": "Manual: '1. Check whether the ventilation at the inverter installation location is adequate and whether the ambient temperature exceeds the maximum permissible ambient temperature range. 2. If there is no ventilation or Ambient Overtemperature, improve the ventilation and heat dissipation conditions. 3. If ventilation and ambient temperature are normal, contact your dealer or after-sales service center.'",
+     "call_installer": false,
+     "source_url": "https://en.goodwe.com/Ftp/EN/Downloads/User%20Manual/GW_Residential-Smart-Inverter-Solutions_User-Manual-ES-Uniq8-12K-LXA-LXU-EN.pdf",
+     "source_ref": "GoodWe Residential Smart Inverter Solutions User Manual (ES Uniq 8-12K, LX A/U batteries) V2.9 2026-10-10, 9.5.2.2.1 Fault Handling (Fault Codes F01-F40), pp. 266-283"
+    },
+    {
+     "code": "F36 Bus Overvoltage",
+     "meaning": "Internal DC bus voltage too high",
+     "causes": "Manual: '1. PV voltage too high; 2. Inverter BUS voltage sampling abnormal; 3. ...isolation performance of the dual-split transformer... is poor...'",
+     "action": "Manual: 'Disconnect the AC output side switch and DC input side switch, 5 minutes later close the AC output side switch and DC input side switch. If the fault still exists, contact your dealer or after-sales service center.'",
+     "call_installer": true,
+     "source_url": "https://en.goodwe.com/Ftp/EN/Downloads/User%20Manual/GW_Residential-Smart-Inverter-Solutions_User-Manual-ES-Uniq8-12K-LXA-LXU-EN.pdf",
+     "source_ref": "GoodWe Residential Smart Inverter Solutions User Manual (ES Uniq 8-12K, LX A/U batteries) V2.9 2026-10-10, 9.5.2.2.1 Fault Handling (Fault Codes F01-F40), pp. 266-283"
+    },
+    {
+     "code": "F37 PV Input Overvoltage",
+     "meaning": "PV string voltage above inverter maximum",
+     "causes": "Manual: 'The PV array configuration is incorrect; too many PV modules are connected in series in the string, causing the string open-circuit voltage to exceed the inverter's maximum operating voltage'",
+     "action": "Manual: 'Check the series configuration of the corresponding PV array string to ensure that the string open-circuit voltage does not exceed the inverter's maximum operating voltage. After the PV array is configured correctly, the inverter alarm automatically disappears.' Installer task.",
+     "call_installer": true,
+     "source_url": "https://en.goodwe.com/Ftp/EN/Downloads/User%20Manual/GW_Residential-Smart-Inverter-Solutions_User-Manual-ES-Uniq8-12K-LXA-LXU-EN.pdf",
+     "source_ref": "GoodWe Residential Smart Inverter Solutions User Manual (ES Uniq 8-12K, LX A/U batteries) V2.9 2026-10-10, 9.5.2.2.1 Fault Handling (Fault Codes F01-F40), pp. 266-283"
+    },
+    {
+     "code": "F38 / F39 PV Continuous Hardware / Software Overcurrent",
+     "meaning": "PV input overcurrent",
+     "causes": "Manual: '1. Improper module configuration 2. Hardware damage'",
+     "action": "Manual: 'Disconnect the AC output side switch and DC input side switch, 5 minutes later close the AC output side switch and DC input side switch. If the fault still exists, contact your dealer or after-sales service center.'",
+     "call_installer": true,
+     "source_url": "https://en.goodwe.com/Ftp/EN/Downloads/User%20Manual/GW_Residential-Smart-Inverter-Solutions_User-Manual-ES-Uniq8-12K-LXA-LXU-EN.pdf",
+     "source_ref": "GoodWe Residential Smart Inverter Solutions User Manual (ES Uniq 8-12K, LX A/U batteries) V2.9 2026-10-10, 9.5.2.2.1 Fault Handling (Fault Codes F01-F40), pp. 266-283"
+    }
+   ]
+  },
+  {
+   "id": "sungrow",
+   "name": "Sungrow SG RS single-phase on-grid",
+   "models": "SG2.0RS-S / 2.5RS-S / 3.0RS-S / 3.0RS / 3.6RS / 4.0RS / 5.0RS / 6.0RS (manual says the code table covers 'all PV inverters' but only some apply per model)",
+   "manual_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
+   "manual_note": "Official Sungrow manual from info-support.sungrowpower.com, Ver21 (2023-12).",
+   "codes": [
+    {
+     "code": "002, 003, 014, 015 Grid Overvoltage",
+     "meaning": "Grid voltage too high",
+     "causes": "Manual: 'Generally, the inverter will be reconnected to the grid after the grid returns to normal.'",
+     "action": "Manual: 'If the fault occurs repeatedly: 1. Measure the actual grid voltage, and contact the local electric power company for solutions if the grid voltage is higher than the set value. 2. Check whether the protection parameters are appropriately set via the App or the LCD. Modify the overvoltage protection values with the consent of the local electric power operator. 3. Contact Sungrow Customer Service if the preceding causes are ruled out and the fault persists.'",
+     "call_installer": true,
+     "source_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
+     "source_ref": "Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312, 9.1 Troubleshooting (pp. 103-109)"
+    },
+    {
+     "code": "004, 005 Grid Undervoltage",
+     "meaning": "Grid voltage too low",
+     "causes": "Same auto-reconnect note.",
+     "action": "Manual: measure grid voltage / contact power company; check protection parameters; '3. Check whether the AC cable is firmly in place. 4. Contact Sungrow Customer Service...'",
+     "call_installer": true,
+     "source_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
+     "source_ref": "Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312, 9.1 Troubleshooting (pp. 103-109)"
+    },
+    {
+     "code": "008 Grid Overfrequency",
+     "meaning": "Grid frequency too high",
+     "causes": "Same auto-reconnect note.",
+     "action": "Manual: '1. Measure the actual grid frequency, and contact the local electric power company for solutions if the grid frequency is beyond the set range. 2. Check whether the protection parameters are appropriately set via the App or the LCD. 3. Contact Sungrow Customer Service...'",
+     "call_installer": true,
+     "source_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
+     "source_ref": "Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312, 9.1 Troubleshooting (pp. 103-109)"
+    },
+    {
+     "code": "009 Grid Underfrequency",
+     "meaning": "Grid frequency too low",
+     "causes": "Same auto-reconnect note.",
+     "action": "Same as 008.",
+     "call_installer": false,
+     "source_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
+     "source_ref": "Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312, 9.1 Troubleshooting (pp. 103-109)"
+    },
+    {
+     "code": "010 Grid Power Outage",
+     "meaning": "No grid",
+     "causes": "Same auto-reconnect note.",
+     "action": "Manual: '1. Check whether the grid supplies power reliably. 2. Check whether the AC cable is firmly in place. 3. Check whether the AC cable is connected to the correct terminal (whether the live wire and the N wire are correctly in place). 4. Check whether the AC circuit breaker is connected. 5. Contact Sungrow Customer Service...' Owner: check for outage / AC breaker.",
+     "call_installer": true,
+     "source_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
+     "source_ref": "Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312, 9.1 Troubleshooting (pp. 103-109)"
+    },
+    {
+     "code": "012 Excess Leakage Current",
+     "meaning": "Leakage current too high",
+     "causes": "Manual: '1. The fault can be caused by poor sunlight or damp environment, and generally the inverter will be reconnected to the grid after the environment is improved.'",
+     "action": "Manual: '2. If the environment is normal, check whether the AC and DC cables are well insulated. 3. Contact Sungrow Customer Service...' Installer task if persistent.",
+     "call_installer": true,
+     "source_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
+     "source_ref": "Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312, 9.1 Troubleshooting (pp. 103-109)"
+    },
+    {
+     "code": "013 Grid Abnormal",
+     "meaning": "Grid parameter out of range",
+     "causes": "Same auto-reconnect note.",
+     "action": "Manual: '1. Measure the actual grid, and contact the local electric power company for solutions if the grid parameter exceeds the set range. 2. Contact Sungrow Customer Service...'",
+     "call_installer": false,
+     "source_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
+     "source_ref": "Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312, 9.1 Troubleshooting (pp. 103-109)"
+    },
+    {
+     "code": "017 Grid Voltage Imbalance",
+     "meaning": "Phase voltages differ too much (3-phase)",
+     "causes": "Same auto-reconnect note.",
+     "action": "Manual: '1. Measure the actual grid voltage. If grid phase voltages differ greatly, contact the electric power company for solutions. 2. ...modify the grid voltage imbalance parameter through the App or the LCD. 3. Contact Sungrow Customer Service...'",
+     "call_installer": true,
+     "source_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
+     "source_ref": "Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312, 9.1 Troubleshooting (pp. 103-109)"
+    },
+    {
+     "code": "028, 029, 208, 212, 448-479 PV Reverse Connection Fault",
+     "meaning": "PV string polarity reversed",
+     "causes": "Manual: 'Check whether the corresponding string is of reverse polarity.' (28/29 = PV1/PV2; 448-479 = string 1-32)",
+     "action": "Manual: 'If so, disconnect the DC switch and adjust the polarity when the string current drops below 0.5 A. 2. Contact Sungrow Customer Service if the preceding causes are ruled out and the fault persists.' Installer task.",
+     "call_installer": true,
+     "source_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
+     "source_ref": "Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312, 9.1 Troubleshooting (pp. 103-109)"
+    },
+    {
+     "code": "037 Excessively High Ambient Temperature",
+     "meaning": "Inverter/module too hot",
+     "causes": "Manual: 'Generally, the inverter will resume operation when the internal or module temperature returns to normal.'",
+     "action": "Manual: '1. Check whether the ambient temperature of the inverter is too high; 2. Check whether the inverter is in a well-ventilated place; 3. Check whether the inverter is exposed to direct sunlight. Shield it if so; 4. Check whether the fan is running properly. Replace the fan if not; 5. Contact Sungrow Power Customer Service...'",
+     "call_installer": true,
+     "source_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
+     "source_ref": "Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312, 9.1 Troubleshooting (pp. 103-109)"
+    },
+    {
+     "code": "039 Low System Insulation Resistance",
+     "meaning": "PV/battery insulation to ground too low",
+     "causes": "Manual: 'Wait for the inverter to return to normal. If the fault occurs repeatedly: 1. Check whether the ISO resistance protection value is excessively high via the app or the LCD... 2. Check the resistance to ground of the string and DC cable... 3. If the cable is normal and the fault occurs on rainy days, check it again when the weather turns fine. 4. If there are batteries, check whether battery cables are damaged...'",
+     "action": "Manual: '5. Contact Sungrow Customer Service if the preceding causes are ruled out and the fault persists.' Installer task.",
+     "call_installer": true,
+     "source_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
+     "source_ref": "Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312, 9.1 Troubleshooting (pp. 103-109)"
+    },
+    {
+     "code": "043 Excessively Low Ambient Temperature",
+     "meaning": "Too cold to operate",
+     "causes": "Manual: 'Stop and disconnect the inverter.'",
+     "action": "Manual: 'Restart the inverter when the ambient temperature rises within the operation temperature range.'",
+     "call_installer": false,
+     "source_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
+     "source_ref": "Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312, 9.1 Troubleshooting (pp. 103-109)"
+    },
+    {
+     "code": "075 Inverter Parallel Communication Alarm",
+     "meaning": "Parallel communication cable problem",
+     "causes": "Manual: '1. Check whether the communication cable and the terminals are abnormal.'",
+     "action": "Manual: '2. Reconnect the communication cable... 3. Contact Sungrow Customer Service...'",
+     "call_installer": true,
+     "source_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
+     "source_ref": "Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312, 9.1 Troubleshooting (pp. 103-109)"
+    },
+    {
+     "code": "084 Reverse Connection Alarm of the Meter/CT",
+     "meaning": "Energy meter or CT wired backwards",
+     "causes": "Manual: '1. Check if the meter is wrongly connected. 2. Check if the input and output wiring of the meter is reversed.'",
+     "action": "Manual: '3. If the existing system is enabled, please check if the rated power setting of the existing inverter is correct.' Installer task.",
+     "call_installer": true,
+     "source_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
+     "source_ref": "Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312, 9.1 Troubleshooting (pp. 103-109)"
+    },
+    {
+     "code": "088 Electric Arc Fault",
+     "meaning": "DC arc detected",
+     "causes": "Manual: '1. Disconnect the DC power supply, and check whether any DC cable is damaged, the connection terminal or fuse is loose or there is a weak contact.'",
+     "action": "Manual: '2. After performing step 1, reconnect the DC power supply, and clear the electric arc fault via the App or the LCD... 3. Contact Sungrow Customer Service if the fault persists.' Installer task.",
+     "call_installer": true,
+     "source_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
+     "source_ref": "Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312, 9.1 Troubleshooting (pp. 103-109)"
+    },
+    {
+     "code": "106 Grounding Cable Fault",
+     "meaning": "Earth/ground cable problem",
+     "causes": "Manual: '1. Check whether the AC cable is correctly connected. 2. Check whether the insulation between the ground cable and the live wire is normal.'",
+     "action": "Manual: '3. Contact Sungrow Customer Service...' Installer task.",
+     "call_installer": true,
+     "source_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
+     "source_ref": "Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312, 9.1 Troubleshooting (pp. 103-109)"
+    },
+    {
+     "code": "264-283 MPPT Reverse Connection",
+     "meaning": "MPPT input polarity reversed",
+     "causes": "Manual: 'Check whether the corresponding string is of reverse polarity.' (264-279 = string 1-20)",
+     "action": "Disconnect DC switch and correct polarity when string current < 0.5 A; else contact Sungrow. Installer task.",
+     "call_installer": true,
+     "source_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
+     "source_ref": "Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312, 9.1 Troubleshooting (pp. 103-109)"
+    },
+    {
+     "code": "323 Grid Confrontation",
+     "meaning": "Output port connected to a live grid when it should not be",
+     "causes": "Manual: '1. Check whether the output port is connected to actual grid. Disconnect it from the grid if so.'",
+     "action": "Manual: '2. Contact Sungrow Customer Service...' Installer task.",
+     "call_installer": true,
+     "source_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
+     "source_ref": "Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312, 9.1 Troubleshooting (pp. 103-109)"
+    },
+    {
+     "code": "332-363 / 364-395 Boost Capacitor Overvoltage Alarm / Fault",
+     "meaning": "Boost capacitor overvoltage",
+     "causes": "Alarm (332-363): 'The inverter can continue running.'",
+     "action": "Alarm: check wiring/terminals and foreign materials. Fault (364-395): 'Disconnect the AC and DC switches, and disconnect the battery side switches if there are batteries. Close the AC and DC switches in turn 15 minutes later and restart the system. 2. If the fault persists, please contact Sungrow Power Customer Service.'",
+     "call_installer": true,
+     "source_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
+     "source_ref": "Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312, 9.1 Troubleshooting (pp. 103-109)"
+    },
+    {
+     "code": "514 Meter Communication Abnormal Alarm",
+     "meaning": "Meter not communicating",
+     "causes": "Manual: '1. Check whether the communication cable and the terminals are abnormal.'",
+     "action": "Manual: '2. Reconnect the communication cable of the meter. 3. Contact Sungrow Customer Service...'",
+     "call_installer": true,
+     "source_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
+     "source_ref": "Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312, 9.1 Troubleshooting (pp. 103-109)"
+    },
+    {
+     "code": "532-547, 564-579 PV Reverse Connection Alarm",
+     "meaning": "String polarity reversed (alarm level)",
+     "causes": "As PV Reverse Connection Fault; 532-547 = string 1-16, 564-579 = string 17-32.",
+     "action": "Same as 028/029.",
+     "call_installer": true,
+     "source_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
+     "source_ref": "Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312, 9.1 Troubleshooting (pp. 103-109)"
+    },
+    {
+     "code": "548-563, 580-595 PV Abnormal Alarm",
+     "meaning": "String producing abnormally (shading, loose wiring, fuse)",
+     "causes": "Manual: '1. Check whether the corresponding module is sheltered... 2. Check whether the battery board wiring is loose... 3. Check if the DC fuse is damaged.'",
+     "action": "Manual: '4. Contact Sungrow Customer Service if the preceding causes are ruled out and the alarm persists.' Owner can check shading/cleanliness; wiring/fuse is installer work.",
+     "call_installer": true,
+     "source_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
+     "source_ref": "Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312, 9.1 Troubleshooting (pp. 103-109)"
+    },
+    {
+     "code": "System Fault (007, 011, 016, 019-025, 030-034, 036, 038, 040-042, 044-050, 052-058, 060-069, 085, 087, 092, 093, 100-105, 107-114, 116-124, 200-211, 248-255, 300-322, 324-328, 401-412, 600-603, 605, 608, 612, 616, 620, 622-624, 800, 802, 804, 807, 1096-1122)",
+     "meaning": "Internal system fault",
+     "causes": "Manual: 'System Fault'",
+     "action": "Manual: '1. Wait for the inverter to return to normal. 2. Disconnect the AC and DC switches, and disconnect the battery side switches if there are batteries. Close the AC and DC switches in turn 15 minutes later and restart the system. 3. Contact Sungrow Customer Service if the preceding causes are ruled out and the fault persists.'",
+     "call_installer": true,
+     "source_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
+     "source_ref": "Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312, 9.1 Troubleshooting (pp. 103-109)"
+    },
+    {
+     "code": "System Alarm (059, 070-074, 076-083, 089, 216-218, 220-233, 432-434, 500-513, 515-518, 635-638, 900, 901, 910, 911, 996)",
+     "meaning": "Non-blocking system alarm",
+     "causes": "Manual: '1. The inverter can continue running.'",
+     "action": "Manual: '2. Check whether the related wiring and terminal are abnormal, check whether there are any foreign materials or other environmental abnormalities, and take corresponding corrective measures when necessary. 3. If the fault persists, please contact Sungrow Power Customer Service.'",
+     "call_installer": true,
+     "source_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
+     "source_ref": "Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312, 9.1 Troubleshooting (pp. 103-109)"
+    }
+   ]
+  },
+  {
+   "id": "fronius",
+   "name": "Fronius (Symo / Primo SnapINverter STATE codes; GEN24 1xxx codes)",
+   "models": "Symo Hybrid (online manual read; Class 1-5 codes are shared with Symo/Primo/Galvo SnapINverters per Fronius numbering) and Primo GEN24 7.7/10.0 (GEN24 lists only 1030/1173/1191 in its manual)",
+   "manual_url": "http://manuals.fronius.com/html/4204260222/en.html",
+   "manual_note": "Official Fronius online manual manuals.fronius.com (Symo Hybrid, doc 42,0426,0222) read via page fetch; some rows were merged in the HTML table so 406-408 and 459-461 remedies are table-layout inferences. GEN24 PDF is Fronius' own manual hosted by a US distributor.",
+   "codes": [
+    {
+     "code": "STATE 102 (also 103, 105, 106, 107, 108, 112)",
+     "meaning": "AC (grid) voltage too high; class 1 codes = grid conditions outside permissible range",
+     "causes": "Manual: 'AC voltage too high' (102); the row covers 103-112 grid voltage/frequency/islanding conditions.",
+     "action": "Manual: inverter resumes 'Following careful testing and when the grid conditions are within the permissible range again'. Remedy: check grid connections; contact the system fitter if the code keeps recurring.",
+     "call_installer": false,
+     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
+    },
+    {
+     "code": "STATE 301",
+     "meaning": "Overcurrent AC",
+     "causes": "Manual: 'Overcurrent (AC)'",
+     "action": "Manual: short-term interruption to feed-in, after which the inverter repeats its start-up routine; 'if the code is displayed permanently, notify a Fronius-trained service technician'.",
+     "call_installer": true,
+     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
+    },
+    {
+     "code": "STATE 302",
+     "meaning": "Overcurrent DC or battery not detected",
+     "causes": "Manual: 'Overcurrent DC or battery not detected'",
+     "action": "Same as 301.",
+     "call_installer": true,
+     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
+    },
+    {
+     "code": "STATE 303 / 304",
+     "meaning": "DC module overtemperature (PV) / AC module overtemperature",
+     "causes": "Manual: 'DC module overtemperature PV' / 'AC module overtemperature'",
+     "action": "Manual: 'purge the cooling air openings and heat sink'; the fault is rectified automatically; if the code recurs contact the system fitter.",
+     "call_installer": false,
+     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
+    },
+    {
+     "code": "STATE 305",
+     "meaning": "No power being fed in, despite closed relays",
+     "causes": "Manual: 'No power being fed in, despite closed relays'",
+     "action": "Manual: fault is rectified automatically; contact the system fitter if it recurs.",
+     "call_installer": false,
+     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
+    },
+    {
+     "code": "STATE 306 (Power low)",
+     "meaning": "Not enough PV power to feed in (normal at dawn/dusk)",
+     "causes": "Manual: 'There is not enough PV power available for feeding energy into the grid and no power has been requested from the battery.' and 'the status codes STATE 306 (Power low) and STATE 307 (DC low) are displayed routinely at these times of day' and 'do not indicate any kind of fault'.",
+     "action": "Manual: wait for sufficient insolation.",
+     "call_installer": false,
+     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
+    },
+    {
+     "code": "STATE 307 (DC low)",
+     "meaning": "DC input voltage too low to feed in (normal at night)",
+     "causes": "Manual: 'DC input voltage too low for feeding energy into the grid'",
+     "action": "Manual: wait for sufficient insolation.",
+     "call_installer": false,
+     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
+    },
+    {
+     "code": "STATE 308",
+     "meaning": "Intermediate circuit voltage too high",
+     "causes": "Manual: 'Intermediate circuit voltage too high'",
+     "action": "Manual: fault is rectified automatically; contact the system fitter if it recurs.",
+     "call_installer": false,
+     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
+    },
+    {
+     "code": "STATE 401",
+     "meaning": "Unable to communicate with the power stage set",
+     "causes": "Manual: 'Unable to communicate with the power stage set'",
+     "action": "Manual: 'The inverter will automatically attempt to connect again and, if possible, will resume feeding energy into the grid.' If displayed permanently, notify a Fronius-trained service engineer.",
+     "call_installer": true,
+     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
+    },
+    {
+     "code": "STATE 406 / 407 / 408",
+     "meaning": "DC module temperature sensor faulty (PV) / AC module temperature sensor faulty / DC component measured in the grid too high",
+     "causes": "Manual descriptions as listed.",
+     "action": "Manual: contact the system engineer if the code keeps recurring.",
+     "call_installer": true,
+     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
+    },
+    {
+     "code": "STATE 412",
+     "meaning": "Fixed voltage mode selected instead of MPP voltage mode",
+     "causes": "Manual: 'Fixed voltage mode has been selected instead of MPP voltage mode, and the fixed voltage has been set to too low or too high a value.'",
+     "action": "Manual: contact the system engineer if the code keeps recurring (settings change).",
+     "call_installer": true,
+     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
+    },
+    {
+     "code": "STATE 416",
+     "meaning": "No communication between power stage set and control system",
+     "causes": "Manual: 'No communication between power stage set and control system'",
+     "action": "Same as 401.",
+     "call_installer": true,
+     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
+    },
+    {
+     "code": "STATE 457",
+     "meaning": "Grid relay sticking or neutral conductor ground voltage too high",
+     "causes": "Manual: 'Grid relay sticking or neutral conductor ground voltage too high'; 'The inverter is not feeding any energy into the grid.'",
+     "action": "Manual: 'check the grounding, so that the neutral conductor ground voltage is below 30 V.' Installer task.",
+     "call_installer": true,
+     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
+    },
+    {
+     "code": "STATE 459 / 460 / 461",
+     "meaning": "Error recording the measuring signal for the insulation test / DSP reference voltage out of tolerance / DSP data memory error",
+     "causes": "Manual descriptions as listed; inverter not feeding in.",
+     "action": "Notify a service engineer if the code is permanent (table layout inference, see notes).",
+     "call_installer": true,
+     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
+    },
+    {
+     "code": "STATE 502",
+     "meaning": "Insulation fault on solar modules or on the battery",
+     "causes": "Manual: 'Insulation fault on solar modules or on the battery'; warning shown on display.",
+     "action": "Manual: contact the system engineer if the code keeps recurring.",
+     "call_installer": true,
+     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
+    },
+    {
+     "code": "STATE 509",
+     "meaning": "No energy fed into the grid in the past 24 hours",
+     "causes": "Manual: 'No energy fed into the grid in the past 24 hours'",
+     "action": "Manual: acknowledge the code and 'check whether all conditions for feed-in are met, for example whether the modules are covered in snow'. Owner: check DC switch, shading/soiling, then installer.",
+     "call_installer": false,
+     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
+    },
+    {
+     "code": "STATE 522",
+     "meaning": "DC low (PV), no PV voltage available",
+     "causes": "Manual: 'this message appears overnight if no photovoltaics are connected to the Fronius Symo Hybrid' or when the inverter is in standby mode.",
+     "action": "No action at night; if during the day, check DC switch / call installer.",
+     "call_installer": false,
+     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
+    },
+    {
+     "code": "STATE 558",
+     "meaning": "Functional incompatibility between PC boards",
+     "causes": "Manual: 'Functional incompatibility (one or more PC boards in the inverter are not compatible with each other...'",
+     "action": "Manual: update the inverter firmware (installer/service).",
+     "call_installer": true,
+     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
+    },
+    {
+     "code": "STATE 567",
+     "meaning": "Power derating caused by overvoltage",
+     "causes": "Manual: power is reduced when grid voltage is excessively high.",
+     "action": "Manual: 'As soon as the grid voltage is back within the permissible range' the fault is rectified automatically; contact the system engineer if it recurs.",
+     "call_installer": false,
+     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
+    },
+    {
+     "code": "1030 WSD Open (GEN24)",
+     "meaning": "Wired shutdown chain open",
+     "causes": "Manual: 'A device that is connected in the WSD chain has interrupted the signal line (e.g., surge protection device) or the bypass installed ex works as standard has been removed and no trigger device has been installed.'",
+     "action": "Manual: 'If the SPD surge protection device has tripped, the inverter must be repaired by an authorized specialist. OR: Install the bypass installed ex works as standard or a trigger device. OR: Turn the WSD (wired shutdown) switch to position 1 (WSD primary device).'",
+     "call_installer": true,
+     "source_url": "https://ressupply.com/documents/fronius/Primo_GEN24_GEN24_Plus-7.7-10.0_Operating_Instructions.pdf",
+     "source_ref": "Fronius Primo GEN24 208-240 7.7/10.0 Operating Instructions 42,0426,0312,EA 017-04092025, 'Status codes and remedy' (p. 133)"
+    },
+    {
+     "code": "1173 ArcContinuousFault (GEN24)",
+     "meaning": "Repeated DC arc detected; max auto-reconnects reached",
+     "causes": "Manual: 'An electric arc has been identified on the PV system, and the maximum number of automatic connections within 24 hours has been reached.'",
+     "action": "Manual: confirm the status (sensor press 3 s, or Event Log / Notifications) BUT 'Before the status 1173 - ArcContinuousFault is confirmed, the entire photovoltaic system affected must be checked for any possible damage. Damaged components must be repaired by qualified specialists.'",
+     "call_installer": true,
+     "source_url": "https://ressupply.com/documents/fronius/Primo_GEN24_GEN24_Plus-7.7-10.0_Operating_Instructions.pdf",
+     "source_ref": "Fronius Primo GEN24 208-240 7.7/10.0 Operating Instructions 42,0426,0312,EA 017-04092025, 'Status codes and remedy' (p. 133)"
+    },
+    {
+     "code": "1191 AfciDataTransfer (GEN24)",
+     "meaning": "Arc identified (info)",
+     "causes": "Manual: 'An electric arc has been identified on the PV system.'",
+     "action": "Manual: 'No action required.'",
+     "call_installer": false,
+     "source_url": "https://ressupply.com/documents/fronius/Primo_GEN24_GEN24_Plus-7.7-10.0_Operating_Instructions.pdf",
+     "source_ref": "Fronius Primo GEN24 208-240 7.7/10.0 Operating Instructions 42,0426,0312,EA 017-04092025, 'Status codes and remedy' (p. 133)"
+    }
+   ]
+  },
+  {
+   "id": "voltronic-axpert",
+   "name": "Voltronic Power Axpert (base design of many Pakistani rebrands)",
+   "models": "Axpert VM III 1.5/3/5 kW (manual read). Other Axpert families (VM IV, MKS IV, MAX, MAX II, King) use the same 01-09 / 51-59 numbering with model-specific additions (MAX II adds 11 PV over voltage, 12 DC/DC over current, 13 battery discharge over current, per voltronicpower.com manual listing - not read). Pakistani brands sold as 'Axpert'-type units (e.g. Inverex Axpert, Ziewnic Axpert) are widely reported to be Voltronic OEM units, but no Inverex/Knox manual was fetched to confirm their code tables.",
+   "manual_url": "https://voltronicpower.com/content/download/Manual/Axpert%20VM%20III_manual-20200904.pdf",
+   "manual_note": "Official Voltronic manual from voltronicpower.com (v1.8, 2020-09-04). Other official Axpert manuals: https://voltronicpower.com/content/download/Manual/Axpert%20VM%20IV-4K6K-TWIN-Off-grid-manual-20220629.pdf , https://voltronicpower.com/content/download/Manual/Axpert%20MAX%20II-manual-20210811.pdf",
+   "codes": [
+    {
+     "code": "Fault 01",
+     "meaning": "Fan is locked / fan fault",
+     "causes": "Manual: 'Fan fault'",
+     "action": "Manual: 'Replace the fan.' Owner: check for dust; replacement by installer.",
+     "call_installer": true,
+     "source_url": "https://voltronicpower.com/content/download/Manual/Axpert%20VM%20III_manual-20200904.pdf",
+     "source_ref": "Voltronic Axpert VM III User Manual v1.8, 'TROUBLE SHOOTING' table (p. 43)"
+    },
+    {
+     "code": "Fault 02",
+     "meaning": "Over temperature",
+     "causes": "Manual: 'Temperature of internal converter component is over 120C.' / 'Internal temperature of inverter component is over 100C.'",
+     "action": "Manual: 'Check whether the air flow of the unit is blocked or whether the ambient temperature is too high.'",
+     "call_installer": false,
+     "source_url": "https://voltronicpower.com/content/download/Manual/Axpert%20VM%20III_manual-20200904.pdf",
+     "source_ref": "Voltronic Axpert VM III User Manual v1.8, 'TROUBLE SHOOTING' table (p. 43)"
+    },
+    {
+     "code": "Fault 03",
+     "meaning": "Battery voltage is too high",
+     "causes": "Manual: 'Battery is over-charged.' / 'The battery voltage is too high.'",
+     "action": "Manual: 'Return to repair center.' / 'Check if spec and quantity of batteries are meet requirements.'",
+     "call_installer": true,
+     "source_url": "https://voltronicpower.com/content/download/Manual/Axpert%20VM%20III_manual-20200904.pdf",
+     "source_ref": "Voltronic Axpert VM III User Manual v1.8, 'TROUBLE SHOOTING' table (p. 43)"
+    },
+    {
+     "code": "Fault 04",
+     "meaning": "Battery voltage is too low",
+     "causes": "Fault table: 'Battery voltage is too low'. Troubleshooting (startup shutdown): 'The battery voltage is too low (<1.91V/Cell)'",
+     "action": "Manual: '1. Re-charge battery. 2. Replace battery.'",
+     "call_installer": false,
+     "source_url": "https://voltronicpower.com/content/download/Manual/Axpert%20VM%20III_manual-20200904.pdf",
+     "source_ref": "Voltronic Axpert VM III User Manual v1.8, 'TROUBLE SHOOTING' table (p. 43)"
+    },
+    {
+     "code": "Fault 05",
+     "meaning": "Output short circuited (or converter over-temperature)",
+     "causes": "Manual: 'Output short circuited or over temperature is detected by internal converter components.'",
+     "action": "Manual: 'Check if wiring is connected well and remove abnormal load.'",
+     "call_installer": true,
+     "source_url": "https://voltronicpower.com/content/download/Manual/Axpert%20VM%20III_manual-20200904.pdf",
+     "source_ref": "Voltronic Axpert VM III User Manual v1.8, 'TROUBLE SHOOTING' table (p. 43)"
+    },
+    {
+     "code": "Fault 06 / 58",
+     "meaning": "Output voltage too high / too low",
+     "causes": "Manual: 'Output abnormal (Inverter voltage below than 190Vac or is higher than 260Vac)'",
+     "action": "Manual: '1. Reduce the connected load. 2. Return to repair center'",
+     "call_installer": true,
+     "source_url": "https://voltronicpower.com/content/download/Manual/Axpert%20VM%20III_manual-20200904.pdf",
+     "source_ref": "Voltronic Axpert VM III User Manual v1.8, 'TROUBLE SHOOTING' table (p. 43)"
+    },
+    {
+     "code": "Fault 07",
+     "meaning": "Overload time out",
+     "causes": "Manual: 'Overload error. The inverter is overload 110% and time is up.' Also: 'If PV input voltage is higher than specification, the output power will be derated... it will cause overload.'",
+     "action": "Manual: 'Reduce the connected load by switching off some equipment.' / 'Reduce the number of PV modules in series or the connected load.'",
+     "call_installer": false,
+     "source_url": "https://voltronicpower.com/content/download/Manual/Axpert%20VM%20III_manual-20200904.pdf",
+     "source_ref": "Voltronic Axpert VM III User Manual v1.8, 'TROUBLE SHOOTING' table (p. 43)"
+    },
+    {
+     "code": "Fault 08 / 09 / 53 / 57",
+     "meaning": "Bus voltage too high / bus soft start failed / inverter soft start failed / current sensor failed",
+     "causes": "Manual: 'Internal components failed.'",
+     "action": "Manual: 'Return to repair center.'",
+     "call_installer": true,
+     "source_url": "https://voltronicpower.com/content/download/Manual/Axpert%20VM%20III_manual-20200904.pdf",
+     "source_ref": "Voltronic Axpert VM III User Manual v1.8, 'TROUBLE SHOOTING' table (p. 43)"
+    },
+    {
+     "code": "Fault 51",
+     "meaning": "Over current or surge",
+     "causes": "Manual: 'Over current or surge.'",
+     "action": "Manual: 'Restart the unit, if the error happens again, please return to repair center.'",
+     "call_installer": true,
+     "source_url": "https://voltronicpower.com/content/download/Manual/Axpert%20VM%20III_manual-20200904.pdf",
+     "source_ref": "Voltronic Axpert VM III User Manual v1.8, 'TROUBLE SHOOTING' table (p. 43)"
+    },
+    {
+     "code": "Fault 52",
+     "meaning": "Bus voltage is too low",
+     "causes": "Manual: 'Bus voltage is too low.'",
+     "action": "Manual: 'Restart the unit, if the error happens again, please return to repair center.'",
+     "call_installer": true,
+     "source_url": "https://voltronicpower.com/content/download/Manual/Axpert%20VM%20III_manual-20200904.pdf",
+     "source_ref": "Voltronic Axpert VM III User Manual v1.8, 'TROUBLE SHOOTING' table (p. 43)"
+    },
+    {
+     "code": "Fault 55",
+     "meaning": "Over DC voltage in AC output / output voltage unbalanced",
+     "causes": "Manual: 'Output voltage is unbalanced.'",
+     "action": "Manual: 'Restart the unit, if the error happens again, please return to repair center.'",
+     "call_installer": true,
+     "source_url": "https://voltronicpower.com/content/download/Manual/Axpert%20VM%20III_manual-20200904.pdf",
+     "source_ref": "Voltronic Axpert VM III User Manual v1.8, 'TROUBLE SHOOTING' table (p. 43)"
+    },
+    {
+     "code": "Fault 59",
+     "meaning": "PV voltage is over limitation",
+     "causes": "Manual: 'PV input voltage is beyond the specification.'",
+     "action": "Manual: 'Reduce the number of PV modules in series.' Installer task.",
+     "call_installer": true,
+     "source_url": "https://voltronicpower.com/content/download/Manual/Axpert%20VM%20III_manual-20200904.pdf",
+     "source_ref": "Voltronic Axpert VM III User Manual v1.8, 'TROUBLE SHOOTING' table (p. 43)"
+    },
+    {
+     "code": "Warning 01",
+     "meaning": "Fan is locked when inverter is on (beep three times every second)",
+     "causes": "Warning table entry.",
+     "action": "Check fan is free; if it persists call installer.",
+     "call_installer": false,
+     "source_url": "https://voltronicpower.com/content/download/Manual/Axpert%20VM%20III_manual-20200904.pdf",
+     "source_ref": "Voltronic Axpert VM III 1.5KW/3KW/5KW User Manual v1.8, 'Fault Reference Code' and 'Warning Indicator' tables (p. 39)"
+    },
+    {
+     "code": "Warning 02",
+     "meaning": "Over temperature (no beep)",
+     "causes": "Warning table entry.",
+     "action": "Reduce load, improve ventilation.",
+     "call_installer": false,
+     "source_url": "https://voltronicpower.com/content/download/Manual/Axpert%20VM%20III_manual-20200904.pdf",
+     "source_ref": "Voltronic Axpert VM III 1.5KW/3KW/5KW User Manual v1.8, 'Fault Reference Code' and 'Warning Indicator' tables (p. 39)"
+    },
+    {
+     "code": "Warning 03",
+     "meaning": "Battery is over-charged (beep once every second)",
+     "causes": "Warning table entry.",
+     "action": "Check charger/battery settings with installer.",
+     "call_installer": true,
+     "source_url": "https://voltronicpower.com/content/download/Manual/Axpert%20VM%20III_manual-20200904.pdf",
+     "source_ref": "Voltronic Axpert VM III 1.5KW/3KW/5KW User Manual v1.8, 'Fault Reference Code' and 'Warning Indicator' tables (p. 39)"
+    },
+    {
+     "code": "Warning 04",
+     "meaning": "Low battery (beep once every second)",
+     "causes": "Warning table entry.",
+     "action": "Recharge battery; reduce load.",
+     "call_installer": false,
+     "source_url": "https://voltronicpower.com/content/download/Manual/Axpert%20VM%20III_manual-20200904.pdf",
+     "source_ref": "Voltronic Axpert VM III 1.5KW/3KW/5KW User Manual v1.8, 'Fault Reference Code' and 'Warning Indicator' tables (p. 39)"
+    },
+    {
+     "code": "Warning 07",
+     "meaning": "Overload (beep once every 0.5 second)",
+     "causes": "Warning table entry.",
+     "action": "Switch off some loads.",
+     "call_installer": false,
+     "source_url": "https://voltronicpower.com/content/download/Manual/Axpert%20VM%20III_manual-20200904.pdf",
+     "source_ref": "Voltronic Axpert VM III 1.5KW/3KW/5KW User Manual v1.8, 'Fault Reference Code' and 'Warning Indicator' tables (p. 39)"
+    },
+    {
+     "code": "Warning 10",
+     "meaning": "Output power derating (beep twice every 3 seconds)",
+     "causes": "Warning table entry.",
+     "action": "Reduce load; see Fault 07 note on high PV voltage derating.",
+     "call_installer": false,
+     "source_url": "https://voltronicpower.com/content/download/Manual/Axpert%20VM%20III_manual-20200904.pdf",
+     "source_ref": "Voltronic Axpert VM III 1.5KW/3KW/5KW User Manual v1.8, 'Fault Reference Code' and 'Warning Indicator' tables (p. 39)"
+    },
+    {
+     "code": "Warning 15",
+     "meaning": "PV energy is low (beep twice every 3 seconds)",
+     "causes": "Warning table entry.",
+     "action": "Normal in low sun; no action in manual.",
+     "call_installer": false,
+     "source_url": "https://voltronicpower.com/content/download/Manual/Axpert%20VM%20III_manual-20200904.pdf",
+     "source_ref": "Voltronic Axpert VM III 1.5KW/3KW/5KW User Manual v1.8, 'Fault Reference Code' and 'Warning Indicator' tables (p. 39)"
+    },
+    {
+     "code": "Warning 16",
+     "meaning": "High AC input (>280VAC) during BUS soft start",
+     "causes": "Warning table entry.",
+     "action": "Wait for utility voltage to normalise; if frequent, have installer check input voltage.",
+     "call_installer": false,
+     "source_url": "https://voltronicpower.com/content/download/Manual/Axpert%20VM%20III_manual-20200904.pdf",
+     "source_ref": "Voltronic Axpert VM III 1.5KW/3KW/5KW User Manual v1.8, 'Fault Reference Code' and 'Warning Indicator' tables (p. 39)"
+    },
+    {
+     "code": "Warning 32",
+     "meaning": "Communication failure between inverter and remote display panel",
+     "causes": "Warning table entry.",
+     "action": "Check the display panel cable; installer if persistent.",
+     "call_installer": false,
+     "source_url": "https://voltronicpower.com/content/download/Manual/Axpert%20VM%20III_manual-20200904.pdf",
+     "source_ref": "Voltronic Axpert VM III 1.5KW/3KW/5KW User Manual v1.8, 'Fault Reference Code' and 'Warning Indicator' tables (p. 39)"
+    },
+    {
+     "code": "Warning (battery icon)",
+     "meaning": "Battery is not connected / Battery equalization",
+     "causes": "Warning table entries (no number; icon only). Troubleshooting: 'Battery is disconnected.' -> relay switches on and off repeatedly",
+     "action": "Manual: 'Check if battery wires are connected well.'",
+     "call_installer": false,
+     "source_url": "https://voltronicpower.com/content/download/Manual/Axpert%20VM%20III_manual-20200904.pdf",
+     "source_ref": "Voltronic Axpert VM III 1.5KW/3KW/5KW User Manual v1.8, 'Fault Reference Code' and 'Warning Indicator' tables (p. 39)"
+    }
+   ]
+  }
+ ]
+}

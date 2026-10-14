@@ -1,0 +1,224 @@
+{
+ "id": "A8",
+ "status": "publish",
+ "template": "tool",
+ "h1": "kVA to kW Calculator",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "calc": "kva_to_kw",
+ "fields": [
+  {
+   "name": "kva",
+   "label": "Apparent power",
+   "unit": "kVA",
+   "default": 5,
+   "hint": "The kVA figure on a generator, UPS, inverter or transformer nameplate, for example 2.5, 3.5, 5 or 10."
+  },
+  {
+   "name": "pf",
+   "label": "Power factor",
+   "unit": "0 to 1",
+   "default": "@pf_generator",
+   "hint": "Generators and most UPS and inverters are rated at 0.8. Use 1 only if the nameplate says unity power factor."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "kw",
+   "label": "Real power",
+   "spec": "2",
+   "unit": "kW"
+  }
+ ],
+ "answer": "A {{in.kva|1}} kVA generator or UPS delivers about {{out.kw|2}} kW of real power at a power factor of {{out.pf|2}}. kW = kVA × power factor. The kVA figure is the apparent power the machine can carry; the kW is the useful power your appliances get, so a {{ex.2.in.kva|int}} kVA set gives {{ex.2.out.kw|int}} kW and a {{ex.1.in.kva|1}} kVA set about {{ex.1.out.kw|1}} kW.",
+ "how": "{{in.kva|2}} kVA × {{out.pf|2}} power factor = {{out.kw|2}} kW. The power factor is the share of the apparent power that does real work; the rest circulates between the supply and motor or electronic loads without being used.",
+ "key_facts": [
+  "kW = kVA × power factor, so at the usual generator power factor of {{d.pf_generator|2}} every kVA gives {{ex.0.out.kw|2}} kW of real power.",
+  "A {{in.kva|int}} kVA generator delivers about {{out.kw|int}} kW at a power factor of {{out.pf|2}}; a {{ex.1.in.kva|1}} kVA set gives about {{ex.1.out.kw|1}} kW and a {{ex.2.in.kva|int}} kVA set about {{ex.2.out.kw|int}} kW.",
+  "The same {{ex.3.in.kva|int}} kVA machine at a power factor of one delivers {{ex.3.out.kw|int}} kW, which is why the rating of a UPS or inverter depends on the power factor printed on its label.",
+  "kVA is apparent power (what the wires and windings must carry); kW is real power (what the meter bills and the appliances use)."
+ ],
+ "formula": {
+  "text": "kW = kVA × PF",
+  "lines": [
+   "kW = real power in kilowatts",
+   "kVA = apparent power in kilovolt-amps (the nameplate rating)",
+   "PF = power factor, 0.8 for generators and most UPS and inverters, 1 for a purely resistive load",
+   "Reverse: kVA = kW ÷ PF"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "What is the difference between kVA and kW?",
+   "p": [
+    "kVA is apparent power: volts times amps, the total the generator windings, transformer and cables must carry. kW is real power: the part that becomes heat, light and motion and that an electricity meter counts. The ratio between them is the power factor. For a heater the two are equal; for motors, ACs and electronic loads the current is partly out of step with the voltage, so the kVA is higher than the kW.",
+    "Makers rate generators, transformers and UPS units in kVA because they cannot know what loads you will plug in, and the windings heat up according to amps, not watts. You then convert to kW with the power factor your loads actually have."
+   ]
+  },
+  {
+   "h2": "Why does a {{in.kva|int}} kVA generator give only about {{out.kw|int}} kW?",
+   "p": [
+    "Generators are rated at a power factor of {{d.pf_generator|2}}, the typical value for a mixed home load. A {{in.kva|int}} kVA set therefore delivers {{in.kva|int}} × {{out.pf|2}} = {{out.kw|int}} kW of real power. Load it with {{in.kva|int}} kW of heaters and it will be overloaded even though the kVA rating looks big enough.",
+    "The same rule covers every common size: a {{ex.1.in.kva|1}} kVA portable set gives about {{ex.1.out.kw|1}} kW, a {{ex.2.in.kva|int}} kVA set about {{ex.2.out.kw|int}} kW and a {{ex.4.in.kva|int}} kVA three-phase set about {{ex.4.out.kw|int}} kW. Motor starting needs headroom on top of this, which the generator size for 1.5 ton AC and generator size for well pump tools work out."
+   ]
+  },
+  {
+   "h2": "kW to kVA: the formula in reverse",
+   "p": [
+    "To size a generator, UPS or transformer from a known load, turn the formula round: kVA = kW ÷ power factor. A load of {{ex.1.out.kw|1}} kW at a power factor of {{ex.1.in.pf|2}} needs {{ex.1.in.kva|1}} kVA, and {{ex.2.out.kw|int}} kW needs {{ex.2.in.kva|int}} kVA. Enter any kVA above and the calculator shows the matching kW, so you can read the table in either direction.",
+    "Remember that this is the running load only. Anything with a motor or compressor draws several times its running current for a moment at start-up, so the generator tools add that surge before picking a standard size."
+   ]
+  },
+  {
+   "h2": "How many watts is one kVA?",
+   "p": [
+    "At a power factor of {{ex.0.in.pf|2}}, {{ex.0.in.kva|int}} kVA is {{ex.0.out.kw|2}} kW. One kilowatt is a thousand watts, so move the decimal point three places to the right for watts. At a power factor of one, {{ex.0.in.kva|int}} kVA and one kW are the same thing.",
+    "For UPS and inverter labels in VA rather than kVA, the VA to watts calculator does the same conversion with the lower power factor that small line-interactive units use."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "kva": 1,
+    "pf": 0.8
+   },
+   "title": "{{in.kva|int}} kVA at a power factor of {{in.pf|2}}",
+   "text": "{{in.kva|int}} kVA × {{in.pf|2}} = {{out.kw|2}} kW. One kVA of generator or UPS rating is {{out.kw|2}} kW of real power at the standard power factor."
+  },
+  {
+   "inputs": {
+    "kva": 3.5,
+    "pf": 0.8
+   },
+   "title": "A {{in.kva|1}} kVA portable generator",
+   "text": "{{in.kva|1}} kVA × {{in.pf|2}} = {{out.kw|1}} kW. This is the continuous real power a {{in.kva|1}} kVA set can supply to fans, lights, a fridge and a TV."
+  },
+  {
+   "inputs": {
+    "kva": 10,
+    "pf": 0.8
+   },
+   "title": "A {{in.kva|int}} kVA generator",
+   "text": "{{in.kva|int}} kVA × {{in.pf|2}} = {{out.kw|int}} kW. Enough for a house with a couple of inverter ACs plus the usual lights, fans and fridge."
+  },
+  {
+   "inputs": {
+    "kva": 5,
+    "pf": 1
+   },
+   "title": "{{in.kva|int}} kVA at a power factor of one",
+   "text": "{{in.kva|int}} kVA × {{in.pf|int}} = {{out.kw|int}} kW. A unity power factor inverter or a purely resistive load makes kVA and kW equal."
+  },
+  {
+   "inputs": {
+    "kva": 20,
+    "pf": 0.8
+   },
+   "title": "A {{in.kva|int}} kVA three-phase set",
+   "text": "{{in.kva|int}} kVA × {{in.pf|2}} = {{out.kw|int}} kW. The formula is the same for three-phase machines; the phases only change how the amps are shared."
+  }
+ ],
+ "table": {
+  "caption": "kVA to kW for common generator and UPS sizes at a power factor of {{d.pf_generator|2}}",
+  "rows": [
+   {
+    "kva": 1
+   },
+   {
+    "kva": 2.5
+   },
+   {
+    "kva": 3.5
+   },
+   {
+    "kva": 5
+   },
+   {
+    "kva": 7.5
+   },
+   {
+    "kva": 10
+   },
+   {
+    "kva": 15
+   },
+   {
+    "kva": 20
+   }
+  ],
+  "columns": [
+   {
+    "label": "Rating",
+    "tpl": "{{in.kva|1}} kVA"
+   },
+   {
+    "label": "Power factor",
+    "tpl": "{{in.pf|2}}"
+   },
+   {
+    "label": "Real power",
+    "tpl": "{{out.kw|2}} kW"
+   }
+  ]
+ },
+ "mistakes": [
+  "Treating kVA as kW. A {{in.kva|int}} kVA generator gives about {{out.kw|int}} kW, so plan the load on the kW figure.",
+  "Using a power factor of one for a generator or UPS. The nameplate kVA assumes {{d.pf_generator|2}} unless it says unity; a higher figure flatters the result.",
+  "Sizing a generator from running kW alone. Motors, pumps and non-inverter ACs surge at start-up; use the generator tools, which add the starting load before picking a standard size.",
+  "Mixing up kW and kWh. kW is power at a moment; kWh (a unit on the bill) is energy over time. A generator's kVA says nothing about fuel or units used."
+ ],
+ "safety": "A generator's kW figure is its continuous limit; motor starting needs headroom above it, and running a set near full load shortens its life. Have a licensed electrician fit a changeover switch so the generator can never feed back into the grid.",
+ "faq": [
+  {
+   "q": "What is the kVA to kW formula?",
+   "a": "kW = kVA × power factor. For a {{in.kva|int}} kVA machine at a power factor of {{out.pf|2}}, kW = {{in.kva|int}} × {{out.pf|2}} = {{out.kw|int}} kW. The reverse is kVA = kW ÷ power factor."
+  },
+  {
+   "q": "How many kW is {{in.kva|int}} kVA?",
+   "a": "About {{out.kw|int}} kW at the standard generator power factor of {{out.pf|2}}, or {{ex.3.out.kw|int}} kW at a power factor of one. Most home generator and UPS labels mean the {{out.pf|2}} figure."
+  },
+  {
+   "q": "How many kW is {{ex.2.in.kva|int}} kVA?",
+   "a": "{{ex.2.in.kva|int}} kVA × {{ex.2.in.pf|2}} = {{ex.2.out.kw|int}} kW of real power. That is the continuous load a {{ex.2.in.kva|int}} kVA generator can carry; starting surges from ACs and pumps must fit inside it too."
+  },
+  {
+   "q": "How many kW is {{ex.1.in.kva|1}} kVA?",
+   "a": "{{ex.1.in.kva|1}} kVA × {{ex.1.in.pf|2}} = {{ex.1.out.kw|1}} kW. A {{ex.1.in.kva|1}} kVA portable generator runs lights, fans, a fridge and a TV, but not a 1.5 ton non-inverter AC, whose starting surge is far above {{ex.1.out.kw|1}} kW."
+  },
+  {
+   "q": "One kVA is how many watts?",
+   "a": "At a power factor of {{ex.0.in.pf|2}}, {{ex.0.in.kva|int}} kVA is {{ex.0.out.kw|2}} kW; one kW is a thousand watts, so shift the decimal point three places for watts. At a power factor of one, {{ex.0.in.kva|int}} kVA equals one kW."
+  },
+  {
+   "q": "How do I convert kW to kVA?",
+   "a": "Divide by the power factor: kVA = kW ÷ power factor. A load of {{ex.2.out.kw|int}} kW at a power factor of {{ex.2.in.pf|2}} needs a {{ex.2.in.kva|int}} kVA generator before any allowance for motor starting."
+  },
+  {
+   "q": "Which power factor should I use for a generator?",
+   "a": "Use {{d.pf_generator|2}} unless the nameplate gives another value. It is the standard rating point for generators and matches a typical home with fans, ACs, a fridge and electronics. For heaters and lights only, the real power factor is close to one, but the generator is still limited by its kW rating."
+  }
+ ],
+ "related": [
+  "A9",
+  "A4",
+  "A10",
+  "C5",
+  "B5"
+ ],
+ "next": "C6",
+ "literal_numbers": [
+  "1.5 ton"
+ ],
+ "sources": [
+  {
+   "label": "Schneider Electric white paper, Watts and Volt-Amps: Powerful Confusion",
+   "url": "https://www.se.com/ww/en/download/document/SPD_SADE-5TNQYF_EN/"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

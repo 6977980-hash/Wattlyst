@@ -1,30 +1,31 @@
 # Progress
 
-## Handoff for next phase (Phase 4: Wave 2 + planner) — written by the Phase 3 thread, 2026-10-13
+## Handoff for next phase (Phase 5: Wave 3 + authority) — written by the Phase 4 thread, 2026-10-14
 
-Read this section, then only "Phase 4" in `specs/build-plan.md`. Formulas and numbers are never repeated here; they live once in `specs/formulas.md`, `data/` and `engine/`.
+Read this section, then only "Phase 5" in `specs/build-plan.md`. Formulas and numbers are never repeated here; they live once in `specs/formulas.md`, `data/` and `engine/`.
 
-**What is where (Phase 3 additions)**
-- Live pages: 24 wave-1 pages (`content/pages/<ID>.json`, status `publish`) plus the 7 trust pages and the 7 pillar hubs P-B P-C P-D P-E P-F P-W P-G (pillars go live automatically with their first live child; a pillar's text is `content/pages/<P-ID>.json` if one exists (H2 `/appliances/` is the example), else its keyword-map row). Wave 2 pages are the keyword-map rows with `wave=2`; create each as a new `content/pages/<ID>.json` with status `publish` only when all four gates pass.
-- Page content format: see `content/pages/B1.json` (simple fields), `content/pages/E1.json` (appliance `loads` field, `@data...` defaults), `content/pages/E4.json` (`appliance` select), `content/pages/C6.json` (`fixed_inputs`), `content/pages/D5.json` (`options_from` cities). Placeholders: `{{in.x|spec}}`, `{{out.x|spec}}`, `{{d.key}}`, `{{a.<appliance-id>.running_w}}`, `{{ex.N.out.x}}` (number from example N). `literal_numbers` lists the only typed digits allowed (product names, years).
-- Engine functions added or changed in Phase 3 (all in `engine/`, registry `engine/index.js`): `sizing.js` (`generatorFor`, `generator_for_ac`, `generator_for_pump`, `loadRows`, `inverter_size` now accepts appliance rows and returns the items), `load.js` (`ac_units`, `home_load`, `add_ac_check`), `solar.js` (`panel_for_12v`, `solar_for_ac`, `solar_from_loads`), `battery.js` (`ups_backup`), `bill.js` (`net_billing` net-metering comparison outputs), `wiring.js` (`wire_size`, `breaker_size`, `cable_rating`, `pkSizeFor`), `core.js` (`appliance()` lookup). Every one has cases in `specs/calculator-test-cases.json` and a section in `specs/formulas.md` ("Phase 3 tools").
-- New data file: `data/cable-ampacity.json` (IEC methods B1/C, Pakistani n/d sizes, MCB curves, minimum areas, breaker-margin load types). `data/appliances.json` now carries `avg_w` for inverter ACs; `data/defaults.json` has `standard_generator_kva` and `battery_v_default`. Both files' `_meta.engineer_confirm` lists what a PEC engineer still has to confirm.
-- Browser: `assets/js/wattlyst-tool.js` handles every field type (number, select, appliance, loads with add/remove rows, checkbox), `?load=` state restore, and reads `manifest.data` (defaults, tariff, cities, cables) so the browser engine equals the build engine. `loads` selects are populated lazily on focus (Lighthouse DOM size).
-- Local check: `tools/wp-test-site.sh` (SQLite WordPress + GeneratePress on 127.0.0.1:8080). Lighthouse: `node_modules/.bin/lighthouse` with `CHROME_PATH` pointing at the Playwright Chromium.
-- Messages: every engine error has an exact string in `engine/messages.js` and a test in `tests/messages.test.js`.
+**What is where (Phase 4 additions)**
+- Live pages: 63 tool/appliance/guide/lookup pages + the homepage planner + 9 pillar hubs + 7 trust pages (table below). Wave 3 pages are the keyword-map rows with `wave=3`; the content brief used for wave 2 is the model: one `content/pages/<ID>.json` per page, reference pages B1, E1, E4, C6, D5, F2, H9, D8, plus C7 (yesno flags), N3/D14 (price data) and N2 (lookup).
+- Home Power Planner: `engine/planner.js` (`home_plan`, composes the existing calculators; owns no formula of its own beyond the monthly solar split, documented in `specs/formulas.md` "Phase 4 tools"), page `content/pages/H1.json` (template `home`: tool + how first, then task cards).
+- New engine functions: `sizing.js` `generator_capacity` (C7); `solar.js` `solar_for_pump` (D15), `quote_checker` (N3, now reads price ranges from data), `solar_price_estimate` (D14), helper `priceRange`; `bill.js` `bill_total` FPA exemption for protected consumers; `conversions.js` `units` optional cost. All have cases in `specs/calculator-test-cases.json`.
+- New data: `data/solar-prices.json` (dated price points by system type, excluded outliers kept with a reason), `data/inverter-codes.json` (brands, codes, manual sources), `data/tariff-pk-2026.json` `addons_secondary.fpa_per_unit.latest` (latest notified FPA, used as the F14 default only), `data/defaults.json` `planner_day_share`. `tools/build.js` hands data files to calculators through `MODULE_DATA` / `CALC_DATA`; `manifest.data` carries what the browser needs.
+- Roman Urdu: `content/labels-ur.json` glossary (English output label -> Roman Urdu); a page may set `label_ur` per output and `how_ur`. Every new output label needs a glossary line.
+- Share bar (every tool): Save as PDF (print CSS in `assets/css/wattlyst.css`), WhatsApp, Copy link, Roman Urdu toggle; HTML in `includes/class-wattlyst-render.php`, behaviour in `assets/js/wattlyst-tool.js`.
+- Lookup template (N2): `template: "lookup"` + `codes_table`; render in `Wattlyst_Render::lookup()`, filter script in the same browser JS.
+- Shipped JS: `tools/build.js` writes stripped copies to `dist/` (`tools/lib/strip.js`); WordPress loads only `dist/`. `tests/engine.test.js` runs every spec case against the stripped engine too; the JS budget test measures `dist/`.
+- Output specs added: `rs2` (rupees with paise) and `yesno` (boolean outputs must use it).
 
 **Do not touch without the matching spec change**
-- `engine/`, `specs/formulas.md`, `specs/calculator-test-cases.json` move together (rule 2). `data/*.json` values change only with `source` + `checked` date.
-- `specs/keyword-map.csv` URLs, titles, metas are canonical; `specs/site-pages.csv` lists trust and pillar pages.
-- `generated/` is build output; never edit by hand (`node tools/build.js`, and `npm test` checks it is fresh).
-- The link plan: every page needs 3+ related links and a `next`; `tests/content.test.js` fails on orphan pages and missing chain links. Wave 2 pages must link into the wave-1 chain and be linked from at least two existing pages (add them to `related` of existing pages in the same PR).
+- Same as before: `engine/` + `specs/formulas.md` + `specs/calculator-test-cases.json` move together; `data/*.json` values change only with `source` + `checked`; never edit `generated/` or `dist/` by hand.
+- `data/solar-prices.json` and the FPA entry are dated: the D14/N3/F14 pages print the checked date, and the content checklist wants it within 35 days.
 
-**Open to-dos for Phase 4**
-- Wave 2 (39 pages, keyword-map `wave=2`) incl. new tools N1 N3 N4 N5 N7; the Home Power Planner (homepage already shows task cards from `content/pages/H1.json`; the chain + PDF export + WhatsApp share is new work); Roman Urdu result toggle.
-- Cosmetic: output spec `2` prints "Rs 33.1" where "Rs 33.10" reads better (`engine/format.js`); fix with a test.
-- Pillar hubs still use the generic keyword-map text; a short hand-written intro per hub (a `content/pages/<P-ID>.json`) would help.
-- Reviewer open questions for the PEC engineer are at the end of `specs/formulas.md` (fridge start factor, DC inverter feed margin, non-inverter AC PF, buyback source); answers change `data/` or `specs/formulas.md` + tests, never page text alone.
-- Owner-only: Google Search Console indexing requests for the 24 URLs, PEC engineer sign-off (`data/site.json` reviewer stays empty until then), AdSense application after ~30 pages.
+**Open to-dos for Phase 5**
+- Wave 3 (keyword-map `wave=3`) incl. N6 (needs a forecast API), N8-N14; embed widget, Bill Index and Solar Price Tracker data pages (they can read `data/tariff-pk-2026.json` and `data/solar-prices.json`).
+- Engine gaps found while writing wave 2: W4 uses voltage drop only (no PV string fuse / Voc / temperature check); `charge_controller`, `solar_size`, `tco`, `bill_audit` do not echo their inputs; N5 gas price default is typed in the page and should move to `data/`; N7 money defaults are illustrative; tariff has no winter-quarter QTA.
+- Engineer Reviewer open notes (Phase 4 pass): grid-tied pages (D8 D12 D13, planner) use the midday power rule for array size, an engineer question; A4 uses PF 0.8 for the inverter AC where the AC pages use 0.9; H5 starting current uses running PF (locked-rotor PF is lower); tubewell watts differ between `data/appliances.json` and the D15 formula; quote_checker / solar_price_estimate spec cases read live `data/solar-prices.json` and must be re-checked (or pinned to fixture data) at each monthly refresh; N4 D12 D13 need the NEPRA net-metering/net-billing regulation link for the sanctioned-load cap; check whether the August 2026 FPA is notified and verify the FPA exemption list against SRO 852(I)/2026; gas slab prices (`tariff-pk-2026.json` `gas_domestic`) are a secondary source until the OGRA notification is found.
+- Data to verify: GEPCO/FESCO/SEPCO/QESCO/TESCO online-bill links, HESCO/SEPCO district lists; Inverex and Knox error codes (manuals not found); net-billing buyback still unverified.
+- Pillar hubs still use the generic keyword-map text (P-A and H2 have their own).
+- Owner-only: Search Console / Bing indexing for the 39 new URLs; PEC engineer sign-off (`data/site.json` reviewer stays empty); AdSense application (now 79 live pages); monthly refresh of solar prices, FPA and buyback.
 
 ## Phase log
 
@@ -35,8 +36,10 @@ Read this section, then only "Phase 4" in `specs/build-plan.md`. Formulas and nu
 | 2026-10-13 | specs/seo-rules.md (SEO, AEO, GEO/LLM, technical, title/meta, Google + AdSense policies); 25 keyword-map titles/metas fixed to rules | done | PR phase-1-engine |
 | 2026-10-13 | Phase 2: page build step (tools/build.js -> generated/), tool/pillar/appliance/guide/trust templates, server-rendered default result, ?load= state with clean canonical, JSON-LD (WebApplication, BreadcrumbList, Article+Person, Organization+WebSite, FAQPage), robots.txt (AI crawlers), core sitemap, /llms.txt, IndexNow, ads.txt (when pub id set), ad slots (off), 7 trust pages, data/appliances.json (87), brand images, header menu by task, plugin v0.3.0 | done: tests green, Lighthouse mobile 100/100/100/100 (tool template + trust pages, local WP + GeneratePress), Engineer Reviewer PASS after fixes | PR phase-2 |
 | 2026-10-13 | Phase 3: Wave 1, 24 pages live (table below) + 7 pillar hubs; new engine tools (generator for AC/pump, home load, add-an-AC check, AC units, solar for AC / from loads / for 12 V battery, UPS backup, wire/breaker/cable sizing with data/cable-ampacity.json), 245 spec cases, browser field types (appliance, loads, checkbox), plugin v0.4.0 | done: 436 tests green, zero orphan pages (link test), Engineer Reviewer PASS after fixes, Lighthouse mobile >= 95 on every live page (most 99-100), calculators checked in a headless browser on local WP | PR phase-3 |
+| 2026-10-14 | Phase 4: Wave 2, 39 pages live (table below) incl. N1 N2 N3 N4 N5 N7, D14 solar price, Home Power Planner on the homepage (load -> inverter -> battery -> solar -> net billing -> generator), Save as PDF / WhatsApp / copy link, Roman Urdu result toggle, stripped dist/ JS, data/solar-prices.json + data/inverter-codes.json, plugin v0.5.0 | done: tests green, Engineer Reviewer pass, Lighthouse mobile 98-100 on sampled templates, every calculator checked in a headless browser on local WP | PR phase-4 |
 
 ## Owner to do
+- Phase 4: request indexing for the 39 wave-2 URLs; apply for AdSense; refresh `data/solar-prices.json` and the FPA entry monthly (source + checked date).
 - Phase 3: request indexing in Google Search Console and Bing for the 24 wave-1 URLs (sitemap already lists them). Fill `data/site.json` reviewer once a PEC engineer signs off on `specs/formulas.md` (open questions are listed at its end) and the `engineer_confirm` lists in `data/cable-ampacity.json` and `data/appliances.json`.
 - Net-billing buyback rate (`data/tariff-pk-2026.json` net_billing): no NEPRA notification found on 2026-10-13, only news reports; the D10 page says so. Replace with the NEPRA page and set `buyback_verified` when it exists (re-check monthly).
 - WordPress: Settings > Reading keep "Discourage search engines" OFF on live; Customizer > Site Identity: optional (plugin already shows logo + favicon).
@@ -45,16 +48,15 @@ Read this section, then only "Phase 4" in `specs/build-plan.md`. Formulas and nu
 - After AdSense approval: ads.adsense_pub_id + a Google-certified CMP name in data/site.json.
 
 ## Not in engine yet (need data first)
-- N2 inverter error codes: data/inverter-codes.json from manufacturer manuals
 - N6 solar forecast: live forecast API (Phase 5)
 - N13 mosque/shop: load profile templates
-- Generator fuel table (data/generator-fuel.json), solar price ranges (data/solar-prices.json, dated)
+- Generator fuel table (data/generator-fuel.json)
 
 ## Pages (from specs/keyword-map.csv)
 
 | ID | URL | Status | PR | Date |
 |---|---|---|---|---|
-| H1 | / (home) | live | phase-3 | 2026-10-13 |
+| H1 | / (home, Home Power Planner) | live | phase-4 | 2026-10-14 |
 | H2 | /appliances/ | live | phase-3 | 2026-10-13 |
 | H9 | /guides/inverter-vs-ups/ | live | phase-3 | 2026-10-13 |
 | B1 | /battery/battery-backup-time-calculator/ | live | phase-3 | 2026-10-13 |
@@ -79,3 +81,43 @@ Read this section, then only "Phase 4" in `specs/build-plan.md`. Formulas and nu
 | W2 | /wiring/wire-size-calculator/ | live | phase-3 | 2026-10-13 |
 | W3 | /wiring/breaker-size-calculator/ | live | phase-3 | 2026-10-13 |
 | P-B P-C P-D P-E P-F P-W P-G | pillar hubs | live (auto, with first child) | phase-3 | 2026-10-13 |
+| A3 | /converters/12v-watts-to-amps-calculator/ | live | phase-4 | 2026-10-14 |
+| A4 | /converters/230v-watts-to-amps-calculator/ | live | phase-4 | 2026-10-14 |
+| A8 | /converters/kva-to-kw-calculator/ | live | phase-4 | 2026-10-14 |
+| A9 | /converters/va-to-watts-calculator/ | live | phase-4 | 2026-10-14 |
+| A10 | /converters/ah-to-wh-calculator/ | live | phase-4 | 2026-10-14 |
+| B4 | /battery/battery-bank-size-calculator/ | live | phase-4 | 2026-10-14 |
+| C7 | /generator/what-can-a-kva-generator-run/ | live | phase-4 | 2026-10-14 |
+| D1 | /solar/solar-battery-size-calculator/ | live | phase-4 | 2026-10-14 |
+| D2 | /solar/solar-panel-wattage-calculator/ | live | phase-4 | 2026-10-14 |
+| D3 | /solar/off-grid-solar-calculator/ | live | phase-4 | 2026-10-14 |
+| D7 | /solar/solar-system-size-calculator/ | live | phase-4 | 2026-10-14 |
+| D12 | /solar/solar-system-for-10-marla-house/ | live | phase-4 | 2026-10-14 |
+| D13 | /solar/solar-system-for-1-kanal-house/ | live | phase-4 | 2026-10-14 |
+| D14 | /solar/solar-system-price-pakistan/ | live | phase-4 | 2026-10-14 |
+| D15 | /solar/tubewell-solar-calculator/ | live | phase-4 | 2026-10-14 |
+| D16 | /solar/charge-controller-size-calculator/ | live | phase-4 | 2026-10-14 |
+| E2 | /load/appliance-load-calculator/ | live | phase-4 | 2026-10-14 |
+| E6 | /load/unit-calculator/ | live | phase-4 | 2026-10-14 |
+| F3 | /bill/iesco-bill-calculator/ | live | phase-4 | 2026-10-14 |
+| F4 | /bill/mepco-bill-calculator/ | live | phase-4 | 2026-10-14 |
+| F5 | /bill/gepco-bill-calculator/ | live | phase-4 | 2026-10-14 |
+| F6 | /bill/fesco-bill-calculator/ | live | phase-4 | 2026-10-14 |
+| F7 | /bill/pesco-bill-calculator/ | live | phase-4 | 2026-10-14 |
+| F8 | /bill/hesco-bill-calculator/ | live | phase-4 | 2026-10-14 |
+| F9 | /bill/sepco-bill-calculator/ | live | phase-4 | 2026-10-14 |
+| F10 | /bill/qesco-bill-calculator/ | live | phase-4 | 2026-10-14 |
+| F11 | /bill/tesco-bill-calculator/ | live | phase-4 | 2026-10-14 |
+| F14 | /guides/fpa-in-electricity-bill/ | live | phase-4 | 2026-10-14 |
+| W4 | /wiring/solar-cable-size-calculator/ | live | phase-4 | 2026-10-14 |
+| H3 | /appliances/ceiling-fan/ | live | phase-4 | 2026-10-14 |
+| H5 | /appliances/water-motor-1hp/ | live | phase-4 | 2026-10-14 |
+| H7 | /appliances/iron/ | live | phase-4 | 2026-10-14 |
+| H8 | /guides/lithium-vs-tubular-battery/ | live | phase-4 | 2026-10-14 |
+| N1 | /bill/bill-audit-overbilling-checker/ | live | phase-4 | 2026-10-14 |
+| N2 | /troubleshoot/inverter-error-codes/ | live | phase-4 | 2026-10-14 |
+| N3 | /solar/solar-quote-checker/ | live | phase-4 | 2026-10-14 |
+| N4 | /bill/sanctioned-load-calculator/ | live | phase-4 | 2026-10-14 |
+| N5 | /load/winter-heating-cost-calculator/ | live | phase-4 | 2026-10-14 |
+| N7 | /load/ups-vs-solar-vs-generator-cost/ | live | phase-4 | 2026-10-14 |
+| P-A P-T | pillar hubs (converters, troubleshoot) | live (auto, with first child) | phase-4 | 2026-10-14 |

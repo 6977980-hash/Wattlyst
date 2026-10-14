@@ -3,15 +3,25 @@
  "type": "guide",
  "silo": "H",
  "url": "/guides/lithium-vs-tubular-battery/",
- "h1": "Lithium Vs Tubular Battery",
+ "h1": "Lithium vs Tubular Battery: Backup, Life and Cost",
  "title": "Lithium vs Tubular Battery: Backup, Life & Cost | Wattlyst",
  "meta": "Lithium vs tubular battery compared on usable backup, cycle life, charging, price per usable kWh and which suits loadshedding.",
  "primary_keyword": "lithium vs tubular battery",
  "wave": 2,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-13",
+ "published": "2026-10-13",
  "author": "ali-ahmad",
+ "related": [
+  "B3",
+  "H9",
+  "N7",
+  "B5",
+  "D1"
+ ],
+ "next": "B1",
  "parent": "P-G",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
@@ -22,11 +32,116 @@
    "url": "/guides/"
   },
   {
-   "name": "Lithium Vs Tubular Battery",
+   "name": "Lithium vs Tubular Battery: Backup, Life and Cost",
    "url": "/guides/lithium-vs-tubular-battery/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "Lithium battery vs tubular: what is actually different?",
+    "p": [
+     "Both store energy for the same job: a home UPS or hybrid inverter draws DC from them during loadshedding. A tubular battery is a flooded lead-acid battery with tubular positive plates, sold by the single twelve-volt unit in Ah, cheap, heavy and happy with a basic charger. A lithium battery for home backup is almost always lithium iron phosphate (LiFePO4), sold as a sealed pack with its own battery management system (BMS), about a third of the weight for the same usable energy, and several times the price per rated Ah.",
+     "The headline numbers that matter are four: how much of the rated capacity you can use, how many cycles it lasts, how efficiently it charges, and what it costs per usable unit over its life. The sections below take each in turn, using the default values from our calculators."
+    ]
+   },
+   {
+    "h2": "Usable backup: 90% against 50%",
+    "p": [
+     "A tubular battery is rated at its full capacity but should only be run down to about 50% of it; deeper discharges every day shorten its life sharply. A LiFePO4 pack can be run down to about 90% with no such penalty. So a lithium pack of the same Ah and volts gives nearly twice the backup time of the tubular battery, and a lithium pack of about half the rated Ah gives the same backup.",
+     "That changes the shopping list. Where a home needs two tubular batteries in series on a 24 V inverter, one lithium pack of about the same volts and half the Ah does the same job, takes less floor space and weighs less than one of the tubular batteries. Run both through the battery backup time calculator with your load to see the hours side by side."
+    ]
+   },
+   {
+    "h2": "Lithium battery life vs tubular battery life",
+    "p": [
+     "Battery life is counted in cycles, one cycle being one discharge and recharge. A good tubular battery is rated by its makers for roughly a thousand to fifteen hundred cycles at half discharge, which at one cycle a day of loadshedding is two to three years, less in a hot room or when it is often run flat. LiFePO4 cells are rated for several thousand cycles at the deeper discharge above, which is eight years or more at a cycle a day, and the warranties reflect that.",
+     "Heat matters for both. Lead-acid life falls quickly above room temperature, which is why a tubular battery in a Pakistani summer rarely reaches its rated cycles; lithium tolerates heat better but still prefers a shaded, ventilated spot. Keeping either battery topped up and never leaving a tubular battery flat for days is the cheapest way to reach the rated life."
+    ]
+   },
+   {
+    "h2": "Charging: speed, efficiency and what it adds to the bill",
+    "p": [
+     "A tubular battery takes several hours to refill after a full backup, because the last part of the charge must be slow, and the charger returns only about 85% of the energy put in; the rest is lost as heat and gas, and the water level drops. On a day with several outages the second backup is shorter than the first because the battery never caught up.",
+     "A lithium pack accepts a high charge current right up to full, so it refills in a fraction of the time, and it charges at about 95%. Over a month of daily loadshedding the difference shows on the bill: the grid units a UPS draws are the backup units ÷ (charge efficiency × inverter efficiency), so the tubular set draws noticeably more for the same hours of fans and lights. It also needs water topping up and terminal cleaning; the lithium pack needs neither."
+    ]
+   },
+   {
+    "h2": "LiFePO4 vs lead acid: safety, weight and the UPS you own",
+    "p": [
+     "LiFePO4 is the safe lithium chemistry: it does not catch fire the way the lithium cells in phones and e-bikes can, and the BMS cuts it off on over-charge, over-discharge, over-current and high temperature. A flooded tubular battery gives off hydrogen while charging and holds acid, so it belongs in a ventilated spot away from living areas; a sealed lithium pack can sit in a cupboard.",
+     "The catch is the charger. An ordinary home UPS built for lead-acid uses charge voltages and a float stage that a lithium BMS may refuse or that may shorten the pack's life, so a lithium pack needs a UPS or hybrid inverter with a lithium setting, ideally one that communicates with the BMS. If you keep your old UPS, a tubular battery is the drop-in choice; if you are buying a hybrid inverter anyway, lithium fits naturally."
+    ]
+   },
+   {
+    "h2": "Lithium battery price in Pakistan: how to compare per usable unit",
+    "p": [
+     "We do not print prices here because battery prices change with the exchange rate from month to month, and lithium packs differ widely in cells and BMS quality. Compare on two numbers instead. First, price per usable unit: price ÷ (Ah × volts ÷ a thousand × usable depth of discharge), with 50% for tubular and 90% for lithium; this shows what you pay for the backup you actually get. Second, price per cycle: that figure ÷ the rated cycle life, which is where lithium usually overtakes tubular despite the higher price tag.",
+     "Then add the running cost. A tubular set bought twice or three times in the years a lithium pack lasts, plus the extra grid units from its lower charge efficiency, is the fair comparison; the UPS, solar and generator cost calculator adds purchase, running cost and replacements over five or ten years for either battery."
+    ]
+   },
+   {
+    "h2": "Which is the best battery for a UPS?",
+    "p": [
+     "Choose tubular if the UPS is an ordinary lead-acid unit you already own, loadshedding is a few hours a day, the budget is tight, and there is a ventilated place for it. Expect to replace it every two or three years and to top up the water.",
+     "Choose lithium if you are buying a hybrid inverter or a UPS with a lithium setting, loadshedding is frequent and long, the battery must recharge quickly between cuts, or it has to sit indoors. Pay more once and expect it to outlast two or three tubular sets. Either way, size the battery by backup hours with the calculator, not by what the shop has in stock."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "Is a lithium battery better than a tubular battery for a UPS?",
+    "a": "For backup per Ah, life and charging, yes: about 90% usable against 50%, several thousand cycles against roughly a thousand to fifteen hundred, and charging at about 95% against 85%. Tubular is better on purchase price and works with any ordinary UPS."
+   },
+   {
+    "q": "How long does a lithium battery last compared with a tubular battery?",
+    "a": "LiFePO4 packs are rated for several thousand cycles, which at a cycle a day of loadshedding is eight years or more; a tubular battery is rated for roughly a thousand to fifteen hundred cycles at half discharge, about two to three years, and less in heat."
+   },
+   {
+    "q": "Does a lithium battery give more backup than a tubular battery of the same Ah?",
+    "a": "Nearly twice as much, because it can be used to about 90% of its capacity instead of about 50%. Backup hours = Ah × volts × usable depth × inverter efficiency ÷ load watts; the battery backup time calculator works it out for both types."
+   },
+   {
+    "q": "Can I use a lithium battery with my existing UPS?",
+    "a": "Only if the UPS has a lithium charge setting or the pack maker approves it. An ordinary lead-acid charger's voltages and float stage can make the BMS disconnect or shorten the pack's life. A hybrid inverter with a lithium profile is the safe match."
+   },
+   {
+    "q": "What is the price of a lithium battery in Pakistan?",
+    "a": "Prices change with the exchange rate and vary widely by brand, so we do not print one. Compare quotes as price per usable unit (price ÷ Ah × volts × usable depth) and per cycle, and add the tubular replacements over the same years; the cost comparison calculator does that sum."
+   },
+   {
+    "q": "LiFePO4 vs lead acid: which is safer?",
+    "a": "LiFePO4 is the stable lithium chemistry, sealed, with a BMS that cuts it off on over-charge, over-discharge, over-current and high temperature. A flooded lead-acid tubular battery is safe too but gives off hydrogen on charge and holds acid, so it needs ventilation and a spot away from living areas."
+   },
+   {
+    "q": "Why does a tubular battery give less backup on the second outage of the day?",
+    "a": "It recharges slowly and at about 85% efficiency, so between two close outages it never refills. A lithium pack accepts a high charge current to full and is usually ready again within a couple of hours of grid power."
+   }
+  ],
+  "key_facts": [
+   "A tubular battery should be discharged to about 50% of its rated capacity for a reasonable life; a LiFePO4 lithium battery can be discharged to about 90%, so the same Ah and volts give nearly double the usable backup.",
+   "A tubular battery charger returns about 85% of the energy put in; lithium charges at about 95%, so a lithium UPS draws fewer grid units for the same backup and recharges faster between cuts.",
+   "A good tubular battery is rated for roughly a thousand to fifteen hundred cycles at half discharge, about two to three years of daily loadshedding; LiFePO4 cells are rated for several thousand cycles, which is why lithium warranties run to several years longer.",
+   "Usable backup in hours = Ah × volts × usable depth of discharge × inverter efficiency ÷ load watts, for either chemistry; the battery backup time calculator applies the right depth of discharge for the type you pick.",
+   "Lithium must be used with a charger or hybrid inverter that has a lithium setting and talks to the battery's management system; a tubular battery works with any ordinary home UPS."
+  ],
+  "mistakes": [
+   "Comparing lithium and tubular by rated Ah. A lithium pack gives about 90% of its Ah as backup, a tubular battery about 50%; compare usable units, not labels.",
+   "Putting a lithium pack on an old lead-acid UPS. Without a lithium charge setting the BMS may disconnect or the pack may age early; check the UPS before buying the battery.",
+   "Running a tubular battery flat every day because the backup was short. Each deep discharge takes cycles off its life; add a battery or cut the load instead.",
+   "Judging lithium by the price tag alone. Divide by usable units and by cycle life, and add the tubular replacements and the extra recharge units over the same years."
+  ],
+  "sources": [
+   {
+    "label": "Wattlyst methodology and default values",
+    "url": "/methodology/"
+   }
+  ],
+  "answer": "A lithium (LiFePO4) battery gives nearly twice the usable backup of a tubular battery of the same rated Ah and volts, because it can be used to about 90% of its capacity against about 50% for tubular, charges faster with less loss, and lasts several times as many cycles. The tubular battery costs far less to buy, so the fair comparison is price per usable unit over its life.",
+  "formula": null,
+  "safety": "Have a licensed electrician fit the battery, its fuse or breaker and the inverter wiring; keep a tubular battery in a ventilated spot away from sparks and living areas, and never bypass the battery management system of a lithium pack."
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -49,7 +164,7 @@
      {
       "@type": "ListItem",
       "position": 3,
-      "name": "Lithium Vs Tubular Battery",
+      "name": "Lithium vs Tubular Battery: Backup, Life and Cost",
       "item": "https://wattlyst.com/guides/lithium-vs-tubular-battery/"
      }
     ]
@@ -66,12 +181,14 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/guides/lithium-vs-tubular-battery/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-13",
+    "lastReviewed": "2026-10-13"
    },
    {
     "@type": "Article",
     "@id": "https://wattlyst.com/guides/lithium-vs-tubular-battery/#article",
-    "headline": "Lithium Vs Tubular Battery",
+    "headline": "Lithium vs Tubular Battery: Backup, Life and Cost",
     "description": "Lithium vs tubular battery compared on usable backup, cycle life, charging, price per usable kWh and which suits loadshedding.",
     "mainEntityOfPage": {
      "@id": "https://wattlyst.com/guides/lithium-vs-tubular-battery/#webpage"
@@ -81,7 +198,9 @@
     },
     "publisher": {
      "@id": "https://wattlyst.com/#organization"
-    }
+    },
+    "datePublished": "2026-10-13",
+    "dateModified": "2026-10-13"
    },
    {
     "@type": "Person",
@@ -94,6 +213,68 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/guides/lithium-vs-tubular-battery/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "Is a lithium battery better than a tubular battery for a UPS?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "For backup per Ah, life and charging, yes: about 90% usable against 50%, several thousand cycles against roughly a thousand to fifteen hundred, and charging at about 95% against 85%. Tubular is better on purchase price and works with any ordinary UPS."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How long does a lithium battery last compared with a tubular battery?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "LiFePO4 packs are rated for several thousand cycles, which at a cycle a day of loadshedding is eight years or more; a tubular battery is rated for roughly a thousand to fifteen hundred cycles at half discharge, about two to three years, and less in heat."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Does a lithium battery give more backup than a tubular battery of the same Ah?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Nearly twice as much, because it can be used to about 90% of its capacity instead of about 50%. Backup hours = Ah × volts × usable depth × inverter efficiency ÷ load watts; the battery backup time calculator works it out for both types."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Can I use a lithium battery with my existing UPS?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Only if the UPS has a lithium charge setting or the pack maker approves it. An ordinary lead-acid charger's voltages and float stage can make the BMS disconnect or shorten the pack's life. A hybrid inverter with a lithium profile is the safe match."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What is the price of a lithium battery in Pakistan?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Prices change with the exchange rate and vary widely by brand, so we do not print one. Compare quotes as price per usable unit (price ÷ Ah × volts × usable depth) and per cycle, and add the tubular replacements over the same years; the cost comparison calculator does that sum."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "LiFePO4 vs lead acid: which is safer?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "LiFePO4 is the stable lithium chemistry, sealed, with a BMS that cuts it off on over-charge, over-discharge, over-current and high temperature. A flooded lead-acid tubular battery is safe too but gives off hydrogen on charge and holds acid, so it needs ventilation and a spot away from living areas."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Why does a tubular battery give less backup on the second outage of the day?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "It recharges slowly and at about 85% efficiency, so between two close outages it never refills. A lithium pack accepts a high charge current to full and is usually ready again within a couple of hours of grid power."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

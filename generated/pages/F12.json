@@ -40,7 +40,7 @@
    {
     "h2": "What is the K-Electric per unit rate?",
     "p": [
-     "K-Electric used to have its own tariff schedule, but NEPRA's 2026 determination rationalised it to the uniform A-1 domestic rates charged across Pakistan. An unprotected Karachi home is billed the rate of the slab its monthly units reach on every unit: 300 units at Rs 33.1 here, less for the lower slabs and most for the open-ended top slab. Protected and lifeline consumers have their own low rates.",
+     "K-Electric used to have its own tariff schedule, but NEPRA's 2026 determination rationalised it to the uniform A-1 domestic rates charged across Pakistan. An unprotected Karachi home is billed the rate of the slab its monthly units reach on every unit: 300 units at Rs 33.10 here, less for the lower slabs and most for the open-ended top slab. Protected and lifeline consumers have their own low rates.",
      "The examples and table below print the rate for each slab from the tariff file. The month's FCA, which K-Electric adds or subtracts per unit, is the one line that is not in the uniform tariff; take it from your bill."
     ]
    },
@@ -66,7 +66,7 @@
    },
    {
     "q": "What is the K-Electric per unit rate for a home?",
-    "a": "The uniform NEPRA domestic slab rate for the slab your month reaches: Rs 33.1 per unit for an unprotected home using 300 units. The table above lists the rate for every slab; protected and lifeline consumers pay less."
+    "a": "The uniform NEPRA domestic slab rate for the slab your month reaches: Rs 33.10 per unit for an unprotected home using 300 units. The table above lists the rate for every slab; protected and lifeline consumers pay less."
    },
    {
     "q": "Is the K-Electric tariff for 2026 higher than other DISCOs?",
@@ -87,7 +87,7 @@
   ],
   "key_facts": [
    "K-Electric's domestic tariff was rationalised to the same uniform NEPRA A-1 rates as the ex-WAPDA DISCOs in the 2026 determination, so a Karachi bill for a given number of units matches a Lahore or Islamabad bill apart from the monthly fuel adjustment.",
-   "The K-Electric per unit rate for an unprotected home using 300 units is Rs 33.1 on every unit, giving Rs 9,930 in energy charges before the fixed charge, surcharges, FCA and GST.",
+   "The K-Electric per unit rate for an unprotected home using 300 units is Rs 33.10 on every unit, giving Rs 9,930 in energy charges before the fixed charge, surcharges, FCA and GST.",
    "FCA is K-Electric's name for the monthly fuel charge adjustment that other DISCOs print as FPA; it changes every month, can be a credit, and is the field to copy from your bill.",
    "A K-Electric protected consumer is one whose last 6 bills were all at or under 200 units on a connection below 5 kW; such bills are worked out slab-wise at the low protected rates."
   ],
@@ -202,44 +202,51 @@
      "key": "total_rs",
      "label": "Estimated bill",
      "spec": "rs",
+     "label_ur": "Andazan bill",
      "value": "Rs 13,458"
     },
     {
      "key": "energy_rs",
      "label": "Energy charge",
      "spec": "rs",
+     "label_ur": "Energy charge",
      "value": "Rs 9,930"
     },
     {
      "key": "fixed_rs",
      "label": "Fixed charge",
      "spec": "rs",
+     "label_ur": "Fixed charge",
      "value": "Rs 350"
     },
     {
      "key": "fc_rs",
      "label": "FC surcharge",
      "spec": "rs",
+     "label_ur": "FC surcharge",
      "value": "Rs 969"
     },
     {
      "key": "qta_rs",
      "label": "QTA",
      "spec": "rs",
+     "label_ur": "QTA",
      "value": "Rs 156"
     },
     {
      "key": "gst_rs",
      "label": "GST",
      "spec": "rs",
+     "label_ur": "GST",
      "value": "Rs 2,053"
     }
    ],
    "how": {
-    "tpl": "{{out.units|int}} units × Rs {{out.rate|2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw|int}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, FCA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}}; GST {{out.gst_pct|int}}% = {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}.",
-    "text": "300 units × Rs 33.1 (unprotected slab rate) = Rs 9,930. Fixed charge for 1 kW = Rs 350. FC surcharge Rs 969, QTA Rs 156, FCA Rs 0. Subtotal Rs 11,405; GST 18% = Rs 2,053. Estimated bill Rs 13,458."
+    "tpl": "{{out.units|int}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw|int}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, FCA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}}; GST {{out.gst_pct|int}}% = {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}.",
+    "text": "300 units × Rs 33.10 (unprotected slab rate) = Rs 9,930. Fixed charge for 1 kW = Rs 350. FC surcharge Rs 969, QTA Rs 156, FCA Rs 0. Subtotal Rs 11,405; GST 18% = Rs 2,053. Estimated bill Rs 13,458."
    },
    "submit": "Calculate",
+   "notice": "",
    "data_checked": [
     {
      "label": "Pakistan electricity tariff (NEPRA notification)",
@@ -299,7 +306,7 @@
     ],
     [
      "300 (unprotected)",
-     "Rs 33.1",
+     "Rs 33.10",
      "Rs 9,930",
      "Rs 350",
      "Rs 13,458"
@@ -320,14 +327,14 @@
     ],
     [
      "800 (unprotected)",
-     "Rs 47.2",
+     "Rs 47.20",
      "Rs 37,760",
      "Rs 675",
      "Rs 48,893"
     ]
    ]
   },
-  "answer": "A Karachi home on K-Electric using 300 units a month as an unprotected consumer with a 1 kW connection pays about Rs 13,458: Rs 9,930 energy charge at Rs 33.1 per unit, plus fixed charge, FC surcharge, QTA and GST, before the month's FCA. K-Electric bill = units × slab rate + fixed charge + adjustments + GST.",
+  "answer": "A Karachi home on K-Electric using 300 units a month as an unprotected consumer with a 1 kW connection pays about Rs 13,458: Rs 9,930 energy charge at Rs 33.10 per unit, plus fixed charge, FC surcharge, QTA and GST, before the month's FCA. K-Electric bill = units × slab rate + fixed charge + adjustments + GST.",
   "formula": {
    "text": "Bill = units × slab rate + fixed Rs/kW × sanctioned kW + (FC + QTA + FCA) × units, then + GST",
    "lines": [
@@ -430,7 +437,7 @@
       "name": "What is the K-Electric per unit rate for a home?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "The uniform NEPRA domestic slab rate for the slab your month reaches: Rs 33.1 per unit for an unprotected home using 300 units. The table above lists the rate for every slab; protected and lifeline consumers pay less."
+       "text": "The uniform NEPRA domestic slab rate for the slab your month reaches: Rs 33.10 per unit for an unprotected home using 300 units. The table above lists the rate for every slab; protected and lifeline consumers pay less."
       }
      },
      {

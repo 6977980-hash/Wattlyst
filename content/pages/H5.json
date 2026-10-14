@@ -1,0 +1,383 @@
+{
+ "id": "H5",
+ "status": "publish",
+ "template": "appliance",
+ "appliance": "water-motor-1hp",
+ "h1": "Water Motor 1 HP: Watts, Units per Hour and Starting Surge",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "calc": "home_load",
+ "fields": [
+  {
+   "name": "loads",
+   "label": "Your water motor",
+   "type": "loads",
+   "catalog": [
+    "water-motor-0-5hp",
+    "water-motor-1hp",
+    "water-motor-1-5hp",
+    "water-motor-2hp",
+    "submersible-pump-1hp",
+    "tubewell-submersible-5hp"
+   ],
+   "default": [
+    {
+      "id": "water-motor-1hp",
+      "qty": 1
+    }
+   ],
+   "hint": "Pick the motor size and set how many hours a day it pumps (a 1 hp donkey pump usually fills an overhead tank in well under an hour). Change the watts if the nameplate gives input watts."
+  },
+  {
+   "name": "tariff",
+   "label": "Electricity rate",
+   "unit": "Rs per unit",
+   "default": "@data.tariff.unprotected.3.rate",
+   "hint": "Energy rate of your slab from the bill. The default is the Pakistan unprotected rate for 301 to 400 units a month."
+  },
+  {
+   "name": "days",
+   "label": "Days in the month",
+   "unit": "days",
+   "default": "@days_per_month",
+   "advanced": true,
+   "hint": "Billing days; most bills cover 29 to 31 days."
+  },
+  {
+   "name": "volts",
+   "label": "Supply voltage",
+   "unit": "V",
+   "type": "select",
+   "default": "@v_1ph",
+   "advanced": true,
+   "options": [
+    [
+     "@v_1ph",
+     "230 V (Pakistan, UK, EU)"
+    ],
+    [
+     "@v_1ph_us",
+     "120 V (US, Canada)"
+    ]
+   ]
+  },
+  {
+   "name": "pf",
+   "label": "Power factor",
+   "unit": "0 to 1",
+   "default": "@pf_mixed",
+   "advanced": true,
+   "hint": "Single-phase pump motors are about 0.8. Only affects the amps."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "running_w",
+   "label": "Running watts",
+   "spec": "int",
+   "unit": "W"
+  },
+  {
+   "key": "peak_w",
+   "label": "Starting watts",
+   "spec": "int",
+   "unit": "W"
+  },
+  {
+   "key": "amps",
+   "label": "Running current",
+   "spec": "1",
+   "unit": "A"
+  },
+  {
+   "key": "peak_amps",
+   "label": "Starting current",
+   "spec": "1",
+   "unit": "A"
+  },
+  {
+   "key": "running_kw",
+   "label": "Units per hour",
+   "spec": "2",
+   "unit": "kWh"
+  },
+  {
+   "key": "monthly_units",
+   "label": "Units per month",
+   "spec": "1",
+   "unit": "kWh"
+  },
+  {
+   "key": "monthly_rs",
+   "label": "Monthly cost (energy charge only)",
+   "spec": "rs"
+  }
+ ],
+ "answer": "A 1 hp water motor draws about {{out.running_w|int}} W while pumping, which is {{out.running_kw|2}} kWh per hour (one kWh is one unit): units per hour equal watts divided by one thousand. For a moment at every start it draws about {{out.peak_w|int}} W, about {{out.peak_amps|1}} A at {{out.volts|int}} V, which a UPS, inverter or generator must supply. Pumping one hour a day uses about {{out.monthly_units|1}} units a month.",
+ "how": "{{out.items|int}} motor × {{out.largest_w|int}} W = {{out.running_w|int}} W running, which is {{out.running_w|int}} ÷ one thousand = {{out.running_kw|2}} kWh per hour. Units per hour × the pumping hours a day you entered = {{out.daily_kwh|2}} kWh a day; × {{out.days|int}} days = {{out.monthly_units|1}} units a month; × {{out.tariff|rs2}} per unit = {{out.monthly_rs|rs}} (energy charge only). Running current = {{out.running_w|int}} W ÷ ({{out.volts|int}} V × {{out.pf|1}} power factor) = {{out.amps|1}} A. At start the motor draws {{out.peak_w|int}} W, so the starting current is {{out.peak_w|int}} W ÷ ({{out.volts|int}} V × {{out.pf|1}}) = {{out.peak_amps|1}} A.",
+ "key_facts": [
+  "A 1 hp single-phase water motor draws about {{appliance.running_w|int}} W of electrical input while pumping ({{appliance.running_w_range.0|int}} to {{appliance.running_w_range.1|int}} W depending on make and efficiency), which is {{out.running_kw|2}} kWh per hour; one hp of shaft power is {{d.w_per_hp|1}} W and a small motor is about {{d.motor_eff|pct}} efficient, so the input watts are higher than the hp suggests.",
+  "At start a 1 hp pump motor draws about {{appliance.starting_w|int}} W for a second or two, nearly three times its running watts, which is {{out.peak_amps|1}} A at {{out.volts|int}} V and {{out.pf|1}} power factor against {{out.amps|1}} A running.",
+  "A 1 hp water motor pumping one hour a day uses about {{out.monthly_units|1}} units in a {{out.days|int}}-day month, about {{out.monthly_rs|rs}} of energy charge at {{out.tariff|rs2}} per unit; two hours a day is about {{ex.1.out.monthly_units|1}} units.",
+  "A UPS, inverter or generator for a water motor must be sized on the starting watts ({{out.peak_w|int}} W for 1 hp), not the running watts; a submersible pump of the same 1 hp starts at about {{ex.3.out.peak_w|int}} W."
+ ],
+ "formula": {
+  "text": "P_in = hp × 745.7 ÷ η_motor; units/h = P_in ÷ 1000; P_start = starting watts from the appliance data (about 3 × P_in for a motor); I = P ÷ (V × PF)",
+  "lines": [
+   "P_in = electrical input watts of the motor (the typical value for the size, or the nameplate input watts)",
+   "η_motor = motor efficiency, default 0.8 for small single-phase motors",
+   "units/day = units/h × pumping hours; units/month = units/day × days; cost = units/month × rate",
+   "I = current in amps at running or starting watts; V = supply voltage; PF = power factor (0.8 for a motor)"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "How many watts is a 1 hp motor?",
+   "p": [
+    "One hp is {{d.w_per_hp|1}} W of shaft power, the mechanical power the motor delivers to the pump. A small single-phase motor is only about {{d.motor_eff|pct}} efficient, so the electrical input it draws from the socket is higher: a typical 1 hp donkey pump sold in Pakistan draws about {{appliance.running_w|int}} W, with real motors ranging from about {{appliance.running_w_range.0|int}} W to {{appliance.running_w_range.1|int}} W.",
+    "If the nameplate gives input watts or kW, enter that in the watts column. If it gives only hp and amps, the amps × {{out.volts|int}} V × power factor is a good estimate of the input watts."
+   ]
+  },
+  {
+   "h2": "Water pump units per hour and per month",
+   "p": [
+    "At {{out.running_w|int}} W a 1 hp motor uses {{out.running_kw|2}} kWh (units) for every hour it runs. What decides the bill is the pumping time: a donkey pump that fills an overhead tank in half an hour or so once a day uses about {{out.monthly_units|1}} units a month, about {{out.monthly_rs|rs}} at {{out.tariff|rs2}} per unit, while a pump that runs two hours a day for a large family uses about {{ex.1.out.monthly_units|1}} units, about {{ex.1.out.monthly_rs|rs}}.",
+    "A {{ex.0.out.running_w|int}} W half-hp pump uses {{ex.0.out.running_kw|2}} kWh per hour and a {{ex.2.out.running_w|int}} W one-and-a-half hp pump {{ex.2.out.running_kw|2}} kWh per hour, but a smaller pump takes longer to fill the same tank, so the units per tank differ less than the watts suggest. A leaking float valve or a pump left on after the tank is full is the usual reason for a high pump bill."
+   ]
+  },
+  {
+   "h2": "1 hp motor starting current",
+   "p": [
+    "A pump motor starting from rest draws a surge of current until it reaches speed. The appliance data used here puts the surge of a 1 hp water motor at about {{appliance.starting_w|int}} W, nearly three times the running watts, for a second or two. At {{out.volts|int}} V and a {{out.pf|1}} power factor that is {{out.peak_amps|1}} A at start against {{out.amps|1}} A running. A submersible pump of the same size starts harder, at about {{ex.3.out.peak_w|int}} W or {{ex.3.out.peak_amps|1}} A.",
+    "This surge is why a pump needs its own circuit with a type C MCB rather than the type B breaker used for lights, and why a long, thin cable to a pump in the lawn drops the voltage at start and makes the motor hum and overheat. The MCB size and wire size calculators linked below pick the breaker, curve and cable for your motor and cable length."
+   ]
+  },
+  {
+   "h2": "Can a UPS or inverter run a water motor?",
+   "p": [
+    "Only if its surge rating covers the starting watts and its continuous rating covers the running watts with a margin. A 1 hp motor needs {{out.peak_w|int}} W for a moment at start and {{out.running_w|int}} W while running, so a small home UPS rated for fans and lights will trip or shut down the moment the motor starts, even though its VA rating sounds large enough. A line-interactive UPS delivers only about {{d.pf_ups_line_interactive|pct}} of its VA rating as watts, which makes the gap worse.",
+    "A hybrid solar inverter or a sine-wave inverter with a stated surge capacity above {{out.peak_w|int}} W can run the pump, and the battery then drains at {{out.running_kw|2}} kWh per hour of pumping. The inverter size calculator adds the motor's starting surge to your other loads and gives the continuous and surge rating you need."
+   ]
+  },
+  {
+   "h2": "Water motor on solar",
+   "p": [
+    "A pump is a good solar load because it can run at midday when the panels produce the most. The array must carry the running watts of {{out.running_w|int}} W on its own, and the inverter must handle the {{out.peak_w|int}} W start; a dedicated solar pump drive with a soft start removes the surge, but a normal hybrid inverter does not. The solar size from appliances calculator sizes the panels and inverter for the pump together with the rest of the house.",
+    "Run the pump in daylight on a timer or the tank float switch so it never draws from the battery at night, and the pump's {{out.monthly_units|1}} units a month come from the sun instead of the grid."
+   ]
+  },
+  {
+   "h2": "What size generator runs a 1 hp water pump?",
+   "p": [
+    "The generator must supply the {{out.peak_w|int}} W start, which is far above the running load, so a small generator chosen on running watts alone stalls when the motor starts. The generator size for well pump calculator in the next step applies the motor starting rule to your pump size and any lights or fans running with it, and gives the next standard kVA."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "water-motor-0-5hp",
+      "qty": 1
+     }
+    ]
+   },
+   "title": "Half hp donkey pump, one hour a day",
+   "text": "{{out.running_w|int}} W ÷ one thousand = {{out.running_kw|2}} kWh per hour, {{out.monthly_units|1}} units a month, about {{out.monthly_rs|rs}}. It starts at {{out.peak_w|int}} W, or {{out.peak_amps|1}} A at {{out.volts|int}} V."
+  },
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "water-motor-1hp",
+      "qty": 1,
+      "hours": 2
+     }
+    ]
+   },
+   "title": "1 hp pump running two hours a day",
+   "text": "{{out.running_w|int}} W × two hours = {{out.daily_kwh|2}} kWh a day and {{out.monthly_units|1}} units in {{out.days|int}} days, about {{out.monthly_rs|rs}} at {{out.tariff|rs2}} per unit. Starting surge {{out.peak_w|int}} W, {{out.peak_amps|1}} A."
+  },
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "water-motor-1-5hp",
+      "qty": 1
+     }
+    ]
+   },
+   "title": "One-and-a-half hp pump, one hour a day",
+   "text": "{{out.running_w|int}} W running is {{out.running_kw|2}} kWh per hour and {{out.monthly_units|1}} units a month, about {{out.monthly_rs|rs}}. It starts at {{out.peak_w|int}} W, which is {{out.peak_amps|1}} A, so it needs a larger inverter or generator than the 1 hp pump."
+  },
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "submersible-pump-1hp",
+      "qty": 1
+     }
+    ]
+   },
+   "title": "1 hp submersible pump, two hours a day",
+   "text": "A deep-well pump of {{out.running_w|int}} W uses {{out.running_kw|2}} kWh per hour; two hours a day is {{out.daily_kwh|2}} kWh a day and {{out.monthly_units|1}} units a month, about {{out.monthly_rs|rs}}. Its start is harder: {{out.peak_w|int}} W, or {{out.peak_amps|1}} A."
+  },
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "water-motor-1hp",
+      "qty": 1,
+      "watts": 1200
+     }
+    ]
+   },
+   "title": "A less efficient 1 hp motor with {{out.running_w|int}} W on the nameplate",
+   "text": "Enter the nameplate watts and the starting surge scales with it: {{out.running_w|int}} W running, {{out.peak_w|int}} W at start, {{out.running_kw|2}} kWh per hour and {{out.monthly_units|1}} units a month for one hour a day."
+  }
+ ],
+ "table": {
+  "caption": "Water pumps pumping one hour a day for {{out.days|int}} days at {{out.tariff|rs2}} per unit, {{out.volts|int}} V and {{out.pf|1}} power factor",
+  "rows": [
+   {
+    "loads": [
+     {
+      "id": "water-motor-0-5hp",
+      "hours": 1
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "water-motor-1hp",
+      "hours": 1
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "water-motor-1hp",
+      "hours": 1,
+      "watts": 1200
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "submersible-pump-1hp",
+      "hours": 1
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "water-motor-1-5hp",
+      "hours": 1
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "water-motor-2hp",
+      "hours": 1
+     }
+    ]
+   }
+  ],
+  "columns": [
+   {
+    "label": "Running watts",
+    "tpl": "{{out.running_w|int}} W"
+   },
+   {
+    "label": "Starting watts",
+    "tpl": "{{out.peak_w|int}} W"
+   },
+   {
+    "label": "Starting current",
+    "tpl": "{{out.peak_amps|1}} A"
+   },
+   {
+    "label": "Units per hour",
+    "tpl": "{{out.running_kw|2}}"
+   },
+   {
+    "label": "Units per month",
+    "tpl": "{{out.monthly_units|1}}"
+   },
+   {
+    "label": "Monthly cost",
+    "tpl": "{{out.monthly_rs|rs}}"
+   }
+  ]
+ },
+ "mistakes": [
+  "Sizing a UPS, inverter or generator on the running watts. A 1 hp motor starts at about {{out.peak_w|int}} W, not {{out.running_w|int}} W, and the start is what trips an undersized unit.",
+  "Taking hp × {{d.w_per_hp|1}} as the input watts. That is shaft power; the motor draws about {{out.running_w|int}} W from the supply because it is only about {{d.motor_eff|pct}} efficient.",
+  "Counting the pump as an all-day load. A donkey pump runs a fraction of an hour a day; use the real pumping time, and fix a leaking float valve before buying a bigger solar system.",
+  "Running the pump from a socket circuit shared with other appliances or over a long thin cable. The {{out.peak_amps|1}} A start drops the voltage, overheats the motor and trips the shared breaker; the pump needs its own circuit and a type C MCB."
+ ],
+ "safety": "A water motor needs its own circuit with a correctly rated cable, a type C MCB and a proper earth, and it stands in a wet place; have a licensed electrician install it and check the earth and any UPS or inverter connection.",
+ "faq": [
+  {
+   "q": "How many units does a 1 hp water motor use per hour?",
+   "a": "About {{out.running_kw|2}} kWh per hour, since a typical 1 hp motor draws about {{out.running_w|int}} W of input while pumping. Pumping one hour a day is about {{out.monthly_units|1}} units a month; two hours a day about {{ex.1.out.monthly_units|1}} units."
+  },
+  {
+   "q": "What is the starting current of a 1 hp motor?",
+   "a": "About {{out.peak_amps|1}} A at {{out.volts|int}} V for a second or two, from a starting surge of about {{out.peak_w|int}} W, against {{out.amps|1}} A while running. A submersible pump of the same size starts at about {{ex.3.out.peak_amps|1}} A."
+  },
+  {
+   "q": "Can a UPS run a 1 hp water motor?",
+   "a": "A normal home UPS for fans and lights cannot: it must supply {{out.peak_w|int}} W at the start and {{out.running_w|int}} W running, and a line-interactive UPS gives only about {{d.pf_ups_line_interactive|pct}} of its VA rating as watts. A hybrid or sine-wave inverter with a surge rating above {{out.peak_w|int}} W can; use the inverter size calculator to size it with your other loads."
+  },
+  {
+   "q": "What size generator do I need for a 1 hp water pump?",
+   "a": "One that can supply the {{out.peak_w|int}} W starting surge, not just the {{out.running_w|int}} W running load. The generator size for well pump calculator applies the motor starting rule to your pump size and other loads and gives the next standard kVA."
+  },
+  {
+   "q": "Can I run a water motor on solar?",
+   "a": "Yes, best at midday. The array must carry {{out.running_w|int}} W and the inverter must handle the {{out.peak_w|int}} W start unless a solar pump drive with soft start is used. One hour of pumping a day is {{out.daily_kwh|2}} kWh, a small share of a home solar system's output."
+  },
+  {
+   "q": "How many watts is a 1 hp motor?",
+   "a": "One hp is {{d.w_per_hp|1}} W of shaft power. Because a small motor is about {{d.motor_eff|pct}} efficient, a 1 hp water motor draws about {{out.running_w|int}} W from the supply, with real motors from about {{appliance.running_w_range.0|int}} W to {{appliance.running_w_range.1|int}} W."
+  },
+  {
+   "q": "How much does a water motor add to the monthly bill?",
+   "a": "For one hour of pumping a day, about {{out.monthly_units|1}} units or {{out.monthly_rs|rs}} of energy charge at {{out.tariff|rs2}} per unit. The real cost depends on your slab, because the pump's units add to everything else on the meter."
+  }
+ ],
+ "related": [
+  "D4",
+  "D8",
+  "W3",
+  "H3",
+  "H7"
+ ],
+ "next": "C5",
+ "literal_numbers": [
+  "1 hp"
+ ],
+ "sources": [
+  {
+   "label": "Murdoch's generator wattage chart (water pump running and starting watts)",
+   "url": "https://www.murdochs.com/learning-center/power-equipment/how-to-choose-a-generator/"
+  },
+  {
+   "label": "NEPRA tariff notification for Ex-WAPDA DISCOs (A-1 domestic energy rates)",
+   "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

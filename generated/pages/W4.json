@@ -3,15 +3,24 @@
  "type": "tool",
  "silo": "W",
  "url": "/wiring/solar-cable-size-calculator/",
- "h1": "Dc Cable Size For Solar Panels",
+ "h1": "DC Cable Size for Solar Panels",
  "title": "Solar DC Cable Size Calculator (4mm², 6mm²) | Wattlyst",
  "meta": "Size the DC cable from solar panels to inverter and battery for 3kW to 10kW systems. Keeps voltage drop under 3% with a safety margin.",
  "primary_keyword": "dc cable size for solar panels",
  "wave": 2,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-13",
+ "published": "2026-10-13",
  "author": "ali-ahmad",
+ "related": [
+  "W2",
+  "W1",
+  "D16",
+  "D3"
+ ],
+ "next": "W3",
  "parent": "P-W",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
@@ -22,11 +31,345 @@
    "url": "/wiring/"
   },
   {
-   "name": "Dc Cable Size For Solar Panels",
+   "name": "DC Cable Size for Solar Panels",
    "url": "/wiring/solar-cable-size-calculator/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "How is the DC cable size for solar panels worked out?",
+    "p": [
+     "A solar DC cable has to pass two checks: it must carry the string current safely, and it must not lose too much voltage over the run. For a single string the first check is easy: a string carries only one panel's current, and 4 mm² copper PV cable, the common size for strings, is rated well above the short-circuit current of any common panel with the 1.25 safety margin. The second check, voltage drop, is what this calculator does: 14 A over 25 m in 4 mm² loses 3.9 V, 0.94% of a 420 V string.",
+     "Pick 4 mm² first. If the drop is above the limit, pick 6 mm² and check again. The table below does this for common runs so you can see where 4 mm² stops being enough."
+    ]
+   },
+   {
+    "h2": "4 mm² or 6 mm² solar cable: which one for my run?",
+    "p": [
+     "For a 14 A string at 420 V, 4 mm² stays under the 3% limit at 25 m (0.94%) and even at 60 m (2.25%). 6 mm² at 60 m drops 1.5%. On a high-voltage string both pass, so the choice is about lost energy: the drop percentage is also the share of that string's output lost as heat in the cable, every day for twenty-five years, which often pays for 6 mm² on a long run.",
+     "On a low-voltage string the answer changes. Three panels in series at 126 V lose 3.13% in 4 mm² over 25 m, above the 3% limit, so 6 mm² is needed; the table shows the 6 mm² figure. More panels in series is the cheapest fix."
+    ]
+   },
+   {
+    "h2": "Solar wire size for a five kW inverter",
+    "p": [
+     "A five kW hybrid inverter is usually fed by two strings. Each string on its own cable carries one panel's current and 4 mm² is normal. If the two strings are joined in a combiner before one cable runs to the inverter, that cable carries twice the current; the table includes a two-string case at 420 V. Cables that carry combined strings must also be checked for current rating, which this page does not do: use the wire size calculator in DC mode for the current check, and never combine more strings than the cable and the inverter input allow.",
+     "The AC output of the inverter to the distribution board is an ordinary single-phase circuit; size it with the wire size calculator and protect it with the MCB from the breaker size calculator."
+    ]
+   },
+   {
+    "h2": "Battery cable size for an inverter",
+    "p": [
+     "The cable between the battery and the inverter is the opposite case: low voltage and very high current. A three kW inverter on a 48 V bank draws at least 62.5 A (more with the inverter's losses and a low battery), and even a 2 m run in 25 mm² loses 0.47%. The size here is set by current rating, not by drop: check it with the wire size calculator in DC mode, which picks the cable from the current table and gives the Pakistani size. Keep battery cables as short as possible and fit a DC-rated fuse or breaker at the battery.",
+     "A five kW inverter on 48 V draws over a hundred amps, beyond the single-phase breaker sizes in our table; the inverter maker's manual gives the cable and fuse for it, and a licensed electrician should fit them."
+    ]
+   },
+   {
+    "h2": "PV cable sizing: what else to check",
+    "p": [
+     "Use real PV cable (double-insulated, UV-resistant, rated for the DC voltage of the string) with MC4 connectors, not ordinary building wire. Keep the positive and negative close together to limit lightning-induced voltage, route the cable out of direct sun where you can, and fit a DC isolator at the inverter. The string's open-circuit voltage on a cold morning must stay below the inverter's or controller's maximum input voltage; the charge controller size calculator explains that check."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "What size DC cable do I need for solar panels?",
+    "a": "4 mm² PV cable for most single strings: a 14 A string at 420 V loses only 0.94% over 25 m. Move to 6 mm² on long runs or low-voltage strings, and check combined strings for current rating too."
+   },
+   {
+    "q": "4 mm² or 6 mm² solar cable?",
+    "a": "Both carry a single string's current. 4 mm² is enough where the drop stays under the limit: 2.25% at 60 m for a 14 A string at 420 V. 6 mm² cuts that to 1.5% and is worth it on long runs or where the string voltage is low."
+   },
+   {
+    "q": "What is an acceptable voltage drop for solar DC cables?",
+    "a": "Keep it under 3% for the string cable; 5% is the general wiring maximum. The percentage lost is energy lost every day, so lower is better where the cable cost is small."
+   },
+   {
+    "q": "Does this calculator pick the cable size for me?",
+    "a": "It checks the size you pick, and the table shows the common sizes for common runs so you can choose the smallest that passes. It does not check the current rating; for combined strings or battery cables use the wire size calculator in DC mode."
+   },
+   {
+    "q": "What cable size between the battery and the inverter?",
+    "a": "That cable is sized by current, not drop: at least 62.5 A for a three kW inverter on 48 V, and more when the battery is low and with the inverter's own losses. 25 mm² over 2 m drops only 0.47%, but confirm the current rating with the wire size calculator and the inverter manual."
+   },
+   {
+    "q": "What wire size for a five kW solar inverter?",
+    "a": "On the DC side each string normally gets 4 mm² PV cable; combined strings need a current check. The AC output is a single-phase circuit sized with the wire size calculator, and a five kW inverter on 48 V draws over a hundred amps from the battery, so follow the maker's cable and fuse table for that run."
+   },
+   {
+    "q": "Why does a low-voltage string need a thicker cable?",
+    "a": "The volts lost depend on current, length and cable, not on the string voltage, so the same 3.9 V is 3.13% of a 126 V string but only 0.94% of a 420 V string. Adding panels in series is the cheapest cure."
+   }
+  ],
+  "key_facts": [
+   "DC cable voltage drop = two × run length × current × copper resistivity ÷ cable area: a 14 A string at 420 V over 25 m in 4 mm² loses 3.9 V, 0.94%, under the 3% solar DC target.",
+   "At 60 m the same string loses 2.25% in 4 mm² and 1.5% in 6 mm², so both are within the limit; 6 mm² simply wastes less energy for the life of the system.",
+   "String voltage matters more than cable size: the same 14 A over 25 m at 126 V loses 3.13% in 4 mm², over the 3% limit, while at 420 V it loses 0.94%.",
+   "A battery-to-inverter cable carries far more current: 62.5 A at 48 V over 2 m in 25 mm² loses 0.47%, which is why battery cables are short and thick."
+  ],
+  "mistakes": [
+   "Measuring one way and forgetting the return. The current goes out on the positive and back on the negative, so the calculator doubles the run; a straight-line guess also misses the route over the parapet and down the wall.",
+   "Using building wire on the roof. Ordinary PVC wire is not rated for sun, rain or the DC voltage of a string; use double-insulated PV cable with MC4 connectors.",
+   "Combining strings without checking the current. Two strings on one cable double the amps; the drop doubles and the cable's current rating must be checked separately.",
+   "Fixing a drop with thicker cable when more panels in series would do. Raising the string voltage cuts the percentage drop and the cost at the same time, within the inverter's voltage limits.",
+   "Going below 4 mm² because the drop allows it. 4 mm² is the common PV cable size for strings and keeps a current margin; this calculator does not offer smaller sizes."
+  ],
+  "sources": [
+   {
+    "label": "IEC 60364-5-52: selection and erection of wiring systems (voltage drop, current ratings)",
+    "url": "https://webstore.iec.ch/publication/1878"
+   },
+   {
+    "label": "Wattlyst methodology and default values (copper resistivity, drop limits)",
+    "url": "/methodology/"
+   }
+  ],
+  "tool": {
+   "calc": "voltage_drop",
+   "module": "wiring.js",
+   "data_keys": [
+    "cables"
+   ],
+   "appliances": {},
+   "fields": [
+    {
+     "name": "amps",
+     "label": "String current",
+     "unit": "A",
+     "default": 14,
+     "hint": "Imp or Isc of one panel from its label (strings in series carry the same current). If two strings are joined before this cable, add their currents."
+    },
+    {
+     "name": "volts",
+     "label": "String voltage",
+     "unit": "V",
+     "default": 420,
+     "hint": "Vmp of one panel × panels in series. Higher string voltage means a smaller drop for the same cable."
+    },
+    {
+     "name": "length_m",
+     "label": "Cable run, one way",
+     "unit": "m",
+     "default": 25,
+     "hint": "Distance from the panels to the inverter or controller along the actual route. The calculator counts both the positive and negative conductor."
+    },
+    {
+     "name": "area_mm2",
+     "label": "Cable size to check",
+     "unit": "mm²",
+     "type": "select",
+     "default": 4,
+     "options": [
+      [
+       4,
+       "4 mm² (standard PV cable)"
+      ],
+      [
+       6,
+       "6 mm² (standard PV cable)"
+      ],
+      [
+       10,
+       "10 mm²"
+      ],
+      [
+       16,
+       "16 mm²"
+      ],
+      [
+       25,
+       "25 mm² (battery cable)"
+      ],
+      [
+       35,
+       "35 mm² (battery cable)"
+      ]
+     ],
+     "hint": "Pick a size and see its drop. 4 mm² and 6 mm² are the PV cable sizes sold for strings; the larger sizes are for battery-to-inverter runs."
+    },
+    {
+     "name": "circuit",
+     "label": "Voltage drop limit",
+     "type": "select",
+     "default": "lighting",
+     "options": [
+      [
+       "lighting",
+       "3% (recommended for solar DC)"
+      ],
+      [
+       "other",
+       "5% (maximum)"
+      ]
+     ],
+     "hint": "Solar DC runs are usually kept under three percent so the panels lose little output; five percent is the general wiring limit."
+    },
+    {
+     "name": "rho",
+     "label": "Copper resistivity",
+     "unit": "Ω·mm²/m",
+     "default": 0.0225,
+     "advanced": true,
+     "hint": "Resistance of copper at working temperature. Leave the default for copper PV cable."
+    }
+   ],
+   "fixed_inputs": {
+    "mode": "dc"
+   },
+   "outputs": [
+    {
+     "key": "drop_pct",
+     "label": "Voltage drop",
+     "spec": "2",
+     "unit": "%",
+     "label_ur": "Voltage drop",
+     "value": "0.94"
+    },
+    {
+     "key": "drop_v",
+     "label": "Volts lost in the cable",
+     "spec": "1",
+     "unit": "V",
+     "label_ur": "Cable mein zaya volts",
+     "value": "3.9"
+    },
+    {
+     "key": "voltage_at_load",
+     "label": "Voltage at the inverter",
+     "spec": "int",
+     "unit": "V",
+     "label_ur": "Inverter par voltage",
+     "value": "416"
+    },
+    {
+     "key": "limit_pct",
+     "label": "Limit chosen",
+     "spec": "int",
+     "unit": "%",
+     "label_ur": "Chuni hui had",
+     "value": "3"
+    }
+   ],
+   "how": {
+    "tpl": "The current flows out along the positive and back along the negative, so the cable length counts twice: {{d.rho_copper|4}} Ω·mm²/m copper resistivity × two × {{in.length_m|int}} m × {{in.amps|int}} A ÷ {{in.area_mm2|int}} mm² = {{out.drop_v|1}} V lost. {{out.drop_v|1}} V ÷ {{in.volts|int}} V string voltage = {{out.drop_pct|2}}%, against the {{out.limit_pct|int}}% limit you chose, leaving {{out.voltage_at_load|int}} V at the inverter. If the drop is above the limit, pick the next cable size and check again.",
+    "text": "The current flows out along the positive and back along the negative, so the cable length counts twice: 0.0225 Ω·mm²/m copper resistivity × two × 25 m × 14 A ÷ 4 mm² = 3.9 V lost. 3.9 V ÷ 420 V string voltage = 0.94%, against the 3% limit you chose, leaving 416 V at the inverter. If the drop is above the limit, pick the next cable size and check again."
+   },
+   "submit": "Calculate",
+   "notice": "",
+   "data_checked": [
+    {
+     "label": "Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)",
+     "url": "https://webstore.iec.ch/publication/1878",
+     "checked": "2026-10-13"
+    }
+   ]
+  },
+  "examples": [
+   {
+    "title": "One string, 14 A at 420 V, 25 m in 4 mm²",
+    "text": "Two × 25 m × 14 A × 0.0225 ÷ 4 mm² = 3.9 V. ÷ 420 V = 0.94%, within the 3% limit; 416 V reaches the inverter. 4 mm² is enough."
+   },
+   {
+    "title": "Long 60 m run in 4 mm²",
+    "text": "Two × 60 m × 14 A × 0.0225 ÷ 4 mm² = 9.5 V, 2.25% of 420 V. Still within the 3% limit on a high-voltage string, but 2.25% of that string's energy is lost in the cable."
+   },
+   {
+    "title": "Same 60 m run in 6 mm²",
+    "text": "6.3 V lost, 1.5%. The thicker cable cuts the loss by a third for the life of the system, which usually pays for itself on runs this long."
+   },
+   {
+    "title": "Low-voltage string, three panels at 126 V, 25 m in 4 mm²",
+    "text": "The same 3.9 V lost is now 3.13% of 126 V, above the 3% limit. Use 6 mm² (see the table) or put more panels in series to raise the string voltage."
+   },
+   {
+    "title": "Battery to inverter: 62.5 A at 48 V, 2 m in 25 mm²",
+    "text": "Two × 2 m × 62.5 A × 0.0225 ÷ 25 mm² = 0.2 V, 0.47% of 48 V. The drop is small; this cable is sized by its current rating, which the wire size calculator checks."
+   }
+  ],
+  "table": {
+   "caption": "Voltage drop of PV string cables for common runs: one string of 14 A at 420 V, two strings combined, and a low-voltage string",
+   "head": [
+    "String",
+    "Run",
+    "Cable",
+    "Volts lost",
+    "Drop",
+    "At the inverter"
+   ],
+   "rows": [
+    [
+     "14 A at 420 V",
+     "20 m",
+     "4 mm²",
+     "3.2 V",
+     "0.75%",
+     "417 V"
+    ],
+    [
+     "14 A at 420 V",
+     "40 m",
+     "4 mm²",
+     "6.3 V",
+     "1.5%",
+     "414 V"
+    ],
+    [
+     "14 A at 420 V",
+     "60 m",
+     "4 mm²",
+     "9.5 V",
+     "2.25%",
+     "411 V"
+    ],
+    [
+     "14 A at 420 V",
+     "60 m",
+     "6 mm²",
+     "6.3 V",
+     "1.5%",
+     "414 V"
+    ],
+    [
+     "28 A at 420 V",
+     "40 m",
+     "6 mm²",
+     "8.4 V",
+     "2%",
+     "412 V"
+    ],
+    [
+     "28 A at 420 V",
+     "60 m",
+     "10 mm²",
+     "7.6 V",
+     "1.8%",
+     "412 V"
+    ],
+    [
+     "14 A at 126 V",
+     "25 m",
+     "6 mm²",
+     "2.6 V",
+     "2.08%",
+     "123 V"
+    ]
+   ]
+  },
+  "answer": "A 4 mm² DC cable from solar panels carrying 14 A at 420 V over a 25 m run loses 3.9 V, a 0.94% voltage drop, within the 3% limit for solar DC, so 4 mm² is the right size for this string. Drop = two × length × current × copper resistivity ÷ cable area; move up to 6 mm² when the drop passes the limit.",
+  "formula": {
+   "text": "ΔV = 2 × L × I × ρ ÷ A; drop% = ΔV ÷ V_string × 100; V_inverter = V_string − ΔV",
+   "lines": [
+    "L = one-way cable run in metres (the two counts the return conductor)",
+    "I = string current in amps (Imp or Isc from the panel label)",
+    "ρ = resistivity of copper in Ω·mm²/m at working temperature",
+    "A = cable cross-section in mm²",
+    "V_string = Vmp × panels in series"
+   ]
+  },
+  "safety": "Solar strings carry lethal DC voltage whenever there is daylight and cannot be switched off at the panels; the DC cables, isolators, fuses, earthing and surge protection must be installed by a licensed electrician or a certified solar installer, and the cable's current rating must be confirmed against the combined string current."
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -49,7 +392,7 @@
      {
       "@type": "ListItem",
       "position": 3,
-      "name": "Dc Cable Size For Solar Panels",
+      "name": "DC Cable Size for Solar Panels",
       "item": "https://wattlyst.com/wiring/solar-cable-size-calculator/"
      }
     ]
@@ -66,12 +409,14 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/wiring/solar-cable-size-calculator/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-13",
+    "lastReviewed": "2026-10-13"
    },
    {
     "@type": "WebApplication",
     "@id": "https://wattlyst.com/wiring/solar-cable-size-calculator/#app",
-    "name": "Dc Cable Size For Solar Panels",
+    "name": "DC Cable Size for Solar Panels",
     "url": "https://wattlyst.com/wiring/solar-cable-size-calculator/",
     "description": "Size the DC cable from solar panels to inverter and battery for 3kW to 10kW systems. Keeps voltage drop under 3% with a safety margin.",
     "applicationCategory": "UtilitiesApplication",
@@ -98,6 +443,68 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/wiring/solar-cable-size-calculator/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "What size DC cable do I need for solar panels?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "4 mm² PV cable for most single strings: a 14 A string at 420 V loses only 0.94% over 25 m. Move to 6 mm² on long runs or low-voltage strings, and check combined strings for current rating too."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "4 mm² or 6 mm² solar cable?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Both carry a single string's current. 4 mm² is enough where the drop stays under the limit: 2.25% at 60 m for a 14 A string at 420 V. 6 mm² cuts that to 1.5% and is worth it on long runs or where the string voltage is low."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What is an acceptable voltage drop for solar DC cables?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Keep it under 3% for the string cable; 5% is the general wiring maximum. The percentage lost is energy lost every day, so lower is better where the cable cost is small."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Does this calculator pick the cable size for me?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "It checks the size you pick, and the table shows the common sizes for common runs so you can choose the smallest that passes. It does not check the current rating; for combined strings or battery cables use the wire size calculator in DC mode."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What cable size between the battery and the inverter?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "That cable is sized by current, not drop: at least 62.5 A for a three kW inverter on 48 V, and more when the battery is low and with the inverter's own losses. 25 mm² over 2 m drops only 0.47%, but confirm the current rating with the wire size calculator and the inverter manual."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What wire size for a five kW solar inverter?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "On the DC side each string normally gets 4 mm² PV cable; combined strings need a current check. The AC output is a single-phase circuit sized with the wire size calculator, and a five kW inverter on 48 V draws over a hundred amps from the battery, so follow the maker's cable and fuse table for that run."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Why does a low-voltage string need a thicker cable?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "The volts lost depend on current, length and cable, not on the string voltage, so the same 3.9 V is 3.13% of a 126 V string but only 0.94% of a 420 V string. Adding panels in series is the cheapest cure."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

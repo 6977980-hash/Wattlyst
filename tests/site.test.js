@@ -33,6 +33,11 @@ test('format: numbers are never blank, NaN or Infinity', () => {
   assert.equal(fmt(1020.4, 'int'), '1,020');
   assert.equal(fmt(0.85, 'pct'), '85%');
   assert.equal(fmt(8275.4, 'rs'), 'Rs 8,275');
+  assert.equal(fmt(33.1, 'rs2'), 'Rs 33.10', 'per-unit rates keep two decimals');
+  assert.equal(fmt(1234.5, 'rs2'), 'Rs 1,234.50');
+  assert.equal(fmt(true, 'yesno'), 'Yes');
+  assert.equal(fmt(false, 'yesno'), 'No');
+  assert.equal(fmt(true), '', 'a flag without the yesno spec never prints as a number');
   assert.equal(fmt(NaN), '');
   assert.equal(fmt(Infinity), '');
   assert.equal(fmt(-0.001), '0', 'no "-0"');
@@ -84,7 +89,7 @@ test('content: numbers in page text come from the engine or data/, never typed (
   for (const f of readdirSync(dir).filter((x) => x.endsWith('.json'))) {
     const c = JSON.parse(readFileSync(join(dir, f), 'utf8'));
     const allowed = c.literal_numbers || [];
-    const texts = [c.answer, c.intro, c.how, c.safety, ...(c.key_facts || []), ...(c.mistakes || []),
+    const texts = [c.answer, c.intro, c.how, c.how_ur, c.safety, ...(c.key_facts || []), ...(c.mistakes || []),
       ...(c.faq || []).flatMap((x) => [x.q, x.a]), ...(c.examples || []).flatMap((x) => [x.title, x.text]),
       c.table?.caption, ...(c.sections || []).flatMap((s) => [s.h2, ...(s.p || [])])].filter(Boolean);
     for (const t of texts) {
@@ -98,7 +103,7 @@ test('content: numbers in page text come from the engine or data/, never typed (
 test('every rendered string is free of NaN, Infinity, undefined and negative results', () => {
   for (const p of pages) {
     const c = structuredClone(p.content || {});
-    if (c.tool?.how) delete c.tool.how.tpl; // the live template is meant to keep its {{placeholders}}
+    if (c.tool?.how) { delete c.tool.how.tpl; delete c.tool.how.tpl_ur; } // the live templates keep their {{placeholders}}
     const s = JSON.stringify(c);
     assert.ok(!/NaN|Infinity|undefined|null h|\{\{/.test(s), `${p.id}: bad value in content`);
   }
@@ -112,7 +117,7 @@ test('schema: breadcrumb everywhere, WebApplication on tools, FAQ matches visibl
     assert.ok(types.includes('Organization'), `${p.id}: Organization`);
     const bc = g.find((n) => n['@type'] === 'BreadcrumbList').itemListElement;
     assert.equal(bc.length, p.breadcrumb.length, `${p.id}: schema breadcrumb = visible breadcrumb`);
-    if (p.type === 'tool' || p.type === 'appliance') {
+    if (p.type === 'tool' || p.type === 'appliance' || p.type === 'lookup') {
       const app = g.find((n) => n['@type'] === 'WebApplication');
       assert.ok(app, `${p.id}: WebApplication`);
       assert.equal(app.applicationCategory, 'UtilitiesApplication');
@@ -186,9 +191,10 @@ test('brand images exist at the sizes the head tags and schema declare', () => {
 });
 
 test('a tool page loads under 30 KB of JavaScript (seo-rules.md 4)', () => {
-  const size = (p) => statSync(join(root, p)).size;
+  // Measured on what the browser actually loads: the stripped copies in dist/.
+  const size = (p) => Buffer.byteLength(files[`dist/${p}`]);
   const base = ['assets/js/wattlyst-tool.js', 'engine/format.js', 'engine/messages.js', 'engine/core.js'].reduce((s, p) => s + size(p), 0);
-  for (const m of ['conversions', 'battery', 'sizing', 'solar', 'bill', 'load', 'wiring']) {
+  for (const m of ['conversions', 'battery', 'sizing', 'solar', 'bill', 'load', 'wiring', 'planner']) {
     assert.ok(base + size(`engine/${m}.js`) < 30 * 1024, `${m}: ${base + size(`engine/${m}.js`)} bytes`);
   }
 });

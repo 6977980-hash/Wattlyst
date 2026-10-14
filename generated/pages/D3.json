@@ -3,15 +3,25 @@
  "type": "tool",
  "silo": "D",
  "url": "/solar/off-grid-solar-calculator/",
- "h1": "Off Grid Solar System Size Calculator",
+ "h1": "Off-Grid Solar System Size Calculator",
  "title": "Off-Grid Solar System Size Calculator | Wattlyst",
  "meta": "Plan a full off-grid solar system: panels, battery bank, inverter and charge controller from your appliance list and backup days.",
  "primary_keyword": "off grid solar system size calculator",
  "wave": 2,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-13",
+ "published": "2026-10-13",
  "author": "ali-ahmad",
+ "related": [
+  "D16",
+  "W4",
+  "D4",
+  "D7",
+  "B4"
+ ],
+ "next": "D1",
  "parent": "P-D",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
@@ -22,11 +32,1458 @@
    "url": "/solar/"
   },
   {
-   "name": "Off Grid Solar System Size Calculator",
+   "name": "Off-Grid Solar System Size Calculator",
    "url": "/solar/off-grid-solar-calculator/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "How is an off-grid solar system designed?",
+    "p": [
+     "Off-grid means no grid at all: the panels make every unit, the battery carries every night and the inverter runs every appliance. So each part is sized from the appliance list. The panels must make the day's 5.9 units, refill what the battery gave at night with its charging and inverter losses (6.6 units in all), and carry the 1,141 W running load at noon; the larger rule gives 1.66 kW, or 3 panels of 585 W. The battery must hold the load after sunset: 1,141 W for 4 hours is 4.6 units, which at 48 V with lithium is 117 Ah. The inverter must carry 1,141 W with a margin: 1.43 kW, with a surge of 2,341 W for the pump motor.",
+     "Everything in the list counts, including the appliances that run for minutes, because there is no grid to fall back on. Check each one's watts against its label before trusting the result."
+    ]
+   },
+   {
+    "h2": "Off-grid battery bank size and days of autonomy",
+    "p": [
+     "This calculator sizes the battery for one night: the full running load for the hours you enter. That is honest about what it covers and what it does not. It assumes every listed appliance runs together for those hours, which is a worst case for the evening, but it does not add a second cloudy day. For 4 hours the bank is 117 Ah (5.6 kWh) at 48 V; for the whole 12 hour night it is 352 Ah (16.9 kWh).",
+     "Off-grid homes usually plan for two days of autonomy, three where winter fog or monsoon clouds last for days. Take the night units from this result to the solar battery size calculator, enter the days of autonomy, and the bank grows in proportion. The panels then also have to refill a larger bank on the first sunny day, so add panels beyond the figure here; this page adds the charging losses for one night, not the catch-up after a cloudy spell."
+    ]
+   },
+   {
+    "h2": "Off-grid inverter size",
+    "p": [
+     "The inverter is sized from the running watts of everything that can be on at once, not from the panels or the battery: 1,141 W × 1.25 = 1,426 W continuous, so a 1.43 kW off-grid or hybrid inverter. Its surge rating must cover the largest motor start, here 2,341 W for the water pump; a non-inverter fridge or AC pushes that figure up fast.",
+     "Buy an inverter whose battery voltage matches the bank you chose and whose MPPT input can take the panel kW and string voltage; the charge controller size calculator explains those limits."
+    ]
+   },
+   {
+    "h2": "Off-grid solar for a home with an AC",
+    "p": [
+     "Add a 1 ton inverter AC for eight hours and the daily energy nearly doubles to 11.1 units, the running load rises to 2,041 W, and the system becomes 6 panels (3.51 kW), a 210 Ah bank at 48 V (10.1 kWh) and a 2.55 kW inverter. The AC in the evening is what makes off-grid expensive; running it only in daylight keeps the battery small."
+    ]
+   },
+   {
+    "h2": "Off-grid solar kit size for a cabin or shop",
+    "p": [
+     "A cabin with four LED bulbs, two DC fans, a small TV and phone charging uses only 1.4 units a day at 188 W, so one 585 W panel, a 39 Ah lithium bank at 24 V and a 0.24 kW inverter cover it. DC fans and LED lights are the cheapest way to shrink an off-grid system, because every watt saved at night comes off the battery."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "How do I size an off-grid solar system?",
+    "a": "From the appliance list: panels from the daily units, the battery refill and the midday load (3 panels, 1.76 kW for the house above), a battery from the load after sunset (117 Ah at 48 V for 4 hours), and an inverter from the running watts (1.43 kW)."
+   },
+   {
+    "q": "How big should the off-grid battery bank be?",
+    "a": "Enough for the load after sunset times the hours it runs, divided by the bank volts, the usable share and the inverter efficiency: 117 Ah at 48 V for 4 hours here, 352 Ah for a full 12 hour night. Add days of autonomy for cloudy weather in the solar battery size calculator."
+   },
+   {
+    "q": "What size inverter for an off-grid system?",
+    "a": "The running watts of everything on at once times the 1.25 margin: 1.43 kW for the house above, with a surge rating of at least 2,341 W for the pump. The panels and battery do not set the inverter size."
+   },
+   {
+    "q": "Can an off-grid solar system run an AC?",
+    "a": "Yes, if it is sized for it. One 1 ton inverter AC for eight hours takes the small house to 6 panels and a 210 Ah bank at 48 V with a 2.55 kW inverter. Running it in daylight only keeps the battery far smaller."
+   },
+   {
+    "q": "Lithium or tubular for an off-grid home?",
+    "a": "Lithium: the same night needs 5.6 kWh of lithium but 10.1 kWh of tubular, and lithium takes a daily deep cycle for many more years. Tubular only wins on purchase price."
+   },
+   {
+    "q": "Why is the battery bigger than the house uses in a day?",
+    "a": "The twelve-hour worst case assumes every appliance runs all night, which is more than the daily total. Enter the hours the full load really runs after sunset, usually about four, and keep the rest of the night for the fridge and a fan."
+   },
+   {
+    "q": "Do I need a charge controller for an off-grid system?",
+    "a": "Yes, either built into a hybrid or off-grid inverter or as a separate MPPT. Its amps come from the panel watts and the bank voltage; the charge controller size calculator gives the size."
+   }
+  ],
+  "key_facts": [
+   "An off-grid solar system has three parts sized separately: panels from the daily units plus the battery refill (6.6 units ÷ 4 per kW in Lahore = 1.66 kW), a battery from the load after sunset (117 Ah at 48 V for 4 hours), and an inverter from the running watts (1,141 W × 1.25 = 1.43 kW).",
+   "The battery bank for one night is sized for the full running load for the hours you enter; running it for the whole 12 hour night needs 352 Ah at 48 V (16.9 kWh), against 117 Ah for 4 hours.",
+   "A tubular bank for the same night is 423 Ah at 24 V (10.1 kWh) because only 50% of it may be used, against 90% for lithium.",
+   "Adding one 1 ton inverter AC for eight hours takes the same house to 11.1 units a day, 6 panels (3.51 kW), a 210 Ah bank at 48 V and a 2.55 kW inverter."
+  ],
+  "mistakes": [
+   "Sizing the panels for the day only. Off-grid, the panels must also put back what the battery gave at night, plus charging and inverter losses; this calculator adds them, a simple daily-units rule does not.",
+   "Planning one night of battery for an off-grid house. Two cloudy days in a row empty a one-night bank; use the solar battery size calculator with days of autonomy.",
+   "Running the AC on the battery. One inverter AC in the evening more than doubles the bank; run it in daylight or plan the battery for it.",
+   "Forgetting the pump's surge. The inverter must start the motor; its surge rating must cover 2,341 W here, not just the running load.",
+   "Using tubular batteries to 90%. Only about 50% of a tubular bank may be used nightly; the calculator already allows for the type you pick."
+  ],
+  "sources": [
+   {
+    "label": "Global Solar Atlas (PV output per kWp by city)",
+    "url": "https://globalsolaratlas.info/"
+   },
+   {
+    "label": "Wattlyst methodology and default values",
+    "url": "/methodology/"
+   }
+  ],
+  "tool": {
+   "calc": "solar_from_loads",
+   "module": "solar.js",
+   "data_keys": [
+    "cities"
+   ],
+   "appliances": {
+    "ceiling-fan-ac": {
+     "name": "Ceiling fan (AC, 56 inch)",
+     "running_w": 80,
+     "starting_w": 120,
+     "typical_hours_per_day": 12,
+     "load_type": "motor"
+    },
+    "ceiling-fan-dc-inverter": {
+     "name": "Ceiling fan (DC / inverter BLDC)",
+     "running_w": 35,
+     "starting_w": 35,
+     "typical_hours_per_day": 12,
+     "load_type": "electronic"
+    },
+    "pedestal-fan": {
+     "name": "Pedestal fan (AC)",
+     "running_w": 75,
+     "starting_w": 110,
+     "typical_hours_per_day": 8,
+     "load_type": "motor"
+    },
+    "pedestal-fan-dc": {
+     "name": "Pedestal fan (DC / inverter)",
+     "running_w": 30,
+     "starting_w": 30,
+     "typical_hours_per_day": 8,
+     "load_type": "electronic"
+    },
+    "bracket-fan": {
+     "name": "Bracket / wall fan",
+     "running_w": 70,
+     "starting_w": 100,
+     "typical_hours_per_day": 8,
+     "load_type": "motor"
+    },
+    "exhaust-fan": {
+     "name": "Exhaust fan (10-12 inch)",
+     "running_w": 40,
+     "starting_w": 60,
+     "typical_hours_per_day": 4,
+     "load_type": "motor"
+    },
+    "air-cooler": {
+     "name": "Room air cooler (evaporative)",
+     "running_w": 200,
+     "starting_w": 300,
+     "typical_hours_per_day": 8,
+     "load_type": "motor"
+    },
+    "ac-split-1ton-inverter": {
+     "name": "Split AC 1 ton inverter",
+     "running_w": 900,
+     "starting_w": 1200,
+     "typical_hours_per_day": 8,
+     "avg_w": 650,
+     "load_type": "inverter_compressor"
+    },
+    "ac-split-1ton-non-inverter": {
+     "name": "Split AC 1 ton non-inverter",
+     "running_w": 1200,
+     "starting_w": 3600,
+     "typical_hours_per_day": 8,
+     "avg_w": 960,
+     "load_type": "compressor"
+    },
+    "ac-split-1-5ton-inverter": {
+     "name": "Split AC 1.5 ton inverter",
+     "running_w": 1450,
+     "starting_w": 1900,
+     "typical_hours_per_day": 8,
+     "avg_w": 1000,
+     "load_type": "inverter_compressor"
+    },
+    "ac-split-1-5ton-non-inverter": {
+     "name": "Split AC 1.5 ton non-inverter",
+     "running_w": 1800,
+     "starting_w": 5400,
+     "typical_hours_per_day": 8,
+     "avg_w": 1440,
+     "load_type": "compressor"
+    },
+    "ac-split-2ton-inverter": {
+     "name": "Split AC 2 ton inverter",
+     "running_w": 1900,
+     "starting_w": 2500,
+     "typical_hours_per_day": 8,
+     "avg_w": 1300,
+     "load_type": "inverter_compressor"
+    },
+    "ac-split-2ton-non-inverter": {
+     "name": "Split AC 2 ton non-inverter",
+     "running_w": 2400,
+     "starting_w": 7200,
+     "typical_hours_per_day": 8,
+     "avg_w": 1920,
+     "load_type": "compressor"
+    },
+    "ac-window-1ton": {
+     "name": "Window AC (about 1 ton / 12-13k BTU)",
+     "running_w": 1350,
+     "starting_w": 4000,
+     "typical_hours_per_day": 8,
+     "avg_w": 1080,
+     "load_type": "compressor"
+    },
+    "ac-floor-standing-4ton": {
+     "name": "Floor-standing AC (4 ton)",
+     "running_w": 4500,
+     "starting_w": 13500,
+     "typical_hours_per_day": 8,
+     "avg_w": 3600,
+     "load_type": "compressor"
+    },
+    "heat-pump-3ton": {
+     "name": "Heat pump / central AC 3 ton",
+     "running_w": 3400,
+     "starting_w": 10200,
+     "typical_hours_per_day": 8,
+     "avg_w": 2720,
+     "load_type": "compressor"
+    },
+    "dehumidifier": {
+     "name": "Dehumidifier",
+     "running_w": 785,
+     "starting_w": 1600,
+     "typical_hours_per_day": 8,
+     "load_type": "compressor"
+    },
+    "refrigerator-non-inverter": {
+     "name": "Refrigerator (non-inverter, 12-16 cu ft)",
+     "running_w": 200,
+     "starting_w": 1200,
+     "typical_hours_per_day": 8,
+     "load_type": "compressor"
+    },
+    "refrigerator-inverter": {
+     "name": "Refrigerator (inverter)",
+     "running_w": 120,
+     "starting_w": 200,
+     "typical_hours_per_day": 10,
+     "load_type": "inverter_compressor"
+    },
+    "deep-freezer": {
+     "name": "Deep freezer (chest)",
+     "running_w": 200,
+     "starting_w": 1200,
+     "typical_hours_per_day": 10,
+     "load_type": "compressor"
+    },
+    "water-dispenser": {
+     "name": "Water dispenser (hot and cold)",
+     "running_w": 500,
+     "starting_w": 900,
+     "typical_hours_per_day": 6,
+     "load_type": "compressor"
+    },
+    "electric-geyser-storage": {
+     "name": "Electric geyser (storage, 40-gallon class)",
+     "running_w": 3000,
+     "starting_w": 3000,
+     "typical_hours_per_day": 3,
+     "load_type": "resistive"
+    },
+    "instant-water-heater": {
+     "name": "Instant electric water heater",
+     "running_w": 3500,
+     "starting_w": 3500,
+     "typical_hours_per_day": 1,
+     "load_type": "resistive"
+    },
+    "room-heater-oil-filled": {
+     "name": "Room heater (oil-filled radiator)",
+     "running_w": 1500,
+     "starting_w": 1500,
+     "typical_hours_per_day": 6,
+     "load_type": "resistive"
+    },
+    "room-heater-fan": {
+     "name": "Room heater (fan heater)",
+     "running_w": 2000,
+     "starting_w": 2000,
+     "typical_hours_per_day": 4,
+     "load_type": "resistive"
+    },
+    "room-heater-halogen": {
+     "name": "Room heater (halogen / quartz rod)",
+     "running_w": 1200,
+     "starting_w": 1200,
+     "typical_hours_per_day": 4,
+     "load_type": "resistive"
+    },
+    "electric-blanket": {
+     "name": "Electric blanket (double)",
+     "running_w": 100,
+     "starting_w": 100,
+     "typical_hours_per_day": 6,
+     "load_type": "resistive"
+    },
+    "electric-iron": {
+     "name": "Electric iron (dry / steam)",
+     "running_w": 1000,
+     "starting_w": 1000,
+     "typical_hours_per_day": 0.5,
+     "load_type": "resistive"
+    },
+    "washing-machine-twin-tub": {
+     "name": "Washing machine (twin tub, semi-automatic)",
+     "running_w": 400,
+     "starting_w": 1200,
+     "typical_hours_per_day": 1,
+     "load_type": "motor"
+    },
+    "washing-machine-automatic": {
+     "name": "Washing machine (automatic, top/front load, no heater)",
+     "running_w": 500,
+     "starting_w": 2250,
+     "typical_hours_per_day": 1,
+     "load_type": "motor"
+    },
+    "clothes-dryer": {
+     "name": "Clothes dryer (electric)",
+     "running_w": 3000,
+     "starting_w": 3500,
+     "typical_hours_per_day": 1,
+     "load_type": "resistive"
+    },
+    "microwave-oven": {
+     "name": "Microwave oven",
+     "running_w": 1100,
+     "starting_w": 1100,
+     "typical_hours_per_day": 0.3,
+     "load_type": "electronic"
+    },
+    "electric-oven": {
+     "name": "Electric oven (baking / toaster oven, large)",
+     "running_w": 1500,
+     "starting_w": 1500,
+     "typical_hours_per_day": 0.5,
+     "load_type": "resistive"
+    },
+    "air-fryer": {
+     "name": "Air fryer",
+     "running_w": 1500,
+     "starting_w": 1500,
+     "typical_hours_per_day": 0.5,
+     "load_type": "resistive"
+    },
+    "electric-kettle": {
+     "name": "Electric kettle",
+     "running_w": 2000,
+     "starting_w": 2000,
+     "typical_hours_per_day": 0.3,
+     "load_type": "resistive"
+    },
+    "toaster": {
+     "name": "Toaster",
+     "running_w": 1000,
+     "starting_w": 1000,
+     "typical_hours_per_day": 0.2,
+     "load_type": "resistive"
+    },
+    "sandwich-maker": {
+     "name": "Sandwich maker",
+     "running_w": 750,
+     "starting_w": 750,
+     "typical_hours_per_day": 0.2,
+     "load_type": "resistive"
+    },
+    "blender-juicer": {
+     "name": "Blender / juicer",
+     "running_w": 300,
+     "starting_w": 650,
+     "typical_hours_per_day": 0.2,
+     "load_type": "motor"
+    },
+    "food-processor": {
+     "name": "Food processor",
+     "running_w": 600,
+     "starting_w": 1200,
+     "typical_hours_per_day": 0.2,
+     "load_type": "motor"
+    },
+    "rice-cooker": {
+     "name": "Rice cooker",
+     "running_w": 700,
+     "starting_w": 700,
+     "typical_hours_per_day": 0.5,
+     "load_type": "resistive"
+    },
+    "slow-cooker": {
+     "name": "Slow cooker",
+     "running_w": 200,
+     "starting_w": 200,
+     "typical_hours_per_day": 4,
+     "load_type": "resistive"
+    },
+    "coffee-maker": {
+     "name": "Coffee maker",
+     "running_w": 1000,
+     "starting_w": 1000,
+     "typical_hours_per_day": 0.3,
+     "load_type": "resistive"
+    },
+    "induction-cooker": {
+     "name": "Induction cooker (single zone)",
+     "running_w": 1800,
+     "starting_w": 1800,
+     "typical_hours_per_day": 1,
+     "load_type": "electronic"
+    },
+    "hot-plate": {
+     "name": "Electric stove / hot plate (single)",
+     "running_w": 1500,
+     "starting_w": 1500,
+     "typical_hours_per_day": 1,
+     "load_type": "resistive"
+    },
+    "electric-grill": {
+     "name": "Electric grill",
+     "running_w": 1650,
+     "starting_w": 1650,
+     "typical_hours_per_day": 0.5,
+     "load_type": "resistive"
+    },
+    "dishwasher": {
+     "name": "Dishwasher (with drying)",
+     "running_w": 1800,
+     "starting_w": 1800,
+     "typical_hours_per_day": 1,
+     "load_type": "resistive"
+    },
+    "water-motor-0-5hp": {
+     "name": "Water pump / donkey motor 0.5 hp",
+     "running_w": 600,
+     "starting_w": 1800,
+     "typical_hours_per_day": 1,
+     "load_type": "motor"
+    },
+    "water-motor-1hp": {
+     "name": "Water pump / donkey motor 1 hp",
+     "running_w": 1000,
+     "starting_w": 2800,
+     "typical_hours_per_day": 1,
+     "load_type": "motor"
+    },
+    "water-motor-1-5hp": {
+     "name": "Water pump 1.5 hp",
+     "running_w": 1500,
+     "starting_w": 4500,
+     "typical_hours_per_day": 1,
+     "load_type": "motor"
+    },
+    "water-motor-2hp": {
+     "name": "Water pump 2 hp",
+     "running_w": 2000,
+     "starting_w": 6000,
+     "typical_hours_per_day": 1,
+     "load_type": "motor"
+    },
+    "submersible-pump-1hp": {
+     "name": "Submersible / deep-well pump 1 hp",
+     "running_w": 1100,
+     "starting_w": 3300,
+     "typical_hours_per_day": 2,
+     "load_type": "motor"
+    },
+    "tubewell-submersible-5hp": {
+     "name": "Tubewell submersible pump 5 hp",
+     "running_w": 4800,
+     "starting_w": 14400,
+     "typical_hours_per_day": 4,
+     "load_type": "motor"
+    },
+    "led-bulb": {
+     "name": "LED bulb (9-12 W)",
+     "running_w": 12,
+     "starting_w": 12,
+     "typical_hours_per_day": 6,
+     "load_type": "lighting"
+    },
+    "led-tube-light": {
+     "name": "LED tube light (4 ft)",
+     "running_w": 20,
+     "starting_w": 20,
+     "typical_hours_per_day": 6,
+     "load_type": "lighting"
+    },
+    "cfl-energy-saver": {
+     "name": "Energy saver (CFL)",
+     "running_w": 25,
+     "starting_w": 25,
+     "typical_hours_per_day": 6,
+     "load_type": "lighting"
+    },
+    "fluorescent-tube-40w": {
+     "name": "Fluorescent tube light (40 W, magnetic choke)",
+     "running_w": 50,
+     "starting_w": 50,
+     "typical_hours_per_day": 6,
+     "load_type": "lighting"
+    },
+    "led-tv-32": {
+     "name": "LED TV 32 inch",
+     "running_w": 40,
+     "starting_w": 40,
+     "typical_hours_per_day": 6,
+     "load_type": "electronic"
+    },
+    "led-tv-43": {
+     "name": "LED TV 43 inch",
+     "running_w": 75,
+     "starting_w": 75,
+     "typical_hours_per_day": 6,
+     "load_type": "electronic"
+    },
+    "led-tv-55": {
+     "name": "LED TV 55 inch",
+     "running_w": 120,
+     "starting_w": 120,
+     "typical_hours_per_day": 6,
+     "load_type": "electronic"
+    },
+    "laptop": {
+     "name": "Laptop",
+     "running_w": 50,
+     "starting_w": 50,
+     "typical_hours_per_day": 6,
+     "load_type": "electronic"
+    },
+    "desktop-pc": {
+     "name": "Desktop PC (CPU only)",
+     "running_w": 120,
+     "starting_w": 120,
+     "typical_hours_per_day": 6,
+     "load_type": "electronic"
+    },
+    "gaming-pc": {
+     "name": "Gaming PC (CPU + GPU, under load)",
+     "running_w": 400,
+     "starting_w": 400,
+     "typical_hours_per_day": 4,
+     "load_type": "electronic"
+    },
+    "monitor": {
+     "name": "Computer monitor (LED, 24 inch)",
+     "running_w": 30,
+     "starting_w": 30,
+     "typical_hours_per_day": 6,
+     "load_type": "electronic"
+    },
+    "wifi-router": {
+     "name": "WiFi router / modem",
+     "running_w": 10,
+     "starting_w": 10,
+     "typical_hours_per_day": 24,
+     "load_type": "electronic"
+    },
+    "phone-charger": {
+     "name": "Phone charger (fast charge, while charging)",
+     "running_w": 15,
+     "starting_w": 15,
+     "typical_hours_per_day": 3,
+     "load_type": "electronic"
+    },
+    "printer-laser": {
+     "name": "Printer (laser, printing)",
+     "running_w": 400,
+     "starting_w": 1000,
+     "typical_hours_per_day": 0.3,
+     "load_type": "electronic"
+    },
+    "printer-inkjet": {
+     "name": "Printer (inkjet)",
+     "running_w": 25,
+     "starting_w": 25,
+     "typical_hours_per_day": 0.3,
+     "load_type": "electronic"
+    },
+    "ups-idle": {
+     "name": "UPS / home inverter idle draw (no load)",
+     "running_w": 30,
+     "starting_w": 30,
+     "typical_hours_per_day": 24,
+     "load_type": "electronic"
+    },
+    "cctv-dvr-4cam": {
+     "name": "CCTV DVR + 4 cameras",
+     "running_w": 40,
+     "starting_w": 40,
+     "typical_hours_per_day": 24,
+     "load_type": "electronic"
+    },
+    "gaming-console": {
+     "name": "Gaming console (PS5 / Xbox Series X)",
+     "running_w": 200,
+     "starting_w": 200,
+     "typical_hours_per_day": 3,
+     "load_type": "electronic"
+    },
+    "sound-system": {
+     "name": "Sound system / stereo",
+     "running_w": 100,
+     "starting_w": 100,
+     "typical_hours_per_day": 3,
+     "load_type": "electronic"
+    },
+    "set-top-box": {
+     "name": "Set-top box / Android TV box",
+     "running_w": 10,
+     "starting_w": 10,
+     "typical_hours_per_day": 6,
+     "load_type": "electronic"
+    },
+    "vacuum-cleaner": {
+     "name": "Vacuum cleaner",
+     "running_w": 1200,
+     "starting_w": 1800,
+     "typical_hours_per_day": 0.3,
+     "load_type": "motor"
+    },
+    "hair-dryer": {
+     "name": "Hair dryer",
+     "running_w": 1500,
+     "starting_w": 1500,
+     "typical_hours_per_day": 0.2,
+     "load_type": "resistive"
+    },
+    "hair-straightener": {
+     "name": "Hair straightener",
+     "running_w": 50,
+     "starting_w": 50,
+     "typical_hours_per_day": 0.3,
+     "load_type": "resistive"
+    },
+    "trimmer-shaver": {
+     "name": "Trimmer / shaver (charging)",
+     "running_w": 5,
+     "starting_w": 5,
+     "typical_hours_per_day": 1,
+     "load_type": "electronic"
+    },
+    "sewing-machine": {
+     "name": "Sewing machine (electric)",
+     "running_w": 100,
+     "starting_w": 200,
+     "typical_hours_per_day": 2,
+     "load_type": "motor"
+    },
+    "aquarium": {
+     "name": "Aquarium (pump, light, heater)",
+     "running_w": 100,
+     "starting_w": 100,
+     "typical_hours_per_day": 24,
+     "load_type": "electronic"
+    },
+    "treadmill": {
+     "name": "Treadmill",
+     "running_w": 1000,
+     "starting_w": 2000,
+     "typical_hours_per_day": 1,
+     "load_type": "motor"
+    },
+    "drill": {
+     "name": "Electric drill / grinder (hand)",
+     "running_w": 600,
+     "starting_w": 900,
+     "typical_hours_per_day": 0.3,
+     "load_type": "motor"
+    },
+    "angle-grinder": {
+     "name": "Angle grinder (4-5 inch)",
+     "running_w": 900,
+     "starting_w": 1800,
+     "typical_hours_per_day": 0.3,
+     "load_type": "motor"
+    },
+    "circular-saw": {
+     "name": "Circular saw",
+     "running_w": 1200,
+     "starting_w": 2000,
+     "typical_hours_per_day": 0.3,
+     "load_type": "motor"
+    },
+    "air-compressor-1hp": {
+     "name": "Air compressor 1 hp",
+     "running_w": 1100,
+     "starting_w": 4500,
+     "typical_hours_per_day": 1,
+     "load_type": "motor"
+    },
+    "pressure-washer": {
+     "name": "Pressure washer",
+     "running_w": 1200,
+     "starting_w": 2400,
+     "typical_hours_per_day": 0.5,
+     "load_type": "motor"
+    },
+    "welding-machine-small": {
+     "name": "Welding machine (small inverter, 160-200 A)",
+     "running_w": 4000,
+     "starting_w": 4000,
+     "typical_hours_per_day": 1,
+     "load_type": "electronic"
+    },
+    "ebike-charger": {
+     "name": "E-bike / e-scooter charger",
+     "running_w": 250,
+     "starting_w": 250,
+     "typical_hours_per_day": 4,
+     "load_type": "electronic"
+    },
+    "ev-charger-level2": {
+     "name": "EV charger level 2 (7.4 kW, single phase)",
+     "running_w": 7400,
+     "starting_w": 7400,
+     "typical_hours_per_day": 4,
+     "load_type": "electronic"
+    }
+   },
+   "fields": [
+    {
+     "name": "loads",
+     "label": "Everything the off-grid system must run",
+     "type": "loads",
+     "catalog": [
+      {
+       "id": "ceiling-fan-ac",
+       "name": "Ceiling fan (AC, 56 inch)",
+       "category": "cooling"
+      },
+      {
+       "id": "ceiling-fan-dc-inverter",
+       "name": "Ceiling fan (DC / inverter BLDC)",
+       "category": "cooling"
+      },
+      {
+       "id": "pedestal-fan",
+       "name": "Pedestal fan (AC)",
+       "category": "cooling"
+      },
+      {
+       "id": "pedestal-fan-dc",
+       "name": "Pedestal fan (DC / inverter)",
+       "category": "cooling"
+      },
+      {
+       "id": "bracket-fan",
+       "name": "Bracket / wall fan",
+       "category": "cooling"
+      },
+      {
+       "id": "exhaust-fan",
+       "name": "Exhaust fan (10-12 inch)",
+       "category": "cooling"
+      },
+      {
+       "id": "air-cooler",
+       "name": "Room air cooler (evaporative)",
+       "category": "cooling"
+      },
+      {
+       "id": "ac-split-1ton-inverter",
+       "name": "Split AC 1 ton inverter",
+       "category": "cooling"
+      },
+      {
+       "id": "ac-split-1ton-non-inverter",
+       "name": "Split AC 1 ton non-inverter",
+       "category": "cooling"
+      },
+      {
+       "id": "ac-split-1-5ton-inverter",
+       "name": "Split AC 1.5 ton inverter",
+       "category": "cooling"
+      },
+      {
+       "id": "ac-split-1-5ton-non-inverter",
+       "name": "Split AC 1.5 ton non-inverter",
+       "category": "cooling"
+      },
+      {
+       "id": "ac-split-2ton-inverter",
+       "name": "Split AC 2 ton inverter",
+       "category": "cooling"
+      },
+      {
+       "id": "ac-split-2ton-non-inverter",
+       "name": "Split AC 2 ton non-inverter",
+       "category": "cooling"
+      },
+      {
+       "id": "ac-window-1ton",
+       "name": "Window AC (about 1 ton / 12-13k BTU)",
+       "category": "cooling"
+      },
+      {
+       "id": "ac-floor-standing-4ton",
+       "name": "Floor-standing AC (4 ton)",
+       "category": "cooling"
+      },
+      {
+       "id": "heat-pump-3ton",
+       "name": "Heat pump / central AC 3 ton",
+       "category": "cooling"
+      },
+      {
+       "id": "dehumidifier",
+       "name": "Dehumidifier",
+       "category": "cooling"
+      },
+      {
+       "id": "refrigerator-non-inverter",
+       "name": "Refrigerator (non-inverter, 12-16 cu ft)",
+       "category": "kitchen"
+      },
+      {
+       "id": "refrigerator-inverter",
+       "name": "Refrigerator (inverter)",
+       "category": "kitchen"
+      },
+      {
+       "id": "deep-freezer",
+       "name": "Deep freezer (chest)",
+       "category": "kitchen"
+      },
+      {
+       "id": "water-dispenser",
+       "name": "Water dispenser (hot and cold)",
+       "category": "kitchen"
+      },
+      {
+       "id": "electric-geyser-storage",
+       "name": "Electric geyser (storage, 40-gallon class)",
+       "category": "heating"
+      },
+      {
+       "id": "instant-water-heater",
+       "name": "Instant electric water heater",
+       "category": "heating"
+      },
+      {
+       "id": "room-heater-oil-filled",
+       "name": "Room heater (oil-filled radiator)",
+       "category": "heating"
+      },
+      {
+       "id": "room-heater-fan",
+       "name": "Room heater (fan heater)",
+       "category": "heating"
+      },
+      {
+       "id": "room-heater-halogen",
+       "name": "Room heater (halogen / quartz rod)",
+       "category": "heating"
+      },
+      {
+       "id": "electric-blanket",
+       "name": "Electric blanket (double)",
+       "category": "heating"
+      },
+      {
+       "id": "electric-iron",
+       "name": "Electric iron (dry / steam)",
+       "category": "laundry"
+      },
+      {
+       "id": "washing-machine-twin-tub",
+       "name": "Washing machine (twin tub, semi-automatic)",
+       "category": "laundry"
+      },
+      {
+       "id": "washing-machine-automatic",
+       "name": "Washing machine (automatic, top/front load, no heater)",
+       "category": "laundry"
+      },
+      {
+       "id": "clothes-dryer",
+       "name": "Clothes dryer (electric)",
+       "category": "laundry"
+      },
+      {
+       "id": "microwave-oven",
+       "name": "Microwave oven",
+       "category": "kitchen"
+      },
+      {
+       "id": "electric-oven",
+       "name": "Electric oven (baking / toaster oven, large)",
+       "category": "kitchen"
+      },
+      {
+       "id": "air-fryer",
+       "name": "Air fryer",
+       "category": "kitchen"
+      },
+      {
+       "id": "electric-kettle",
+       "name": "Electric kettle",
+       "category": "kitchen"
+      },
+      {
+       "id": "toaster",
+       "name": "Toaster",
+       "category": "kitchen"
+      },
+      {
+       "id": "sandwich-maker",
+       "name": "Sandwich maker",
+       "category": "kitchen"
+      },
+      {
+       "id": "blender-juicer",
+       "name": "Blender / juicer",
+       "category": "kitchen"
+      },
+      {
+       "id": "food-processor",
+       "name": "Food processor",
+       "category": "kitchen"
+      },
+      {
+       "id": "rice-cooker",
+       "name": "Rice cooker",
+       "category": "kitchen"
+      },
+      {
+       "id": "slow-cooker",
+       "name": "Slow cooker",
+       "category": "kitchen"
+      },
+      {
+       "id": "coffee-maker",
+       "name": "Coffee maker",
+       "category": "kitchen"
+      },
+      {
+       "id": "induction-cooker",
+       "name": "Induction cooker (single zone)",
+       "category": "kitchen"
+      },
+      {
+       "id": "hot-plate",
+       "name": "Electric stove / hot plate (single)",
+       "category": "kitchen"
+      },
+      {
+       "id": "electric-grill",
+       "name": "Electric grill",
+       "category": "kitchen"
+      },
+      {
+       "id": "dishwasher",
+       "name": "Dishwasher (with drying)",
+       "category": "kitchen"
+      },
+      {
+       "id": "water-motor-0-5hp",
+       "name": "Water pump / donkey motor 0.5 hp",
+       "category": "water"
+      },
+      {
+       "id": "water-motor-1hp",
+       "name": "Water pump / donkey motor 1 hp",
+       "category": "water"
+      },
+      {
+       "id": "water-motor-1-5hp",
+       "name": "Water pump 1.5 hp",
+       "category": "water"
+      },
+      {
+       "id": "water-motor-2hp",
+       "name": "Water pump 2 hp",
+       "category": "water"
+      },
+      {
+       "id": "submersible-pump-1hp",
+       "name": "Submersible / deep-well pump 1 hp",
+       "category": "water"
+      },
+      {
+       "id": "tubewell-submersible-5hp",
+       "name": "Tubewell submersible pump 5 hp",
+       "category": "water"
+      },
+      {
+       "id": "led-bulb",
+       "name": "LED bulb (9-12 W)",
+       "category": "lighting"
+      },
+      {
+       "id": "led-tube-light",
+       "name": "LED tube light (4 ft)",
+       "category": "lighting"
+      },
+      {
+       "id": "cfl-energy-saver",
+       "name": "Energy saver (CFL)",
+       "category": "lighting"
+      },
+      {
+       "id": "fluorescent-tube-40w",
+       "name": "Fluorescent tube light (40 W, magnetic choke)",
+       "category": "lighting"
+      },
+      {
+       "id": "led-tv-32",
+       "name": "LED TV 32 inch",
+       "category": "electronics"
+      },
+      {
+       "id": "led-tv-43",
+       "name": "LED TV 43 inch",
+       "category": "electronics"
+      },
+      {
+       "id": "led-tv-55",
+       "name": "LED TV 55 inch",
+       "category": "electronics"
+      },
+      {
+       "id": "laptop",
+       "name": "Laptop",
+       "category": "electronics"
+      },
+      {
+       "id": "desktop-pc",
+       "name": "Desktop PC (CPU only)",
+       "category": "electronics"
+      },
+      {
+       "id": "gaming-pc",
+       "name": "Gaming PC (CPU + GPU, under load)",
+       "category": "electronics"
+      },
+      {
+       "id": "monitor",
+       "name": "Computer monitor (LED, 24 inch)",
+       "category": "electronics"
+      },
+      {
+       "id": "wifi-router",
+       "name": "WiFi router / modem",
+       "category": "electronics"
+      },
+      {
+       "id": "phone-charger",
+       "name": "Phone charger (fast charge, while charging)",
+       "category": "electronics"
+      },
+      {
+       "id": "printer-laser",
+       "name": "Printer (laser, printing)",
+       "category": "electronics"
+      },
+      {
+       "id": "printer-inkjet",
+       "name": "Printer (inkjet)",
+       "category": "electronics"
+      },
+      {
+       "id": "ups-idle",
+       "name": "UPS / home inverter idle draw (no load)",
+       "category": "electronics"
+      },
+      {
+       "id": "cctv-dvr-4cam",
+       "name": "CCTV DVR + 4 cameras",
+       "category": "electronics"
+      },
+      {
+       "id": "gaming-console",
+       "name": "Gaming console (PS5 / Xbox Series X)",
+       "category": "electronics"
+      },
+      {
+       "id": "sound-system",
+       "name": "Sound system / stereo",
+       "category": "electronics"
+      },
+      {
+       "id": "set-top-box",
+       "name": "Set-top box / Android TV box",
+       "category": "electronics"
+      },
+      {
+       "id": "vacuum-cleaner",
+       "name": "Vacuum cleaner",
+       "category": "other"
+      },
+      {
+       "id": "hair-dryer",
+       "name": "Hair dryer",
+       "category": "personal-care"
+      },
+      {
+       "id": "hair-straightener",
+       "name": "Hair straightener",
+       "category": "personal-care"
+      },
+      {
+       "id": "trimmer-shaver",
+       "name": "Trimmer / shaver (charging)",
+       "category": "personal-care"
+      },
+      {
+       "id": "sewing-machine",
+       "name": "Sewing machine (electric)",
+       "category": "other"
+      },
+      {
+       "id": "aquarium",
+       "name": "Aquarium (pump, light, heater)",
+       "category": "other"
+      },
+      {
+       "id": "treadmill",
+       "name": "Treadmill",
+       "category": "other"
+      },
+      {
+       "id": "drill",
+       "name": "Electric drill / grinder (hand)",
+       "category": "workshop"
+      },
+      {
+       "id": "angle-grinder",
+       "name": "Angle grinder (4-5 inch)",
+       "category": "workshop"
+      },
+      {
+       "id": "circular-saw",
+       "name": "Circular saw",
+       "category": "workshop"
+      },
+      {
+       "id": "air-compressor-1hp",
+       "name": "Air compressor 1 hp",
+       "category": "workshop"
+      },
+      {
+       "id": "pressure-washer",
+       "name": "Pressure washer",
+       "category": "workshop"
+      },
+      {
+       "id": "welding-machine-small",
+       "name": "Welding machine (small inverter, 160-200 A)",
+       "category": "workshop"
+      },
+      {
+       "id": "ebike-charger",
+       "name": "E-bike / e-scooter charger",
+       "category": "transport"
+      },
+      {
+       "id": "ev-charger-level2",
+       "name": "EV charger level 2 (7.4 kW, single phase)",
+       "category": "transport"
+      }
+     ],
+     "default": [
+      {
+       "id": "ceiling-fan-ac",
+       "qty": 3,
+       "hours": 12
+      },
+      {
+       "id": "led-bulb",
+       "qty": 8,
+       "hours": 6
+      },
+      {
+       "id": "refrigerator-inverter",
+       "qty": 1,
+       "hours": 10
+      },
+      {
+       "id": "led-tv-43",
+       "qty": 1,
+       "hours": 5
+      },
+      {
+       "id": "water-motor-0-5hp",
+       "qty": 1,
+       "hours": 1
+      },
+      {
+       "id": "wifi-router",
+       "qty": 1,
+       "hours": 24
+      }
+     ],
+     "hint": "With no grid, every appliance counts. The list starts as a small house or farmhouse; set the hours each one runs in a full day, night included."
+    },
+    {
+     "name": "city",
+     "label": "City or nearest city",
+     "type": "select",
+     "options_from": "cities",
+     "default": "lahore",
+     "hint": "Sets the units each kW of panels makes a day over the year from Global Solar Atlas data.",
+     "options": [
+      [
+       "lahore",
+       "Lahore"
+      ],
+      [
+       "karachi",
+       "Karachi"
+      ],
+      [
+       "islamabad",
+       "Islamabad"
+      ],
+      [
+       "peshawar",
+       "Peshawar"
+      ],
+      [
+       "quetta",
+       "Quetta"
+      ],
+      [
+       "multan",
+       "Multan"
+      ]
+     ]
+    },
+    {
+     "name": "night_hours",
+     "label": "Hours the full load runs on the battery after sunset",
+     "unit": "h",
+     "default": 4,
+     "hint": "Hours the whole listed load must run from the battery with no sun. Most homes run everything in the evening and only fans, a fridge and a light or two later, so four hours of the full load is a fair planning figure for one night; use twelve for a worst case."
+    },
+    {
+     "name": "battery_v",
+     "label": "Battery bank voltage",
+     "unit": "V",
+     "type": "select",
+     "default": 48,
+     "options": [
+      [
+       48,
+       "48 V"
+      ],
+      [
+       24,
+       "24 V"
+      ]
+     ],
+     "hint": "Match the off-grid inverter: 48 V for most inverters of three kW and up, 24 V for small ones."
+    },
+    {
+     "name": "dod",
+     "label": "Battery type (usable depth of discharge)",
+     "unit": "0 to 1",
+     "type": "select",
+     "default": 0.9,
+     "options": [
+      [
+       0.9,
+       "Lithium (LiFePO4)"
+      ],
+      [
+       0.5,
+       "Tubular / lead-acid"
+      ]
+     ],
+     "hint": "Lithium can be used almost fully every night; tubular only to about half if it is to last."
+    },
+    {
+     "name": "panel_w",
+     "label": "Panel size",
+     "unit": "W",
+     "default": 585,
+     "advanced": true,
+     "hint": "Watts of one panel from the label."
+    },
+    {
+     "name": "pr",
+     "label": "Performance ratio",
+     "unit": "0 to 1",
+     "default": 0.78,
+     "advanced": true,
+     "hint": "Share of the panel watts that reaches the loads at midday after heat, dust and wiring losses. As a decimal."
+    },
+    {
+     "name": "margin",
+     "label": "Inverter safety margin",
+     "unit": "times",
+     "default": 1.25,
+     "advanced": true,
+     "hint": "Inverter continuous rating above the running load. A decimal like one point two five."
+    },
+    {
+     "name": "inverter_eff",
+     "label": "Inverter efficiency",
+     "unit": "0 to 1",
+     "default": 0.9,
+     "advanced": true,
+     "hint": "Share of battery energy that reaches the appliances. As a decimal."
+    }
+   ],
+   "fixed_inputs": {
+    "off_grid": true
+   },
+   "outputs": [
+    {
+     "key": "installed_kw",
+     "label": "Solar panels",
+     "spec": "2",
+     "unit": "kW",
+     "label_ur": "Solar panels",
+     "value": "1.76"
+    },
+    {
+     "key": "panels",
+     "label": "Panels",
+     "spec": "int",
+     "label_ur": "Panels",
+     "value": "3"
+    },
+    {
+     "key": "battery_ah",
+     "label": "Battery bank",
+     "spec": "int",
+     "unit": "Ah",
+     "label_ur": "Battery bank",
+     "value": "117"
+    },
+    {
+     "key": "battery_kwh",
+     "label": "Battery energy",
+     "spec": "1",
+     "unit": "kWh",
+     "label_ur": "Battery ki energy",
+     "value": "5.6"
+    },
+    {
+     "key": "inverter_kw",
+     "label": "Off-grid inverter",
+     "spec": "2",
+     "unit": "kW",
+     "label_ur": "Off-grid inverter",
+     "value": "1.43"
+    }
+   ],
+   "how": {
+    "tpl": "Energy: watts × quantity × hours a day for every appliance = {{out.daily_kwh|1}} units a day; the night share, {{out.night_kwh|1}} units, comes from the battery, so the panels must refill it through charging and inverter losses: {{out.day_kwh|1}} + {{out.night_kwh|1}} ÷ ({{out.battery_inverter_eff|pct}} × {{out.charge_eff|pct}}) = {{out.array_kwh|1}} units a day, ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW of panels a day in your city = {{out.kw_energy|2}} kW. Power: the panels must also carry the {{out.running_w|int}} W running load at midday, ÷ {{out.pr|2}} performance ratio = {{out.kw_power|2}} kW. The larger, {{out.kw|2}} kW, rounded up to whole {{out.panel_w|int}} W panels = {{out.panels|int}} panels, {{out.installed_kw|2}} kW. Battery: {{out.running_w|int}} W × {{out.night_hours|int}} hours = {{out.night_kwh|1}} units after sunset, ÷ ({{out.battery_v|int}} V × {{out.battery_dod|pct}} usable × inverter efficiency) = {{out.battery_ah|int}} Ah, a bank of {{out.battery_kwh|1}} kWh. Inverter: {{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_w|int}} W continuous, with a surge rating of at least {{out.inverter_surge_w|int}} W for the pump.",
+    "text": "Energy: watts × quantity × hours a day for every appliance = 5.9 units a day; the night share, 4.6 units, comes from the battery, so the panels must refill it through charging and inverter losses: 1.3 + 4.6 ÷ (90% × 95%) = 6.6 units a day, ÷ 4 units per kW of panels a day in your city = 1.66 kW. Power: the panels must also carry the 1,141 W running load at midday, ÷ 0.78 performance ratio = 1.46 kW. The larger, 1.66 kW, rounded up to whole 585 W panels = 3 panels, 1.76 kW. Battery: 1,141 W × 4 hours = 4.6 units after sunset, ÷ (48 V × 90% usable × inverter efficiency) = 117 Ah, a bank of 5.6 kWh. Inverter: 1,141 W × 1.25 = 1,426 W continuous, with a surge rating of at least 2,341 W for the pump."
+   },
+   "submit": "Calculate",
+   "notice": "",
+   "data_checked": [
+    {
+     "label": "Peak sun hours by city (Global Solar Atlas)",
+     "url": "https://globalsolaratlas.info/",
+     "checked": "2026-10-13"
+    },
+    {
+     "label": "Appliance running and starting watts (Wattlyst appliance data, sources listed on the appliance list page)",
+     "url": "https://wattlyst.com/appliances/",
+     "checked": "2026-10-13"
+    }
+   ]
+  },
+  "examples": [
+   {
+    "title": "Small off-grid house, Lahore, 4 hours of full load on lithium",
+    "text": "5.9 units a day and 1,141 W running. Panels: 3 × 585 W = 1.76 kW. Battery: 4.6 units after sunset ÷ (48 V × 90% × efficiency) = 117 Ah, 5.6 kWh. Inverter 1.43 kW, surge 2,341 W."
+   },
+   {
+    "title": "Same house with a 1 ton inverter AC for eight hours",
+    "text": "11.1 units a day and 2,041 W running. Panels 6 × 585 W = 3.51 kW; battery 210 Ah at 48 V (10.1 kWh) for 4 hours with the AC on; inverter 2.55 kW, surge 3,241 W."
+   },
+   {
+    "title": "Small off-grid house on a 24 V tubular bank",
+    "text": "Same inverter (1.43 kW); the panels become 4 × 585 W because lead-acid charges at 85% efficiency, and the battery becomes 423 Ah at 24 V, 10.1 kWh, because only 50% of a tubular bank may be used each night."
+   },
+   {
+    "title": "Cabin kit: four bulbs, two DC fans, a small TV, two phones",
+    "text": "1.4 units a day, 188 W running. One 585 W panel (0.59 kW), a 39 Ah lithium bank at 24 V (0.9 kWh) for 4 hours, and a 0.24 kW inverter."
+   },
+   {
+    "title": "Worst case: full load for the whole 12 hour night",
+    "text": "Inverter unchanged (1.43 kW), but the panels grow to 7 (4.1 kW) because they must refill the bigger night draw. Battery: 1,141 W × 12 h = 13.7 units, which is 352 Ah at 48 V, 16.9 kWh. More than the house uses in a whole day, because it assumes everything runs all night."
+   }
+  ],
+  "table": {
+   "caption": "Off-grid system size in Lahore sun, 4 hours of full load on a 48 V lithium bank: a cabin kit, the small house without and with its pump, then with a 1 ton inverter AC, a 1.5 ton inverter AC and two 1.5 ton inverter ACs",
+   "head": [
+    "House",
+    "Panels",
+    "Battery",
+    "Inverter"
+   ],
+   "rows": [
+    [
+     "4 kinds of appliance, 188 W, 1.4 units a day",
+     "1 × 585 W (0.59 kW)",
+     "19 Ah (0.9 kWh)",
+     "0.24 kW"
+    ],
+    [
+     "5 kinds of appliance, 541 W, 5.3 units a day",
+     "3 × 585 W (1.76 kW)",
+     "56 Ah (2.7 kWh)",
+     "0.68 kW"
+    ],
+    [
+     "6 kinds of appliance, 1,141 W, 5.9 units a day",
+     "3 × 585 W (1.76 kW)",
+     "117 Ah (5.6 kWh)",
+     "1.43 kW"
+    ],
+    [
+     "7 kinds of appliance, 2,041 W, 11.1 units a day",
+     "6 × 585 W (3.51 kW)",
+     "210 Ah (10.1 kWh)",
+     "2.55 kW"
+    ],
+    [
+     "7 kinds of appliance, 2,591 W, 13.9 units a day",
+     "7 × 585 W (4.1 kW)",
+     "267 Ah (12.8 kWh)",
+     "3.24 kW"
+    ],
+    [
+     "7 kinds of appliance, 4,041 W, 21.9 units a day",
+     "11 × 585 W (6.44 kW)",
+     "416 Ah (20 kWh)",
+     "5.05 kW"
+    ]
+   ]
+  },
+  "answer": "A small off-grid house with three fans, eight LED bulbs, an inverter fridge, a TV, a pump and a router needs 1.76 kW of panels (3 panels), a 117 Ah lithium bank at 48 V for 4 hours of the full load after sunset, and a 1.43 kW inverter. Panels = (day units + night units ÷ charging and inverter efficiency) ÷ sun yield; battery = night units ÷ (volts × usable share × efficiency).",
+  "formula": {
+   "text": "kW = max(E_day ÷ yield, P_run ÷ 1000 ÷ PR); panels = ceil(kW × 1000 ÷ W_panel); Ah = P_run × h_night ÷ (V × DoD × η); P_inv = P_run × m",
+   "lines": [
+    "E_day = Σ watts × qty × hours ÷ 1000, units used in a full day",
+    "yield = units one kW of panels makes a day in your city",
+    "P_run = total running watts; PR = performance ratio",
+    "h_night = hours the full load runs from the battery after sunset",
+    "V = bank voltage; DoD = usable share of the battery; η = inverter efficiency",
+    "m = inverter margin; surge ≥ largest starting load"
+   ]
+  },
+  "safety": "An off-grid system has no grid breaker to protect it; the DC fuses, isolators, earthing and the battery wiring must be installed by a licensed electrician or a certified solar installer, and the inverter must never be fed from both the battery and a generator without a proper changeover."
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -49,7 +1506,7 @@
      {
       "@type": "ListItem",
       "position": 3,
-      "name": "Off Grid Solar System Size Calculator",
+      "name": "Off-Grid Solar System Size Calculator",
       "item": "https://wattlyst.com/solar/off-grid-solar-calculator/"
      }
     ]
@@ -66,12 +1523,14 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/solar/off-grid-solar-calculator/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-13",
+    "lastReviewed": "2026-10-13"
    },
    {
     "@type": "WebApplication",
     "@id": "https://wattlyst.com/solar/off-grid-solar-calculator/#app",
-    "name": "Off Grid Solar System Size Calculator",
+    "name": "Off-Grid Solar System Size Calculator",
     "url": "https://wattlyst.com/solar/off-grid-solar-calculator/",
     "description": "Plan a full off-grid solar system: panels, battery bank, inverter and charge controller from your appliance list and backup days.",
     "applicationCategory": "UtilitiesApplication",
@@ -98,6 +1557,68 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/solar/off-grid-solar-calculator/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "How do I size an off-grid solar system?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "From the appliance list: panels from the daily units, the battery refill and the midday load (3 panels, 1.76 kW for the house above), a battery from the load after sunset (117 Ah at 48 V for 4 hours), and an inverter from the running watts (1.43 kW)."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How big should the off-grid battery bank be?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Enough for the load after sunset times the hours it runs, divided by the bank volts, the usable share and the inverter efficiency: 117 Ah at 48 V for 4 hours here, 352 Ah for a full 12 hour night. Add days of autonomy for cloudy weather in the solar battery size calculator."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What size inverter for an off-grid system?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "The running watts of everything on at once times the 1.25 margin: 1.43 kW for the house above, with a surge rating of at least 2,341 W for the pump. The panels and battery do not set the inverter size."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Can an off-grid solar system run an AC?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Yes, if it is sized for it. One 1 ton inverter AC for eight hours takes the small house to 6 panels and a 210 Ah bank at 48 V with a 2.55 kW inverter. Running it in daylight only keeps the battery far smaller."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Lithium or tubular for an off-grid home?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Lithium: the same night needs 5.6 kWh of lithium but 10.1 kWh of tubular, and lithium takes a daily deep cycle for many more years. Tubular only wins on purchase price."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Why is the battery bigger than the house uses in a day?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "The twelve-hour worst case assumes every appliance runs all night, which is more than the daily total. Enter the hours the full load really runs after sunset, usually about four, and keep the rest of the night for the fridge and a fan."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Do I need a charge controller for an off-grid system?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Yes, either built into a hybrid or off-grid inverter or as a separate MPPT. Its amps come from the panel watts and the bank voltage; the charge controller size calculator gives the size."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

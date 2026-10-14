@@ -215,6 +215,7 @@
      "label": "Generator size to buy",
      "spec": "1",
      "unit": "kVA",
+     "label_ur": "Kaunsa generator lein",
      "value": "3.5"
     },
     {
@@ -222,6 +223,7 @@
      "label": "Calculated minimum",
      "spec": "2",
      "unit": "kVA",
+     "label_ur": "Hisab se kam az kam",
      "value": "3.5"
     },
     {
@@ -229,6 +231,7 @@
      "label": "Pump running watts",
      "spec": "int",
      "unit": "W",
+     "label_ur": "Pump ke chalne ke watts",
      "value": "932"
     },
     {
@@ -236,6 +239,7 @@
      "label": "Pump starting watts",
      "spec": "int",
      "unit": "W",
+     "label_ur": "Pump ke start ke watts",
      "value": "2,796"
     }
    ],
@@ -244,6 +248,7 @@
     "text": "1 hp × 745.7 W per hp ÷ 80% motor efficiency = 932 W running. × 3 start factor = 2,796 W starting. Other loads add 0 W, so the total is 932 W running and 2,796 W at the moment of starting. The larger of 932 W × 1.25 margin and 2,796 W is 2,796 W; ÷ 0.8 power factor ÷ 1,000 = 3.5 kVA, rounded up to the next standard size, 3.5 kVA."
    },
    "submit": "Calculate",
+   "notice": "",
    "data_checked": []
   },
   "examples": [

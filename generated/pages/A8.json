@@ -3,26 +3,247 @@
  "type": "tool",
  "silo": "A",
  "url": "/converters/kva-to-kw-calculator/",
- "h1": "Kva To Kw",
+ "h1": "kVA to kW Calculator",
  "title": "kVA to kW Calculator (Power Factor Explained) | Wattlyst",
  "meta": "Convert kVA to kW using power factor. See why a 5 kVA generator or UPS gives about 4 kW at PF 0.8, with a table for common sizes.",
  "primary_keyword": "kva to kw",
  "wave": 2,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-13",
+ "published": "2026-10-13",
  "author": "ali-ahmad",
+ "related": [
+  "A9",
+  "A4",
+  "A10",
+  "C5",
+  "B5"
+ ],
+ "next": "C6",
  "parent": "P-A",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
    "url": "/"
   },
   {
-   "name": "Kva To Kw",
+   "name": "Electrical Unit Converters",
+   "url": "/converters/"
+  },
+  {
+   "name": "kVA to kW Calculator",
    "url": "/converters/kva-to-kw-calculator/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "What is the difference between kVA and kW?",
+    "p": [
+     "kVA is apparent power: volts times amps, the total the generator windings, transformer and cables must carry. kW is real power: the part that becomes heat, light and motion and that an electricity meter counts. The ratio between them is the power factor. For a heater the two are equal; for motors, ACs and electronic loads the current is partly out of step with the voltage, so the kVA is higher than the kW.",
+     "Makers rate generators, transformers and UPS units in kVA because they cannot know what loads you will plug in, and the windings heat up according to amps, not watts. You then convert to kW with the power factor your loads actually have."
+    ]
+   },
+   {
+    "h2": "Why does a 5 kVA generator give only about 4 kW?",
+    "p": [
+     "Generators are rated at a power factor of 0.8, the typical value for a mixed home load. A 5 kVA set therefore delivers 5 × 0.8 = 4 kW of real power. Load it with 5 kW of heaters and it will be overloaded even though the kVA rating looks big enough.",
+     "The same rule covers every common size: a 3.5 kVA portable set gives about 2.8 kW, a 10 kVA set about 8 kW and a 20 kVA three-phase set about 16 kW. Motor starting needs headroom on top of this, which the generator size for 1.5 ton AC and generator size for well pump tools work out."
+    ]
+   },
+   {
+    "h2": "kW to kVA: the formula in reverse",
+    "p": [
+     "To size a generator, UPS or transformer from a known load, turn the formula round: kVA = kW ÷ power factor. A load of 2.8 kW at a power factor of 0.8 needs 3.5 kVA, and 8 kW needs 10 kVA. Enter any kVA above and the calculator shows the matching kW, so you can read the table in either direction.",
+     "Remember that this is the running load only. Anything with a motor or compressor draws several times its running current for a moment at start-up, so the generator tools add that surge before picking a standard size."
+    ]
+   },
+   {
+    "h2": "How many watts is one kVA?",
+    "p": [
+     "At a power factor of 0.8, 1 kVA is 0.8 kW. One kilowatt is a thousand watts, so move the decimal point three places to the right for watts. At a power factor of one, 1 kVA and one kW are the same thing.",
+     "For UPS and inverter labels in VA rather than kVA, the VA to watts calculator does the same conversion with the lower power factor that small line-interactive units use."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "What is the kVA to kW formula?",
+    "a": "kW = kVA × power factor. For a 5 kVA machine at a power factor of 0.8, kW = 5 × 0.8 = 4 kW. The reverse is kVA = kW ÷ power factor."
+   },
+   {
+    "q": "How many kW is 5 kVA?",
+    "a": "About 4 kW at the standard generator power factor of 0.8, or 5 kW at a power factor of one. Most home generator and UPS labels mean the 0.8 figure."
+   },
+   {
+    "q": "How many kW is 10 kVA?",
+    "a": "10 kVA × 0.8 = 8 kW of real power. That is the continuous load a 10 kVA generator can carry; starting surges from ACs and pumps must fit inside it too."
+   },
+   {
+    "q": "How many kW is 3.5 kVA?",
+    "a": "3.5 kVA × 0.8 = 2.8 kW. A 3.5 kVA portable generator runs lights, fans, a fridge and a TV, but not a 1.5 ton non-inverter AC, whose starting surge is far above 2.8 kW."
+   },
+   {
+    "q": "One kVA is how many watts?",
+    "a": "At a power factor of 0.8, 1 kVA is 0.8 kW; one kW is a thousand watts, so shift the decimal point three places for watts. At a power factor of one, 1 kVA equals one kW."
+   },
+   {
+    "q": "How do I convert kW to kVA?",
+    "a": "Divide by the power factor: kVA = kW ÷ power factor. A load of 8 kW at a power factor of 0.8 needs a 10 kVA generator before any allowance for motor starting."
+   },
+   {
+    "q": "Which power factor should I use for a generator?",
+    "a": "Use 0.8 unless the nameplate gives another value. It is the standard rating point for generators and matches a typical home with fans, ACs, a fridge and electronics. For heaters and lights only, the real power factor is close to one, but the generator is still limited by its kW rating."
+   }
+  ],
+  "key_facts": [
+   "kW = kVA × power factor, so at the usual generator power factor of 0.8 every kVA gives 0.8 kW of real power.",
+   "A 5 kVA generator delivers about 4 kW at a power factor of 0.8; a 3.5 kVA set gives about 2.8 kW and a 10 kVA set about 8 kW.",
+   "The same 5 kVA machine at a power factor of one delivers 5 kW, which is why the rating of a UPS or inverter depends on the power factor printed on its label.",
+   "kVA is apparent power (what the wires and windings must carry); kW is real power (what the meter bills and the appliances use)."
+  ],
+  "mistakes": [
+   "Treating kVA as kW. A 5 kVA generator gives about 4 kW, so plan the load on the kW figure.",
+   "Using a power factor of one for a generator or UPS. The nameplate kVA assumes 0.8 unless it says unity; a higher figure flatters the result.",
+   "Sizing a generator from running kW alone. Motors, pumps and non-inverter ACs surge at start-up; use the generator tools, which add the starting load before picking a standard size.",
+   "Mixing up kW and kWh. kW is power at a moment; kWh (a unit on the bill) is energy over time. A generator's kVA says nothing about fuel or units used."
+  ],
+  "sources": [
+   {
+    "label": "Schneider Electric white paper, Watts and Volt-Amps: Powerful Confusion",
+    "url": "https://www.se.com/ww/en/download/document/SPD_SADE-5TNQYF_EN/"
+   },
+   {
+    "label": "Wattlyst methodology and default values",
+    "url": "/methodology/"
+   }
+  ],
+  "tool": {
+   "calc": "kva_to_kw",
+   "module": "conversions.js",
+   "data_keys": [],
+   "appliances": {},
+   "fields": [
+    {
+     "name": "kva",
+     "label": "Apparent power",
+     "unit": "kVA",
+     "default": 5,
+     "hint": "The kVA figure on a generator, UPS, inverter or transformer nameplate, for example 2.5, 3.5, 5 or 10."
+    },
+    {
+     "name": "pf",
+     "label": "Power factor",
+     "unit": "0 to 1",
+     "default": 0.8,
+     "hint": "Generators and most UPS and inverters are rated at 0.8. Use 1 only if the nameplate says unity power factor."
+    }
+   ],
+   "fixed_inputs": {},
+   "outputs": [
+    {
+     "key": "kw",
+     "label": "Real power",
+     "spec": "2",
+     "unit": "kW",
+     "label_ur": "Asal power",
+     "value": "4"
+    }
+   ],
+   "how": {
+    "tpl": "{{in.kva|2}} kVA × {{out.pf|2}} power factor = {{out.kw|2}} kW. The power factor is the share of the apparent power that does real work; the rest circulates between the supply and motor or electronic loads without being used.",
+    "text": "5 kVA × 0.8 power factor = 4 kW. The power factor is the share of the apparent power that does real work; the rest circulates between the supply and motor or electronic loads without being used."
+   },
+   "submit": "Calculate",
+   "notice": "",
+   "data_checked": []
+  },
+  "examples": [
+   {
+    "title": "1 kVA at a power factor of 0.8",
+    "text": "1 kVA × 0.8 = 0.8 kW. One kVA of generator or UPS rating is 0.8 kW of real power at the standard power factor."
+   },
+   {
+    "title": "A 3.5 kVA portable generator",
+    "text": "3.5 kVA × 0.8 = 2.8 kW. This is the continuous real power a 3.5 kVA set can supply to fans, lights, a fridge and a TV."
+   },
+   {
+    "title": "A 10 kVA generator",
+    "text": "10 kVA × 0.8 = 8 kW. Enough for a house with a couple of inverter ACs plus the usual lights, fans and fridge."
+   },
+   {
+    "title": "5 kVA at a power factor of one",
+    "text": "5 kVA × 1 = 5 kW. A unity power factor inverter or a purely resistive load makes kVA and kW equal."
+   },
+   {
+    "title": "A 20 kVA three-phase set",
+    "text": "20 kVA × 0.8 = 16 kW. The formula is the same for three-phase machines; the phases only change how the amps are shared."
+   }
+  ],
+  "table": {
+   "caption": "kVA to kW for common generator and UPS sizes at a power factor of 0.8",
+   "head": [
+    "Rating",
+    "Power factor",
+    "Real power"
+   ],
+   "rows": [
+    [
+     "1 kVA",
+     "0.8",
+     "0.8 kW"
+    ],
+    [
+     "2.5 kVA",
+     "0.8",
+     "2 kW"
+    ],
+    [
+     "3.5 kVA",
+     "0.8",
+     "2.8 kW"
+    ],
+    [
+     "5 kVA",
+     "0.8",
+     "4 kW"
+    ],
+    [
+     "7.5 kVA",
+     "0.8",
+     "6 kW"
+    ],
+    [
+     "10 kVA",
+     "0.8",
+     "8 kW"
+    ],
+    [
+     "15 kVA",
+     "0.8",
+     "12 kW"
+    ],
+    [
+     "20 kVA",
+     "0.8",
+     "16 kW"
+    ]
+   ]
+  },
+  "answer": "A 5 kVA generator or UPS delivers about 4 kW of real power at a power factor of 0.8. kW = kVA × power factor. The kVA figure is the apparent power the machine can carry; the kW is the useful power your appliances get, so a 10 kVA set gives 8 kW and a 3.5 kVA set about 2.8 kW.",
+  "formula": {
+   "text": "kW = kVA × PF",
+   "lines": [
+    "kW = real power in kilowatts",
+    "kVA = apparent power in kilovolt-amps (the nameplate rating)",
+    "PF = power factor, 0.8 for generators and most UPS and inverters, 1 for a purely resistive load",
+    "Reverse: kVA = kW ÷ PF"
+   ]
+  },
+  "safety": "A generator's kW figure is its continuous limit; motor starting needs headroom above it, and running a set near full load shortens its life. Have a licensed electrician fit a changeover switch so the generator can never feed back into the grid."
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -39,7 +260,13 @@
      {
       "@type": "ListItem",
       "position": 2,
-      "name": "Kva To Kw",
+      "name": "Electrical Unit Converters",
+      "item": "https://wattlyst.com/converters/"
+     },
+     {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "kVA to kW Calculator",
       "item": "https://wattlyst.com/converters/kva-to-kw-calculator/"
      }
     ]
@@ -56,12 +283,14 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/converters/kva-to-kw-calculator/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-13",
+    "lastReviewed": "2026-10-13"
    },
    {
     "@type": "WebApplication",
     "@id": "https://wattlyst.com/converters/kva-to-kw-calculator/#app",
-    "name": "Kva To Kw",
+    "name": "kVA to kW Calculator",
     "url": "https://wattlyst.com/converters/kva-to-kw-calculator/",
     "description": "Convert kVA to kW using power factor. See why a 5 kVA generator or UPS gives about 4 kW at PF 0.8, with a table for common sizes.",
     "applicationCategory": "UtilitiesApplication",
@@ -88,6 +317,68 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/converters/kva-to-kw-calculator/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "What is the kVA to kW formula?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "kW = kVA × power factor. For a 5 kVA machine at a power factor of 0.8, kW = 5 × 0.8 = 4 kW. The reverse is kVA = kW ÷ power factor."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many kW is 5 kVA?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "About 4 kW at the standard generator power factor of 0.8, or 5 kW at a power factor of one. Most home generator and UPS labels mean the 0.8 figure."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many kW is 10 kVA?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "10 kVA × 0.8 = 8 kW of real power. That is the continuous load a 10 kVA generator can carry; starting surges from ACs and pumps must fit inside it too."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many kW is 3.5 kVA?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "3.5 kVA × 0.8 = 2.8 kW. A 3.5 kVA portable generator runs lights, fans, a fridge and a TV, but not a 1.5 ton non-inverter AC, whose starting surge is far above 2.8 kW."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "One kVA is how many watts?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "At a power factor of 0.8, 1 kVA is 0.8 kW; one kW is a thousand watts, so shift the decimal point three places for watts. At a power factor of one, 1 kVA equals one kW."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How do I convert kW to kVA?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Divide by the power factor: kVA = kW ÷ power factor. A load of 8 kW at a power factor of 0.8 needs a 10 kVA generator before any allowance for motor starting."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Which power factor should I use for a generator?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Use 0.8 unless the nameplate gives another value. It is the standard rating point for generators and matches a typical home with fans, ACs, a fridge and electronics. For heaters and lights only, the real power factor is close to one, but the generator is still limited by its kW rating."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

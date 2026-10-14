@@ -3,15 +3,25 @@
  "type": "tool",
  "silo": "F",
  "url": "/bill/pesco-bill-calculator/",
- "h1": "Pesco Bill Calculator",
+ "h1": "PESCO Bill Calculator",
  "title": "PESCO Bill Calculator 2026 (Latest Tariff) | Wattlyst",
  "meta": "Estimate your PESCO bill from units with the current tariff, FPA and all taxes. Protected and non-protected slabs explained.",
  "primary_keyword": "pesco bill calculator",
  "wave": 2,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-13",
+ "published": "2026-10-13",
  "author": "ali-ahmad",
+ "related": [
+  "F3",
+  "F6",
+  "F1",
+  "F2",
+  "E1"
+ ],
+ "next": "N1",
  "parent": "P-F",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
@@ -22,11 +32,358 @@
    "url": "/bill/"
   },
   {
-   "name": "Pesco Bill Calculator",
+   "name": "PESCO Bill Calculator",
    "url": "/bill/pesco-bill-calculator/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "What is the PESCO per unit rate?",
+    "p": [
+     "PESCO bills the uniform A-1 domestic tariff that NEPRA determined and the Government notified for 2026; there is no separate PESCO tariff. An unprotected home in Peshawar, Mardan, Swat, Abbottabad, Bannu or Dera Ismail Khan pays the rate of the slab its monthly units reach on every unit: 300 units are all billed at Rs 33.10. Protected consumers pay two low rates slab by slab, and lifeline consumers less again.",
+     "The table below prints the rate for each slab from the tariff file. The worked examples follow the same home through a protected spring month, the same units in two different quarters, a winter heater month and a lifeline bill."
+    ]
+   },
+   {
+    "h2": "PESCO tariff: why the QTA line changes every quarter",
+    "p": [
+     "The quarterly tariff adjustment is a per-unit amount NEPRA sets for each three-month block to true up the DISCOs' costs, and it is applied to every unit of the month except on lifeline bills. It can be a charge or a credit. In the examples, 300 units cost Rs 13,458 in the September to November quarter and Rs 12,571 in the June to August quarter, where the adjustment was a credit. Pick the quarter of the billing month under advanced settings, or type the QTA per unit from the bill if your quarter is not listed.",
+     "The FPA is separate: a monthly fuel price adjustment set after the month ends, so this page cannot know it in advance. Copy it from the bill into the FPA field; GST is charged on both lines."
+    ]
+   },
+   {
+    "h2": "Winter in Khyber Pakhtunkhwa: heaters and geysers on the PESCO bill",
+    "p": [
+     "Peshawar has cold winters and the hill districts colder ones, and when gas pressure falls electric heating takes over. A fan heater draws about 2,000 W, an oil-filled radiator about 1,500 W and a storage geyser about 3,000 W, so a few hours a day of each adds hundreds of units. That is how a home protected in October reaches 480 units in January and a bill of Rs 25,365.",
+     "The lower districts such as Dera Ismail Khan and Bannu also have hot summers with AC loads, so some PESCO homes see two peaks a year. The home load calculator linked below adds up your heaters and ACs into units per month; enter that figure here."
+    ]
+   },
+   {
+    "h2": "PESCO bill check: estimate here, confirm on the PESCO site",
+    "p": [
+     "This PESCO bill estimate works from the units you type and does not fetch your account. The official bill, with the reference number, due date, arrears and the exact FPA, is on the PESCO website, which links the duplicate bill page on the PITC portal; enter the reference number from the top of any earlier bill there, digits only. Use the estimate to see what each printed line should be and to plan the winter months.",
+     "If the reading dates on the bill cover more than a month, the units may have been pushed into a higher slab by the long cycle; the bill audit tool linked below checks that for you."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "How do I get a PESCO bill estimate from my units?",
+    "a": "Enter the units and the sanctioned load from the bill, tick protected only if the bill prints that category, pick the billing quarter and add the FPA from the bill under advanced settings. For 300 units the estimate is Rs 13,458 before FPA."
+   },
+   {
+    "q": "What is the PESCO per unit rate for a home?",
+    "a": "The uniform NEPRA domestic slab rate for the slab the month reaches: Rs 33.10 per unit for an unprotected home using 300 units. The table above lists the rate for every slab; protected and lifeline consumers pay less."
+   },
+   {
+    "q": "Is the PESCO tariff different from the Punjab DISCOs?",
+    "a": "No. The 2026 tariff notified as SRO 279(I)/2026 is uniform for all ex-WAPDA DISCOs and K-Electric. For the same units a PESCO bill differs from a LESCO or IESCO bill only by the month's FPA."
+   },
+   {
+    "q": "What is the QTA on a PESCO bill?",
+    "a": "The quarterly tariff adjustment, a per-unit charge or credit NEPRA sets for each three-month block and applies to all units except lifeline. For 300 units in the default quarter it comes to Rs 156; pick a different quarter or type the bill's figure to see another."
+   },
+   {
+    "q": "Which areas does PESCO cover?",
+    "a": "The civil districts of Khyber Pakhtunkhwa, run from Peshawar through regional circles; the former tribal districts are served by TESCO. If your bill carries another company's name, use that company's calculator."
+   },
+   {
+    "q": "How do I check my PESCO bill online?",
+    "a": "The PESCO website links a duplicate bill page on the PITC portal; enter the reference number printed at the top of an earlier bill, digits only, to see the current bill and due date. This calculator estimates the bill from units; it does not fetch your account."
+   },
+   {
+    "q": "Does a winter heater make a PESCO home unprotected?",
+    "a": "It can. Protection needs all of the last 6 bills at or under 200 units. A fan heater of about 2,000 W run a few hours a day adds well over a hundred units a month, enough to cross the limit on its own."
+   }
+  ],
+  "key_facts": [
+   "PESCO, the Peshawar Electric Supply Company, supplies the civil districts of Khyber Pakhtunkhwa from its head office in Peshawar and bills the uniform NEPRA A-1 domestic tariff for 2026, the same slabs as every other ex-WAPDA DISCO.",
+   "An unprotected PESCO consumer using 300 units pays Rs 33.10 on every unit, which is Rs 9,930 of energy charge before the fixed charge, FC surcharge, QTA and GST.",
+   "The QTA changes by quarter: the same 300 units come to about Rs 13,458 in the September to November quarter and about Rs 12,571 in the June to August quarter, when the adjustment was a credit.",
+   "A Khyber Pakhtunkhwa winter month of 480 units with a fan heater and an electric geyser costs about Rs 25,365 unprotected, against about Rs 3,195 for a protected spring month of 160 units.",
+   "Protection on PESCO needs every one of the last 6 bills at or under 200 units on a connection below 5 kW; one heater month over the limit ends it for the next 6 bills."
+  ],
+  "mistakes": [
+   "Looking for a PESCO tariff of its own. PESCO bills the uniform NEPRA domestic slabs; the QTA and FPA lines are the parts that move from quarter to quarter and month to month.",
+   "Leaving the quarter on the default for an old bill. The QTA differs by quarter and can be a credit; pick the quarter of the billing month or type the figure from the bill.",
+   "Planning the winter on the autumn bill. A heater and a geyser can double or treble the units, and one month over 200 units ends protected status for the next 6 bills.",
+   "Dividing the bill total by units to find the PESCO per unit rate. Fixed charge, surcharges and GST are inside the total; the slab rate is the energy line divided by units."
+  ],
+  "sources": [
+   {
+    "label": "NEPRA tariff decision and SRO for A-1 domestic consumers (tariff PDF)",
+    "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf"
+   },
+   {
+    "label": "PESCO official website, what we do (service area, duplicate bill link)",
+    "url": "https://pesco.com.pk/about/what-we-do"
+   },
+   {
+    "label": "PESCO duplicate bill on the PITC portal",
+    "url": "https://bill.pitc.com.pk/pescobill"
+   },
+   {
+    "label": "Wattlyst methodology and default values",
+    "url": "/methodology/"
+   }
+  ],
+  "tool": {
+   "calc": "bill_total",
+   "module": "bill.js",
+   "data_keys": [
+    "tariff"
+   ],
+   "appliances": {},
+   "fields": [
+    {
+     "name": "units",
+     "label": "Units on the PESCO bill",
+     "unit": "units",
+     "default": 300,
+     "hint": "Units (kWh) for the month, from the bill or from this and last month's meter readings. In Khyber Pakhtunkhwa the winter heater months can be as heavy as the summer."
+    },
+    {
+     "name": "sanctioned_kw",
+     "label": "Sanctioned load",
+     "unit": "kW",
+     "default": 1,
+     "hint": "The kW printed in the connection details of the PESCO bill. It sets the fixed charge; 5 kW and above is billed on ToU rates instead."
+    },
+    {
+     "name": "protected",
+     "label": "Protected consumer",
+     "type": "checkbox",
+     "default": false,
+     "hint": "Tick only if the bill prints the protected category; one heater or AC month over the limit removes it."
+    },
+    {
+     "name": "lifeline",
+     "label": "Lifeline consumer (up to one hundred units)",
+     "type": "checkbox",
+     "default": false,
+     "advanced": true,
+     "hint": "Only for very small consumers whose bill shows the lifeline category."
+    },
+    {
+     "name": "period",
+     "label": "Billing quarter for QTA",
+     "type": "select",
+     "options_from": "qta_periods",
+     "default": "2026-09..2026-11",
+     "advanced": true,
+     "hint": "The quarterly tariff adjustment depends on the quarter the bill falls in; pick the quarter of the billing month.",
+     "options": [
+      [
+       "2026-03..2026-05",
+       "2026-03 to 2026-05"
+      ],
+      [
+       "2026-06..2026-08",
+       "2026-06 to 2026-08"
+      ],
+      [
+       "2026-09..2026-11",
+       "2026-09 to 2026-11"
+      ]
+     ]
+    },
+    {
+     "name": "qta_per_unit",
+     "label": "QTA from the bill (overrides the quarter)",
+     "unit": "Rs per unit",
+     "placeholder": "Leave blank to use the quarter above",
+     "advanced": true,
+     "hint": "If your bill prints a QTA per unit that differs from the quarter's figure, or the quarter is not in the list, type it here; a credit is negative."
+    },
+    {
+     "name": "fc_surcharge_per_unit",
+     "label": "FC surcharge",
+     "unit": "Rs per unit",
+     "default": 3.23,
+     "advanced": true,
+     "hint": "Financing cost surcharge per unit, from the bill. Secondary-source default."
+    },
+    {
+     "name": "fpa_per_unit",
+     "label": "FPA",
+     "unit": "Rs per unit",
+     "placeholder": "From your bill (FPA / FCA)",
+     "advanced": true,
+     "hint": "Monthly fuel price adjustment printed on the PESCO bill, positive or negative. Leave blank if unknown."
+    },
+    {
+     "name": "gst_pct",
+     "label": "GST",
+     "unit": "%",
+     "default": 18,
+     "advanced": true,
+     "hint": "Sales tax applied to the bill subtotal."
+    }
+   ],
+   "fixed_inputs": {},
+   "outputs": [
+    {
+     "key": "total_rs",
+     "label": "Estimated bill",
+     "spec": "rs",
+     "label_ur": "Andazan bill",
+     "value": "Rs 13,458"
+    },
+    {
+     "key": "energy_rs",
+     "label": "Energy charge",
+     "spec": "rs",
+     "label_ur": "Energy charge",
+     "value": "Rs 9,930"
+    },
+    {
+     "key": "fixed_rs",
+     "label": "Fixed charge",
+     "spec": "rs",
+     "label_ur": "Fixed charge",
+     "value": "Rs 350"
+    },
+    {
+     "key": "fc_rs",
+     "label": "FC surcharge",
+     "spec": "rs",
+     "label_ur": "FC surcharge",
+     "value": "Rs 969"
+    },
+    {
+     "key": "qta_rs",
+     "label": "QTA",
+     "spec": "rs",
+     "label_ur": "QTA",
+     "value": "Rs 156"
+    },
+    {
+     "key": "gst_rs",
+     "label": "GST",
+     "spec": "rs",
+     "label_ur": "GST",
+     "value": "Rs 2,053"
+    }
+   ],
+   "how": {
+    "tpl": "{{out.units|int}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw|int}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct|int}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
+    "text": "300 units × Rs 33.10 (unprotected slab rate) = Rs 9,930. Fixed charge for 1 kW = Rs 350. FC surcharge Rs 969 + QTA Rs 156 + FPA Rs 0. Subtotal Rs 11,405 + GST 18% (Rs 2,053) = Rs 13,458."
+   },
+   "submit": "Calculate",
+   "notice": "",
+   "data_checked": [
+    {
+     "label": "Pakistan electricity tariff (NEPRA notification)",
+     "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf",
+     "checked": "2026-10-13"
+    }
+   ]
+  },
+  "examples": [
+   {
+    "title": "160 units, protected consumer in a spring month",
+    "text": "Energy charge Rs 1,835 slab-wise at protected rates, fixed charge Rs 300 for 1 kW, FC surcharge Rs 517, QTA for the March to May quarter Rs 56, GST Rs 487. Estimated PESCO bill Rs 3,195 before FPA."
+   },
+   {
+    "title": "300 units, unprotected, September to November quarter",
+    "text": "300 × Rs 33.10 = Rs 9,930, fixed charge Rs 350, FC surcharge Rs 969, QTA Rs 156, GST Rs 2,053. Estimated PESCO bill Rs 13,458 before FPA."
+   },
+   {
+    "title": "Same 300 units, June to August quarter",
+    "text": "The energy charge Rs 9,930 and fixed charge Rs 350 are unchanged, but the quarter's QTA was a credit, so the subtotal falls to Rs 10,653 and GST to Rs 1,918. Estimated PESCO bill Rs 12,571 before FPA."
+   },
+   {
+    "title": "480 units, winter month with a fan heater and geyser, 2 kW",
+    "text": "The heater month breaks the protected run, so all 480 units are billed at Rs 38.95 = Rs 18,696, fixed charge Rs 1,000 for 2 kW, FC surcharge Rs 1,550, QTA Rs 249, GST Rs 3,869. Estimated PESCO bill Rs 25,365 before FPA."
+   },
+   {
+    "title": "80 units, lifeline consumer",
+    "text": "80 units at the lifeline rate of Rs 7.74 = Rs 619, with no fixed charge and no QTA. With the FC surcharge and GST fields blank the estimate assumes neither applies to lifeline bills (still being verified): Rs 619."
+   }
+  ],
+  "table": {
+   "caption": "Estimated PESCO bill by units on a 1 kW connection in the September to November quarter with the default surcharges and GST, before FPA; unprotected unless marked",
+   "head": [
+    "Units",
+    "Per unit rate",
+    "Energy",
+    "Fixed",
+    "QTA",
+    "Estimated bill"
+   ],
+   "rows": [
+    [
+     "100 (unprotected)",
+     "Rs 22.44",
+     "Rs 2,244",
+     "Rs 275",
+     "Rs 52",
+     "Rs 3,415"
+    ],
+    [
+     "200 (protected)",
+     "Rs 13.01",
+     "Rs 2,355",
+     "Rs 300",
+     "Rs 104",
+     "Rs 4,018"
+    ],
+    [
+     "200 (unprotected)",
+     "Rs 28.91",
+     "Rs 5,782",
+     "Rs 300",
+     "Rs 104",
+     "Rs 8,062"
+    ],
+    [
+     "300 (unprotected)",
+     "Rs 33.10",
+     "Rs 9,930",
+     "Rs 350",
+     "Rs 156",
+     "Rs 13,458"
+    ],
+    [
+     "400 (unprotected)",
+     "Rs 36.46",
+     "Rs 14,584",
+     "Rs 400",
+     "Rs 208",
+     "Rs 19,451"
+    ],
+    [
+     "500 (unprotected)",
+     "Rs 38.95",
+     "Rs 19,475",
+     "Rs 500",
+     "Rs 260",
+     "Rs 25,783"
+    ],
+    [
+     "600 (unprotected)",
+     "Rs 40.22",
+     "Rs 24,132",
+     "Rs 675",
+     "Rs 312",
+     "Rs 31,927"
+    ]
+   ]
+  },
+  "answer": "A PESCO home in Peshawar or elsewhere in Khyber Pakhtunkhwa using 300 units in a month as an unprotected consumer on a 1 kW connection pays about Rs 13,458: Rs 9,930 energy charge at Rs 33.10 per unit, plus fixed charge, FC surcharge, the quarter's QTA and GST, before the month's FPA. PESCO bill = units × slab rate + fixed charge + surcharges, then GST.",
+  "formula": {
+   "text": "Bill = units × slab rate + fixed Rs/kW × sanctioned kW + (FC + QTA + FPA) × units, then + GST",
+   "lines": [
+    "slab rate = rate of the band the month's units reach (unprotected) or slab-wise (protected)",
+    "fixed = Rs per kW of the band reached × sanctioned kW",
+    "FC = financing cost surcharge; QTA = the quarter's tariff adjustment; FPA = the month's fuel price adjustment, all per unit from the PESCO bill",
+    "GST = percentage of the subtotal"
+   ]
+  },
+  "safety": ""
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -49,7 +406,7 @@
      {
       "@type": "ListItem",
       "position": 3,
-      "name": "Pesco Bill Calculator",
+      "name": "PESCO Bill Calculator",
       "item": "https://wattlyst.com/bill/pesco-bill-calculator/"
      }
     ]
@@ -66,12 +423,14 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/bill/pesco-bill-calculator/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-13",
+    "lastReviewed": "2026-10-13"
    },
    {
     "@type": "WebApplication",
     "@id": "https://wattlyst.com/bill/pesco-bill-calculator/#app",
-    "name": "Pesco Bill Calculator",
+    "name": "PESCO Bill Calculator",
     "url": "https://wattlyst.com/bill/pesco-bill-calculator/",
     "description": "Estimate your PESCO bill from units with the current tariff, FPA and all taxes. Protected and non-protected slabs explained.",
     "applicationCategory": "UtilitiesApplication",
@@ -98,6 +457,68 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/bill/pesco-bill-calculator/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "How do I get a PESCO bill estimate from my units?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Enter the units and the sanctioned load from the bill, tick protected only if the bill prints that category, pick the billing quarter and add the FPA from the bill under advanced settings. For 300 units the estimate is Rs 13,458 before FPA."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What is the PESCO per unit rate for a home?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "The uniform NEPRA domestic slab rate for the slab the month reaches: Rs 33.10 per unit for an unprotected home using 300 units. The table above lists the rate for every slab; protected and lifeline consumers pay less."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Is the PESCO tariff different from the Punjab DISCOs?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "No. The 2026 tariff notified as SRO 279(I)/2026 is uniform for all ex-WAPDA DISCOs and K-Electric. For the same units a PESCO bill differs from a LESCO or IESCO bill only by the month's FPA."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What is the QTA on a PESCO bill?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "The quarterly tariff adjustment, a per-unit charge or credit NEPRA sets for each three-month block and applies to all units except lifeline. For 300 units in the default quarter it comes to Rs 156; pick a different quarter or type the bill's figure to see another."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Which areas does PESCO cover?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "The civil districts of Khyber Pakhtunkhwa, run from Peshawar through regional circles; the former tribal districts are served by TESCO. If your bill carries another company's name, use that company's calculator."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How do I check my PESCO bill online?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "The PESCO website links a duplicate bill page on the PITC portal; enter the reference number printed at the top of an earlier bill, digits only, to see the current bill and due date. This calculator estimates the bill from units; it does not fetch your account."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Does a winter heater make a PESCO home unprotected?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "It can. Protection needs all of the last 6 bills at or under 200 units. A fan heater of about 2,000 W run a few hours a day adds well over a hundred units a month, enough to cross the limit on its own."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

@@ -3,26 +3,269 @@
  "type": "tool",
  "silo": "A",
  "url": "/converters/va-to-watts-calculator/",
- "h1": "Va To Watts",
+ "h1": "VA to Watts Calculator",
  "title": "VA to Watts Calculator for UPS & Inverters | Wattlyst",
  "meta": "Convert a UPS or inverter VA rating to real watts using power factor. Find how many watts a 1000VA or 1500VA UPS can actually run.",
  "primary_keyword": "va to watts",
  "wave": 2,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-13",
+ "published": "2026-10-13",
  "author": "ali-ahmad",
+ "related": [
+  "A8",
+  "A10",
+  "A3",
+  "B1",
+  "H9"
+ ],
+ "next": "B5",
  "parent": "P-A",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
    "url": "/"
   },
   {
-   "name": "Va To Watts",
+   "name": "Electrical Unit Converters",
+   "url": "/converters/"
+  },
+  {
+   "name": "VA to Watts Calculator",
    "url": "/converters/va-to-watts-calculator/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "How many watts can a 1,000 VA UPS run?",
+    "p": [
+     "About 600 W for a typical line-interactive 1,000 VA UPS, because these units are built for a power factor of 0.6. That covers a desktop PC with a monitor, a router and a couple of LED lights, but not a fan-heater, iron or microwave. A 1,000 VA online UPS with a power factor of 0.8 manages 800 W from the same label figure.",
+     "The watt limit says nothing about backup time. That depends on the battery; the UPS backup time calculator takes the VA, the battery Ah and your load and gives the hours."
+    ]
+   },
+   {
+    "h2": "VA vs watts on a UPS: what the two ratings mean",
+    "p": [
+     "VA (volt-amps) is apparent power: the voltage times the current the UPS can supply. Watts is real power: the part that does useful work. Many loads, especially the switch-mode power supplies in PCs and TVs, draw current that is partly out of step with the voltage, so their VA is higher than their watts. The ratio is the power factor, and a UPS is sized so that both its VA and its watt limits are safe.",
+     "On a Pakistani home UPS or inverter the same idea appears as a VA or kVA rating with a smaller watt figure next to it. An inverter sold as one kVA usually has a watt rating of about 800 W if it is rated at 0.8, which is the figure to compare with your load."
+    ]
+   },
+   {
+    "h2": "UPS VA to watts power factor: which number to use",
+    "p": [
+     "Use the power factor from the label. Small line-interactive UPS units for PCs are mostly 0.6; online double-conversion UPS units, hybrid solar inverters and generators are rated at 0.8; a few premium UPS models are unity power factor, so VA and watts are equal. If the label only shows a watt figure next to the VA, divide one by the other to find the power factor.",
+     "Choosing too high a power factor is the common error. It makes a 1,000 VA UPS look like it can run 1,000 W when its real limit may be 600 W, and an overloaded UPS trips or fails early."
+    ]
+   },
+   {
+    "h2": "Watts to VA: sizing a UPS for your load",
+    "p": [
+     "Turn the formula round: VA = watts ÷ power factor. A load of 900 W needs a 1,500 VA line-interactive UPS at a power factor of 0.6, while a 390 W load fits a 650 VA unit. Add up the watts of everything that will be on the UPS at the same time, then pick the next size up so the UPS runs below its limit.",
+     "The appliance wattage list gives running watts for PCs, routers, TVs and fans, and the home electrical load calculator adds them up for you."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "A 1,000 VA UPS is how many watts?",
+    "a": "About 600 W for a line-interactive unit (power factor 0.6) and 800 W for an online UPS or inverter rated at 0.8. The watt figure on the label is the one to compare with your load."
+   },
+   {
+    "q": "How many watts is 1,500 VA?",
+    "a": "1,500 VA × 0.6 = 900 W for a typical line-interactive UPS. At a power factor of 0.8 it would be more, so check the label before loading it."
+   },
+   {
+    "q": "How many watts can a 650 VA UPS run?",
+    "a": "About 390 W at a power factor of 0.6. That suits a basic desktop PC, a monitor and a router, or a fibre modem and router with a small TV."
+   },
+   {
+    "q": "A two kVA UPS is how many watts?",
+    "a": "2,000 VA × 0.8 = 1,600 W if it is an online UPS or inverter rated at 0.8. A line-interactive unit of the same VA would give less."
+   },
+   {
+    "q": "How do I convert watts to VA?",
+    "a": "VA = watts ÷ power factor. A 900 W load needs a 1,500 VA UPS at a power factor of 0.6, and a load of 800 W needs 1,000 VA at 0.8. Round up to the next size sold."
+   },
+   {
+    "q": "What does the VA rating on an inverter mean?",
+    "a": "It is the apparent power the inverter's electronics can carry, volts times amps. The real watts it can deliver are the VA times its power factor, usually 0.8 for a home or hybrid solar inverter, so a one kVA inverter gives about 800 W."
+   },
+   {
+    "q": "Why is the watt rating lower than the VA rating?",
+    "a": "Because real loads draw some current that does no work. The UPS must still carry that current, so it is rated in VA for the electronics and in watts for the energy it can supply; the watt figure is always the VA times a power factor of one or less."
+   }
+  ],
+  "key_facts": [
+   "Watts = VA × power factor, so a 1,000 VA line-interactive UPS at a power factor of 0.6 delivers at most 600 W.",
+   "A 650 VA UPS gives about 390 W and a 1,500 VA UPS about 900 W at a power factor of 0.6; a 2,000 VA online UPS or inverter at 0.8 gives 1,600 W.",
+   "The same 1,000 VA is 800 W at a power factor of 0.8 and 1,000 W at 1, so two UPS units with the same VA can differ a lot in real capacity.",
+   "VA is what the UPS electronics must handle; W is what your PC, router or fans actually consume. Both limits must be respected, and the watt limit is the one home users usually hit."
+  ],
+  "mistakes": [
+   "Reading VA as watts. A 1,000 VA line-interactive UPS runs about 600 W, not 1,000 W.",
+   "Using a power factor of one for a cheap UPS. Most small units are rated at 0.6; check the watt figure on the label.",
+   "Expecting the VA rating to tell you backup time. VA is a power limit; runtime comes from the battery Ah, which the UPS backup time calculator works out.",
+   "Plugging a fridge, motor or laser printer into a small UPS. Their starting surge is several times their running watts and will trip a unit that looks big enough on paper."
+  ],
+  "sources": [
+   {
+    "label": "Schneider Electric white paper, Watts and Volt-Amps: Powerful Confusion",
+    "url": "https://www.se.com/ww/en/download/document/SPD_SADE-5TNQYF_EN/"
+   },
+   {
+    "label": "Wattlyst methodology and default values",
+    "url": "/methodology/"
+   }
+  ],
+  "tool": {
+   "calc": "va_to_watts",
+   "module": "conversions.js",
+   "data_keys": [],
+   "appliances": {},
+   "fields": [
+    {
+     "name": "va",
+     "label": "UPS or inverter rating",
+     "unit": "VA",
+     "default": 1000,
+     "hint": "From the label or box, for example 650, 1000, 1500 or 2000 VA. One kVA is a thousand VA."
+    },
+    {
+     "name": "pf",
+     "label": "Power factor",
+     "type": "select",
+     "default": 0.6,
+     "options": [
+      [
+       0.6,
+       "0.6 (line-interactive home or PC UPS)"
+      ],
+      [
+       0.7,
+       "0.7"
+      ],
+      [
+       0.8,
+       "0.8 (online UPS, inverter, generator)"
+      ],
+      [
+       0.9,
+       "0.9"
+      ],
+      [
+       1,
+       "1.0 (unity power factor UPS)"
+      ]
+     ],
+     "hint": "Printed on the label as PF or as a watt figure next to the VA. Cheap line-interactive units are about 0.6; online UPS and solar inverters about 0.8 or higher."
+    }
+   ],
+   "fixed_inputs": {},
+   "outputs": [
+    {
+     "key": "watts",
+     "label": "Maximum real load",
+     "spec": "int",
+     "unit": "W",
+     "label_ur": "Zyada se zyada asal load",
+     "value": "600"
+    }
+   ],
+   "how": {
+    "tpl": "{{in.va|int}} VA × {{out.pf|2}} power factor = {{out.watts|int}} W. The VA figure is the apparent power the UPS electronics can carry; the power factor is the share of it that reaches your appliances as real watts.",
+    "text": "1,000 VA × 0.6 power factor = 600 W. The VA figure is the apparent power the UPS electronics can carry; the power factor is the share of it that reaches your appliances as real watts."
+   },
+   "submit": "Calculate",
+   "notice": "",
+   "data_checked": []
+  },
+  "examples": [
+   {
+    "title": "A 650 VA PC UPS",
+    "text": "650 VA × 0.6 = 390 W. Enough for a modest desktop PC with a monitor and a router."
+   },
+   {
+    "title": "A 1,500 VA line-interactive UPS",
+    "text": "1,500 VA × 0.6 = 900 W. A gaming PC, two monitors and a router fit inside this; a laser printer does not."
+   },
+   {
+    "title": "A 2,000 VA (two kVA) online UPS or inverter",
+    "text": "2,000 VA × 0.8 = 1,600 W. Online UPS units and home inverters are usually rated at this higher power factor."
+   },
+   {
+    "title": "1,000 VA at a power factor of 0.8",
+    "text": "1,000 VA × 0.8 = 800 W. Compare this with the same 1,000 VA at a line-interactive power factor in the calculator above."
+   },
+   {
+    "title": "1,000 VA at unity power factor",
+    "text": "1,000 VA × 1 = 1,000 W. On a unity power factor UPS the VA and watt ratings are the same."
+   }
+  ],
+  "table": {
+   "caption": "VA to watts for common UPS and inverter sizes",
+   "head": [
+    "Rating",
+    "Power factor",
+    "Maximum real load"
+   ],
+   "rows": [
+    [
+     "450 VA",
+     "0.6",
+     "270 W"
+    ],
+    [
+     "650 VA",
+     "0.6",
+     "390 W"
+    ],
+    [
+     "1,000 VA",
+     "0.6",
+     "600 W"
+    ],
+    [
+     "1,500 VA",
+     "0.6",
+     "900 W"
+    ],
+    [
+     "2,000 VA",
+     "0.8",
+     "1,600 W"
+    ],
+    [
+     "3,000 VA",
+     "0.8",
+     "2,400 W"
+    ],
+    [
+     "5,000 VA",
+     "0.8",
+     "4,000 W"
+    ],
+    [
+     "10,000 VA",
+     "0.8",
+     "8,000 W"
+    ]
+   ]
+  },
+  "answer": "A 1,000 VA UPS can run about 600 W of real load at a power factor of 0.6, the usual figure for a line-interactive home or PC UPS. Watts = VA × power factor. An online UPS or inverter rated at 0.8 gives 800 W from the same 1,000 VA, so always read the power factor on the label.",
+  "formula": {
+   "text": "W = VA × PF",
+   "lines": [
+    "W = maximum real power in watts",
+    "VA = apparent power rating on the UPS or inverter label",
+    "PF = power factor: about 0.6 for line-interactive home UPS, 0.8 to 1.0 for online UPS and inverters",
+    "Reverse: VA = W ÷ PF"
+   ]
+  },
+  "safety": "A UPS rated in VA also has a watt limit; loading it past either one makes it trip or overheat. Keep the load below the watt figure, never run heaters or motors on a small UPS, and have a licensed electrician wire a home UPS or inverter into the house circuit."
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -39,7 +282,13 @@
      {
       "@type": "ListItem",
       "position": 2,
-      "name": "Va To Watts",
+      "name": "Electrical Unit Converters",
+      "item": "https://wattlyst.com/converters/"
+     },
+     {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "VA to Watts Calculator",
       "item": "https://wattlyst.com/converters/va-to-watts-calculator/"
      }
     ]
@@ -56,12 +305,14 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/converters/va-to-watts-calculator/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-13",
+    "lastReviewed": "2026-10-13"
    },
    {
     "@type": "WebApplication",
     "@id": "https://wattlyst.com/converters/va-to-watts-calculator/#app",
-    "name": "Va To Watts",
+    "name": "VA to Watts Calculator",
     "url": "https://wattlyst.com/converters/va-to-watts-calculator/",
     "description": "Convert a UPS or inverter VA rating to real watts using power factor. Find how many watts a 1000VA or 1500VA UPS can actually run.",
     "applicationCategory": "UtilitiesApplication",
@@ -88,6 +339,68 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/converters/va-to-watts-calculator/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "A 1,000 VA UPS is how many watts?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "About 600 W for a line-interactive unit (power factor 0.6) and 800 W for an online UPS or inverter rated at 0.8. The watt figure on the label is the one to compare with your load."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many watts is 1,500 VA?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "1,500 VA × 0.6 = 900 W for a typical line-interactive UPS. At a power factor of 0.8 it would be more, so check the label before loading it."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many watts can a 650 VA UPS run?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "About 390 W at a power factor of 0.6. That suits a basic desktop PC, a monitor and a router, or a fibre modem and router with a small TV."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "A two kVA UPS is how many watts?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "2,000 VA × 0.8 = 1,600 W if it is an online UPS or inverter rated at 0.8. A line-interactive unit of the same VA would give less."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How do I convert watts to VA?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "VA = watts ÷ power factor. A 900 W load needs a 1,500 VA UPS at a power factor of 0.6, and a load of 800 W needs 1,000 VA at 0.8. Round up to the next size sold."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What does the VA rating on an inverter mean?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "It is the apparent power the inverter's electronics can carry, volts times amps. The real watts it can deliver are the VA times its power factor, usually 0.8 for a home or hybrid solar inverter, so a one kVA inverter gives about 800 W."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Why is the watt rating lower than the VA rating?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Because real loads draw some current that does no work. The UPS must still carry that current, so it is rated in VA for the electronics and in watts for the energy it can supply; the watt figure is always the VA times a power factor of one or less."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

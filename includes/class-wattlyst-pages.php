@@ -245,8 +245,8 @@ final class Wattlyst_Pages {
 		}
 		require_once WATTLYST_TOOLS_DIR . 'includes/class-wattlyst-render.php';
 		$render = new Wattlyst_Render( $this->plugin, $page );
-		if ( ! empty( $page['content']['tool'] ) ) {
-			self::$tool_rendered = true;
+		if ( ! empty( $page['content']['tool'] ) || ! empty( $page['content']['lookup'] ) ) {
+			self::$tool_rendered = true; // the same script also drives the lookup filter
 		}
 		return $render->html();
 	}
@@ -257,7 +257,7 @@ final class Wattlyst_Pages {
 		}
 		printf(
 			'<script type="module" src="%s"></script>' . "\n",
-			esc_url( add_query_arg( 'ver', WATTLYST_TOOLS_VERSION, Wattlyst_Tools::asset( 'assets/js/wattlyst-tool.js' ) ) )
+			esc_url( add_query_arg( 'ver', WATTLYST_TOOLS_VERSION, Wattlyst_Tools::asset( 'dist/assets/js/wattlyst-tool.js' ) ) )
 		);
 	}
 }

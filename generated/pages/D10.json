@@ -17,7 +17,8 @@
   "D5",
   "F1",
   "F2",
-  "F12"
+  "F12",
+  "N3"
  ],
  "next": "F1",
  "parent": "P-D",
@@ -57,7 +58,7 @@
    {
     "h2": "What is the net billing rate for solar exports in Pakistan?",
     "p": [
-     "The calculator uses Rs 11 per exported unit, the figure most reported for the new rules. NEPRA has said the rate will be set from the national average power purchase price and revised over time, and the exact number has not been confirmed on a NEPRA page at the time of writing. Change the buyback field to the rate on your own bill or DISCO notice and the result updates.",
+     "The calculator uses Rs 11.00 per exported unit, the figure most reported for the new rules. NEPRA has said the rate will be set from the national average power purchase price and revised over time, and the exact number has not been confirmed on a NEPRA page at the time of writing. Change the buyback field to the rate on your own bill or DISCO notice and the result updates.",
      "Compare that with the import rate of Rs 36.46 per unit for 400 units: a unit you export is worth a fraction of a unit you import. Using your own solar power in the day, running the water pump, washing machine and AC while the sun is up, is worth more than exporting it."
     ]
    },
@@ -75,7 +76,7 @@
    },
    {
     "q": "What is the solar export rate in Pakistan?",
-    "a": "Reports put the net billing buyback rate at about Rs 11 per unit, but it is not yet confirmed on a NEPRA page. Under old net metering there was no export rate: each exported unit simply cancelled an imported one."
+    "a": "Reports put the net billing buyback rate at about Rs 11.00 per unit, but it is not yet confirmed on a NEPRA page. Under old net metering there was no export rate: each exported unit simply cancelled an imported one."
    },
    {
     "q": "How much does a solar home save under net metering compared with net billing?",
@@ -99,7 +100,7 @@
    }
   ],
   "key_facts": [
-   "Under net billing the imported units are billed at the normal slab rate (Rs 36.46 per unit for 400 units) and exported units are bought back at a flat rate, Rs 11 per unit by default, which is not yet confirmed on a NEPRA page.",
+   "Under net billing the imported units are billed at the normal slab rate (Rs 36.46 per unit for 400 units) and exported units are bought back at a flat rate, Rs 11.00 per unit by default, which is not yet confirmed on a NEPRA page.",
    "Under old net metering exported units cancelled imported units one for one, so a home importing 400 and exporting 300 units paid for only 100 units, at the lower slab those units reach (Rs 22.44).",
    "For the same 400 imported and 300 exported units, net billing charges Rs 11,284 and old net metering Rs 2,244: a difference of Rs 9,040 a month in energy charges alone.",
    "The net billing figure is energy charges only; the fixed charge per sanctioned kW, FC surcharge, QTA, FPA and GST are added on the real bill."
@@ -170,32 +171,37 @@
      "key": "net_energy_rs",
      "label": "Net bill under net billing, energy only",
      "spec": "rs",
+     "label_ur": "Net billing ka bill, sirf energy",
      "value": "Rs 11,284"
     },
     {
      "key": "export_credit_rs",
      "label": "Credit for exported units",
      "spec": "rs",
+     "label_ur": "Export units ka credit",
      "value": "Rs 3,300"
     },
     {
      "key": "net_metering_rs",
      "label": "Same month under old net metering",
      "spec": "rs",
+     "label_ur": "Purani net metering mein wohi mahina",
      "value": "Rs 2,244"
     },
     {
      "key": "extra_vs_net_metering_rs",
      "label": "Extra you pay under net billing",
      "spec": "rs",
+     "label_ur": "Net billing mein izafi adaigi",
      "value": "Rs 9,040"
     }
    ],
    "how": {
-    "tpl": "Import: {{out.import_units|int}} units at the slab rate of Rs {{out.import_rate|2}} = {{out.import_energy_rs|rs}}. Export credit: {{out.export_units|int}} units × Rs {{out.buyback_rs|2}} = {{out.export_credit_rs|rs}}. Net billing energy charge = {{out.import_energy_rs|rs}} − {{out.export_credit_rs|rs}} = {{out.net_energy_rs|rs}}; any credit above the import bill carries forward ({{out.carry_forward_rs|rs}} here). Old net metering: {{out.import_units|int}} − {{out.export_units|int}} = {{out.net_metering_units|int}} net units billed at Rs {{out.net_metering_rate|2}} = {{out.net_metering_rs|rs}}. Difference = {{out.extra_vs_net_metering_rs|rs}}. Fixed charges, FC surcharge, QTA, FPA and GST are added on top; use the bill calculator for the full bill.",
-    "text": "Import: 400 units at the slab rate of Rs 36.46 = Rs 14,584. Export credit: 300 units × Rs 11 = Rs 3,300. Net billing energy charge = Rs 14,584 − Rs 3,300 = Rs 11,284; any credit above the import bill carries forward (Rs 0 here). Old net metering: 400 − 300 = 100 net units billed at Rs 22.44 = Rs 2,244. Difference = Rs 9,040. Fixed charges, FC surcharge, QTA, FPA and GST are added on top; use the bill calculator for the full bill."
+    "tpl": "Import: {{out.import_units|int}} units at the slab rate of {{out.import_rate|rs2}} = {{out.import_energy_rs|rs}}. Export credit: {{out.export_units|int}} units × {{out.buyback_rs|rs2}} = {{out.export_credit_rs|rs}}. Net billing energy charge = {{out.import_energy_rs|rs}} − {{out.export_credit_rs|rs}} = {{out.net_energy_rs|rs}}; any credit above the import bill carries forward ({{out.carry_forward_rs|rs}} here). Old net metering: {{out.import_units|int}} − {{out.export_units|int}} = {{out.net_metering_units|int}} net units billed at {{out.net_metering_rate|rs2}} = {{out.net_metering_rs|rs}}. Difference = {{out.extra_vs_net_metering_rs|rs}}. Fixed charges, FC surcharge, QTA, FPA and GST are added on top; use the bill calculator for the full bill.",
+    "text": "Import: 400 units at the slab rate of Rs 36.46 = Rs 14,584. Export credit: 300 units × Rs 11.00 = Rs 3,300. Net billing energy charge = Rs 14,584 − Rs 3,300 = Rs 11,284; any credit above the import bill carries forward (Rs 0 here). Old net metering: 400 − 300 = 100 net units billed at Rs 22.44 = Rs 2,244. Difference = Rs 9,040. Fixed charges, FC surcharge, QTA, FPA and GST are added on top; use the bill calculator for the full bill."
    },
    "submit": "Calculate",
+   "notice": "",
    "data_checked": [
     {
      "label": "Pakistan electricity tariff (NEPRA notification)",
@@ -207,7 +213,7 @@
   "examples": [
    {
     "title": "Import 400 units, export 300 units",
-    "text": "Import bill 400 × Rs 36.46 = Rs 14,584; export credit 300 × Rs 11 = Rs 3,300; net billing charge Rs 11,284. Old net metering billed 100 net units at Rs 22.44 = Rs 2,244, so net billing costs Rs 9,040 more."
+    "text": "Import bill 400 × Rs 36.46 = Rs 14,584; export credit 300 × Rs 11.00 = Rs 3,300; net billing charge Rs 11,284. Old net metering billed 100 net units at Rs 22.44 = Rs 2,244, so net billing costs Rs 9,040 more."
    },
    {
     "title": "Export more than you import: 200 in, 500 out",
@@ -227,7 +233,7 @@
    }
   ],
   "table": {
-   "caption": "Energy charges for the same month under net billing and old net metering, unprotected A-1 tariff, buyback Rs 11 per unit",
+   "caption": "Energy charges for the same month under net billing and old net metering, unprotected A-1 tariff, buyback Rs 11.00 per unit",
    "head": [
     "Import",
     "Export",
@@ -287,7 +293,7 @@
     ]
    ]
   },
-  "answer": "A home that imports 400 units and exports 300 units pays about Rs 11,284 in energy charges under net billing, against Rs 2,244 under old net metering, so net billing costs Rs 9,040 more that month. Net bill = imported units × slab rate − exported units × buyback rate of Rs 11.",
+  "answer": "A home that imports 400 units and exports 300 units pays about Rs 11,284 in energy charges under net billing, against Rs 2,244 under old net metering, so net billing costs Rs 9,040 more that month. Net bill = imported units × slab rate − exported units × buyback rate of Rs 11.00.",
   "formula": {
    "text": "Net billing Rs = max(0, import × slab rate − export × buyback); old net metering Rs = max(0, import − export) × slab rate of the net units",
    "lines": [
@@ -392,7 +398,7 @@
       "name": "What is the solar export rate in Pakistan?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Reports put the net billing buyback rate at about Rs 11 per unit, but it is not yet confirmed on a NEPRA page. Under old net metering there was no export rate: each exported unit simply cancelled an imported one."
+       "text": "Reports put the net billing buyback rate at about Rs 11.00 per unit, but it is not yet confirmed on a NEPRA page. Under old net metering there was no export rate: each exported unit simply cancelled an imported one."
       }
      },
      {

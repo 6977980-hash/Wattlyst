@@ -16,7 +16,8 @@
   "W1",
   "W2",
   "C5",
-  "E3"
+  "E3",
+  "W4"
  ],
  "next": "W2",
  "parent": "P-W",
@@ -246,12 +247,14 @@
      "label": "MCB rating",
      "spec": "int",
      "unit": "A",
+     "label_ur": "MCB ki rating",
      "value": "16"
     },
     {
      "key": "curve",
      "label": "Curve",
      "spec": "raw",
+     "label_ur": "MCB curve",
      "value": "C"
     },
     {
@@ -259,6 +262,7 @@
      "label": "Minimum cable",
      "spec": "1",
      "unit": "mm²",
+     "label_ur": "Kam az kam cable",
      "value": "2.5"
     },
     {
@@ -266,6 +270,7 @@
      "label": "Design current",
      "spec": "1",
      "unit": "A",
+     "label_ur": "Design current",
      "value": "10.9"
     }
    ],
@@ -274,6 +279,7 @@
     "text": "Design current = 2,000 W ÷ (1 × 230 V × 0.8 power factor) = 10.9 A (the first factor is one for single phase, root three for three phase). Breaker design current = 10.9 A (× 1.25 only for motors, compressors, ACs and welders). Next standard MCB = 16 A, type C, which trips instantly between 80 A and 160 A. The cable must be rated at least 16 A and be at least 2.5 mm²: 2.5 mm² (7/29), rated 24 A for this installation."
    },
    "submit": "Calculate",
+   "notice": "",
    "data_checked": [
     {
      "label": "Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)",

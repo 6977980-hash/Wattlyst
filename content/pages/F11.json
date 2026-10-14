@@ -1,0 +1,304 @@
+{
+ "id": "F11",
+ "status": "publish",
+ "template": "tool",
+ "h1": "TESCO Bill Calculator",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "calc": "bill_total",
+ "fields": [
+  {
+   "name": "units",
+   "label": "Units on the TESCO bill",
+   "unit": "units",
+   "default": 200,
+   "hint": "Units (kWh) for the month, from the bill or from this and last month's meter readings."
+  },
+  {
+   "name": "sanctioned_kw",
+   "label": "Sanctioned load",
+   "unit": "kW",
+   "default": "@default_sanctioned_kw",
+   "hint": "The kW printed on the bill; one or two for most homes in the merged districts. It sets the fixed charge."
+  },
+  {
+   "name": "protected",
+   "label": "Protected consumer",
+   "type": "checkbox",
+   "default": false,
+   "hint": "Tick if every one of your last six TESCO bills was within the protected unit limit; the bill prints the category."
+  },
+  {
+   "name": "lifeline",
+   "label": "Lifeline consumer (up to one hundred units)",
+   "type": "checkbox",
+   "default": false,
+   "advanced": true,
+   "hint": "Only for very small consumers whose bill shows the lifeline category."
+  },
+  {
+   "name": "period",
+   "label": "Billing quarter for QTA",
+   "type": "select",
+   "options_from": "qta_periods",
+   "default": "2026-09..2026-11",
+   "advanced": true,
+   "hint": "The quarterly tariff adjustment depends on the quarter the bill falls in."
+  },
+  {
+   "name": "fc_surcharge_per_unit",
+   "label": "FC surcharge",
+   "unit": "Rs per unit",
+   "default": "@data.tariff.addons_secondary.fc_surcharge_per_unit.value",
+   "advanced": true,
+   "hint": "Financing cost surcharge per unit, from the bill. Secondary-source default."
+  },
+  {
+   "name": "fpa_per_unit",
+   "label": "FPA",
+   "unit": "Rs per unit",
+   "placeholder": "From your bill (FPA / FCA)",
+   "advanced": true,
+   "hint": "Monthly fuel price adjustment from the bill, positive or negative. Leave blank if unknown."
+  },
+  {
+   "name": "gst_pct",
+   "label": "GST",
+   "unit": "%",
+   "default": "@data.tariff.addons_secondary.gst_pct.value",
+   "advanced": true,
+   "hint": "Sales tax applied to the bill subtotal."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "total_rs",
+   "label": "Estimated bill",
+   "spec": "rs"
+  },
+  {
+   "key": "energy_rs",
+   "label": "Energy charge",
+   "spec": "rs"
+  },
+  {
+   "key": "fixed_rs",
+   "label": "Fixed charge",
+   "spec": "rs"
+  },
+  {
+   "key": "fc_rs",
+   "label": "FC surcharge",
+   "spec": "rs"
+  },
+  {
+   "key": "qta_rs",
+   "label": "QTA",
+   "spec": "rs"
+  },
+  {
+   "key": "gst_rs",
+   "label": "GST",
+   "spec": "rs"
+  }
+ ],
+ "answer": "A TESCO home in the merged districts of Khyber Pakhtunkhwa using {{in.units|int}} units a month as an unprotected consumer on a {{in.sanctioned_kw|int}} kW connection pays about {{out.total_rs|rs}}: {{out.energy_rs|rs}} energy charge at {{out.rate|rs2}} per unit plus fixed charge, FC surcharge, QTA and GST. TESCO bill = units × slab rate + fixed charge + surcharges + GST, before the month's FPA.",
+ "how": "{{out.units|int}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw|int}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct|int}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
+ "key_facts": [
+  "TESCO, the Tribal Electric Supply Company Limited, is the ex-WAPDA distribution company for the merged districts of Khyber Pakhtunkhwa (the former FATA), run from WAPDA House on Shami Road in Peshawar; it bills the uniform NEPRA A-1 domestic tariff for 2026.",
+  "The TESCO per unit rate for an unprotected home using {{out.units|int}} units is {{out.rate|rs2}} on every unit, giving {{out.energy_rs|rs}} in energy charges before the fixed charge, surcharges and GST.",
+  "A TESCO consumer whose last {{d.protected_months|int}} bills were all at or under {{d.protected_max_units|int}} units is billed slab-wise at the protected rates; the second example below shows how much lower that makes the same month.",
+  "The slab rates on a TESCO bill are identical to those on a PESCO bill from Peshawar or Mardan; the two companies differ only in the area they serve and in the FPA printed for the month."
+ ],
+ "formula": {
+  "text": "Bill = units × slab rate + fixed Rs/kW × sanctioned kW + (FC + QTA + FPA) × units, then + GST",
+  "lines": [
+   "slab rate = rate of the band the month's units reach (unprotected) or slab-wise (protected)",
+   "fixed = Rs per kW of the band reached × sanctioned kW",
+   "FC, QTA, FPA = per-unit surcharges printed on the bill",
+   "GST = percentage of the subtotal"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "What is the TESCO per unit rate in 2026?",
+   "p": [
+    "TESCO here is the Tribal Electric Supply Company Limited of Peshawar, not the British supermarket. It is the smallest of the ex-WAPDA distribution companies, created to serve the former tribal agencies and frontier regions that are now the merged districts of Khyber Pakhtunkhwa. Its domestic consumers are billed on the uniform A-1 tariff that NEPRA determined and the Government notified for 2026, so the per unit rate is the national slab rate: an unprotected home using {{out.units|int}} units pays {{out.rate|rs2}} on every unit.",
+    "Many homes in TESCO's area use little electricity for most of the year, which keeps them in the protected or lifeline categories at much lower rates. The examples below show the same month billed both ways so you can see what protection is worth."
+   ]
+  },
+  {
+   "h2": "Is the TESCO tariff different from PESCO's?",
+   "p": [
+    "No. PESCO serves the settled districts of Khyber Pakhtunkhwa, Peshawar, Mardan, Swat, Kohat, Bannu, D.I. Khan and the rest, while TESCO serves the merged districts: Bajaur, Mohmand, Khyber, Orakzai, Kurram, North Waziristan and South Waziristan, together with the former frontier regions attached to them. Both bill the same uniform domestic slabs and the same fixed charge per kW, and both print the NEPRA-notified FPA for the month.",
+    "What does differ in TESCO's area is the metering history. Where meters were installed recently or readings are irregular, a single bill may cover more than a month of use and land in a higher slab than a normal month would. The overbilling check linked below shows what a long reading cycle does to the slab."
+   ]
+  },
+  {
+   "h2": "What does a protected TESCO consumer pay?",
+   "p": [
+    "A home is protected when all of its last {{d.protected_months|int}} bills were at or under {{d.protected_max_units|int}} units on a connection below {{d.tou_threshold_kw|int}} kW. Protected bills are worked out slab-wise at two low rates, so {{ex.0.in.units|int}} protected units cost {{ex.0.out.energy_rs|rs}} in energy charge, against {{ex.1.out.energy_rs|rs}} for the same units billed unprotected. The difference is larger than every other line on the bill put together.",
+    "One month over the limit, whatever the cause, moves the home to unprotected rates for the next {{d.protected_months|int}} bills. If a heater or a new fan pushes winter or summer use close to the limit, the protected check on the main bill calculator shows how much room is left."
+   ]
+  },
+  {
+   "h2": "TESCO bill check: estimate here, confirm on the printed bill",
+   "p": [
+    "This page estimates a TESCO bill from the units and category you enter. It cannot see your account, arrears, the exact FPA or any local charge. The printed bill, with the reference number and due date, is available from TESCO and through the online bill lookup by reference number; use that to pay and this page to understand the lines.",
+    "The full electricity bill calculator for Pakistan, linked below, explains the slabs and the protected check in more depth; the maths is the same."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "units": 200,
+    "protected": true
+   },
+   "title": "{{in.units|int}} units, TESCO protected consumer",
+   "text": "Energy charge {{out.energy_rs|rs}} slab-wise at protected rates, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated TESCO bill {{out.total_rs|rs}}."
+  },
+  {
+   "inputs": {
+    "units": 200
+   },
+   "title": "The same {{in.units|int}} units billed unprotected",
+   "text": "{{out.units|int}} × {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated TESCO bill {{out.total_rs|rs}}; protection lost in one month over the limit costs this difference."
+  },
+  {
+   "inputs": {
+    "units": 380,
+    "sanctioned_kw": 2
+   },
+   "title": "{{in.units|int}} units with an AC in a Bajaur or Khyber summer, {{in.sanctioned_kw|int}} kW",
+   "text": "{{out.units|int}} × {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated TESCO bill {{out.total_rs|rs}} before FPA."
+  },
+  {
+   "inputs": {
+    "units": 50,
+    "lifeline": true,
+    "fc_surcharge_per_unit": "",
+    "gst_pct": ""
+   },
+   "title": "{{in.units|int}} units, lifeline consumer",
+   "text": "{{out.units|int}} units at the lowest lifeline rate of {{out.rate|rs2}} = {{out.energy_rs|rs}}, with no fixed charge and no QTA. With the FC surcharge and GST fields blank the estimate assumes neither applies to lifeline bills (still being verified): {{out.total_rs|rs}}."
+  }
+ ],
+ "table": {
+  "caption": "Estimated TESCO bill by units on a {{in.sanctioned_kw|int}} kW connection with the default surcharges and GST, before FPA; unprotected unless marked",
+  "rows": [
+   {
+    "units": 50,
+    "lifeline": true,
+    "fc_surcharge_per_unit": "",
+    "gst_pct": ""
+   },
+   {
+    "units": 100,
+    "protected": true
+   },
+   {
+    "units": 200,
+    "protected": true
+   },
+   {
+    "units": 100
+   },
+   {
+    "units": 200
+   },
+   {
+    "units": 300
+   },
+   {
+    "units": 380
+   }
+  ],
+  "columns": [
+   {
+    "label": "Units",
+    "tpl": "{{out.units|int}} ({{out.category}})"
+   },
+   {
+    "label": "Per unit rate",
+    "tpl": "{{out.rate|rs2}}"
+   },
+   {
+    "label": "Energy",
+    "tpl": "{{out.energy_rs|rs}}"
+   },
+   {
+    "label": "Fixed",
+    "tpl": "{{out.fixed_rs|rs}}"
+   },
+   {
+    "label": "Estimated bill",
+    "tpl": "{{out.total_rs|rs}}"
+   }
+  ]
+ },
+ "mistakes": [
+  "Searching for the supermarket. TESCO on a Pakistani bill is the Tribal Electric Supply Company of Peshawar; its tariff is the NEPRA domestic tariff, not a retail price list.",
+  "Expecting a lower tribal-area rate. The slab rates are uniform across Pakistan; the lower bills in the merged districts come from the protected and lifeline categories, which depend on how many units the home uses.",
+  "Ticking protected after one high month. Protection needs all of the last {{d.protected_months|int}} bills at or under {{d.protected_max_units|int}} units.",
+  "Paying a bill for a long reading period as if it were one month. More than a month of units on one bill can land in a higher slab; run it through the overbilling check first."
+ ],
+ "faq": [
+  {
+   "q": "How do I get a TESCO bill estimate from my units?",
+   "a": "Enter the units and the sanctioned load from your bill, tick protected only if the bill says so, and add the FPA from the bill under advanced settings. For {{out.units|int}} units the estimate is {{out.total_rs|rs}} before FPA."
+  },
+  {
+   "q": "What is the TESCO per unit rate for a home?",
+   "a": "The uniform NEPRA domestic slab rate for the slab your month reaches: {{out.rate|rs2}} per unit for an unprotected home using {{out.units|int}} units. The table above lists the rate for every slab, including the protected and lifeline rates."
+  },
+  {
+   "q": "What is the TESCO tariff for 2026?",
+   "a": "The uniform A-1 domestic tariff notified as SRO 279(I)/2026: lifeline slabs up to one hundred units, protected slabs up to {{d.protected_max_units|int}} units, unprotected slabs of a hundred units each up to seven hundred and an open-ended top slab; connections of {{d.tou_threshold_kw|int}} kW and above are billed on ToU rates."
+  },
+  {
+   "q": "Which areas does TESCO cover?",
+   "a": "The merged districts of Khyber Pakhtunkhwa, formerly FATA: Bajaur, Mohmand, Khyber, Orakzai, Kurram, North Waziristan and South Waziristan, with the former frontier regions. The settled districts of the province, including Peshawar itself, are PESCO."
+  },
+  {
+   "q": "How do I check my TESCO bill online?",
+   "a": "Through TESCO's online bill lookup by the reference number printed on the bill, which shows the current bill, due date and payment status. This calculator estimates the bill from units; it does not fetch your account."
+  },
+  {
+   "q": "Is TESCO the same as the UK supermarket Tesco?",
+   "a": "No. The Pakistani TESCO is the Tribal Electric Supply Company Limited, a NEPRA-licensed electricity distributor based in Peshawar. This page is about its electricity bills."
+  },
+  {
+   "q": "Why is my TESCO bill higher than this estimate?",
+   "a": "Usually the month's FPA, arrears or a late-payment surcharge, or a bill that covers more than a month of readings. Add the FPA in the advanced fields; for a long reading period use the overbilling check linked below."
+  }
+ ],
+ "related": [
+  "F10",
+  "F8",
+  "F7",
+  "F1",
+  "F2"
+ ],
+ "next": "N1",
+ "literal_numbers": [
+  "SRO 279(I)/2026",
+  "2026",
+  "A-1"
+ ],
+ "sources": [
+  {
+   "label": "NEPRA tariff decision and SRO for A-1 domestic consumers (tariff PDF)",
+   "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf"
+  },
+  {
+   "label": "TESCO application to NEPRA for modification and extension of its distribution licence (company name and head office on the letterhead)",
+   "url": "https://www.nepra.org.pk/Admission%20Notices/2024/04%20Apr/LPM%20filed%20by%20TESCO%20in%20its%20Distribution%20Licence.PDF"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

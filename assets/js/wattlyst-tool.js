@@ -1,7 +1,7 @@
 // Live calculator runner (progressive enhancement: the default result is already in the HTML).
 // It only reads the form, calls the engine and prints the engine's numbers. No formula lives here.
 import { fmt, render } from '../../engine/format.js';
-import { errorMessage } from '../../engine/messages.js';
+import { errorMessage, noticeCode } from '../../engine/messages.js';
 
 const ver = new URL(import.meta.url).searchParams.get('ver') || '';
 
@@ -127,31 +127,74 @@ async function init(form) {
       }
       return;
     }
-    errorEl.hidden = true;
     results.hidden = false;
+    // Warning flags (size above the standard list, solar above the sanctioned load) print a notice, not a blank.
+    const notice = noticeCode(out);
+    errorEl.textContent = notice ? errorMessage(notice) : '';
+    errorEl.hidden = !notice;
     for (const o of cfg.outputs) {
       const node = results.querySelector(`[data-out="${o.key}"] .wl-val`);
-      if (node) node.textContent = fmt(out[o.key], o.spec);
+      if (node) node.textContent = fmt(out[o.key], o.spec) || 'n/a';
     }
     if (howEl && cfg.how) {
-      const text = render(cfg.how, { in: out, out, d: cfg.data.defaults });
+      const text = render(form.dataset.lang === 'ur' && cfg.how_ur ? cfg.how_ur : cfg.how, { in: out, out, d: cfg.data.defaults });
       howEl.hidden = text === null;
       if (text !== null) howEl.textContent = text;
     }
-    if (pushState) {
-      const load = cfg.fields
-        .map((f) => {
-          if (lists[f.name]) return `${f.name}:${encodeURIComponent(lists[f.name].encode())}`;
-          const v = f.type === 'checkbox' ? (el(f.name)?.checked ? '1' : '') : el(f.name)?.value.trim();
-          return v ? `${f.name}:${encodeURIComponent(v)}` : '';
-        })
-        .filter(Boolean)
-        .join(',');
-      const url = new URL(window.location.href);
-      url.search = load ? `?load=${load}` : '';
-      history.replaceState(null, '', url);
-    }
+    if (pushState) history.replaceState(null, '', shareUrl());
   };
+
+  // The ?load= link that reproduces the current inputs (only filled fields; the canonical stays clean).
+  const shareUrl = () => {
+    const load = cfg.fields
+      .map((f) => {
+        if (lists[f.name]) return `${f.name}:${encodeURIComponent(lists[f.name].encode())}`;
+        const v = f.type === 'checkbox' ? (el(f.name)?.checked ? '1' : '') : el(f.name)?.value.trim();
+        return v ? `${f.name}:${encodeURIComponent(v)}` : '';
+      })
+      .filter(Boolean)
+      .join(',');
+    const url = new URL(window.location.href);
+    url.search = load ? `?load=${load}` : '';
+    return url.href;
+  };
+
+  // Share bar: Save as PDF (the browser's print dialog, with a print stylesheet), WhatsApp (results + link), Copy link.
+  const share = form.querySelector('.wl-share');
+  if (share) {
+    share.hidden = false;
+    const note = share.querySelector('.wl-share-note');
+    const summary = () => [...results.querySelectorAll('.wl-result')].map((r) => `${r.querySelector('.wl-result-label').textContent}: ${r.querySelector('output').textContent.trim()}`).join('\n');
+    share.querySelector('[data-wl-share="print"]').addEventListener('click', () => { show(true); window.print(); });
+    const wa = share.querySelector('[data-wl-share="whatsapp"]');
+    const setWa = () => { wa.href = `https://wa.me/?text=${encodeURIComponent(`${cfg.h1} (Wattlyst)\n${summary()}\n${shareUrl()}`)}`; };
+    wa.addEventListener('pointerdown', setWa);
+    wa.addEventListener('focus', setWa);
+    setWa();
+    share.querySelector('[data-wl-share="copy"]').addEventListener('click', async () => {
+      show(true);
+      try { await navigator.clipboard.writeText(shareUrl()); note.textContent = 'Link copied.'; } catch { note.textContent = shareUrl(); }
+    });
+    // Roman Urdu result labels (and the "how" text when the page has one); the choice is remembered on this device.
+    const lang = share.querySelector('[data-wl-lang]');
+    if (lang) {
+      const apply = (ur) => {
+        lang.setAttribute('aria-pressed', String(ur));
+        lang.textContent = ur ? 'English' : 'Roman Urdu';
+        results.querySelectorAll('.wl-result-label[data-ur]').forEach((l) => { l.textContent = ur ? l.dataset.ur : l.dataset.en; });
+        form.dataset.lang = ur ? 'ur' : 'en';
+        show(false);
+      };
+      lang.addEventListener('click', () => {
+        const ur = form.dataset.lang !== 'ur';
+        try { localStorage.setItem('wl-lang', ur ? 'ur' : 'en'); } catch {}
+        apply(ur);
+      });
+      let saved = null;
+      try { saved = localStorage.getItem('wl-lang'); } catch {}
+      if (saved === 'ur') apply(true);
+    }
+  }
 
   // ?load=name:value,name:value restores a shared result. Only known fields and listed options are used.
   const load = new URLSearchParams(window.location.search).get('load');
@@ -184,3 +227,31 @@ async function init(form) {
 }
 
 document.querySelectorAll('form[data-wl-tool]').forEach((form) => { init(form).catch(() => {}); });
+
+// Lookup pages (error codes): the tables are already in the HTML; this only hides rows and brands that do not match.
+document.querySelectorAll('form[data-wl-lookup]').forEach((form) => {
+  const page = form.closest('.wl-page');
+  const groups = [...page.querySelectorAll('[data-wl-group]')];
+  const select = form.querySelector('[data-wl-group-select]');
+  const box = form.querySelector('[data-wl-filter]');
+  const nomatch = form.querySelector('[data-wl-nomatch]');
+  const apply = () => {
+    const q = box.value.trim().toLowerCase();
+    let shown = 0;
+    for (const g of groups) {
+      const on = !select.value || g.dataset.wlGroup === select.value;
+      let rows = 0;
+      for (const tr of g.querySelectorAll('tbody tr')) {
+        const hit = on && (!q || tr.textContent.toLowerCase().includes(q));
+        tr.hidden = !hit;
+        if (hit) rows += 1;
+      }
+      g.hidden = !on || rows === 0;
+      shown += rows;
+    }
+    nomatch.hidden = shown > 0;
+  };
+  select.addEventListener('change', apply);
+  box.addEventListener('input', apply);
+  if (select.value || box.value) apply();
+});

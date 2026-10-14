@@ -18,7 +18,8 @@
   "C6",
   "H9",
   "D5",
-  "H2"
+  "H2",
+  "N2"
  ],
  "next": "B1",
  "parent": "P-D",
@@ -1234,6 +1235,7 @@
      "label": "Inverter continuous rating needed",
      "spec": "int",
      "unit": "W",
+     "label_ur": "Inverter ki darkar continuous rating",
      "value": "1,789"
     },
     {
@@ -1241,6 +1243,7 @@
      "label": "Inverter rating",
      "spec": "2",
      "unit": "kVA",
+     "label_ur": "Inverter ki rating",
      "value": "2.24"
     },
     {
@@ -1248,6 +1251,7 @@
      "label": "Running load",
      "spec": "int",
      "unit": "W",
+     "label_ur": "Chalta hua load",
      "value": "1,431"
     },
     {
@@ -1255,6 +1259,7 @@
      "label": "Surge rating needed",
      "spec": "int",
      "unit": "W",
+     "label_ur": "Darkar surge rating",
      "value": "1,731"
     }
    ],
@@ -1263,6 +1268,7 @@
     "text": "Running load = the running watts of every appliance × its quantity, added up = 1,431 W. Continuous rating = 1,431 W × 1.25 margin = 1,789 W. kVA = 1,789 W ÷ 0.8 power factor ÷ 1,000 = 2.24 kVA. Surge = running load plus the extra starting watts of the largest motor or compressor = 1,731 W, which the inverter's surge rating must cover."
    },
    "submit": "Calculate",
+   "notice": "",
    "data_checked": [
     {
      "label": "Appliance running and starting watts (Wattlyst appliance data, sources listed on the appliance list page)",

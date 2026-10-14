@@ -3,15 +3,27 @@
  "type": "tool",
  "silo": "D",
  "url": "/solar/solar-quote-checker/",
- "h1": "Solar Quotation Checker",
+ "h1": "Solar Quotation Checker: Is the Price Fair?",
  "title": "Solar Quotation Checker: Is the Price Fair? | Wattlyst",
  "meta": "Enter your solar quotation (kW, panels, inverter, price) to see the cost per watt, what is missing and whether the price fits today's market.",
  "primary_keyword": "solar quotation checker",
  "wave": 2,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-14",
+ "published": "2026-10-14",
  "author": "ali-ahmad",
+ "related": [
+  "D7",
+  "D2",
+  "D1",
+  "D10",
+  "D8",
+  "D12",
+  "D14"
+ ],
+ "next": "D10",
  "parent": "P-D",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
@@ -22,11 +34,327 @@
    "url": "/solar/"
   },
   {
-   "name": "Solar Quotation Checker",
+   "name": "Solar Quotation Checker: Is the Price Fair?",
    "url": "/solar/solar-quote-checker/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "Is my solar quote fair? Read the price per watt first",
+    "p": [
+     "A 10 kW quote at Rs 1,100,000 is Rs 110.00 per watt. The typical range for an on-grid system of that size is Rs 95.00 to Rs 120.00 per watt, so this quote is within the range. A quote above the range is not automatically bad: it may include an elevated structure, a better inverter brand, a longer warranty or a battery. A quote below the range deserves a closer look at what is missing.",
+     "Per-watt prices fall as systems grow, because the inverter, structure, labour and paperwork are spread over more panels. Compare your quote with the range for its own size, not with a neighbour's larger system."
+    ]
+   },
+   {
+    "h2": "Solar price per watt check: what should be included",
+    "p": [
+     "Ask for a line-by-line quote. Panels (brand, model, watts, count, tier), inverter (brand, model, kW, on-grid or hybrid, warranty years), mounting structure (galvanised iron or aluminium, elevated or flush), DC cable and connectors, AC cable, DC and AC breakers, surge protection, earthing, installation labour and commissioning, and the net-metering application and meter fees. For a hybrid quote add the battery brand, chemistry, kWh and cycle warranty.",
+     "Items commonly left out and billed later: sales tax, an elevated structure, civil work for the structure base, a longer AC run to the meter, and the net-metering fees. If any of these is missing, add its cost before comparing."
+    ]
+   },
+   {
+    "h2": "Hybrid quotes: compare the battery separately",
+    "p": [
+     "Hybrid system prices vary far more than on-grid prices because the battery can be a small lead-acid bank or a large lithium one. Our hybrid range mixes both, so a hybrid quote that is within the range may still be fair or unfair depending on the battery. Compare the battery on its own: kWh, chemistry and warranty, then the rest of the system per watt.",
+     "Use the solar battery size calculator to decide how many kWh you need before you compare quotes; a quote with a battery larger than you need is expensive, one with a smaller battery will not give the backup you expect."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "What is a fair price per watt for solar in Pakistan?",
+    "a": "For a 10 kW on-grid system our price data shows about Rs 95.00 to Rs 120.00 per watt installed, lower per watt for larger systems and higher for hybrid systems with a battery. The range is updated monthly from installer price lists and reports."
+   },
+   {
+    "q": "Why is my hybrid quote so much higher than an on-grid quote?",
+    "a": "The battery and the hybrid inverter. A battery bank can add a third or more to the price, and its size and chemistry vary from quote to quote, which is why the hybrid range is wide. Compare the battery kWh and warranty separately."
+   },
+   {
+    "q": "Does a quote below the range mean a bad installer?",
+    "a": "No. It means check what is included. Ask for the panel and inverter models, the structure type, breakers, surge protection, earthing, warranty and the net-metering paperwork. A complete quote below the range is simply a good price."
+   },
+   {
+    "q": "Should the quote include GST?",
+    "a": "Add it before comparing. Some quotes show the price before sales tax and add it on the invoice; our range is built from quoted installed prices as published, which mostly include it."
+   },
+   {
+    "q": "How do I work out the kW from a panel list?",
+    "a": "Multiply the number of panels by the watts of each panel and divide by one thousand. Use that DC kW as the system size, not the inverter kW."
+   },
+   {
+    "q": "Where do the typical prices come from?",
+    "a": "From Pakistani installer price lists, news reports and solar price guides fetched on the date shown under Sources, combined per system size. They are secondary sources, not an official tariff, and they change with the rupee and tax policy."
+   }
+  ],
+  "key_facts": [
+   "Price per watt = total quoted price ÷ (system kW × one thousand); it is the only fair way to compare quotes of different sizes.",
+   "In Pakistan a 10 kW on-grid system was quoted at about Rs 95.00 to Rs 120.00 per watt in installer price lists checked in the month shown under Sources; larger systems cost less per watt, hybrid systems with a battery cost more.",
+   "A complete quote should list panels (brand, watts, count), inverter (brand, kW, on-grid or hybrid), mounting structure, DC and AC cables with breakers and surge protection, earthing, installation and the net-metering paperwork; a low price that leaves these out is not cheaper.",
+   "The range comes from secondary sources (installer price lists, news and blogs), not an official list; prices move with the rupee and tax policy, so treat the result as a market check and get at least three written quotes."
+  ],
+  "mistakes": [
+   "Comparing total prices of different sizes. Divide by the watts first.",
+   "Ignoring what is left out. Structure, earthing, surge protection, net-metering fees and tax often appear after the price has been agreed.",
+   "Judging a hybrid quote without the battery kWh. The battery can be a third of the price.",
+   "Treating our range as an official rate. It is a dated market check from installer lists and reports; get three written quotes."
+  ],
+  "sources": [
+   {
+    "label": "Wattlyst methodology and default values",
+    "url": "/methodology/"
+   },
+   {
+    "label": "Toolsfluent (blog), 2026-07-14 (price data)",
+    "url": "https://www.toolsfluent.com/blog/3kw-solar-system-pakistan-complete-guide"
+   },
+   {
+    "label": "PriceData.pk (market data), page 'Last Updated: October 14, 2026' (price data)",
+    "url": "https://www.pricedata.pk/solar/solar-panel-prices-in-pakistan"
+   },
+   {
+    "label": "GreenOH (installer marketplace), 2026-10-14 (price data)",
+    "url": "https://thegreenoh.com/solar-guides/on-grid-vs-hybrid-solar-system-pakistan"
+   },
+   {
+    "label": "Toolsfluent (blog), 2026-05-13 (price data)",
+    "url": "https://www.toolsfluent.com/blog/5kw-solar-system-pakistan-complete-guide"
+   },
+   {
+    "label": "Max Power (manufacturer/installer blog), undated (price data)",
+    "url": "https://maxpower.com.pk/?p=4888"
+   },
+   {
+    "label": "VoltFlow (blog), 2026-04-03 (price data)",
+    "url": "https://www.voltflow.net/blog/solar-panels-pakistan-2026"
+   },
+   {
+    "label": "GreenOH (installer marketplace), 2026-10-14 (price data)",
+    "url": "https://thegreenoh.com/solar-guides/10kw-solar-system-price-pakistan"
+   },
+   {
+    "label": "Toolsfluent (blog), 2026-07-14 (price data)",
+    "url": "https://www.toolsfluent.com/blog/10kw-solar-system-pakistan-complete-guide"
+   },
+   {
+    "label": "Max Power (manufacturer/installer blog), 2026-07-28 (price data)",
+    "url": "https://maxpower.com.pk/?p=4877"
+   },
+   {
+    "label": "SheikhX Solar Corporation (installer), 2026-10-14 (price data)",
+    "url": "https://sheikhxsolarcorp.com/solar-rates-pakistan"
+   },
+   {
+    "label": "solar-price.pk (dealer-sourced guide), 2026-05 (price data)",
+    "url": "https://solar-price.pk/10kw-solar-system-price-in-pakistan/"
+   },
+   {
+    "label": "PhoneWorld.com.pk, 2026-06-11 (price data)",
+    "url": "https://www.phoneworld.com.pk/solar-panel-price-in-pakistan-today-updated-rates/"
+   },
+   {
+    "label": "Toolsfluent (blog), 2026-08-18 (price data)",
+    "url": "https://www.toolsfluent.com/blog/solar-panel-price-pakistan-2026"
+   },
+   {
+    "label": "Toolsfluent price tracker (search-result snippet, not fetched), 2026-07-15 (price data)",
+    "url": "https://www.toolsfluent.com/tools/solar-panel-price-tracker-pakistan"
+   },
+   {
+    "label": "ARY News, 2026-07-01 (price data)",
+    "url": "https://arynews.tv/solar-panel-batteries-and-inverters-prices-drop-in-karachi"
+   }
+  ],
+  "tool": {
+   "calc": "quote_checker",
+   "module": "solar.js",
+   "data_keys": [
+    "cities",
+    "solar_prices"
+   ],
+   "appliances": {},
+   "fields": [
+    {
+     "name": "kwp",
+     "label": "System size in the quote",
+     "unit": "kW",
+     "default": 10,
+     "hint": "The DC panel capacity, for example 10 kW. Add up the panels if the quote lists them: panels × watts ÷ 1000."
+    },
+    {
+     "name": "type",
+     "label": "System type",
+     "type": "select",
+     "default": "on-grid",
+     "options": [
+      [
+       "on-grid",
+       "On-grid (net metering, no battery)"
+      ],
+      [
+       "hybrid",
+       "Hybrid (with battery)"
+      ]
+     ],
+     "hint": "Hybrid quotes include a battery; their range is wider because battery size varies."
+    },
+    {
+     "name": "price",
+     "label": "Total quoted price",
+     "unit": "Rs",
+     "default": 1100000,
+     "hint": "Everything on the quote: panels, inverter, structure, wiring, installation. Add GST if the quote shows it separately."
+    },
+    {
+     "name": "range_low",
+     "label": "Your own low price",
+     "unit": "Rs per W",
+     "placeholder": "Optional",
+     "advanced": true,
+     "hint": "Enter your own typical range (low and high, rupees per watt) to replace ours, for example from two other quotes."
+    },
+    {
+     "name": "range_high",
+     "label": "Your own high price",
+     "unit": "Rs per W",
+     "placeholder": "Optional",
+     "advanced": true,
+     "hint": "Both low and high are needed to replace our range."
+    }
+   ],
+   "fixed_inputs": {},
+   "outputs": [
+    {
+     "key": "rs_per_w",
+     "label": "Your quote per watt",
+     "label_ur": "Aap ka quote fi watt",
+     "spec": "rs2",
+     "unit": "per W",
+     "value": "Rs 110.00"
+    },
+    {
+     "key": "verdict",
+     "label": "Compared with typical prices",
+     "label_ur": "Aam qeematon ke muqable",
+     "spec": "raw",
+     "value": "within"
+    },
+    {
+     "key": "range_low",
+     "label": "Typical low",
+     "label_ur": "Aam kam qeemat",
+     "spec": "rs2",
+     "unit": "per W",
+     "value": "Rs 95.00"
+    },
+    {
+     "key": "range_high",
+     "label": "Typical high",
+     "label_ur": "Aam zyada qeemat",
+     "spec": "rs2",
+     "unit": "per W",
+     "value": "Rs 120.00"
+    },
+    {
+     "key": "range_low_rs",
+     "label": "Typical range for this size, from",
+     "label_ur": "Is size ki aam range, se",
+     "spec": "rs",
+     "value": "Rs 950,000"
+    },
+    {
+     "key": "range_high_rs",
+     "label": "to",
+     "label_ur": "tak",
+     "spec": "rs",
+     "value": "Rs 1,200,000"
+    }
+   ],
+   "how": {
+    "tpl": "{{in.price|rs}} ÷ ({{in.kwp|int}} kW × 1,000) = {{out.rs_per_w|rs2}} per watt. Typical {{in.type}} range for {{in.kwp|int}} kW: {{out.range_low|rs2}} to {{out.range_high|rs2}} per watt, that is {{out.range_low_rs|rs}} to {{out.range_high_rs|rs}}. Against the low end your quote differs by {{out.vs_low_pct|int}}%, against the high end by {{out.vs_high_pct|int}}% (a minus sign means below it), so it is {{out.verdict}} the range.",
+    "text": "Rs 1,100,000 ÷ (10 kW × 1,000) = Rs 110.00 per watt. Typical on-grid range for 10 kW: Rs 95.00 to Rs 120.00 per watt, that is Rs 950,000 to Rs 1,200,000. Against the low end your quote differs by 16%, against the high end by -8% (a minus sign means below it), so it is within the range."
+   },
+   "submit": "Check my quote",
+   "notice": "",
+   "data_checked": [
+    {
+     "label": "Typical solar system prices in Pakistan (installer price lists and news reports, each listed under Sources on this page)",
+     "url": null,
+     "checked": "2026-10-14"
+    }
+   ]
+  },
+  "examples": [
+   {
+    "title": "5 kW on-grid at Rs 700,000",
+    "text": "Rs 700,000 ÷ (5 × 1,000) = Rs 140.00 per watt against a typical Rs 128.00 to Rs 160.00: within the range."
+   },
+   {
+    "title": "10 kW hybrid with battery at Rs 1,500,000",
+    "text": "Rs 150.00 per watt against the hybrid range of Rs 140.00 to Rs 169.00 per watt: within. Check the battery kWh before deciding."
+   },
+   {
+    "title": "A small 3 kW system at Rs 550,000",
+    "text": "Rs 183.33 per watt is above the typical Rs 120.00 to Rs 150.00 per watt for this size; small systems cost more per watt, but this one is 22% past the high end."
+   },
+   {
+    "title": "15 kW on-grid at Rs 1,350,000",
+    "text": "Rs 90.00 per watt is below the range of Rs 93.33 to Rs 120.00; ask what the quote leaves out before you accept a price this far below typical."
+   }
+  ],
+  "table": {
+   "caption": "Typical installed price per watt by system size (on-grid, Pakistan, from the price data checked on the date under Sources)",
+   "head": [
+    "System size",
+    "Typical low",
+    "Typical high"
+   ],
+   "rows": [
+    [
+     "3 kW",
+     "Rs 360,000 (Rs 120.00 per W)",
+     "Rs 450,000 (Rs 150.00 per W)"
+    ],
+    [
+     "5 kW",
+     "Rs 640,000 (Rs 128.00 per W)",
+     "Rs 800,000 (Rs 160.00 per W)"
+    ],
+    [
+     "8 kW",
+     "Rs 850,000 (Rs 106.25 per W)",
+     "Rs 1,050,000 (Rs 131.25 per W)"
+    ],
+    [
+     "10 kW",
+     "Rs 950,000 (Rs 95.00 per W)",
+     "Rs 1,200,000 (Rs 120.00 per W)"
+    ],
+    [
+     "15 kW",
+     "Rs 1,400,000 (Rs 93.33 per W)",
+     "Rs 1,800,000 (Rs 120.00 per W)"
+    ],
+    [
+     "20 kW",
+     "Rs 1,800,000 (Rs 90.00 per W)",
+     "Rs 2,200,000 (Rs 110.00 per W)"
+    ]
+   ]
+  },
+  "answer": "A 10 kW on-grid solar quote of Rs 1,100,000 works out to Rs 110.00 per watt, which is within the typical installed range of Rs 95.00 to Rs 120.00 per watt (Rs 950,000 to Rs 1,200,000 for this size) seen in Pakistani installer price lists and reports. Price per watt = total price ÷ (kW × one thousand). The range is a market check, not a verdict on any installer.",
+  "formula": {
+   "text": "Rs/W = price ÷ (kW × 1000); verdict = below / within / above the typical range for that size and type",
+   "lines": [
+    "price = total quoted price in rupees",
+    "kW = DC panel capacity of the quote",
+    "typical range = low and high rupees per watt from Wattlyst price data (interpolated between listed sizes)"
+   ]
+  },
+  "safety": "Solar installation involves high DC voltages and roof work. Use a licensed electrician or a registered installer, and insist on DC breakers, surge protection and proper earthing in the quote."
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -49,7 +377,7 @@
      {
       "@type": "ListItem",
       "position": 3,
-      "name": "Solar Quotation Checker",
+      "name": "Solar Quotation Checker: Is the Price Fair?",
       "item": "https://wattlyst.com/solar/solar-quote-checker/"
      }
     ]
@@ -66,12 +394,14 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/solar/solar-quote-checker/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-14",
+    "lastReviewed": "2026-10-14"
    },
    {
     "@type": "WebApplication",
     "@id": "https://wattlyst.com/solar/solar-quote-checker/#app",
-    "name": "Solar Quotation Checker",
+    "name": "Solar Quotation Checker: Is the Price Fair?",
     "url": "https://wattlyst.com/solar/solar-quote-checker/",
     "description": "Enter your solar quotation (kW, panels, inverter, price) to see the cost per watt, what is missing and whether the price fits today's market.",
     "applicationCategory": "UtilitiesApplication",
@@ -98,6 +428,60 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/solar/solar-quote-checker/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "What is a fair price per watt for solar in Pakistan?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "For a 10 kW on-grid system our price data shows about Rs 95.00 to Rs 120.00 per watt installed, lower per watt for larger systems and higher for hybrid systems with a battery. The range is updated monthly from installer price lists and reports."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Why is my hybrid quote so much higher than an on-grid quote?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "The battery and the hybrid inverter. A battery bank can add a third or more to the price, and its size and chemistry vary from quote to quote, which is why the hybrid range is wide. Compare the battery kWh and warranty separately."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Does a quote below the range mean a bad installer?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "No. It means check what is included. Ask for the panel and inverter models, the structure type, breakers, surge protection, earthing, warranty and the net-metering paperwork. A complete quote below the range is simply a good price."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Should the quote include GST?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Add it before comparing. Some quotes show the price before sales tax and add it on the invoice; our range is built from quoted installed prices as published, which mostly include it."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How do I work out the kW from a panel list?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Multiply the number of panels by the watts of each panel and divide by one thousand. Use that DC kW as the system size, not the inverter kW."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Where do the typical prices come from?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "From Pakistani installer price lists, news reports and solar price guides fetched on the date shown under Sources, combined per system size. They are secondary sources, not an official tariff, and they change with the rupee and tax policy."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

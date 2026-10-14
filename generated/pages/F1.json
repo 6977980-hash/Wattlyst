@@ -16,7 +16,9 @@
   "F2",
   "F12",
   "E5",
-  "D10"
+  "D10",
+  "N1",
+  "F14"
  ],
  "next": "E5",
  "parent": "P-F",
@@ -68,7 +70,7 @@
    {
     "h2": "What is the bill for 300 units?",
     "p": [
-     "300 units is the default above: all units at Rs 33.1 = Rs 9,930, plus Rs 350 fixed charge for 1 kW, Rs 969 FC surcharge, Rs 156 QTA and Rs 2,053 GST, for about Rs 13,458. One unit over three hundred moves every unit to the next slab, so 300 units is a line worth staying under."
+     "300 units is the default above: all units at Rs 33.10 = Rs 9,930, plus Rs 350 fixed charge for 1 kW, Rs 969 FC surcharge, Rs 156 QTA and Rs 2,053 GST, for about Rs 13,458. One unit over three hundred moves every unit to the next slab, so 300 units is a line worth staying under."
     ]
    }
   ],
@@ -87,7 +89,7 @@
    },
    {
     "q": "What is the per unit rate of electricity in Pakistan?",
-    "a": "It depends on the slab and category. An unprotected home using 300 units pays Rs 33.1 per unit on every unit; lower slabs pay less and the top slab pays the most. Protected and lifeline consumers pay far lower rates. The reference table above lists the rate for each slab."
+    "a": "It depends on the slab and category. An unprotected home using 300 units pays Rs 33.10 per unit on every unit; lower slabs pay less and the top slab pays the most. Protected and lifeline consumers pay far lower rates. The reference table above lists the rate for each slab."
    },
    {
     "q": "What are the electricity slab rates in Pakistan?",
@@ -107,7 +109,7 @@
    }
   ],
   "key_facts": [
-   "An unprotected consumer pays the rate of the slab the monthly total reaches on every unit: 300 units are all charged at Rs 33.1, giving Rs 9,930 in energy charges.",
+   "An unprotected consumer pays the rate of the slab the monthly total reaches on every unit: 300 units are all charged at Rs 33.10, giving Rs 9,930 in energy charges.",
    "A protected consumer is billed slab-wise with the benefit of the lower slab, and the category needs every one of the last 6 months at or under 200 units.",
    "The fixed charge is Rs per kW of sanctioned load and rises with the slab; a 1 kW connection using 300 units pays Rs 350 a month before using a single unit.",
    "GST at 18% is applied to the subtotal of energy, fixed charge and surcharges, which adds Rs 2,053 to a 300 unit bill; the surcharge and GST figures are from secondary sources and change monthly.",
@@ -221,44 +223,51 @@
      "key": "total_rs",
      "label": "Estimated bill",
      "spec": "rs",
+     "label_ur": "Andazan bill",
      "value": "Rs 13,458"
     },
     {
      "key": "energy_rs",
      "label": "Energy charge",
      "spec": "rs",
+     "label_ur": "Energy charge",
      "value": "Rs 9,930"
     },
     {
      "key": "fixed_rs",
      "label": "Fixed charge",
      "spec": "rs",
+     "label_ur": "Fixed charge",
      "value": "Rs 350"
     },
     {
      "key": "fc_rs",
      "label": "FC surcharge",
      "spec": "rs",
+     "label_ur": "FC surcharge",
      "value": "Rs 969"
     },
     {
      "key": "qta_rs",
      "label": "QTA",
      "spec": "rs",
+     "label_ur": "QTA",
      "value": "Rs 156"
     },
     {
      "key": "gst_rs",
      "label": "GST",
      "spec": "rs",
+     "label_ur": "GST",
      "value": "Rs 2,053"
     }
    ],
    "how": {
-    "tpl": "Energy: {{out.units|int}} units × Rs {{out.rate|2}} (the {{out.category}} rate of the slab reached) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw|int}} kW = {{out.fixed_rs|rs}}. FC surcharge = {{out.fc_rs|rs}}, QTA = {{out.qta_rs|rs}}, FPA = {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}}; GST at {{out.gst_pct|int}}% = {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}.",
-    "text": "Energy: 300 units × Rs 33.1 (the unprotected rate of the slab reached) = Rs 9,930. Fixed charge for 1 kW = Rs 350. FC surcharge = Rs 969, QTA = Rs 156, FPA = Rs 0. Subtotal Rs 11,405; GST at 18% = Rs 2,053. Estimated bill Rs 13,458."
+    "tpl": "Energy: {{out.units|int}} units × {{out.rate|rs2}} (the {{out.category}} rate of the slab reached) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw|int}} kW = {{out.fixed_rs|rs}}. FC surcharge = {{out.fc_rs|rs}}, QTA = {{out.qta_rs|rs}}, FPA = {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}}; GST at {{out.gst_pct|int}}% = {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}.",
+    "text": "Energy: 300 units × Rs 33.10 (the unprotected rate of the slab reached) = Rs 9,930. Fixed charge for 1 kW = Rs 350. FC surcharge = Rs 969, QTA = Rs 156, FPA = Rs 0. Subtotal Rs 11,405; GST at 18% = Rs 2,053. Estimated bill Rs 13,458."
    },
    "submit": "Calculate",
+   "notice": "",
    "data_checked": [
     {
      "label": "Pakistan electricity tariff (NEPRA notification)",
@@ -278,7 +287,7 @@
    },
    {
     "title": "300 units, unprotected",
-    "text": "300 units × Rs 33.1 = Rs 9,930, fixed charge Rs 350, FC surcharge Rs 969, QTA Rs 156, GST Rs 2,053. Estimated bill Rs 13,458."
+    "text": "300 units × Rs 33.10 = Rs 9,930, fixed charge Rs 350, FC surcharge Rs 969, QTA Rs 156, GST Rs 2,053. Estimated bill Rs 13,458."
    },
    {
     "title": "500 units on a 2 kW connection",
@@ -322,7 +331,7 @@
     ],
     [
      "300 (unprotected)",
-     "Rs 33.1",
+     "Rs 33.10",
      "Rs 9,930",
      "Rs 350",
      "Rs 13,458"
@@ -350,7 +359,7 @@
     ]
    ]
   },
-  "answer": "An unprotected home using 300 units a month on a 1 kW connection pays about Rs 13,458: Rs 9,930 in energy charges at Rs 33.1 per unit, plus the fixed charge, FC surcharge, QTA and 18% GST. Bill = units × slab rate + fixed charge + surcharges, then GST on the subtotal.",
+  "answer": "An unprotected home using 300 units a month on a 1 kW connection pays about Rs 13,458: Rs 9,930 in energy charges at Rs 33.10 per unit, plus the fixed charge, FC surcharge, QTA and 18% GST. Bill = units × slab rate + fixed charge + surcharges, then GST on the subtotal.",
   "formula": {
    "text": "Bill = units × slab rate + fixed Rs/kW × sanctioned kW + (FC + QTA + FPA) × units, then + GST",
    "lines": [
@@ -470,7 +479,7 @@
       "name": "What is the per unit rate of electricity in Pakistan?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "It depends on the slab and category. An unprotected home using 300 units pays Rs 33.1 per unit on every unit; lower slabs pay less and the top slab pays the most. Protected and lifeline consumers pay far lower rates. The reference table above lists the rate for each slab."
+       "text": "It depends on the slab and category. An unprotected home using 300 units pays Rs 33.10 per unit on every unit; lower slabs pay less and the top slab pays the most. Protected and lifeline consumers pay far lower rates. The reference table above lists the rate for each slab."
       }
      },
      {

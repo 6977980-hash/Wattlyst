@@ -3,15 +3,26 @@
  "type": "tool",
  "silo": "E",
  "url": "/load/unit-calculator/",
- "h1": "Unit Calculator Electricity",
+ "h1": "Unit Calculator for Electricity",
  "title": "Electricity Unit Calculator (Watts to Units) | Wattlyst",
  "meta": "Convert watts or amps and hours into electricity units (kWh), where 1 unit = 1 kWh. Find daily and monthly units and cost for any appliance.",
  "primary_keyword": "unit calculator electricity",
  "wave": 2,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-13",
+ "published": "2026-10-13",
  "author": "ali-ahmad",
+ "related": [
+  "E2",
+  "E5",
+  "F1",
+  "B4",
+  "N5",
+  "N4"
+ ],
+ "next": "F1",
  "parent": "P-E",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
@@ -22,11 +33,314 @@
    "url": "/load/"
   },
   {
-   "name": "Unit Calculator Electricity",
+   "name": "Unit Calculator for Electricity",
    "url": "/load/unit-calculator/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "How many units in 1 kWh?",
+    "p": [
+     "Exactly one. The unit on a Pakistani electricity bill, and on most bills worldwide, is the kilowatt hour: one thousand watts used for one hour. A 1,000 W appliance running for one hour, an 80 W fan running for about twelve and a half hours, and a ten-watt LED bulb running for a hundred hours all use one unit. The meter counts these units and the bill multiplies them by the rate of your slab.",
+     "So 1 unit in watts is not a fixed number of watts; it is watts times hours. Watts say how fast an appliance uses electricity, units say how much it has used. That is why a 1,000 W AC for 8 hours a day (240 units a month) costs far more than a 1,000 W iron for one hour a day, even though the watts are the same."
+    ]
+   },
+   {
+    "h2": "How to calculate electricity units from watts",
+    "p": [
+     "Take the watts from the appliance label, multiply by the hours it runs in a day, and divide by one thousand. That is the units a day; multiply by the days in the month for the monthly figure. An 80 W ceiling fan for 10 hours a day is 24 units over 30 days.",
+     "Use the real running hours, not the hours the appliance is switched on. A fridge compressor runs about a third of the time, and an inverter AC draws far less than its rated watts for most of the hour; the appliance load calculator and the AC units calculator use planning averages for those."
+    ]
+   },
+   {
+    "h2": "Amps to kWh: units from a current reading",
+    "p": [
+     "Some labels give amps instead of watts, and a clamp meter always reads amps. Switch to Amps mode: the calculator first converts to watts with volts × amps × power factor, then applies the same hours and days. At 230 V and a 0.8 power factor, 5 A is 920 W, which over 4 hours a day comes to 110.4 units in 30 days.",
+     "Set the power factor to one for a heater, iron or geyser and about 0.8 for a motor, fan or compressor. For a three-phase motor the volts are the line-to-line 400 V and the calculator multiplies by the square root of three."
+    ]
+   },
+   {
+    "h2": "Amp hours to units: battery energy in kWh",
+    "p": [
+     "A battery is labelled in amp hours. Multiply the Ah by the battery volts and divide by one thousand to get the kWh it stores: a 200 Ah, 12 V battery holds 2.4 units. Only part of that is usable: about half for a tubular battery, so the battery capacity calculator sizes a bank from the appliance watts, not from the raw kWh.",
+     "The same rule covers a DC load in Amps mode with the supply set to DC: 10 A from a 12 V battery is 120 W, or 0.6 units over 5 hours, with no power factor."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "How many units is 1 kWh?",
+    "a": "One. A unit on the bill is a kilowatt hour: 1,000 W used for one hour. A thousand-watt heater uses one unit an hour; a hundred-watt load takes ten hours to use one unit."
+   },
+   {
+    "q": "What is 1 unit in watts?",
+    "a": "There is no fixed answer because a unit is watts × hours. One unit is 1,000 W for one hour, 80 W for about twelve and a half hours, or a ten-watt bulb for a hundred hours."
+   },
+   {
+    "q": "How do I calculate electricity units per day?",
+    "a": "Watts × hours a day ÷ 1,000. An 80 W fan for 10 hours is 80 × 10 ÷ 1,000, under one unit a day and 24 units a month."
+   },
+   {
+    "q": "How do I convert amps to kWh?",
+    "a": "Multiply amps by volts and power factor to get watts, then by hours and divide by 1,000. 5 A at 230 V and 0.8 power factor is 920 W, or 110.4 units over 30 days at 4 hours a day."
+   },
+   {
+    "q": "How many units does a 1.5 ton AC use per hour?",
+    "a": "About one unit an hour for an inverter AC at its average draw of about 1,000 W, and more in a hot room or at full speed. The AC units calculator gives the figure for each AC type and set point."
+   },
+   {
+    "q": "How many units does a 200 Ah battery hold?",
+    "a": "200 Ah × 12 V ÷ 1,000 = 2.4 units. Only about half of that is usable on a tubular battery, and the UPS loses some more as heat; the battery backup time calculator gives the real hours."
+   },
+   {
+    "q": "Does using more units raise my sanctioned load?",
+    "a": "No. Units are energy over the month; the sanctioned load is the kW your connection may draw at any moment. The sanctioned load calculator works that out from your appliances."
+   },
+   {
+    "q": "How much does one unit cost?",
+    "a": "It depends on your slab and DISCO. Take the units from this page to the electricity bill calculator, which applies the current tariff, fixed charges and taxes."
+   }
+  ],
+  "key_facts": [
+   "One electricity unit = one kilowatt hour (kWh) = 1,000 watts used for one hour; a 1,000 W appliance uses one unit every hour it runs, and a hundred-watt bulb takes ten hours to use one unit.",
+   "Units = watts × hours ÷ 1,000: an 80 W fan for 10 hours a day uses 24 units in 30 days.",
+   "Units from amps = volts × amps × power factor × hours ÷ 1,000: an appliance drawing 5 A at 230 V with a 0.8 power factor is 920 W and uses 110.4 units in 30 days at 4 hours a day.",
+   "On DC the power factor is one: 10 A from a 12 V battery is 120 W, which is 0.6 units over 5 hours."
+  ],
+  "mistakes": [
+   "Mixing up watts and units. Watts are a rate; units are watts × hours ÷ 1,000. A 1,000 W appliance does not use 1,000 units.",
+   "Using the hours an appliance is switched on instead of the hours it draws power. A fridge or AC compressor cycles; count the running hours.",
+   "Forgetting the power factor in Amps mode. Volts × amps gives VA; a motor's watts are about 0.8 of that. For DC there is no power factor.",
+   "Reading the AC's rated watts as its average. A 1.5 ton inverter AC is rated at about 1,450 W but averages about 1,000 W over an hour."
+  ],
+  "sources": [
+   {
+    "label": "NEPRA tariff decision, A-1 domestic (units billed as kWh)",
+    "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf"
+   },
+   {
+    "label": "Wattlyst methodology and default values",
+    "url": "/methodology/"
+   }
+  ],
+  "tool": {
+   "calc": "units",
+   "module": "conversions.js",
+   "data_keys": [],
+   "appliances": {},
+   "fields": [
+    {
+     "name": "input",
+     "label": "What is on the label?",
+     "type": "select",
+     "default": "watts",
+     "options": [
+      [
+       "watts",
+       "Watts (W)"
+      ],
+      [
+       "amps",
+       "Amps (A), from the label or a clamp meter"
+      ]
+     ],
+     "hint": "Pick Amps if the appliance only shows amps or you measured the current; the watts are then worked out from volts × amps × power factor."
+    },
+    {
+     "name": "watts",
+     "label": "Appliance power",
+     "unit": "W",
+     "default": 1000,
+     "hint": "From the rating label. Used in Watts mode. 1,000 W for one hour is exactly one unit."
+    },
+    {
+     "name": "amps",
+     "label": "Current",
+     "unit": "A",
+     "default": 5,
+     "hint": "Used in Amps mode only. From the label or a clamp meter reading."
+    },
+    {
+     "name": "hours",
+     "label": "Hours a day",
+     "unit": "h",
+     "default": 1,
+     "hint": "How long it runs each day. For a fridge or AC use the hours the compressor actually runs."
+    },
+    {
+     "name": "days",
+     "label": "Days",
+     "unit": "days",
+     "default": 30,
+     "hint": "Enter 1 for units a day, 30 for a month."
+    },
+    {
+     "name": "mode",
+     "label": "Supply type (Amps mode)",
+     "type": "select",
+     "default": "ac1",
+     "advanced": true,
+     "options": [
+      [
+       "ac1",
+       "AC single phase"
+      ],
+      [
+       "ac3",
+       "AC three phase"
+      ],
+      [
+       "dc",
+       "DC (battery, solar panel)"
+      ]
+     ],
+     "hint": "Used in Amps mode. DC has no power factor; three phase multiplies by the square root of three."
+    },
+    {
+     "name": "volts",
+     "label": "Voltage (Amps mode)",
+     "unit": "V",
+     "default": 230,
+     "advanced": true,
+     "hint": "230 V in Pakistan, 120 V in the US, 400 V line-to-line for three phase, 12 or 24 V for a battery."
+    },
+    {
+     "name": "pf",
+     "label": "Power factor (Amps mode, AC only)",
+     "unit": "0 to 1",
+     "default": 0.8,
+     "advanced": true,
+     "hint": "Motors and fans about 0.8, heaters and irons 1.0. Ignored for DC."
+    },
+    {
+     "name": "tariff",
+     "label": "Tariff",
+     "unit": "Rs per unit",
+     "default": 36.46,
+     "advanced": true,
+     "hint": "Your per-unit rate from the bill; the pre-filled rate is the unprotected slab for three to four hundred units."
+    }
+   ],
+   "fixed_inputs": {},
+   "outputs": [
+    {
+     "key": "units",
+     "label": "Electricity units (kWh)",
+     "spec": "2",
+     "unit": "units",
+     "label_ur": "Bijli ke units (kWh)",
+     "value": "30"
+    },
+    {
+     "key": "watts",
+     "label": "Power",
+     "spec": "int",
+     "unit": "W",
+     "label_ur": "Power",
+     "value": "1,000"
+    },
+    {
+     "key": "rs",
+     "label": "Cost",
+     "spec": "rs",
+     "label_ur": "Kharcha",
+     "value": "Rs 1,094"
+    }
+   ],
+   "how": {
+    "tpl": "{{out.watts|int}} W × {{out.hours|2}} h a day × {{out.days|int}} days ÷ 1,000 = {{out.units|2}} units (kWh). In Amps mode the watts come first from volts × amps × power factor (× the square root of three for three phase), then the same step.",
+    "text": "1,000 W × 1 h a day × 30 days ÷ 1,000 = 30 units (kWh). In Amps mode the watts come first from volts × amps × power factor (× the square root of three for three phase), then the same step."
+   },
+   "submit": "Calculate",
+   "notice": "",
+   "data_checked": []
+  },
+  "examples": [
+   {
+    "title": "Ceiling fan: 80 W for 10 hours a day",
+    "text": "80 W × 10 h × 30 days ÷ 1,000 = 24 units a month. One fan running most of the day is about one unit a day."
+   },
+   {
+    "title": "Amps mode: a 5 A appliance at 230 V",
+    "text": "230 V × 5 A × 0.8 power factor = 920 W. 920 W × 4 h × 30 days ÷ 1,000 = 110.4 units a month."
+   },
+   {
+    "title": "DC load: 10 A from a 12 V battery",
+    "text": "DC has no power factor, so 12 V × 10 A = 120 W. Over 5 hours that is 0.6 units, which is what the battery must supply."
+   },
+   {
+    "title": "Inverter AC at its 1,000 W average for 8 hours a day",
+    "text": "1,000 W × 8 h × 30 days ÷ 1,000 = 240 units a month at an average draw of about one kilowatt. Rated watts would overstate this; the AC units calculator explains the average."
+   },
+   {
+    "title": "Amp hours: a 200 Ah, 12 V battery",
+    "text": "200 Ah × 12 V ÷ 1,000 = 2.4 units of stored energy. About half is usable on a tubular battery and about ninety percent on lithium."
+   }
+  ],
+  "table": {
+   "caption": "Units a month for common appliance wattages at typical daily hours (30 days)",
+   "head": [
+    "Power",
+    "Hours a day",
+    "Units a month"
+   ],
+   "rows": [
+    [
+     "12 W",
+     "6 h",
+     "2.2"
+    ],
+    [
+     "80 W",
+     "12 h",
+     "28.8"
+    ],
+    [
+     "150 W",
+     "8 h",
+     "36"
+    ],
+    [
+     "500 W",
+     "2 h",
+     "30"
+    ],
+    [
+     "1,000 W",
+     "1 h",
+     "30"
+    ],
+    [
+     "1,000 W",
+     "8 h",
+     "240"
+    ],
+    [
+     "2,000 W",
+     "2 h",
+     "120"
+    ],
+    [
+     "3,000 W",
+     "1 h",
+     "90"
+    ]
+   ]
+  },
+  "answer": "One electricity unit is one kilowatt hour (kWh): a 1,000 W appliance running for one hour uses exactly one unit, so 1 hour a day for 30 days is 30 units. Units = watts × hours ÷ 1,000, or from amps: volts × amps × power factor × hours ÷ 1,000. Enter your appliance's watts or amps and hours to get its units.",
+  "formula": {
+   "text": "units (kWh) = W × h × days ÷ 1000; W = V × A × PF (DC: PF = 1; three phase: × √3)",
+   "lines": [
+    "W = power in watts, h = hours a day, days = number of days",
+    "V = supply voltage, A = current in amps, PF = power factor",
+    "1 unit = 1 kWh = 1,000 Wh",
+    "From amp hours: units = Ah × V ÷ 1000"
+   ]
+  },
+  "safety": "A clamp meter is clipped round one live conductor only, never round the whole cable; if you are not sure, ask a licensed electrician to take the reading."
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -49,7 +363,7 @@
      {
       "@type": "ListItem",
       "position": 3,
-      "name": "Unit Calculator Electricity",
+      "name": "Unit Calculator for Electricity",
       "item": "https://wattlyst.com/load/unit-calculator/"
      }
     ]
@@ -66,12 +380,14 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/load/unit-calculator/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-13",
+    "lastReviewed": "2026-10-13"
    },
    {
     "@type": "WebApplication",
     "@id": "https://wattlyst.com/load/unit-calculator/#app",
-    "name": "Unit Calculator Electricity",
+    "name": "Unit Calculator for Electricity",
     "url": "https://wattlyst.com/load/unit-calculator/",
     "description": "Convert watts or amps and hours into electricity units (kWh), where 1 unit = 1 kWh. Find daily and monthly units and cost for any appliance.",
     "applicationCategory": "UtilitiesApplication",
@@ -98,6 +414,76 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/load/unit-calculator/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "How many units is 1 kWh?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "One. A unit on the bill is a kilowatt hour: 1,000 W used for one hour. A thousand-watt heater uses one unit an hour; a hundred-watt load takes ten hours to use one unit."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What is 1 unit in watts?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "There is no fixed answer because a unit is watts × hours. One unit is 1,000 W for one hour, 80 W for about twelve and a half hours, or a ten-watt bulb for a hundred hours."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How do I calculate electricity units per day?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Watts × hours a day ÷ 1,000. An 80 W fan for 10 hours is 80 × 10 ÷ 1,000, under one unit a day and 24 units a month."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How do I convert amps to kWh?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Multiply amps by volts and power factor to get watts, then by hours and divide by 1,000. 5 A at 230 V and 0.8 power factor is 920 W, or 110.4 units over 30 days at 4 hours a day."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many units does a 1.5 ton AC use per hour?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "About one unit an hour for an inverter AC at its average draw of about 1,000 W, and more in a hot room or at full speed. The AC units calculator gives the figure for each AC type and set point."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many units does a 200 Ah battery hold?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "200 Ah × 12 V ÷ 1,000 = 2.4 units. Only about half of that is usable on a tubular battery, and the UPS loses some more as heat; the battery backup time calculator gives the real hours."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Does using more units raise my sanctioned load?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "No. Units are energy over the month; the sanctioned load is the kW your connection may draw at any moment. The sanctioned load calculator works that out from your appliances."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How much does one unit cost?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "It depends on your slab and DISCO. Take the units from this page to the electricity bill calculator, which applies the current tariff, fixed charges and taxes."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

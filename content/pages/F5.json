@@ -1,0 +1,305 @@
+{
+ "id": "F5",
+ "status": "publish",
+ "template": "tool",
+ "h1": "GEPCO Bill Calculator",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "calc": "bill_total",
+ "fields": [
+  {
+   "name": "units",
+   "label": "Units on the GEPCO bill",
+   "unit": "units",
+   "default": 250,
+   "hint": "Units (kWh) for the month: the difference between this and last month's meter readings, or the units line on the bill."
+  },
+  {
+   "name": "sanctioned_kw",
+   "label": "Sanctioned load",
+   "unit": "kW",
+   "default": "@default_sanctioned_kw",
+   "hint": "The kW printed in the connection details of the GEPCO bill. It sets the fixed charge; 5 kW and above is billed on ToU rates instead."
+  },
+  {
+   "name": "protected",
+   "label": "Protected consumer",
+   "type": "checkbox",
+   "default": false,
+   "hint": "Tick only if the bill prints the protected category; it needs six months in a row under the limit."
+  },
+  {
+   "name": "lifeline",
+   "label": "Lifeline consumer (up to one hundred units)",
+   "type": "checkbox",
+   "default": false,
+   "advanced": true,
+   "hint": "Only for very small consumers whose bill shows the lifeline category."
+  },
+  {
+   "name": "period",
+   "label": "Billing quarter for QTA",
+   "type": "select",
+   "options_from": "qta_periods",
+   "default": "2026-09..2026-11",
+   "advanced": true,
+   "hint": "The quarterly tariff adjustment depends on the quarter the bill falls in."
+  },
+  {
+   "name": "fc_surcharge_per_unit",
+   "label": "FC surcharge",
+   "unit": "Rs per unit",
+   "default": "@data.tariff.addons_secondary.fc_surcharge_per_unit.value",
+   "advanced": true,
+   "hint": "Financing cost surcharge per unit, from the bill. Secondary-source default."
+  },
+  {
+   "name": "fpa_per_unit",
+   "label": "FPA",
+   "unit": "Rs per unit",
+   "placeholder": "From your bill (FPA / FCA)",
+   "advanced": true,
+   "hint": "Monthly fuel price adjustment printed on the GEPCO bill, positive or negative. Leave blank if unknown."
+  },
+  {
+   "name": "gst_pct",
+   "label": "GST",
+   "unit": "%",
+   "default": "@data.tariff.addons_secondary.gst_pct.value",
+   "advanced": true,
+   "hint": "Sales tax applied to the bill subtotal."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "total_rs",
+   "label": "Estimated bill",
+   "spec": "rs"
+  },
+  {
+   "key": "energy_rs",
+   "label": "Energy charge",
+   "spec": "rs"
+  },
+  {
+   "key": "fixed_rs",
+   "label": "Fixed charge",
+   "spec": "rs"
+  },
+  {
+   "key": "fc_rs",
+   "label": "FC surcharge",
+   "spec": "rs"
+  },
+  {
+   "key": "qta_rs",
+   "label": "QTA",
+   "spec": "rs"
+  },
+  {
+   "key": "gst_rs",
+   "label": "GST",
+   "spec": "rs"
+  }
+ ],
+ "answer": "A GEPCO home in Gujranwala, Sialkot or Gujrat using {{in.units|int}} units in a month as an unprotected consumer on a {{in.sanctioned_kw|int}} kW connection pays about {{out.total_rs|rs}}: {{out.energy_rs|rs}} energy charge at {{out.rate|rs2}} per unit, plus fixed charge, FC surcharge, QTA and GST, before the month's FPA. GEPCO bill = units × slab rate + fixed charge + surcharges, then GST on the subtotal.",
+ "how": "{{out.units|int}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw|int}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct|int}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
+ "key_facts": [
+  "GEPCO, the Gujranwala Electric Power Company, supplies Gujranwala, Gujrat, Sialkot, Narowal, Hafizabad, Mandi Bahauddin and Wazirabad from its head office in Gujranwala and bills the uniform NEPRA A-1 domestic tariff for 2026, not a tariff of its own.",
+  "An unprotected GEPCO consumer using {{out.units|int}} units pays {{out.rate|rs2}} on every unit, which is {{out.energy_rs|rs}} of energy charge before the fixed charge, FC surcharge, QTA and GST.",
+  "Crossing a slab costs more than the extra units: {{ex.0.out.units|int}} protected units cost about {{ex.0.out.total_rs|rs}}, while {{ex.1.out.units|int}} unprotected units, only a few more, cost about {{ex.1.out.total_rs|rs}} because the whole month moves to the unprotected rate of {{ex.1.out.rate|rs2}}.",
+  "Protection on GEPCO needs every one of the last {{d.protected_months|int}} bills at or under {{d.protected_max_units|int}} units on a connection below {{d.tou_threshold_kw|int}} kW; a single bill over the limit ends it for the next {{d.protected_months|int}} months.",
+  "GST at {{out.gst_pct|int}}% is charged on the energy charge, fixed charge and surcharges together and adds {{out.gst_rs|rs}} to a {{out.units|int}} unit GEPCO bill; the surcharge and GST defaults are secondary-source figures that change."
+ ],
+ "formula": {
+  "text": "Bill = units × slab rate + fixed Rs/kW × sanctioned kW + (FC + QTA + FPA) × units, then + GST",
+  "lines": [
+   "slab rate = rate of the band the month's units reach (unprotected) or slab-wise (protected)",
+   "fixed = Rs per kW of the band reached × sanctioned kW",
+   "FC, QTA, FPA = per-unit surcharges printed on the GEPCO bill",
+   "GST = percentage of the subtotal"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "What is the GEPCO per unit rate?",
+   "p": [
+    "GEPCO bills the uniform A-1 domestic tariff that NEPRA determined and the Government notified for 2026; the company sets none of the rates itself. An unprotected home in Gujranwala, Sialkot, Gujrat, Narowal, Hafizabad, Mandi Bahauddin or Wazirabad pays the rate of the slab its monthly units reach on every unit: {{out.units|int}} units are all billed at {{out.rate|rs2}}. Protected consumers pay two low rates slab by slab, and lifeline consumers less again.",
+    "The table below is built around the slab edges, so you can see what one unit over a boundary does to the bill. The worked examples follow one home through a protected month, the month it loses protection, a normal month and a month further up the slabs."
+   ]
+  },
+  {
+   "h2": "GEPCO tariff: what one unit over a slab costs",
+   "p": [
+    "Unprotected domestic slabs are a hundred units wide, and the rate of the slab reached applies to every unit of the month, not just the units above the line. So a month of {{ex.1.out.units|int}} units is billed at {{ex.1.out.rate|rs2}} on all of them and costs {{ex.1.out.total_rs|rs}}, while a protected month of {{ex.0.out.units|int}} units costs {{ex.0.out.total_rs|rs}}. The gap between those two bills is the price of a few units of extra use at the wrong time.",
+    "The same thing happens at every edge further up: in the table, compare the row just under a boundary with the row just over it. If a month looks like it will land a few units into the next slab, moving a wash, an iron session or a pump run to after the reading date keeps the whole month in the lower slab."
+   ]
+  },
+  {
+   "h2": "How do I read my GEPCO bill before estimating it?",
+   "p": [
+    "Three printed items feed this calculator. The units are the difference between the current and previous meter readings shown on the bill. The sanctioned load, in kW, is in the connection details and sets the fixed charge. The category line shows whether the bill was worked out as protected, unprotected or lifeline. The FPA, the fuel price adjustment for the month, is a per-unit line that changes monthly; copy it into the advanced field for the exact figure.",
+    "Also check the reading dates. A cycle longer than a month carries more units than a normal month and can push you over a slab edge; the bill audit tool linked below works out the thirty-day equivalent and whether the slab was fair."
+   ]
+  },
+  {
+   "h2": "GEPCO bill estimate vs the official bill check",
+   "p": [
+    "This GEPCO bill estimate works from the figures you type and does not fetch your account. The official bill, with the reference number, due date, arrears and the exact FPA, is on the GEPCO website, which links the duplicate bill on the PITC portal; enter the reference number from the top of an earlier bill, digits only, without the spaces printed between groups.",
+    "Use the estimate to understand what each printed line should be, to plan the next month, or to see whether a bill that looks high is explained by the slab it reached."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "units": 190,
+    "protected": true
+   },
+   "title": "{{in.units|int}} units, protected consumer just under the limit",
+   "text": "Energy charge {{out.energy_rs|rs}} slab-wise at the two protected rates, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated GEPCO bill {{out.total_rs|rs}} before FPA."
+  },
+  {
+   "inputs": {
+    "units": 210
+   },
+   "title": "{{in.units|int}} units, the month that ends protection",
+   "text": "A few units over the limit and the whole month is unprotected: {{out.units|int}} × {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated GEPCO bill {{out.total_rs|rs}} before FPA, and the next bills stay unprotected too."
+  },
+  {
+   "inputs": {
+    "units": 250
+   },
+   "title": "{{in.units|int}} units, unprotected, a typical month without an AC",
+   "text": "{{out.units|int}} × {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated GEPCO bill {{out.total_rs|rs}} before FPA."
+  },
+  {
+   "inputs": {
+    "units": 420,
+    "sanctioned_kw": 2
+   },
+   "title": "{{in.units|int}} units, summer with an AC on a {{in.sanctioned_kw|int}} kW connection",
+   "text": "{{out.units|int}} × {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated GEPCO bill {{out.total_rs|rs}} before FPA."
+  }
+ ],
+ "table": {
+  "caption": "Estimated GEPCO bill at the slab edges on a {{in.sanctioned_kw|int}} kW connection with the default surcharges and GST, before FPA; unprotected unless marked",
+  "rows": [
+   {
+    "units": 100
+   },
+   {
+    "units": 200,
+    "protected": true
+   },
+   {
+    "units": 200
+   },
+   {
+    "units": 201
+   },
+   {
+    "units": 300
+   },
+   {
+    "units": 301
+   },
+   {
+    "units": 400
+   },
+   {
+    "units": 401
+   }
+  ],
+  "columns": [
+   {
+    "label": "Units",
+    "tpl": "{{out.units|int}} ({{out.category}})"
+   },
+   {
+    "label": "Per unit rate",
+    "tpl": "{{out.rate|rs2}}"
+   },
+   {
+    "label": "Energy",
+    "tpl": "{{out.energy_rs|rs}}"
+   },
+   {
+    "label": "Fixed",
+    "tpl": "{{out.fixed_rs|rs}}"
+   },
+   {
+    "label": "Estimated bill",
+    "tpl": "{{out.total_rs|rs}}"
+   }
+  ]
+ },
+ "mistakes": [
+  "Looking for a GEPCO tariff of its own. GEPCO bills the uniform NEPRA domestic slabs; only the monthly FPA is specific to the month.",
+  "Thinking only the units above a slab line are charged at the higher rate. For unprotected homes the rate of the slab reached applies to every unit of the month.",
+  "Ticking protected because the bill was low this month. Protection needs all of the last {{d.protected_months|int}} bills at or under {{d.protected_max_units|int}} units, and one month over ends it.",
+  "Ignoring the reading dates. A long cycle carries extra units that can cross a slab edge; check the thirty-day equivalent before assuming the meter is wrong."
+ ],
+ "faq": [
+  {
+   "q": "How do I get a GEPCO bill estimate from my units?",
+   "a": "Enter the units and the sanctioned load from the bill, tick protected only if the bill prints that category, and add the FPA from the bill under advanced settings. For {{out.units|int}} units the estimate is {{out.total_rs|rs}} before FPA."
+  },
+  {
+   "q": "What is the GEPCO per unit rate for a home?",
+   "a": "The uniform NEPRA domestic slab rate for the slab the month reaches: {{out.rate|rs2}} per unit for an unprotected home using {{out.units|int}} units. The table above gives the rate on each side of every slab edge; protected and lifeline consumers pay less."
+  },
+  {
+   "q": "Is the GEPCO tariff different from LESCO or IESCO?",
+   "a": "No. The 2026 tariff notified as SRO 279(I)/2026 is uniform for all ex-WAPDA DISCOs and K-Electric. For the same units a GEPCO bill differs from a LESCO bill only by the month's FPA."
+  },
+  {
+   "q": "Which districts does GEPCO cover?",
+   "a": "Gujranwala, Gujrat, Sialkot, Narowal, Hafizabad, Mandi Bahauddin and Wazirabad, from its head office in Gujranwala. If your bill carries another company's name, use that company's calculator instead."
+  },
+  {
+   "q": "How do I check my GEPCO bill online?",
+   "a": "The GEPCO website links a duplicate bill page on the PITC portal; enter the reference number printed at the top of an earlier bill, digits only, to see the current bill and due date. This calculator estimates the bill from units; it does not fetch your account."
+  },
+  {
+   "q": "What happens when a GEPCO bill goes one unit over the slab?",
+   "a": "Every unit of the month is billed at the higher slab's rate, and the fixed charge per kW also steps up. In the table, compare the rows just under and just over each hundred-unit line to see the jump."
+  },
+  {
+   "q": "Why does my GEPCO bill differ from this estimate?",
+   "a": "The estimate leaves out the FPA unless you enter it, and it cannot see arrears, late payment surcharge or meter rent. If the reading dates cover more than a month, the units may have crossed a slab because of the long cycle; run the bill audit tool."
+  }
+ ],
+ "related": [
+  "F6",
+  "F4",
+  "F1",
+  "F2",
+  "E5"
+ ],
+ "next": "N1",
+ "literal_numbers": [
+  "SRO 279(I)/2026",
+  "2026",
+  "A-1"
+ ],
+ "sources": [
+  {
+   "label": "NEPRA tariff decision and SRO for A-1 domestic consumers (tariff PDF)",
+   "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf"
+  },
+  {
+   "label": "GEPCO official website (bill and consumer services)",
+   "url": "https://www.gepco.com.pk/"
+  },
+  {
+   "label": "GEPCO application for power supply licence, NEPRA (districts served)",
+   "url": "https://www.nepra.org.pk/Admission%20Notices/2023/04%20Apr/Application%20filed%20by%20GEPCO%20for%20Power%20Supply%20Licence.PDF"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

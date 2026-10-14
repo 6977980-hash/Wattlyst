@@ -1,0 +1,257 @@
+{
+ "id": "N4",
+ "status": "publish",
+ "template": "tool",
+ "h1": "Sanctioned Load Calculator",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "calc": "sanctioned_load",
+ "fields": [
+  {
+   "name": "connected_kw",
+   "label": "Connected load",
+   "unit": "kW",
+   "default": 6,
+   "hint": "Add the running watts of every appliance wired in the house and divide by 1,000. The home electrical load calculator totals them for you; a home with two inverter ACs, fans, lights, a fridge, an iron and a water pump is about 6 kW."
+  },
+  {
+   "name": "diversity",
+   "label": "Diversity factor",
+   "unit": "0 to 1",
+   "default": "@diversity_home",
+   "advanced": true,
+   "hint": "The share of the connected load that is on at the same time. 0.6 is a typical planning figure for a home; use 1.0 if everything really runs together."
+  },
+  {
+   "name": "largest_start_kw",
+   "label": "Largest motor starting surge",
+   "unit": "kW",
+   "placeholder": "Optional",
+   "advanced": true,
+   "hint": "Starting kW of your biggest non-inverter AC or pump, if you want it noted. It lasts seconds and does not change the sanctioned load."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "recommended_kw",
+   "label": "Sanctioned load to apply for",
+   "spec": "int",
+   "unit": "kW"
+  },
+  {
+   "key": "demand_kw",
+   "label": "Expected maximum demand",
+   "spec": "1",
+   "unit": "kW"
+  },
+  {
+   "key": "net_billing_cap_kw",
+   "label": "Largest solar system under net billing",
+   "spec": "int",
+   "unit": "kW"
+  }
+ ],
+ "answer": "A home with {{out.connected_kw|1}} kW of connected load needs a sanctioned load of about {{out.recommended_kw|int}} kW: connected kW × {{out.diversity|1}} diversity factor = {{out.demand_kw|1}} kW of expected demand, rounded up to the next whole kW. Stay below {{d.tou_threshold_kw|int}} kW to keep a normal meter, and note that net billing caps your solar system at the sanctioned kW.",
+ "how": "{{out.connected_kw|1}} kW connected × {{out.diversity|2}} diversity = {{out.demand_kw|2}} kW expected at the same time. Rounded up to a whole kW, and never below {{d.min_sanctioned_kw|int}} kW: {{out.recommended_kw|int}} kW. A connection of {{d.tou_threshold_kw|int}} kW or more must have a time-of-use meter and loses protected-slab eligibility. Under net billing the largest solar system you may connect equals the sanctioned load, {{out.net_billing_cap_kw|int}} kW here. A motor's starting surge lasts seconds and does not raise the sanctioned load; it matters for inverter and generator sizing.",
+ "key_facts": [
+  "Sanctioned load (kW) = connected load × diversity factor, rounded up to the next whole kW; with the planning diversity of {{d.diversity_home|1}}, a {{out.connected_kw|1}} kW home needs {{out.recommended_kw|int}} kW and a {{ex.2.out.connected_kw|1}} kW home with two inverter ACs needs {{ex.2.out.recommended_kw|int}} kW.",
+  "A domestic connection with a sanctioned load of {{d.tou_threshold_kw|int}} kW or more must be on a time-of-use (ToU) meter with peak and off-peak rates, and is not eligible for the protected slabs.",
+  "The fixed charge on the bill is charged per kW of sanctioned load every month, so applying for more kW than you need costs money every month even when nothing runs.",
+  "Under NEPRA's net-billing rules the solar system you may connect is capped at your sanctioned load: a {{out.recommended_kw|int}} kW connection allows at most a {{out.net_billing_cap_kw|int}} kW solar system, so size the connection before you size the panels."
+ ],
+ "formula": {
+  "text": "demand kW = connected kW × diversity; sanctioned kW = max(1, ceil(demand kW))",
+  "lines": [
+   "connected kW = sum of the rated watts of every appliance wired in the house ÷ 1,000",
+   "diversity = share expected to run at the same time (home planning default 0.6)",
+   "ceil = round up to the next whole kW; the minimum domestic sanctioned load is 1 kW",
+   "ToU meter required at 5 kW or more; net-billing cap = sanctioned kW",
+   "A motor's starting surge lasts seconds and does not change the sanctioned load"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "How much sanctioned load do I need?",
+   "p": [
+    "Enough to cover the load that really runs at the same time, with a little room for the next appliance. The calculator takes the connected load, everything wired in the house, and applies a diversity factor, because the iron, the pump, the microwave and the geyser are not all on at once. For the default {{out.connected_kw|1}} kW home that gives {{out.demand_kw|1}} kW of demand and a sanctioned load of {{out.recommended_kw|int}} kW.",
+    "If your bill already shows a sanctioned load, compare it with this result. A connection that is too small trips the meter breaker on hot evenings; one that is too big pays a higher fixed charge every month. The small home in the first example needs only {{ex.0.out.recommended_kw|int}} kW, the one-AC home {{ex.1.out.recommended_kw|int}} kW."
+   ]
+  },
+  {
+   "h2": "Sanctioned load for 2 AC: the usual case",
+   "p": [
+    "Two 1.5 ton inverter ACs with fans, lights, a fridge, a TV, an iron and a water pump add up to about {{ex.2.out.connected_kw|1}} kW of connected load. At the planning diversity of {{ex.2.out.diversity|1}} that is {{ex.2.out.demand_kw|1}} kW of demand, so apply for {{ex.2.out.recommended_kw|int}} kW. Non-inverter ACs of the same size run at higher watts, so the same home with two of those lands a step higher; run the home load calculator with your actual ACs to get the connected kW.",
+    "On summer evenings both ACs run near full input while the fans and lights are on, so do not cut the diversity below the default for an AC home. If you plan a third AC or an electric geyser, add it now: the three-AC home in the examples needs {{ex.3.out.recommended_kw|int}} kW, which already crosses the {{d.tou_threshold_kw|int}} kW line."
+   ]
+  },
+  {
+   "h2": "The 5 kW rule: time-of-use meter and protected slabs",
+   "p": [
+    "NEPRA's domestic tariff puts every connection with a sanctioned load of {{d.tou_threshold_kw|int}} kW or more on a time-of-use meter. Units in the evening peak hours cost more than off-peak units, and the fixed charge is higher. Such a connection also cannot be a protected consumer, whatever its monthly units. Many homes with two or three ACs sit right at this line: the {{ex.3.out.connected_kw|1}} kW home needs {{ex.3.out.recommended_kw|int}} kW and goes to ToU, while the {{ex.2.out.connected_kw|1}} kW home stays at {{ex.2.out.recommended_kw|int}} kW on a normal meter.",
+    "If the result is {{d.tou_threshold_kw|int}} kW or more, check whether it is really needed: inverter ACs instead of non-inverter, a gas or solar geyser instead of an electric one, or simply not running the pump during AC hours can keep the demand under the line. The ToU calculator on the bill pages shows what the peak rate would cost you."
+   ]
+  },
+  {
+   "h2": "Net billing cap: the sanctioned load limits your solar system",
+   "p": [
+    "Under the net-billing regulations a domestic solar system may not be larger than the sanctioned load of the connection. A {{out.recommended_kw|int}} kW connection allows a solar system of up to {{out.net_billing_cap_kw|int}} kW; if the solar calculator says you need more, apply for a higher sanctioned load first, keeping the {{d.tou_threshold_kw|int}} kW rule in mind. The net billing calculator shows what the exported units are worth.",
+    "A higher sanctioned load for solar has a cost: the monthly fixed charge rises with each kW, and at {{d.tou_threshold_kw|int}} kW the meter becomes ToU. Weigh that against the extra solar before applying."
+   ]
+  },
+  {
+   "h2": "Why a motor's starting surge does not count",
+   "p": [
+    "A non-inverter AC or a water pump draws about three times its running watts for a second or two at start. That surge is what trips an undersized UPS or generator, but the DISCO's maximum demand indicator averages over minutes, so it does not register and does not raise the sanctioned load. The calculator notes the surge you enter only as a reminder for inverter and generator sizing.",
+    "In the last example a {{ex.4.out.largest_start_kw|1}} kW compressor start on a {{ex.4.out.connected_kw|1}} kW home still gives a sanctioned load of {{ex.4.out.recommended_kw|int}} kW; the generator pages size for the surge instead."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "connected_kw": 2
+   },
+   "title": "Small home, no AC: {{out.connected_kw|1}} kW connected",
+   "text": "Fans, lights, a fridge, a TV and an iron come to about {{out.connected_kw|1}} kW. × {{out.diversity|1}} = {{out.demand_kw|1}} kW, rounded up to {{out.recommended_kw|int}} kW. Net-billing cap {{out.net_billing_cap_kw|int}} kW."
+  },
+  {
+   "inputs": {
+    "connected_kw": 4.5
+   },
+   "title": "One inverter AC home: {{out.connected_kw|1}} kW connected",
+   "text": "One 1.5 ton inverter AC, fans, lights, a fridge, an iron and a water pump: {{out.connected_kw|1}} kW × {{out.diversity|1}} = {{out.demand_kw|1}} kW, so apply for {{out.recommended_kw|int}} kW. A normal meter, protected slabs still possible."
+  },
+  {
+   "inputs": {
+    "connected_kw": 5.5
+   },
+   "title": "Two inverter ACs: {{out.connected_kw|1}} kW connected",
+   "text": "Two 1.5 ton inverter ACs, fans, lights, a fridge, a TV, an iron and a water pump: {{out.connected_kw|1}} kW × {{out.diversity|1}} = {{out.demand_kw|1}} kW, rounded up to {{out.recommended_kw|int}} kW. Below the {{d.tou_threshold_kw|int}} kW line; solar capped at {{out.net_billing_cap_kw|int}} kW."
+  },
+  {
+   "inputs": {
+    "connected_kw": 10
+   },
+   "title": "Three ACs and an electric geyser: {{out.connected_kw|1}} kW connected",
+   "text": "{{out.connected_kw|1}} kW × {{out.diversity|1}} = {{out.demand_kw|1}} kW, so {{out.recommended_kw|int}} kW. That is above the {{d.tou_threshold_kw|int}} kW threshold: a ToU meter is required and the protected slabs no longer apply. Solar allowed up to {{out.net_billing_cap_kw|int}} kW."
+  },
+  {
+   "inputs": {
+    "connected_kw": 5,
+    "largest_start_kw": 5.4
+   },
+   "title": "Non-inverter AC with a {{out.largest_start_kw|1}} kW starting surge",
+   "text": "{{out.connected_kw|1}} kW × {{out.diversity|1}} = {{out.demand_kw|1}} kW, so {{out.recommended_kw|int}} kW. The {{out.largest_start_kw|1}} kW compressor surge is above the sanctioned load but lasts seconds and is not metered as demand; it matters for the UPS or generator, not the DISCO application."
+  }
+ ],
+ "table": {
+  "caption": "Sanctioned load for a range of connected loads at a {{out.diversity|1}} diversity factor",
+  "rows": [
+   {
+    "connected_kw": 1.5
+   },
+   {
+    "connected_kw": 2
+   },
+   {
+    "connected_kw": 3
+   },
+   {
+    "connected_kw": 4.5
+   },
+   {
+    "connected_kw": 6
+   },
+   {
+    "connected_kw": 8
+   },
+   {
+    "connected_kw": 10
+   },
+   {
+    "connected_kw": 12
+   }
+  ],
+  "columns": [
+   {
+    "label": "Connected load",
+    "tpl": "{{out.connected_kw|1}} kW"
+   },
+   {
+    "label": "Expected demand",
+    "tpl": "{{out.demand_kw|1}} kW"
+   },
+   {
+    "label": "Sanctioned load",
+    "tpl": "{{out.recommended_kw|int}} kW"
+   },
+   {
+    "label": "Solar cap (net billing)",
+    "tpl": "{{out.net_billing_cap_kw|int}} kW"
+   }
+  ]
+ },
+ "mistakes": [
+  "Applying for the connected load itself. Not everything runs together; the diversity factor is what keeps a {{out.connected_kw|1}} kW home at {{out.recommended_kw|int}} kW instead of {{out.connected_kw|int}} kW.",
+  "Forgetting the monthly fixed charge. It is billed per sanctioned kW whether or not you use the power, so extra kW cost every month.",
+  "Crossing {{d.tou_threshold_kw|int}} kW without noticing. At that point the meter must be ToU, evening units cost more and the protected slabs are gone.",
+  "Sizing the solar system first. Net billing caps the system at the sanctioned load, so a {{out.recommended_kw|int}} kW connection cannot take a bigger array until the load is raised.",
+  "Adding the starting surge of a pump or non-inverter AC. It lasts seconds and does not register as demand; size the UPS or generator for it instead."
+ ],
+ "safety": "The sanctioned load is applied for at your DISCO office; the meter breaker, service cable and main MCB must match it, so have a licensed electrician check them before you raise the load or add a large appliance.",
+ "faq": [
+  {
+   "q": "What sanctioned load do I need for a house?",
+   "a": "Connected kW × {{d.diversity_home|1}} diversity, rounded up. A home without AC needs about {{ex.0.out.recommended_kw|int}} kW, one with a single inverter AC about {{ex.1.out.recommended_kw|int}} kW, and one with two inverter ACs about {{ex.2.out.recommended_kw|int}} kW."
+  },
+  {
+   "q": "What sanctioned load is needed for 2 AC?",
+   "a": "About {{ex.2.out.recommended_kw|int}} kW for two 1.5 ton inverter ACs with the usual fans, lights, fridge, iron and pump ({{ex.2.out.connected_kw|1}} kW connected). Two non-inverter ACs push the connected load higher; check your ACs in the home load calculator."
+  },
+  {
+   "q": "What happens at {{d.tou_threshold_kw|int}} kW sanctioned load?",
+   "a": "At {{d.tou_threshold_kw|int}} kW or more the connection must have a time-of-use meter, with a higher rate for evening peak units and a higher fixed charge, and it cannot be a protected consumer."
+  },
+  {
+   "q": "Can I install a solar system bigger than my sanctioned load?",
+   "a": "Not under net billing: the system is capped at the sanctioned kW. A {{out.recommended_kw|int}} kW connection allows up to {{out.net_billing_cap_kw|int}} kW of solar; apply for a higher load first if you need more."
+  },
+  {
+   "q": "Does a higher sanctioned load increase my bill?",
+   "a": "Yes, through the fixed charge, which is billed per sanctioned kW every month, and at {{d.tou_threshold_kw|int}} kW or more through the ToU peak rate. The units themselves are charged the same."
+  },
+  {
+   "q": "What is the difference between connected load and sanctioned load?",
+   "a": "Connected load is everything wired in the house added up; sanctioned load is the kW the DISCO allows you to draw at once. The diversity factor links them: {{out.connected_kw|1}} kW connected becomes {{out.demand_kw|1}} kW expected demand and {{out.recommended_kw|int}} kW sanctioned."
+  },
+  {
+   "q": "Does a non-inverter AC need a higher sanctioned load because of its starting surge?",
+   "a": "No. The surge lasts a second or two and is not registered as demand. It does need a bigger UPS or generator, which the generator for an AC page sizes."
+  }
+ ],
+ "related": [
+  "E1",
+  "E4",
+  "D10",
+  "F1",
+  "E2"
+ ],
+ "next": "F1",
+ "literal_numbers": [
+  "1,000",
+  "1.5 ton",
+  "5 kW rule",
+  "for 2 AC"
+ ],
+ "sources": [
+  {
+   "label": "NEPRA tariff decision 11 Feb 2026, A-1 domestic (ToU at 5 kW and above, fixed charge per kW)",
+   "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}
