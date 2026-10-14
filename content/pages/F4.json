@@ -110,7 +110,8 @@
   "An unprotected MEPCO consumer using {{out.units|int}} units pays {{out.rate|rs2}} on every unit, which is {{out.energy_rs|rs}} of energy charge before the fixed charge, FC surcharge, QTA and GST.",
   "A south Punjab summer month of {{ex.1.out.units|int}} units with one inverter AC costs about {{ex.1.out.total_rs|rs}}, while the same home's protected winter month of {{ex.0.out.units|int}} units costs about {{ex.0.out.total_rs|rs}}.",
   "The FPA on a MEPCO bill is a per-unit figure that changes every month; on {{ex.3.out.units|int}} units the FPA entered in the fourth example adds {{ex.3.out.fpa_rs|rs}} before GST, which is why two months with the same units can total differently.",
-  "A MEPCO protected consumer is one whose last {{d.protected_months|int}} bills were all at or under {{d.protected_max_units|int}} units on a connection below {{d.tou_threshold_kw|int}} kW; the first AC month of summer usually ends that run."
+  "A MEPCO protected consumer is one whose last {{d.protected_months|int}} bills were all at or under {{d.protected_max_units|int}} units on a connection below {{d.tou_threshold_kw|int}} kW; the first AC month of summer usually ends that run.",
+  "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of {{data.tariff.addons_secondary.income_tax_235.rate_pct_non_atl|1}}% on a monthly bill of {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}} or more; consumers on the list pay none."
  ],
  "formula": {
   "text": "Bill = units × slab rate + fixed Rs/kW × sanctioned kW + (FC + QTA + FPA) × units, then + GST",
@@ -268,6 +269,10 @@
   {
    "q": "Why is my MEPCO bill higher than this estimate?",
    "a": "The estimate leaves out the FPA unless you enter it, and it cannot see arrears, late payment surcharge or meter rent. A reading cycle longer than a month can also push the units into a higher slab; the bill audit tool checks that."
+  },
+  {
+   "q": "Why is my real bill higher than this estimate when it is over {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}}?",
+   "a": "A bill of {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}} or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: {{data.tariff.addons_secondary.income_tax_235.rate_pct_non_atl|1}}% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
   }
  ],
  "related": [
@@ -281,7 +286,10 @@
  "literal_numbers": [
   "SRO 279(I)/2026",
   "2026",
-  "A-1"
+  "A-1",
+  "section 235",
+  "Ordinance 2001",
+  "Rs 25,000"
  ],
  "sources": [
   {
@@ -299,6 +307,10 @@
   {
    "label": "Wattlyst methodology and default values",
    "url": "/methodology/"
+  },
+  {
+   "label": "PkRevenue: income tax on domestic electricity bills of Rs 25,000 or more (section 235, FBR withholding rates)",
+   "url": "https://pkrevenue.com/domestic-electricity-consumers-to-pay-tax-on-monthly-bill-above-rs25000/"
   }
  ]
 }

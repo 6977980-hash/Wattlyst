@@ -69,7 +69,8 @@
   "Peak hours change the price only on a time-of-use (ToU) meter, which domestic connections of {{d.tou_threshold_kw|int}} kW sanctioned load or more must have; smaller connections pay the normal slab rate at any hour.",
   "On the A-1 domestic ToU tariff a peak unit costs {{data.tariff.tou.peak|rs2}} and an off-peak unit {{data.tariff.tou.offpeak|rs2}}, so every unit moved out of peak hours saves the difference between the two.",
   "A ToU home using {{out.peak_units|int}} peak and {{out.offpeak_units|int}} off-peak units pays {{out.energy_rs|rs}} in energy charges; with only {{ex.1.in.peak_units|int}} of the same units in peak hours the charge falls to {{ex.1.out.energy_rs|rs}}.",
-  "K-Electric publishes its own peak-hour timings, so Karachi consumers should check K-Electric's schedule rather than the DISCO one."
+  "K-Electric publishes its own peak-hour timings, so Karachi consumers should check K-Electric's schedule rather than the DISCO one.",
+  "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of {{data.tariff.addons_secondary.income_tax_235.rate_pct_non_atl|1}}% on a monthly bill of {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}} or more; consumers on the list pay none."
  ],
  "formula": {
   "text": "ToU energy charge = peak units × peak rate + off-peak units × off-peak rate; fixed charge = fixed rate per kW × max(half the sanctioned load, MDI)",
@@ -238,6 +239,10 @@
   {
    "q": "Are K-Electric peak hours different?",
    "a": "K-Electric publishes its own peak-hour timings, so check its schedule or your Karachi bill rather than the DISCO schedule on this page."
+  },
+  {
+   "q": "Why is my real bill higher than this estimate when it is over {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}}?",
+   "a": "A bill of {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}} or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: {{data.tariff.addons_secondary.income_tax_235.rate_pct_non_atl|1}}% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
   }
  ],
  "related": [
@@ -253,7 +258,10 @@
   "2023",
   "2025",
   "2026",
-  "A-1"
+  "A-1",
+  "section 235",
+  "Ordinance 2001",
+  "Rs 25,000"
  ],
  "sources": [
   {
@@ -271,6 +279,10 @@
   {
    "label": "Wattlyst methodology and default values",
    "url": "/methodology/"
+  },
+  {
+   "label": "PkRevenue: income tax on domestic electricity bills of Rs 25,000 or more (section 235, FBR withholding rates)",
+   "url": "https://pkrevenue.com/domestic-electricity-consumers-to-pay-tax-on-monthly-bill-above-rs25000/"
   }
  ]
 }

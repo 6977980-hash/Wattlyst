@@ -36,6 +36,9 @@ export async function loadInputs() {
   const inverterCodes = readJson('data/inverter-codes.json');
   const data = { defaults: readJson('data/defaults.json'), tariff: readJson('data/tariff-pk-2026.json'), cities, appliances: Object.fromEntries(appliances.items.map((a) => [a.id, a])), cables, solar_prices: solarPrices, generator_fuel: readJson('data/generator-fuel.json'), load_profiles: readJson('data/load-profiles.json').profiles,
     bill_index: readJson('data/bill-index.json'), component_prices: readJson('data/component-prices.json'), solar_price_history: readJson('data/solar-price-history.json') };
+  // One source for the FPA (audit WL-13): the newest NEPRA-verified month of the Bill Index. Pages that pre-fill
+  // an FPA read data.fpa_latest; data/tariff-pk-2026.json keeps no copy.
+  data.fpa_latest = data.bill_index.months.find((m) => m.fpa_verified === true) || null;
   const modules = {};
   for (const m of ENGINE_MODULES) modules[m] = await import(pathToFileURL(join(root, 'engine', `${m}.js`)).href);
   const keywordRows = parseCsv(read('specs/keyword-map.csv'));

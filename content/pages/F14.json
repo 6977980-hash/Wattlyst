@@ -20,8 +20,8 @@
    "name": "fpa_per_unit",
    "label": "FPA rate",
    "unit": "Rs per unit",
-   "default": "@data.tariff.addons_secondary.fpa_per_unit.latest.value",
-   "hint": "From your bill (FPA, FCA or fuel adjustment line). The pre-filled value is NEPRA's adjustment for July 2026 (SRO 1499(I)/2026), charged on later bills; replace it with this month's rate. Negative is allowed."
+   "default": "@data.fpa_latest.fpa_per_unit",
+   "hint": "From your bill (FPA, FCA or fuel adjustment line). The pre-filled value is NEPRA's adjustment for {{data.fpa_latest.fpa_for}}, charged on {{data.fpa_latest.label}} bills; replace it with this month's rate. Negative is allowed."
   },
   {
    "name": "sanctioned_kw",
@@ -103,9 +103,10 @@
  "key_facts": [
   "FPA, the fuel price adjustment (printed as FCA, fuel charges adjustment, on K-Electric and NEPRA documents), is a monthly per-unit figure that NEPRA determines after a public hearing and notifies in the Gazette; the DISCOs apply it to a later month's bills.",
   "The FPA is positive when the actual fuel cost of generation was above the reference cost built into the tariff and negative when it was below: a negative FPA is a credit that lowers the bill.",
-  "FPA line = FPA rate × units: at NEPRA's July 2026 rate, a {{out.units|int}} unit bill carries {{out.fpa_rs|rs}} of FPA, and GST at {{out.gst_pct|int}}% is charged on it as well.",
+  "FPA line = FPA rate × units: at NEPRA's {{data.fpa_latest.fpa_for}} rate, a {{out.units|int}} unit bill carries {{out.fpa_rs|rs}} of FPA, and GST at {{out.gst_pct|int}}% is charged on it as well.",
   "NEPRA's review decision for the March 2026 adjustment (SRO 852(I)/2026) states that the monthly FPA applies to all consumer categories except lifeline consumers, protected consumers, electric vehicle charging stations and prepaid consumers.",
-  "QTA is different: the quarterly tariff adjustment covers capacity and other non-fuel costs over a three-month period; the FPA covers fuel only and changes every month."
+  "QTA is different: the quarterly tariff adjustment covers capacity and other non-fuel costs over a three-month period; the FPA covers fuel only and changes every month.",
+  "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of {{data.tariff.addons_secondary.income_tax_235.rate_pct_non_atl|1}}% on a monthly bill of {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}} or more; consumers on the list pay none."
  ],
  "formula": {
   "text": "FPA line = FPA rate (Rs per unit, notified by NEPRA for the month) × units billed; GST is then charged on the subtotal that includes it",
@@ -121,7 +122,7 @@
    "h2": "What is fuel price adjustment (FPA) on an electricity bill?",
    "p": [
     "Every electricity tariff in Pakistan is built on a reference fuel cost: the price per unit that NEPRA assumed the power plants would pay for gas, coal, furnace oil and imported fuel when it set the tariff. The real cost moves every month with fuel prices, the exchange rate and how much hydro and solar power was available. The fuel price adjustment is the mechanism that passes the difference to consumers, one month at a time, under the NEPRA Act.",
-    "On the bill it appears as a single line, FPA or fuel adjustment, equal to the month's notified rate times the units billed. At the pre-filled July 2026 rate, {{out.units|int}} units carry {{out.fpa_rs|rs}}. GST is charged on the subtotal that includes it, so the real cost of the line is a little higher than the line itself."
+    "On the bill it appears as a single line, FPA or fuel adjustment, equal to the month's notified rate times the units billed. At the pre-filled {{data.fpa_latest.fpa_for}} rate, {{out.units|int}} units carry {{out.fpa_rs|rs}}. GST is charged on the subtotal that includes it, so the real cost of the line is a little higher than the line itself."
    ]
   },
   {
@@ -134,7 +135,7 @@
   {
    "h2": "Positive and negative FPA: what each means for your bill",
    "p": [
-    "A positive FPA is an extra charge. The pre-filled rate on this page is the one NEPRA determined for July 2026, and on {{out.units|int}} units it adds {{out.fpa_rs|rs}} before GST. A negative FPA is a credit of the same shape: NEPRA has in past months notified negative adjustments, and the second example below shows what a small negative rate does to the same bill.",
+    "A positive FPA is an extra charge. The pre-filled rate on this page is the one NEPRA determined for {{data.fpa_latest.fpa_for}}, and on {{out.units|int}} units it adds {{out.fpa_rs|rs}} before GST. A negative FPA is a credit of the same shape: NEPRA has in past months notified negative adjustments, and the second example below shows what a small negative rate does to the same bill.",
     "Either way the effect scales with units. A home on {{ex.2.in.units|int}} units pays or receives more than twice what a home on {{in.units|int}} units does, so the FPA matters most in the months when consumption is already highest."
    ]
   },
@@ -164,7 +165,7 @@
    "inputs": {
     "units": 300
    },
-   "title": "{{in.units|int}} units with the positive July 2026 FPA",
+   "title": "{{in.units|int}} units with the positive {{data.fpa_latest.fpa_for}} FPA",
    "text": "FPA line {{out.fpa_rs|rs}}. Energy charge {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}."
   },
   {
@@ -180,7 +181,7 @@
     "units": 700,
     "sanctioned_kw": 3
    },
-   "title": "{{in.units|int}} units in an AC month at the July 2026 rate",
+   "title": "{{in.units|int}} units in an AC month at the {{data.fpa_latest.fpa_for}} rate",
    "text": "FPA line {{out.fpa_rs|rs}} on top of {{out.energy_rs|rs}} energy charge at {{out.rate|rs2}}; fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}."
   },
   {
@@ -194,7 +195,7 @@
   }
  ],
  "table": {
-  "caption": "FPA line, GST and estimated bill by units at the pre-filled July 2026 FPA rate on a {{in.sanctioned_kw|int}} kW unprotected connection with the default FC surcharge and QTA",
+  "caption": "FPA line, GST and estimated bill by units at the pre-filled {{data.fpa_latest.fpa_for}} FPA rate on a {{in.sanctioned_kw|int}} kW unprotected connection with the default FC surcharge and QTA",
   "rows": [
    {
     "units": 100
@@ -251,7 +252,7 @@
  "faq": [
   {
    "q": "What is the fuel adjustment this month?",
-   "a": "It is whatever NEPRA notified for the month whose fuel is being recovered on your bill. The rate pre-filled on this page is NEPRA's July 2026 adjustment, charged on later bills; check the NEPRA decision linked under sources and the FPA line on your own bill, and replace the rate here."
+   "a": "It is whatever NEPRA notified for the month whose fuel is being recovered on your bill. The rate pre-filled on this page is NEPRA's {{data.fpa_latest.fpa_for}} adjustment, charged on later bills; check the NEPRA decision linked under sources and the FPA line on your own bill, and replace the rate here."
   },
   {
    "q": "How do I calculate FPA charges on my bill?",
@@ -276,6 +277,10 @@
   {
    "q": "Why is my bill high this month because of FPA?",
    "a": "A positive FPA is charged on every unit, so a high-use month with a large adjustment can add thousands of rupees: on {{ex.2.in.units|int}} units the default rate adds {{ex.2.out.fpa_rs|rs}} before GST. If the line does not equal the notified rate times your units, query it with the DISCO."
+  },
+  {
+   "q": "Why is my real bill higher than this estimate when it is over {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}}?",
+   "a": "A bill of {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}} or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: {{data.tariff.addons_secondary.income_tax_235.rate_pct_non_atl|1}}% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
   }
  ],
  "related": [
@@ -290,7 +295,10 @@
   "SRO 1499(I)/2026",
   "SRO 852(I)/2026",
   "2026",
-  "CPPA-G"
+  "CPPA-G",
+  "section 235",
+  "Ordinance 2001",
+  "Rs 25,000"
  ],
  "sources": [
   {
@@ -308,6 +316,10 @@
   {
    "label": "Wattlyst methodology and default values",
    "url": "/methodology/"
+  },
+  {
+   "label": "PkRevenue: income tax on domestic electricity bills of Rs 25,000 or more (section 235, FBR withholding rates)",
+   "url": "https://pkrevenue.com/domestic-electricity-consumers-to-pay-tax-on-monthly-bill-above-rs25000/"
   }
  ]
 }

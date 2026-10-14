@@ -118,7 +118,8 @@
   "An unprotected PESCO consumer using {{out.units|int}} units pays {{out.rate|rs2}} on every unit, which is {{out.energy_rs|rs}} of energy charge before the fixed charge, FC surcharge, QTA and GST.",
   "The QTA changes by quarter: the same {{ex.1.out.units|int}} units come to about {{ex.1.out.total_rs|rs}} in the September to November quarter and about {{ex.2.out.total_rs|rs}} in the June to August quarter, when the adjustment was a credit.",
   "A Khyber Pakhtunkhwa winter month of {{ex.3.out.units|int}} units with a fan heater and an electric geyser costs about {{ex.3.out.total_rs|rs}} unprotected, against about {{ex.0.out.total_rs|rs}} for a protected spring month of {{ex.0.out.units|int}} units.",
-  "Protection on PESCO needs every one of the last {{d.protected_months|int}} bills at or under {{d.protected_max_units|int}} units on a connection below {{d.tou_threshold_kw|int}} kW; one heater month over the limit ends it for the next {{d.protected_months|int}} bills."
+  "Protection on PESCO needs every one of the last {{d.protected_months|int}} bills at or under {{d.protected_max_units|int}} units on a connection below {{d.tou_threshold_kw|int}} kW; one heater month over the limit ends it for the next {{d.protected_months|int}} bills.",
+  "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of {{data.tariff.addons_secondary.income_tax_235.rate_pct_non_atl|1}}% on a monthly bill of {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}} or more; consumers on the list pay none."
  ],
  "formula": {
   "text": "Bill = units × slab rate + fixed Rs/kW × sanctioned kW + (FC + QTA + FPA) × units, then + GST",
@@ -290,6 +291,10 @@
   {
    "q": "Does a winter heater make a PESCO home unprotected?",
    "a": "It can. Protection needs all of the last {{d.protected_months|int}} bills at or under {{d.protected_max_units|int}} units. A fan heater of about {{a.room-heater-fan.running_w|int}} W run a few hours a day adds well over a hundred units a month, enough to cross the limit on its own."
+  },
+  {
+   "q": "Why is my real bill higher than this estimate when it is over {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}}?",
+   "a": "A bill of {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}} or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: {{data.tariff.addons_secondary.income_tax_235.rate_pct_non_atl|1}}% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
   }
  ],
  "related": [
@@ -304,7 +309,10 @@
   "SRO 279(I)/2026",
   "2026",
   "A-1",
-  "well over a hundred units"
+  "well over a hundred units",
+  "section 235",
+  "Ordinance 2001",
+  "Rs 25,000"
  ],
  "sources": [
   {
@@ -322,6 +330,10 @@
   {
    "label": "Wattlyst methodology and default values",
    "url": "/methodology/"
+  },
+  {
+   "label": "PkRevenue: income tax on domestic electricity bills of Rs 25,000 or more (section 235, FBR withholding rates)",
+   "url": "https://pkrevenue.com/domestic-electricity-consumers-to-pay-tax-on-monthly-bill-above-rs25000/"
   }
  ]
 }

@@ -96,6 +96,10 @@
    {
     "q": "Why does my FESCO bill differ from this estimate?",
     "a": "The estimate leaves out the FPA unless you enter it, and it cannot see arrears, late payment surcharge or meter rent. Check that the sanctioned kW you entered matches the bill, and if the reading dates cover more than a month, run the bill audit tool."
+   },
+   {
+    "q": "Why is my real bill higher than this estimate when it is over Rs 25,000?",
+    "a": "A bill of Rs 25,000 or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: 7.5% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
    }
   ],
   "key_facts": [
@@ -103,7 +107,8 @@
    "An unprotected FESCO consumer using 350 units pays Rs 36.46 on every unit, which is Rs 12,761 of energy charge before the fixed charge, FC surcharge, QTA and GST.",
    "The fixed charge is per kW of sanctioned load at the rate of the slab reached: 350 units on 2 kW carry a fixed charge of Rs 800, and the same units on 4 kW carry Rs 1,600, before GST.",
    "A FESCO protected consumer is one whose last 6 bills were all at or under 200 units on a connection below 5 kW; a Faisalabad summer month with an AC usually ends that run.",
-   "GST at 18% is charged on the energy charge, fixed charge and surcharges together and adds Rs 2,677 to a 350 unit FESCO bill; the surcharge and GST defaults are secondary-source figures that change."
+   "GST at 18% is charged on the energy charge, fixed charge and surcharges together and adds Rs 2,677 to a 350 unit FESCO bill; the surcharge and GST defaults are secondary-source figures that change.",
+   "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of 7.5% on a monthly bill of Rs 25,000 or more; consumers on the list pay none."
   ],
   "mistakes": [
    "Looking for a FESCO tariff of its own. FESCO bills the uniform NEPRA domestic slabs; only the monthly FPA is specific to the month.",
@@ -123,6 +128,10 @@
    {
     "label": "Wattlyst methodology and default values",
     "url": "/methodology/"
+   },
+   {
+    "label": "PkRevenue: income tax on domestic electricity bills of Rs 25,000 or more (section 235, FBR withholding rates)",
+    "url": "https://pkrevenue.com/domestic-electricity-consumers-to-pay-tax-on-monthly-bill-above-rs25000/"
    }
   ],
   "tool": {
@@ -511,6 +520,14 @@
       "acceptedAnswer": {
        "@type": "Answer",
        "text": "The estimate leaves out the FPA unless you enter it, and it cannot see arrears, late payment surcharge or meter rent. Check that the sanctioned kW you entered matches the bill, and if the reading dates cover more than a month, run the bill audit tool."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Why is my real bill higher than this estimate when it is over Rs 25,000?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "A bill of Rs 25,000 or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: 7.5% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
       }
      }
     ]

@@ -84,13 +84,18 @@
    {
     "q": "How many units keep a LESCO consumer protected?",
     "a": "At or under 200 units in every one of the last 6 months, on a connection below 5 kW. Cross the limit once and the next bills are unprotected until six months under the limit have passed again."
+   },
+   {
+    "q": "Why is my real bill higher than this estimate when it is over Rs 25,000?",
+    "a": "A bill of Rs 25,000 or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: 7.5% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
    }
   ],
   "key_facts": [
    "LESCO charges the NEPRA uniform A-1 domestic tariff for 2026, so a LESCO bill for a given number of units is the same as any other DISCO's; only the monthly FPA line differs.",
    "The LESCO per unit rate for an unprotected home using 300 units is Rs 33.10 on every unit, which gives Rs 9,930 before the fixed charge, surcharges and GST.",
    "LESCO protected units: a home stays protected only while every one of its last 6 bills is at or under 200 units; protected bills are worked out slab-wise at much lower rates.",
-   "GST at 18% is charged on energy, fixed charge and surcharges together, adding Rs 2,053 to a 300 unit LESCO bill; the surcharge and GST values are secondary-source figures that change monthly."
+   "GST at 18% is charged on energy, fixed charge and surcharges together, adding Rs 2,053 to a 300 unit LESCO bill; the surcharge and GST values are secondary-source figures that change monthly.",
+   "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of 7.5% on a monthly bill of Rs 25,000 or more; consumers on the list pay none."
   ],
   "mistakes": [
    "Looking for a separate LESCO tariff. LESCO bills the uniform NEPRA domestic tariff; the slab rates are the same across Pakistan.",
@@ -110,6 +115,10 @@
    {
     "label": "Wattlyst methodology and default values",
     "url": "/methodology/"
+   },
+   {
+    "label": "PkRevenue: income tax on domestic electricity bills of Rs 25,000 or more (section 235, FBR withholding rates)",
+    "url": "https://pkrevenue.com/domestic-electricity-consumers-to-pay-tax-on-monthly-bill-above-rs25000/"
    }
   ],
   "tool": {
@@ -474,6 +483,14 @@
       "acceptedAnswer": {
        "@type": "Answer",
        "text": "At or under 200 units in every one of the last 6 months, on a connection below 5 kW. Cross the limit once and the next bills are unprotected until six months under the limit have passed again."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Why is my real bill higher than this estimate when it is over Rs 25,000?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "A bill of Rs 25,000 or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: 7.5% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
       }
      }
     ]

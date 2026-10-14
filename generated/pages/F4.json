@@ -96,6 +96,10 @@
    {
     "q": "Why is my MEPCO bill higher than this estimate?",
     "a": "The estimate leaves out the FPA unless you enter it, and it cannot see arrears, late payment surcharge or meter rent. A reading cycle longer than a month can also push the units into a higher slab; the bill audit tool checks that."
+   },
+   {
+    "q": "Why is my real bill higher than this estimate when it is over Rs 25,000?",
+    "a": "A bill of Rs 25,000 or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: 7.5% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
    }
   ],
   "key_facts": [
@@ -103,7 +107,8 @@
    "An unprotected MEPCO consumer using 400 units pays Rs 36.46 on every unit, which is Rs 14,584 of energy charge before the fixed charge, FC surcharge, QTA and GST.",
    "A south Punjab summer month of 400 units with one inverter AC costs about Rs 19,923, while the same home's protected winter month of 120 units costs about Rs 2,436.",
    "The FPA on a MEPCO bill is a per-unit figure that changes every month; on 400 units the FPA entered in the fourth example adds Rs 1,000 before GST, which is why two months with the same units can total differently.",
-   "A MEPCO protected consumer is one whose last 6 bills were all at or under 200 units on a connection below 5 kW; the first AC month of summer usually ends that run."
+   "A MEPCO protected consumer is one whose last 6 bills were all at or under 200 units on a connection below 5 kW; the first AC month of summer usually ends that run.",
+   "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of 7.5% on a monthly bill of Rs 25,000 or more; consumers on the list pay none."
   ],
   "mistakes": [
    "Expecting a MEPCO tariff that differs from Lahore or Karachi. The slab rates are the uniform NEPRA rates; only the monthly FPA is specific to the month.",
@@ -127,6 +132,10 @@
    {
     "label": "Wattlyst methodology and default values",
     "url": "/methodology/"
+   },
+   {
+    "label": "PkRevenue: income tax on domestic electricity bills of Rs 25,000 or more (section 235, FBR withholding rates)",
+    "url": "https://pkrevenue.com/domestic-electricity-consumers-to-pay-tax-on-monthly-bill-above-rs25000/"
    }
   ],
   "tool": {
@@ -499,6 +508,14 @@
       "acceptedAnswer": {
        "@type": "Answer",
        "text": "The estimate leaves out the FPA unless you enter it, and it cannot see arrears, late payment surcharge or meter rent. A reading cycle longer than a month can also push the units into a higher slab; the bill audit tool checks that."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Why is my real bill higher than this estimate when it is over Rs 25,000?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "A bill of Rs 25,000 or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: 7.5% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
       }
      }
     ]

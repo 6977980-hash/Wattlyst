@@ -109,6 +109,10 @@
    {
     "q": "Why is my bill high this month because of FPA?",
     "a": "A positive FPA is charged on every unit, so a high-use month with a large adjustment can add thousands of rupees: on 700 units the default rate adds Rs 1,763 before GST. If the line does not equal the notified rate times your units, query it with the DISCO."
+   },
+   {
+    "q": "Why is my real bill higher than this estimate when it is over Rs 25,000?",
+    "a": "A bill of Rs 25,000 or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: 7.5% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
    }
   ],
   "key_facts": [
@@ -116,7 +120,8 @@
    "The FPA is positive when the actual fuel cost of generation was above the reference cost built into the tariff and negative when it was below: a negative FPA is a credit that lowers the bill.",
    "FPA line = FPA rate × units: at NEPRA's July 2026 rate, a 300 unit bill carries Rs 755 of FPA, and GST at 18% is charged on it as well.",
    "NEPRA's review decision for the March 2026 adjustment (SRO 852(I)/2026) states that the monthly FPA applies to all consumer categories except lifeline consumers, protected consumers, electric vehicle charging stations and prepaid consumers.",
-   "QTA is different: the quarterly tariff adjustment covers capacity and other non-fuel costs over a three-month period; the FPA covers fuel only and changes every month."
+   "QTA is different: the quarterly tariff adjustment covers capacity and other non-fuel costs over a three-month period; the FPA covers fuel only and changes every month.",
+   "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of 7.5% on a monthly bill of Rs 25,000 or more; consumers on the list pay none."
   ],
   "mistakes": [
    "Reading the FPA month as the bill month. The month printed next to the FPA is the month whose fuel is being adjusted; the charge lands on a later bill.",
@@ -141,6 +146,10 @@
    {
     "label": "Wattlyst methodology and default values",
     "url": "/methodology/"
+   },
+   {
+    "label": "PkRevenue: income tax on domestic electricity bills of Rs 25,000 or more (section 235, FBR withholding rates)",
+    "url": "https://pkrevenue.com/domestic-electricity-consumers-to-pay-tax-on-monthly-bill-above-rs25000/"
    }
   ],
   "tool": {
@@ -163,7 +172,7 @@
      "label": "FPA rate",
      "unit": "Rs per unit",
      "default": 2.5182,
-     "hint": "From your bill (FPA, FCA or fuel adjustment line). The pre-filled value is NEPRA's adjustment for July 2026 (SRO 1499(I)/2026), charged on later bills; replace it with this month's rate. Negative is allowed."
+     "hint": "From your bill (FPA, FCA or fuel adjustment line). The pre-filled value is NEPRA's adjustment for July 2026, charged on September 2026 bills; replace it with this month's rate. Negative is allowed."
     },
     {
      "name": "sanctioned_kw",
@@ -503,6 +512,14 @@
       "acceptedAnswer": {
        "@type": "Answer",
        "text": "A positive FPA is charged on every unit, so a high-use month with a large adjustment can add thousands of rupees: on 700 units the default rate adds Rs 1,763 before GST. If the line does not equal the notified rate times your units, query it with the DISCO."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Why is my real bill higher than this estimate when it is over Rs 25,000?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "A bill of Rs 25,000 or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: 7.5% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
       }
      }
     ]

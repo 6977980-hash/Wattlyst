@@ -96,13 +96,18 @@
    {
     "q": "Why is my QESCO bill higher than this estimate?",
     "a": "Usually the month's FPA, arrears or a late-payment surcharge, or a bill that covers more than a month of readings. Add the FPA in the advanced fields; for a long reading period use the overbilling check linked below."
+   },
+   {
+    "q": "Why is my real bill higher than this estimate when it is over Rs 25,000?",
+    "a": "A bill of Rs 25,000 or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: 7.5% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
    }
   ],
   "key_facts": [
    "QESCO, the Quetta Electric Supply Company Limited with its head office on Zarghoon Road in Quetta, bills domestic consumers on the uniform NEPRA A-1 tariff for 2026; the slab rates are the same as in every other province.",
    "The QESCO per unit rate for an unprotected home using 250 units is Rs 33.10 on every unit, giving Rs 8,275 in energy charges before the fixed charge, surcharges and GST.",
    "This calculator is for domestic A-1 connections only; QESCO's agricultural tubewell consumers are billed on the separate agricultural tariff and subsidy arrangements, which these slabs do not cover.",
-   "A QESCO home stays protected only while every one of the last 6 bills is at or under 200 units; in Quetta an electric heater month in winter can break the run as easily as an AC month does elsewhere."
+   "A QESCO home stays protected only while every one of the last 6 bills is at or under 200 units; in Quetta an electric heater month in winter can break the run as easily as an AC month does elsewhere.",
+   "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of 7.5% on a monthly bill of Rs 25,000 or more; consumers on the list pay none."
   ],
   "mistakes": [
    "Using this page for a tubewell or shop. The slabs here are the domestic A-1 tariff; agricultural and commercial connections have their own rates.",
@@ -122,6 +127,10 @@
    {
     "label": "Wattlyst methodology and default values",
     "url": "/methodology/"
+   },
+   {
+    "label": "PkRevenue: income tax on domestic electricity bills of Rs 25,000 or more (section 235, FBR withholding rates)",
+    "url": "https://pkrevenue.com/domestic-electricity-consumers-to-pay-tax-on-monthly-bill-above-rs25000/"
    }
   ],
   "tool": {
@@ -494,6 +503,14 @@
       "acceptedAnswer": {
        "@type": "Answer",
        "text": "Usually the month's FPA, arrears or a late-payment surcharge, or a bill that covers more than a month of readings. Add the FPA in the advanced fields; for a long reading period use the overbilling check linked below."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Why is my real bill higher than this estimate when it is over Rs 25,000?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "A bill of Rs 25,000 or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: 7.5% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
       }
      }
     ]

@@ -89,6 +89,10 @@
    {
     "q": "Why does my IESCO bill differ from this estimate?",
     "a": "The estimate leaves out the month's FPA unless you enter it, and it cannot see arrears, late payment surcharge, meter rent or a long reading cycle. Copy the FPA from the bill, and if the reading dates cover more than a month, run the bill audit tool."
+   },
+   {
+    "q": "Why is my real bill higher than this estimate when it is over Rs 25,000?",
+    "a": "A bill of Rs 25,000 or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: 7.5% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
    }
   ],
   "key_facts": [
@@ -96,7 +100,8 @@
    "An unprotected IESCO consumer using 300 units pays Rs 33.10 on every unit, which is Rs 9,930 of energy charge before the fixed charge, FC surcharge, QTA and GST.",
    "A heater month of 450 units in an Islamabad winter costs about Rs 23,263 unprotected, while the same home stays at about Rs 3,622 in a protected month of 180 units.",
    "Protection on IESCO needs every one of the last 6 bills at or under 200 units on a connection below 5 kW; one winter month over the limit moves every later bill to unprotected rates until the run is rebuilt.",
-   "GST at 18% is charged on the energy charge, fixed charge and surcharges together and adds Rs 2,053 to a 300 unit IESCO bill; the surcharge and GST defaults are secondary-source figures that change."
+   "GST at 18% is charged on the energy charge, fixed charge and surcharges together and adds Rs 2,053 to a 300 unit IESCO bill; the surcharge and GST defaults are secondary-source figures that change.",
+   "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of 7.5% on a monthly bill of Rs 25,000 or more; consumers on the list pay none."
   ],
   "mistakes": [
    "Searching for a separate IESCO tariff. IESCO bills the uniform NEPRA domestic slabs; the only line that is IESCO's own month to month is the FPA.",
@@ -120,6 +125,10 @@
    {
     "label": "Wattlyst methodology and default values",
     "url": "/methodology/"
+   },
+   {
+    "label": "PkRevenue: income tax on domestic electricity bills of Rs 25,000 or more (section 235, FBR withholding rates)",
+    "url": "https://pkrevenue.com/domestic-electricity-consumers-to-pay-tax-on-monthly-bill-above-rs25000/"
    }
   ],
   "tool": {
@@ -500,6 +509,14 @@
       "acceptedAnswer": {
        "@type": "Answer",
        "text": "The estimate leaves out the month's FPA unless you enter it, and it cannot see arrears, late payment surcharge, meter rent or a long reading cycle. Copy the FPA from the bill, and if the reading dates cover more than a month, run the bill audit tool."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Why is my real bill higher than this estimate when it is over Rs 25,000?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "A bill of Rs 25,000 or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: 7.5% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
       }
      }
     ]

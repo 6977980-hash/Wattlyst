@@ -65,6 +65,8 @@ Engineer review required before launch (see engineer-reviewer.md). Units are SI 
 - Unprotected: all units × rate of band reached.
 - Fixed charge: `Rs/kW × sanctioned kW` from the reached band.
 - Add-ons (secondary, monthly re-check): FC surcharge Rs3.23/unit, QTA (quarterly), FPA (monthly input), GST 18%. Show each line separately with source and date.
+- Income tax (Income Tax Ordinance 2001 section 235, domestic consumers not on the Active Taxpayers List, bills at or above the threshold in data/tariff-pk-2026.json `income_tax_235`): NOT added by the engine because it depends on the consumer's tax status; every bill page states it in a key fact and an FAQ with the data figures (audit 2026-10-14, WL-14c, WL-49).
+- Open tariff questions for the owner's NEPRA/PEC check (audit 2026-10-14, WL-14a/b): (a) unprotected 101–200 units: the engine charges all units at the band reached (non-telescopic); a telescopic reading of SRO 279(I)/2026 would charge 150 units less; (b) fixed charge: the engine charges Rs/kW × sanctioned kW; confirm it is per kW (not per consumer) for every band. Both stay as they are until the SRO text is checked; the pages say the result is an estimate.
 - Net billing: `import × slab tariff − export × buyback`; buyback default 11 (editable, label "not yet confirmed on a NEPRA page").
 
 ## W. Wiring (advisory, always with "confirm with a licensed electrician")
