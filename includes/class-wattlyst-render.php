@@ -35,6 +35,7 @@ final class Wattlyst_Render {
 				$out .= $this->how();
 			}
 			$out .= $this->cards();
+			$out .= $this->lead();
 			$out .= $this->key_facts();
 			$out .= $this->sections();
 			$out .= $this->faq();
@@ -60,11 +61,14 @@ final class Wattlyst_Render {
 			$out .= $this->answer( $this->c['answer'] ?? '' );
 			$out .= $this->lookup();
 			$out .= $this->key_facts();
+			$out .= $this->ad( 'content-1' );
 			$out .= $this->sections();
 			$out .= $this->tables();
+			$out .= $this->ad( 'content-2' );
 			$out .= $this->mistakes();
 			$out .= $this->faq();
 			$out .= $this->related();
+			$out .= $this->ad( 'content-3' );
 			$out .= $this->author_box();
 			$out .= $this->sources();
 		} elseif ( 'pillar' === $type ) {
@@ -85,16 +89,19 @@ final class Wattlyst_Render {
 				$out .= $this->how();
 			}
 			$out .= $this->key_facts();
-			$out .= Wattlyst_Ads::slot( 'content-1', $this->plugin->site() );
+			$out .= $this->ad( 'content-1' );
 			$out .= $this->formula();
 			$out .= $this->sections();
 			$out .= $this->examples();
 			$out .= $this->table();
 			$out .= $this->tables();
+			$out .= $this->ad( 'content-2' );
 			$out .= $this->mistakes();
-			$out .= Wattlyst_Ads::slot( 'content-2', $this->plugin->site() );
+			$out .= $this->where_to_buy();
+			$out .= $this->lead();
 			$out .= $this->faq();
 			$out .= $this->related();
+			$out .= $this->ad( 'content-3' );
 			$out .= $this->author_box();
 			$out .= $this->sources();
 		}
@@ -102,6 +109,76 @@ final class Wattlyst_Render {
 	}
 
 	/* ------------------------------------------------------------ pieces */
+
+	/** One of the three manual ad units (Wattlyst_Ads decides whether this page and request may show it). */
+	private function ad( string $slot ): string {
+		return Wattlyst_Ads::slot( $slot, $this->plugin->site(), $this->page );
+	}
+
+	/** Affiliate links (data/affiliates.json): labelled box, visible disclosure, rel="sponsored" on every link. */
+	private function where_to_buy(): string {
+		$a = $this->page['affiliates'] ?? null;
+		if ( empty( $a['links'] ) ) {
+			return '';
+		}
+		$items = '';
+		foreach ( $a['links'] as $l ) {
+			$items .= '<li><a href="' . esc_url( $l['url'] ) . '" rel="sponsored noopener">' . esc_html( $l['label'] ) . '</a>' . ( ! empty( $l['note'] ) ? ' ' . esc_html( $l['note'] ) : '' ) . '</li>';
+		}
+		return '<aside class="wl-buy" aria-label="Where to buy"><h2>Where to buy</h2><p class="wl-disclosure">' . esc_html( $a['disclosure'] ) . '</p><ul>' . $items . '</ul></aside>';
+	}
+
+	/**
+	 * Solar quote request form (Phase 6). Plain HTML form posted to admin-post.php and handled by
+	 * Wattlyst_Leads, so it needs no JavaScript. Shown only when leads are enabled for this page.
+	 */
+	private function lead(): string {
+		$leads = $this->plugin->site()['leads'] ?? array();
+		if ( empty( $leads['enabled'] ) || empty( $this->page['lead'] ) ) {
+			return '';
+		}
+		$c     = $leads['copy'];
+		$state = isset( $_GET['lead'] ) ? sanitize_key( wp_unslash( $_GET['lead'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification
+		$out   = '<section class="wl-lead" id="wl-lead" aria-labelledby="wl-lead-h"><h2 id="wl-lead-h">' . esc_html( $c['heading'] ) . '</h2>';
+		if ( 'sent' === $state ) {
+			$link = '';
+			if ( ! empty( $leads['success_url'] ) && $leads['success_url'] !== $this->page['url'] ) {
+				$link = ' <a href="' . esc_url( Wattlyst_Tools::link( $leads['success_url'] ) ) . '">' . esc_html( $this->plugin->row_by_url( $leads['success_url'] )['h1'] ?? '' ) . '</a>';
+			}
+			return $out . '<p class="wl-lead-ok" role="status">' . esc_html( $c['success'] ) . $link . '</p></section>';
+		}
+		$why = isset( $_GET['why'] ) ? sanitize_key( wp_unslash( $_GET['why'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification
+		if ( 'error' === $state && isset( $c['errors'][ $why ] ) ) {
+			$out .= '<p class="wl-error" role="alert">' . esc_html( $c['errors'][ $why ] ) . '</p>';
+		}
+		$f    = $c['fields'];
+		$opts = '<option value="">' . esc_html( $f['city'] ) . '</option>';
+		foreach ( $leads['cities'] as $city ) {
+			$opts .= '<option value="' . esc_attr( $city['id'] ) . '">' . esc_html( $city['name'] ) . '</option>';
+		}
+		$opts .= '<option value="other">' . esc_html( $f['city_other'] ) . '</option>';
+		$row   = static function ( string $id, string $label, string $control ): string {
+			return '<div class="wl-field"><label for="' . esc_attr( $id ) . '">' . esc_html( $label ) . '</label>' . $control . '</div>';
+		};
+		$out .= '<p>' . esc_html( $c['intro'] ) . '</p>';
+		$out .= '<form class="wl-lead-form" method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '">';
+		$out .= '<input type="hidden" name="action" value="wattlyst_lead"><input type="hidden" name="page" value="' . esc_attr( $this->page['id'] ) . '">';
+		$out .= '<input type="hidden" name="wl_t" value="' . esc_attr( Wattlyst_Leads::token() ) . '">';
+		$out .= '<div class="wl-fields">';
+		$out .= $row( 'wl-lead-name', $f['name'], '<input type="text" id="wl-lead-name" name="name" required maxlength="80" autocomplete="name">' );
+		$out .= $row( 'wl-lead-phone', $f['phone'], '<input type="tel" id="wl-lead-phone" name="phone" required maxlength="20" autocomplete="tel" inputmode="tel" aria-describedby="wl-lead-phone-hint"><p class="wl-hint" id="wl-lead-phone-hint">' . esc_html( $f['phone_hint'] ) . '</p>' );
+		$out .= $row( 'wl-lead-city', $f['city'], '<select id="wl-lead-city" name="city" required>' . $opts . '</select>' );
+		$out .= $row( 'wl-lead-kw', $f['kw'], '<input type="text" id="wl-lead-kw" name="kw" inputmode="decimal" maxlength="8">' );
+		$out .= $row( 'wl-lead-units', $f['units'], '<input type="text" id="wl-lead-units" name="units" inputmode="numeric" maxlength="8">' );
+		$out .= '</div>';
+		$out .= $row( 'wl-lead-msg', $f['msg'], '<textarea id="wl-lead-msg" name="msg" rows="3" maxlength="500"></textarea>' );
+		// Honeypot: hidden from people and screen readers; bots that fill it are dropped.
+		$out .= '<div class="wl-hp" aria-hidden="true"><label for="wl-lead-web">Website</label><input type="text" id="wl-lead-web" name="website" tabindex="-1" autocomplete="off"></div>';
+		$out .= '<div class="wl-check"><input type="checkbox" id="wl-lead-ok" name="consent" value="1" required><label for="wl-lead-ok">' . esc_html( $f['consent'] ) . ' <a href="' . esc_url( Wattlyst_Tools::link( '/privacy-policy/' ) ) . '">Privacy policy</a>.</label></div>';
+		$out .= '<button type="submit" class="wl-btn">' . esc_html( $c['button'] ) . '</button>';
+		$out .= '<p class="wl-note">' . esc_html( $c['privacy'] ) . '</p>';
+		return $out . '</form></section>';
+	}
 
 	private function breadcrumb(): string {
 		$items = array();
