@@ -731,24 +731,40 @@
    "id": "A1",
    "type": "tool",
    "url": "/converters/watts-to-amps-calculator/",
-   "h1": "Watts To Amps Calculator",
+   "h1": "Watts to Amps Calculator for DC, Single-Phase and Three-Phase",
    "title": "Watts to Amps Calculator (DC, 1-Phase, 3-Phase) | Wattlyst",
    "meta": "Convert watts to amps for DC, single-phase and three-phase circuits. Pick 12V, 230V or any voltage, add power factor and see the formula with your numbers.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-A",
+   "related": [
+    "A2",
+    "A4",
+    "A3",
+    "A6",
+    "A5"
+   ],
+   "next": "W3",
    "wave": 3
   },
   {
    "id": "A2",
    "type": "tool",
    "url": "/converters/amps-to-watts-calculator/",
-   "h1": "Amps To Watts Calculator",
+   "h1": "Amps to Watts Calculator (DC, AC and 3-Phase)",
    "title": "Amps to Watts Calculator (DC, AC & 3-Phase) | Wattlyst",
    "meta": "Convert amps to watts for DC, single-phase or three-phase supply. Enter current, voltage and power factor; get watts with a step-by-step formula.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-A",
+   "related": [
+    "A1",
+    "A6",
+    "A7",
+    "A9",
+    "E3"
+   ],
+   "next": "W3",
    "wave": 3
   },
   {
@@ -795,36 +811,60 @@
    "id": "A5",
    "type": "tool",
    "url": "/converters/3-phase-current-calculator/",
-   "h1": "3 Phase Amps Calculator",
+   "h1": "3 Phase Amps Calculator (kW and kVA to Amps)",
    "title": "3 Phase Amps Calculator (kW, kVA to Amps, 400V) | Wattlyst",
    "meta": "Calculate three-phase current from kW or kVA at 400V or any line voltage. Uses I = P / (√3 × V × PF) and shows each step with your values.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-A",
+   "related": [
+    "A6",
+    "A1",
+    "A8",
+    "W5",
+    "W2"
+   ],
+   "next": "W3",
    "wave": 3
   },
   {
    "id": "A6",
    "type": "tool",
    "url": "/converters/amps-to-kw-calculator/",
-   "h1": "Amps To Kw Calculator",
+   "h1": "Amps to kW Calculator (and kW to Amps)",
    "title": "Amps to kW and kW to Amps Calculator | Wattlyst",
    "meta": "Convert amps to kilowatts and back for DC, single-phase and three-phase supply. Add power factor, see the formula and a quick reference table.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-A",
+   "related": [
+    "A5",
+    "A2",
+    "A8",
+    "A1",
+    "A7"
+   ],
+   "next": "E3",
    "wave": 3
   },
   {
    "id": "A7",
    "type": "tool",
    "url": "/converters/volts-to-watts-calculator/",
-   "h1": "Volts To Watts Calculator",
+   "h1": "Volts to Watts Calculator (Volts × Amps)",
    "title": "Volts to Watts Calculator (with Amps) | Wattlyst",
    "meta": "Turn volts and amps into watts for DC or AC circuits. Includes power factor for AC loads and worked examples for 12V, 24V and 230V.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-A",
+   "related": [
+    "A2",
+    "A1",
+    "A3",
+    "A6",
+    "W5"
+   ],
+   "next": "E6",
    "wave": 3
   },
   {
@@ -1890,7 +1930,8 @@
     "W2",
     "W1",
     "D16",
-    "D3"
+    "D3",
+    "W5"
    ],
    "next": "W3",
    "wave": 2
@@ -1899,12 +1940,19 @@
    "id": "W5",
    "type": "tool",
    "url": "/wiring/voltage-drop-calculator/",
-   "h1": "Voltage Drop Calculator",
+   "h1": "Voltage Drop Calculator for Any Cable, AC or DC",
    "title": "Voltage Drop Calculator (Copper & Aluminium) | Wattlyst",
    "meta": "Calculate voltage drop for any wire size, length and load, single or three phase, DC or AC. See if your cable stays under 3% or 5%.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-W",
+   "related": [
+    "W4",
+    "W3",
+    "W1",
+    "A5"
+   ],
+   "next": "W2",
    "wave": 3
   },
   {
@@ -2396,8 +2444,13 @@
    "live": true,
    "parent": null,
    "children": [
+    "A1",
+    "A2",
     "A3",
     "A4",
+    "A5",
+    "A6",
+    "A7",
     "A8",
     "A9",
     "A10"
@@ -2534,7 +2587,8 @@
     "W1",
     "W2",
     "W3",
-    "W4"
+    "W4",
+    "W5"
    ],
    "wave": 0
   },

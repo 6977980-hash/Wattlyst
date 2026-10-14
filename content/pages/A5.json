@@ -1,0 +1,249 @@
+{
+ "id": "A5",
+ "status": "publish",
+ "template": "tool",
+ "h1": "3 Phase Amps Calculator (kW and kVA to Amps)",
+ "author": "ali-ahmad",
+ "published": "2026-10-14",
+ "reviewed": "2026-10-14",
+ "calc": "kw_to_amps",
+ "fixed_inputs": {
+  "mode": "ac3"
+ },
+ "fields": [
+  {
+   "name": "kw",
+   "label": "Load",
+   "unit": "kW",
+   "default": 15,
+   "hint": "Total kW of the three-phase load. For a kVA rating (transformer, generator), enter the kVA here and set the power factor to 1."
+  },
+  {
+   "name": "volts",
+   "label": "Line-to-line voltage",
+   "unit": "V",
+   "default": "@v_3ph",
+   "hint": "The voltage between two phases: 400 V in Pakistan and most of the world (often written 415 V or 380 V). Not the 230 V phase-to-neutral."
+  },
+  {
+   "name": "pf",
+   "label": "Power factor",
+   "unit": "0 to 1",
+   "default": "@pf_mixed",
+   "hint": "About 0.8 for motors, pumps and mixed loads; 1 for heaters, or when you entered kVA."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "amps",
+   "label": "Line current",
+   "spec": "1",
+   "unit": "A"
+  }
+ ],
+ "answer": "A {{in.kw|int}} kW three-phase load at {{in.volts|int}} V and a power factor of {{in.pf|2}} draws {{out.amps|1}} A in each line. Three-phase amps = kW × 1,000 ÷ (√3 × line-to-line volts × power factor). For a kVA rating leave out the power factor: a {{ex.0.in.kw|int}} kVA supply carries {{ex.0.out.amps|1}} A per line at full load.",
+ "how": "{{in.kw|2}} kW × 1,000 ÷ (√3 × {{in.volts|int}} V × {{in.pf|2}}) = {{out.amps|1}} A per line. The √3 appears because the three phases are a third of a cycle apart, so the line-to-line voltage is √3 times the phase voltage. Each of the three line wires carries this current when the load is balanced.",
+ "key_facts": [
+  "Three-phase current = kW × 1,000 ÷ (√3 × line-to-line volts × power factor); {{in.kw|int}} kW at {{in.volts|int}} V and a power factor of {{in.pf|2}} is {{out.amps|1}} A per line.",
+  "A {{ex.0.in.kw|int}} kVA transformer or generator at {{ex.0.in.volts|int}} V delivers {{ex.0.out.amps|1}} A per line at full load; kVA already includes the power factor.",
+  "The same {{in.kw|int}} kW at {{ex.1.in.volts|int}} V draws {{ex.1.out.amps|1}} A per line, slightly less than at {{in.volts|int}} V.",
+  "In a balanced star (wye) connection the line current and phase current are equal; in a delta connection the current in each winding is the line current divided by √3."
+ ],
+ "formula": {
+  "text": "I_line = P ÷ (√3 × V_LL × PF)  or  I_line = S ÷ (√3 × V_LL)",
+  "lines": [
+   "I_line = current in each line wire (A)",
+   "P = real power in W (kW × 1,000)",
+   "S = apparent power in VA (kVA × 1,000)",
+   "V_LL = line-to-line voltage: 400 V in Pakistan (phase-to-neutral is 230 V)",
+   "PF = power factor; √3 ≈ 1.732"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "Three-phase current formula",
+   "p": [
+    "Divide the power by √3, the line-to-line voltage and the power factor. {{in.kw|int}} kW at {{in.volts|int}} V and a power factor of {{in.pf|2}} gives {{out.amps|1}} A in each of the three lines. A balanced load spreads evenly, so the neutral carries little or no current.",
+    "The same power on a single phase would need three times the current on one wire. That is why large motors, tubewells, shops and big houses use a three-phase connection."
+   ]
+  },
+  {
+   "h2": "3 phase kVA to amps",
+   "p": [
+    "Transformers, generators and UPS units are rated in kVA, the apparent power. kVA already includes the power factor, so enter the kVA figure in the load box and set the power factor to one. A {{ex.0.in.kw|int}} kVA unit at {{ex.0.in.volts|int}} V delivers {{ex.0.out.amps|1}} A per line at full load; a {{ex.3.in.kw|1}} kVA generator delivers {{ex.3.out.amps|1}} A.",
+    "To get kW from kVA, multiply by the power factor; the kVA to kW converter does that step."
+   ]
+  },
+  {
+   "h2": "Line current vs phase current",
+   "p": [
+    "The calculator gives the line current, the current in each supply wire, which is what the cable, breaker and meter carry. In a star (wye) connection each winding sits between a line and the neutral, so phase current equals line current and each phase sees {{d.v_1ph|int}} V.",
+    "In a delta connection each winding sits between two lines at {{d.v_3ph|int}} V, and the current inside each winding is the line current divided by √3. Motor nameplates often give both star and delta currents; the cable is sized on the line current."
+   ]
+  },
+  {
+   "h2": "3 phase motor current",
+   "p": [
+    "A motor's nameplate kW is its shaft output, not the power it draws. The electrical input is higher by the motor's efficiency, so the real current is higher than the shaft kW suggests. Use the full-load amps on the nameplate when you have it; otherwise divide the shaft kW by the motor's efficiency to get the input kW, then enter that here.",
+    "Motors also draw several times their running current for a moment at start. The running current sets the cable; the starting current matters for the breaker curve and for a generator."
+   ]
+  },
+  {
+   "h2": "3 phase load calculation for a building",
+   "p": [
+    "Add the kW of every load that can run at the same time, then use this calculator for the line current. Spread single-phase loads (lights, sockets, ACs) evenly across the three phases, otherwise one phase carries more than this balanced figure."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "kw": 100,
+    "pf": 1
+   },
+   "title": "{{in.kw|int}} kVA to amps at {{in.volts|int}} V",
+   "text": "{{in.kw|int}} kVA × 1,000 ÷ (√3 × {{in.volts|int}} V) = {{out.amps|1}} A per line. With kVA, the power factor is already inside the rating, so it is set to one."
+  },
+  {
+   "inputs": {
+    "kw": 15,
+    "volts": 415,
+    "pf": 0.8
+   },
+   "title": "{{in.kw|int}} kW at {{in.volts|int}} V three-phase",
+   "text": "{{in.kw|int}} kW × 1,000 ÷ (√3 × {{in.volts|int}} V × {{in.pf|2}}) = {{out.amps|1}} A per line. Older equipment labels give the line voltage as {{in.volts|int}} V; the answer is close to the {{d.v_3ph|int}} V result."
+  },
+  {
+   "inputs": {
+    "kw": 6,
+    "pf": 1
+   },
+   "title": "A {{in.kw|int}} kW three-phase heater or oven",
+   "text": "{{in.kw|int}} kW × 1,000 ÷ (√3 × {{in.volts|int}} V × {{in.pf|int}}) = {{out.amps|1}} A per line. A resistive load has a power factor of one."
+  },
+  {
+   "inputs": {
+    "kw": 62.5,
+    "pf": 1
+   },
+   "title": "A {{in.kw|1}} kVA generator at full load",
+   "text": "{{in.kw|1}} kVA × 1,000 ÷ (√3 × {{in.volts|int}} V) = {{out.amps|1}} A per line. This is the most current the generator is rated to supply in each line."
+  },
+  {
+   "inputs": {
+    "kw": 30,
+    "volts": 380,
+    "pf": 0.85
+   },
+   "title": "{{in.kw|int}} kW at {{in.volts|int}} V and a power factor of {{in.pf|2}}",
+   "text": "{{in.kw|int}} kW × 1,000 ÷ (√3 × {{in.volts|int}} V × {{in.pf|2}}) = {{out.amps|1}} A per line."
+  }
+ ],
+ "table": {
+  "caption": "3 phase kVA to amps chart at {{in.volts|int}} V: full-load line current of common transformer and generator sizes",
+  "rows": [
+   {
+    "kw": 10,
+    "pf": 1
+   },
+   {
+    "kw": 25,
+    "pf": 1
+   },
+   {
+    "kw": 50,
+    "pf": 1
+   },
+   {
+    "kw": 100,
+    "pf": 1
+   },
+   {
+    "kw": 200,
+    "pf": 1
+   },
+   {
+    "kw": 500,
+    "pf": 1
+   },
+   {
+    "kw": 1000,
+    "pf": 1
+   }
+  ],
+  "columns": [
+   {
+    "label": "Rating",
+    "tpl": "{{in.kw|int}} kVA"
+   },
+   {
+    "label": "Full-load current per line",
+    "tpl": "{{out.amps|1}} A"
+   }
+  ]
+ },
+ "mistakes": [
+  "Using the phase-to-neutral {{d.v_1ph|int}} V in the three-phase formula. Use the line-to-line voltage ({{d.v_3ph|int}} V) with the square root of three; mixing them gives a current that is far too high.",
+  "Multiplying by three instead of by √3. The three phases are a third of a cycle apart, so the factor is √3, not three.",
+  "Entering a kVA rating with a power factor below one. kVA already includes the power factor; set it to one, or convert kVA to kW first.",
+  "Using a motor's shaft kW as its input power. The input is higher by the motor efficiency, so the real current is higher; read the nameplate full-load amps where you can."
+ ],
+ "safety": "Three-phase circuits carry {{d.v_3ph|int}} V between lines and can kill on contact. Use the current from this page only to plan; cable, breaker and motor protection must be selected and connected by a licensed electrician.",
+ "faq": [
+  {
+   "q": "How many amps is {{in.kw|int}} kW on three-phase?",
+   "a": "{{out.amps|1}} A per line at {{in.volts|int}} V and a power factor of {{in.pf|2}}. At {{ex.1.in.volts|int}} V it is {{ex.1.out.amps|1}} A."
+  },
+  {
+   "q": "What is the three-phase current formula?",
+   "a": "I = P ÷ (√3 × V × PF), with P in watts, V the line-to-line voltage and PF the power factor. For a kVA rating, I = kVA × 1,000 ÷ (√3 × V)."
+  },
+  {
+   "q": "How do I convert 3 phase kVA to amps?",
+   "a": "Multiply the kVA by 1,000 and divide by √3 × the line-to-line voltage. A {{ex.0.in.kw|int}} kVA transformer at {{ex.0.in.volts|int}} V is {{ex.0.out.amps|1}} A per line at full load."
+  },
+  {
+   "q": "How many amps is a {{ex.3.in.kw|1}} kVA generator?",
+   "a": "{{ex.3.out.amps|1}} A per line at {{ex.3.in.volts|int}} V at full rated load. Leave headroom below it for motor starting surges."
+  },
+  {
+   "q": "What is the difference between line current and phase current?",
+   "a": "Line current flows in each supply wire. In a star connection it equals the phase current; in a delta connection the current inside each winding is the line current divided by √3."
+  },
+  {
+   "q": "Can I use this as a {{ex.1.in.volts|int}} V amps calculator?",
+   "a": "Yes. Enter {{ex.1.in.volts|int}} V as the line-to-line voltage. {{ex.1.in.kw|int}} kW at a power factor of {{ex.1.in.pf|2}} is {{ex.1.out.amps|1}} A per line at {{ex.1.in.volts|int}} V."
+  },
+  {
+   "q": "How do I work out a three-phase motor's current?",
+   "a": "Use the nameplate full-load amps if you have them. Otherwise divide the shaft kW by the motor efficiency to get the input kW, then use the three-phase formula with the motor's power factor."
+  }
+ ],
+ "related": [
+  "A6",
+  "A1",
+  "A8",
+  "W5",
+  "W2"
+ ],
+ "next": "W3",
+ "literal_numbers": [
+  "3 phase",
+  "1,000",
+  "√3"
+ ],
+ "sources": [
+  {
+   "label": "IEC 60038:2009, IEC standard voltages (230/400 V three-phase systems)",
+   "url": "https://webstore.iec.ch/publication/153"
+  },
+  {
+   "label": "NEPRA, National Electric Power Regulatory Authority of Pakistan (supply standards: 230 V single-phase, 400 V three-phase, 50 Hz)",
+   "url": "https://www.nepra.org.pk/"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

@@ -3,15 +3,24 @@
  "type": "tool",
  "silo": "W",
  "url": "/wiring/voltage-drop-calculator/",
- "h1": "Voltage Drop Calculator",
+ "h1": "Voltage Drop Calculator for Any Cable, AC or DC",
  "title": "Voltage Drop Calculator (Copper & Aluminium) | Wattlyst",
  "meta": "Calculate voltage drop for any wire size, length and load, single or three phase, DC or AC. See if your cable stays under 3% or 5%.",
  "primary_keyword": "voltage drop calculator",
  "wave": 3,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-14",
+ "published": "2026-10-14",
  "author": "ali-ahmad",
+ "related": [
+  "W4",
+  "W3",
+  "W1",
+  "A5"
+ ],
+ "next": "W2",
  "parent": "P-W",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
@@ -22,11 +31,353 @@
    "url": "/wiring/"
   },
   {
-   "name": "Voltage Drop Calculator",
+   "name": "Voltage Drop Calculator for Any Cable, AC or DC",
    "url": "/wiring/voltage-drop-calculator/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "Voltage drop formula",
+    "p": [
+     "The cable's resistance turns part of the voltage into heat. For single-phase and DC the current goes out on one conductor and back on the other, so the length counts twice: drop = 2 × length × current × resistivity ÷ area. For a balanced three-phase load the factor is √3 instead of two, and the drop is compared with the line-to-line voltage.",
+     "Halve the cable area and the drop doubles; double the length or the current and it doubles too. That is why long runs to a tubewell, gate or outbuilding need a thicker cable than the current alone suggests."
+    ]
+   },
+   {
+    "h2": "Maximum voltage drop allowed",
+    "p": [
+     "This calculator uses 3% for lighting circuits and 5% for other circuits, the values given in an informative annex of IEC 60364-5-52 for installations supplied from the public low-voltage network. Solar DC strings are usually kept to 3% so the panels lose little output. Above the limit, motors run hot, lights dim and inverters may trip on low voltage."
+    ]
+   },
+   {
+    "h2": "Cable voltage drop calculation, step by step",
+    "p": [
+     "First the current: the load in watts ÷ (230 V × 0.8 power factor) gives 16.3 A for the default load. Then the drop: two × 30 m × 16.3 A × copper resistivity ÷ 2.5 mm² = 8.8 V. Finally the share: 8.8 V of 230 V is 3.83%, under the 5% limit, so 221 V reaches the load."
+    ]
+   },
+   {
+    "h2": "Voltage drop per metre",
+    "p": [
+     "The drop grows in straight proportion to length, so the volts lost per metre stay fixed for a given cable and current. In the table below, the rows with the same cable size at different lengths show this: the longer run loses proportionally more. Divide the volts lost by the run to get your per-metre figure."
+    ]
+   },
+   {
+    "h2": "Voltage drop calculator for DC",
+    "p": [
+     "Choose DC and enter the battery or panel string voltage. At 12 V even a short cable loses a large share: 20 A over 5 m of 6 mm² loses 0.75 V, 6.3% of the supply. Keep battery cables short and thick, or move to a higher battery voltage. For solar panel strings, the solar DC cable calculator has the PV cable sizes."
+    ]
+   },
+   {
+    "h2": "Copper and aluminium cables",
+    "p": [
+     "The calculator uses copper by default. Aluminium conducts less well than copper, so an aluminium cable of the same size drops more voltage; that is why aluminium service and feeder cables are usually a size or two larger. To check an aluminium cable, open the advanced settings and replace the resistivity with the aluminium value at working temperature from the cable maker's datasheet. Copper and aluminium must never be joined directly; use bimetallic lugs or connectors."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "What is the voltage drop formula?",
+    "a": "Single-phase and DC: drop = 2 × length × current × resistivity ÷ cable area. Three-phase: drop = √3 × length × current × resistivity ÷ area. Copper resistivity is 0.0225 Ω·mm²/m at working temperature."
+   },
+   {
+    "q": "What is the maximum voltage drop allowed?",
+    "a": "This calculator checks 3% for lighting and 5% for other circuits, from the supply to the load. Solar DC strings are usually kept to 3%."
+   },
+   {
+    "q": "How do I calculate voltage drop per metre?",
+    "a": "Work out the drop for your run and divide by its length; for the same cable and current the per-metre figure is fixed. Thicker cable or lower current reduces it."
+   },
+   {
+    "q": "How much voltage drops on 2.5 mm² cable over 30 m?",
+    "a": "With 16.3 A at 230 V, 8.8 V or 3.83%. On 4 mm² it is 2.39%."
+   },
+   {
+    "q": "Does this voltage drop calculator work for DC?",
+    "a": "Yes. Choose DC and enter the battery or string voltage. 20 A at 12 V over 5 m of 6 mm² drops 6.3%."
+   },
+   {
+    "q": "Can I calculate voltage drop for aluminium cable?",
+    "a": "Yes, by replacing the copper resistivity in the advanced settings with the aluminium value at working temperature from the cable maker's datasheet. The calculator does not hold an aluminium value itself."
+   },
+   {
+    "q": "What happens if the voltage drop is too high?",
+    "a": "Motors and compressors run hot and may fail to start, lights dim, and inverters or stabilisers may cut out. Use a larger cable, shorten the run, or split the load."
+   }
+  ],
+  "key_facts": [
+   "Voltage drop = 2 × length × current × resistivity ÷ area (single-phase and DC) or √3 × length × current × resistivity ÷ area (three-phase), with copper resistivity of 0.0225 Ω·mm²/m at working temperature.",
+   "A 16.3 A single-phase load on 2.5 mm² copper over 30 m drops 3.83%; on 4 mm² the drop falls to 2.39%.",
+   "The usual limits are 3% for lighting and solar DC and 5% for other circuits, measured from the supply to the load.",
+   "Low-voltage DC suffers most: 20 A from a 12 V battery over only 5 m of 6 mm² cable loses 6.3% of the voltage."
+  ],
+  "mistakes": [
+   "Entering the total out-and-back length. Enter the one-way run; the calculator already counts the return conductor.",
+   "Checking only the current rating. A cable can carry the current safely and still drop too much voltage over a long run; check both, as the wire size calculator does.",
+   "Using copper resistivity for an aluminium cable. Aluminium drops more; enter its resistivity from the datasheet in the advanced settings.",
+   "Ignoring the drop on low-voltage DC. A drop that is trivial at 230 V can be several percent at 12 V over the same cable."
+  ],
+  "sources": [
+   {
+    "label": "IEC 60364-5-52: selection and erection of wiring systems (voltage drop, current ratings)",
+    "url": "https://webstore.iec.ch/publication/1878"
+   },
+   {
+    "label": "Wattlyst methodology and default values (copper resistivity, drop limits)",
+    "url": "/methodology/"
+   }
+  ],
+  "tool": {
+   "calc": "voltage_drop",
+   "module": "wiring.js",
+   "data_keys": [
+    "cables"
+   ],
+   "appliances": {},
+   "fields": [
+    {
+     "name": "watts",
+     "label": "Load",
+     "unit": "W",
+     "default": 3000,
+     "hint": "Total watts the cable carries. Ignored if you enter the current below."
+    },
+    {
+     "name": "amps",
+     "label": "Or current",
+     "unit": "A",
+     "placeholder": "Worked out from the watts",
+     "hint": "If you know the current (from a label or clamp meter), enter it here and the watts are ignored. For three-phase, the current in one line."
+    },
+    {
+     "name": "length_m",
+     "label": "Cable run, one way",
+     "unit": "m",
+     "default": 30,
+     "hint": "Distance from the board or battery to the load along the cable route. The return conductor is counted for you."
+    },
+    {
+     "name": "area_mm2",
+     "label": "Cable size",
+     "unit": "mm²",
+     "default": 2.5,
+     "hint": "Conductor cross-section. Pakistani sizes: 3/29 is about 1.5 mm², 7/29 is 2.5, 7/36 is 4, 7/44 is 6, 7/52 is 10."
+    },
+    {
+     "name": "mode",
+     "label": "Supply",
+     "type": "select",
+     "default": "ac1",
+     "options": [
+      [
+       "ac1",
+       "Single-phase AC"
+      ],
+      [
+       "ac3",
+       "Three-phase AC"
+      ],
+      [
+       "dc",
+       "DC (battery or solar)"
+      ]
+     ],
+     "hint": "Single-phase and DC count the cable twice (out and back); three-phase uses √3."
+    },
+    {
+     "name": "volts",
+     "label": "Voltage",
+     "unit": "V",
+     "placeholder": "Auto by supply",
+     "hint": "Leave blank for 230 V single-phase or 400 V three-phase line to line. For DC, enter the battery or string voltage."
+    },
+    {
+     "name": "circuit",
+     "label": "Drop limit",
+     "type": "select",
+     "default": "other",
+     "options": [
+      [
+       "other",
+       "5% (power, sockets, motors)"
+      ],
+      [
+       "lighting",
+       "3% (lighting, solar DC)"
+      ]
+     ],
+     "hint": "The share of the supply voltage the cable may lose."
+    },
+    {
+     "name": "pf",
+     "label": "Power factor",
+     "unit": "0 to 1",
+     "default": 0.8,
+     "advanced": true,
+     "hint": "Used only to turn watts into amps on AC. 1 for heaters, about 0.8 for motors and mixed loads."
+    },
+    {
+     "name": "rho",
+     "label": "Conductor resistivity",
+     "unit": "Ω·mm²/m",
+     "default": 0.0225,
+     "advanced": true,
+     "hint": "The default is copper at working temperature. For an aluminium cable, replace it with the aluminium resistivity at working temperature from the cable maker's datasheet."
+    }
+   ],
+   "fixed_inputs": {},
+   "outputs": [
+    {
+     "key": "drop_pct",
+     "label": "Voltage drop",
+     "spec": "2",
+     "unit": "%",
+     "label_ur": "Voltage drop",
+     "value": "3.83"
+    },
+    {
+     "key": "drop_v",
+     "label": "Volts lost in the cable",
+     "spec": "1",
+     "unit": "V",
+     "label_ur": "Cable mein zaya volts",
+     "value": "8.8"
+    },
+    {
+     "key": "voltage_at_load",
+     "label": "Voltage at the load",
+     "spec": "int",
+     "unit": "V",
+     "label_ur": "Load par voltage",
+     "value": "221"
+    },
+    {
+     "key": "within_limit",
+     "label": "Within the limit?",
+     "spec": "yesno",
+     "label_ur": "Had ke andar?",
+     "value": "Yes"
+    },
+    {
+     "key": "amps",
+     "label": "Current",
+     "spec": "1",
+     "unit": "A",
+     "label_ur": "Current (amp)",
+     "value": "16.3"
+    }
+   ],
+   "how": {
+    "tpl": "Current: {{out.amps|1}} A (the watts ÷ ({{out.volts|int}} V × {{out.pf|2}} power factor), unless you entered the amps). Drop = 2 × {{in.length_m|int}} m × {{out.amps|1}} A × {{out.rho|4}} Ω·mm²/m ÷ {{in.area_mm2|1}} mm² = {{out.drop_v|1}} V, which is {{out.drop_pct|2}}% of {{out.volts|int}} V, leaving {{out.voltage_at_load|int}} V at the load. The limit you chose is {{out.limit_pct|int}}%. On three-phase the factor of two is replaced by √3; if the drop is over the limit, try the next cable size.",
+    "text": "Current: 16.3 A (the watts ÷ (230 V × 0.8 power factor), unless you entered the amps). Drop = 2 × 30 m × 16.3 A × 0.0225 Ω·mm²/m ÷ 2.5 mm² = 8.8 V, which is 3.83% of 230 V, leaving 221 V at the load. The limit you chose is 5%. On three-phase the factor of two is replaced by √3; if the drop is over the limit, try the next cable size."
+   },
+   "submit": "Calculate",
+   "notice": "",
+   "data_checked": [
+    {
+     "label": "Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)",
+     "url": "https://webstore.iec.ch/publication/1878",
+     "checked": "2026-10-13"
+    }
+   ]
+  },
+  "examples": [
+   {
+    "title": "The same 16.3 A load on 4 mm² cable",
+    "text": "2 × 30 m × 16.3 A × 0.0225 ÷ 4 mm² = 5.5 V, a 2.39% drop. Moving up one size gives a clear margin under the 5% limit."
+   },
+   {
+    "title": "Three-phase 27.1 A per line over 50 m of 6 mm²",
+    "text": "√3 × 50 m × 27.1 A × 0.0225 ÷ 6 mm² = 8.8 V, 2.2% of 400 V. Within the limit: Yes."
+   },
+   {
+    "title": "20 A from a 12 V battery over 5 m",
+    "text": "2 × 5 m × 20 A × 0.0225 ÷ 6 mm² = 0.75 V, which is 6.3% of 12 V. Within the 5% limit: No. A thicker or shorter cable, or a higher battery voltage, fixes it."
+   },
+   {
+    "title": "A 3.3 A lighting circuit, 40 m of 1.5 mm²",
+    "text": "40 m loses 3.9 V, 1.7% against the 3% lighting limit. Within the limit: Yes."
+   },
+   {
+    "title": "A 16.3 A pump 100 m away on 4 mm²",
+    "text": "2 × 100 m × 16.3 A × 0.0225 ÷ 4 mm² = 18.3 V, 7.97%. Within the 5% limit: No. Long runs to a motor need a larger cable than the current alone suggests."
+   }
+  ],
+  "table": {
+   "caption": "Voltage drop for a 16.3 A single-phase load at 230 V on copper cable",
+   "head": [
+    "Cable",
+    "Run",
+    "Volts lost",
+    "Drop",
+    "Within the limit"
+   ],
+   "rows": [
+    [
+     "2.5 mm²",
+     "20 m",
+     "5.9 V",
+     "2.55%",
+     "Yes"
+    ],
+    [
+     "2.5 mm²",
+     "10 m",
+     "2.9 V",
+     "1.28%",
+     "Yes"
+    ],
+    [
+     "2.5 mm²",
+     "30 m",
+     "8.8 V",
+     "3.83%",
+     "Yes"
+    ],
+    [
+     "4 mm²",
+     "30 m",
+     "5.5 V",
+     "2.39%",
+     "Yes"
+    ],
+    [
+     "4 mm²",
+     "50 m",
+     "9.2 V",
+     "3.99%",
+     "Yes"
+    ],
+    [
+     "6 mm²",
+     "50 m",
+     "6.1 V",
+     "2.66%",
+     "Yes"
+    ],
+    [
+     "10 mm²",
+     "100 m",
+     "7.3 V",
+     "3.19%",
+     "Yes"
+    ]
+   ]
+  },
+  "answer": "A 16.3 A load on 2.5 mm² copper cable over 30 m at 230 V loses 8.8 V, a voltage drop of 3.83%, under the 5% limit. Voltage drop = two × length × current × resistivity ÷ cable area for single-phase and DC; three-phase uses √3 instead of two.",
+  "formula": {
+   "text": "ΔV = 2 × L × I × ρ ÷ A (single-phase, DC);  ΔV = √3 × L × I × ρ ÷ A (three-phase);  drop % = ΔV ÷ V × 100",
+   "lines": [
+    "ΔV = volts lost in the cable",
+    "L = one-way cable length in metres",
+    "I = current in amps (from watts ÷ (V × PF) if not entered; per line for three-phase)",
+    "ρ = conductor resistivity in Ω·mm²/m at working temperature (copper by default)",
+    "A = conductor cross-section in mm²; V = supply voltage (line-to-line for three-phase)"
+   ]
+  },
+  "safety": "Voltage drop is one check among several: the cable must also carry the current, match the breaker and suit how it is installed. Use the wire size calculator for the full check and have a licensed electrician select, install and test the cable."
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -49,7 +400,7 @@
      {
       "@type": "ListItem",
       "position": 3,
-      "name": "Voltage Drop Calculator",
+      "name": "Voltage Drop Calculator for Any Cable, AC or DC",
       "item": "https://wattlyst.com/wiring/voltage-drop-calculator/"
      }
     ]
@@ -66,12 +417,14 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/wiring/voltage-drop-calculator/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-14",
+    "lastReviewed": "2026-10-14"
    },
    {
     "@type": "WebApplication",
     "@id": "https://wattlyst.com/wiring/voltage-drop-calculator/#app",
-    "name": "Voltage Drop Calculator",
+    "name": "Voltage Drop Calculator for Any Cable, AC or DC",
     "url": "https://wattlyst.com/wiring/voltage-drop-calculator/",
     "description": "Calculate voltage drop for any wire size, length and load, single or three phase, DC or AC. See if your cable stays under 3% or 5%.",
     "applicationCategory": "UtilitiesApplication",
@@ -98,6 +451,68 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/wiring/voltage-drop-calculator/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "What is the voltage drop formula?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Single-phase and DC: drop = 2 × length × current × resistivity ÷ cable area. Three-phase: drop = √3 × length × current × resistivity ÷ area. Copper resistivity is 0.0225 Ω·mm²/m at working temperature."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What is the maximum voltage drop allowed?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "This calculator checks 3% for lighting and 5% for other circuits, from the supply to the load. Solar DC strings are usually kept to 3%."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How do I calculate voltage drop per metre?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Work out the drop for your run and divide by its length; for the same cable and current the per-metre figure is fixed. Thicker cable or lower current reduces it."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How much voltage drops on 2.5 mm² cable over 30 m?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "With 16.3 A at 230 V, 8.8 V or 3.83%. On 4 mm² it is 2.39%."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Does this voltage drop calculator work for DC?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Yes. Choose DC and enter the battery or string voltage. 20 A at 12 V over 5 m of 6 mm² drops 6.3%."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Can I calculate voltage drop for aluminium cable?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Yes, by replacing the copper resistivity in the advanced settings with the aluminium value at working temperature from the cable maker's datasheet. The calculator does not hold an aluminium value itself."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What happens if the voltage drop is too high?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Motors and compressors run hot and may fail to start, lights dim, and inverters or stabilisers may cut out. Use a larger cable, shorten the run, or split the load."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

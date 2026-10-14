@@ -3,15 +3,25 @@
  "type": "tool",
  "silo": "A",
  "url": "/converters/volts-to-watts-calculator/",
- "h1": "Volts To Watts Calculator",
+ "h1": "Volts to Watts Calculator (Volts × Amps)",
  "title": "Volts to Watts Calculator (with Amps) | Wattlyst",
  "meta": "Turn volts and amps into watts for DC or AC circuits. Includes power factor for AC loads and worked examples for 12V, 24V and 230V.",
  "primary_keyword": "volts to watts calculator",
  "wave": 3,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-14",
+ "published": "2026-10-14",
  "author": "ali-ahmad",
+ "related": [
+  "A2",
+  "A1",
+  "A3",
+  "A6",
+  "W5"
+ ],
+ "next": "E6",
  "parent": "P-A",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
@@ -22,11 +32,252 @@
    "url": "/converters/"
   },
   {
-   "name": "Volts To Watts Calculator",
+   "name": "Volts to Watts Calculator (Volts × Amps)",
    "url": "/converters/volts-to-watts-calculator/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "Volts, amps and watts formula",
+    "p": [
+     "Watts are volts times amps, adjusted by the power factor on AC. 230 V × 5 A = 1,150 VA; a heater turns all of it into 1,150 W, a motor at a power factor of 0.8 only 920 W of useful power.",
+     "Rearranged, the same formula gives amps = watts ÷ volts and volts = watts ÷ amps. The watts to amps calculator and the amps to watts calculator do those directions."
+    ]
+   },
+   {
+    "h2": "How many watts is 230 volts?",
+    "p": [
+     "Volts alone have no watts. Voltage is the electrical pressure; watts appear only when current flows. A 230 V socket with nothing plugged in delivers zero watts; with 5 A of heating load it delivers 1,150 W. The same applies to an older 220 V figure: 10 A there is 2,200 W at a power factor of one."
+    ]
+   },
+   {
+    "h2": "12 volts to watts and other DC systems",
+    "p": [
+     "For batteries, solar panels and car circuits choose DC. 12 V × 5 A = 60 W, and 24 V × 10 A = 240 W. A higher battery voltage carries the same power with fewer amps, which is why larger inverters run on higher-voltage banks."
+    ]
+   },
+   {
+    "h2": "Watts, volts, amps triangle and Ohm's law",
+    "p": [
+     "The power triangle (P = V × I) links watts, volts and amps: cover the one you want and the other two show how to get it. Ohm's law (V = I × R) links volts, amps and resistance. Together they answer most circuit questions: for a pure resistance such as a heater element, watts also equal amps squared × ohms, and volts squared ÷ ohms.",
+     "Ohm's law applies directly only to resistive loads. Motors, chargers and LED drivers do not behave like a fixed resistance, so for them measure or read the current and use watts = volts × amps × power factor."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "How do I convert volts to watts?",
+    "a": "Multiply volts by amps, then by the power factor on AC. 230 V × 5 A × 0.8 = 920 W. Without the current there is no answer."
+   },
+   {
+    "q": "How many watts is 230 volts?",
+    "a": "None on its own. Watts depend on the current: 5 A at 230 V is 1,150 W for a heater and 920 W for a motor at a power factor of 0.8."
+   },
+   {
+    "q": "How many watts is 12 volts?",
+    "a": "It depends on the amps. At 5 A, 12 V gives 60 W; double the current and the watts double."
+   },
+   {
+    "q": "How do I convert volts to amps?",
+    "a": "Divide the watts by the volts (and the power factor on AC): amps = watts ÷ (volts × power factor). The watts to amps calculator does this for DC, single-phase and three-phase."
+   },
+   {
+    "q": "What is the watts, volts, amps triangle?",
+    "a": "Watts = volts × amps, volts = watts ÷ amps, amps = watts ÷ volts. On AC multiply the volts × amps side by the power factor."
+   },
+   {
+    "q": "Is this an Ohm's law calculator?",
+    "a": "It covers the power side of Ohm's law: watts from volts and amps. Ohm's law itself, V = I × R, links volts, amps and resistance and holds exactly only for resistive loads such as heater elements."
+   }
+  ],
+  "key_facts": [
+   "Watts = volts × amps × power factor. 230 V × 5 A at a power factor of 0.8 is 920 W.",
+   "On DC there is no power factor: 12 V × 5 A = 60 W and 24 V × 10 A = 240 W.",
+   "At the same 5 A, a 230 V heater gives 1,150 W, while a 12 V battery load gives a small fraction of that: higher voltage moves more power through the same current.",
+   "Voltage on its own is not power. A 230 V socket supplies only as many watts as the connected load draws in amps."
+  ],
+  "mistakes": [
+   "Asking how many watts a voltage is. Voltage alone has no power; you need the current the load draws.",
+   "Multiplying volts × amps for a motor and calling it watts. That is VA; the real watts are lower by the power factor (about 0.8).",
+   "Using Ohm's law with a fixed resistance for a motor, charger or LED driver. Their resistance is not constant; use the measured current instead.",
+   "Forgetting √3 on three-phase. The 400 V row in the table already includes it."
+  ],
+  "sources": [
+   {
+    "label": "IEC 60038:2009, IEC standard voltages (230/400 V, 120/240 V systems)",
+    "url": "https://webstore.iec.ch/publication/153"
+   },
+   {
+    "label": "Wattlyst methodology and default values",
+    "url": "/methodology/"
+   }
+  ],
+  "tool": {
+   "calc": "amps_to_watts",
+   "module": "conversions.js",
+   "data_keys": [],
+   "appliances": {},
+   "fields": [
+    {
+     "name": "volts",
+     "label": "Voltage",
+     "unit": "V",
+     "default": 230,
+     "hint": "The supply voltage: 12, 24 or 48 for a battery, 230 for Pakistani mains, 120 in the US, 400 line to line for three-phase."
+    },
+    {
+     "name": "amps",
+     "label": "Current",
+     "unit": "A",
+     "default": 5,
+     "hint": "Amps from the label or a clamp meter. Volts alone cannot give watts; you need the current too."
+    },
+    {
+     "name": "mode",
+     "label": "Supply type",
+     "type": "select",
+     "default": "ac1",
+     "options": [
+      [
+       "ac1",
+       "Single-phase AC"
+      ],
+      [
+       "dc",
+       "DC (battery, solar, car)"
+      ],
+      [
+       "ac3",
+       "Three-phase AC (line-to-line volts)"
+      ]
+     ],
+     "hint": "DC ignores power factor. For three-phase, enter the line-to-line voltage and the current in one line."
+    },
+    {
+     "name": "pf",
+     "label": "Power factor",
+     "unit": "0 to 1",
+     "default": 0.8,
+     "hint": "1 for heaters and bulbs, about 0.8 for motors and mixed loads. Ignored for DC."
+    }
+   ],
+   "fixed_inputs": {},
+   "outputs": [
+    {
+     "key": "watts",
+     "label": "Real power",
+     "spec": "int",
+     "unit": "W",
+     "label_ur": "Asal power",
+     "value": "920"
+    },
+    {
+     "key": "va",
+     "label": "Volts × amps",
+     "spec": "int",
+     "unit": "VA",
+     "label_ur": "Volts × amps (VA)",
+     "value": "1,150"
+    }
+   ],
+   "how": {
+    "tpl": "{{out.volts|int}} V × {{in.amps|int}} A = {{out.va|int}} VA. × {{out.pf|2}} power factor = {{out.watts|int}} W of real power. On DC the power factor is one, so watts = volts × amps exactly; on three-phase the product is multiplied by √3 as well.",
+    "text": "230 V × 5 A = 1,150 VA. × 0.8 power factor = 920 W of real power. On DC the power factor is one, so watts = volts × amps exactly; on three-phase the product is multiplied by √3 as well."
+   },
+   "submit": "Calculate",
+   "notice": "",
+   "data_checked": []
+  },
+  "examples": [
+   {
+    "title": "12 volts to watts at 5 A (DC)",
+    "text": "12 V × 5 A = 60 W, about what a small DC fan or a router with a few lights draws."
+   },
+   {
+    "title": "24 V system at 10 A",
+    "text": "24 V × 10 A = 240 W from a 24 V battery bank."
+   },
+   {
+    "title": "230 V and 5 A, heating load",
+    "text": "230 V × 5 A × 1 = 1,150 W, roughly an electric iron or small room heater."
+   },
+   {
+    "title": "230 V and 5 A, motor or mixed load",
+    "text": "230 V × 5 A = 1,150 VA; × 0.8 = 920 W of real power. The cable still carries the full 5 A."
+   },
+   {
+    "title": "How many watts is 220 volts at 10 A?",
+    "text": "220 V × 10 A × 1 = 2,200 W for a resistive load."
+   }
+  ],
+  "table": {
+   "caption": "Volts to watts at 5 A: how the voltage changes the power for the same current",
+   "head": [
+    "Voltage",
+    "Power factor",
+    "Volts × amps",
+    "Watts"
+   ],
+   "rows": [
+    [
+     "12 V",
+     "1",
+     "60 VA",
+     "60 W"
+    ],
+    [
+     "24 V",
+     "1",
+     "120 VA",
+     "120 W"
+    ],
+    [
+     "48 V",
+     "1",
+     "240 VA",
+     "240 W"
+    ],
+    [
+     "120 V",
+     "1",
+     "600 VA",
+     "600 W"
+    ],
+    [
+     "230 V",
+     "1",
+     "1,150 VA",
+     "1,150 W"
+    ],
+    [
+     "230 V",
+     "0.8",
+     "1,150 VA",
+     "920 W"
+    ],
+    [
+     "400 V",
+     "0.8",
+     "3,464 VA",
+     "2,771 W"
+    ]
+   ]
+  },
+  "answer": "230 volts at 5 amps is 1,150 VA, which is 920 watts at a power factor of 0.8 or 1,150 W for a heater. Watts = volts × amps × power factor. Volts alone do not give watts: you need the current too. On DC the power factor is one, so 12 V at 5 A is 60 W.",
+  "formula": {
+   "text": "P = V × I (DC);  P = V × I × PF (single-phase AC);  P = √3 × V × I × PF (three-phase AC);  Ohm's law: V = I × R",
+   "lines": [
+    "P = real power in watts (W)",
+    "V = voltage in volts (V)",
+    "I = current in amps (A)",
+    "PF = power factor (1 for DC and heaters)",
+    "R = resistance in ohms (Ω); V × I without PF is the apparent power in VA"
+   ]
+  },
+  "safety": "Measuring live voltage and current at the mains is dangerous. Use a clamp meter rated for the circuit, keep to battery and plug-in measurements yourself, and let a licensed electrician take readings inside a distribution board."
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -49,7 +300,7 @@
      {
       "@type": "ListItem",
       "position": 3,
-      "name": "Volts To Watts Calculator",
+      "name": "Volts to Watts Calculator (Volts × Amps)",
       "item": "https://wattlyst.com/converters/volts-to-watts-calculator/"
      }
     ]
@@ -66,12 +317,14 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/converters/volts-to-watts-calculator/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-14",
+    "lastReviewed": "2026-10-14"
    },
    {
     "@type": "WebApplication",
     "@id": "https://wattlyst.com/converters/volts-to-watts-calculator/#app",
-    "name": "Volts To Watts Calculator",
+    "name": "Volts to Watts Calculator (Volts × Amps)",
     "url": "https://wattlyst.com/converters/volts-to-watts-calculator/",
     "description": "Turn volts and amps into watts for DC or AC circuits. Includes power factor for AC loads and worked examples for 12V, 24V and 230V.",
     "applicationCategory": "UtilitiesApplication",
@@ -98,6 +351,60 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/converters/volts-to-watts-calculator/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "How do I convert volts to watts?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Multiply volts by amps, then by the power factor on AC. 230 V × 5 A × 0.8 = 920 W. Without the current there is no answer."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many watts is 230 volts?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "None on its own. Watts depend on the current: 5 A at 230 V is 1,150 W for a heater and 920 W for a motor at a power factor of 0.8."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many watts is 12 volts?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "It depends on the amps. At 5 A, 12 V gives 60 W; double the current and the watts double."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How do I convert volts to amps?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Divide the watts by the volts (and the power factor on AC): amps = watts ÷ (volts × power factor). The watts to amps calculator does this for DC, single-phase and three-phase."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What is the watts, volts, amps triangle?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Watts = volts × amps, volts = watts ÷ amps, amps = watts ÷ volts. On AC multiply the volts × amps side by the power factor."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Is this an Ohm's law calculator?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "It covers the power side of Ohm's law: watts from volts and amps. Ohm's law itself, V = I × R, links volts, amps and resistance and holds exactly only for resistive loads such as heater elements."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

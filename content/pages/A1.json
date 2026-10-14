@@ -1,0 +1,283 @@
+{
+ "id": "A1",
+ "status": "publish",
+ "template": "tool",
+ "h1": "Watts to Amps Calculator for DC, Single-Phase and Three-Phase",
+ "author": "ali-ahmad",
+ "published": "2026-10-14",
+ "reviewed": "2026-10-14",
+ "calc": "watts_to_amps",
+ "fields": [
+  {
+   "name": "watts",
+   "label": "Power",
+   "unit": "W",
+   "default": 1500,
+   "hint": "Watts from the appliance label, or the total of several appliances. For kW, multiply by 1,000."
+  },
+  {
+   "name": "mode",
+   "label": "Supply type",
+   "type": "select",
+   "default": "ac1",
+   "options": [
+    [
+     "dc",
+     "DC (battery, solar panel, car)"
+    ],
+    [
+     "ac1",
+     "Single-phase AC (normal home supply)"
+    ],
+    [
+     "ac3",
+     "Three-phase AC (line-to-line voltage)"
+    ]
+   ],
+   "hint": "DC ignores power factor. Three-phase uses the line-to-line voltage and the square root of three."
+  },
+  {
+   "name": "volts",
+   "label": "Voltage",
+   "unit": "V",
+   "placeholder": "Auto by supply type",
+   "hint": "Leave blank for standard mains: 230 V single-phase or 400 V three-phase. For DC enter the battery voltage (12, 24, 48). For the US enter 120."
+  },
+  {
+   "name": "pf",
+   "label": "Power factor",
+   "unit": "0 to 1",
+   "default": "@pf_mixed",
+   "hint": "1 for heaters, kettles, irons and bulbs; about 0.8 for motors, ACs, fridges and mixed loads. Ignored for DC."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "amps",
+   "label": "Current drawn",
+   "spec": "2",
+   "unit": "A"
+  },
+  {
+   "key": "volts",
+   "label": "Voltage used",
+   "spec": "int",
+   "unit": "V"
+  }
+ ],
+ "answer": "{{in.watts|int}} watts is {{out.amps|2}} amps on a {{in.volts|int}} V single-phase supply at a power factor of {{out.pf|2}}, or {{ex.0.out.amps|2}} A for a heater with a power factor of one. Amps = watts ÷ (volts × power factor); for DC the power factor is one, and for three-phase the volts are multiplied by the square root of three.",
+ "how": "{{in.watts|int}} W ÷ ({{out.volts|int}} V × {{out.pf|2}} power factor) = {{out.amps|2}} A. On DC the power factor is always one, so amps are simply watts ÷ volts. On three-phase the divisor is √3 × the line-to-line voltage × power factor, because the power is shared by three wires.",
+ "key_facts": [
+  "Amps = watts ÷ (volts × power factor). On a {{in.volts|int}} V single-phase supply, {{in.watts|int}} W at a power factor of {{out.pf|2}} draws {{out.amps|2}} A.",
+  "Watts alone do not give amps: the same {{ex.1.in.watts|int}} W draws {{ex.1.out.amps|2}} A from a {{ex.1.in.volts|int}} V battery but only {{ex.4.out.amps|2}} A at {{ex.4.in.volts|int}} V mains with a power factor of one.",
+  "At {{ex.3.in.volts|int}} V (US and Canada) a {{ex.3.in.watts|int}} W heater draws {{ex.3.out.amps|2}} A, about twice the current of the same heater on a {{in.volts|int}} V supply.",
+  "On three-phase {{ex.2.out.volts|int}} V, {{ex.2.in.watts|int}} W at a power factor of {{ex.2.in.pf|2}} draws {{ex.2.out.amps|2}} A in each line wire."
+ ],
+ "formula": {
+  "text": "DC: I = P ÷ V;  single-phase AC: I = P ÷ (V × PF);  three-phase AC: I = P ÷ (√3 × V × PF)",
+  "lines": [
+   "I = current in amps (A)",
+   "P = real power in watts (W); for kW multiply by 1,000",
+   "V = voltage: the battery voltage for DC, phase-to-neutral for single-phase, line-to-line for three-phase",
+   "PF = power factor between 0 and 1 (1 for heating loads)",
+   "√3 ≈ 1.732, three-phase only"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "What is {{ex.0.in.watts|int}} W in amps?",
+   "p": [
+    "On a {{ex.0.in.volts|int}} V home supply, {{ex.0.in.watts|int}} W is {{ex.0.out.amps|2}} A for a heater, kettle or iron (power factor one) and {{out.amps|2}} A for a motor or AC at a power factor of {{out.pf|2}}. The watts are the same; the motor draws more current because part of it flows back and forth without doing work.",
+    "On a {{ex.3.in.volts|int}} V US supply the same heater draws twice as much current, so always enter the voltage of the supply the load actually runs on."
+   ]
+  },
+  {
+   "h2": "Is {{ex.1.in.watts|int}} watts one amp? How many watts per amp?",
+   "p": [
+    "No. A watt is power, an amp is current, and the voltage links them. {{ex.1.in.watts|int}} W is {{ex.1.out.amps|2}} A from a {{ex.1.in.volts|int}} V battery but {{ex.4.out.amps|2}} A from {{ex.4.in.volts|int}} V mains. The higher the voltage, the fewer amps for the same watts.",
+    "Each amp carries as many watts as the voltage times the power factor: on {{d.v_1ph|int}} V mains with a power factor of one, one amp is {{d.v_1ph|int}} W. The amps to watts calculator does that direction."
+   ]
+  },
+  {
+   "h2": "Watts, amps and volts: how they relate",
+   "p": [
+    "Power is voltage times current. On DC that is the whole story: watts = volts × amps. On AC the current and voltage are slightly out of step in motors, compressors and electronics, so a power factor below one is added: watts = volts × amps × power factor.",
+    "Three-phase supplies use three live wires. The power is shared between them, so the formula uses the square root of three and the line-to-line voltage ({{d.v_3ph|int}} V in Pakistan), and the result is the current in each line."
+   ]
+  },
+  {
+   "h2": "DC watts to amps: batteries, solar and cars",
+   "p": [
+    "Choose DC and enter the battery voltage. A {{ex.1.in.watts|int}} W load on a {{ex.1.in.volts|int}} V battery draws {{ex.1.out.amps|2}} A, which is why low-voltage inverters need thick cables. On a battery inverter, add the inverter's losses to the watts first; the 12V watts to amps calculator does this for you."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "watts": 1500,
+    "pf": 1
+   },
+   "title": "What is {{in.watts|int}} W in amps on a {{in.volts|int}} V supply?",
+   "text": "{{in.watts|int}} W ÷ ({{in.volts|int}} V × {{in.pf|int}}) = {{out.amps|2}} A for a heater or kettle. A motor of the same watts at a power factor below one draws more."
+  },
+  {
+   "inputs": {
+    "watts": 1000,
+    "mode": "dc",
+    "volts": 12
+   },
+   "title": "{{in.watts|int}} W from a {{in.volts|int}} V battery (DC)",
+   "text": "{{in.watts|int}} W ÷ {{in.volts|int}} V = {{out.amps|2}} A. DC has no power factor, so this is the current the battery and its cable must carry, before inverter losses."
+  },
+  {
+   "inputs": {
+    "watts": 10000,
+    "mode": "ac3",
+    "pf": 0.8
+   },
+   "title": "{{in.watts|int}} W on three-phase {{out.volts|int}} V",
+   "text": "{{in.watts|int}} W ÷ (√3 × {{out.volts|int}} V × {{in.pf|2}}) = {{out.amps|2}} A in each line. The voltage box was left blank, so the calculator used the standard three-phase line-to-line voltage."
+  },
+  {
+   "inputs": {
+    "watts": 1500,
+    "volts": 120,
+    "pf": 1
+   },
+   "title": "{{in.watts|int}} W heater at {{in.volts|int}} V (US and Canada)",
+   "text": "{{in.watts|int}} W ÷ ({{in.volts|int}} V × {{in.pf|int}}) = {{out.amps|2}} A. A lower voltage means more amps for the same watts."
+  },
+  {
+   "inputs": {
+    "watts": 1000,
+    "pf": 1
+   },
+   "title": "How many amps is {{in.watts|int}} watts at {{in.volts|int}} V?",
+   "text": "{{in.watts|int}} W ÷ ({{in.volts|int}} V × {{in.pf|int}}) = {{out.amps|2}} A for a resistive load such as an iron or water heater."
+  }
+ ],
+ "table": {
+  "caption": "Watts to amps chart: common loads on DC batteries, single-phase mains and three-phase supplies",
+  "rows": [
+   {
+    "watts": 100,
+    "mode": "dc",
+    "volts": 12
+   },
+   {
+    "watts": 1000,
+    "mode": "dc",
+    "volts": 48
+   },
+   {
+    "watts": 500,
+    "pf": 1
+   },
+   {
+    "watts": 2000,
+    "pf": 1
+   },
+   {
+    "watts": 2000,
+    "pf": 0.8
+   },
+   {
+    "watts": 3000,
+    "pf": 1
+   },
+   {
+    "watts": 2000,
+    "volts": 120,
+    "pf": 1
+   },
+   {
+    "watts": 20000,
+    "mode": "ac3",
+    "pf": 0.8
+   }
+  ],
+  "columns": [
+   {
+    "label": "Power",
+    "tpl": "{{in.watts|int}} W"
+   },
+   {
+    "label": "Voltage",
+    "tpl": "{{out.volts|int}} V"
+   },
+   {
+    "label": "Power factor",
+    "tpl": "{{out.pf|2}}"
+   },
+   {
+    "label": "Current",
+    "tpl": "{{out.amps|2}} A"
+   }
+  ]
+ },
+ "mistakes": [
+  "Dividing watts by volts for an AC, fridge or water motor. Their power factor is below one, so the real current is higher; use about {{d.pf_mixed|2}} unless the label says otherwise.",
+  "Using {{d.v_1ph|int}} V in the three-phase formula. Three-phase needs the line-to-line voltage ({{d.v_3ph|int}} V) together with the square root of three.",
+  "Forgetting that DC current is large at low voltage. A load that draws a few amps from the mains can draw tens of amps from a battery, and the cable must be sized for that.",
+  "Treating the calculated amps as the breaker or wire size. Cables and breakers need a margin above the running current; the breaker size calculator adds it."
+ ],
+ "safety": "The current from this page is a starting point for choosing cable and breakers, not the final choice. Use the wire size and breaker size calculators for the margins and voltage drop, and have a licensed electrician connect any new circuit.",
+ "faq": [
+  {
+   "q": "How many amps is {{ex.4.in.watts|int}} watts?",
+   "a": "{{ex.4.out.amps|2}} A on a {{ex.4.in.volts|int}} V single-phase supply with a power factor of one. From a {{ex.1.in.volts|int}} V battery the same {{ex.1.in.watts|int}} W draws {{ex.1.out.amps|2}} A, because current depends on the voltage."
+  },
+  {
+   "q": "What is {{ex.0.in.watts|int}} W in amps?",
+   "a": "{{ex.0.out.amps|2}} A at {{ex.0.in.volts|int}} V for a heating load, and {{out.amps|2}} A at a power factor of {{out.pf|2}} for a motor or mixed load."
+  },
+  {
+   "q": "How many amps does a {{ex.3.in.watts|int}} W heater draw at {{ex.3.in.volts|int}} V?",
+   "a": "{{ex.3.out.amps|2}} A at {{ex.3.in.volts|int}} V, against {{ex.0.out.amps|2}} A on a {{ex.0.in.volts|int}} V supply. Roughly halving the voltage roughly doubles the current, which is why US heaters need heavier cable."
+  },
+  {
+   "q": "What is the watts to amps formula?",
+   "a": "Amps = watts ÷ volts for DC; amps = watts ÷ (volts × power factor) for single-phase AC; amps = watts ÷ (√3 × line-to-line volts × power factor) for three-phase."
+  },
+  {
+   "q": "Is {{ex.1.in.watts|int}} watts one amp?",
+   "a": "No. Watts measure power and amps measure current. {{ex.1.in.watts|int}} W is {{ex.4.out.amps|2}} A on {{ex.4.in.volts|int}} V mains and {{ex.1.out.amps|2}} A from a {{ex.1.in.volts|int}} V battery."
+  },
+  {
+   "q": "How many watts per amp?",
+   "a": "Watts per amp equals the voltage times the power factor. On {{d.v_1ph|int}} V mains with a power factor of one, each amp carries {{d.v_1ph|int}} W; on a {{ex.1.in.volts|int}} V battery each amp carries only {{ex.1.in.volts|int}} W."
+  },
+  {
+   "q": "How do I convert watts to amps on three-phase?",
+   "a": "Divide the watts by √3 × the line-to-line voltage × the power factor. {{ex.2.in.watts|int}} W at {{ex.2.out.volts|int}} V and a power factor of {{ex.2.in.pf|2}} is {{ex.2.out.amps|2}} A per line. The 3 phase amps calculator also handles kW and kVA ratings."
+  }
+ ],
+ "related": [
+  "A2",
+  "A4",
+  "A3",
+  "A6",
+  "A5"
+ ],
+ "next": "W3",
+ "literal_numbers": [
+  "12V",
+  "3 phase",
+  "√3"
+ ],
+ "sources": [
+  {
+   "label": "IEC 60038:2009, IEC standard voltages (230/400 V, 120/240 V systems)",
+   "url": "https://webstore.iec.ch/publication/153"
+  },
+  {
+   "label": "NEPRA, National Electric Power Regulatory Authority of Pakistan (supply standards: 230 V single-phase, 400 V three-phase, 50 Hz)",
+   "url": "https://www.nepra.org.pk/"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}
