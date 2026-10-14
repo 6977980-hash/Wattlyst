@@ -5,7 +5,7 @@
  "url": "/solar/solar-panel-cleaning-loss-calculator/",
  "h1": "Solar Panel Cleaning Loss Calculator: Dust and When to Clean",
  "title": "Solar Panel Dust & Cleaning Loss Calculator | Wattlyst",
- "meta": "Estimate how many units and rupees dust is costing your solar system, and how often cleaning pays for itself in your city.",
+ "meta": "Estimate how many units and rupees dust is costing your solar system each day, and after how many days a cleaning pays for itself.",
  "primary_keyword": "solar panel cleaning loss calculator",
  "wave": 3,
  "status": "publish",
@@ -118,10 +118,8 @@
   ],
   "tool": {
    "calc": "cleaning_loss",
-   "module": "solar.js",
-   "data_keys": [
-    "cities"
-   ],
+   "module": "solartools.js",
+   "data_keys": [],
    "appliances": {},
    "fields": [
     {
@@ -165,7 +163,7 @@
      "unit": "0 to 1",
      "default": 0.003,
      "advanced": true,
-     "hint": "Share of output lost to dust each day without rain. The default is an estimate for dusty Pakistani cities, not a measurement; measure your own by comparing output before and after a cleaning on two clear days."
+     "hint": "Share of output lost to dust each day without rain, as a decimal, not a percent: 0.003 means 0.3% a day; typing 0.3 would mean 30% a day and is rejected. The default is an estimate for dusty Pakistani cities, not a measurement; measure your own by comparing output before and after a cleaning on two clear days."
     }
    ],
    "fixed_inputs": {},
@@ -332,7 +330,7 @@
     "@id": "https://wattlyst.com/solar/solar-panel-cleaning-loss-calculator/#webpage",
     "url": "https://wattlyst.com/solar/solar-panel-cleaning-loss-calculator/",
     "name": "Solar Panel Dust & Cleaning Loss Calculator | Wattlyst",
-    "description": "Estimate how many units and rupees dust is costing your solar system, and how often cleaning pays for itself in your city.",
+    "description": "Estimate how many units and rupees dust is costing your solar system each day, and after how many days a cleaning pays for itself.",
     "inLanguage": "en",
     "isPartOf": {
      "@id": "https://wattlyst.com/#website"
@@ -348,7 +346,7 @@
     "@id": "https://wattlyst.com/solar/solar-panel-cleaning-loss-calculator/#app",
     "name": "Solar Panel Cleaning Loss Calculator: Dust and When to Clean",
     "url": "https://wattlyst.com/solar/solar-panel-cleaning-loss-calculator/",
-    "description": "Estimate how many units and rupees dust is costing your solar system, and how often cleaning pays for itself in your city.",
+    "description": "Estimate how many units and rupees dust is costing your solar system each day, and after how many days a cleaning pays for itself.",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Any",
     "browserRequirements": "Requires JavaScript for live results",

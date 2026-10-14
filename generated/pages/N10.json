@@ -42,15 +42,15 @@
    {
     "h2": "Inverter AC vs non-inverter AC savings: where they come from",
     "p": [
-     "A non-inverter AC has one speed: its compressor runs at full power until the room reaches the setting, switches off, and starts again with a surge. An inverter AC slows its compressor down as the room cools and keeps it running gently, so it draws less on average. With the defaults the difference is 1.8 kW against 1 kW, which over 1,200 hours is 960 units a year.",
-     "Both power figures are planning averages, not measurements of your units. The saving is largest in the hottest weeks, when the non-inverter compressor hardly ever switches off, and smallest in mild weather, when it cycles; the second worked example uses the mild-weather figure."
+     "A non-inverter AC has one speed: its compressor runs at full power until the room reaches the setting, switches off, and starts again with a surge. An inverter AC slows its compressor down as the room cools and keeps it running gently, so it draws less on average. With the defaults the non-inverter AC averages 1.8 kW × 80% = 1.44 kW against 1 kW, which over 1,200 hours is 1,728 units against 1,200, a saving of 528 units a year.",
+     "Both average figures are planning values, not measurements of your units. The saving is largest in the hottest weeks, when the non-inverter compressor hardly ever switches off, and smaller in mild weather, when it cycles more; the second worked example shows the peak-summer case."
     ]
    },
    {
     "h2": "Inverter AC payback period",
     "p": [
-     "Payback = the extra price ÷ the saving a month. With the example price gap of Rs 40,000 and Rs 35,002 saved a year, that is about 13.7 months of AC use in peak heat, or about 24.9 months if your weather is milder. The price gap is an example to show the method, not a market price; enter the gap between two real quotes for the same brand and tonnage.",
-     "Count only the months the AC actually runs. If your payback is two summers, it is two years of calendar time, not two years of AC months."
+     "Payback = the extra price ÷ the saving a month. With the example price gap of Rs 40,000 and Rs 19,251 saved a year, that is about 24.9 calendar months, or about 13.7 if the compressor ran flat out every AC hour. The price gap is an example to show the method, not a market price; enter the gap between two real quotes for the same brand and tonnage.",
+     "The months are calendar months. The yearly saving already spreads the summer saving over the whole year, months with the AC off included, so do not count only the months the AC runs."
     ]
    },
    {
@@ -70,11 +70,11 @@
   "faq": [
    {
     "q": "How much electricity does an inverter AC save?",
-    "a": "With the planning averages here, about 960 units a year for a 1.5 ton AC run 1,200 hours in peak heat, and about 528 units in milder weather. Your figure depends on hours, weather and the models."
+    "a": "With the planning averages here, about 528 units a year for a 1.5 ton AC run 1,200 hours, and up to about 960 units if every hour were like peak summer. Your figure depends on hours, weather and the models."
    },
    {
     "q": "What is the payback period of an inverter AC?",
-    "a": "The extra price ÷ the monthly saving. For the example gap of Rs 40,000, about 13.7 months of AC use in peak heat at Rs 36.46 per unit, longer at lower rates or fewer hours."
+    "a": "The extra price ÷ the monthly saving. For the example gap of Rs 40,000, about 24.9 calendar months at Rs 36.46 per unit, longer at lower rates or fewer hours."
    },
    {
     "q": "Is an inverter AC worth it in Pakistan?",
@@ -85,8 +85,8 @@
     "a": "Yes, twice: it uses fewer units, and it starts without a big surge, so it needs a smaller solar inverter. See how many panels each kind needs with the solar panels for AC calculator."
    },
    {
-    "q": "Why does the non-inverter AC use less in mild weather?",
-    "a": "Its compressor switches off when the room reaches the setting. In mild weather it is off for part of each hour, about 80% on by our planning figure, so its average draw falls and the inverter AC's advantage shrinks."
+    "q": "Why does a non-inverter AC use less than its rated power?",
+    "a": "Its compressor switches off when the room reaches the setting. Over a season it is on about 80% of each hour by our planning figure, so its average draw is below its running power; in the hottest weeks it hardly switches off and the inverter AC's advantage is largest."
    },
    {
     "q": "Is the price difference on this page real?",
@@ -94,16 +94,16 @@
    }
   ],
   "key_facts": [
-   "Yearly saving of an inverter AC = (non-inverter kW − inverter average kW) × hours a year × tariff; payback in months = the extra price ÷ (yearly saving ÷ twelve).",
-   "Using a 1.5 ton non-inverter AC at 1.8 kW with its compressor on and an inverter AC at a planning average of 1 kW, 1,200 hours a year save about 960 units, Rs 35,002 at Rs 36.46 per unit.",
-   "In milder weather, when the non-inverter compressor runs only about 80% of the hour, the same AC saves about 528 units a year and the payback stretches to about 24.9 months for the same example price gap.",
-   "A home on the protected tariff at Rs 13.01 per unit takes about 38.4 months to recover the same example price gap, because each saved unit is worth less."
+   "Yearly saving of an inverter AC = (non-inverter average kW − inverter average kW) × hours a year × tariff; payback in calendar months = the extra price ÷ (yearly saving ÷ twelve).",
+   "A 1.5 ton non-inverter AC draws 1.8 kW with its compressor on and about 80% of that over a season, 1.44 kW on average; against an inverter AC averaging 1 kW, 1,200 hours a year save about 528 units, Rs 19,251 at Rs 36.46 per unit.",
+   "In the hottest weeks, when the non-inverter compressor hardly switches off, the gap is wider: at that rate all year the same AC would save about 960 units and pay back in about 13.7 calendar months, so treat that as the optimistic end.",
+   "A home on the protected tariff at Rs 13.01 per unit takes about 69.9 calendar months to recover the same example price gap, because each saved unit is worth less."
   ],
   "mistakes": [
    "Comparing label watts. The inverter AC's label shows its maximum; the bill follows its average, about 1 kW for a 1.5 ton unit.",
-   "Counting calendar months as AC months. Payback is measured in months of AC use; a payback of a summer and a half takes two calendar years.",
+   "Comparing a non-inverter AC at full power with an inverter AC at its average. Both must be averages: the non-inverter compressor switches off for part of each hour.",
    "Comparing different brands or tonnage. The price gap is fair only for the same brand, the same tonnage and the same installation.",
-   "Using the peak-summer saving all year. In mild weather the non-inverter AC cycles off and the gap is smaller, as the second example shows."
+   "Using the peak-summer saving all year. In the hottest weeks the gap is widest, as the second example shows; over a season it is smaller."
   ],
   "sources": [
    {
@@ -132,7 +132,14 @@
      "label": "Non-inverter AC power while running",
      "unit": "kW",
      "default": 1.8,
-     "hint": "Input watts from the label ÷ 1000. The default is a 1.5 ton non-inverter AC with its compressor on, as in peak summer when it barely switches off. For milder weather, multiply by how much of the hour the compressor runs."
+     "hint": "Input watts from the label ÷ 1000, while the compressor is on. The default is a 1.5 ton non-inverter AC."
+    },
+    {
+     "name": "duty",
+     "label": "Share of each hour the non-inverter compressor runs",
+     "unit": "",
+     "default": 0.8,
+     "hint": "Between 0 and 1. The default is the standard planning figure for a non-inverter AC averaged over the season; enter 1 for the hottest weeks, when the compressor hardly switches off."
     },
     {
      "name": "kw_inv",
@@ -146,7 +153,7 @@
      "label": "Hours the AC runs a year",
      "unit": "hours",
      "default": 1200,
-     "hint": "Hours a day × days of AC weather. The default is 8 hours a day for about five months; Karachi and southern Punjab often run more."
+     "hint": "Hours a day × days of AC weather, at most a full year of hours. The default is 8 hours a day for about five months; Karachi and southern Punjab often run more."
     },
     {
      "name": "tariff",
@@ -167,29 +174,52 @@
    "outputs": [
     {
      "key": "payback_months",
-     "label": "Months to pay back the extra price",
+     "label": "Calendar months to pay back the extra price",
      "spec": "1",
-     "label_ur": "Izafi qeemat kitne mahine mein wapas",
-     "value": "13.7"
+     "value": "24.9"
     },
     {
      "key": "annual_saving",
      "label": "Bill saving a year",
      "spec": "rs",
      "label_ur": "Saalana bill ki bachat",
-     "value": "Rs 35,002"
+     "value": "Rs 19,251"
     },
     {
      "key": "annual_units_saved",
      "label": "Units saved a year",
      "spec": "int",
      "label_ur": "Saalana bache hue units",
-     "value": "960"
+     "value": "528"
+    },
+    {
+     "key": "units_noninv",
+     "label": "Non-inverter AC units a year",
+     "spec": "int",
+     "value": "1,728"
+    },
+    {
+     "key": "rs_noninv",
+     "label": "Non-inverter AC energy cost a year",
+     "spec": "rs",
+     "value": "Rs 63,003"
+    },
+    {
+     "key": "units_inv",
+     "label": "Inverter AC units a year",
+     "spec": "int",
+     "value": "1,200"
+    },
+    {
+     "key": "rs_inv",
+     "label": "Inverter AC energy cost a year",
+     "spec": "rs",
+     "value": "Rs 43,752"
     }
    ],
    "how": {
-    "tpl": "Power saved: {{out.kw_noninv|2}} kW − {{out.kw_inv|2}} kW, for {{out.hours_year|int}} hours a year = {{out.annual_units_saved|int}} units. Bill saving: {{out.annual_units_saved|int}} units × {{out.tariff|rs2}} = {{out.annual_saving|rs}} a year. Payback: {{out.price_diff|rs}} ÷ ({{out.annual_saving|rs}} ÷ twelve months) = {{out.payback_months|1}} months.",
-    "text": "Power saved: 1.8 kW − 1 kW, for 1,200 hours a year = 960 units. Bill saving: 960 units × Rs 36.46 = Rs 35,002 a year. Payback: Rs 40,000 ÷ (Rs 35,002 ÷ twelve months) = 13.7 months."
+    "tpl": "Non-inverter average: {{out.kw_noninv|2}} kW × {{out.duty|pct}} compressor on-time = {{out.kw_noninv_avg|2}} kW, × {{out.hours_year|int}} hours = {{out.units_noninv|int}} units, {{out.rs_noninv|rs}} a year. Inverter: {{out.kw_inv|2}} kW × {{out.hours_year|int}} hours = {{out.units_inv|int}} units, {{out.rs_inv|rs}}. Saved: {{out.annual_units_saved|int}} units × {{out.tariff|rs2}} = {{out.annual_saving|rs}} a year. Payback: {{out.price_diff|rs}} ÷ ({{out.annual_saving|rs}} ÷ twelve months) = {{out.payback_months|1}} calendar months.",
+    "text": "Non-inverter average: 1.8 kW × 80% compressor on-time = 1.44 kW, × 1,200 hours = 1,728 units, Rs 63,003 a year. Inverter: 1 kW × 1,200 hours = 1,200 units, Rs 43,752. Saved: 528 units × Rs 36.46 = Rs 19,251 a year. Payback: Rs 40,000 ÷ (Rs 19,251 ÷ twelve months) = 24.9 calendar months."
    },
    "submit": "Calculate",
    "notice": "",
@@ -203,24 +233,24 @@
   },
   "examples": [
    {
-    "title": "1.5 ton AC in peak summer, 1,200 hours a year",
-    "text": "(1.8 − 1) kW × 1,200 h = 960 units × Rs 36.46 = Rs 35,002 a year. The example price gap of Rs 40,000 pays back in about 13.7 months."
+    "title": "1.5 ton AC at the planning average, 1,200 hours a year",
+    "text": "(1.44 − 1) kW × 1,200 h = 528 units × Rs 36.46 = Rs 19,251 a year. The example price gap of Rs 40,000 pays back in about 24.9 calendar months."
    },
    {
-    "title": "The same AC in milder weather",
-    "text": "When the non-inverter compressor runs about 80% of the hour, it averages 1.44 kW. The saving falls to 528 units, Rs 19,251 a year, and payback stretches to about 24.9 months."
+    "title": "Peak summer: the compressor never switches off",
+    "text": "In the hottest weeks the non-inverter AC runs at its full 1.8 kW. If every AC hour were like that, the saving would be 960 units, Rs 35,002 a year, and payback about 13.7 calendar months. Use it as the best case, not the average."
    },
    {
     "title": "Long hours: 2,400 hours a year",
-    "text": "An AC run day and night through a long summer saves 1,920 units, Rs 70,003 a year, and pays back the example gap in about 6.9 months."
+    "text": "An AC run day and night through a long summer saves 1,056 units, Rs 38,502 a year, and pays back the example gap in about 12.5 calendar months."
    },
    {
     "title": "Protected consumer at Rs 13.01 per unit",
-    "text": "The same units saved, 960 a year, are worth only Rs 12,490 at the protected rate, so the example gap takes about 38.4 months. Note that an AC usually pushes a home past the protected limit."
+    "text": "The same units saved, 528 a year, are worth only Rs 6,869 at the protected rate, so the example gap takes about 69.9 calendar months. Note that an AC usually pushes a home past the protected limit."
    }
   ],
   "table": {
-   "caption": "Payback of an example price gap of Rs 40,000 for a 1.5 ton inverter AC in peak summer, by hours a year and tariff (example price gap, not a market price)",
+   "caption": "Payback of an example price gap of Rs 40,000 for a 1.5 ton inverter AC at the planning average, by hours a year and tariff (example price gap, not a market price)",
    "head": [
     "Hours a year",
     "Rate",
@@ -232,59 +262,60 @@
     [
      "600",
      "Rs 36.46",
-     "480",
-     "Rs 17,501",
-     "27.4 months"
+     "264",
+     "Rs 9,625",
+     "49.9 calendar months"
     ],
     [
      "900",
      "Rs 36.46",
-     "720",
-     "Rs 26,251",
-     "18.3 months"
+     "396",
+     "Rs 14,438",
+     "33.2 calendar months"
     ],
     [
      "1,200",
      "Rs 36.46",
-     "960",
-     "Rs 35,002",
-     "13.7 months"
+     "528",
+     "Rs 19,251",
+     "24.9 calendar months"
     ],
     [
      "1,800",
      "Rs 36.46",
-     "1,440",
-     "Rs 52,502",
-     "9.1 months"
+     "792",
+     "Rs 28,876",
+     "16.6 calendar months"
     ],
     [
      "2,400",
      "Rs 36.46",
-     "1,920",
-     "Rs 70,003",
-     "6.9 months"
+     "1,056",
+     "Rs 38,502",
+     "12.5 calendar months"
     ],
     [
      "1,200",
      "Rs 47.20",
-     "960",
-     "Rs 45,312",
-     "10.6 months"
+     "528",
+     "Rs 24,922",
+     "19.3 calendar months"
     ],
     [
      "1,200",
      "Rs 13.01",
-     "960",
-     "Rs 12,490",
-     "38.4 months"
+     "528",
+     "Rs 6,869",
+     "69.9 calendar months"
     ]
    ]
   },
-  "answer": "In peak summer a 1.5 ton inverter AC saves about 960 units a year over a non-inverter AC run 1,200 hours, Rs 35,002 at Rs 36.46 per unit, so an extra price of Rs 40,000 pays back in about 13.7 months. Saving = (non-inverter kW − inverter kW) × hours × tariff; payback = extra price ÷ monthly saving.",
+  "answer": "A 1.5 ton non-inverter AC averaging 1.44 kW uses about 1,728 units (Rs 63,003) in 1,200 hours a year; an inverter AC averaging 1 kW uses about 1,200 (Rs 43,752). The Rs 19,251 yearly saving pays back an extra Rs 40,000 in about 24.9 calendar months. Payback = extra price ÷ monthly saving.",
   "formula": {
-   "text": "Payback months = ΔPrice ÷ ((kW_non-inverter − kW_inverter) × hours a year × tariff ÷ 12)",
+   "text": "Payback (calendar months) = ΔPrice ÷ ((kW_non-inverter × duty − kW_inverter) × hours a year × tariff ÷ 12)",
    "lines": [
-    "kW_non-inverter = power of the non-inverter AC while it runs (× its on-time share in mild weather)",
+    "kW_non-inverter = power of the non-inverter AC while its compressor runs",
+    "duty = share of each hour the compressor runs, averaged over the season",
     "kW_inverter = average power of the inverter AC over an hour",
     "hours a year = hours a day × days of AC use",
     "tariff = Rs per unit of your slab",
@@ -376,7 +407,7 @@
       "name": "How much electricity does an inverter AC save?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "With the planning averages here, about 960 units a year for a 1.5 ton AC run 1,200 hours in peak heat, and about 528 units in milder weather. Your figure depends on hours, weather and the models."
+       "text": "With the planning averages here, about 528 units a year for a 1.5 ton AC run 1,200 hours, and up to about 960 units if every hour were like peak summer. Your figure depends on hours, weather and the models."
       }
      },
      {
@@ -384,7 +415,7 @@
       "name": "What is the payback period of an inverter AC?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "The extra price ÷ the monthly saving. For the example gap of Rs 40,000, about 13.7 months of AC use in peak heat at Rs 36.46 per unit, longer at lower rates or fewer hours."
+       "text": "The extra price ÷ the monthly saving. For the example gap of Rs 40,000, about 24.9 calendar months at Rs 36.46 per unit, longer at lower rates or fewer hours."
       }
      },
      {
@@ -405,10 +436,10 @@
      },
      {
       "@type": "Question",
-      "name": "Why does the non-inverter AC use less in mild weather?",
+      "name": "Why does a non-inverter AC use less than its rated power?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Its compressor switches off when the room reaches the setting. In mild weather it is off for part of each hour, about 80% on by our planning figure, so its average draw falls and the inverter AC's advantage shrinks."
+       "text": "Its compressor switches off when the room reaches the setting. Over a season it is on about 80% of each hour by our planning figure, so its average draw is below its running power; in the hottest weeks it hardly switches off and the inverter AC's advantage is largest."
       }
      },
      {

@@ -1,4 +1,4 @@
-import{calculator,CalcError,has,pos,frac,nonneg,ceilSafe,dflt,num,appliance,pick}from './core.js';
+import{calculator,CalcError,has,pos,frac,nonneg,ceilSafe,dflt,num,appliance}from './core.js';
 import{sumLoads,loadRows}from './sizing.js';
 function yieldFor(i,d){
 if(has(i,'yield_kwh_per_kwp_day')){
@@ -93,12 +93,18 @@ const kw_power=running_w / 1000 / pr;
 const kw=Math.max(kw_energy,kw_power);
 const panels=ceilSafe((kw * 1000)/ panel_w);
 const installed_kw=(panels * panel_w)/ 1000;
+const load_w=running_w * margin;
+const dc_ac_ratio_max=dflt(d,'dc_ac_ratio_max');
+const inverter_w=Math.max(load_w,(installed_kw * 1000)/ dc_ac_ratio_max);
 const out={
 daily_kwh,array_kwh,...offgrid,running_w,surge_w,...y,pr,panel_w,margin,kw_energy,kw_power,kw,panels,installed_kw,
 roof_m2:panels * dflt(d,'panel_area_m2'),
 monthly_kwh_estimate:installed_kw * y.yield_kwh_per_kwp_day * dflt(d,'days_per_month'),
-inverter_w:running_w * margin,
-inverter_kw:(running_w * margin)/ 1000,
+inverter_kw_load:load_w / 1000,
+inverter_kw_array:installed_kw / dc_ac_ratio_max,
+dc_ac_ratio_max,
+inverter_w,
+inverter_kw:inverter_w / 1000,
 inverter_surge_w:surge_w,
 limited_by:kw_power > kw_energy?'power':'energy',
 };
@@ -128,56 +134,4 @@ const hours=pos(i,'hours');
 const pump_w=(hp * dflt(d,'w_per_hp'))/ motor_eff;
 const sys=solarSystem((pump_w * hours)/ 1000,pump_w,pump_w,i,d);
 return{hp,motor_eff,hours,pump_w,pump_kw:pump_w / 1000,motor_kw:(hp * dflt(d,'w_per_hp'))/ 1000,...sys,drive_kw:sys.inverter_kw};
-});
-export const charge_controller=calculator((i,d)=>{
-const type=i.type??'mppt';
-const margin=num(i,'margin',{def:dflt(d,'margin'),min:1});
-let amps;
-if(type==='mppt'){
-amps=(pos(i,'panel_w')/ pos(i,'battery_v'))* margin;
-}else if(type==='pwm'){
-const n_parallel=num(i,'n_parallel',{def:1,min:1});
-if(!Number.isInteger(n_parallel))throw new CalcError('n_parallel_must_be_whole','n_parallel');
-amps=pos(i,'isc')* n_parallel * margin;
-}else throw new CalcError('type_invalid','type');
-const sizes=dflt(d,'standard_controller_a');
-const standard_a=sizes.find((s)=> s >=amps - 1e-9);
-return standard_a===undefined?{type,margin,amps,above_standard_sizes:true}:{type,margin,amps,standard_a,above_standard_sizes:false};
-});
-
-export const cleaning_loss=calculator((i,d)=>{
-const kwp=pos(i,'kwp');
-const y=pos(i,'yield');
-const rate=num(i,'rate',{def:dflt(d,'soiling_rate_per_day'),min:0,max:1});
-const days=nonneg(i,'days');
-const tariff=nonneg(i,'tariff');
-const cap=dflt(d,'soiling_cap');
-const soiling=Math.min(rate * days,cap);
-const loss_kwh_day=kwp * y * soiling;
-const out={kwp,yield:y,rate,days,tariff,soiling,soiling_capped:rate * days > cap,loss_kwh_day,rs_lost_day:loss_kwh_day * tariff};
-if(has(i,'cleaning_cost')){
-const cleaning_cost=nonneg(i,'cleaning_cost');
-let cum=0;
-let clean_after_days=null;
-for(let day=1;day <=365;day++){
-cum +=kwp * y * Math.min(rate * day,cap)* tariff;
-if(cum > cleaning_cost){clean_after_days=day;break;}
-}
-out.cleaning_cost=cleaning_cost;
-out.clean_worth_it_within_year=clean_after_days !==null;
-if(clean_after_days !==null)out.clean_after_days=clean_after_days;
-}
-return out;
-});
-export const autonomy=calculator((i,d)=>{
-const ah=pos(i,'ah');
-const v=pos(i,'v');
-const dod=frac(i,'dod',dflt(d,'dod_lead_acid'));
-const eta=frac(i,'eta',dflt(d,'inverter_eff_ups'));
-const load_wh=pos(i,'load_wh',undefined,'load_must_be_positive');
-const solar_wh=nonneg(i,'solar_wh',0);
-const deficit_wh=load_wh - solar_wh;
-if(deficit_wh <=0)throw new CalcError('solar_covers_load','solar_wh');
-const usable_wh=ah * v * dod * eta;
-return{ah,v,dod,eta,load_wh,solar_wh,usable_wh,deficit_wh,days:usable_wh / deficit_wh};
 });

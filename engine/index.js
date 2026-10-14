@@ -12,8 +12,9 @@ import * as planner from './planner.js';
 import * as prices from './prices.js';
 import * as forecast from './forecast.js';
 import * as fuel from './fuel.js';
+import * as solartools from './solartools.js';
 
-const modules = { conversions, battery, sizing, solar, bill, load, wiring, planner, prices, forecast, fuel };
+const modules = { conversions, battery, sizing, solar, bill, load, wiring, planner, prices, forecast, fuel, solartools };
 
 export const calculators = {};
 for (const mod of Object.values(modules)) {

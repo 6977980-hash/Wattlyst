@@ -7,11 +7,13 @@ const c=d?.cities?.[city];
 if(!c || !(c.yield > 0))throw new CalcError('city_unknown','city');
 const pr=frac(i,'pr',dflt(d,'pr'));
 const typical_units=kwp * c.yield;
-const out={kwp,city,city_name:city.replace(/\b\w/g,(m)=> m.toUpperCase()),pr,typical_psh:c.psh,typical_units};
+const out={kwp,city,city_name:city.replace(/\b\w/g,(m)=> m.toUpperCase()),pr,no_loss_overstatement:1 / pr - 1,typical_psh:c.psh,typical_units};
 if(Array.isArray(i.gti_wm2)&& i.gti_wm2.length){
 if(i.gti_wm2.length > 48)throw new CalcError('forecast_invalid','gti_wm2');
-const hours=i.gti_wm2.map((w,k)=> num({w},'w',{min:0,max:dflt(d,'forecast_max_wm2'),code:'forecast_invalid'}));
-const psh=hours.reduce((s,w)=> s + w,0)/ 1000;
+const hours=i.gti_wm2.map((w)=> num({gti_wm2:w},'gti_wm2',{min:0,max:dflt(d,'forecast_max_wm2'),code:'forecast_invalid'}));
+const day_whm2=hours.reduce((s,w)=> s + w,0);
+if(day_whm2 > dflt(d,'forecast_max_day_whm2'))throw new CalcError('forecast_invalid','gti_wm2');
+const psh=day_whm2 / 1000;
 const units=kwp * psh * pr;
 const pct=(units / typical_units)* 100;
 const band=dflt(d,'forecast_sky_bands').find((b)=> pct >=b.min_pct);

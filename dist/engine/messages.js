@@ -40,8 +40,11 @@ fuel_data_missing:'Fuel data could not be loaded. Please refresh the page.',
 panels_must_be_whole:'Number of panels must be a whole number.',
 forecast_invalid:'The solar forecast could not be read. The typical day is shown instead.',
 volts_required_dc:'For DC, enter the battery or system voltage; there is no standard DC voltage to assume.',
-cable_over_current_rating:'This current is more than this cable size is rated to carry in conduit, or the cable is smaller than our table, so the cable is not safe for this load even if the voltage drop is small. Use a thicker cable; the wire size calculator checks current and voltage drop together.',
+cable_over_current_rating:'This cable is not rated for this current (in conduit), so it is unsafe even if the voltage drop is small. Use a thicker cable; the wire size calculator checks both.',
 ampacity_not_checked_aluminium:'The current rating of aluminium cable is not checked here, only its voltage drop. Check the current rating in the cable maker\'s datasheet, or ask a licensed electrician.',
+hours_year_invalid:'Hours a year must be above 0 and at most 8,760.',
+duty_invalid:'Compressor on-time must be a share from 0 to 1, e.g. 0.8.',
+soiling_rate_invalid:'Dust loss per day is a share: 0.003 means 0.3% a day. Maximum 0.05.',
 internal_non_finite:'These numbers are outside a realistic range. Please check your inputs.',
 };
 const PATTERNS=[

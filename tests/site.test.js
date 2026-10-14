@@ -194,7 +194,7 @@ test('a tool page loads under 30 KB of JavaScript (seo-rules.md 4)', () => {
   // Measured on what the browser actually loads: the stripped copies in dist/.
   const size = (p) => Buffer.byteLength(files[`dist/${p}`]);
   const base = ['assets/js/wattlyst-tool.js', 'engine/format.js', 'engine/messages.js', 'engine/core.js'].reduce((s, p) => s + size(p), 0);
-  for (const m of ['conversions', 'battery', 'sizing', 'solar', 'bill', 'load', 'wiring', 'planner', 'prices', 'forecast', 'fuel']) {
+  for (const m of ['conversions', 'battery', 'sizing', 'solar', 'bill', 'load', 'wiring', 'planner', 'prices', 'forecast', 'fuel', 'solartools']) {
     assert.ok(base + size(`engine/${m}.js`) < 30 * 1024, `${m}: ${base + size(`engine/${m}.js`)} bytes`);
   }
 });
