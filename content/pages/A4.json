@@ -1,0 +1,297 @@
+{
+ "id": "A4",
+ "status": "publish",
+ "template": "tool",
+ "h1": "230V and 220V Watts to Amps Calculator",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "calc": "watts_to_amps",
+ "fields": [
+  {
+   "name": "watts",
+   "label": "Load",
+   "unit": "W",
+   "default": 1500,
+   "hint": "Running watts from the appliance label or the appliance list. For an AC or motor use its running watts, not the starting surge."
+  },
+  {
+   "name": "volts",
+   "label": "Supply voltage",
+   "unit": "V",
+   "type": "select",
+   "default": "@v_1ph",
+   "options": [
+    [
+     "@v_1ph",
+     "230 V (Pakistan and most countries)"
+    ],
+    [
+     220,
+     "220 V"
+    ],
+    [
+     240,
+     "240 V"
+    ],
+    [
+     "@v_1ph_us",
+     "120 V (US, Canada)"
+    ],
+    [
+     "@v_3ph",
+     "400 V (three-phase, line to line)"
+    ]
+   ],
+   "hint": "Pakistan's mains is 230 V single-phase and 400 V three-phase. Older labels say 220 V; the result is almost the same."
+  },
+  {
+   "name": "mode",
+   "label": "Supply type",
+   "type": "select",
+   "default": "ac1",
+   "options": [
+    [
+     "ac1",
+     "Single-phase (normal home supply)"
+    ],
+    [
+     "ac3",
+     "Three-phase (use the line-to-line voltage, 400 V)"
+    ]
+   ],
+   "hint": "Almost every home is single-phase. Choose three-phase only for a three-phase connection and enter the line-to-line volts."
+  },
+  {
+   "name": "pf",
+   "label": "Power factor",
+   "unit": "0 to 1",
+   "default": "@pf_mixed",
+   "hint": "Use 1 for heaters, irons, kettles and geysers. Use about 0.8 for ACs, fridges, water motors and mixed home loads."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "amps",
+   "label": "Current drawn",
+   "spec": "2",
+   "unit": "A"
+  }
+ ],
+ "answer": "A {{in.watts|int}} W load on a {{in.volts|int}} V single-phase supply draws about {{out.amps|2}} A at a power factor of {{out.pf|2}}. Amps = watts ÷ (volts × power factor). A pure heating load has a power factor of one, so a {{ex.1.in.watts|int}} W heater draws {{ex.1.out.amps|2}} A, while an AC or motor of the same watts draws more.",
+ "how": "{{in.watts|int}} W ÷ ({{in.volts|int}} V × {{out.pf|2}} power factor) = {{out.amps|2}} A. For three-phase the voltage is also multiplied by the square root of three. The power factor turns the real watts into the apparent power the supply must carry; a heater has a power factor of one, motors and ACs less.",
+ "key_facts": [
+  "On a {{in.volts|int}} V single-phase supply, amps = watts ÷ ({{in.volts|int}} × power factor); at a power factor of {{out.pf|2}}, {{in.watts|int}} W draws {{out.amps|2}} A.",
+  "A {{ex.1.in.watts|int}} W heater, iron or kettle (power factor one) draws {{ex.1.out.amps|2}} A at {{ex.1.in.volts|int}} V; a {{ex.3.in.watts|int}} W 1.5 ton inverter AC at a power factor of {{ex.3.in.pf|2}} draws {{ex.3.out.amps|2}} A.",
+  "{{ex.0.in.watts|int}} W at {{ex.0.in.volts|int}} V and a power factor of one is {{ex.0.out.amps|2}} A; at {{ex.2.in.volts|int}} V the same load draws slightly less, so a 220V label and a 230V supply give almost the same answer.",
+  "Three-phase at {{ex.4.in.volts|int}} V line to line spreads the load over three wires: {{ex.4.in.watts|int}} W at a power factor of {{ex.4.in.pf|2}} is {{ex.4.out.amps|2}} A per line."
+ ],
+ "formula": {
+  "text": "I = P ÷ (V × PF)  (single-phase);  I = P ÷ (√3 × V × PF)  (three-phase)",
+  "lines": [
+   "I = current in amps (A)",
+   "P = real power in watts (W)",
+   "V = supply voltage: 230 V single-phase, 400 V line-to-line for three-phase",
+   "PF = power factor, 1 for heating loads, about 0.8 for motors, ACs and mixed loads",
+   "√3 ≈ 1.732 applies only to three-phase"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "{{ex.0.in.volts|int}} V amps calculator: is {{ex.0.in.volts|int}} V different from {{in.volts|int}} V?",
+   "p": [
+    "Barely. Pakistan's standard supply is {{in.volts|int}} V, but many appliance labels and older guides say {{ex.0.in.volts|int}} V. The same {{ex.0.in.watts|int}} W load draws {{ex.0.out.amps|2}} A at {{ex.0.in.volts|int}} V and a little less at {{in.volts|int}} V, a difference smaller than the day-to-day swing of the mains itself. Pick whichever voltage your label shows; a 220V and a 230V calculation lead to the same wire and breaker choice.",
+    "The {{d.v_1ph_us|int}} V option is for the US and Canada, where the same watts draw roughly twice the amps. That is why a {{d.v_1ph_us|int}} V heater needs a much thicker cable than a {{in.volts|int}} V one."
+   ]
+  },
+  {
+   "h2": "How many amps is {{ex.2.in.watts|int}} watts at {{in.volts|int}} V?",
+   "p": [
+    "It depends on the power factor. A {{ex.2.in.watts|int}} W heating load (power factor one) draws {{ex.2.out.amps|2}} A at {{ex.2.in.volts|int}} V. A {{in.watts|int}} W load with a power factor of {{out.pf|2}}, typical of an AC, fridge or a mixed set of appliances, draws {{out.amps|2}} A. Same watts, about a quarter more current.",
+    "This is why an appliance's current is sometimes printed as a higher figure than watts ÷ volts. The label amps include the reactive part of the load, which the meter does not bill but the wire must carry."
+   ]
+  },
+  {
+   "h2": "AC amps at {{in.volts|int}} V: why the power factor changes the answer",
+   "p": [
+    "A 1.5 ton inverter AC runs at about {{ex.3.in.watts|int}} W. With a power factor of {{ex.3.in.pf|2}} that is {{ex.3.out.amps|2}} A at {{ex.3.in.volts|int}} V. A non-inverter AC of the same size runs at more watts and also starts with a surge of several times its running current for a second or two, which is what trips an undersized breaker. Use the running amps for the cable and the generator and breaker tools for the surge.",
+    "Resistive loads are simpler. An electric iron of about {{ex.0.in.watts|int}} W, a {{ex.1.in.watts|int}} W kettle or a geyser all have a power factor of one, so their current is just watts ÷ volts. That is why the table below lists the power factor next to each row."
+   ]
+  },
+  {
+   "h2": "Three-phase and {{d.v_1ph_us|int}} V: the same calculator for other supplies",
+   "p": [
+    "Switch the supply type to three-phase and choose the {{ex.4.in.volts|int}} V line-to-line option. The formula gains a factor of the square root of three because the load is spread over three wires: {{ex.4.in.watts|int}} W at a power factor of {{ex.4.in.pf|2}} draws {{ex.4.out.amps|2}} A per line. Enter the line-to-line voltage ({{ex.4.in.volts|int}} V in Pakistan), not the phase-to-neutral {{in.volts|int}} V.",
+    "Most homes in Pakistan are single-phase; a three-phase connection is normal for large houses, shops and motors. If you are checking whether a load fits a single-phase meter, the single phase load calculator does that job."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "watts": 1000,
+    "volts": 220,
+    "pf": 1
+   },
+   "title": "{{in.watts|int}} watts at {{in.volts|int}} V (an electric iron)",
+   "text": "{{in.watts|int}} W ÷ ({{in.volts|int}} V × {{in.pf|int}}) = {{out.amps|2}} A. An iron is a pure heating load, so the power factor is one."
+  },
+  {
+   "inputs": {
+    "watts": 2000,
+    "volts": 230,
+    "pf": 1
+   },
+   "title": "A {{in.watts|int}} W heater or kettle at {{in.volts|int}} V",
+   "text": "{{in.watts|int}} W ÷ ({{in.volts|int}} V × {{in.pf|int}}) = {{out.amps|2}} A. A room heater, kettle or hot plate of {{in.watts|int}} W draws {{out.amps|2}} A continuously while it runs."
+  },
+  {
+   "inputs": {
+    "watts": 1500,
+    "volts": 230,
+    "pf": 1
+   },
+   "title": "{{in.watts|int}} watts at {{in.volts|int}} V, power factor one",
+   "text": "{{in.watts|int}} W ÷ ({{in.volts|int}} V × {{in.pf|int}}) = {{out.amps|2}} A for a heating load. The same {{in.watts|int}} W with a power factor of {{d.pf_mixed|2}} draws more; try it in the calculator."
+  },
+  {
+   "inputs": {
+    "watts": 1450,
+    "volts": 230,
+    "pf": 0.8
+   },
+   "title": "A 1.5 ton inverter AC at {{in.volts|int}} V",
+   "text": "A 1.5 ton inverter AC runs at about {{in.watts|int}} W. {{in.watts|int}} W ÷ ({{in.volts|int}} V × {{in.pf|2}}) = {{out.amps|2}} A running current. Starting is gentle for an inverter AC; a non-inverter AC surges well above this."
+  },
+  {
+   "inputs": {
+    "watts": 5000,
+    "volts": 400,
+    "mode": "ac3",
+    "pf": 0.8
+   },
+   "title": "{{in.watts|int}} W on a three-phase {{in.volts|int}} V supply",
+   "text": "{{in.watts|int}} W ÷ (√3 × {{in.volts|int}} V × {{in.pf|2}}) = {{out.amps|2}} A per line. The square root of three appears because three-phase power is shared across three wires."
+  }
+ ],
+ "table": {
+  "caption": "Single-phase {{in.volts|int}} V amps chart for common loads",
+  "rows": [
+   {
+    "watts": 100,
+    "pf": 1
+   },
+   {
+    "watts": 500,
+    "pf": 1
+   },
+   {
+    "watts": 1000,
+    "pf": 1
+   },
+   {
+    "watts": 1000,
+    "pf": 0.8
+   },
+   {
+    "watts": 1500,
+    "pf": 0.8
+   },
+   {
+    "watts": 2000,
+    "pf": 1
+   },
+   {
+    "watts": 3000,
+    "pf": 1
+   },
+   {
+    "watts": 5000,
+    "pf": 0.8
+   }
+  ],
+  "columns": [
+   {
+    "label": "Load",
+    "tpl": "{{in.watts|int}} W"
+   },
+   {
+    "label": "Power factor",
+    "tpl": "{{in.pf|2}}"
+   },
+   {
+    "label": "Current",
+    "tpl": "{{out.amps|2}} A"
+   }
+  ]
+ },
+ "mistakes": [
+  "Using a power factor of one for an AC, fridge or water motor. Their current is about a quarter higher than watts ÷ volts; use about {{d.pf_mixed|2}} unless the label says otherwise.",
+  "Using the phase-to-neutral {{in.volts|int}} V with the three-phase formula. Three-phase needs the line-to-line voltage ({{ex.4.in.volts|int}} V in Pakistan) and the square root of three.",
+  "Taking the running amps of a non-inverter AC or motor as its only current. The compressor or pump surges to several times this for a moment at start-up, which is what trips breakers and stalls generators.",
+  "Buying a breaker or wire equal to the calculated amps. Cables and MCBs need a margin above the running current; use the wire size and breaker size calculators for the final choice."
+ ],
+ "safety": "The amps from this page decide cable and breaker size, so never pick a wire or MCB from this result alone. Add the margins the wiring calculators use and have a licensed electrician check and connect any new circuit.",
+ "faq": [
+  {
+   "q": "How many amps is {{ex.0.in.watts|int}} watts at {{ex.0.in.volts|int}} V?",
+   "a": "{{ex.0.in.watts|int}} W ÷ ({{ex.0.in.volts|int}} V × a power factor of one) = {{ex.0.out.amps|2}} A for a heating load such as an iron. For a motor or AC with a power factor of about {{d.pf_mixed|2}}, the current is about a quarter higher."
+  },
+  {
+   "q": "How many amps does a {{ex.1.in.watts|int}} W heater draw at {{ex.1.in.volts|int}} V?",
+   "a": "{{ex.1.out.amps|2}} A. A heater is a pure resistive load with a power factor of one, so the current is simply {{ex.1.in.watts|int}} W ÷ {{ex.1.in.volts|int}} V, and it draws that for as long as the element is on."
+  },
+  {
+   "q": "How many amps does an iron draw at {{in.volts|int}} V?",
+   "a": "A typical dry or steam iron is about {{ex.0.in.watts|int}} W, which is {{ex.0.out.amps|2}} A at {{ex.0.in.volts|int}} V and a touch less at {{in.volts|int}} V. Bigger steam irons are rated higher, so check the label."
+  },
+  {
+   "q": "What is the {{in.volts|int}} V current calculation formula?",
+   "a": "Amps = watts ÷ (volts × power factor). For a {{in.watts|int}} W load at {{in.volts|int}} V and a power factor of {{out.pf|2}}, that is {{out.amps|2}} A. For three-phase, multiply the line-to-line voltage by the square root of three as well."
+  },
+  {
+   "q": "How many amps does a 1.5 ton AC draw at {{in.volts|int}} V?",
+   "a": "A 1.5 ton inverter AC running at about {{ex.3.in.watts|int}} W with a power factor of {{ex.3.in.pf|2}} draws {{ex.3.out.amps|2}} A. A non-inverter unit runs at more watts and briefly surges to several times that when the compressor starts."
+  },
+  {
+   "q": "Can I use this calculator for {{d.v_1ph_us|int}} V?",
+   "a": "Yes. Choose the {{d.v_1ph_us|int}} V option for US and Canadian supplies. The same watts draw roughly twice the amps of a {{in.volts|int}} V supply, which is why appliances there need thicker cable and higher-rated breakers."
+  },
+  {
+   "q": "How many amps is {{ex.4.in.watts|int}} W on three-phase {{ex.4.in.volts|int}} V?",
+   "a": "{{ex.4.out.amps|2}} A per line at a power factor of {{ex.4.in.pf|2}}. Three-phase divides the load across three wires, so each carries far less than the same load would on a single phase."
+  },
+  {
+   "q": "Which wire and breaker do I need for these amps?",
+   "a": "Use the running amps with the wire size calculator, which adds the cable length and voltage drop, and the breaker size calculator for the MCB. Both keep a margin above the running current; a licensed electrician should confirm the final choice."
+  }
+ ],
+ "related": [
+  "A3",
+  "A8",
+  "A9",
+  "W3",
+  "E3"
+ ],
+ "next": "W2",
+ "literal_numbers": [
+  "1.5 ton",
+  "220V",
+  "230V",
+  "√3"
+ ],
+ "sources": [
+  {
+   "label": "IEC 60038:2009, IEC standard voltages (230/400 V, 120/240 V systems)",
+   "url": "https://webstore.iec.ch/publication/153"
+  },
+  {
+   "label": "NEPRA, National Electric Power Regulatory Authority of Pakistan (supply standards: 230 V single-phase, 400 V three-phase, 50 Hz)",
+   "url": "https://www.nepra.org.pk/"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

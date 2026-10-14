@@ -1,0 +1,288 @@
+{
+ "id": "D14",
+ "status": "publish",
+ "template": "tool",
+ "h1": "Solar System Price in Pakistan: 3kW, 5kW and 10kW Systems",
+ "author": "ali-ahmad",
+ "published": "2026-10-14",
+ "reviewed": "2026-10-14",
+ "calc": "solar_price_estimate",
+ "submit": "Estimate the price",
+ "fields": [
+  {
+   "name": "kwp",
+   "label": "System size",
+   "unit": "kW",
+   "type": "select",
+   "default": 10,
+   "options": [
+    [
+     3,
+     "3 kW"
+    ],
+    [
+     5,
+     "5 kW"
+    ],
+    [
+     8,
+     "8 kW"
+    ],
+    [
+     10,
+     "10 kW"
+    ],
+    [
+     15,
+     "15 kW"
+    ],
+    [
+     20,
+     "20 kW"
+    ]
+   ],
+   "hint": "DC panel capacity. Our price data lists these sizes; the quote checker handles any size."
+  },
+  {
+   "name": "type",
+   "label": "System type",
+   "type": "select",
+   "default": "on-grid",
+   "options": [
+    [
+     "on-grid",
+     "On-grid (net metering, no battery)"
+    ],
+    [
+     "hybrid",
+     "Hybrid (with battery)"
+    ]
+   ],
+   "hint": "Hybrid prices include a battery and vary with its size."
+  },
+  {
+   "name": "monthly_saving_rs",
+   "label": "Bill you expect solar to remove",
+   "unit": "Rs a month",
+   "default": 25000,
+   "hint": "The part of your monthly bill the system should cover; use the net billing calculator for a realistic figure. Leave blank to skip the payback."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "price_low_rs",
+   "label": "Typical price, from",
+   "spec": "rs"
+  },
+  {
+   "key": "price_high_rs",
+   "label": "to",
+   "spec": "rs"
+  },
+  {
+   "key": "rs_per_w_low",
+   "label": "Price per watt, from",
+   "spec": "rs2"
+  },
+  {
+   "key": "rs_per_w_high",
+   "label": "to",
+   "spec": "rs2"
+  },
+  {
+   "key": "panels_low_rs",
+   "label": "Of which panels alone, about",
+   "spec": "rs"
+  },
+  {
+   "key": "payback_years_low",
+   "label": "Simple payback, from",
+   "spec": "1",
+   "unit": "years"
+  },
+  {
+   "key": "payback_years_high",
+   "label": "to",
+   "spec": "1",
+   "unit": "years"
+  }
+ ],
+ "answer": "A {{in.kwp|int}} kW on-grid solar system in Pakistan costs about {{out.price_low_rs|rs}} to {{out.price_high_rs|rs}} installed ({{out.rs_per_w_low|rs2}} to {{out.rs_per_w_high|rs2}} per watt) in installer price lists and reports checked on the date under Sources; hybrid systems with a battery cost more. If the system removes {{in.monthly_saving_rs|rs}} a month from the bill, the simple payback is {{out.payback_years_low|1}} to {{out.payback_years_high|1}} years. Price = kW × one thousand × typical rupees per watt.",
+ "how": "Typical {{in.type}} price for {{in.kwp|int}} kW: {{out.rs_per_w_low|rs2}} to {{out.rs_per_w_high|rs2}} per watt × {{in.kwp|int}},000 W = {{out.price_low_rs|rs}} to {{out.price_high_rs|rs}}. Panels alone at {{out.panel_rs_per_w_low|rs2}} to {{out.panel_rs_per_w_high|rs2}} per watt = {{out.panels_low_rs|rs}} to {{out.panels_high_rs|rs}}. Payback: {{out.price_low_rs|rs}} ÷ ({{in.monthly_saving_rs|rs}} × 12) = {{out.payback_years_low|1}} years at the low end, {{out.payback_years_high|1}} years at the high end.",
+ "key_facts": [
+  "A {{in.kwp|int}} kW on-grid solar system was quoted at about {{out.price_low_rs|rs}} to {{out.price_high_rs|rs}} installed in Pakistan in the price lists and reports Wattlyst checked on the date under Sources, that is {{out.rs_per_w_low|rs2}} to {{out.rs_per_w_high|rs2}} per watt.",
+  "Tier-one panels alone cost about {{out.panel_rs_per_w_low|rs2}} to {{out.panel_rs_per_w_high|rs2}} per watt; the inverter, structure, cables, protection, labour and net-metering paperwork make up the rest of an installed price.",
+  "Price per watt falls as the system grows: a {{ex.0.in.kwp|int}} kW system is about {{ex.0.out.rs_per_w_low|rs2}} to {{ex.0.out.rs_per_w_high|rs2}} per watt, a {{ex.3.in.kwp|int}} kW system about {{ex.3.out.rs_per_w_low|rs2}} to {{ex.3.out.rs_per_w_high|rs2}}.",
+  "Simple payback = installed price ÷ yearly bill saving; it ignores panel degradation, tariff changes and financing cost, so treat it as a first screen, not a forecast.",
+  "These are secondary-source market prices (installer lists, news, price guides), not an official rate; they move with the rupee, panel prices and tax policy and are refreshed monthly."
+ ],
+ "formula": {
+  "text": "Price = kW × 1000 × Rs/W (typical range for the size and type); payback years = price ÷ (monthly saving × 12)",
+  "lines": [
+   "Rs/W = typical installed rupees per watt from Wattlyst price data, interpolated between listed sizes",
+   "panels alone = kW × 1000 × panel Rs/W",
+   "payback ignores degradation, inflation and financing"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "{{in.kwp|int}} kW solar system price in Pakistan",
+   "p": [
+    "A {{in.kwp|int}} kW on-grid system, the most common size for a house with two or three ACs, was quoted at {{out.price_low_rs|rs}} to {{out.price_high_rs|rs}} installed. Panels are about {{out.panels_low_rs|rs}} to {{out.panels_high_rs|rs}} of that; the inverter is usually the next biggest line, then the structure and installation. A hybrid {{in.kwp|int}} kW system with a lithium battery costs more; see the hybrid example below.",
+    "Prices in this range normally include tier-one panels, an on-grid inverter, a galvanised structure, DC and AC cabling with breakers and surge protection, earthing, installation and the net-metering application. Elevated structures, long cable runs and sales tax are often extra."
+   ]
+  },
+  {
+   "h2": "{{ex.0.in.kwp|int}} kW and {{ex.1.in.kwp|int}} kW solar system price",
+   "p": [
+    "Smaller systems cost more per watt because the inverter, structure, labour and paperwork are spread over fewer panels: a {{ex.0.in.kwp|int}} kW system is about {{ex.0.out.price_low_rs|rs}} to {{ex.0.out.price_high_rs|rs}} and a {{ex.1.in.kwp|int}} kW system about {{ex.1.out.price_low_rs|rs}} to {{ex.1.out.price_high_rs|rs}}. If your roof and sanctioned load allow it, a slightly larger system is often better value per watt.",
+    "Use the solar system size calculator to find the size your bill needs before pricing it; an oversized on-grid system exports units at the buyback rate, which is far below the price you pay for imported units."
+   ]
+  },
+  {
+   "h2": "Solar system on installments: what the payback means",
+   "p": [
+    "Banks and installers offer solar on monthly installments. The simple payback above tells you whether the installment can be lower than the bill it replaces: a {{in.kwp|int}} kW system paying back in {{out.payback_years_low|1}} to {{out.payback_years_high|1}} years at {{in.monthly_saving_rs|rs}} a month of savings leaves little room for financing cost over a short term, more over a longer one. Compare the total installment cost, not the monthly figure, with the cash price.",
+    "Payback here is simple: price divided by yearly saving. It does not include panel degradation, tariff changes, maintenance or interest. Use it to rank options, then ask for a written quote and check it with the quote checker."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "kwp": 3,
+    "monthly_saving_rs": 8000
+   },
+   "title": "{{in.kwp|int}} kW on-grid system",
+   "text": "{{out.rs_per_w_low|rs2}} to {{out.rs_per_w_high|rs2}} per watt × {{in.kwp|int}},000 W = {{out.price_low_rs|rs}} to {{out.price_high_rs|rs}}; at {{in.monthly_saving_rs|rs}} a month saved, payback {{out.payback_years_low|1}} to {{out.payback_years_high|1}} years."
+  },
+  {
+   "inputs": {
+    "kwp": 5,
+    "monthly_saving_rs": 13000
+   },
+   "title": "{{in.kwp|int}} kW on-grid system",
+   "text": "{{out.price_low_rs|rs}} to {{out.price_high_rs|rs}} installed ({{out.rs_per_w_low|rs2}} to {{out.rs_per_w_high|rs2}} per watt); payback {{out.payback_years_low|1}} to {{out.payback_years_high|1}} years at {{in.monthly_saving_rs|rs}} a month."
+  },
+  {
+   "inputs": {
+    "kwp": 10,
+    "type": "hybrid",
+    "monthly_saving_rs": 25000
+   },
+   "title": "{{in.kwp|int}} kW hybrid system with battery",
+   "text": "{{out.price_low_rs|rs}} to {{out.price_high_rs|rs}} ({{out.rs_per_w_low|rs2}} to {{out.rs_per_w_high|rs2}} per watt); the battery size behind each quote differs, so compare battery kWh separately. Payback {{out.payback_years_low|1}} to {{out.payback_years_high|1}} years."
+  },
+  {
+   "inputs": {
+    "kwp": 20,
+    "monthly_saving_rs": 45000
+   },
+   "title": "{{in.kwp|int}} kW on-grid system",
+   "text": "{{out.rs_per_w_low|rs2}} to {{out.rs_per_w_high|rs2}} per watt, {{out.price_low_rs|rs}} to {{out.price_high_rs|rs}} installed; a system this size needs a sanctioned load to match under net billing."
+  }
+ ],
+ "table": {
+  "caption": "Typical installed price by size, on-grid and hybrid (Pakistan, price data checked on the date under Sources)",
+  "rows": [
+   {
+    "kwp": 3,
+    "type": "on-grid"
+   },
+   {
+    "kwp": 3,
+    "type": "hybrid"
+   },
+   {
+    "kwp": 5,
+    "type": "on-grid"
+   },
+   {
+    "kwp": 5,
+    "type": "hybrid"
+   },
+   {
+    "kwp": 10,
+    "type": "on-grid"
+   },
+   {
+    "kwp": 10,
+    "type": "hybrid"
+   },
+   {
+    "kwp": 15,
+    "type": "on-grid"
+   },
+   {
+    "kwp": 20,
+    "type": "on-grid"
+   }
+  ],
+  "columns": [
+   {
+    "label": "System",
+    "tpl": "{{in.kwp|int}} kW {{in.type}}"
+   },
+   {
+    "label": "Typical price",
+    "tpl": "{{out.price_low_rs|rs}} to {{out.price_high_rs|rs}}"
+   },
+   {
+    "label": "Per watt",
+    "tpl": "{{out.rs_per_w_low|rs2}} to {{out.rs_per_w_high|rs2}}"
+   }
+  ]
+ },
+ "mistakes": [
+  "Comparing a hybrid quote with an on-grid price. The battery and hybrid inverter can add a third or more.",
+  "Pricing before sizing. Size the system from your bill first; an oversized on-grid system exports at the buyback rate.",
+  "Forgetting the extras. Elevated structure, long AC runs, civil work and sales tax are often outside the quoted price.",
+  "Reading the payback as a promise. It ignores degradation, tariff changes and financing; use it to compare options."
+ ],
+ "safety": "Solar installation involves roof work and dangerous DC voltage; use a licensed electrician or registered installer and make sure DC breakers, surge protection and earthing are in the quote.",
+ "faq": [
+  {
+   "q": "What is the price of a {{in.kwp|int}} kW solar system in Pakistan?",
+   "a": "About {{out.price_low_rs|rs}} to {{out.price_high_rs|rs}} installed for an on-grid system in the installer price lists and reports we checked (date under Sources), that is {{out.rs_per_w_low|rs2}} to {{out.rs_per_w_high|rs2}} per watt. A hybrid system with a battery costs more."
+  },
+  {
+   "q": "How much does a {{ex.1.in.kwp|int}} kW solar system cost?",
+   "a": "About {{ex.1.out.price_low_rs|rs}} to {{ex.1.out.price_high_rs|rs}} installed on-grid. Per watt it is dearer than a {{in.kwp|int}} kW system because the fixed parts of the job are spread over fewer panels."
+  },
+  {
+   "q": "How much does a {{ex.0.in.kwp|int}} kW solar system cost?",
+   "a": "About {{ex.0.out.price_low_rs|rs}} to {{ex.0.out.price_high_rs|rs}} installed on-grid, around {{ex.0.out.rs_per_w_low|rs2}} to {{ex.0.out.rs_per_w_high|rs2}} per watt. Hybrid versions with a small battery cost noticeably more."
+  },
+  {
+   "q": "Is a hybrid solar system worth the extra price?",
+   "a": "If you have loadshedding and need backup, yes: the battery replaces a UPS. If your supply is reliable and net billing is available, an on-grid system gives the shortest payback. Compare the battery kWh and warranty separately from the per-watt price."
+  },
+  {
+   "q": "Can I get a solar system on installments?",
+   "a": "Yes, through banks and some installers. Work out the simple payback first, then compare the total of all installments with the cash price; a short-term loan can cost more per month than the bill it replaces."
+  },
+  {
+   "q": "Why do prices differ so much between installers?",
+   "a": "Panel and inverter brands, structure type, cable sizes, protection, warranty years and what is left out of the quote. Our ranges come from secondary sources and change monthly; always get three written quotes and check them with the quote checker."
+  }
+ ],
+ "related": [
+  "N3",
+  "D7",
+  "D10",
+  "D8",
+  "D12",
+  "D13"
+ ],
+ "next": "N3",
+ "literal_numbers": [
+  "12",
+  "000 W"
+ ],
+ "sources": [
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

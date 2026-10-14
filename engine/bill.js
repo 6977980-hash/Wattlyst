@@ -79,7 +79,9 @@ export const bill_tou = calculator((i, d) => {
  * Full estimate: energy + fixed + FC surcharge + QTA + FPA, then GST on that subtotal.
  * Add-on rates are inputs; a blank field uses data/tariff-pk-2026.json addons_secondary (FC surcharge, GST,
  * QTA for the given `period` like "2026-09..2026-11", FPA value when notified, else 0). Each line is shown with source/date.
- * QTA is not applied to lifeline. QTA/FPA may be negative (a credit).
+ * QTA is not applied to lifeline. FPA (monthly fuel charges adjustment) is not applied to lifeline or
+ * protected consumers (NEPRA exempts them, SRO 852(I)/2026); the per-unit rates are echoed for page text.
+ * QTA/FPA may be negative (a credit).
  */
 export const bill_total = calculator((i, d) => {
   const base = bill_energy.raw(i, d);
@@ -96,11 +98,12 @@ export const bill_total = calculator((i, d) => {
   const gst_pct = num(i, 'gst_pct', { def: life ? 0 : a.gst_pct?.value ?? 0, min: 0, max: 100 });
   const fc_rs = fc * base.units;
   const qta_rs = base.category === 'lifeline' ? 0 : qta * base.units;
-  const fpa_rs = fpa * base.units;
+  const fpa_exempt = base.category !== 'unprotected';
+  const fpa_rs = fpa_exempt ? 0 : fpa * base.units;
   const subtotal_rs = Math.max(0, base.energy_rs + base.fixed_rs + fc_rs + qta_rs + fpa_rs);
   const gst_rs = (subtotal_rs * gst_pct) / 100;
-  return { ...base, fc_rs, qta_rs, fpa_rs, subtotal_rs, gst_pct, gst_rs, total_rs: subtotal_rs + gst_rs };
-}, { allowNegative: ['qta_rs', 'fpa_rs'] });
+  return { ...base, fc_surcharge_per_unit: fc, qta_per_unit: qta, fpa_per_unit: fpa, fpa_exempt, fc_rs, qta_rs, fpa_rs, subtotal_rs, gst_pct, gst_rs, total_rs: subtotal_rs + gst_rs };
+}, { allowNegative: ['qta_rs', 'fpa_rs', 'qta_per_unit', 'fpa_per_unit'] });
 
 /** Protected: last 6 months each ≤ 200 units, not ToU, sanctioned < 5 kW. */
 export const protected_check = calculator((i, d) => {

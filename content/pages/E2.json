@@ -1,0 +1,359 @@
+{
+ "id": "E2",
+ "status": "publish",
+ "template": "tool",
+ "h1": "Appliance Load Calculator",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "calc": "home_load",
+ "fields": [
+  {
+   "name": "loads",
+   "label": "Appliance (add more to compare a few)",
+   "type": "loads",
+   "catalog": "all",
+   "default": [
+    {
+     "id": "refrigerator-non-inverter",
+     "qty": 1
+    }
+   ],
+   "hint": "Pick an appliance or choose Custom and type the watts from its label. Set how many hours a day it really runs; a fridge compressor runs about a third of the time."
+  },
+  {
+   "name": "volts",
+   "label": "Supply voltage",
+   "unit": "V",
+   "type": "select",
+   "default": "@v_1ph",
+   "options": [
+    [
+     "@v_1ph",
+     "230 V (Pakistan, UK, EU)"
+    ],
+    [
+     "@v_1ph_us",
+     "120 V (US, Canada)"
+    ]
+   ]
+  },
+  {
+   "name": "tariff",
+   "label": "Electricity rate",
+   "unit": "Rs per unit",
+   "default": "@data.tariff.unprotected.3.rate",
+   "hint": "Energy rate of your slab from the bill. The default is the Pakistan unprotected rate for 301 to 400 units a month."
+  },
+  {
+   "name": "pf",
+   "label": "Power factor",
+   "unit": "0 to 1",
+   "default": "@pf_mixed",
+   "advanced": true,
+   "hint": "Motors and compressors are about 0.8; heaters, irons and kettles are 1.0."
+  },
+  {
+   "name": "days",
+   "label": "Days a month",
+   "unit": "days",
+   "default": "@days_per_month",
+   "advanced": true,
+   "hint": "Use fewer days for an appliance you only run on some days, such as a washing machine."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "running_w",
+   "label": "Running watts",
+   "spec": "int",
+   "unit": "W"
+  },
+  {
+   "key": "peak_w",
+   "label": "Starting watts",
+   "spec": "int",
+   "unit": "W"
+  },
+  {
+   "key": "amps",
+   "label": "Current while running",
+   "spec": "1",
+   "unit": "A"
+  },
+  {
+   "key": "daily_kwh",
+   "label": "Units a day",
+   "spec": "2"
+  },
+  {
+   "key": "monthly_units",
+   "label": "Units a month",
+   "spec": "1"
+  },
+  {
+   "key": "monthly_rs",
+   "label": "Cost a month",
+   "spec": "rs"
+  }
+ ],
+ "answer": "A non-inverter fridge is a {{out.running_w|int}} W appliance load that surges to about {{out.peak_w|int}} W when its compressor starts, draws {{out.amps|1}} A at {{out.volts|int}} V and uses about {{out.daily_kwh|2}} units a day, {{out.monthly_units|1}} units a month, about {{out.monthly_rs|rs}}. Appliance units a day = watts × hours it runs ÷ 1,000; pick any appliance above to get its watts, amps, units and cost.",
+ "how": "Running load = {{out.running_w|int}} W (the appliance's running watts × quantity). Starting watts = {{out.peak_w|int}} W, the surge for a second or two when its motor or compressor starts. Current = {{out.running_w|int}} W ÷ ({{out.volts|int}} V × {{out.pf|2}} power factor) = {{out.amps|1}} A running, {{out.peak_amps|1}} A at start. Energy = watts × hours a day ÷ 1,000 = {{out.daily_kwh|2}} units a day; × {{out.days|int}} days = {{out.monthly_units|1}} units a month; × {{out.tariff|rs2}} per unit = {{out.monthly_rs|rs}} in energy charges before fixed charges and taxes.",
+ "key_facts": [
+  "Appliance load in watts is the running watts on its label; the starting watts of a motor or compressor appliance are about three times higher for a second or two, which matters for a UPS, inverter or generator but not for the bill.",
+  "Units a day for one appliance = running watts × hours it actually runs ÷ 1,000; a {{out.running_w|int}} W fridge compressor that runs about eight hours in twenty-four uses {{out.daily_kwh|2}} units a day and {{out.monthly_units|1}} a month.",
+  "Amps = watts ÷ (volts × power factor): a {{ex.0.out.running_w|int}} W iron draws {{ex.0.out.amps|1}} A at {{ex.0.out.volts|int}} V, and a {{ex.2.out.running_w|int}} W inverter AC about {{ex.2.out.amps|1}} A while running.",
+  "The monthly cost of one appliance = its units a month × your energy rate; at {{out.tariff|rs2}} per unit a {{ex.2.out.running_w|int}} W inverter AC for {{ex.2.out.daily_kwh|1}} units a day costs about {{ex.2.out.monthly_rs|rs}} a month, an {{ex.1.out.running_w|int}} W ceiling fan about {{ex.1.out.monthly_rs|rs}}."
+ ],
+ "formula": {
+  "text": "P = W × qty; I = P ÷ (V × PF); units/day = W × qty × h ÷ 1000; Rs/month = units/day × days × rate",
+  "lines": [
+   "P = running load in watts; W = running watts of the appliance, qty = how many",
+   "Starting watts = P + (the appliance's starting watts − its running watts)",
+   "I = current in amps, V = supply voltage, PF = power factor",
+   "h = hours a day the appliance runs; inverter ACs count at their average draw",
+   "rate = energy charge per unit from your bill"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "Appliance wattage calculator: running watts vs starting watts",
+   "p": [
+    "Every appliance has a running figure, the watts it draws while working, and some have a much higher starting figure. Heaters, irons, kettles, lights and electronics start at their running watts. Anything with a motor or compressor (fridge, water pump, non-inverter AC, washing machine) draws a surge of about three times its running watts for a second or two. The default fridge runs at {{out.running_w|int}} W but starts at about {{out.peak_w|int}} W; a 1 hp water pump runs at {{ex.3.out.running_w|int}} W and starts at {{ex.3.out.peak_w|int}} W.",
+    "Which number you need depends on the question. For the electricity bill only the running watts and the hours matter. For a UPS, inverter or generator the starting watts decide whether the appliance will even switch on, which is why the result shows both. This page is for one appliance or a few; to add up a whole house and check it against the sanctioned load, use the home electrical load calculator."
+   ]
+  },
+  {
+   "h2": "Appliance power consumption: how many units does one appliance use?",
+   "p": [
+    "Units are watts × hours ÷ one thousand, so the hours matter as much as the watts. An iron at {{ex.0.out.running_w|int}} W used half an hour a day takes {{ex.0.out.daily_kwh|2}} units a day, while an {{ex.1.out.running_w|int}} W ceiling fan running twelve hours takes {{ex.1.out.daily_kwh|2}} units, more than the iron. A fridge is never off, but its compressor only runs part of the time, so count its real running hours, about eight in a day for a typical unit.",
+    "Inverter ACs are the special case: their input goes up and down with the room temperature, so the calculator counts their energy at a planning average well below the rated watts. A 1.5 ton inverter AC runs at up to {{ex.2.out.running_w|int}} W but is counted at about {{d.ac_inverter_avg_kw_1_5_ton|1}} kW on average, which gives {{ex.2.out.daily_kwh|1}} units a day over eight hours. The AC units calculator goes deeper into that one appliance."
+   ]
+  },
+  {
+   "h2": "Appliance cost calculator: what one appliance adds to the bill",
+   "p": [
+    "Multiply the units a month by the energy rate of your slab and you have the appliance's share of the bill before fixed charges and taxes. At the default rate of {{out.tariff|rs2}} per unit the fridge costs about {{out.monthly_rs|rs}} a month, the ceiling fan about {{ex.1.out.monthly_rs|rs}} and the inverter AC about {{ex.2.out.monthly_rs|rs}}. Change the rate to your own slab, because in Pakistan the rate rises with the total units, so an appliance that pushes you into the next slab costs more than its own units suggest.",
+    "To see the full bill with fixed charges, fuel adjustments and taxes, take the units to the electricity bill calculator. To see how much it costs to run the whole house, use the home load calculator with every appliance that runs together."
+   ]
+  },
+  {
+   "h2": "Watts of home appliances: enter your own rating",
+   "p": [
+    "The appliance list holds typical values; your own label is better. Choose Custom and type the watts printed on the rating plate or in the manual. If the label gives amps instead, multiply by the volts to get watts (the unit calculator does this). If it gives kW, multiply by one thousand. A geyser labelled {{ex.4.out.running_kw|1}} kW is {{ex.4.out.running_w|int}} W, draws {{ex.4.out.amps|1}} A and uses {{ex.4.out.daily_kwh|1}} units a day if its element runs two hours.",
+    "Add a few appliances together to compare them side by side or to size a small UPS: the calculator adds the running watts, adds the surge of the largest motor once, and totals the units."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "electric-iron",
+      "hours": 0.5
+     }
+    ]
+   },
+   "title": "Electric iron, half an hour a day",
+   "text": "{{out.running_w|int}} W running and starting (a heater has no surge), {{out.amps|1}} A at {{out.volts|int}} V. Half an hour a day gives {{out.daily_kwh|2}} units a day, {{out.monthly_units|1}} units a month, about {{out.monthly_rs|rs}}."
+  },
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac",
+      "hours": 12
+     }
+    ]
+   },
+   "title": "Ceiling fan, twelve hours a day",
+   "text": "{{out.running_w|int}} W running, {{out.peak_w|int}} W at start, {{out.amps|1}} A. Twelve hours a day gives {{out.daily_kwh|2}} units a day and {{out.monthly_units|1}} units a month, about {{out.monthly_rs|rs}}; a small load that runs for a long time adds up."
+  },
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "ac-split-1-5ton-inverter",
+      "hours": 8
+     }
+    ]
+   },
+   "title": "1.5 ton inverter AC, eight hours a day",
+   "text": "Up to {{out.running_w|int}} W running and {{out.peak_w|int}} W at full speed, {{out.amps|1}} A. Counted at its average draw it uses {{out.daily_kwh|1}} units a day and {{out.monthly_units|int}} units a month, about {{out.monthly_rs|rs}}, the biggest single appliance in most homes."
+  },
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "water-motor-1hp",
+      "hours": 1
+     }
+    ]
+   },
+   "title": "1 hp water pump, one hour a day",
+   "text": "{{out.running_w|int}} W running but {{out.peak_w|int}} W to start, which is {{out.peak_amps|1}} A for a moment against {{out.amps|1}} A running. One hour a day is only {{out.daily_kwh|1}} unit a day, {{out.monthly_units|int}} units a month, about {{out.monthly_rs|rs}}."
+  },
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "custom",
+      "watts": 2000,
+      "hours": 2
+     }
+    ]
+   },
+   "title": "Custom appliance: a {{out.running_w|int}} W geyser, two hours a day",
+   "text": "Typed from the label: {{out.running_w|int}} W, {{out.amps|1}} A at {{out.volts|int}} V. Two hours a day gives {{out.daily_kwh|1}} units a day and {{out.monthly_units|int}} units a month, about {{out.monthly_rs|rs}} at {{out.tariff|rs2}} per unit."
+  }
+ ],
+ "table": {
+  "caption": "Load and monthly units of single appliances at their typical daily hours, from the top: ceiling fan, LED bulb, LED TV, non-inverter fridge, electric iron, microwave oven, 1 hp water pump, 1.5 ton inverter AC",
+  "rows": [
+   {
+    "loads": [
+     {
+      "id": "ceiling-fan-ac"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "led-bulb"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "led-tv-43"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "refrigerator-non-inverter"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "electric-iron"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "microwave-oven"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "water-motor-1hp"
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "ac-split-1-5ton-inverter"
+     }
+    ]
+   }
+  ],
+  "columns": [
+   {
+    "label": "Running",
+    "tpl": "{{out.running_w|int}} W"
+   },
+   {
+    "label": "Starting",
+    "tpl": "{{out.peak_w|int}} W"
+   },
+   {
+    "label": "Current",
+    "tpl": "{{out.amps|1}} A"
+   },
+   {
+    "label": "Units a day",
+    "tpl": "{{out.daily_kwh|2}}"
+   },
+   {
+    "label": "Units a month",
+    "tpl": "{{out.monthly_units|1}}"
+   },
+   {
+    "label": "Cost a month",
+    "tpl": "{{out.monthly_rs|rs}}"
+   }
+  ]
+ },
+ "mistakes": [
+  "Counting twenty-four hours for a fridge. The compressor cycles; about eight running hours a day is typical, so a {{out.running_w|int}} W fridge uses {{out.daily_kwh|2}} units a day, not three times that.",
+  "Using the rated watts of an inverter AC for the bill. Its input varies with the room temperature; the bill follows the average, about {{d.ac_inverter_avg_kw_1_5_ton|1}} kW for a 1.5 ton unit, while the rated {{ex.2.out.running_w|int}} W is for wire and breaker sizing.",
+  "Ignoring starting watts when buying a UPS. A {{ex.3.out.running_w|int}} W pump needs {{ex.3.out.peak_w|int}} W to start; a UPS sized on running watts alone will trip.",
+  "Confusing watts and units. Watts are the rate right now; units are watts × hours ÷ one thousand and are what you pay for."
+ ],
+ "safety": "An appliance above about {{ex.4.out.running_w|int}} W (geyser, instant heater, large AC) needs its own circuit and breaker; have a licensed electrician check the socket and cable before plugging in a heavy appliance.",
+ "faq": [
+  {
+   "q": "How do I calculate the load of an appliance?",
+   "a": "Read the running watts from the label, or take it from the list above. For amps, divide the watts by volts × power factor; for units a day, multiply the watts by the hours it runs and divide by one thousand. A {{out.running_w|int}} W fridge draws {{out.amps|1}} A at {{out.volts|int}} V and uses {{out.daily_kwh|2}} units a day."
+  },
+  {
+   "q": "What is the difference between running watts and starting watts?",
+   "a": "Running watts is the steady draw while the appliance works. Starting watts is the short surge when a motor or compressor starts, about three times higher: the fridge above runs at {{out.running_w|int}} W and starts at {{out.peak_w|int}} W. Heaters and electronics have no surge."
+  },
+  {
+   "q": "How many units does a fridge use per month?",
+   "a": "A non-inverter fridge whose compressor runs about eight hours a day uses {{out.daily_kwh|2}} units a day and {{out.monthly_units|1}} units a month, about {{out.monthly_rs|rs}} at {{out.tariff|rs2}} per unit. An inverter fridge uses less because it runs at lower power."
+  },
+  {
+   "q": "How much does it cost to run an AC per month?",
+   "a": "A 1.5 ton inverter AC for eight hours a day uses about {{ex.2.out.monthly_units|int}} units a month, about {{ex.2.out.monthly_rs|rs}} at {{ex.2.out.tariff|rs2}} per unit, before fixed charges and taxes. Hot rooms, long hours and a low set point push it higher."
+  },
+  {
+   "q": "What is the energy consumption of a ceiling fan?",
+   "a": "About {{ex.1.out.running_w|int}} W for a normal AC fan, so twelve hours a day is {{ex.1.out.daily_kwh|2}} units a day and {{ex.1.out.monthly_units|1}} units a month, about {{ex.1.out.monthly_rs|rs}}. A DC inverter fan uses less than half of that."
+  },
+  {
+   "q": "How do I find the watts of an appliance that only shows amps?",
+   "a": "Multiply the amps by the supply volts ({{d.v_1ph|int}} V in Pakistan) and, for motors, by the power factor of about {{d.pf_mixed|1}}. Then enter that figure as a Custom appliance above, or use the unit calculator in amps mode."
+  },
+  {
+   "q": "Can I add several appliances here instead of using the home load calculator?",
+   "a": "Yes, for a few. The calculator adds the running watts, adds the surge of the largest motor once and totals the units. For a whole house, with the check against your sanctioned load, the home electrical load calculator is built for that."
+  }
+ ],
+ "related": [
+  "E1",
+  "E5",
+  "E6",
+  "C7",
+  "N4",
+  "N5"
+ ],
+ "next": "E1",
+ "literal_numbers": [
+  "1,000",
+  "1.5 ton",
+  "1 hp"
+ ],
+ "sources": [
+  {
+   "label": "Virginia Tech Extension: appliance wattage table (running and starting watts)",
+   "url": "https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

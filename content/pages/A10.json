@@ -1,0 +1,271 @@
+{
+ "id": "A10",
+ "status": "publish",
+ "template": "tool",
+ "h1": "Amp Hours to Watt Hours (Ah to Wh) Calculator",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "calc": "ah_to_wh",
+ "fields": [
+  {
+   "name": "ah",
+   "label": "Battery capacity",
+   "unit": "Ah",
+   "default": 200,
+   "hint": "From the battery label, for example 100, 150 or 200 Ah. For batteries in series enter the Ah of one battery; in parallel add them up."
+  },
+  {
+   "name": "volts",
+   "label": "Battery or bank voltage",
+   "unit": "V",
+   "type": "select",
+   "default": 12,
+   "options": [
+    [
+     12,
+     "12 V (lead-acid / tubular)"
+    ],
+    [
+     12.8,
+     "12.8 V (lithium LiFePO4)"
+    ],
+    [
+     24,
+     "24 V (two lead-acid in series)"
+    ],
+    [
+     25.6,
+     "25.6 V (lithium)"
+    ],
+    [
+     48,
+     "48 V (four lead-acid in series)"
+    ],
+    [
+     51.2,
+     "51.2 V (lithium)"
+    ]
+   ],
+   "hint": "Use the nominal voltage on the label. Lithium (LiFePO4) packs are 12.8, 25.6 or 51.2 V, which is why their kWh is a little higher."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "wh",
+   "label": "Energy stored",
+   "spec": "int",
+   "unit": "Wh"
+  },
+  {
+   "key": "kwh",
+   "label": "In kilowatt hours (units)",
+   "spec": "2",
+   "unit": "kWh"
+  }
+ ],
+ "answer": "A {{in.ah|int}} Ah battery at {{in.volts|1}} V stores {{out.wh|int}} Wh, which is {{out.kwh|2}} kWh or {{out.kwh|2}} units. Watt hours = amp hours × volts. A {{ex.0.in.ah|int}} Ah battery at the same voltage holds {{ex.0.out.kwh|2}} kWh, and a {{ex.2.in.ah|int}} Ah battery on a {{ex.2.in.volts|int}} V bank holds {{ex.2.out.kwh|2}} kWh. Only part of this is usable; see depth of discharge below.",
+ "how": "{{in.ah|int}} Ah × {{in.volts|1}} V = {{out.wh|int}} Wh. Divide by a thousand for kilowatt hours: {{out.kwh|2}} kWh. One kWh is one unit on the electricity bill. This is the total stored energy; multiply by the usable depth of discharge for the part you can actually draw.",
+ "key_facts": [
+  "Watt hours = amp hours × volts, so a {{in.ah|int}} Ah {{in.volts|1}} V battery stores {{out.wh|int}} Wh ({{out.kwh|2}} kWh) and a {{ex.0.in.ah|int}} Ah {{ex.0.in.volts|1}} V battery stores {{ex.0.out.wh|int}} Wh ({{ex.0.out.kwh|2}} kWh).",
+  "A {{ex.2.in.ah|int}} Ah battery on a {{ex.2.in.volts|int}} V bank holds {{ex.2.out.kwh|2}} kWh, four times the energy of the same Ah at {{ex.0.in.volts|int}} V, because the voltage is four times higher.",
+  "A {{ex.3.in.ah|int}} Ah lithium (LiFePO4) pack at its nominal {{ex.3.in.volts|1}} V holds {{ex.3.out.kwh|2}} kWh, which sellers round to a five kWh battery.",
+  "Only part of the stored energy is usable: about {{d.dod_lead_acid|pct}} of a tubular or lead-acid battery and about {{d.dod_lifepo4|pct}} of a lithium (LiFePO4) battery, to protect battery life."
+ ],
+ "formula": {
+  "text": "Wh = Ah × V;  kWh = Wh ÷ 1000;  usable Wh = Wh × DoD",
+  "lines": [
+   "Wh = energy stored in watt hours",
+   "Ah = battery capacity in amp hours (label rating)",
+   "V = nominal battery or bank voltage (12, 12.8, 24, 25.6, 48, 51.2)",
+   "DoD = usable depth of discharge: about 0.5 for lead-acid, 0.9 for LiFePO4",
+   "Reverse: Ah = Wh ÷ V"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "Ah vs Wh: why amp hours alone do not tell you the energy",
+   "p": [
+    "Amp hours say how much charge a battery holds, but energy is charge times voltage. A {{ex.0.in.ah|int}} Ah battery at {{ex.0.in.volts|int}} V holds {{ex.0.out.kwh|2}} kWh; a {{ex.2.in.ah|int}} Ah battery at {{ex.2.in.volts|int}} V holds {{ex.2.out.kwh|2}} kWh, four times as much, even though the Ah is the same. That is why comparing batteries by Ah only works at the same voltage, and why lithium packs for solar are usually sold by kWh.",
+    "Watt hours also match the rest of your system. Loads are in watts, solar production is in kWh and the electricity bill is in units (kWh), so converting the battery to Wh lets you compare all of them directly."
+   ]
+  },
+  {
+   "h2": "How many watts is a {{in.ah|int}} Ah battery?",
+   "p": [
+    "A battery has no watt rating; watts is a rate of use, not an amount stored. What a {{in.ah|int}} Ah, {{in.volts|1}} V battery has is {{out.wh|int}} Wh of energy, which could feed a one hundred watt load for many hours or a thousand watt inverter for well under an hour before the recommended depth of discharge is reached. The battery backup time calculator turns this energy and your load into hours.",
+    "If you want the current a load draws from the battery, that is amps, not watts: the 12V watts to amps calculator divides the watts by the battery voltage."
+   ]
+  },
+  {
+   "h2": "kWh to Ah: a five kWh battery is how many amp hours?",
+   "p": [
+    "Reverse the formula: Ah = Wh ÷ V. The voltage matters more than anything else. A {{ex.3.in.ah|int}} Ah lithium pack at {{ex.3.in.volts|1}} V is {{ex.3.out.kwh|2}} kWh, which is what the market calls a five kWh battery. At {{ex.2.in.volts|int}} V nominal the same {{ex.2.in.ah|int}} Ah is {{ex.2.out.kwh|2}} kWh, and at {{ex.1.in.volts|int}} V you need {{ex.1.in.ah|int}} Ah just to reach {{ex.1.out.kwh|2}} kWh. Change the voltage in the calculator and adjust the Ah until the kWh matches the battery you are pricing.",
+    "The same reverse formula sizes a battery bank from a daily need in units, which the inverter size calculator and the solar panel for 12V battery tool use."
+   ]
+  },
+  {
+   "h2": "Usable energy: depth of discharge",
+   "p": [
+    "The calculator gives the total stored energy. A tubular or lead-acid battery should only be run down to about {{d.dod_lead_acid|pct}} of it, and a lithium (LiFePO4) battery to about {{d.dod_lifepo4|pct}}, or the battery ages fast. Multiply the Wh above by that share for the energy you can actually use; the battery backup time and 12V battery runtime calculators do this for you and add the inverter loss.",
+    "Lithium's higher usable share, together with its slightly higher nominal voltage ({{ex.4.in.volts|1}} V against {{ex.0.in.volts|int}} V), is why a {{ex.4.in.ah|int}} Ah lithium battery gives far more usable energy than a {{in.ah|int}} Ah tubular battery of the same label Ah."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "ah": 100,
+    "volts": 12
+   },
+   "title": "A {{in.ah|int}} Ah, {{in.volts|int}} V battery",
+   "text": "{{in.ah|int}} Ah × {{in.volts|int}} V = {{out.wh|int}} Wh = {{out.kwh|2}} kWh. The common small UPS or solar battery."
+  },
+  {
+   "inputs": {
+    "ah": 150,
+    "volts": 24
+   },
+   "title": "Two {{in.ah|int}} Ah batteries in series ({{in.volts|int}} V)",
+   "text": "{{in.ah|int}} Ah × {{in.volts|int}} V = {{out.wh|int}} Wh = {{out.kwh|2}} kWh. Series connection doubles the volts, and so the energy, while the Ah stays {{in.ah|int}}."
+  },
+  {
+   "inputs": {
+    "ah": 100,
+    "volts": 48
+   },
+   "title": "A {{in.ah|int}} Ah, {{in.volts|int}} V bank",
+   "text": "{{in.ah|int}} Ah × {{in.volts|int}} V = {{out.wh|int}} Wh = {{out.kwh|2}} kWh. Four lead-acid batteries in series, the usual bank for a hybrid solar inverter."
+  },
+  {
+   "inputs": {
+    "ah": 100,
+    "volts": 51.2
+   },
+   "title": "A {{in.ah|int}} Ah, {{in.volts|1}} V lithium pack",
+   "text": "{{in.ah|int}} Ah × {{in.volts|1}} V = {{out.wh|int}} Wh = {{out.kwh|2}} kWh, sold as a five kWh battery. The nominal voltage of lithium cells is a little higher, so the energy is too."
+  },
+  {
+   "inputs": {
+    "ah": 200,
+    "volts": 12.8
+   },
+   "title": "A {{in.ah|int}} Ah, {{in.volts|1}} V lithium battery",
+   "text": "{{in.ah|int}} Ah × {{in.volts|1}} V = {{out.wh|int}} Wh = {{out.kwh|2}} kWh total, of which about {{d.dod_lifepo4|pct}} is usable."
+  }
+ ],
+ "table": {
+  "caption": "Ah to Wh and kWh for common battery sizes and voltages",
+  "rows": [
+   {
+    "ah": 100,
+    "volts": 12
+   },
+   {
+    "ah": 150,
+    "volts": 12
+   },
+   {
+    "ah": 200,
+    "volts": 12
+   },
+   {
+    "ah": 100,
+    "volts": 24
+   },
+   {
+    "ah": 200,
+    "volts": 24
+   },
+   {
+    "ah": 100,
+    "volts": 48
+   },
+   {
+    "ah": 100,
+    "volts": 51.2
+   },
+   {
+    "ah": 200,
+    "volts": 51.2
+   }
+  ],
+  "columns": [
+   {
+    "label": "Capacity",
+    "tpl": "{{in.ah|int}} Ah"
+   },
+   {
+    "label": "Voltage",
+    "tpl": "{{in.volts|1}} V"
+   },
+   {
+    "label": "Watt hours",
+    "tpl": "{{out.wh|int}} Wh"
+   },
+   {
+    "label": "Kilowatt hours",
+    "tpl": "{{out.kwh|2}} kWh"
+   }
+  ]
+ },
+ "mistakes": [
+  "Adding the Ah of batteries in series. Two {{ex.1.in.ah|int}} Ah batteries in series are still {{ex.1.in.ah|int}} Ah, at {{ex.1.in.volts|int}} V; the energy doubles through the voltage, not the Ah.",
+  "Treating all the Wh as usable. Only about {{d.dod_lead_acid|pct}} of a tubular battery and about {{d.dod_lifepo4|pct}} of a lithium battery should be used between charges.",
+  "Confusing amps with amp hours. Amps is the current flowing now; amp hours is the capacity. A {{in.ah|int}} Ah label does not mean the battery can deliver {{in.ah|int}} A.",
+  "Using {{ex.0.in.volts|int}} V for a lithium battery. LiFePO4 packs are nominally {{ex.4.in.volts|1}} V, so their kWh is slightly higher than a {{ex.0.in.volts|int}} V calculation shows."
+ ],
+ "safety": "Watt hours tell you the energy stored, not the safe current. Size battery cables and fuses for the amps the inverter draws, keep batteries in a ventilated place away from sparks, and have a licensed electrician connect a battery bank to an inverter and the house wiring.",
+ "faq": [
+  {
+   "q": "What is the Ah to Wh formula?",
+   "a": "Watt hours = amp hours × volts. For a {{in.ah|int}} Ah battery at {{in.volts|1}} V, that is {{out.wh|int}} Wh, or {{out.kwh|2}} kWh after dividing by a thousand. The reverse is Ah = Wh ÷ V."
+  },
+  {
+   "q": "How many kWh is a {{ex.0.in.ah|int}} Ah {{ex.0.in.volts|int}} V battery?",
+   "a": "{{ex.0.in.ah|int}} Ah × {{ex.0.in.volts|int}} V = {{ex.0.out.wh|int}} Wh, or {{ex.0.out.kwh|2}} kWh. If it is a tubular battery, about {{d.dod_lead_acid|pct}} of that is usable; if lithium, about {{d.dod_lifepo4|pct}}."
+  },
+  {
+   "q": "How many kWh is a {{ex.2.in.volts|int}} V {{ex.2.in.ah|int}} Ah battery?",
+   "a": "{{ex.2.in.ah|int}} Ah × {{ex.2.in.volts|int}} V = {{ex.2.out.wh|int}} Wh, or {{ex.2.out.kwh|2}} kWh. A lithium pack of the same Ah is rated at {{ex.3.in.volts|1}} V and holds {{ex.3.out.kwh|2}} kWh."
+  },
+  {
+   "q": "A {{in.ah|int}} Ah battery is how many watts?",
+   "a": "Batteries store energy, not watts. A {{in.ah|int}} Ah, {{in.volts|1}} V battery holds {{out.wh|int}} Wh; how many watts it can deliver depends on the inverter, and how long it lasts depends on the load. Use the battery backup time calculator for hours."
+  },
+  {
+   "q": "A five kWh battery is how many Ah?",
+   "a": "It depends on the voltage: Ah = Wh ÷ V. A {{ex.3.in.volts|1}} V lithium pack of {{ex.3.in.ah|int}} Ah is {{ex.3.out.kwh|2}} kWh, the usual five kWh battery. At {{ex.0.in.volts|int}} V you would need about four times the Ah for the same energy."
+  },
+  {
+   "q": "How do I convert Wh to Ah?",
+   "a": "Divide the watt hours by the battery voltage. From the table, {{ex.2.out.wh|int}} Wh at {{ex.2.in.volts|int}} V is {{ex.2.in.ah|int}} Ah, and the same {{ex.2.out.wh|int}} Wh at {{ex.0.in.volts|int}} V would need four times as many amp hours."
+  },
+  {
+   "q": "Why does the seller's kWh differ from my calculation?",
+   "a": "Usually the voltage. Lithium batteries are rated at {{ex.4.in.volts|1}} V per twelve-volt block, not {{ex.0.in.volts|int}} V, so a {{ex.4.in.ah|int}} Ah lithium battery is {{ex.4.out.kwh|2}} kWh rather than {{out.kwh|2}} kWh. Some sellers also quote usable kWh after depth of discharge rather than total."
+  }
+ ],
+ "related": [
+  "A3",
+  "A9",
+  "B2",
+  "D6",
+  "D4"
+ ],
+ "next": "B1",
+ "literal_numbers": [
+  "LiFePO4",
+  "12V"
+ ],
+ "sources": [
+  {
+   "label": "Victron Energy, Lithium Battery Smart 12,8 V and 25,6 V (nominal voltage, Ah and Wh ratings)",
+   "url": "https://www.victronenergy.com/batteries/lithium-battery-12-8v"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

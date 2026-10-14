@@ -1,4 +1,4 @@
-import{calculator,CalcError,has,pos,frac,nonneg,ceilSafe,dflt,num,appliance}from './core.js';
+import{calculator,CalcError,has,pos,frac,nonneg,ceilSafe,dflt,num,appliance,pick}from './core.js';
 import{sumLoads,loadRows}from './sizing.js';
 function yieldFor(i,d){
 if(has(i,'yield_kwh_per_kwp_day')){
@@ -134,16 +134,60 @@ const sizes=dflt(d,'standard_controller_a');
 const standard_a=sizes.find((s)=> s >=amps - 1e-9);
 return standard_a===undefined?{type,margin,amps,above_standard_sizes:true}:{type,margin,amps,standard_a,above_standard_sizes:false};
 });
-export const quote_checker=calculator((i)=>{
+
+function priceRange(d,type,kwp){
+const rows=(d?.solar_prices?.systems ||[]).filter((r)=> r.type===type && r.kw > 0).sort((a,b)=> a.kw - b.kw);
+if(!rows.length)throw new CalcError('price_data_missing','type');
+const perW=(r)=>({lo:r.low_rs /(r.kw * 1000),hi:r.high_rs /(r.kw * 1000)});
+const exact=rows.find((r)=> Math.abs(r.kw - kwp)< 1e-9);
+if(exact)return{...perW(exact),range_kw_used:exact.kw};
+if(kwp <=rows[0].kw)return{...perW(rows[0]),range_kw_used:rows[0].kw};
+const last=rows[rows.length - 1];
+if(kwp >=last.kw)return{...perW(last),range_kw_used:last.kw};
+const a=rows.filter((r)=> r.kw < kwp).pop();
+const b=rows.find((r)=> r.kw > kwp);
+const t=(kwp - a.kw)/(b.kw - a.kw);
+const pa=perW(a);
+const pb=perW(b);
+return{lo:pa.lo +(pb.lo - pa.lo)* t,hi:pa.hi +(pb.hi - pa.hi)* t,range_between_kw:[a.kw,b.kw]};
+}
+
+export const quote_checker=calculator((i,d)=>{
 const kwp=pos(i,'kwp');
 const price=pos(i,'price');
 const rs_per_w=price /(kwp * 1000);
 const out={kwp,price,rs_per_w};
+let lo;
+let hi;
 if(has(i,'range_low')|| has(i,'range_high')){
-const lo=pos(i,'range_low');
-const hi=pos(i,'range_high');
+lo=pos(i,'range_low');
+hi=pos(i,'range_high');
+out.range_source='input';
+}else if(has(i,'type')){
+const type=pick(i,'type',['on-grid','hybrid']);
+const r=priceRange(d,type,kwp);
+({lo,hi}=r);
+Object.assign(out,{type,range_source:'data'},r.range_kw_used !==undefined?{range_kw_used:r.range_kw_used}:{range_between_kw:r.range_between_kw});
+}
+if(lo !==undefined){
 if(lo > hi)throw new CalcError('range_invalid','range_low');
-out.verdict=rs_per_w < lo?'below':rs_per_w > hi?'above':'within';
+Object.assign(out,{range_low:lo,range_high:hi,range_low_rs:lo * kwp * 1000,range_high_rs:hi * kwp * 1000,verdict:rs_per_w < lo?'below':rs_per_w > hi?'above':'within',
+vs_low_pct:((rs_per_w - lo)/ lo)* 100,vs_high_pct:((rs_per_w - hi)/ hi)* 100});
+}
+return out;
+},{allowNegative:['vs_low_pct','vs_high_pct']});
+
+export const solar_price_estimate=calculator((i,d)=>{
+const kwp=pos(i,'kwp');
+const type=pick(i,'type',['on-grid','hybrid'],'on-grid');
+const r=priceRange(d,type,kwp);
+const out={kwp,type,rs_per_w_low:r.lo,rs_per_w_high:r.hi,price_low_rs:r.lo * kwp * 1000,price_high_rs:r.hi * kwp * 1000,price_mid_rs:((r.lo + r.hi)/ 2)* kwp * 1000};
+if(r.range_kw_used !==undefined)out.range_kw_used=r.range_kw_used;else out.range_between_kw=r.range_between_kw;
+const panel=d?.solar_prices?.panel_rs_per_w;
+if(panel?.low > 0 && panel?.high > 0)Object.assign(out,{panel_rs_per_w_low:panel.low,panel_rs_per_w_high:panel.high,panels_low_rs:kwp * 1000 * panel.low,panels_high_rs:kwp * 1000 * panel.high});
+if(has(i,'monthly_saving_rs')){
+const monthly_saving_rs=pos(i,'monthly_saving_rs');
+Object.assign(out,{monthly_saving_rs,payback_years_low:out.price_low_rs /(monthly_saving_rs * 12),payback_years_high:out.price_high_rs /(monthly_saving_rs * 12)});
 }
 return out;
 });

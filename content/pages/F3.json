@@ -1,0 +1,300 @@
+{
+ "id": "F3",
+ "status": "publish",
+ "template": "tool",
+ "h1": "IESCO Bill Calculator",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "calc": "bill_total",
+ "fields": [
+  {
+   "name": "units",
+   "label": "Units on the IESCO bill",
+   "unit": "units",
+   "default": 300,
+   "hint": "Units (kWh) for the month, from the bill or from this and last month's meter readings. Winter heater months and summer AC months both push this up."
+  },
+  {
+   "name": "sanctioned_kw",
+   "label": "Sanctioned load",
+   "unit": "kW",
+   "default": "@default_sanctioned_kw",
+   "hint": "The kW printed in the connection details of the IESCO bill. It sets the fixed charge; 5 kW and above is billed on ToU rates instead."
+  },
+  {
+   "name": "protected",
+   "label": "Protected consumer",
+   "type": "checkbox",
+   "default": false,
+   "hint": "Tick only if the bill prints the protected category; one heater month over the limit removes it."
+  },
+  {
+   "name": "lifeline",
+   "label": "Lifeline consumer (up to one hundred units)",
+   "type": "checkbox",
+   "default": false,
+   "advanced": true,
+   "hint": "Only for very small consumers whose bill shows the lifeline category."
+  },
+  {
+   "name": "period",
+   "label": "Billing quarter for QTA",
+   "type": "select",
+   "options_from": "qta_periods",
+   "default": "2026-09..2026-11",
+   "advanced": true,
+   "hint": "The quarterly tariff adjustment depends on the quarter the bill falls in."
+  },
+  {
+   "name": "fc_surcharge_per_unit",
+   "label": "FC surcharge",
+   "unit": "Rs per unit",
+   "default": "@data.tariff.addons_secondary.fc_surcharge_per_unit.value",
+   "advanced": true,
+   "hint": "Financing cost surcharge per unit, from the bill. Secondary-source default."
+  },
+  {
+   "name": "fpa_per_unit",
+   "label": "FPA",
+   "unit": "Rs per unit",
+   "placeholder": "From your bill (FPA / FCA)",
+   "advanced": true,
+   "hint": "Monthly fuel price adjustment printed on the IESCO bill, positive or negative. Leave blank if unknown."
+  },
+  {
+   "name": "gst_pct",
+   "label": "GST",
+   "unit": "%",
+   "default": "@data.tariff.addons_secondary.gst_pct.value",
+   "advanced": true,
+   "hint": "Sales tax applied to the bill subtotal."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "total_rs",
+   "label": "Estimated bill",
+   "spec": "rs"
+  },
+  {
+   "key": "energy_rs",
+   "label": "Energy charge",
+   "spec": "rs"
+  },
+  {
+   "key": "fixed_rs",
+   "label": "Fixed charge",
+   "spec": "rs"
+  },
+  {
+   "key": "fc_rs",
+   "label": "FC surcharge",
+   "spec": "rs"
+  },
+  {
+   "key": "qta_rs",
+   "label": "QTA",
+   "spec": "rs"
+  },
+  {
+   "key": "gst_rs",
+   "label": "GST",
+   "spec": "rs"
+  }
+ ],
+ "answer": "An IESCO home in Islamabad or Rawalpindi using {{in.units|int}} units in a month as an unprotected consumer on a {{in.sanctioned_kw|int}} kW connection pays about {{out.total_rs|rs}}: {{out.energy_rs|rs}} energy charge at {{out.rate|rs2}} per unit, plus fixed charge, FC surcharge, QTA and GST, before the month's FPA. IESCO bill = units × slab rate + fixed charge + surcharges, then GST on the subtotal.",
+ "how": "{{out.units|int}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw|int}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct|int}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
+ "key_facts": [
+  "IESCO, the Islamabad Electric Supply Company, bills the uniform NEPRA A-1 domestic tariff for 2026 across Islamabad, Rawalpindi, Attock, Chakwal and Jhelum, so {{out.units|int}} units cost the same in Rawalpindi as in Lahore apart from the monthly FPA line.",
+  "An unprotected IESCO consumer using {{out.units|int}} units pays {{out.rate|rs2}} on every unit, which is {{out.energy_rs|rs}} of energy charge before the fixed charge, FC surcharge, QTA and GST.",
+  "A heater month of {{ex.1.out.units|int}} units in an Islamabad winter costs about {{ex.1.out.total_rs|rs}} unprotected, while the same home stays at about {{ex.0.out.total_rs|rs}} in a protected month of {{ex.0.out.units|int}} units.",
+  "Protection on IESCO needs every one of the last {{d.protected_months|int}} bills at or under {{d.protected_max_units|int}} units on a connection below {{d.tou_threshold_kw|int}} kW; one winter month over the limit moves every later bill to unprotected rates until the run is rebuilt.",
+  "GST at {{out.gst_pct|int}}% is charged on the energy charge, fixed charge and surcharges together and adds {{out.gst_rs|rs}} to a {{out.units|int}} unit IESCO bill; the surcharge and GST defaults are secondary-source figures that change."
+ ],
+ "formula": {
+  "text": "Bill = units × slab rate + fixed Rs/kW × sanctioned kW + (FC + QTA + FPA) × units, then + GST",
+  "lines": [
+   "slab rate = rate of the band the month's units reach (unprotected) or slab-wise (protected)",
+   "fixed = Rs per kW of the band reached × sanctioned kW",
+   "FC, QTA, FPA = per-unit surcharges printed on the IESCO bill",
+   "GST = percentage of the subtotal"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "What is the IESCO per unit rate in 2026?",
+   "p": [
+    "IESCO does not set its own rate. It supplies Islamabad, Rawalpindi, Attock, Chakwal and Jhelum, with some feeders into Azad Kashmir, and bills the uniform A-1 domestic tariff that NEPRA determined and the Government notified for 2026. An unprotected home pays the rate of the slab its monthly units reach on every unit: {{out.units|int}} units are all billed at {{out.rate|rs2}}. The lowest slab is the cheapest and the open-ended top slab is the dearest.",
+    "Protected and lifeline consumers have their own low rates, worked out slab by slab. The table below prints the rate for each slab from the tariff file, and the worked examples show a protected month, a winter heater month and a summer AC month."
+   ]
+  },
+  {
+   "h2": "Why is the winter IESCO bill as high as the summer one?",
+   "p": [
+    "Islamabad and Rawalpindi have real winters, and when gas pressure drops many homes switch to electric heating. A fan heater draws about {{a.room-heater-fan.running_w|int}} W and a storage geyser about {{a.electric-geyser-storage.running_w|int}} W, so a few hours a day of each adds hundreds of units to the month. That is how a home that was protected in autumn lands at {{ex.1.out.units|int}} units and a bill of {{ex.1.out.total_rs|rs}} in January.",
+    "Summer in the capital region is milder than south Punjab, but an inverter AC still adds a few hundred units. The AC units calculator linked below estimates the units for your tonnage and hours; this page then turns those units into the IESCO bill."
+   ]
+  },
+  {
+   "h2": "IESCO bill check: estimate here, confirm on the IESCO site",
+   "p": [
+    "This IESCO bill estimate works from the units you type. The official bill, with the reference number, due date, arrears and the exact FPA, is on the IESCO website, which links the duplicate bill page on the PITC portal; enter the reference number from the top of any earlier bill there. Use this calculator to understand what each printed line should be, to plan next month, or to check a high bill against the slab it should fall in.",
+    "If the reading dates on the bill cover more than a month, the units may have been pushed into a higher slab by the long cycle; the bill audit tool linked below checks that for you."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "units": 180,
+    "protected": true
+   },
+   "title": "{{in.units|int}} units, protected consumer in a Rawalpindi flat",
+   "text": "Energy charge {{out.energy_rs|rs}} slab-wise at protected rates, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated IESCO bill {{out.total_rs|rs}} before FPA."
+  },
+  {
+   "inputs": {
+    "units": 450
+   },
+   "title": "{{in.units|int}} units, winter month with a fan heater and geyser",
+   "text": "The heater month breaks the protected run, so all {{out.units|int}} units are billed at {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated IESCO bill {{out.total_rs|rs}} before FPA."
+  },
+  {
+   "inputs": {
+    "units": 300
+   },
+   "title": "{{in.units|int}} units, unprotected, no AC or heater",
+   "text": "{{out.units|int}} × {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated IESCO bill {{out.total_rs|rs}} before FPA."
+  },
+  {
+   "inputs": {
+    "units": 550,
+    "sanctioned_kw": 2,
+    "fpa_per_unit": 1.5
+   },
+   "title": "{{in.units|int}} units, summer with an inverter AC, {{in.sanctioned_kw|int}} kW connection, FPA from the bill",
+   "text": "{{out.units|int}} × {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, FPA {{out.fpa_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated IESCO bill {{out.total_rs|rs}} including the FPA entered."
+  }
+ ],
+ "table": {
+  "caption": "Estimated IESCO bill by units on a {{in.sanctioned_kw|int}} kW connection with the default surcharges and GST, before FPA; unprotected unless marked",
+  "rows": [
+   {
+    "units": 100
+   },
+   {
+    "units": 200,
+    "protected": true
+   },
+   {
+    "units": 200
+   },
+   {
+    "units": 300
+   },
+   {
+    "units": 400
+   },
+   {
+    "units": 500
+   },
+   {
+    "units": 700
+   }
+  ],
+  "columns": [
+   {
+    "label": "Units",
+    "tpl": "{{out.units|int}} ({{out.category}})"
+   },
+   {
+    "label": "Per unit rate",
+    "tpl": "{{out.rate|rs2}}"
+   },
+   {
+    "label": "Energy",
+    "tpl": "{{out.energy_rs|rs}}"
+   },
+   {
+    "label": "Fixed",
+    "tpl": "{{out.fixed_rs|rs}}"
+   },
+   {
+    "label": "GST",
+    "tpl": "{{out.gst_rs|rs}}"
+   },
+   {
+    "label": "Estimated bill",
+    "tpl": "{{out.total_rs|rs}}"
+   }
+  ]
+ },
+ "mistakes": [
+  "Searching for a separate IESCO tariff. IESCO bills the uniform NEPRA domestic slabs; the only line that is IESCO's own month to month is the FPA.",
+  "Planning the winter on the autumn bill. A heater and a geyser can double the units in January, and one month over {{d.protected_max_units|int}} units ends protected status for the next {{d.protected_months|int}} bills.",
+  "Reading the reference number wrong on the duplicate bill page. Type the digits only, without the spaces or dashes some bills print between groups.",
+  "Dividing the bill total by units to find the IESCO per unit rate. Fixed charge, surcharges and GST are inside the total; the slab rate is the energy line divided by units."
+ ],
+ "faq": [
+  {
+   "q": "How do I get an IESCO bill estimate from my units?",
+   "a": "Enter the units and the sanctioned load from the bill, tick protected only if the bill says so, and add the FPA from the bill under advanced settings. For {{out.units|int}} units the estimate is {{out.total_rs|rs}} before FPA."
+  },
+  {
+   "q": "What is the IESCO per unit rate for a home?",
+   "a": "The uniform NEPRA domestic slab rate for the slab the month reaches: {{out.rate|rs2}} per unit for an unprotected home using {{out.units|int}} units. The table above lists the rate for every slab; protected and lifeline consumers pay less."
+  },
+  {
+   "q": "What is the IESCO tariff for 2026?",
+   "a": "The uniform A-1 domestic tariff notified as SRO 279(I)/2026: lifeline slabs up to one hundred units, protected slabs up to {{d.protected_max_units|int}} units, unprotected slabs of a hundred units each up to seven hundred and an open-ended top slab. Connections of {{d.tou_threshold_kw|int}} kW and above are billed on ToU rates."
+  },
+  {
+   "q": "How do I check my IESCO bill online?",
+   "a": "The IESCO website links a duplicate bill page on the PITC portal; enter the reference number printed at the top of an earlier bill to see the current bill and its due date. This calculator estimates the bill from units; it does not fetch your account."
+  },
+  {
+   "q": "Which areas does IESCO cover?",
+   "a": "The federal capital Islamabad and the districts of Rawalpindi, Attock, Chakwal and Jhelum, with some feeders serving Azad Kashmir. If your bill carries another company's name, use that company's calculator; the slab rates are the same but the FPA differs."
+  },
+  {
+   "q": "Does an electric heater make an IESCO home unprotected?",
+   "a": "It can. Protection needs all of the last {{d.protected_months|int}} bills at or under {{d.protected_max_units|int}} units. A fan heater of about {{a.room-heater-fan.running_w|int}} W run a few hours a day adds well over a hundred units a month, which is enough to cross the limit."
+  },
+  {
+   "q": "Why does my IESCO bill differ from this estimate?",
+   "a": "The estimate leaves out the month's FPA unless you enter it, and it cannot see arrears, late payment surcharge, meter rent or a long reading cycle. Copy the FPA from the bill, and if the reading dates cover more than a month, run the bill audit tool."
+  }
+ ],
+ "related": [
+  "F4",
+  "F7",
+  "F1",
+  "F2",
+  "E5"
+ ],
+ "next": "N1",
+ "literal_numbers": [
+  "SRO 279(I)/2026",
+  "2026",
+  "A-1"
+ ],
+ "sources": [
+  {
+   "label": "NEPRA tariff decision and SRO for A-1 domestic consumers (tariff PDF)",
+   "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf"
+  },
+  {
+   "label": "IESCO official website (service area, duplicate bill link)",
+   "url": "https://www.iesco.com.pk/"
+  },
+  {
+   "label": "IESCO duplicate bill on the PITC portal",
+   "url": "https://bill.pitc.com.pk/iescobill"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

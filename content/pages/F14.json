@@ -1,0 +1,313 @@
+{
+ "id": "F14",
+ "status": "publish",
+ "template": "tool",
+ "h1": "FPA in Electricity Bill: What It Means and How to Calculate It",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "calc": "bill_total",
+ "submit": "Calculate FPA",
+ "fields": [
+  {
+   "name": "units",
+   "label": "Units on the bill",
+   "unit": "units",
+   "default": 300,
+   "hint": "Units (kWh) for the month the FPA is charged on, from the bill."
+  },
+  {
+   "name": "fpa_per_unit",
+   "label": "FPA rate",
+   "unit": "Rs per unit",
+   "default": "@data.tariff.addons_secondary.fpa_per_unit.latest.value",
+   "hint": "From your bill (FPA, FCA or fuel adjustment line). The pre-filled value is NEPRA's adjustment for July 2026 (SRO 1499(I)/2026), charged on later bills; replace it with this month's rate. Negative is allowed."
+  },
+  {
+   "name": "sanctioned_kw",
+   "label": "Sanctioned load",
+   "unit": "kW",
+   "default": "@default_sanctioned_kw",
+   "hint": "The kW printed on the bill. It sets the fixed charge, not the FPA."
+  },
+  {
+   "name": "protected",
+   "label": "Protected consumer",
+   "type": "checkbox",
+   "default": false,
+   "hint": "NEPRA exempts protected and lifeline consumers from the monthly FPA; if your bill shows protected, set the FPA rate to zero."
+  },
+  {
+   "name": "lifeline",
+   "label": "Lifeline consumer (up to one hundred units)",
+   "type": "checkbox",
+   "default": false,
+   "advanced": true,
+   "hint": "Only for very small consumers whose bill shows the lifeline category; lifeline bills carry no FPA."
+  },
+  {
+   "name": "period",
+   "label": "Billing quarter for QTA",
+   "type": "select",
+   "options_from": "qta_periods",
+   "default": "2026-09..2026-11",
+   "advanced": true,
+   "hint": "The quarterly tariff adjustment is a separate line from the FPA and depends on the quarter."
+  },
+  {
+   "name": "fc_surcharge_per_unit",
+   "label": "FC surcharge",
+   "unit": "Rs per unit",
+   "default": "@data.tariff.addons_secondary.fc_surcharge_per_unit.value",
+   "advanced": true,
+   "hint": "Financing cost surcharge per unit, from the bill. Secondary-source default."
+  },
+  {
+   "name": "gst_pct",
+   "label": "GST",
+   "unit": "%",
+   "default": "@data.tariff.addons_secondary.gst_pct.value",
+   "advanced": true,
+   "hint": "Sales tax applied to the bill subtotal, FPA included."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "fpa_rs",
+   "label": "FPA line on the bill",
+   "spec": "rs"
+  },
+  {
+   "key": "energy_rs",
+   "label": "Energy charge",
+   "spec": "rs"
+  },
+  {
+   "key": "qta_rs",
+   "label": "QTA line",
+   "spec": "rs"
+  },
+  {
+   "key": "gst_rs",
+   "label": "GST (on everything, FPA included)",
+   "spec": "rs"
+  },
+  {
+   "key": "total_rs",
+   "label": "Estimated bill with FPA",
+   "spec": "rs"
+  }
+ ],
+ "answer": "FPA (fuel price adjustment) in an electricity bill is a per-unit charge or credit that NEPRA sets every month to pass on the difference between the fuel cost it assumed in the tariff and the actual cost of generation. FPA line = FPA rate × units: at the pre-filled rate, NEPRA's July 2026 adjustment, {{out.units|int}} units add {{out.fpa_rs|rs}} to the bill, plus GST on top.",
+ "how": "FPA line = {{out.units|int}} units × the FPA rate entered = {{out.fpa_rs|rs}}. Energy charge {{out.energy_rs|rs}} at {{out.rate|rs2}} per unit, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct|int}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
+ "key_facts": [
+  "FPA, the fuel price adjustment (printed as FCA, fuel charges adjustment, on K-Electric and NEPRA documents), is a monthly per-unit figure that NEPRA determines after a public hearing and notifies in the Gazette; the DISCOs apply it to a later month's bills.",
+  "The FPA is positive when the actual fuel cost of generation was above the reference cost built into the tariff and negative when it was below: a negative FPA is a credit that lowers the bill.",
+  "FPA line = FPA rate × units: at NEPRA's July 2026 rate, a {{out.units|int}} unit bill carries {{out.fpa_rs|rs}} of FPA, and GST at {{out.gst_pct|int}}% is charged on it as well.",
+  "NEPRA's review decision for the March 2026 adjustment (SRO 852(I)/2026) states that the monthly FPA applies to all consumer categories except lifeline consumers, protected consumers, electric vehicle charging stations and prepaid consumers.",
+  "QTA is different: the quarterly tariff adjustment covers capacity and other non-fuel costs over a three-month period; the FPA covers fuel only and changes every month."
+ ],
+ "formula": {
+  "text": "FPA line = FPA rate (Rs per unit, notified by NEPRA for the month) × units billed; GST is then charged on the subtotal that includes it",
+  "lines": [
+   "FPA rate = actual fuel cost per kWh of the month's generation − reference fuel cost per kWh in the tariff",
+   "positive rate = extra charge; negative rate = credit",
+   "not applied to lifeline, protected, EV charging station and prepaid consumers (NEPRA)",
+   "bill = energy + fixed + FC surcharge + QTA + FPA, then + GST"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "What is fuel price adjustment (FPA) on an electricity bill?",
+   "p": [
+    "Every electricity tariff in Pakistan is built on a reference fuel cost: the price per unit that NEPRA assumed the power plants would pay for gas, coal, furnace oil and imported fuel when it set the tariff. The real cost moves every month with fuel prices, the exchange rate and how much hydro and solar power was available. The fuel price adjustment is the mechanism that passes the difference to consumers, one month at a time, under the NEPRA Act.",
+    "On the bill it appears as a single line, FPA or fuel adjustment, equal to the month's notified rate times the units billed. At the pre-filled July 2026 rate, {{out.units|int}} units carry {{out.fpa_rs|rs}}. GST is charged on the subtotal that includes it, so the real cost of the line is a little higher than the line itself."
+   ]
+  },
+  {
+   "h2": "How is the FPA calculated and who decides it?",
+   "p": [
+    "The Central Power Purchasing Agency (CPPA-G) files a request with NEPRA after each month closes, showing the actual fuel cost of the generation bought that month against the reference. NEPRA advertises a public hearing, hears the request and objections, and issues a decision with a notification in the official Gazette. The decision names the month the adjustment belongs to and the month in which the DISCOs are to recover it, which is why the FPA on a September bill can refer to July's fuel.",
+    "The arithmetic is a subtraction: actual fuel cost per kWh minus reference fuel cost per kWh. If more expensive fuel ran in a month with poor hydro flows, the rate comes out positive; a month with cheap hydro and low oil prices gives a negative rate. The same rate applies to all ex-WAPDA DISCOs; K-Electric has its own monthly decision."
+   ]
+  },
+  {
+   "h2": "Positive and negative FPA: what each means for your bill",
+   "p": [
+    "A positive FPA is an extra charge. The pre-filled rate on this page is the one NEPRA determined for July 2026, and on {{out.units|int}} units it adds {{out.fpa_rs|rs}} before GST. A negative FPA is a credit of the same shape: NEPRA has in past months notified negative adjustments, and the second example below shows what a small negative rate does to the same bill.",
+    "Either way the effect scales with units. A home on seven hundred units pays or receives more than twice what a home on three hundred does, so the FPA matters most in the months when consumption is already highest."
+   ]
+  },
+  {
+   "h2": "FPA vs FCA: is there a difference?",
+   "p": [
+    "No. FPA (fuel price adjustment) and FCA (fuel charges adjustment) are two names for the same monthly line. NEPRA's decisions use fuel charges adjustment; most DISCO bills print FPA; K-Electric bills print FCA. Some bills also show it as fuel adjustment or F.P.A. with a month next to it, which is the month the fuel was burnt, not the month of the bill."
+   ]
+  },
+  {
+   "h2": "What is QTA in the electricity bill, and how is it different from FPA?",
+   "p": [
+    "QTA is the quarterly tariff adjustment. It settles the non-fuel side of the tariff over a three-month period: capacity payments to power plants, transmission and distribution costs and similar items that do not move with the price of fuel. It too is determined by NEPRA and notified, and it too can be positive or negative. On this page it is a separate input under advanced settings, chosen by billing quarter, and it appears as its own line of {{out.qta_rs|rs}} on the default bill.",
+    "The practical difference: the FPA changes every month and tracks fuel; the QTA changes once a quarter and tracks everything else. Both are per unit, both are exempt for lifeline consumers, and both are added to the subtotal before GST."
+   ]
+  },
+  {
+   "h2": "Why is my bill high because of FPA, and who is exempt?",
+   "p": [
+    "When a month with heavy AC use lands on a bill carrying a large positive FPA, the line can be the biggest surprise on the page: at the pre-filled rate a {{ex.2.in.units|int}} unit month carries {{ex.2.out.fpa_rs|rs}} of FPA before GST. NEPRA's review decision for the March 2026 adjustment (SRO 852(I)/2026) confirms that the FPA is not charged to lifeline consumers, protected consumers, electric vehicle charging stations or prepaid consumers; everyone else pays it.",
+    "If the FPA on your bill does not match the notified rate for that month times your units, or if a protected bill carries an FPA line, that is a billing error worth raising with the DISCO. The overbilling check linked below walks through the other common errors."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "units": 300
+   },
+   "title": "{{in.units|int}} units with the positive July 2026 FPA",
+   "text": "FPA line {{out.fpa_rs|rs}}. Energy charge {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}."
+  },
+  {
+   "inputs": {
+    "units": 300,
+    "fpa_per_unit": -0.5
+   },
+   "title": "{{in.units|int}} units with a small negative FPA",
+   "text": "FPA line {{out.fpa_rs|rs}}, a credit. Energy charge {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}, lower than the same month with a positive adjustment."
+  },
+  {
+   "inputs": {
+    "units": 700,
+    "sanctioned_kw": 3
+   },
+   "title": "{{in.units|int}} units in an AC month at the July 2026 rate",
+   "text": "FPA line {{out.fpa_rs|rs}} on top of {{out.energy_rs|rs}} energy charge at {{out.rate|rs2}}; fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}."
+  },
+  {
+   "inputs": {
+    "units": 180,
+    "protected": true,
+    "fpa_per_unit": 0
+   },
+   "title": "{{in.units|int}} units, protected consumer, exempt from FPA",
+   "text": "FPA line {{out.fpa_rs|rs}} because NEPRA does not apply the adjustment to protected consumers. Energy charge {{out.energy_rs|rs}} slab-wise, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}."
+  }
+ ],
+ "table": {
+  "caption": "FPA line, GST and estimated bill by units at the pre-filled July 2026 FPA rate on a {{in.sanctioned_kw|int}} kW unprotected connection with the default FC surcharge and QTA",
+  "rows": [
+   {
+    "units": 100
+   },
+   {
+    "units": 200
+   },
+   {
+    "units": 300
+   },
+   {
+    "units": 400
+   },
+   {
+    "units": 500
+   },
+   {
+    "units": 700
+   },
+   {
+    "units": 900
+   }
+  ],
+  "columns": [
+   {
+    "label": "Units",
+    "tpl": "{{out.units|int}}"
+   },
+   {
+    "label": "FPA line",
+    "tpl": "{{out.fpa_rs|rs}}"
+   },
+   {
+    "label": "Energy charge",
+    "tpl": "{{out.energy_rs|rs}}"
+   },
+   {
+    "label": "GST",
+    "tpl": "{{out.gst_rs|rs}}"
+   },
+   {
+    "label": "Estimated bill",
+    "tpl": "{{out.total_rs|rs}}"
+   }
+  ]
+ },
+ "mistakes": [
+  "Reading the FPA month as the bill month. The month printed next to the FPA is the month whose fuel is being adjusted; the charge lands on a later bill.",
+  "Treating the FPA as a fixed tax. It is a different number every month and can be a credit; copy the rate from each bill rather than carrying one over.",
+  "Forgetting GST on the FPA. GST at {{out.gst_pct|int}}% is charged on the subtotal including the FPA line, so {{out.fpa_rs|rs}} of FPA costs more than that.",
+  "Confusing FPA with QTA. The FPA is monthly and about fuel; the QTA is quarterly and about capacity and other costs. Both can appear on the same bill.",
+  "Accepting an FPA line on a protected or lifeline bill. NEPRA exempts both categories; an FPA charge there should be queried with the DISCO."
+ ],
+ "faq": [
+  {
+   "q": "What is the fuel adjustment this month?",
+   "a": "It is whatever NEPRA notified for the month whose fuel is being recovered on your bill. The rate pre-filled on this page is NEPRA's July 2026 adjustment, charged on later bills; check the NEPRA decision linked under sources and the FPA line on your own bill, and replace the rate here."
+  },
+  {
+   "q": "How do I calculate FPA charges on my bill?",
+   "a": "Multiply the units on the bill by the FPA rate for the month: {{out.units|int}} units at the pre-filled rate give {{out.fpa_rs|rs}}. Then expect GST at {{out.gst_pct|int}}% on the subtotal that includes it."
+  },
+  {
+   "q": "What is FCA in an electricity bill?",
+   "a": "The same thing as FPA: fuel charges adjustment is NEPRA's and K-Electric's name for the monthly fuel price adjustment. The rate for K-Electric is decided separately from the ex-WAPDA DISCOs."
+  },
+  {
+   "q": "Can the FPA be negative?",
+   "a": "Yes. When the actual fuel cost for the month was below the reference cost in the tariff, NEPRA notifies a negative adjustment and the bill shows a credit. The second worked example shows a negative rate on {{ex.1.in.units|int}} units."
+  },
+  {
+   "q": "Who does not pay FPA?",
+   "a": "Under NEPRA's review decision for the March 2026 adjustment, the monthly FPA is not applied to lifeline consumers, protected consumers, electric vehicle charging stations or prepaid consumers. All other consumer categories pay it."
+  },
+  {
+   "q": "What is QTA in the electricity bill?",
+   "a": "The quarterly tariff adjustment, a per-unit line that settles capacity and other non-fuel costs over a three-month period. It is separate from the FPA, can also be positive or negative, and is chosen by billing quarter under advanced settings on this page."
+  },
+  {
+   "q": "Why is my bill high this month because of FPA?",
+   "a": "A positive FPA is charged on every unit, so a high-use month with a large adjustment can add thousands of rupees: on {{ex.2.in.units|int}} units the default rate adds {{ex.2.out.fpa_rs|rs}} before GST. If the line does not equal the notified rate times your units, query it with the DISCO."
+  }
+ ],
+ "related": [
+  "F1",
+  "F2",
+  "F12",
+  "N1",
+  "F8"
+ ],
+ "next": "N1",
+ "literal_numbers": [
+  "SRO 1499(I)/2026",
+  "SRO 852(I)/2026",
+  "2026",
+  "CPPA-G"
+ ],
+ "sources": [
+  {
+   "label": "NEPRA decision on the fuel charges adjustment for July 2026 for ex-WAPDA DISCOs, SRO 1499(I)/2026 (PDF)",
+   "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20MFPA%20FOR%20THE%20MONTH%20OF%20JULY%202026%20EX-WAPDA%20DISCOS%2004-09-2026%2018342-60.PDF"
+  },
+  {
+   "label": "NEPRA review decision on the March 2026 fuel charges adjustment: exempt consumer categories, SRO 852(I)/2026 (PDF)",
+   "url": "https://ke.com.pk/wp-content/uploads/2026/05/Review-Decision-of-FCA-for-XWDISCOs-March-2026.pdf"
+  },
+  {
+   "label": "NEPRA tariff decision and SRO for A-1 domestic consumers (tariff PDF)",
+   "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

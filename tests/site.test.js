@@ -35,6 +35,9 @@ test('format: numbers are never blank, NaN or Infinity', () => {
   assert.equal(fmt(8275.4, 'rs'), 'Rs 8,275');
   assert.equal(fmt(33.1, 'rs2'), 'Rs 33.10', 'per-unit rates keep two decimals');
   assert.equal(fmt(1234.5, 'rs2'), 'Rs 1,234.50');
+  assert.equal(fmt(true, 'yesno'), 'Yes');
+  assert.equal(fmt(false, 'yesno'), 'No');
+  assert.equal(fmt(true), '', 'a flag without the yesno spec never prints as a number');
   assert.equal(fmt(NaN), '');
   assert.equal(fmt(Infinity), '');
   assert.equal(fmt(-0.001), '0', 'no "-0"');
@@ -114,7 +117,7 @@ test('schema: breadcrumb everywhere, WebApplication on tools, FAQ matches visibl
     assert.ok(types.includes('Organization'), `${p.id}: Organization`);
     const bc = g.find((n) => n['@type'] === 'BreadcrumbList').itemListElement;
     assert.equal(bc.length, p.breadcrumb.length, `${p.id}: schema breadcrumb = visible breadcrumb`);
-    if (p.type === 'tool' || p.type === 'appliance') {
+    if (p.type === 'tool' || p.type === 'appliance' || p.type === 'lookup') {
       const app = g.find((n) => n['@type'] === 'WebApplication');
       assert.ok(app, `${p.id}: WebApplication`);
       assert.equal(app.applicationCategory, 'UtilitiesApplication');

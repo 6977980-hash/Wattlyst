@@ -17,7 +17,7 @@ const STOP = new Set('a an the to for of in on and or my do i is can what how mu
 const tokens = (s) => (s.toLowerCase().match(/[a-z0-9.]+/g) || []).filter((t) => !STOP.has(t));
 const words = (s) => String(s).trim().split(/\s+/).filter(Boolean).length;
 
-for (const p of live.filter((x) => ['tool', 'appliance', 'guide', 'pillar', 'home'].includes(x.type) && x.content)) {
+for (const p of live.filter((x) => ['tool', 'appliance', 'guide', 'pillar', 'home', 'lookup'].includes(x.type) && x.content)) {
   test(`content checklist: ${p.id} ${p.url}`, () => {
     const c = p.content;
     const row = kw.get(p.id);
@@ -32,6 +32,10 @@ for (const p of live.filter((x) => ['tool', 'appliance', 'guide', 'pillar', 'hom
     assert.ok((c.faq || []).length >= 4 && c.faq.length <= 8, `${(c.faq || []).length} FAQs (4-8)`);
     assert.ok(p.reviewed, 'last reviewed date');
     assert.ok((c.sources || []).length >= 1, 'sources');
+    if (p.type === 'lookup') {
+      assert.ok(c.lookup && c.tables?.length >= 3 && c.tables.every((t) => t.rows.length >= 5), 'lookup tables with 5+ rows each');
+      for (const t of c.tables) for (const r of t.rows) assert.ok(r.every((v) => String(v).trim() !== ''), `${t.key}: empty cell`);
+    }
     if (p.type === 'tool' || p.type === 'appliance') {
       assert.ok(c.tool, 'calculator');
       assert.ok(c.tool.how?.text, '"How this result was calculated" text');
@@ -62,7 +66,7 @@ test('link graph: every live page has 3+ inbound links and tool pages link out t
   for (const p of live) {
     if (p.type === 'trust' || p.type === 'home') continue;
     if (inbound.get(p.id).size < 3) problems.push(`${p.id} has only ${inbound.get(p.id).size} inbound links (${[...inbound.get(p.id)].join(', ')})`);
-    if (['tool', 'appliance', 'guide'].includes(p.type)) {
+    if (['tool', 'appliance', 'guide', 'lookup'].includes(p.type)) {
       const n = outbound.get(p.id).size;
       if (n < 4 || n > 8) problems.push(`${p.id} links out to ${n} live pages (4-8)`);
     }
@@ -75,5 +79,5 @@ test('home page lists every live hub and every live tool is under a live hub', (
   assert.ok(home, 'home page live');
   const hubs = live.filter((p) => p.type === 'pillar').map((p) => p.id).sort();
   assert.deepEqual(home.cards.map((c) => c.id).sort(), hubs);
-  for (const p of live.filter((x) => x.type === 'tool' || x.type === 'guide' || x.type === 'appliance')) assert.ok(p.parent && byId.get(p.parent).live, `${p.id} under a live hub`);
+  for (const p of live.filter((x) => ['tool', 'guide', 'appliance', 'lookup'].includes(x.type))) assert.ok(p.parent && byId.get(p.parent).live, `${p.id} under a live hub`);
 });

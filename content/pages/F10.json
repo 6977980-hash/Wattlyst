@@ -1,0 +1,300 @@
+{
+ "id": "F10",
+ "status": "publish",
+ "template": "tool",
+ "h1": "QESCO Bill Calculator",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "calc": "bill_total",
+ "fields": [
+  {
+   "name": "units",
+   "label": "Units on the QESCO bill",
+   "unit": "units",
+   "default": 250,
+   "hint": "Units (kWh) for the month, from the bill or from this and last month's meter readings. Domestic (A-1) connections only."
+  },
+  {
+   "name": "sanctioned_kw",
+   "label": "Sanctioned load",
+   "unit": "kW",
+   "default": "@default_sanctioned_kw",
+   "hint": "The kW printed on the bill; one to three for most Quetta homes. It sets the fixed charge."
+  },
+  {
+   "name": "protected",
+   "label": "Protected consumer",
+   "type": "checkbox",
+   "default": false,
+   "hint": "Tick if every one of your last six QESCO bills was within the protected unit limit; the bill prints the category."
+  },
+  {
+   "name": "lifeline",
+   "label": "Lifeline consumer (up to one hundred units)",
+   "type": "checkbox",
+   "default": false,
+   "advanced": true,
+   "hint": "Only for very small consumers whose bill shows the lifeline category."
+  },
+  {
+   "name": "period",
+   "label": "Billing quarter for QTA",
+   "type": "select",
+   "options_from": "qta_periods",
+   "default": "2026-09..2026-11",
+   "advanced": true,
+   "hint": "The quarterly tariff adjustment depends on the quarter the bill falls in."
+  },
+  {
+   "name": "fc_surcharge_per_unit",
+   "label": "FC surcharge",
+   "unit": "Rs per unit",
+   "default": "@data.tariff.addons_secondary.fc_surcharge_per_unit.value",
+   "advanced": true,
+   "hint": "Financing cost surcharge per unit, from the bill. Secondary-source default."
+  },
+  {
+   "name": "fpa_per_unit",
+   "label": "FPA",
+   "unit": "Rs per unit",
+   "placeholder": "From your bill (FPA / FCA)",
+   "advanced": true,
+   "hint": "Monthly fuel price adjustment from the bill, positive or negative. Leave blank if unknown."
+  },
+  {
+   "name": "gst_pct",
+   "label": "GST",
+   "unit": "%",
+   "default": "@data.tariff.addons_secondary.gst_pct.value",
+   "advanced": true,
+   "hint": "Sales tax applied to the bill subtotal."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "total_rs",
+   "label": "Estimated bill",
+   "spec": "rs"
+  },
+  {
+   "key": "energy_rs",
+   "label": "Energy charge",
+   "spec": "rs"
+  },
+  {
+   "key": "fixed_rs",
+   "label": "Fixed charge",
+   "spec": "rs"
+  },
+  {
+   "key": "fc_rs",
+   "label": "FC surcharge",
+   "spec": "rs"
+  },
+  {
+   "key": "qta_rs",
+   "label": "QTA",
+   "spec": "rs"
+  },
+  {
+   "key": "gst_rs",
+   "label": "GST",
+   "spec": "rs"
+  }
+ ],
+ "answer": "A QESCO home in Quetta or elsewhere in Balochistan using {{in.units|int}} units a month as an unprotected domestic consumer on a {{in.sanctioned_kw|int}} kW connection pays about {{out.total_rs|rs}}: {{out.energy_rs|rs}} energy charge at {{out.rate|rs2}} per unit plus fixed charge, FC surcharge, QTA and GST. QESCO bill = units × slab rate + fixed charge + surcharges + GST, before the month's FPA.",
+ "how": "{{out.units|int}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw|int}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct|int}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
+ "key_facts": [
+  "QESCO, the Quetta Electric Supply Company Limited with its head office on Zarghoon Road in Quetta, bills domestic consumers on the uniform NEPRA A-1 tariff for 2026; the slab rates are the same as in every other province.",
+  "The QESCO per unit rate for an unprotected home using {{out.units|int}} units is {{out.rate|rs2}} on every unit, giving {{out.energy_rs|rs}} in energy charges before the fixed charge, surcharges and GST.",
+  "This calculator is for domestic A-1 connections only; QESCO's agricultural tubewell consumers are billed on the separate agricultural tariff and subsidy arrangements, which these slabs do not cover.",
+  "A QESCO home stays protected only while every one of the last {{d.protected_months|int}} bills is at or under {{d.protected_max_units|int}} units; in Quetta an electric heater month in winter can break the run as easily as an AC month does elsewhere."
+ ],
+ "formula": {
+  "text": "Bill = units × slab rate + fixed Rs/kW × sanctioned kW + (FC + QTA + FPA) × units, then + GST",
+  "lines": [
+   "slab rate = rate of the band the month's units reach (unprotected) or slab-wise (protected)",
+   "fixed = Rs per kW of the band reached × sanctioned kW",
+   "FC, QTA, FPA = per-unit surcharges printed on the bill",
+   "GST = percentage of the subtotal"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "What is the QESCO per unit rate in 2026?",
+   "p": [
+    "QESCO is the Quetta Electric Supply Company Limited, the ex-WAPDA distribution company for Balochistan. Its domestic consumers are billed on the uniform A-1 tariff that NEPRA determined and the Government notified for 2026, the same slabs that apply in Punjab, Sindh and Khyber Pakhtunkhwa. For an unprotected home the rate of the slab the month reaches applies to every unit: {{out.units|int}} units are all billed at {{out.rate|rs2}}.",
+    "The examples and the table below print the rate for each slab. The month's FPA, set by NEPRA and printed on the bill, is the only line not in the uniform tariff; add it in the advanced fields for the exact figure."
+   ]
+  },
+  {
+   "h2": "Why is a Quetta winter bill high?",
+   "p": [
+    "Quetta sits high and cold; the heavy electricity months there are December to February rather than June to August. Where gas pressure is low, an electric heater, a geyser rod or an AC in heat mode carries the load, and a heater draws as much as an air conditioner. A home that used {{ex.0.in.units|int}} protected units in autumn can reach {{ex.2.in.units|int}} units in a heater month, and under unprotected billing every one of those units is charged at {{ex.2.out.rate|rs2}}.",
+    "The protected status is lost the same way: one month over {{d.protected_max_units|int}} units, and the next {{d.protected_months|int}} bills are unprotected. Balochistan has some of the strongest sun in the country, and the net billing calculator linked below shows what a rooftop solar system is worth against these slabs."
+   ]
+  },
+  {
+   "h2": "Does this QESCO calculator work for agricultural tubewells?",
+   "p": [
+    "No. A large share of QESCO's load is agricultural tubewells, and those connections are billed on the agricultural tariff category with its own rates and a long-running subsidy and flat-payment arrangement between the federal and provincial governments. The domestic slabs on this page do not apply to them, and the page makes no estimate for a tubewell bill.",
+    "Shops and offices are billed on the commercial tariff and are also outside this tool. Use it for a house or flat with a domestic (A-1) connection, which is what the bill's tariff code shows."
+   ]
+  },
+  {
+   "h2": "Which areas does QESCO cover?",
+   "p": [
+    "QESCO serves the whole of Balochistan apart from Lasbela district, where Hub and the surrounding industrial area are supplied by K-Electric. That takes in Quetta, Pishin and Qila Abdullah in the north, Zhob and Loralai, Sibi and Naseerabad on the plains, and Khuzdar, Kalat, Kharan, Panjgur, Kech and Gwadar towards the coast. Wherever the home is, the domestic slab rates are the uniform national ones.",
+    "The printed bill, with the reference number and due date, is available from QESCO and through the online bill lookup by reference number; this page estimates the bill from your units and does not fetch your account."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "units": 180,
+    "protected": true
+   },
+   "title": "{{in.units|int}} units, QESCO protected consumer",
+   "text": "Energy charge {{out.energy_rs|rs}} slab-wise at protected rates, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated QESCO bill {{out.total_rs|rs}}."
+  },
+  {
+   "inputs": {
+    "units": 250
+   },
+   "title": "{{in.units|int}} units, unprotected, no heating or cooling",
+   "text": "{{out.units|int}} units all at {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated QESCO bill {{out.total_rs|rs}}."
+  },
+  {
+   "inputs": {
+    "units": 480,
+    "sanctioned_kw": 2
+   },
+   "title": "{{in.units|int}} units in a Quetta winter with an electric heater, {{in.sanctioned_kw|int}} kW",
+   "text": "{{out.units|int}} × {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated QESCO bill {{out.total_rs|rs}} before FPA."
+  },
+  {
+   "inputs": {
+    "units": 60,
+    "lifeline": true,
+    "fc_surcharge_per_unit": "",
+    "gst_pct": ""
+   },
+   "title": "{{in.units|int}} units, lifeline consumer",
+   "text": "{{out.units|int}} units at the lifeline rate of {{out.rate|rs2}} = {{out.energy_rs|rs}}, with no fixed charge and no QTA. With the FC surcharge and GST fields blank the estimate assumes neither applies to lifeline bills (still being verified): {{out.total_rs|rs}}."
+  }
+ ],
+ "table": {
+  "caption": "Estimated QESCO domestic bill by units on a {{in.sanctioned_kw|int}} kW connection with the default surcharges and GST, before FPA; unprotected unless marked",
+  "rows": [
+   {
+    "units": 90
+   },
+   {
+    "units": 160,
+    "protected": true
+   },
+   {
+    "units": 160
+   },
+   {
+    "units": 250
+   },
+   {
+    "units": 350
+   },
+   {
+    "units": 480
+   },
+   {
+    "units": 620
+   }
+  ],
+  "columns": [
+   {
+    "label": "Units",
+    "tpl": "{{out.units|int}} ({{out.category}})"
+   },
+   {
+    "label": "Per unit rate",
+    "tpl": "{{out.rate|rs2}}"
+   },
+   {
+    "label": "Energy",
+    "tpl": "{{out.energy_rs|rs}}"
+   },
+   {
+    "label": "Fixed",
+    "tpl": "{{out.fixed_rs|rs}}"
+   },
+   {
+    "label": "Estimated bill",
+    "tpl": "{{out.total_rs|rs}}"
+   }
+  ]
+ },
+ "mistakes": [
+  "Using this page for a tubewell or shop. The slabs here are the domestic A-1 tariff; agricultural and commercial connections have their own rates.",
+  "Expecting a Balochistan-only rate. QESCO bills the uniform NEPRA domestic tariff, so the slab rates match the rest of the country.",
+  "Ticking protected after a heater winter. Protection needs all of the last {{d.protected_months|int}} months under {{d.protected_max_units|int}} units, and one electric-heater month usually breaks the run.",
+  "Leaving the FPA blank when the bill shows one. The fuel adjustment changes monthly and can be a credit; copy it from the bill into the advanced field."
+ ],
+ "faq": [
+  {
+   "q": "How do I get a QESCO bill estimate from my units?",
+   "a": "Enter the units and the sanctioned load from your bill, tick protected only if the bill says so, and add the FPA from the bill under advanced settings. For {{out.units|int}} units the estimate is {{out.total_rs|rs}} before FPA."
+  },
+  {
+   "q": "What is the QESCO per unit rate for a home?",
+   "a": "The uniform NEPRA domestic slab rate for the slab your month reaches: {{out.rate|rs2}} per unit for an unprotected home using {{out.units|int}} units. The table above lists the rate for every slab; protected and lifeline consumers pay less."
+  },
+  {
+   "q": "What is the QESCO tariff for 2026?",
+   "a": "For homes, the uniform A-1 domestic tariff notified as SRO 279(I)/2026: lifeline slabs up to one hundred units, protected slabs up to {{d.protected_max_units|int}} units, unprotected slabs of a hundred units each up to seven hundred and an open-ended top slab; connections of {{d.tou_threshold_kw|int}} kW and above are billed on ToU rates. Agricultural and commercial connections have separate tariffs."
+  },
+  {
+   "q": "Is the QESCO tariff for tubewells the same as for homes?",
+   "a": "No. Agricultural tubewells are billed on the agricultural tariff category, and in Balochistan they also fall under a government subsidy and flat-payment arrangement. This calculator covers domestic connections only."
+  },
+  {
+   "q": "How do I check my QESCO bill online?",
+   "a": "Through QESCO's online bill lookup by the reference number printed on the bill, which shows the current bill, due date and payment status. This calculator estimates the bill from units; it does not fetch your account."
+  },
+  {
+   "q": "Does QESCO cover all of Balochistan?",
+   "a": "All of it except Lasbela district, where Hub and the surrounding area are served by K-Electric. Every QESCO domestic consumer, from Quetta to Gwadar, is billed on the same uniform slabs."
+  },
+  {
+   "q": "Why is my QESCO bill higher than this estimate?",
+   "a": "Usually the month's FPA, arrears or a late-payment surcharge, or a bill that covers more than a month of readings. Add the FPA in the advanced fields; for a long reading period use the overbilling check linked below."
+  }
+ ],
+ "related": [
+  "F8",
+  "F11",
+  "F1",
+  "F2",
+  "D10"
+ ],
+ "next": "N1",
+ "literal_numbers": [
+  "SRO 279(I)/2026",
+  "2026",
+  "A-1"
+ ],
+ "sources": [
+  {
+   "label": "NEPRA tariff decision and SRO for A-1 domestic consumers (tariff PDF)",
+   "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf"
+  },
+  {
+   "label": "QESCO application to NEPRA for an electric power supply licence (company name and head office on the letterhead)",
+   "url": "https://www.nepra.org.pk/Admission%20Notices/2023/06%20June/24-06/Supply%20Lic%20Application%20Of%20QESCO.PDF"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

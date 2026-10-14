@@ -5,6 +5,7 @@ return nf.get(decimals);
 }
 export function fmt(value,spec='2'){
 if(typeof value==='string')return value;
+if(typeof value==='boolean')return spec==='yesno'?(value?'Yes':'No'):'';
 if(typeof value !=='number' || !Number.isFinite(value))return '';
 if(spec==='raw')return String(value);
 if(spec==='int')return numberFormat(0).format(Math.round(value));
@@ -24,7 +25,7 @@ return m===0?`${sign}${numberFormat(0).format(h)} h`:`${sign}${numberFormat(0).f
 const d=/^\d$/.test(spec)?Number(spec):2;
 return numberFormat(d).format(value);
 }
-export const SPECS=['raw','int','pct','rs','rs2','hm'];
+export const SPECS=['raw','int','pct','rs','rs2','hm','yesno'];
 export const isSpec=(spec)=> /^\d$/.test(spec)|| SPECS.includes(spec);
 export function lookup(ctx,path){
 return path.split('.').reduce((o,k)=>(o==null?undefined:o[k]),ctx);

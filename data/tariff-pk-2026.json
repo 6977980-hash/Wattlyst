@@ -6,26 +6,137 @@
   "status": "energy and fixed rates verified from NEPRA PDF via research; add-ons below are secondary sources and must be re-checked monthly",
   "rules": "Protected: benefit of one previous slab. Unprotected: all units at the rate of the band reached. Fixed charge = Rs/kW/month x sanctioned kW. >=5 kW must be ToU."
  },
- "lifeline": [{"upto": 50, "rate": 3.95, "fixed_per_kw": 0}, {"upto": 100, "rate": 7.74, "fixed_per_kw": 0}],
- "protected": [{"upto": 100, "rate": 10.54, "fixed_per_kw": 200}, {"upto": 200, "rate": 13.01, "fixed_per_kw": 300}],
- "unprotected": [
-  {"upto": 100, "rate": 22.44, "fixed_per_kw": 275},
-  {"upto": 200, "rate": 28.91, "fixed_per_kw": 300},
-  {"upto": 300, "rate": 33.10, "fixed_per_kw": 350},
-  {"upto": 400, "rate": 36.46, "fixed_per_kw": 400},
-  {"upto": 500, "rate": 38.95, "fixed_per_kw": 500},
-  {"upto": 600, "rate": 40.22, "fixed_per_kw": 675},
-  {"upto": 700, "rate": 41.85, "fixed_per_kw": 675},
-  {"upto": null, "rate": 47.20, "fixed_per_kw": 675}
+ "lifeline": [
+  {
+   "upto": 50,
+   "rate": 3.95,
+   "fixed_per_kw": 0
+  },
+  {
+   "upto": 100,
+   "rate": 7.74,
+   "fixed_per_kw": 0
+  }
  ],
- "tou": {"peak": 46.85, "offpeak": 34.53, "fixed_per_kw": 675, "fixed_basis": "higher of 50% sanctioned load or MDI", "fixed_min_fraction": 0.5},
- "addons_secondary": {
-  "fc_surcharge_per_unit": {"value": 3.23, "source": "Profit 15 Jan 2026", "verified": false},
-  "qta_per_unit": {"2026-03..2026-05": 0.3504, "2026-06..2026-08": -1.9857, "2026-09..2026-11": 0.5194, "excludes": "lifeline, prepaid", "verified": false},
-  "fpa_per_unit": {"value": null, "note": "changes monthly; user input with default from latest NEPRA FCA decision", "verified": false},
-  "gst_pct": {"value": 18, "verified": false},
-  "electricity_duty_pct": {"value": 0, "note": "removed from bills from 1 Jul 2025 (Profit)", "verified": false},
-  "ptv_fee": {"value": 0, "note": "removal announced 29 Jun 2025; effective date unconfirmed", "verified": false}
+ "protected": [
+  {
+   "upto": 100,
+   "rate": 10.54,
+   "fixed_per_kw": 200
+  },
+  {
+   "upto": 200,
+   "rate": 13.01,
+   "fixed_per_kw": 300
+  }
+ ],
+ "unprotected": [
+  {
+   "upto": 100,
+   "rate": 22.44,
+   "fixed_per_kw": 275
+  },
+  {
+   "upto": 200,
+   "rate": 28.91,
+   "fixed_per_kw": 300
+  },
+  {
+   "upto": 300,
+   "rate": 33.1,
+   "fixed_per_kw": 350
+  },
+  {
+   "upto": 400,
+   "rate": 36.46,
+   "fixed_per_kw": 400
+  },
+  {
+   "upto": 500,
+   "rate": 38.95,
+   "fixed_per_kw": 500
+  },
+  {
+   "upto": 600,
+   "rate": 40.22,
+   "fixed_per_kw": 675
+  },
+  {
+   "upto": 700,
+   "rate": 41.85,
+   "fixed_per_kw": 675
+  },
+  {
+   "upto": null,
+   "rate": 47.2,
+   "fixed_per_kw": 675
+  }
+ ],
+ "tou": {
+  "peak": 46.85,
+  "offpeak": 34.53,
+  "fixed_per_kw": 675,
+  "fixed_basis": "higher of 50% sanctioned load or MDI",
+  "fixed_min_fraction": 0.5
  },
- "net_billing": {"regulation": "NEPRA (Prosumer) Regulations 2026, notified 9 Feb 2026", "buyback_rs_per_unit_default": 11, "buyback_verified": false, "note": "news reports Rs10-11 (one report Rs8.13); keep editable. Size capped at sanctioned load. Existing net-metering contracts likely valid until expiry (unconfirmed on NEPRA page).", "buyback_sources_secondary": [{"label": "Express Tribune, 10 Feb 2026: Rs 11/unit discussed with stakeholders, not yet notified", "url": "https://tribune.com.pk/story/2591628/1"}, {"label": "Nukta: revised buyback rate yet to be formally notified", "url": "https://nukta.com/pakistan-solar-ends-net-metering"}], "buyback_checked": "2026-10-13", "buyback_status": "No NEPRA notification of the buyback rate found on 2026-10-13 (searched nepra.org.pk); re-check monthly and replace these links with the NEPRA page when it exists."}
+ "addons_secondary": {
+  "fc_surcharge_per_unit": {
+   "value": 3.23,
+   "source": "Profit 15 Jan 2026",
+   "verified": false
+  },
+  "qta_per_unit": {
+   "2026-03..2026-05": 0.3504,
+   "2026-06..2026-08": -1.9857,
+   "2026-09..2026-11": 0.5194,
+   "excludes": "lifeline, prepaid",
+   "verified": false
+  },
+  "fpa_per_unit": {
+   "value": null,
+   "note": "Changes monthly and is not applied by default (a blank field = 0); pages that explain the FPA pre-fill the latest notified figure from `latest`. Not charged to lifeline, protected, EV charging station and prepaid consumers (NEPRA review decision on the March 2026 FCA, SRO 852(I)/2026).",
+   "latest": {
+    "month": "2026-07",
+    "value": 2.5182,
+    "sro": "SRO 1499(I)/2026",
+    "source": "NEPRA decision on the monthly fuel charges adjustment for July 2026, ex-WAPDA DISCOs, dated 04-09-2026",
+    "source_url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20MFPA%20FOR%20THE%20MONTH%20OF%20JULY%202026%20EX-WAPDA%20DISCOS%2004-09-2026%2018342-60.PDF",
+    "checked": "2026-10-14"
+   },
+   
+   "verified": true
+  },
+  "gst_pct": {
+   "value": 18,
+   "verified": false
+  },
+  "electricity_duty_pct": {
+   "value": 0,
+   "note": "removed from bills from 1 Jul 2025 (Profit)",
+   "verified": false
+  },
+  "ptv_fee": {
+   "value": 0,
+   "note": "removal announced 29 Jun 2025; effective date unconfirmed",
+   "verified": false
+  }
+ },
+ "net_billing": {
+  "regulation": "NEPRA (Prosumer) Regulations 2026, notified 9 Feb 2026",
+  "buyback_rs_per_unit_default": 11,
+  "buyback_verified": false,
+  "note": "news reports Rs10-11 (one report Rs8.13); keep editable. Size capped at sanctioned load. Existing net-metering contracts likely valid until expiry (unconfirmed on NEPRA page).",
+  "buyback_sources_secondary": [
+   {
+    "label": "Express Tribune, 10 Feb 2026: Rs 11/unit discussed with stakeholders, not yet notified",
+    "url": "https://tribune.com.pk/story/2591628/1"
+   },
+   {
+    "label": "Nukta: revised buyback rate yet to be formally notified",
+    "url": "https://nukta.com/pakistan-solar-ends-net-metering"
+   }
+  ],
+  "buyback_checked": "2026-10-13",
+  "buyback_status": "No NEPRA notification of the buyback rate found on 2026-10-13 (searched nepra.org.pk); re-check monthly and replace these links with the NEPRA page when it exists."
+ }
 }

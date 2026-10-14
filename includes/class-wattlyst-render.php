@@ -40,6 +40,17 @@ final class Wattlyst_Render {
 			$out .= $this->faq();
 			$out .= $this->author_box();
 			$out .= $this->dates();
+		} elseif ( 'lookup' === $type ) {
+			$out .= $this->answer( $this->c['answer'] ?? '' );
+			$out .= $this->lookup();
+			$out .= $this->key_facts();
+			$out .= $this->sections();
+			$out .= $this->tables();
+			$out .= $this->mistakes();
+			$out .= $this->faq();
+			$out .= $this->related();
+			$out .= $this->author_box();
+			$out .= $this->sources();
 		} elseif ( 'pillar' === $type ) {
 			$out .= $this->answer( ( $this->c['answer'] ?? '' ) ?: ( $this->c['intro'] ?? '' ) ?: $this->page['meta'] );
 			$out .= $this->children();
@@ -301,6 +312,23 @@ final class Wattlyst_Render {
 		return '<section class="wl-ref"><h2>' . esc_html( $t['caption'] ) . '</h2><div class="wl-table-wrap"><table class="wl-table"><thead><tr>' . $head . '</tr></thead><tbody>' . $rows . '</tbody></table></div></section>';
 	}
 
+	/** Lookup page (error codes): brand select + text filter over the tables below; the tables are complete without JavaScript. */
+	private function lookup(): string {
+		$l    = $this->c['lookup'] ?? null;
+		if ( ! $l ) {
+			return '';
+		}
+		$id   = 'wl-' . strtolower( $this->page['id'] );
+		$opts = '<option value="">All brands</option>';
+		foreach ( $this->c['tables'] ?? array() as $t ) {
+			$opts .= '<option value="' . esc_attr( $t['key'] ) . '">' . esc_html( $t['label'] ) . '</option>';
+		}
+		return '<form class="wl-tool wl-lookup" data-wl-lookup onsubmit="return false"><div class="wl-fields">' .
+			'<div class="wl-field"><label for="' . esc_attr( $id ) . '-brand">' . esc_html( $l['label'] ) . '</label><select id="' . esc_attr( $id ) . '-brand" data-wl-group-select>' . $opts . '</select></div>' .
+			'<div class="wl-field"><label for="' . esc_attr( $id ) . '-q">' . esc_html( $l['text_label'] ) . '</label><input type="search" id="' . esc_attr( $id ) . '-q" data-wl-filter autocomplete="off" placeholder="For example 02, 1010, F03, grid"><p class="wl-hint">Type the code as the display shows it, or a word such as battery, fan or grid. ' . esc_html( (string) $l['count'] ) . ' codes from manufacturer manuals, last checked <time datetime="' . esc_attr( $l['checked'] ) . '">' . esc_html( self::date( $l['checked'] ) ) . '</time>.</p></div>' .
+			'</div><p class="wl-error" data-wl-nomatch hidden>No code matches. Check the brand, try a shorter text, or look at the full table below.</p></form>';
+	}
+
 	private function tables(): string {
 		$out = '';
 		foreach ( $this->c['tables'] ?? array() as $t ) {
@@ -309,7 +337,8 @@ final class Wattlyst_Render {
 			foreach ( $t['rows'] as $r ) {
 				$rows .= '<tr>' . implode( '', array_map( static fn( $v ) => '<td>' . esc_html( $v ) . '</td>', $r ) ) . '</tr>';
 			}
-			$out .= '<section class="wl-ref"><h2>' . esc_html( $t['caption'] ) . '</h2><div class="wl-table-wrap"><table class="wl-table"><thead><tr>' . $head . '</tr></thead><tbody>' . $rows . '</tbody></table></div></section>';
+			$group = isset( $t['key'] ) ? ' data-wl-group="' . esc_attr( $t['key'] ) . '"' : '';
+			$out .= '<section class="wl-ref"' . $group . '><h2>' . esc_html( $t['caption'] ) . '</h2><div class="wl-table-wrap"><table class="wl-table"><thead><tr>' . $head . '</tr></thead><tbody>' . $rows . '</tbody></table></div></section>';
 		}
 		return $out;
 	}

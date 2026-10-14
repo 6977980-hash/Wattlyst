@@ -3,26 +3,302 @@
  "type": "tool",
  "silo": "A",
  "url": "/converters/230v-watts-to-amps-calculator/",
- "h1": "230v Watts To Amps Calculator",
+ "h1": "230V and 220V Watts to Amps Calculator",
  "title": "230V / 220V Watts to Amps Calculator | Wattlyst",
  "meta": "Convert watts to amps on 230V or 220V mains. Power factor included, with a table for common appliances like ACs, irons and water motors.",
  "primary_keyword": "230v watts to amps calculator",
  "wave": 2,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-13",
+ "published": "2026-10-13",
  "author": "ali-ahmad",
+ "related": [
+  "A3",
+  "A8",
+  "A9",
+  "W3",
+  "E3"
+ ],
+ "next": "W2",
  "parent": "P-A",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
    "url": "/"
   },
   {
-   "name": "230v Watts To Amps Calculator",
+   "name": "Electrical Unit Converters",
+   "url": "/converters/"
+  },
+  {
+   "name": "230V and 220V Watts to Amps Calculator",
    "url": "/converters/230v-watts-to-amps-calculator/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "220 V amps calculator: is 220 V different from 230 V?",
+    "p": [
+     "Barely. Pakistan's standard supply is 230 V, but many appliance labels and older guides say 220 V. The same 1,000 W load draws 4.55 A at 220 V and a little less at 230 V, a difference smaller than the day-to-day swing of the mains itself. Pick whichever voltage your label shows; a 220V and a 230V calculation lead to the same wire and breaker choice.",
+     "The 120 V option is for the US and Canada, where the same watts draw roughly twice the amps. That is why a 120 V heater needs a much thicker cable than a 230 V one."
+    ]
+   },
+   {
+    "h2": "How many amps is 1,500 watts at 230 V?",
+    "p": [
+     "It depends on the power factor. A 1,500 W heating load (power factor one) draws 6.52 A at 230 V. A 1,500 W load with a power factor of 0.8, typical of an AC, fridge or a mixed set of appliances, draws 8.15 A. Same watts, about a quarter more current.",
+     "This is why an appliance's current is sometimes printed as a higher figure than watts ÷ volts. The label amps include the reactive part of the load, which the meter does not bill but the wire must carry."
+    ]
+   },
+   {
+    "h2": "AC amps at 230 V: why the power factor changes the answer",
+    "p": [
+     "A 1.5 ton inverter AC runs at about 1,450 W. With a power factor of 0.8 that is 7.88 A at 230 V. A non-inverter AC of the same size runs at more watts and also starts with a surge of several times its running current for a second or two, which is what trips an undersized breaker. Use the running amps for the cable and the generator and breaker tools for the surge.",
+     "Resistive loads are simpler. An electric iron of about 1,000 W, a 2,000 W kettle or a geyser all have a power factor of one, so their current is just watts ÷ volts. That is why the table below lists the power factor next to each row."
+    ]
+   },
+   {
+    "h2": "Three-phase and 120 V: the same calculator for other supplies",
+    "p": [
+     "Switch the supply type to three-phase and choose the 400 V line-to-line option. The formula gains a factor of the square root of three because the load is spread over three wires: 5,000 W at a power factor of 0.8 draws 9.02 A per line. Enter the line-to-line voltage (400 V in Pakistan), not the phase-to-neutral 230 V.",
+     "Most homes in Pakistan are single-phase; a three-phase connection is normal for large houses, shops and motors. If you are checking whether a load fits a single-phase meter, the single phase load calculator does that job."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "How many amps is 1,000 watts at 220 V?",
+    "a": "1,000 W ÷ (220 V × a power factor of one) = 4.55 A for a heating load such as an iron. For a motor or AC with a power factor of about 0.8, the current is about a quarter higher."
+   },
+   {
+    "q": "How many amps does a 2,000 W heater draw at 230 V?",
+    "a": "8.7 A. A heater is a pure resistive load with a power factor of one, so the current is simply 2,000 W ÷ 230 V, and it draws that for as long as the element is on."
+   },
+   {
+    "q": "How many amps does an iron draw at 230 V?",
+    "a": "A typical dry or steam iron is about 1,000 W, which is 4.55 A at 220 V and a touch less at 230 V. Bigger steam irons are rated higher, so check the label."
+   },
+   {
+    "q": "What is the 230 V current calculation formula?",
+    "a": "Amps = watts ÷ (volts × power factor). For a 1,500 W load at 230 V and a power factor of 0.8, that is 8.15 A. For three-phase, multiply the line-to-line voltage by the square root of three as well."
+   },
+   {
+    "q": "How many amps does a 1.5 ton AC draw at 230 V?",
+    "a": "A 1.5 ton inverter AC running at about 1,450 W with a power factor of 0.8 draws 7.88 A. A non-inverter unit runs at more watts and briefly surges to several times that when the compressor starts."
+   },
+   {
+    "q": "Can I use this calculator for 120 V?",
+    "a": "Yes. Choose the 120 V option for US and Canadian supplies. The same watts draw roughly twice the amps of a 230 V supply, which is why appliances there need thicker cable and higher-rated breakers."
+   },
+   {
+    "q": "How many amps is 5,000 W on three-phase 400 V?",
+    "a": "9.02 A per line at a power factor of 0.8. Three-phase divides the load across three wires, so each carries far less than the same load would on a single phase."
+   },
+   {
+    "q": "Which wire and breaker do I need for these amps?",
+    "a": "Use the running amps with the wire size calculator, which adds the cable length and voltage drop, and the breaker size calculator for the MCB. Both keep a margin above the running current; a licensed electrician should confirm the final choice."
+   }
+  ],
+  "key_facts": [
+   "On a 230 V single-phase supply, amps = watts ÷ (230 × power factor); at a power factor of 0.8, 1,500 W draws 8.15 A.",
+   "A 2,000 W heater, iron or kettle (power factor one) draws 8.7 A at 230 V; a 1,450 W 1.5 ton inverter AC at a power factor of 0.8 draws 7.88 A.",
+   "1,000 W at 220 V and a power factor of one is 4.55 A; at 230 V the same load draws slightly less, so a 220V label and a 230V supply give almost the same answer.",
+   "Three-phase at 400 V line to line spreads the load over three wires: 5,000 W at a power factor of 0.8 is 9.02 A per line."
+  ],
+  "mistakes": [
+   "Using a power factor of one for an AC, fridge or water motor. Their current is about a quarter higher than watts ÷ volts; use about 0.8 unless the label says otherwise.",
+   "Using the phase-to-neutral 230 V with the three-phase formula. Three-phase needs the line-to-line voltage (400 V in Pakistan) and the square root of three.",
+   "Taking the running amps of a non-inverter AC or motor as its only current. The compressor or pump surges to several times this for a moment at start-up, which is what trips breakers and stalls generators.",
+   "Buying a breaker or wire equal to the calculated amps. Cables and MCBs need a margin above the running current; use the wire size and breaker size calculators for the final choice."
+  ],
+  "sources": [
+   {
+    "label": "IEC 60038:2009, IEC standard voltages (230/400 V, 120/240 V systems)",
+    "url": "https://webstore.iec.ch/publication/153"
+   },
+   {
+    "label": "NEPRA, National Electric Power Regulatory Authority of Pakistan (supply standards: 230 V single-phase, 400 V three-phase, 50 Hz)",
+    "url": "https://www.nepra.org.pk/"
+   },
+   {
+    "label": "Wattlyst methodology and default values",
+    "url": "/methodology/"
+   }
+  ],
+  "tool": {
+   "calc": "watts_to_amps",
+   "module": "conversions.js",
+   "data_keys": [],
+   "appliances": {},
+   "fields": [
+    {
+     "name": "watts",
+     "label": "Load",
+     "unit": "W",
+     "default": 1500,
+     "hint": "Running watts from the appliance label or the appliance list. For an AC or motor use its running watts, not the starting surge."
+    },
+    {
+     "name": "volts",
+     "label": "Supply voltage",
+     "unit": "V",
+     "type": "select",
+     "default": 230,
+     "options": [
+      [
+       230,
+       "230 V (Pakistan and most countries)"
+      ],
+      [
+       220,
+       "220 V"
+      ],
+      [
+       240,
+       "240 V"
+      ],
+      [
+       120,
+       "120 V (US, Canada)"
+      ],
+      [
+       400,
+       "400 V (three-phase, line to line)"
+      ]
+     ],
+     "hint": "Pakistan's mains is 230 V single-phase and 400 V three-phase. Older labels say 220 V; the result is almost the same."
+    },
+    {
+     "name": "mode",
+     "label": "Supply type",
+     "type": "select",
+     "default": "ac1",
+     "options": [
+      [
+       "ac1",
+       "Single-phase (normal home supply)"
+      ],
+      [
+       "ac3",
+       "Three-phase (use the line-to-line voltage, 400 V)"
+      ]
+     ],
+     "hint": "Almost every home is single-phase. Choose three-phase only for a three-phase connection and enter the line-to-line volts."
+    },
+    {
+     "name": "pf",
+     "label": "Power factor",
+     "unit": "0 to 1",
+     "default": 0.8,
+     "hint": "Use 1 for heaters, irons, kettles and geysers. Use about 0.8 for ACs, fridges, water motors and mixed home loads."
+    }
+   ],
+   "fixed_inputs": {},
+   "outputs": [
+    {
+     "key": "amps",
+     "label": "Current drawn",
+     "spec": "2",
+     "unit": "A",
+     "label_ur": "Khincha gaya current",
+     "value": "8.15"
+    }
+   ],
+   "how": {
+    "tpl": "{{in.watts|int}} W ÷ ({{in.volts|int}} V × {{out.pf|2}} power factor) = {{out.amps|2}} A. For three-phase the voltage is also multiplied by the square root of three. The power factor turns the real watts into the apparent power the supply must carry; a heater has a power factor of one, motors and ACs less.",
+    "text": "1,500 W ÷ (230 V × 0.8 power factor) = 8.15 A. For three-phase the voltage is also multiplied by the square root of three. The power factor turns the real watts into the apparent power the supply must carry; a heater has a power factor of one, motors and ACs less."
+   },
+   "submit": "Calculate",
+   "data_checked": []
+  },
+  "examples": [
+   {
+    "title": "1,000 watts at 220 V (an electric iron)",
+    "text": "1,000 W ÷ (220 V × 1) = 4.55 A. An iron is a pure heating load, so the power factor is one."
+   },
+   {
+    "title": "A 2,000 W heater or kettle at 230 V",
+    "text": "2,000 W ÷ (230 V × 1) = 8.7 A. A room heater, kettle or hot plate of 2,000 W draws 8.7 A continuously while it runs."
+   },
+   {
+    "title": "1,500 watts at 230 V, power factor one",
+    "text": "1,500 W ÷ (230 V × 1) = 6.52 A for a heating load. The same 1,500 W with a power factor of 0.8 draws more; try it in the calculator."
+   },
+   {
+    "title": "A 1.5 ton inverter AC at 230 V",
+    "text": "A 1.5 ton inverter AC runs at about 1,450 W. 1,450 W ÷ (230 V × 0.8) = 7.88 A running current. Starting is gentle for an inverter AC; a non-inverter AC surges well above this."
+   },
+   {
+    "title": "5,000 W on a three-phase 400 V supply",
+    "text": "5,000 W ÷ (√3 × 400 V × 0.8) = 9.02 A per line. The square root of three appears because three-phase power is shared across three wires."
+   }
+  ],
+  "table": {
+   "caption": "Single-phase 230 V amps chart for common loads",
+   "head": [
+    "Load",
+    "Power factor",
+    "Current"
+   ],
+   "rows": [
+    [
+     "100 W",
+     "1",
+     "0.43 A"
+    ],
+    [
+     "500 W",
+     "1",
+     "2.17 A"
+    ],
+    [
+     "1,000 W",
+     "1",
+     "4.35 A"
+    ],
+    [
+     "1,000 W",
+     "0.8",
+     "5.43 A"
+    ],
+    [
+     "1,500 W",
+     "0.8",
+     "8.15 A"
+    ],
+    [
+     "2,000 W",
+     "1",
+     "8.7 A"
+    ],
+    [
+     "3,000 W",
+     "1",
+     "13.04 A"
+    ],
+    [
+     "5,000 W",
+     "0.8",
+     "27.17 A"
+    ]
+   ]
+  },
+  "answer": "A 1,500 W load on a 230 V single-phase supply draws about 8.15 A at a power factor of 0.8. Amps = watts ÷ (volts × power factor). A pure heating load has a power factor of one, so a 2,000 W heater draws 8.7 A, while an AC or motor of the same watts draws more.",
+  "formula": {
+   "text": "I = P ÷ (V × PF)  (single-phase);  I = P ÷ (√3 × V × PF)  (three-phase)",
+   "lines": [
+    "I = current in amps (A)",
+    "P = real power in watts (W)",
+    "V = supply voltage: 230 V single-phase, 400 V line-to-line for three-phase",
+    "PF = power factor, 1 for heating loads, about 0.8 for motors, ACs and mixed loads",
+    "√3 ≈ 1.732 applies only to three-phase"
+   ]
+  },
+  "safety": "The amps from this page decide cable and breaker size, so never pick a wire or MCB from this result alone. Add the margins the wiring calculators use and have a licensed electrician check and connect any new circuit."
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -39,7 +315,13 @@
      {
       "@type": "ListItem",
       "position": 2,
-      "name": "230v Watts To Amps Calculator",
+      "name": "Electrical Unit Converters",
+      "item": "https://wattlyst.com/converters/"
+     },
+     {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "230V and 220V Watts to Amps Calculator",
       "item": "https://wattlyst.com/converters/230v-watts-to-amps-calculator/"
      }
     ]
@@ -56,12 +338,14 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/converters/230v-watts-to-amps-calculator/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-13",
+    "lastReviewed": "2026-10-13"
    },
    {
     "@type": "WebApplication",
     "@id": "https://wattlyst.com/converters/230v-watts-to-amps-calculator/#app",
-    "name": "230v Watts To Amps Calculator",
+    "name": "230V and 220V Watts to Amps Calculator",
     "url": "https://wattlyst.com/converters/230v-watts-to-amps-calculator/",
     "description": "Convert watts to amps on 230V or 220V mains. Power factor included, with a table for common appliances like ACs, irons and water motors.",
     "applicationCategory": "UtilitiesApplication",
@@ -88,6 +372,76 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/converters/230v-watts-to-amps-calculator/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "How many amps is 1,000 watts at 220 V?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "1,000 W ÷ (220 V × a power factor of one) = 4.55 A for a heating load such as an iron. For a motor or AC with a power factor of about 0.8, the current is about a quarter higher."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many amps does a 2,000 W heater draw at 230 V?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "8.7 A. A heater is a pure resistive load with a power factor of one, so the current is simply 2,000 W ÷ 230 V, and it draws that for as long as the element is on."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many amps does an iron draw at 230 V?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "A typical dry or steam iron is about 1,000 W, which is 4.55 A at 220 V and a touch less at 230 V. Bigger steam irons are rated higher, so check the label."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What is the 230 V current calculation formula?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Amps = watts ÷ (volts × power factor). For a 1,500 W load at 230 V and a power factor of 0.8, that is 8.15 A. For three-phase, multiply the line-to-line voltage by the square root of three as well."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many amps does a 1.5 ton AC draw at 230 V?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "A 1.5 ton inverter AC running at about 1,450 W with a power factor of 0.8 draws 7.88 A. A non-inverter unit runs at more watts and briefly surges to several times that when the compressor starts."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Can I use this calculator for 120 V?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Yes. Choose the 120 V option for US and Canadian supplies. The same watts draw roughly twice the amps of a 230 V supply, which is why appliances there need thicker cable and higher-rated breakers."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many amps is 5,000 W on three-phase 400 V?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "9.02 A per line at a power factor of 0.8. Three-phase divides the load across three wires, so each carries far less than the same load would on a single phase."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Which wire and breaker do I need for these amps?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Use the running amps with the wire size calculator, which adds the cable length and voltage drop, and the breaker size calculator for the MCB. Both keep a margin above the running current; a licensed electrician should confirm the final choice."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

@@ -255,8 +255,16 @@
     },
     "fpa_per_unit": {
      "value": null,
-     "note": "changes monthly; user input with default from latest NEPRA FCA decision",
-     "verified": false
+     "note": "Changes monthly and is not applied by default (a blank field = 0); pages that explain the FPA pre-fill the latest notified figure from `latest`. Not charged to lifeline, protected, EV charging station and prepaid consumers (NEPRA review decision on the March 2026 FCA, SRO 852(I)/2026).",
+     "latest": {
+      "month": "2026-07",
+      "value": 2.5182,
+      "sro": "SRO 1499(I)/2026",
+      "source": "NEPRA decision on the monthly fuel charges adjustment for July 2026, ex-WAPDA DISCOs, dated 04-09-2026",
+      "source_url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20MFPA%20FOR%20THE%20MONTH%20OF%20JULY%202026%20EX-WAPDA%20DISCOS%2004-09-2026%2018342-60.PDF",
+      "checked": "2026-10-14"
+     },
+     "verified": true
     },
     "gst_pct": {
      "value": 18,
@@ -511,6 +519,87 @@
     "inverter_compressor",
     "high_inrush"
    ]
+  },
+  "solar_prices": {
+   "checked": "2026-10-14",
+   "panel_rs_per_w": {
+    "low": 40,
+    "high": 46
+   },
+   "systems": [
+    {
+     "type": "hybrid",
+     "kw": 3,
+     "low_rs": 480000,
+     "high_rs": 850000
+    },
+    {
+     "type": "hybrid",
+     "kw": 5,
+     "low_rs": 950000,
+     "high_rs": 1250000
+    },
+    {
+     "type": "hybrid",
+     "kw": 8,
+     "low_rs": 1390000,
+     "high_rs": 1800000
+    },
+    {
+     "type": "hybrid",
+     "kw": 10,
+     "low_rs": 1400000,
+     "high_rs": 1690000
+    },
+    {
+     "type": "hybrid",
+     "kw": 12,
+     "low_rs": 1990000,
+     "high_rs": 1990000
+    },
+    {
+     "type": "hybrid",
+     "kw": 15,
+     "low_rs": 2300000,
+     "high_rs": 3000000
+    },
+    {
+     "type": "on-grid",
+     "kw": 3,
+     "low_rs": 360000,
+     "high_rs": 450000
+    },
+    {
+     "type": "on-grid",
+     "kw": 5,
+     "low_rs": 640000,
+     "high_rs": 800000
+    },
+    {
+     "type": "on-grid",
+     "kw": 8,
+     "low_rs": 850000,
+     "high_rs": 1050000
+    },
+    {
+     "type": "on-grid",
+     "kw": 10,
+     "low_rs": 950000,
+     "high_rs": 1200000
+    },
+    {
+     "type": "on-grid",
+     "kw": 15,
+     "low_rs": 1400000,
+     "high_rs": 1800000
+    },
+    {
+     "type": "on-grid",
+     "kw": 20,
+     "low_rs": 1800000,
+     "high_rs": 2200000
+    }
+   ]
   }
  },
  "pages": [
@@ -542,24 +631,40 @@
    "id": "A3",
    "type": "tool",
    "url": "/converters/12v-watts-to-amps-calculator/",
-   "h1": "12v Watts To Amps Calculator",
+   "h1": "12V Watts to Amps Calculator",
    "title": "12V Watts to Amps Calculator (Battery & Solar) | Wattlyst",
    "meta": "Find how many amps a 12V load draws from your battery. Includes inverter losses, a 12V reference table and examples for fans, lights and routers.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-A",
+   "related": [
+    "A4",
+    "A10",
+    "A9",
+    "B1",
+    "D6"
+   ],
+   "next": "B2",
    "wave": 2
   },
   {
    "id": "A4",
    "type": "tool",
    "url": "/converters/230v-watts-to-amps-calculator/",
-   "h1": "230v Watts To Amps Calculator",
+   "h1": "230V and 220V Watts to Amps Calculator",
    "title": "230V / 220V Watts to Amps Calculator | Wattlyst",
    "meta": "Convert watts to amps on 230V or 220V mains. Power factor included, with a table for common appliances like ACs, irons and water motors.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-A",
+   "related": [
+    "A3",
+    "A8",
+    "A9",
+    "W3",
+    "E3"
+   ],
+   "next": "W2",
    "wave": 2
   },
   {
@@ -602,36 +707,60 @@
    "id": "A8",
    "type": "tool",
    "url": "/converters/kva-to-kw-calculator/",
-   "h1": "Kva To Kw",
+   "h1": "kVA to kW Calculator",
    "title": "kVA to kW Calculator (Power Factor Explained) | Wattlyst",
    "meta": "Convert kVA to kW using power factor. See why a 5 kVA generator or UPS gives about 4 kW at PF 0.8, with a table for common sizes.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-A",
+   "related": [
+    "A9",
+    "A4",
+    "A10",
+    "C5",
+    "B5"
+   ],
+   "next": "C6",
    "wave": 2
   },
   {
    "id": "A9",
    "type": "tool",
    "url": "/converters/va-to-watts-calculator/",
-   "h1": "Va To Watts",
+   "h1": "VA to Watts Calculator",
    "title": "VA to Watts Calculator for UPS & Inverters | Wattlyst",
    "meta": "Convert a UPS or inverter VA rating to real watts using power factor. Find how many watts a 1000VA or 1500VA UPS can actually run.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-A",
+   "related": [
+    "A8",
+    "A10",
+    "A3",
+    "B1",
+    "H9"
+   ],
+   "next": "B5",
    "wave": 2
   },
   {
    "id": "A10",
    "type": "tool",
    "url": "/converters/ah-to-wh-calculator/",
-   "h1": "Amp Hours To Watt Hours",
+   "h1": "Amp Hours to Watt Hours (Ah to Wh) Calculator",
    "title": "Ah to Wh and kWh to Ah Calculator (Battery) | Wattlyst",
    "meta": "Convert battery amp-hours to watt-hours or kWh, and back. Pick 12V, 24V, 48V or 51.2V lithium and see usable energy after depth of discharge.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-A",
+   "related": [
+    "A3",
+    "A9",
+    "B2",
+    "D6",
+    "D4"
+   ],
+   "next": "B1",
    "wave": 2
   },
   {
@@ -650,7 +779,8 @@
     "B5",
     "H9",
     "D4",
-    "P-G"
+    "P-G",
+    "A10"
    ],
    "next": "D4",
    "wave": 1
@@ -669,7 +799,8 @@
     "B1",
     "B3",
     "D6",
-    "B5"
+    "B5",
+    "A3"
    ],
    "next": "D6",
    "wave": 1
@@ -697,12 +828,21 @@
    "id": "B4",
    "type": "tool",
    "url": "/battery/battery-bank-size-calculator/",
-   "h1": "Battery Capacity Calculator For Appliances",
+   "h1": "Battery Capacity Calculator for Appliances",
    "title": "Battery Capacity Calculator for Appliances | Wattlyst",
    "meta": "Pick your appliances and backup hours to get the battery Ah and how many batteries you need for a 1kW, 3kW or 5kW inverter. Tubular and lithium.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-B",
+   "related": [
+    "B1",
+    "B5",
+    "D4",
+    "H9",
+    "C7",
+    "E2"
+   ],
+   "next": "D4",
    "wave": 2
   },
   {
@@ -720,7 +860,8 @@
     "B2",
     "H9",
     "D4",
-    "P-G"
+    "P-G",
+    "N2"
    ],
    "next": "B1",
    "wave": 1
@@ -806,7 +947,9 @@
     "C5",
     "D4",
     "E5",
-    "W1"
+    "W1",
+    "C7",
+    "A8"
    ],
    "next": "W1",
    "wave": 1
@@ -815,12 +958,21 @@
    "id": "C7",
    "type": "tool",
    "url": "/generator/what-can-a-kva-generator-run/",
-   "h1": "What Can A 5 Kva Generator Run",
+   "h1": "What Can a 5 kVA Generator Run?",
    "title": "What Can a 3, 5 or 7 kVA Generator Run? | Wattlyst",
    "meta": "See which appliances a 3, 5 or 7 kVA generator can run at once, with real watts at PF 0.8 and motor starting surge. Try your own list.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-C",
+   "related": [
+    "C6",
+    "C5",
+    "D4",
+    "E1",
+    "E2",
+    "B4"
+   ],
+   "next": "C6",
    "wave": 2
   },
   {
@@ -839,12 +991,20 @@
    "id": "D1",
    "type": "tool",
    "url": "/solar/solar-battery-size-calculator/",
-   "h1": "Solar Battery Size Calculator For Home",
+   "h1": "Solar Battery Size Calculator for Home",
    "title": "Solar Battery Size Calculator for Home | Wattlyst",
    "meta": "Size the battery bank for your solar system from night-time load, backup days and battery type. Lithium and tubular, 12V to 48V.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-D",
+   "related": [
+    "D3",
+    "D7",
+    "D4",
+    "H8",
+    "B1"
+   ],
+   "next": "B4",
    "wave": 2
   },
   {
@@ -854,21 +1014,38 @@
    "h1": "Solar Panel Wattage Calculator",
    "title": "Solar Panel Wattage Calculator (kWh to Watts) | Wattlyst",
    "meta": "Find the total solar panel watts you need from daily kWh and your city's sun hours. Losses included; shows the number of 585W panels.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-D",
+   "related": [
+    "D7",
+    "D5",
+    "D8",
+    "D6",
+    "D4",
+    "D14"
+   ],
+   "next": "D16",
    "wave": 2
   },
   {
    "id": "D3",
    "type": "tool",
    "url": "/solar/off-grid-solar-calculator/",
-   "h1": "Off Grid Solar System Size Calculator",
+   "h1": "Off-Grid Solar System Size Calculator",
    "title": "Off-Grid Solar System Size Calculator | Wattlyst",
    "meta": "Plan a full off-grid solar system: panels, battery bank, inverter and charge controller from your appliance list and backup days.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-D",
+   "related": [
+    "D16",
+    "W4",
+    "D4",
+    "D7",
+    "B4"
+   ],
+   "next": "D1",
    "wave": 2
   },
   {
@@ -887,7 +1064,8 @@
     "C6",
     "H9",
     "D5",
-    "H2"
+    "H2",
+    "N2"
    ],
    "next": "B1",
    "wave": 1
@@ -907,7 +1085,8 @@
     "D8",
     "D4",
     "D10",
-    "D6"
+    "D6",
+    "D2"
    ],
    "next": "D10",
    "wave": 1
@@ -926,7 +1105,8 @@
     "B2",
     "D5",
     "D8",
-    "B1"
+    "B1",
+    "D16"
    ],
    "next": "B2",
    "wave": 1
@@ -935,12 +1115,21 @@
    "id": "D7",
    "type": "tool",
    "url": "/solar/solar-system-size-calculator/",
-   "h1": "Solar System Size For Daily Kwh Usage",
+   "h1": "Solar System Size for Daily kWh Usage",
    "title": "Solar System Size for Daily kWh Usage | Wattlyst",
    "meta": "Turn your daily kWh usage or monthly units into solar system size in kW, panel count and roof space, using real sun data for your city.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-D",
+   "related": [
+    "D2",
+    "D8",
+    "D1",
+    "D10",
+    "F1",
+    "D14"
+   ],
+   "next": "D4",
    "wave": 2
   },
   {
@@ -958,7 +1147,8 @@
     "D5",
     "D10",
     "D4",
-    "D6"
+    "D6",
+    "N3"
    ],
    "next": "D10",
    "wave": 1
@@ -990,7 +1180,8 @@
     "D5",
     "F1",
     "F2",
-    "F12"
+    "F12",
+    "N3"
    ],
    "next": "F1",
    "wave": 1
@@ -1011,48 +1202,82 @@
    "id": "D12",
    "type": "tool",
    "url": "/solar/solar-system-for-10-marla-house/",
-   "h1": "10 Marla Solar System",
+   "h1": "10 Marla Solar System: Size, Panels and Inverter",
    "title": "10 Marla Solar System: kW, Panels & Cost | Wattlyst",
    "meta": "Typical 10 marla load, the right solar system size in kW, panels, inverter and battery, plus cost and payback. Use the calculator for your bill.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-D",
+   "related": [
+    "D13",
+    "D8",
+    "D10",
+    "E1",
+    "N7",
+    "N3"
+   ],
+   "next": "D4",
    "wave": 2
   },
   {
    "id": "D13",
    "type": "tool",
    "url": "/solar/solar-system-for-1-kanal-house/",
-   "h1": "1 Kanal Solar System",
+   "h1": "1 Kanal Solar System: Size for a House with 3 to 4 ACs",
    "title": "Solar System for 1 Kanal House: Size & Cost | Wattlyst",
    "meta": "How much solar does a 1 kanal house need with 3 to 4 ACs? kW, panels, hybrid inverter, battery options and cost estimate.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-D",
+   "related": [
+    "D12",
+    "D8",
+    "D10",
+    "D15",
+    "H8",
+    "N3"
+   ],
+   "next": "D4",
    "wave": 2
   },
   {
    "id": "D14",
    "type": "tool",
    "url": "/solar/solar-system-price-pakistan/",
-   "h1": "10kw Solar System Price In Pakistan",
+   "h1": "Solar System Price in Pakistan: 3kW, 5kW and 10kW Systems",
    "title": "Solar System Price in Pakistan: 3kW, 5kW, 10kW | Wattlyst",
    "meta": "Estimated price of 3kW, 5kW and 10kW on-grid and hybrid solar systems in Pakistan, part by part, with the date checked and payback.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-D",
+   "related": [
+    "N3",
+    "D7",
+    "D10",
+    "D8",
+    "D12",
+    "D13"
+   ],
+   "next": "N3",
    "wave": 2
   },
   {
    "id": "D15",
    "type": "tool",
    "url": "/solar/tubewell-solar-calculator/",
-   "h1": "Tubewell Solar System",
+   "h1": "Tubewell Solar System Calculator: HP to kW",
    "title": "Tubewell Solar System Calculator (HP to kW) | Wattlyst",
    "meta": "Size a solar system for a 1 to 20 HP tubewell or water pump: panel kW, VFD inverter and daily water hours. For farmers in Pakistan.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-D",
+   "related": [
+    "D12",
+    "D13",
+    "W2",
+    "D8"
+   ],
+   "next": "C5",
    "wave": 2
   },
   {
@@ -1062,9 +1287,17 @@
    "h1": "Solar Charge Controller Size Calculator",
    "title": "Solar Charge Controller Size Calculator | Wattlyst",
    "meta": "Find the amp rating of your PWM or MPPT solar charge controller from panel watts and battery voltage, with a safety margin and cold-weather Voc.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-D",
+   "related": [
+    "D6",
+    "D2",
+    "D3",
+    "D1",
+    "W2"
+   ],
+   "next": "W4",
    "wave": 2
   },
   {
@@ -1082,7 +1315,9 @@
     "E4",
     "D4",
     "H2",
-    "F1"
+    "F1",
+    "E2",
+    "N4"
    ],
    "next": "D4",
    "wave": 1
@@ -1094,9 +1329,18 @@
    "h1": "Appliance Load Calculator",
    "title": "Appliance Load Calculator (Watts & Units) | Wattlyst",
    "meta": "Find watts, daily units and monthly bill share for any appliance. Choose from a list of common home appliances or enter your own rating.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-E",
+   "related": [
+    "E1",
+    "E5",
+    "E6",
+    "C7",
+    "N4",
+    "N5"
+   ],
+   "next": "E1",
    "wave": 2
   },
   {
@@ -1152,7 +1396,9 @@
     "D5",
     "E4",
     "C6",
-    "H2"
+    "H2",
+    "N5",
+    "H3"
    ],
    "next": "F1",
    "wave": 1
@@ -1161,12 +1407,21 @@
    "id": "E6",
    "type": "tool",
    "url": "/load/unit-calculator/",
-   "h1": "Unit Calculator Electricity",
+   "h1": "Unit Calculator for Electricity",
    "title": "Electricity Unit Calculator (Watts to Units) | Wattlyst",
    "meta": "Convert watts or amps and hours into electricity units (kWh), where 1 unit = 1 kWh. Find daily and monthly units and cost for any appliance.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-E",
+   "related": [
+    "E2",
+    "E5",
+    "F1",
+    "B4",
+    "N5",
+    "N4"
+   ],
+   "next": "F1",
    "wave": 2
   },
   {
@@ -1183,7 +1438,9 @@
     "F2",
     "F12",
     "E5",
-    "D10"
+    "D10",
+    "N1",
+    "F14"
    ],
    "next": "E5",
    "wave": 1
@@ -1210,108 +1467,180 @@
    "id": "F3",
    "type": "tool",
    "url": "/bill/iesco-bill-calculator/",
-   "h1": "Iesco Bill Calculator",
+   "h1": "IESCO Bill Calculator",
    "title": "IESCO Bill Calculator 2026 (Latest Tariff) | Wattlyst",
    "meta": "Estimate your IESCO bill from units with the current tariff, FPA and all taxes. Protected and non-protected slabs explained.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-F",
+   "related": [
+    "F4",
+    "F7",
+    "F1",
+    "F2",
+    "E5"
+   ],
+   "next": "N1",
    "wave": 2
   },
   {
    "id": "F4",
    "type": "tool",
    "url": "/bill/mepco-bill-calculator/",
-   "h1": "Mepco Bill Calculator",
+   "h1": "MEPCO Bill Calculator",
    "title": "MEPCO Bill Calculator 2026 (Latest Tariff) | Wattlyst",
    "meta": "Estimate your MEPCO bill from units with the current tariff, FPA and all taxes. Protected and non-protected slabs explained.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-F",
+   "related": [
+    "F5",
+    "F3",
+    "F1",
+    "F2",
+    "E5"
+   ],
+   "next": "N1",
    "wave": 2
   },
   {
    "id": "F5",
    "type": "tool",
    "url": "/bill/gepco-bill-calculator/",
-   "h1": "Gepco Bill Calculator",
+   "h1": "GEPCO Bill Calculator",
    "title": "GEPCO Bill Calculator 2026 (Latest Tariff) | Wattlyst",
    "meta": "Estimate your GEPCO bill from units with the current tariff, FPA and all taxes. Protected and non-protected slabs explained.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-F",
+   "related": [
+    "F6",
+    "F4",
+    "F1",
+    "F2",
+    "E5"
+   ],
+   "next": "N1",
    "wave": 2
   },
   {
    "id": "F6",
    "type": "tool",
    "url": "/bill/fesco-bill-calculator/",
-   "h1": "Fesco Bill Calculator",
+   "h1": "FESCO Bill Calculator",
    "title": "FESCO Bill Calculator 2026 (Latest Tariff) | Wattlyst",
    "meta": "Estimate your FESCO bill from units with the current tariff, FPA and all taxes. Protected and non-protected slabs explained.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-F",
+   "related": [
+    "F7",
+    "F5",
+    "F1",
+    "F2",
+    "E5"
+   ],
+   "next": "N1",
    "wave": 2
   },
   {
    "id": "F7",
    "type": "tool",
    "url": "/bill/pesco-bill-calculator/",
-   "h1": "Pesco Bill Calculator",
+   "h1": "PESCO Bill Calculator",
    "title": "PESCO Bill Calculator 2026 (Latest Tariff) | Wattlyst",
    "meta": "Estimate your PESCO bill from units with the current tariff, FPA and all taxes. Protected and non-protected slabs explained.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-F",
+   "related": [
+    "F3",
+    "F6",
+    "F1",
+    "F2",
+    "E1"
+   ],
+   "next": "N1",
    "wave": 2
   },
   {
    "id": "F8",
    "type": "tool",
    "url": "/bill/hesco-bill-calculator/",
-   "h1": "Hesco Bill Calculator",
+   "h1": "HESCO Bill Calculator",
    "title": "HESCO Bill Calculator 2026 (Latest Tariff) | Wattlyst",
    "meta": "Estimate your HESCO bill from units with the current tariff, FPA and all taxes. Protected and non-protected slabs explained.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-F",
+   "related": [
+    "F9",
+    "F10",
+    "F12",
+    "F1",
+    "F2"
+   ],
+   "next": "N1",
    "wave": 2
   },
   {
    "id": "F9",
    "type": "tool",
    "url": "/bill/sepco-bill-calculator/",
-   "h1": "Sepco Bill Calculator",
+   "h1": "SEPCO Bill Calculator",
    "title": "SEPCO Bill Calculator 2026 (Latest Tariff) | Wattlyst",
    "meta": "Estimate your SEPCO bill from units with the current tariff, FPA and all taxes. Protected and non-protected slabs explained.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-F",
+   "related": [
+    "F8",
+    "F10",
+    "F1",
+    "F2",
+    "E4"
+   ],
+   "next": "N1",
    "wave": 2
   },
   {
    "id": "F10",
    "type": "tool",
    "url": "/bill/qesco-bill-calculator/",
-   "h1": "Qesco Bill Calculator",
+   "h1": "QESCO Bill Calculator",
    "title": "QESCO Bill Calculator 2026 (Latest Tariff) | Wattlyst",
    "meta": "Estimate your QESCO bill from units with the current tariff, FPA and all taxes. Protected and non-protected slabs explained.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-F",
+   "related": [
+    "F8",
+    "F11",
+    "F1",
+    "F2",
+    "D10"
+   ],
+   "next": "N1",
    "wave": 2
   },
   {
    "id": "F11",
    "type": "tool",
    "url": "/bill/tesco-bill-calculator/",
-   "h1": "Tesco Bill Calculator",
+   "h1": "TESCO Bill Calculator",
    "title": "TESCO Bill Calculator 2026 (Latest Tariff) | Wattlyst",
    "meta": "Estimate your TESCO bill from units with the current tariff, FPA and all taxes. Protected and non-protected slabs explained.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-F",
+   "related": [
+    "F10",
+    "F8",
+    "F7",
+    "F1",
+    "F2"
+   ],
+   "next": "N1",
    "wave": 2
   },
   {
@@ -1348,12 +1677,20 @@
    "id": "F14",
    "type": "guide",
    "url": "/guides/fpa-in-electricity-bill/",
-   "h1": "Fpa In Electricity Bill",
+   "h1": "FPA in Electricity Bill: What It Means and How to Calculate It",
    "title": "FPA in Electricity Bill: Meaning & Latest Rate | Wattlyst",
    "meta": "What fuel price adjustment (FPA) means on your bill, this month's rate with the NEPRA decision link, and how to calculate it yourself.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-G",
+   "related": [
+    "F1",
+    "F2",
+    "F12",
+    "N1",
+    "F8"
+   ],
+   "next": "N1",
    "wave": 2
   },
   {
@@ -1389,7 +1726,8 @@
     "W1",
     "W3",
     "E3",
-    "C5"
+    "C5",
+    "A4"
    ],
    "next": "W3",
    "wave": 1
@@ -1408,7 +1746,8 @@
     "W1",
     "W2",
     "C5",
-    "E3"
+    "E3",
+    "W4"
    ],
    "next": "W2",
    "wave": 1
@@ -1417,12 +1756,19 @@
    "id": "W4",
    "type": "tool",
    "url": "/wiring/solar-cable-size-calculator/",
-   "h1": "Dc Cable Size For Solar Panels",
+   "h1": "DC Cable Size for Solar Panels",
    "title": "Solar DC Cable Size Calculator (4mm², 6mm²) | Wattlyst",
    "meta": "Size the DC cable from solar panels to inverter and battery for 3kW to 10kW systems. Keeps voltage drop under 3% with a safety margin.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-W",
+   "related": [
+    "W2",
+    "W1",
+    "D16",
+    "D3"
+   ],
+   "next": "W3",
    "wave": 2
   },
   {
@@ -1468,7 +1814,11 @@
    "status": "publish",
    "live": true,
    "parent": null,
-   "children": [],
+   "children": [
+    "H3",
+    "H5",
+    "H7"
+   ],
    "related": [
     "E1",
     "E5",
@@ -1482,12 +1832,20 @@
    "id": "H3",
    "type": "appliance",
    "url": "/appliances/ceiling-fan/",
-   "h1": "Fan Units Per Hour Pakistan",
+   "h1": "Fan Units per Hour in Pakistan: AC Fan vs DC Inverter Fan",
    "title": "Fan Units per Hour in Pakistan (AC vs DC Fan) | Wattlyst",
    "meta": "How many units does a ceiling fan use per hour in Pakistan? Normal AC fan vs DC inverter fan, with daily units, monthly bill and UPS backup.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "H2",
+   "related": [
+    "B5",
+    "E1",
+    "D8",
+    "H5",
+    "H7"
+   ],
+   "next": "B1",
    "wave": 2
   },
   {
@@ -1506,12 +1864,20 @@
    "id": "H5",
    "type": "appliance",
    "url": "/appliances/water-motor-1hp/",
-   "h1": "Water Motor 1 Hp Units",
+   "h1": "Water Motor 1 HP: Watts, Units per Hour and Starting Surge",
    "title": "1 HP Water Motor: Watts, Units & Starting Surge | Wattlyst",
    "meta": "Watts, units per hour and starting surge of a 0.5 to 1.5 HP water motor, and whether your UPS, inverter or generator can start it.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "H2",
+   "related": [
+    "D4",
+    "D8",
+    "W3",
+    "H3",
+    "H7"
+   ],
+   "next": "C5",
    "wave": 2
   },
   {
@@ -1530,24 +1896,39 @@
    "id": "H7",
    "type": "appliance",
    "url": "/appliances/iron/",
-   "h1": "Iron Units Per Hour",
+   "h1": "Iron Units per Hour: Watts, Amps and Monthly Cost",
    "title": "Iron Units per Hour (1000W–2000W) | Wattlyst",
    "meta": "How many units an electric iron uses per hour and per month, and whether a UPS, inverter or solar system can run it safely.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "H2",
+   "related": [
+    "D4",
+    "B5",
+    "H3",
+    "H5"
+   ],
+   "next": "E1",
    "wave": 2
   },
   {
    "id": "H8",
    "type": "guide",
    "url": "/guides/lithium-vs-tubular-battery/",
-   "h1": "Lithium Vs Tubular Battery",
+   "h1": "Lithium vs Tubular Battery: Backup, Life and Cost",
    "title": "Lithium vs Tubular Battery: Backup, Life & Cost | Wattlyst",
    "meta": "Lithium vs tubular battery compared on usable backup, cycle life, charging, price per usable kWh and which suits loadshedding.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-G",
+   "related": [
+    "B3",
+    "H9",
+    "N7",
+    "B5",
+    "D1"
+   ],
+   "next": "B1",
    "wave": 2
   },
   {
@@ -1564,7 +1945,9 @@
     "B1",
     "B5",
     "D4",
-    "B2"
+    "B2",
+    "N2",
+    "P-T"
    ],
    "next": "B1",
    "wave": 1
@@ -1576,33 +1959,59 @@
    "h1": "Electricity Bill Overbilling Check",
    "title": "Electricity Bill Overbilling Check (Detection) | Wattlyst",
    "meta": "Check if your electricity bill is wrong. Enter reading dates, units, slab and FPA to spot overbilling, detection units and slab jumps.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-F",
+   "related": [
+    "F14",
+    "F2",
+    "F12",
+    "F8",
+    "E5"
+   ],
+   "next": "F1",
    "wave": 2
   },
   {
    "id": "N2",
-   "type": "tool",
+   "type": "lookup",
    "url": "/troubleshoot/inverter-error-codes/",
-   "h1": "Solar Inverter Error Codes",
+   "h1": "Solar Inverter Error Codes and What to Do",
    "title": "Solar Inverter Error Codes & Fixes | Wattlyst",
    "meta": "Look up your solar inverter error code and see what it means and how to fix it safely. Inverex, Growatt, Nitrox, Crown, Fronus and more.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-T",
+   "related": [
+    "D4",
+    "H9",
+    "D16",
+    "B5",
+    "H8"
+   ],
+   "next": "D4",
    "wave": 2
   },
   {
    "id": "N3",
    "type": "tool",
    "url": "/solar/solar-quote-checker/",
-   "h1": "Solar Quotation Checker",
+   "h1": "Solar Quotation Checker: Is the Price Fair?",
    "title": "Solar Quotation Checker: Is the Price Fair? | Wattlyst",
    "meta": "Enter your solar quotation (kW, panels, inverter, price) to see the cost per watt, what is missing and whether the price fits today's market.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-D",
+   "related": [
+    "D7",
+    "D2",
+    "D1",
+    "D10",
+    "D8",
+    "D12",
+    "D14"
+   ],
+   "next": "D10",
    "wave": 2
   },
   {
@@ -1612,21 +2021,36 @@
    "h1": "Sanctioned Load Calculator",
    "title": "Sanctioned Load Calculator (kW for Your Home) | Wattlyst",
    "meta": "Find the sanctioned load in kW your home needs from its appliances, see the 5 kW ToU meter limit and the solar net billing size cap.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-F",
+   "related": [
+    "E1",
+    "E4",
+    "D10",
+    "F1",
+    "E2"
+   ],
+   "next": "F1",
    "wave": 2
   },
   {
    "id": "N5",
    "type": "tool",
    "url": "/load/winter-heating-cost-calculator/",
-   "h1": "Inverter Ac Heating Cost",
+   "h1": "Inverter AC Heating Cost vs Gas and Electric Heaters",
    "title": "Inverter AC Heating Cost vs Gas & Electric | Wattlyst",
    "meta": "Compare the cost per hour of heating with an inverter AC in heat mode, a gas heater and an electric heater, using your tariff and gas price.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-E",
+   "related": [
+    "E5",
+    "F1",
+    "E6",
+    "E2"
+   ],
+   "next": "E5",
    "wave": 2
   },
   {
@@ -1645,12 +2069,20 @@
    "id": "N7",
    "type": "tool",
    "url": "/load/ups-vs-solar-vs-generator-cost/",
-   "h1": "Ups Vs Solar Vs Generator Cost",
+   "h1": "UPS vs Solar vs Generator: Cost Over Five Years",
    "title": "UPS vs Solar vs Generator: 5-Year Cost Calculator | Wattlyst",
    "meta": "Compare the 5-year cost of a UPS, solar system and generator for your load and loadshedding hours: purchase, fuel, batteries and bills.",
-   "status": "planned",
-   "live": false,
+   "status": "publish",
+   "live": true,
    "parent": "P-E",
+   "related": [
+    "H8",
+    "H9",
+    "D15",
+    "C6",
+    "D10"
+   ],
+   "next": "B1",
    "wave": 2
   },
   {
@@ -1829,9 +2261,15 @@
    "title": "Electrical Unit Converters: Watts, Amps, kVA | Wattlyst",
    "meta": "Free electrical converters for watts, amps, volts, kW, kVA, VA and amp hours. Each tool shows the formula with your numbers for DC, single and three phase.",
    "status": "auto",
-   "live": false,
+   "live": true,
    "parent": null,
-   "children": [],
+   "children": [
+    "A3",
+    "A4",
+    "A8",
+    "A9",
+    "A10"
+   ],
    "wave": 0
   },
   {
@@ -1848,6 +2286,7 @@
     "B1",
     "B2",
     "B3",
+    "B4",
     "B5"
    ],
    "wave": 0
@@ -1864,7 +2303,8 @@
    "parent": null,
    "children": [
     "C5",
-    "C6"
+    "C6",
+    "C7"
    ],
    "wave": 0
   },
@@ -1879,11 +2319,21 @@
    "live": true,
    "parent": null,
    "children": [
+    "D1",
+    "D2",
+    "D3",
     "D4",
     "D5",
     "D6",
+    "D7",
     "D8",
-    "D10"
+    "D10",
+    "D12",
+    "D13",
+    "D14",
+    "D15",
+    "D16",
+    "N3"
    ],
    "wave": 0
   },
@@ -1899,9 +2349,13 @@
    "parent": null,
    "children": [
     "E1",
+    "E2",
     "E3",
     "E4",
-    "E5"
+    "E5",
+    "E6",
+    "N5",
+    "N7"
    ],
    "wave": 0
   },
@@ -1918,7 +2372,18 @@
    "children": [
     "F1",
     "F2",
-    "F12"
+    "F3",
+    "F4",
+    "F5",
+    "F6",
+    "F7",
+    "F8",
+    "F9",
+    "F10",
+    "F11",
+    "F12",
+    "N1",
+    "N4"
    ],
    "wave": 0
   },
@@ -1935,7 +2400,8 @@
    "children": [
     "W1",
     "W2",
-    "W3"
+    "W3",
+    "W4"
    ],
    "wave": 0
   },
@@ -1950,6 +2416,8 @@
    "live": true,
    "parent": null,
    "children": [
+    "F14",
+    "H8",
     "H9"
    ],
    "wave": 0
@@ -1962,9 +2430,11 @@
    "title": "Inverter and Battery Troubleshooting Tools | Wattlyst",
    "meta": "Troubleshooting tools for home power systems: look up solar inverter error codes and plan battery series and parallel wiring safely, step by step.",
    "status": "auto",
-   "live": false,
+   "live": true,
    "parent": null,
-   "children": [],
+   "children": [
+    "N2"
+   ],
    "wave": 0
   }
  ],

@@ -69,7 +69,7 @@ const input=pick(i,'input',['watts','amps','ah'],has(i,'amps')?'amps':has(i,'ah'
 if(input==='ah'){
 const ah=nonneg(i,'ah');
 const volts=pos(i,'volts');
-return{input,ah,volts,units:(ah * volts)/ 1000};
+return withCost(i,{input,ah,volts,units:(ah * volts)/ 1000});
 }
 const hours=nonneg(i,'hours');
 const days=nonneg(i,'days',1);
@@ -83,8 +83,13 @@ Object.assign(out,{mode,volts,pf,amps});
 }else{
 watts=nonneg(i,'watts');
 }
-return{...out,watts,units:(watts * hours * days)/ 1000};
+return withCost(i,{...out,watts,units:(watts * hours * days)/ 1000});
 });
+function withCost(i,out){
+if(!has(i,'tariff'))return out;
+const tariff=nonneg(i,'tariff');
+return{...out,tariff,rs:out.units * tariff};
+}
 export const hp_to_kw=calculator((i,d)=>{
 const hp=nonneg(i,'hp');
 const motor_eff=frac(i,'motor_eff',dflt(d,'motor_eff'));

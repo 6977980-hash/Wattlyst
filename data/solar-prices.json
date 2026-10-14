@@ -1,0 +1,766 @@
+{
+ "_meta": {
+  "source": "Pakistani blogs, installer price lists and news reports fetched 2026-10-14 (URLs on every data point). No official/regulatory price list exists; AEDB/NEPRA publish none.",
+  "checked": "2026-10-14",
+  "currency": "PKR",
+  "method": "For each (type, kW): collect every 2026 price range found (low_rs/high_rs per source). Points flagged in excluded_points are not used (reason given). with 4+ used sources low_rs = median of their lows and high_rs = median of their highs; with 1-3 sources low_rs = lowest low and high_rs = highest high (so single-source sizes keep that source's full range); rounded to Rs 5,000; rs_per_w = that / (kW*1000). min_low_seen / max_high_seen give the full spread. A quote below low_rs is 'below typical', above high_rs 'above typical'. Sizes with no 2026 data point (6 kW on-grid, 12 kW on-grid, 20 kW hybrid) are omitted rather than interpolated.",
+  "notes": "Sources disagree by up to 2x for the same size; most are blogs or installer marketing, several internally inconsistent (noted per source). Hybrid prices depend mainly on battery kWh/chemistry. Panel prices move 5-10% month to month with USD/PKR and tax policy (ProPakistani and Nukta reported early-2026 price rises and a proposal to raise GST on solar equipment from 10% to 18%; ProPakistani page returned HTTP 403 so it is not quoted). Business Recorder, Dawn and Express Tribune pages were not found with system-price tables in the time available. ferozepower.com figures are 2025 and were not used.",
+  "status": "Secondary sources only (blogs, installer price lists); refresh monthly (Phase 6 routine). Ranges are typical installed prices incl. panels, inverter, structure, wiring, labour; hybrid ranges mix battery sizes."
+ },
+ "panel_rs_per_w": {
+  "low": 40.0,
+  "high": 46.0,
+  "unit": "PKR per watt, panel only, retail (Tier-1 N-type TOPCon 555-650 W)",
+  "min_low_seen": 39,
+  "max_high_seen": 52,
+  "method": "median of source lows and median of source highs across the six 2026 sources listed",
+  "sources": [
+   {
+    "url": "https://www.phoneworld.com.pk/solar-panel-price-in-pakistan-today-updated-rates/",
+    "publisher": "PhoneWorld.com.pk",
+    "date": "2026-06-11 ('Last Updated')",
+    "quote": "\"Premium N-Type / bifacial Tier-1\": \"Rs. 42 – 52 per watt\"; \"Regular documented A-grade stock\": \"Rs. 38 – 44 per watt\"; Longi Hi-MO 7 585W N-Type \"Rs. 42.5 – Rs. 47 per watt\"; Jinko N-Type 585W bifacial \"Rs. 44.5 – Rs. 50 per watt\"; JA N-Type 585W \"Rs. 42 – Rs. 46 per watt\"; Trina N-Type \"Rs. 40 – Rs. 42.8 per watt\"; \"These are panel-only prices.\"",
+    "low": 42,
+    "high": 52
+   },
+   {
+    "url": "https://www.toolsfluent.com/blog/solar-panel-price-pakistan-2026",
+    "publisher": "Toolsfluent (blog)",
+    "date": "2026-08-18 ('Prices last verified'), prices checked ~2026-07-15",
+    "quote": "JA Solar DeepBlue 4.0 N-Type \"Rs 40\"; Trina Vertex N \"Rs 41\"; Jinko Tiger Neo N-Type \"Rs 42\"; Canadian TOPBiHiKu7 \"Rs 42.5\"; LONGi Hi-Mo 7 N-Type \"Rs 43\"; LONGi Hi-Mo 9 HPBC \"Rs 45\"; Canadian HJT \"Rs 46\" (per watt)",
+    "low": 40,
+    "high": 46
+   },
+   {
+    "url": "https://www.toolsfluent.com/tools/solar-panel-price-tracker-pakistan",
+    "publisher": "Toolsfluent price tracker (search-result snippet, not fetched)",
+    "date": "2026-07-15 (per snippet)",
+    "quote": "snippet: \"LONGi Hi-Mo 7 N-Type at Rs 44.50, Jinko Tiger Neo N-Type at Rs 42, Canadian Solar TopBiHiKu7 at Rs 42.50, Trina Vertex N at Rs 41, and JA Solar DeepBlue 4.0 N-Type at Rs 40 per watt\"",
+    "low": 40,
+    "high": 44.5
+   },
+   {
+    "url": "https://sheikhxsolarcorp.com/solar-rates-pakistan",
+    "publisher": "SheikhX Solar Corporation (installer)",
+    "date": "2026-10-14",
+    "quote": "Jinko Tiger Neo N-Type 590W/585W \"PKR 40-42\"; Longi X10 640W \"PKR 45-47\"; Longi HiMO 7 615W \"PKR 42-46\" (PKR/Watt)",
+    "low": 40,
+    "high": 47
+   },
+   {
+    "url": "https://www.pricedata.pk/solar/solar-panel-prices-in-pakistan",
+    "publisher": "PriceData.pk",
+    "date": "page 'Last Updated: October 14, 2026'; panel table July 2026",
+    "quote": "Tier-1 545-600W: \"Rs. 39 – 46/W\"; Tier-2 400W: \"Rs. 28 – 33/W\" (N-type not mentioned)",
+    "low": 39,
+    "high": 46
+   },
+   {
+    "url": "https://arynews.tv/solar-panel-batteries-and-inverters-prices-drop-in-karachi",
+    "publisher": "ARY News",
+    "date": "2026-07-01",
+    "quote": "\"585W, 645W, and 720W solar panels are selling at around Rs45 per watt\" (down from about Rs50 per watt a few days earlier); \"a 5kWh lithium battery is available for around Rs230,000\"; \"inverters with capacities ranging from 3kW to 5kW are priced between Rs120,000 and Rs300,000.\"",
+    "low": 45,
+    "high": 45
+   }
+  ]
+ },
+ "systems": [
+  {
+   "type": "hybrid",
+   "kw": 3,
+   "low_rs": 480000,
+   "high_rs": 850000,
+   "low_rs_per_w": 160.0,
+   "high_rs_per_w": 283.3,
+   "n_sources": 3,
+   "min_low_seen": 480000,
+   "max_high_seen": 850000,
+   "confidence": "medium",
+   "sources": [
+    {
+     "url": "https://www.toolsfluent.com/blog/3kw-solar-system-pakistan-complete-guide",
+     "publisher": "Toolsfluent (blog)",
+     "date": "2026-07-14 (reviewed 2026-08-20)",
+     "quote": "Hybrid 3kW with 5 kWh battery: \"Rs 6,50,000 to Rs 7,50,000\"; with 10 kWh battery: \"Rs 7,50,000 to Rs 8,50,000\"",
+     "low_rs": 650000,
+     "high_rs": 850000,
+     "note": "5-10 kWh lithium"
+    },
+    {
+     "url": "https://www.pricedata.pk/solar/solar-panel-prices-in-pakistan",
+     "publisher": "PriceData.pk (market data)",
+     "date": "page 'Last Updated: October 14, 2026'; table data July 2026",
+     "quote": "3kW hybrid: \"Rs. 480,000 – 580,000\" (hybrid column lists lead-acid 150Ah x2; page also says prices 'include LiFePO4 batteries' - contradiction)",
+     "low_rs": 480000,
+     "high_rs": 580000,
+     "note": "small lead-acid bank; excludes GST"
+    },
+    {
+     "url": "https://thegreenoh.com/solar-guides/on-grid-vs-hybrid-solar-system-pakistan",
+     "publisher": "GreenOH (installer marketplace)",
+     "date": "2026-10-14",
+     "quote": "\"3 kW Hybrid\": \"Rs 590,000\" (\"197\" PKR per watt); \"Installed prices from packages published by verified installers\"",
+     "low_rs": 590000,
+     "high_rs": 590000,
+     "note": "battery size not stated"
+    }
+   ],
+   "battery_note": "Hybrid prices depend heavily on battery chemistry and kWh; sources mix 5-15 kWh lithium and lead-acid banks (see each source's note)."
+  },
+  {
+   "type": "hybrid",
+   "kw": 5,
+   "low_rs": 950000,
+   "high_rs": 1250000,
+   "low_rs_per_w": 190.0,
+   "high_rs_per_w": 250.0,
+   "n_sources": 5,
+   "min_low_seen": 750000,
+   "max_high_seen": 1800000,
+   "confidence": "high",
+   "sources": [
+    {
+     "url": "https://www.toolsfluent.com/blog/5kw-solar-system-pakistan-complete-guide",
+     "publisher": "Toolsfluent (blog)",
+     "date": "2026-05-13 (reviewed 2026-08-20)",
+     "quote": "\"5kW hybrid + 5 kWh lithium battery\": \"11-13 lakh\"; \"5kW hybrid + 10 kWh lithium battery\": \"14-17 lakh\"; \"5kW hybrid + tubular battery bank (legacy choice)\": \"8-10 lakh\"",
+     "low_rs": 1100000,
+     "high_rs": 1700000,
+     "note": "5-10 kWh lithium"
+    },
+    {
+     "url": "https://maxpower.com.pk/?p=4888",
+     "publisher": "Max Power (manufacturer/installer blog)",
+     "date": "undated; image path 2026/07",
+     "quote": "5 kW: Hybrid System with Battery \"Rs 9.5 Lakh – 12.5 Lakh\"",
+     "low_rs": 950000,
+     "high_rs": 1250000,
+     "note": "battery size not stated"
+    },
+    {
+     "url": "https://www.pricedata.pk/solar/solar-panel-prices-in-pakistan",
+     "publisher": "PriceData.pk (market data)",
+     "date": "page 'Last Updated: October 14, 2026'; table data July 2026",
+     "quote": "5kW hybrid: \"Rs. 750,000 – 950,000\" (lead-acid 200Ah x4 listed); excludes GST",
+     "low_rs": 750000,
+     "high_rs": 950000,
+     "note": "lead-acid bank; excludes GST"
+    },
+    {
+     "url": "https://www.voltflow.net/blog/solar-panels-pakistan-2026",
+     "publisher": "VoltFlow (blog)",
+     "date": "2026-04-03",
+     "quote": "\"5 kW + 5 kWh battery\": \"PKR 1.3-1.8M\"; battery add-on alone \"PKR 400,000-800,000 for 5-10 kWh usable capacity\"",
+     "low_rs": 1300000,
+     "high_rs": 1800000,
+     "note": "5 kWh"
+    },
+    {
+     "url": "https://thegreenoh.com/solar-guides/on-grid-vs-hybrid-solar-system-pakistan",
+     "publisher": "GreenOH (installer marketplace)",
+     "date": "2026-10-14",
+     "quote": "\"5 kW Hybrid\": \"Rs 890,000\" (\"178\" PKR per watt)",
+     "low_rs": 890000,
+     "high_rs": 890000,
+     "note": "battery size not stated"
+    }
+   ],
+   "excluded_points": [
+    {
+     "url": "https://www.toolsfluent.com/blog/on-grid-vs-hybrid-solar-pakistan-2026",
+     "publisher": "Toolsfluent (blog)",
+     "date": "2026-07-20",
+     "quote": "5kW Hybrid + tubular 5 kWh: \"Rs 11.5 Lakh\"; Hybrid + lithium 10 kWh: \"Rs 17.3 Lakh\"",
+     "low_rs": 1150000,
+     "high_rs": 1730000,
+     "note": "excluded: same page's component lines conflict with the site's other guides"
+    }
+   ],
+   "battery_note": "Hybrid prices depend heavily on battery chemistry and kWh; sources mix 5-15 kWh lithium and lead-acid banks (see each source's note)."
+  },
+  {
+   "type": "hybrid",
+   "kw": 8,
+   "low_rs": 1390000,
+   "high_rs": 1800000,
+   "low_rs_per_w": 173.8,
+   "high_rs_per_w": 225.0,
+   "n_sources": 2,
+   "min_low_seen": 1390000,
+   "max_high_seen": 1800000,
+   "confidence": "medium",
+   "sources": [
+    {
+     "url": "https://maxpower.com.pk/?p=4888",
+     "publisher": "Max Power (manufacturer/installer blog)",
+     "date": "undated; image path 2026/07",
+     "quote": "8 kW: Hybrid System with Battery \"Rs 14.0 Lakh – 18.0 Lakh\"",
+     "low_rs": 1400000,
+     "high_rs": 1800000,
+     "note": "battery size not stated"
+    },
+    {
+     "url": "https://thegreenoh.com/solar-guides/10kw-solar-system-price-pakistan",
+     "publisher": "GreenOH (installer marketplace)",
+     "date": "2026-10-14",
+     "quote": "\"8 kW Hybrid\": \"Rs 1,390,000\" (174 PKR per watt)",
+     "low_rs": 1390000,
+     "high_rs": 1390000,
+     "note": "battery size not stated"
+    }
+   ],
+   "excluded_points": [
+    {
+     "url": "https://www.toolsfluent.com/blog/on-grid-vs-hybrid-solar-pakistan-2026",
+     "publisher": "Toolsfluent (blog)",
+     "date": "2026-07-20",
+     "quote": "payback table: \"Hybrid 8kW + lithium 15 kWh\" cost \"Rs 24 Lakh\"",
+     "low_rs": 2400000,
+     "high_rs": 2400000,
+     "note": "excluded (15 kWh battery; same page as other excluded figures)"
+    }
+   ],
+   "battery_note": "Hybrid prices depend heavily on battery chemistry and kWh; sources mix 5-15 kWh lithium and lead-acid banks (see each source's note)."
+  },
+  {
+   "type": "hybrid",
+   "kw": 10,
+   "low_rs": 1400000,
+   "high_rs": 1690000,
+   "low_rs_per_w": 140.0,
+   "high_rs_per_w": 169.0,
+   "n_sources": 7,
+   "min_low_seen": 1000000,
+   "max_high_seen": 2200000,
+   "confidence": "high",
+   "sources": [
+    {
+     "url": "https://www.toolsfluent.com/blog/10kw-solar-system-pakistan-complete-guide",
+     "publisher": "Toolsfluent (blog)",
+     "date": "2026-07-14 (reviewed 2026-08-20)",
+     "quote": "Hybrid 10kW with 10 kWh battery: \"Rs 14,00,000 to Rs 16,00,000\"; with 15 kWh battery: \"Rs 16,00,000 to Rs 18,00,000\"",
+     "low_rs": 1400000,
+     "high_rs": 1800000,
+     "note": "10-15 kWh lithium"
+    },
+    {
+     "url": "https://maxpower.com.pk/?p=4888",
+     "publisher": "Max Power (manufacturer/installer blog)",
+     "date": "undated; image path 2026/07",
+     "quote": "10 kW: Hybrid System with Battery \"Rs 16.0 Lakh – 21.0 Lakh\"",
+     "low_rs": 1600000,
+     "high_rs": 2100000,
+     "note": "battery size not stated"
+    },
+    {
+     "url": "https://maxpower.com.pk/?p=4877",
+     "publisher": "Max Power (manufacturer/installer blog)",
+     "date": "2026-07-28 (per search listing)",
+     "quote": "Hybrid 10 kW system (with battery): \"ranges between PKR 1,600,000 and PKR 2,200,000 depending on battery capacity\"; \"A complete setup using high-efficiency solar panels, a smart hybrid solar inverter, and a lithium battery bank\"",
+     "low_rs": 1600000,
+     "high_rs": 2200000,
+     "note": "lithium, size varies"
+    },
+    {
+     "url": "https://sheikhxsolarcorp.com/solar-rates-pakistan",
+     "publisher": "SheikhX Solar Corporation (installer)",
+     "date": "2026-10-14",
+     "quote": "10kW Hybrid System: \"PKR 1,000,000 - 1,200,000\" with \"18x Tier-1 Solar Panels\"; \"10kW Hybrid Inverter\"; \"2x Lithium Battery 5.12kWh\" (same page's FAQ says \"PKR 1,400,000 to PKR 1,700,000\")",
+     "low_rs": 1000000,
+     "high_rs": 1200000,
+     "note": "10.24 kWh lithium; page internally inconsistent"
+    },
+    {
+     "url": "https://www.pricedata.pk/solar/solar-panel-prices-in-pakistan",
+     "publisher": "PriceData.pk (market data)",
+     "date": "page 'Last Updated: October 14, 2026'; table data July 2026",
+     "quote": "10kW hybrid: \"Rs. 1,250,000 – 1,650,000\" (lead-acid 200Ah x8 listed); excludes GST",
+     "low_rs": 1250000,
+     "high_rs": 1650000,
+     "note": "lead-acid bank; excludes GST"
+    },
+    {
+     "url": "https://solar-price.pk/10kw-solar-system-price-in-pakistan/",
+     "publisher": "solar-price.pk (dealer-sourced guide)",
+     "date": "2026-05",
+     "quote": "10kW Hybrid: \"PKR 1,000,000–1,200,000\"; \"Hybrid prices include a lithium battery bank\"; lithium costs \"PKR 150,000–250,000 more\" than lead-acid",
+     "low_rs": 1000000,
+     "high_rs": 1200000,
+     "note": "lithium, size not stated"
+    },
+    {
+     "url": "https://thegreenoh.com/solar-guides/10kw-solar-system-price-pakistan",
+     "publisher": "GreenOH (installer marketplace)",
+     "date": "2026-10-14",
+     "quote": "\"10 kW Hybrid\": \"Rs 1,690,000,\" listed at \"169\" PKR per watt; \"Installed prices from packages published by verified installers. Final prices are confirmed after a site survey.\"",
+     "low_rs": 1689999,
+     "high_rs": 1689999,
+     "note": "battery size not stated"
+    }
+   ],
+   "excluded_points": [
+    {
+     "url": "https://www.toolsfluent.com/blog/on-grid-vs-hybrid-solar-pakistan-2026",
+     "publisher": "Toolsfluent (blog)",
+     "date": "2026-07-20",
+     "quote": "10kW Hybrid + tubular 10 kWh: \"Rs 21 Lakh\"; Hybrid + lithium 15 kWh: \"Rs 28.5 Lakh\"",
+     "low_rs": 2100000,
+     "high_rs": 2850000,
+     "note": "excluded: conflicts with same site's 10kW guide"
+    }
+   ],
+   "battery_note": "Hybrid prices depend heavily on battery chemistry and kWh; sources mix 5-15 kWh lithium and lead-acid banks (see each source's note)."
+  },
+  {
+   "type": "hybrid",
+   "kw": 12,
+   "low_rs": 1990000,
+   "high_rs": 1990000,
+   "low_rs_per_w": 165.8,
+   "high_rs_per_w": 165.8,
+   "n_sources": 1,
+   "min_low_seen": 1989999,
+   "max_high_seen": 1989999,
+   "confidence": "low",
+   "sources": [
+    {
+     "url": "https://thegreenoh.com/solar-guides/10kw-solar-system-price-pakistan",
+     "publisher": "GreenOH (installer marketplace)",
+     "date": "2026-10-14",
+     "quote": "\"12 kW Hybrid\": \"Rs 1,990,000\" (166 PKR per watt)",
+     "low_rs": 1989999,
+     "high_rs": 1989999,
+     "note": "battery size not stated"
+    }
+   ],
+   "battery_note": "Hybrid prices depend heavily on battery chemistry and kWh; sources mix 5-15 kWh lithium and lead-acid banks (see each source's note)."
+  },
+  {
+   "type": "hybrid",
+   "kw": 15,
+   "low_rs": 2300000,
+   "high_rs": 3000000,
+   "low_rs_per_w": 153.3,
+   "high_rs_per_w": 200.0,
+   "n_sources": 2,
+   "min_low_seen": 2300000,
+   "max_high_seen": 3000000,
+   "confidence": "medium",
+   "sources": [
+    {
+     "url": "https://maxpower.com.pk/?p=4888",
+     "publisher": "Max Power (manufacturer/installer blog)",
+     "date": "undated; image path 2026/07",
+     "quote": "15 kW: Hybrid System with Battery \"Rs 23.0 Lakh – 30.0 Lakh\"",
+     "low_rs": 2300000,
+     "high_rs": 3000000,
+     "note": "battery size not stated"
+    },
+    {
+     "url": "https://thegreenoh.com/solar-guides/10kw-solar-system-price-pakistan",
+     "publisher": "GreenOH (installer marketplace)",
+     "date": "2026-10-14",
+     "quote": "\"15 kW Hybrid\": \"Rs 2,490,000\" (166 PKR per watt)",
+     "low_rs": 2490000,
+     "high_rs": 2490000,
+     "note": "battery size not stated"
+    }
+   ],
+   "excluded_points": [
+    {
+     "url": "https://www.toolsfluent.com/blog/on-grid-vs-hybrid-solar-pakistan-2026",
+     "publisher": "Toolsfluent (blog)",
+     "date": "2026-07-20",
+     "quote": "15kW Hybrid + lithium 20 kWh: \"Rs 32-38 Lakh\"",
+     "low_rs": 3200000,
+     "high_rs": 3800000,
+     "note": "excluded (20 kWh battery; same page as other excluded figures)"
+    }
+   ],
+   "battery_note": "Hybrid prices depend heavily on battery chemistry and kWh; sources mix 5-15 kWh lithium and lead-acid banks (see each source's note)."
+  },
+  {
+   "type": "on-grid",
+   "kw": 3,
+   "low_rs": 360000,
+   "high_rs": 450000,
+   "low_rs_per_w": 120.0,
+   "high_rs_per_w": 150.0,
+   "n_sources": 4,
+   "min_low_seen": 300000,
+   "max_high_seen": 750000,
+   "confidence": "high",
+   "sources": [
+    {
+     "url": "https://www.toolsfluent.com/blog/3kw-solar-system-pakistan-complete-guide",
+     "publisher": "Toolsfluent (blog)",
+     "date": "2026-07-14 (reviewed 2026-08-20)",
+     "quote": "On-grid 3kW (no battery): \"Rs 4,00,000 to Rs 5,00,000\", typical \"Rs 4,50,000\"",
+     "low_rs": 400000,
+     "high_rs": 500000
+    },
+    {
+     "url": "https://www.voltflow.net/blog/solar-panels-pakistan-2026",
+     "publisher": "VoltFlow (blog)",
+     "date": "2026-04-03",
+     "quote": "3 kW on-grid: \"PKR 550,000-750,000 installed.\" (Punjab/Islamabad basis)",
+     "low_rs": 550000,
+     "high_rs": 750000
+    },
+    {
+     "url": "https://sheikhxsolarcorp.com/solar-rates-pakistan",
+     "publisher": "SheikhX Solar Corporation (installer)",
+     "date": "2026-10-14",
+     "quote": "3kW: \"PKR 300,000 - 400,000\" with \"6x Tier-1 Solar Panels (585W)\"; \"On-Grid Inverter\"; \"Net Metering Assistance\" (page labels it 'Hybrid System' but lists an on-grid inverter and no battery)",
+     "low_rs": 300000,
+     "high_rs": 400000,
+     "note": "labelled hybrid on page; treated as on-grid because it lists an on-grid inverter and no battery"
+    },
+    {
+     "url": "https://www.pricedata.pk/solar/solar-panel-prices-in-pakistan",
+     "publisher": "PriceData.pk (market data)",
+     "date": "page 'Last Updated: October 14, 2026'; table data July 2026",
+     "quote": "3kW on-grid: \"Rs. 320,000 – 390,000\"; prices \"exclude GST and any applicable local taxes\"",
+     "low_rs": 320000,
+     "high_rs": 390000,
+     "note": "excludes GST"
+    }
+   ]
+  },
+  {
+   "type": "on-grid",
+   "kw": 5,
+   "low_rs": 640000,
+   "high_rs": 800000,
+   "low_rs_per_w": 128.0,
+   "high_rs_per_w": 160.0,
+   "n_sources": 4,
+   "min_low_seen": 550000,
+   "max_high_seen": 1200000,
+   "confidence": "high",
+   "sources": [
+    {
+     "url": "https://www.toolsfluent.com/blog/5kw-solar-system-pakistan-complete-guide",
+     "publisher": "Toolsfluent (blog)",
+     "date": "2026-05-13 (reviewed 2026-08-20)",
+     "quote": "\"5kW on-grid, tier-1 panels (Longi/Jinko/Canadian), Inverex/Solis inverter\": \"7-9 lakh\"; tier-2 panels, budget inverter: \"5.5-7 lakh\"; \"Approximate market prices, Q2 2026, installed, including net metering paperwork\"",
+     "low_rs": 700000,
+     "high_rs": 900000
+    },
+    {
+     "url": "https://www.voltflow.net/blog/solar-panels-pakistan-2026",
+     "publisher": "VoltFlow (blog)",
+     "date": "2026-04-03",
+     "quote": "5 kW on-grid: \"PKR 850,000-1,200,000 installed.\" Includes \"10-12 panels, 5 kW hybrid inverter (Fronius, Huawei, Solis, or Growatt), mounting rails\"",
+     "low_rs": 850000,
+     "high_rs": 1200000,
+     "note": "premium inverter brands"
+    },
+    {
+     "url": "https://maxpower.com.pk/?p=4888",
+     "publisher": "Max Power (manufacturer/installer blog)",
+     "date": "undated; image path 2026/07",
+     "quote": "5 kW: On-Grid Complete System \"Rs 5.5 Lakh – 7.0 Lakh\"",
+     "low_rs": 550000,
+     "high_rs": 700000
+    },
+    {
+     "url": "https://www.pricedata.pk/solar/solar-panel-prices-in-pakistan",
+     "publisher": "PriceData.pk (market data)",
+     "date": "page 'Last Updated: October 14, 2026'; table data July 2026",
+     "quote": "5kW on-grid: \"Rs. 580,000 – 680,000\" (another heading on same page says \"Rs. 660,000 – 750,000\"); excludes GST",
+     "low_rs": 580000,
+     "high_rs": 680000,
+     "note": "excludes GST"
+    }
+   ],
+   "excluded_points": [
+    {
+     "url": "https://www.toolsfluent.com/blog/on-grid-vs-hybrid-solar-pakistan-2026",
+     "publisher": "Toolsfluent (blog)",
+     "date": "2026-07-20",
+     "quote": "5kW On-grid: Panels Rs 6L + Inverter Rs 1.2L + Install Rs 1L = \"Rs 8.2 Lakh\"",
+     "low_rs": 819999,
+     "high_rs": 819999,
+     "note": "same site, conflicts with its own 5kW guide (panel line Rs 6L for 5 kW = Rs 120/W, far above its own panel page); excluded as outlier"
+    }
+   ]
+  },
+  {
+   "type": "on-grid",
+   "kw": 8,
+   "low_rs": 850000,
+   "high_rs": 1050000,
+   "low_rs_per_w": 106.2,
+   "high_rs_per_w": 131.2,
+   "n_sources": 1,
+   "min_low_seen": 850000,
+   "max_high_seen": 1050000,
+   "confidence": "low",
+   "sources": [
+    {
+     "url": "https://maxpower.com.pk/?p=4888",
+     "publisher": "Max Power (manufacturer/installer blog)",
+     "date": "undated; image path 2026/07",
+     "quote": "8 kW: On-Grid Complete System \"Rs 8.5 Lakh – 10.5 Lakh\"",
+     "low_rs": 850000,
+     "high_rs": 1050000
+    }
+   ],
+   "excluded_points": [
+    {
+     "url": "https://www.toolsfluent.com/blog/on-grid-vs-hybrid-solar-pakistan-2026",
+     "publisher": "Toolsfluent (blog)",
+     "date": "2026-07-20",
+     "quote": "payback table: \"On-grid 8kW\" cost \"Rs 12 Lakh\"",
+     "low_rs": 1200000,
+     "high_rs": 1200000,
+     "note": "excluded (same page as other excluded Toolsfluent figures)"
+    }
+   ]
+  },
+  {
+   "type": "on-grid",
+   "kw": 10,
+   "low_rs": 950000,
+   "high_rs": 1200000,
+   "low_rs_per_w": 95.0,
+   "high_rs_per_w": 120.0,
+   "n_sources": 6,
+   "min_low_seen": 750000,
+   "max_high_seen": 2200000,
+   "confidence": "high",
+   "sources": [
+    {
+     "url": "https://www.toolsfluent.com/blog/10kw-solar-system-pakistan-complete-guide",
+     "publisher": "Toolsfluent (blog)",
+     "date": "2026-07-14 (reviewed 2026-08-20)",
+     "quote": "On-grid 10kW (no battery): \"Rs 9,50,000 to Rs 12,00,000,\" typically Rs 10,50,000",
+     "low_rs": 950000,
+     "high_rs": 1200000
+    },
+    {
+     "url": "https://www.voltflow.net/blog/solar-panels-pakistan-2026",
+     "publisher": "VoltFlow (blog)",
+     "date": "2026-04-03",
+     "quote": "10 kW on-grid: \"PKR 1,500,000-2,200,000 installed.\" Includes \"18-22 panels, 10 kW inverter, heavy-duty mounting, and three-phase connection.\"",
+     "low_rs": 1500000,
+     "high_rs": 2200000,
+     "note": "highest source; premium brands"
+    },
+    {
+     "url": "https://maxpower.com.pk/?p=4888",
+     "publisher": "Max Power (manufacturer/installer blog)",
+     "date": "undated; image path 2026/07",
+     "quote": "10 kW: On-Grid Complete System \"Rs 10.0 Lakh – 13.0 Lakh\"",
+     "low_rs": 1000000,
+     "high_rs": 1300000
+    },
+    {
+     "url": "https://sheikhxsolarcorp.com/solar-rates-pakistan",
+     "publisher": "SheikhX Solar Corporation (installer)",
+     "date": "2026-10-14",
+     "quote": "10kW On-Grid System: \"PKR 950,000 - 1,200,000\" with \"18x Tier-1 Solar Panels (585W)\"; \"10kW On-Grid Inverter\"; \"Complete Structure & Wiring\"; \"Net Metering Setup\"",
+     "low_rs": 950000,
+     "high_rs": 1200000
+    },
+    {
+     "url": "https://www.pricedata.pk/solar/solar-panel-prices-in-pakistan",
+     "publisher": "PriceData.pk (market data)",
+     "date": "page 'Last Updated: October 14, 2026'; table data July 2026",
+     "quote": "10kW on-grid: \"Rs. 950,000 – 1,150,000\"; excludes GST",
+     "low_rs": 950000,
+     "high_rs": 1150000,
+     "note": "excludes GST"
+    },
+    {
+     "url": "https://solar-price.pk/10kw-solar-system-price-in-pakistan/",
+     "publisher": "solar-price.pk (dealer-sourced guide)",
+     "date": "2026-05 ('Last verified: May, 2026')",
+     "quote": "10kW On-grid: \"PKR 750,000–900,000\"; includes \"Tier-1 solar panels (Jinko, LONGi, or Canadian Solar)\", \"a quality inverter (Solis, Growatt, or Huawei)\", \"galvanized steel mounting structure, DC and AC wiring with breakers, and standard installation labor\"",
+     "low_rs": 750000,
+     "high_rs": 900000,
+     "note": "lowest source"
+    }
+   ],
+   "excluded_points": [
+    {
+     "url": "https://www.toolsfluent.com/blog/on-grid-vs-hybrid-solar-pakistan-2026",
+     "publisher": "Toolsfluent (blog)",
+     "date": "2026-07-20",
+     "quote": "10kW On-grid: \"Rs 14.5 Lakh\"",
+     "low_rs": 1450000,
+     "high_rs": 1450000,
+     "note": "excluded: conflicts with same site's 10kW guide"
+    },
+    {
+     "url": "https://thegreenoh.com/solar-guides/10kw-solar-system-price-pakistan",
+     "publisher": "GreenOH (installer marketplace)",
+     "date": "2026-10-14",
+     "quote": "planning estimate \"about Rs 140 per watt for on-grid\" (no 10 kW on-grid package listed)",
+     "low_rs": 1400000,
+     "high_rs": 1400000,
+     "note": "per-watt planning estimate only, not a package price"
+    }
+   ]
+  },
+  {
+   "type": "on-grid",
+   "kw": 15,
+   "low_rs": 1400000,
+   "high_rs": 1800000,
+   "low_rs_per_w": 93.3,
+   "high_rs_per_w": 120.0,
+   "n_sources": 2,
+   "min_low_seen": 1400000,
+   "max_high_seen": 1800000,
+   "confidence": "medium",
+   "sources": [
+    {
+     "url": "https://maxpower.com.pk/?p=4888",
+     "publisher": "Max Power (manufacturer/installer blog)",
+     "date": "undated; image path 2026/07",
+     "quote": "15 kW: On-Grid Complete System \"Rs 14.5 Lakh – 18.0 Lakh\"",
+     "low_rs": 1450000,
+     "high_rs": 1800000
+    },
+    {
+     "url": "https://sheikhxsolarcorp.com/solar-rates-pakistan",
+     "publisher": "SheikhX Solar Corporation (installer)",
+     "date": "2026-10-14",
+     "quote": "15kW: \"PKR 1,400,000 - 1,700,000\" with \"26x Tier-1 Solar Panels (585W)\"; \"15kW On-Grid Inverter\"; \"Net Metering Approved\" (page labels it 'Hybrid System' but lists an on-grid inverter and no battery)",
+     "low_rs": 1400000,
+     "high_rs": 1700000,
+     "note": "labelled hybrid; treated as on-grid"
+    }
+   ],
+   "excluded_points": [
+    {
+     "url": "https://www.toolsfluent.com/blog/on-grid-vs-hybrid-solar-pakistan-2026",
+     "publisher": "Toolsfluent (blog)",
+     "date": "2026-07-20",
+     "quote": "15kW On-grid: \"Rs 18-20 Lakh\"",
+     "low_rs": 1800000,
+     "high_rs": 2000000,
+     "note": "excluded (same page as other excluded Toolsfluent figures)"
+    }
+   ]
+  },
+  {
+   "type": "on-grid",
+   "kw": 20,
+   "low_rs": 1800000,
+   "high_rs": 2200000,
+   "low_rs_per_w": 90.0,
+   "high_rs_per_w": 110.0,
+   "n_sources": 1,
+   "min_low_seen": 1800000,
+   "max_high_seen": 2200000,
+   "confidence": "low",
+   "sources": [
+    {
+     "url": "https://sheikhxsolarcorp.com/solar-rates-pakistan",
+     "publisher": "SheikhX Solar Corporation (installer)",
+     "date": "2026-10-14",
+     "quote": "20kW: \"PKR 1,800,000 - 2,200,000\" with \"34x Tier-1 Solar Panels (585W)\"; \"20kW On-Grid Inverter\"; \"Industrial Mounting\"; \"NEPRA Net Metering\" (page labels it 'Hybrid System' but lists an on-grid inverter and no battery)",
+     "low_rs": 1800000,
+     "high_rs": 2200000,
+     "note": "labelled hybrid; treated as on-grid; single source"
+    }
+   ]
+  }
+ ],
+ "includes": [
+  {
+   "item": "Tier-1 solar panels (N-type TOPCon 555-650 W is the 2026 norm)",
+   "sources": [
+    "https://sheikhxsolarcorp.com/solar-rates-pakistan",
+    "https://www.toolsfluent.com/blog/3kw-solar-system-pakistan-complete-guide",
+    "https://solar-price.pk/10kw-solar-system-price-in-pakistan/"
+   ]
+  },
+  {
+   "item": "On-grid or hybrid inverter (hybrid adds battery charger)",
+   "sources": [
+    "https://sheikhxsolarcorp.com/solar-rates-pakistan",
+    "https://www.toolsfluent.com/blog/3kw-solar-system-pakistan-complete-guide",
+    "https://solar-price.pk/10kw-solar-system-price-in-pakistan/"
+   ]
+  },
+  {
+   "item": "Mounting structure (galvanized/aluminium; elevated L2/L3 costs extra)",
+   "sources": [
+    "https://sheikhxsolarcorp.com/solar-rates-pakistan",
+    "https://www.toolsfluent.com/blog/3kw-solar-system-pakistan-complete-guide",
+    "https://maxpower.com.pk/?p=4888",
+    "https://solar-price.pk/10kw-solar-system-price-in-pakistan/"
+   ]
+  },
+  {
+   "item": "DC/AC wiring, MC4 connectors, combiner/distribution box, breakers, SPD, earthing",
+   "sources": [
+    "https://www.toolsfluent.com/blog/3kw-solar-system-pakistan-complete-guide",
+    "https://solar-price.pk/10kw-solar-system-price-in-pakistan/",
+    "https://www.voltflow.net/blog/solar-panels-pakistan-2026"
+   ]
+  },
+  {
+   "item": "Installation labour and commissioning (AEDB-registered installer)",
+   "sources": [
+    "https://www.toolsfluent.com/blog/3kw-solar-system-pakistan-complete-guide",
+    "https://solar-price.pk/10kw-solar-system-price-in-pakistan/",
+    "https://sheikhxsolarcorp.com/solar-rates-pakistan"
+   ]
+  },
+  {
+   "item": "Net-metering paperwork / DISCO application (bi-directional meter is installed by the DISCO after approval; some sources list it as a separate Rs 15,000-30,000 line)",
+   "sources": [
+    "https://www.toolsfluent.com/blog/3kw-solar-system-pakistan-complete-guide",
+    "https://www.toolsfluent.com/blog/5kw-solar-system-pakistan-complete-guide",
+    "https://sheikhxsolarcorp.com/solar-rates-pakistan"
+   ]
+  },
+  {
+   "item": "Hybrid only: lithium (LiFePO4) or tubular battery bank, battery cabinet/BMS, change-over switch",
+   "sources": [
+    "https://www.toolsfluent.com/blog/3kw-solar-system-pakistan-complete-guide",
+    "https://www.toolsfluent.com/blog/5kw-solar-system-pakistan-complete-guide"
+   ]
+  },
+  {
+   "item": "Usually NOT included: GST (PriceData.pk prices exclude it), civil works, long cable runs, three-phase upgrade, elevated structure",
+   "sources": [
+    "https://www.pricedata.pk/solar/solar-panel-prices-in-pakistan",
+    "https://www.voltflow.net/blog/solar-panels-pakistan-2026"
+   ]
+  }
+ ],
+ "excluded_points": [
+  {
+   "type": "hybrid",
+   "kw": 6,
+   "low_rs": 550000,
+   "high_rs": 700000,
+   "low_rs_per_w": 91.7,
+   "high_rs_per_w": 116.7,
+   "n_sources": 1,
+   "min_low_seen": 550000,
+   "max_high_seen": 700000,
+   "confidence": "low",
+   "sources": [
+    {
+     "url": "https://sheikhxsolarcorp.com/solar-rates-pakistan",
+     "publisher": "SheikhX Solar Corporation (installer)",
+     "date": "2026-10-14",
+     "quote": "6kW Hybrid System: \"PKR 550,000 - 700,000\" with \"10x Tier-1 Solar Panels\"; \"Hybrid Inverter 5kW\"; \"Lithium Battery 5.12kWh\"; \"Complete Installation\"",
+     "low_rs": 550000,
+     "high_rs": 700000,
+     "note": "5.12 kWh lithium"
+    }
+   ],
+   "battery_note": "Hybrid prices depend heavily on battery chemistry and kWh; sources mix 5-15 kWh lithium and lead-acid banks (see each source's note).",
+   "reason_excluded": "single installer figure (a 5 kW inverter with 10 panels sold as 6 kW) that is below the 5 kW on-grid range; using it would make the 5 to 8 kW hybrid range dip. Keep for reference, not used by the engine."
+  }
+ ]
+}

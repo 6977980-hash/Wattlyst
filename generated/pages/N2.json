@@ -1,28 +1,1688 @@
 {
  "id": "N2",
- "type": "tool",
+ "type": "lookup",
  "silo": "T",
  "url": "/troubleshoot/inverter-error-codes/",
- "h1": "Solar Inverter Error Codes",
+ "h1": "Solar Inverter Error Codes and What to Do",
  "title": "Solar Inverter Error Codes & Fixes | Wattlyst",
  "meta": "Look up your solar inverter error code and see what it means and how to fix it safely. Inverex, Growatt, Nitrox, Crown, Fronus and more.",
  "primary_keyword": "solar inverter error codes",
  "wave": 2,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-14",
+ "published": "2026-10-14",
  "author": "ali-ahmad",
+ "related": [
+  "D4",
+  "H9",
+  "D16",
+  "B5",
+  "H8"
+ ],
+ "next": "D4",
  "parent": "P-T",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
    "url": "/"
   },
   {
-   "name": "Solar Inverter Error Codes",
+   "name": "Troubleshooting Tools",
+   "url": "/troubleshoot/"
+  },
+  {
+   "name": "Solar Inverter Error Codes and What to Do",
    "url": "/troubleshoot/inverter-error-codes/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "How to use the error code lookup",
+    "p": [
+     "Choose the brand, then type the code exactly as the display or app shows it: a number such as 02 or 1010, a letter code such as F03, or a word from the message such as battery, grid or fan. Matching rows stay on screen; everything else hides. Clear the box to see the full table for that brand again.",
+     "If your brand is not listed, try the Voltronic Axpert table: Inverex, Crown, Homage, Fronus and several other Pakistani brands use that platform for their hybrid models, and the fault numbers often match. Confirm against the manual that came with your unit before acting."
+    ]
+   },
+   {
+    "h2": "Inverex, Nitrox and other Pakistani brands",
+    "p": [
+     "We only list codes we could read in a manufacturer's manual. Inverex (Nitrox, Veyron, Aerox) and Knox manuals were not available from the makers' own sites when this page was checked, so their codes are not here yet. Most of these units are Voltronic-based hybrids: start with the Axpert table and your printed manual, and send us a copy of the manual's fault table through the contact page so we can add it with a source.",
+     "Growatt's off-grid SPF series uses a fault table very close to Axpert's; Growatt's on-grid MIN series uses three-digit error numbers instead. Both tables are below."
+    ]
+   },
+   {
+    "h2": "What you can safely check yourself",
+    "p": [
+     "Safe checks: the AC and DC isolators are on, the battery breaker is on, the display shows the grid voltage within the normal range, the fan vents are not blocked by dust, and the inverter is not in direct sun or a closed cupboard. A restart (AC off, DC off, wait a minute, DC on, AC on, in the order your manual gives) clears many one-off codes.",
+     "Call the installer for anything else: repeated over-temperature, insulation or earth-fault codes, arc-fault codes, battery communication errors, a blown fuse or a code that comes back after a restart. Never open the inverter or a DC connector yourself."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "What does a solar inverter error code mean?",
+    "a": "It is the inverter reporting which protection tripped: grid voltage or frequency out of range, PV voltage too high, battery too low or too high, over temperature, overload, insulation fault and so on. Pick your brand above and type the code to read the manufacturer's meaning and remedy."
+   },
+   {
+    "q": "My Inverex error code is not in the list. What now?",
+    "a": "Inverex manuals were not available from the maker's site when we checked, so its codes are not listed yet. Most Inverex hybrids follow the Voltronic Axpert table; compare the number there and with your printed manual, and send us the manual's fault table through the contact page so we can add it."
+   },
+   {
+    "q": "Why does my on-grid inverter stop every afternoon with a grid voltage code?",
+    "a": "The street voltage rises when many solar systems export at once and the inverter must disconnect above its limit. Note the voltage shown on the display and report it to your DISCO; an installer can also check the AC cable size and connections, which add to the voltage the inverter sees."
+   },
+   {
+    "q": "Can I clear an error code by restarting the inverter?",
+    "a": "Often, for a one-off trip. Switch off AC then DC, wait about a minute, switch on in the order your manual gives. If the code returns, stop restarting and call the installer."
+   },
+   {
+    "q": "Which codes mean the battery is the problem?",
+    "a": "Battery voltage high or low, battery over-current, battery over-temperature and battery communication (BMS) errors. Check the battery breaker and connections are tight and the battery is not flat; lithium batteries also need the communication cable in place."
+   },
+   {
+    "q": "Where do these tables come from?",
+    "a": "From the manufacturers' own manuals and support pages, listed under Sources with a link for each brand and the date we last checked them. Rows quote the manual; the owner notes are our plain-English reading of that text."
+   }
+  ],
+  "key_facts": [
+   "An inverter error code is a message from the inverter's own protection: most codes mean the grid, the battery or the PV string is outside the range the inverter accepts, not that the inverter is broken.",
+   "Many Pakistani hybrid inverters are built on the Voltronic Axpert design, so their fault numbers (fan locked, over temperature, battery voltage too high, output short circuit, overload) follow the Axpert table; check your manual, the numbering can differ by model.",
+   "Grid-side codes on on-grid inverters (grid voltage or frequency out of range, no grid) clear on their own when the supply returns to normal; a code that returns every afternoon usually means high grid voltage on your street, which the DISCO must fix, not the inverter.",
+   "Anything that requires opening DC connectors, replacing a fan or a fuse, or changing settings inside the inverter is an installer job; PV strings carry lethal DC voltage whenever the sun is up, even with the AC switched off.",
+   "Every row in the tables below quotes the manufacturer's manual and links to it; the plain-English owner note is Wattlyst's reading of that text, not an extra manufacturer statement."
+  ],
+  "mistakes": [
+   "Restarting again and again. A code that returns after one restart has a cause; repeated restarts can damage the inverter.",
+   "Ignoring grid over-voltage codes. If the inverter trips every afternoon, log the voltage it shows and report it to the DISCO; the inverter is doing its job.",
+   "Reading another brand's table as your own. Fault numbers differ between platforms; use your brand's table or your printed manual.",
+   "Opening DC connectors with the sun up. PV strings are live whenever there is light; only an installer with the right tools should touch them."
+  ],
+  "sources": [
+   {
+    "label": "Wattlyst methodology and editorial policy",
+    "url": "/methodology/"
+   },
+   {
+    "label": "Growatt SPF (off-grid / hybrid 'ES' series): Growatt SPF 6000 ES PLUS User Manual v1.0",
+    "url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf"
+   },
+   {
+    "label": "Growatt MIN / MOD on-grid (TL-X family): Growatt MIN 2500-6000TL-X User Manual GR-UM-155-A-04",
+    "url": "https://b2b.offgridtec.com/media/product_attachements/MIN 2500-6000 TL-X User Manual General EN 202206.pdf"
+   },
+   {
+    "label": "Huawei SUN2000 (L1 single-phase residential): SUN2000-(2KTL-6KTL)-L1 User Manual Issue 10 (2022-10-27)",
+    "url": "https://res.cloudinary.com/gpceurope/image/upload/v1690811120/eau10ickazhrwervcftj.pdf"
+   },
+   {
+    "label": "Solis (Ginlong) on-grid and hybrid: Solis North America support article 'Solis Inverter Alarm Codes (Complete List)'",
+    "url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-"
+   },
+   {
+    "label": "GoodWe (ES Uniq hybrid; F-codes are shared across GoodWe residential inverters): GoodWe Residential Smart Inverter Solutions User Manual (ES Uniq 8-12K",
+    "url": "https://en.goodwe.com/Ftp/EN/Downloads/User%20Manual/GW_Residential-Smart-Inverter-Solutions_User-Manual-ES-Uniq8-12K-LXA-LXU-EN.pdf"
+   },
+   {
+    "label": "Sungrow SG RS single-phase on-grid: Sungrow SG2.0RS-S...SG6.0RS User Manual SG2.0-6.0RS-UEN-Ver21-202312",
+    "url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf"
+   },
+   {
+    "label": "Fronius (Symo / Primo SnapINverter STATE codes; GEN24 1xxx codes): Fronius Symo Hybrid Operating Instructions (online manual 42",
+    "url": "http://manuals.fronius.com/html/4204260222/en.html"
+   },
+   {
+    "label": "Voltronic Power Axpert (base design of many Pakistani rebrands): Voltronic Axpert VM III User Manual v1.8",
+    "url": "https://voltronicpower.com/content/download/Manual/Axpert%20VM%20III_manual-20200904.pdf"
+   }
+  ],
+  "tables": [
+   {
+    "key": "growatt-spf",
+    "label": "Growatt SPF (off-grid / hybrid 'ES' series)",
+    "caption": "Growatt SPF (off-grid / hybrid 'ES' series) error codes (SPF 3000-6000 ES / ES PLUS (codes table from SPF 6000 ES PLUS manual; same numbering family as other SPF units but verify per model))",
+    "head": [
+     "Code",
+     "Meaning",
+     "Likely cause",
+     "What to do",
+     "Call installer?"
+    ],
+    "rows": [
+     [
+      "Fault 01",
+      "Fan is locked / fan fault",
+      "Manual: 'Fan fault.'",
+      "Manual: '1.Check whether all fans are working properly. 2.Replace the fan.' Owner: check the fan is not blocked by dust; replacement is an installer job.",
+      "Yes"
+     ],
+     [
+      "Fault 02",
+      "Over temperature",
+      "Manual: 'Internal temperature of component is over 100C.'",
+      "Manual: '1. Check whether the air flow of the unit is blocked or whether the ambient temperature is too high. 2. Check whether the thermistor plug is loose.' Owner: clear vents, improve ventilation; if it repeats call installer.",
+      "Usually not"
+     ],
+     [
+      "Fault 03",
+      "Battery voltage is too high (battery over-charged)",
+      "Manual: 'Battery is over-charged.' / 'The battery voltage is too high.'",
+      "Manual: 'Restart the unit, if the error happens again, please return to repair center.' and 'Check if spec and quantity of batteries are meet requirements.'",
+      "Yes"
+     ],
+     [
+      "Warning 04",
+      "Battery voltage / SOC is too low (low battery)",
+      "Manual: 'The battery voltage/SOC is too low.'",
+      "Manual: '1. Measure battery voltage in DC input. 2. Check battery SOC in LCD when use Li battery 3. Recharge the battery.'",
+      "Usually not"
+     ],
+     [
+      "Fault 05",
+      "Output short circuited",
+      "Manual: 'Output short circuited.'",
+      "Manual: 'Check if wiring is connected well and remove abnormal load.' Owner: switch off loads, look for a faulty appliance; if the fault stays, call installer.",
+      "Usually not"
+     ],
+     [
+      "Fault 06 / 58",
+      "Output voltage abnormal (too high / too low)",
+      "Manual: 'Output abnormal (Inverter voltage is higher than 280Vac or lower than 80Vac).'",
+      "Manual: '1. Reduce the connected load. 2. Restart the unit, if the error happens again, please return to repair center.'",
+      "Yes"
+     ],
+     [
+      "Fault 07",
+      "Overload time out",
+      "Manual: 'The inverter is overload 110% and time is up.'",
+      "Manual: 'Reduce the connected load by switching off some equipment.'",
+      "Usually not"
+     ],
+     [
+      "Fault 08",
+      "Bus voltage is too high",
+      "Manual: '1. If you connect to a lithum battery without communication, check whether the voltage points of the program 19 and 21 are too high for the lithum battery.'",
+      "Manual: '2. Restart the unit, if the error happens again, please return to repair center.'",
+      "Yes"
+     ],
+     [
+      "Fault 09 / 53 / 57",
+      "Bus soft start failed / inverter soft start failed / current sensor failed",
+      "Manual: 'Internal components failed.'",
+      "Manual: 'Restart the unit, if the error happens again, please return to repair center.'",
+      "Yes"
+     ],
+     [
+      "Warning 15",
+      "Parallel input utility grid different",
+      "Manual: 'The input status is different in parallel system.'",
+      "Manual: 'Check if AC input wires of all inverters are connected well.' (parallel systems only; installer task)",
+      "Yes"
+     ],
+     [
+      "Warning 16",
+      "Parallel input phase error",
+      "Manual: 'Input phase is not correct.'",
+      "Manual: 'Change the input phase S and T wiring.' (installer task)",
+      "Yes"
+     ],
+     [
+      "Warning 17",
+      "Parallel output phase loss",
+      "Manual: 'The output phase not correct in parallel.'",
+      "Manual: '1.Make sure the parallel setting are the same system(sigle or paralle; 3P1,3P2,3P3). 2.Make sure all phases inverters are power on.'",
+      "Yes"
+     ],
+     [
+      "Warning 20",
+      "BMS communication error",
+      "Manual: 'Li battery can't communicate to the inverter.'",
+      "Manual: '1. Check whether communication line is correct connection between inverter and battery. 2. Check whether BMS protocol type is correct setting.'",
+      "Usually not"
+     ],
+     [
+      "Fault 51",
+      "Over current or surge",
+      "Manual: 'Over current or surge.'",
+      "Manual: 'Restart the unit, if the error happens again, please return to repair center.'",
+      "Yes"
+     ],
+     [
+      "Fault 52",
+      "Bus voltage is too low",
+      "Manual: 'Bus voltage is too low.'",
+      "Manual: 'Restart the unit, if the error happens again, please return to repair center.'",
+      "Yes"
+     ],
+     [
+      "Fault 55",
+      "Output voltage is unbalanced / over DC voltage in AC output",
+      "Manual (fault table): 'Over DC voltage in AC output'; (troubleshooting): 'Output voltage is unbalanced'",
+      "Manual: 'Restart the unit, if the error happens again, please return to repair center.'",
+      "Yes"
+     ],
+     [
+      "Fault 56",
+      "Battery connection is open",
+      "Manual: 'Battery is not connected well or fuse is burnt.' and, for lithium without communication, 'check whether the voltage points of the program 19 and 21 are too high for the lithum battery.'",
+      "Manual: '2. If the battery is connected well, restart the unit. If the error happens again, please return to repair center.'",
+      "Yes"
+     ],
+     [
+      "Fault 60",
+      "Negative power fault",
+      "Manual: '1. Check whether the AC output connected to the grid input. 2. Check whether Program 8 settings are the same for all parallel inverters 3. Check whether the current sharing cables are connected well in the same parallel phases. 4. Check whether all neutral wires of all parallel units are connected together.'",
+      "Manual: '5. If problem still exists, contact repair center.' (wiring checks are installer work)",
+      "Yes"
+     ],
+     [
+      "Fault 61",
+      "PV voltage is too high",
+      "Fault table entry only: 'PV voltage is too high'. (Manual gives no cause text for this code.)",
+      "Not detailed in troubleshooting table. Installer must check PV string voltage against inverter limit.",
+      "Yes"
+     ],
+     [
+      "Fault 62",
+      "Internal communication error",
+      "Fault table entry only: 'Internal communication error'.",
+      "Not detailed in troubleshooting table; treat like other internal faults (restart; if it repeats, repair center).",
+      "Yes"
+     ],
+     [
+      "Fault 80 / 81",
+      "CAN fault / Host loss (parallel communication)",
+      "Manual: '1. Check whether the parallel communication cables are connected well. 2. Check whether Program 23 settings are right for the parallel system.'",
+      "Manual: '3. If problem still exists, contact repair center'",
+      "Yes"
+     ],
+     [
+      "Warning 01",
+      "Fan is locked when inverter is on",
+      "Warning table: 'Fan is locked when inverter is on.' (Beep 3 times every second)",
+      "Check the fan is free of dust/obstruction; if it stays locked, call installer.",
+      "Usually not"
+     ],
+     [
+      "Warning 02",
+      "Over temperature",
+      "Warning table: 'Over temperature'",
+      "Reduce load, improve ventilation; see Fault 02.",
+      "Usually not"
+     ],
+     [
+      "Warning 03",
+      "Battery is over-charged",
+      "Warning table: 'Battery is over-charged'",
+      "Check battery settings with installer (see Fault 03).",
+      "Yes"
+     ],
+     [
+      "Warning 07",
+      "Overload",
+      "Warning table: 'Overload' (Beep once every 0.5 second)",
+      "Switch off some loads.",
+      "Usually not"
+     ],
+     [
+      "Warning 10",
+      "Output power derating",
+      "Warning table: 'Output power derating'",
+      "Reduce load; usually from high temperature or high PV voltage. No cause text in manual.",
+      "Usually not"
+     ],
+     [
+      "Warning 12",
+      "Solar charger stops due to low battery",
+      "Warning table: 'Solar charger stops due to low battery'",
+      "Recharge the battery / check battery (no further text in manual).",
+      "Usually not"
+     ],
+     [
+      "Warning 13",
+      "Solar charger stops due to high PV voltage",
+      "Warning table: 'Solar charger stops due to high PV voltage'",
+      "Installer must check PV string configuration (no further text in manual).",
+      "Yes"
+     ],
+     [
+      "Warning 14",
+      "Solar charger stops due to overload",
+      "Warning table: 'Solar charger stops due to overload'",
+      "Reduce PV/charging load (no further text in manual).",
+      "Usually not"
+     ],
+     [
+      "Warning 19",
+      "Battery disconnect",
+      "Warning table: 'Battery disconnect' (No beep)",
+      "Check battery breaker/cables are connected; if unsure call installer.",
+      "Usually not"
+     ],
+     [
+      "Warning 21",
+      "PV power insufficient",
+      "Warning table: 'PV power insufficient'",
+      "Normal at low sun; no action in manual.",
+      "Usually not"
+     ],
+     [
+      "Warning 33",
+      "BMS communication loss",
+      "Warning table: 'BMS communication loss'",
+      "Check BMS cable and protocol setting (see Warning 20).",
+      "Usually not"
+     ],
+     [
+      "Warning 34-45",
+      "Lithium battery BMS alarms: 34 Cell over voltage, 35 Cell under voltage, 36 Total over voltage, 37 Total under voltage, 38 Discharge over voltage, 39 Charge over voltage, 40 Discharge over temperature, 41 Charge over temperature, 42 Mosfet over temperature, 43 Battery over temperature, 44 Battery under temperature, 45 System shut down",
+      "Warning table lists only the event names (reported by the battery BMS).",
+      "Manual gives no owner action; these come from the battery - contact battery supplier/installer.",
+      "Yes"
+     ]
+    ]
+   },
+   {
+    "key": "growatt-min",
+    "label": "Growatt MIN / MOD on-grid (TL-X family)",
+    "caption": "Growatt MIN / MOD on-grid (TL-X family) error codes (MIN 2500-6000TL-X (manual read); MOD/MID share the Error 2xx/4xx numbering family per Growatt but only MIN TL-X was verified)",
+    "head": [
+     "Code",
+     "Meaning",
+     "Likely cause",
+     "What to do",
+     "Call installer?"
+    ],
+    "rows": [
+     [
+      "Error: 200",
+      "AFCI fault (DC arc detected)",
+      "Manual: 'AFCI fault'",
+      "Manual: '1.After shutdown,Check the PV panel terminal. 2.Restart inverter. 3.If error message still exists,contact Growatt.' Owner: do not open DC connectors yourself; call installer.",
+      "Yes"
+     ],
+     [
+      "Error: 201 (Residual I High)",
+      "Leakage current too high",
+      "Manual: 'Leakage current too high'",
+      "Manual: '1.Restart the invert. 2. If error message still exists, contact Growatt.'",
+      "Yes"
+     ],
+     [
+      "Warning 202",
+      "DC SPD function abnormal",
+      "Manual: 'DC SPD function abnormal'",
+      "Manual: '1.After shutdown,Check the DC SPD. 2.If error message still exists,contact manufacturer.'",
+      "Yes"
+     ],
+     [
+      "Warning 203",
+      "PV1 or PV2 circuit short",
+      "Manual: 'PV1 or PV2 Circuit short'",
+      "Manual: 'Check the PV panel polarity. Restart the inverter. If the warning still exist, please contact Growatt customer service to replace the POWER board.'",
+      "Yes"
+     ],
+     [
+      "Warning 204",
+      "Dry-contact function abnormal",
+      "Manual: 'Dryconnect function abnormal'",
+      "Manual: '1.After shutdown,Check the Dryconnect wiring. 2.If the error message still exists, contact manufacturer.'",
+      "Yes"
+     ],
+     [
+      "Warning 205",
+      "PV1 or PV2 boost broken",
+      "Manual: 'PV1 or PV2 boost broken'",
+      "Manual: 'Restart the inverter. If the warning still exist, please contact Growatt customer service to replace the power board.'",
+      "Yes"
+     ],
+     [
+      "Warning 207",
+      "USB over-current",
+      "Manual: 'USB over-current'",
+      "Manual: '1: Unplug the U disk or monitor. 2: Re-access U disk or monitor after shutdown. 3.If the error message still exists, contact manufacturer.'",
+      "Usually not"
+     ],
+     [
+      "Warning 401",
+      "Inverter communicates with meter abnormal",
+      "Manual: 'Inverter communicates with Meter abnormal'",
+      "Manual: '1: Check if the meter is on. 2: Check the inverter and the meter connection is normal .'",
+      "Usually not"
+     ],
+     [
+      "Error: 402",
+      "Output high DCI (DC injection in AC output)",
+      "Manual: 'Output High DCI'",
+      "Manual: 'Restart inverter, if problem still exist, Contact Growatt.'",
+      "Yes"
+     ],
+     [
+      "Error: 404",
+      "Bus sample fault",
+      "Manual: 'Bus sample fault'",
+      "Manual: 'Restart inverter, if problem still exist, Contact Growatt.'",
+      "Yes"
+     ],
+     [
+      "Warning 404",
+      "EEPROM abnormal",
+      "Manual: 'EEPROM abnormal'",
+      "Manual: 'Restart the inverter. If the warning still exist, please contact Growatt customer service to replace the M3 board.'",
+      "Yes"
+     ],
+     [
+      "Error: 405",
+      "Relay fault",
+      "Manual: 'Relay fault'",
+      "Manual: 'Restart inverter, if problem still exist, Contact Growatt.'",
+      "Yes"
+     ],
+     [
+      "Warning 405",
+      "Firmware version is not consistent",
+      "Manual: 'Firmware version is not consistent'",
+      "Manual: 'Uptate the right version firmware' (installer/Growatt service)",
+      "Yes"
+     ],
+     [
+      "Error: 407",
+      "Auto test failed",
+      "Manual: 'Auto test didn't pass.'",
+      "Manual: 'Restart inverter, repeat Auto Test, if problem still exist, contact Growatt.'",
+      "Yes"
+     ],
+     [
+      "Error: 408",
+      "Over temperature",
+      "Manual: 'Over Temperature'",
+      "Manual: 'If the ambient temperature of inverter is lower than 60C, restart inverter, if error message still exists, contact Growatt.' Owner: improve ventilation/shade first.",
+      "Usually not"
+     ],
+     [
+      "Error: 409",
+      "Bus over voltage",
+      "Manual: 'Bus over voltage'",
+      "Manual: 'Restart inverter, if problem still exist, Contact Growatt.'",
+      "Yes"
+     ],
+     [
+      "Error: 411",
+      "DSP communicates with M3 abnormal (internal communication)",
+      "Manual: 'DSP communicates with M3 abnormal'",
+      "Manual: 'Restart inverter, if problem still exist, contact Growatt.'",
+      "Yes"
+     ],
+     [
+      "Error: 414",
+      "EEPROM fault",
+      "Manual: 'EEPROM fault.'",
+      "Manual: 'Restart inverter, if problem still exist, Contact Growatt.'",
+      "Yes"
+     ],
+     [
+      "Error: 417",
+      "DSP / redundant M3 sample mismatch",
+      "Manual: 'The data sampled by the DSP and redundant M3 is not the same.'",
+      "Manual: 'Restart inverter, if problem still exist, Contact Growatt.'",
+      "Yes"
+     ],
+     [
+      "Error: 420",
+      "GFCI fault",
+      "Manual: 'GFCI fault.'",
+      "Manual: 'Restart inverter, if problem still exist, or contact Growatt.'",
+      "Yes"
+     ],
+     [
+      "Error: 425",
+      "AFCI self-test fault",
+      "Manual: 'AFCI self-test fault'",
+      "Manual: 'Restart inverter, if problem still exist, or contact Growatt.'",
+      "Yes"
+     ]
+    ]
+   },
+   {
+    "key": "huawei",
+    "label": "Huawei SUN2000 (L1 single-phase residential)",
+    "caption": "Huawei SUN2000 (L1 single-phase residential) error codes (SUN2000-2KTL-L1 to 6KTL-L1 (alarm IDs are shared across SUN2000 families per Huawei, but only the L1 manual was read))",
+    "head": [
+     "Code",
+     "Meaning",
+     "Likely cause",
+     "What to do",
+     "Call installer?"
+    ],
+    "rows": [
+     [
+      "2001 High String Input Voltage",
+      "PV string open-circuit voltage exceeds the inverter maximum (too many modules in series)",
+      "Manual: 'The PV array is not properly configured. Excessive PV modules are connected in series to the PV string, and therefore the open-circuit voltage exceeds the maximum SUN2000 operating voltage.' Cause ID 1 = PV1, 2 = PV2.",
+      "Manual: 'Check the serial connection configuration of the PV string and ensure that the PV string open-circuit voltage is not greater than the maximum operating voltage of the SUN2000.' Installer task.",
+      "Yes"
+     ],
+     [
+      "2002 DC Arc Fault",
+      "Electric arc on PV string cables",
+      "Manual: 'The PV string power cables arc or are in poor contact.'",
+      "Manual: 'Check whether the string cables arc or are in poor contact.' Owner: do not touch DC wiring; call installer.",
+      "Yes"
+     ],
+     [
+      "2011 String Reversed",
+      "PV string connected with reversed polarity",
+      "Manual: 'The PV string is reversely connected.'",
+      "Manual: 'wait until the PV string current decreases below 0.5 A, set DC switch to OFF, and adjust the PV string polarity.' Installer task.",
+      "Yes"
+     ],
+     [
+      "2021 AFCI Check Failure",
+      "Arc-fault detection self-check failed",
+      "Manual: '1: The AFCI check circuit is abnormal. 2: The AFCI circuit is faulty.'",
+      "Manual: 'Turn off the AC output switch and DC input switch, and then turn them on after 5 minutes. If the fault persists, contact your dealer or Huawei technical support.'",
+      "Yes"
+     ],
+     [
+      "2032 Grid Failure",
+      "No grid (outage or AC breaker off)",
+      "Manual: 'The power grid experiences an outage. The AC circuit is disconnected or the AC circuit breaker is OFF.'",
+      "Manual: '1. Check the AC voltage. 2. Check whether the AC circuit is disconnected or the AC circuit breaker is OFF.' Owner: check for load-shedding and the AC breaker.",
+      "Usually not"
+     ],
+     [
+      "2033 Grid Undervoltage",
+      "Grid voltage below lower threshold",
+      "Manual: 'The grid voltage is below the lower threshold or the low voltage duration has lasted for more than the value specified by low voltage ride-through (LVRT).'",
+      "Manual: '1. If the alarm occurs occasionally, the power grid may be abnormal temporarily. The SUN2000 automatically recovers... 2. If the alarm occurs frequently, check whether the power grid voltage is within the allowed range. If no, contact the local power operator. If yes, modify the grid undervoltage protection threshold ... with the consent of the local power operator.'",
+      "Usually not"
+     ],
+     [
+      "2034 Grid Overvoltage",
+      "Grid voltage above upper threshold",
+      "Manual: 'The grid voltage exceeds the higher threshold or the high voltage has lasted for more than the value specified by high voltage ride-through (HVRT).'",
+      "Manual: same as 2033 (occasional = wait; frequent = check grid voltage, contact power operator; threshold change only with operator consent); '3. Check whether the peak voltage of the power grid is too high.'",
+      "Usually not"
+     ],
+     [
+      "2036 Grid Overfrequency",
+      "Grid frequency too high",
+      "Manual: 'Power grid exception: The actual power grid frequency is higher than the standard requirement for the local power grid.'",
+      "Manual: occasional = auto recovers; frequent = 'check whether the power grid frequency is within the allowed range. If no, contact the local power operator.'",
+      "Usually not"
+     ],
+     [
+      "2037 Grid Underfrequency",
+      "Grid frequency too low",
+      "Manual: 'Power grid exception: The actual power grid frequency is lower than the standard requirement for the local power grid.'",
+      "Manual: occasional = auto recovers; frequent = check grid frequency / contact local power operator.",
+      "Usually not"
+     ],
+     [
+      "2038 Unstable Grid Frequency",
+      "Grid frequency changing too fast",
+      "Manual: 'Power grid exception: The actual grid frequency change rate does not comply with the local power grid standard.'",
+      "Manual: occasional = auto recovers; frequent = check grid frequency / contact local power operator.",
+      "Usually not"
+     ],
+     [
+      "2039 Output Overcurrent",
+      "Inverter output current exceeded limit",
+      "Manual: 'The power grid voltage drops dramatically or the power grid is short-circuited. As a result, the SUN2000 transient output current exceeds the upper threshold and therefore the SUN2000 protection is triggered.'",
+      "Manual: '1. ... After the fault is rectified, the SUN2000 automatically recovers. 2. If the alarm occurs frequently and affects the energy yield of the power plant, check whether the output is short-circuited. If the fault persists, contact your dealer or Huawei technical support.'",
+      "Yes"
+     ],
+     [
+      "2040 Output DC Component Overhigh",
+      "Too much DC in AC output",
+      "Manual: 'The DC component of the SUN2000 output current exceeds the specified upper threshold.'",
+      "Manual: auto recovers; 'If the alarm occurs frequently, contact your dealer or Huawei technical support.'",
+      "Yes"
+     ],
+     [
+      "2051 Abnormal Residual Current",
+      "Leakage (residual) current too high",
+      "Manual: 'The insulation impedance of the input side to PE decreases when the SUN2000 is operating.'",
+      "Manual: '1. If the alarm occurs occasionally, the external circuit may be abnormal temporarily. The SUN2000 automatically recovers... 2. If the alarm occurs frequently or persists, check whether the impedance between the PV string and the ground is too low.' Installer task.",
+      "Yes"
+     ],
+     [
+      "2062 Low Insulation Resistance",
+      "PV array insulation to ground too low",
+      "Manual: 'A short circuit occurs between the PV array and the ground.' / 'The ambient air of the PV array is damp and the insulation between the PV array and the ground is poor.'",
+      "Manual: '1. Check the output impedance of the PV array to ground... 2. Check that the PE cable of the SUN2000 is correctly connected. 3. If the impedance is lower than the specified protection threshold in rainy and cloudy days, set Insulation resistance protection using the mobile App...' Installer task; often appears after rain.",
+      "Yes"
+     ],
+     [
+      "2063 Overtemperature",
+      "Inverter too hot (Minor)",
+      "Manual: 'The SUN2000 is installed in a place with poor ventilation.' / 'The ambient temperature is higher than the upper threshold.' / 'The SUN2000 is not working properly.'",
+      "Manual: 'Check the ventilation and ambient temperature... improve the ventilation and heat dissipation. If the ventilation and ambient temperature both meet requirements, contact your dealer or Huawei technical support.'",
+      "Usually not"
+     ],
+     [
+      "2064 Device Fault",
+      "Unrecoverable internal fault (Cause ID 1-12: boost short/overcurrent, control circuit, inverter circuit, residual current sensor, temperature detection, EEPROM, auxiliary power, grid-tied relay, DC bus over/under-voltage/imbalance)",
+      "Manual: 'An unrecoverable fault has occurred on a circuit inside the SUN2000.'",
+      "Manual: 'Turn off the AC output switch and DC input switch, and then turn them on after 5 minutes. If the fault persists, contact your dealer or Huawei technical support.'",
+      "Yes"
+     ],
+     [
+      "2065 Upgrade Failed or Version Mismatch",
+      "Firmware upgrade failed",
+      "Manual: 'The upgrade does not complete normally.' Cause IDs 1-4, 7 (software/hardware mismatch, controller version mismatch, upgrade fails, optimizer upgrade fails).",
+      "Manual: '1. Perform an upgrade again. 2. If the upgrade fails for multiple times, contact your dealer or Huawei technical support.'",
+      "Yes"
+     ],
+     [
+      "61440 Monitoring Unit Faulty",
+      "Monitoring (communication) unit fault",
+      "Manual: 'The flash memory is insufficient.' / 'The flash memory has bad sectors.'",
+      "Manual: 'Turn off the AC output switch and DC input switch, and then turn them on after 5 minutes. If the fault persists, replace the monitoring board or contact your dealer Huawei technical support.'",
+      "Yes"
+     ],
+     [
+      "2067 Faulty Power Collector",
+      "Smart power sensor (meter) disconnected",
+      "Manual: 'The smart power sensor is disconnected.'",
+      "Manual: '1. Check that the configured power meter model is the same as the actual model. 2. Check that the communications parameters ... are the same as the SUN2000 RS485 configurations. 3. Check whether the smart power sensor is powered on and whether the RS485 communications cable is connected.'",
+      "Yes"
+     ],
+     [
+      "2068 Battery Abnormal",
+      "Battery fault, disconnected or breaker off (hybrid/LUNA systems)",
+      "Manual: 'The battery is faulty, disconnected, or the battery circuit breaker is OFF when the battery is running.' Cause IDs: communication abnormal, port overcurrent, enabling cable not connected, port voltage abnormal.",
+      "Manual: '1. If the battery fault indicator is steady on or blinking, contact the battery supplier. 2. Check that the battery enabling/power/communications cable is correctly installed... 3. Check that the auxiliary power switch on the battery is set to ON. 4. Send a shutdown command on the App... turn on the battery switch, AC output switch, and DC input switch in sequence after 5 minutes. 5. If the fault persists, contact your dealer or Huawei technical support.'",
+      "Yes"
+     ],
+     [
+      "2070 Active Islanding",
+      "Grid outage detected (anti-islanding)",
+      "Manual: 'When the power grid experiences an AC power outage, the SUN2000 detects islanding proactively.'",
+      "Manual: 'Check that the grid connection voltage of the SUN2000 is normal.' Owner: usually load-shedding; wait for grid.",
+      "Usually not"
+     ],
+     [
+      "2077 Off-grid output overload",
+      "Backup output overloaded",
+      "Manual: 'The output is overloaded or short-circuited.'",
+      "Manual: '1. Check whether the device output is short-circuited. 2. Check whether the device load configuration exceeds the rated value.' Owner: switch off loads on backup circuit.",
+      "Usually not"
+     ],
+     [
+      "2080 Abnormal PV Module Configuration",
+      "PV/optimizer string configuration wrong (Cause IDs 2,3,6,7,8,9)",
+      "Manual: 'PV module configuration does not meet requirements, or the PV module output is reversely connected or short-circuited.'",
+      "Manual: 'Check whether the total number of PV modules, number of PV modules in a string, and number of PV strings meet requirements and whether the PV module output is reversely connected.' Installer task.",
+      "Yes"
+     ],
+     [
+      "2081 Optimizer Fault",
+      "An optimizer is faulty (Warning)",
+      "Manual: 'An optimizer is faulty.'",
+      "Manual: 'Go to the optimizer information screen to view the fault details.'",
+      "Yes"
+     ],
+     [
+      "2082 Grid-tied/Off-grid Controller Abnormal",
+      "Backup Box communication/internal fault",
+      "Manual: 'The inverter fails to communicate with the Smart Backup Box.' / 'An unrecoverable fault occurs on a circuit inside the Smart Backup Box.'",
+      "Manual: shutdown via App, turn off AC/DC/battery switches, check power and RS485 cables between Backup Box and inverter, restart after 5 minutes; '4. If the alarm persists, contact your dealer or Huawei technical support.'",
+      "Yes"
+     ]
+    ]
+   },
+   {
+    "key": "solis",
+    "label": "Solis (Ginlong) on-grid and hybrid",
+    "caption": "Solis (Ginlong) on-grid and hybrid error codes (Solis 1P/3P string inverters and RHI/S5/S6 hybrids (article is Solis' complete display-message list; hybrid battery codes not extracted))",
+    "head": [
+     "Code",
+     "Meaning",
+     "Likely cause",
+     "What to do",
+     "Call installer?"
+    ],
+    "rows": [
+     [
+      "OV-G-V 01..05 (1010)",
+      "Grid overvoltage",
+      "Article: 'Grid voltage is higher than standard code's 1st level overvoltage limit for the set period of time.' (02: 'transient value is over 1.35 times of rated voltage peak value'; 03: 10-min overvoltage; 04: 2nd level; 05: transient over 200ms)",
+      "Article: '1. If it happens accidentally, it may be a short-term abnormality of the grid. The inverter will resume normal operation after detecting that the grid is normal, without manual intervention. 2. Check if the standard is set correctly. 3. If it occurs frequently, please check the grid voltage and the grid frequency... check whether the AC side circuit breaker and the output cable are connected properly. 4. ...After obtaining the approval from the local power operator, please contact customer service to modify the inverter grid Over and under voltage/frequency protection points.'",
+      "Usually not"
+     ],
+     [
+      "UN-G-V (1011)",
+      "Grid undervoltage",
+      "Article: 'Grid voltage is lower than the limit.'",
+      "Same steps as OV-G-V (wait if occasional; check grid/wiring and protection settings if frequent).",
+      "Usually not"
+     ],
+     [
+      "OV-G-F (1012)",
+      "Grid overfrequency",
+      "Article: 'Grid frequency is higher the limit.'",
+      "Same steps as OV-G-V.",
+      "Usually not"
+     ],
+     [
+      "UN-G-F (1013)",
+      "Grid underfrequency",
+      "Article: 'Grid frequency is lower the limit.'",
+      "Same steps as OV-G-V.",
+      "Usually not"
+     ],
+     [
+      "Backfeed_Iac (1014)",
+      "AC backfeed current",
+      "Article: 'AC backfeed current'",
+      "Article: '1. Restart the inverter, if it is still not ruled out, please contact the manufacturer's customer service.'",
+      "Yes"
+     ],
+     [
+      "NO-Grid (1015)",
+      "No grid detected",
+      "Article: 'No grid'",
+      "Article: '1. Confirm whether the power grid is properly connected. 2. Confirm whether the connected power grid is normal. 3. Check if the Grid Standard is set correctly. 3. If the grid connection is normal, you need to contact manufacturer's customer service...' Owner: check for outage and AC breaker.",
+      "Usually not"
+     ],
+     [
+      "G-PHASE (1016)",
+      "Grid 3-phase unbalanced",
+      "Article: 'Grid has unbalanced 3phase'",
+      "Article: '1. Confirm whether the power grid is properly connected.2. Confirm whether the connected power grid is normal. 3. If the grid connection is normal, you need to contact manufacturer's customer service.'",
+      "Yes"
+     ],
+     [
+      "G-F-FLU (1017)",
+      "Grid frequency fluctuation",
+      "Article: 'Grid frequency is abnormal'",
+      "Article: confirm grid connected/normal; if normal, contact customer service.",
+      "Usually not"
+     ],
+     [
+      "OV-G-I (1018)",
+      "Grid output overcurrent",
+      "Article: 'Grid output overcurrent'",
+      "Article: confirm grid connected/normal; if normal, contact customer service.",
+      "Yes"
+     ],
+     [
+      "IGFOL-F (1019)",
+      "Grid current tracking error",
+      "Article: 'Grid current tracking error'",
+      "Article: '1. Restart the inverter, if it is still not ruled out, please contact the manufacturer's customer service.'",
+      "Yes"
+     ],
+     [
+      "PHASE-FAULT (101A)",
+      "Abnormal grid phase angle",
+      "Article: 'Abnormal grid phase angle'",
+      "Article: '1. Check whether the AC side wiring is correct. 2. Check whether the grid phase angle is 120. 3. Restart the inverter. If it is still not resolved, please contact the manufacturer's customer service.'",
+      "Yes"
+     ],
+     [
+      "OV-DC (1020)",
+      "DC (PV) overvoltage",
+      "Article: 'DC overvoltage'",
+      "Article: '1. Check whether the input voltage exceeds the maximum input voltage of the inverter;2. Restart the inverter 3. If it is still not ruled out, please contact the manufacturer's customer service.'",
+      "Yes"
+     ],
+     [
+      "BoostFal (1020)",
+      "DC boost circuit fault",
+      "Article: 'DC boost circuit fault'",
+      "Article: 'Restart the inverter. If it is still not resolved, please contact the manufacturer's customer service.'",
+      "Yes"
+     ],
+     [
+      "OV-BUS (1021)",
+      "DC bus overvoltage",
+      "Article: 'DC bus overvoltage'",
+      "Article: check input voltage vs max; restart; else contact customer service.",
+      "Yes"
+     ],
+     [
+      "UNB-BUS (1022)",
+      "DC bus unbalanced",
+      "Article: 'DC bus voltage and DC bus half voltage is not correct'",
+      "Article: restart; if not resolved contact customer service.",
+      "Yes"
+     ],
+     [
+      "UN-BUS (1023)",
+      "DC bus voltage too low",
+      "Article: 'DC bus voltage is too low'",
+      "Article: '1. Check whether the input voltage is too low 2. Restart the inverter 3. If it is still not ruled out, please contact the manufacturer's after sales engineer.'",
+      "Yes"
+     ],
+     [
+      "DC-INTF. (1027)",
+      "Abnormal DC input current",
+      "Article: 'Abnormal DC input current'",
+      "Article: '1. Check whether the DC wiring is falsely connected or damaged.2. Restart the inverter. 3. If it is still not resolved, please contact the manufacturer's customer service.'",
+      "Yes"
+     ],
+     [
+      "Reve-DC (1028)",
+      "DC reversely connected",
+      "Article: 'DC reversely connected.'",
+      "Article: '1. Check whether the DC wiring is reversed. 2. Check whether the wire has correct size. 3. Check if correct Grid Standard is set.4. Restart the inverter 5. If it is still not resolved, please contact the manufacturer's customer service.' Installer task.",
+      "Yes"
+     ],
+     [
+      "PvMidIso / PVGndRun (1029)",
+      "PV mid-point low insulation / PV grounded during operation",
+      "Article: 'PV middle point low insulation protection' / 'The PV terminal of the inverter is grounded during operation.'",
+      "Article: check time of day (early morning/rain = moisture, normal); measure PV string to ground resistance (should be above 20k ohm); check N-to-ground; update software; else contact after-sales. Installer task.",
+      "Yes"
+     ],
+     [
+      "GRID-INTF. (1030)",
+      "Grid interference",
+      "Article: 'Grid interference' - '1. Multiple inverters installed in line and the grid voltage wave is non-ideal.'",
+      "Article: '2. Grid filters need to be set... 3. Downstream equipment needs to be changed or repaired. Restart the inverter. If it is still not resolved, please contact the manufacturer's customer service.'",
+      "Yes"
+     ],
+     [
+      "INI-FAULT (1031)",
+      "DSP initializing fault",
+      "Article: 'DSP initializing fault.'",
+      "Article: 'Restart the inverter. If it is still not resolved, please contact the manufacturer's customer service.'",
+      "Yes"
+     ],
+     [
+      "OV-TEM (1032)",
+      "Over temperature",
+      "Article: 'The internal temperature near IGBTs is beyond the limitation. Typically 90C for 1P inverters 115C for 3P inverters'",
+      "Article: '1: Check whether the installation location of the inverter meets the requirements of the user manual. (Installation in direct sunlight?...) 2: Try to lower the ambient temperature 3: Turn off the inverter and restart it after 15 minutes 4: If the error still exists, please contact the manufacturer's customer service.'",
+      "Usually not"
+     ],
+     [
+      "PV ISO-PRO 01/02 (1033)",
+      "Low PV insulation protection",
+      "Article: 'Low PV insulation protection'",
+      "Article: '1. Check the time when the error is reported. If ... early morning or late afternoon or on a rainy day, it is a normal phenomenon... 2. Use the resistance level of the multimeter to measure the resistance of the PV string to the ground, and the resistance should be above 20k ohm... 3. ...measure the resistance of the N wire and the ground wire... 4. ...update the software... 5. If the above is normal, please contact after-sales service.' Installer task.",
+      "Yes"
+     ],
+     [
+      "ILeak-PRO 01-04 (1034)",
+      "Leakage current protection",
+      "Article: '1. Connect each string of components individually in turn to determine whether it is caused by a single string problem... A: Damaged PV wire insulation. B: PV wire is incorrect gauge. C: Faulty transformer downstream. D: Incorrect wiring of RSD. E: Buried AC wires are saturated with Water F: AC Wire is low quality 2. If this error occurs only on a rainy day or in the morning, the leakage current is too large due to the aging of the module...'",
+      "Article: '3. This issue may be solved by remotely upgrading the software. Please contact our customer support team.' Installer task.",
+      "Yes"
+     ],
+     [
+      "RelayChk-FAIL (1035)",
+      "Relay check failed",
+      "Article lists the message and code; solution text not captured in the extracted slice.",
+      "Restart; if persistent contact service (per article pattern for internal faults).",
+      "Yes"
+     ],
+     [
+      "Fan Alarm / Fan_H Alarm",
+      "Internal / external fan fault",
+      "Article: 'Internal Fan fault' / 'External Fan fault'",
+      "Owner: check fan is unobstructed; replacement by installer.",
+      "Yes"
+     ],
+     [
+      "Surge Alarm",
+      "Grid surge recorded",
+      "Article: 'Grid has surge. It is for after-sale information analysis, doesn't affect inverter operation.'",
+      "No action needed.",
+      "Usually not"
+     ],
+     [
+      "VgSpdFail",
+      "AC SPD fault",
+      "Article: 'AC SPD fault'",
+      "Article: 'Restart the inverter. If it is still not resolved, please contact the manufacturer's customer service.'",
+      "Yes"
+     ]
+    ]
+   },
+   {
+    "key": "goodwe",
+    "label": "GoodWe (ES Uniq hybrid; F-codes are shared across GoodWe residential inverters)",
+    "caption": "GoodWe (ES Uniq hybrid; F-codes are shared across GoodWe residential inverters) error codes (GW ES Uniq 8-12K with LX A/U batteries (manual read); on-grid DNS/MS/SDT and other hybrids (ET/EH) use the same F01-F163 numbering per this manual's 'all PV inverters' wording - verify per model)",
+    "head": [
+     "Code",
+     "Meaning",
+     "Likely cause",
+     "What to do",
+     "Call installer?"
+    ],
+    "rows": [
+     [
+      "F01 Grid Power Outage",
+      "No grid",
+      "Manual: '1. Grid power outage. 2. The AC line or AC Switch is disconnected.'",
+      "Manual: '1. The alarm automatically disappears after grid power supply is restored. 2. Check whether the AC line or AC Switch is disconnected.'",
+      "Usually not"
+     ],
+     [
+      "F02 Grid Overvoltage Protection",
+      "Grid voltage too high",
+      "Manual: 'The grid voltage is higher than the allowable range, or the high-voltage Duration exceeds the high voltage ride-through setpoint.'",
+      "Manual: '1. If it occurs occasionally, it may be a short-term grid abnormality. The inverter will resume normal operation after detecting that the grid is normal, and no manual intervention is required. 2. If it occurs frequently, check whether the grid voltage is within the allowable range. If not, contact the local power operator... 3. If it cannot recover for a long time, check whether the AC-side circuit breaker and output cable are connected properly.'",
+      "Usually not"
+     ],
+     [
+      "F03 Grid Undervoltage Protection",
+      "Grid voltage too low",
+      "Manual: 'The grid voltage is lower than the allowable range, or the Low Voltage Duration exceeds the Low Voltage Ride-Through setpoint.'",
+      "Manual: '1. If it occurs occasionally, it may be a short-term grid abnormality. The inverter will resume normal operation after detecting that the grid is normal, and no manual intervention is required. 2. If it occurs frequently, check whether the grid voltage is within the allowable range. If not, contact the local power operator... 3. If it cannot recover for a long time, check whether the AC-side circuit breaker and output cable are connected properly.'",
+      "Usually not"
+     ],
+     [
+      "F04 Grid Rapid Overvoltage Protection",
+      "Sudden grid overvoltage",
+      "Manual: 'Abnormal grid voltage detection or ultra-high voltage triggers the fault.'",
+      "Manual: '1. If it occurs occasionally, it may be a short-term grid abnormality. The inverter will resume normal operation after detecting that the grid is normal, and no manual intervention is required. 2. If it occurs frequently, check whether the grid voltage is within the allowable range. If not, contact the local power operator... 3. If it cannot recover for a long time, check whether the AC-side circuit breaker and output cable are connected properly.'",
+      "Usually not"
+     ],
+     [
+      "F05 10min Overvoltage",
+      "10-minute average grid voltage too high",
+      "Manual: 'Within 10min the grid voltage sliding average exceeds the range specified by safety regulations.'",
+      "Manual: 'Check whether the grid voltage operates at a relatively high voltage for a long time... If not, contact your local power operator.'",
+      "Usually not"
+     ],
+     [
+      "F06 Grid Overfrequency",
+      "Grid frequency too high",
+      "Manual: 'Grid abnormal: The actual grid frequency is higher than the local grid standard requirements.'",
+      "Manual: occasional = auto resume; frequent = check grid frequency, contact power operator; protection point change only with operator consent.",
+      "Usually not"
+     ],
+     [
+      "F07 Grid Underfrequency",
+      "Grid frequency too low",
+      "Manual: 'Grid abnormal: The actual grid frequency is lower than the local grid standard requirements.'",
+      "Same as F06.",
+      "Usually not"
+     ],
+     [
+      "F08 Grid Frequency Instability",
+      "Grid frequency changing too fast",
+      "Manual: 'Grid abnormal: The actual grid frequency change rate does not comply with the local grid standard.'",
+      "Manual: occasional = auto resume; frequent = contact local power operator.",
+      "Usually not"
+     ],
+     [
+      "F09 Anti-islanding Protection",
+      "Grid lost but voltage held by load; inverter stops grid connection",
+      "Manual: 'The grid has been disconnected; the grid voltage is maintained due to the presence of the load. According to safety code Protection requirements, stop grid connection.'",
+      "Manual: occasional = auto resume; frequent = contact local power operator.",
+      "Usually not"
+     ],
+     [
+      "F10 / F11 LVRT / HVRT fault",
+      "Grid voltage abnormal longer than ride-through time",
+      "Manual: 'Grid abnormal: The duration of Grid Voltage Abnormal exceeds the time specified for high/low voltage ride-through.'",
+      "Manual: occasional = auto resume; '2. If it occurs frequently, check whether the grid voltage and frequency are within the allowable range and stable. If not, contact your local power operator.'",
+      "Usually not"
+     ],
+     [
+      "F12 / F13 / F14 / F15 GFCI Protection (30mA / 60mA / 150mA / slow change)",
+      "Leakage current to ground",
+      "Manual: 'The input-to-ground insulation impedance becomes low during inverter operation.'",
+      "Manual: '1. If it occurs occasionally, it may be caused by a sporadic external line abnormality... no manual intervention is required. 2. If it occurs frequently or cannot be recovered for a long time, check whether the PV string-to-ground impedance is too low.' Installer task.",
+      "Yes"
+     ],
+     [
+      "F16 / F17 DCI Protection Level 1 / 2",
+      "DC component in AC output too high",
+      "Manual: 'High DC Component: The DC component of the inverter output current is higher than the allowable range specified by safety regulations or the machine default.'",
+      "Manual: '1. If the abnormality is caused by an external fault, the inverter will automatically resume... 2. If this alarm occurs frequently and affects the normal power generation of the plant, please contact your distributor or after-sales service center.'",
+      "Yes"
+     ],
+     [
+      "F18 Low Insulation Resistance",
+      "PV or battery insulation to ground too low",
+      "Manual: '1. The PV string is short-circuited to protective ground. 2. The environment where the PV strings are installed has been humid for a long time, and the line-to-ground insulation is poor. 3. Battery port line-to-ground Low Insulation Resistance.'",
+      "Manual: '1. Check the impedance of the PV string/battery port to protective ground. If a short circuit occurs, identify the short-circuit point and rectify it. 2. Check whether the inverter's protective ground conductor is correctly connected. 3. If it is confirmed that this impedance is indeed lower than the default value in rainy weather, please use the App to reset the inverter's Insulation Resistance Protection Point.' Installer task.",
+      "Yes"
+     ],
+     [
+      "F19 Grounding Abnormal",
+      "Protective earth not connected",
+      "Manual: '1. The inverter's protective ground conductor is Not Connected. 2. When the output of the PV string is grounded, no isolation transformer is connected on the inverter output side.'",
+      "Manual: '1. Please confirm whether the inverter's protective ground conductor is Not Connected properly. 2. ...confirm whether an isolation transformer is connected on the inverter output side.' Installer task.",
+      "Yes"
+     ],
+     [
+      "F20 Hard Power Limit Protection",
+      "Abnormal load fluctuation",
+      "Manual: 'Abnormal Load Fluctuation'",
+      "Manual: auto resume if external; if frequent contact distributor/after-sales.",
+      "Usually not"
+     ],
+     [
+      "F21 Internal Comm Loss",
+      "Internal DSP communication timeout",
+      "Manual: 'Chip not powered on' / 'Chip firmware version error'",
+      "Manual: 'Disconnect the AC output side switch and DC input side switch, 5 minutes later close the AC output side switch and DC input side switch. If the fault still exists, contact your dealer or after-sales service center.'",
+      "Yes"
+     ],
+     [
+      "F22-F27 Generator faults (waveform, abnormal connection, voltage low/high, frequency low/high)",
+      "Generator input out of range",
+      "Manual (F26/F27): '1. When the generator is Not Connected, this fault will be displayed continuously; 2. When the generator is operating, failure to meet generator safety regulations will trigger this fault.'",
+      "Manual: '1. When the generator is not connected, ignore this fault; 2. It is normal for this fault to occur when the generator has a fault. After the generator recovers, wait for a period of time and the fault will be automatically cleared; 3. This fault will not affect the normal operation of off-grid mode.'",
+      "Usually not"
+     ],
+     [
+      "F28 Parallel I/O Self-check Abnormal",
+      "Parallel communication cable / IO chip",
+      "Manual: 'Parallel communication cable is not securely connected or parallel IO chip is damaged'",
+      "Manual: 'Check whether the parallel communication cable is securely connected, then check whether the IO chip is damaged; if so, replace the IO chip.' Installer task.",
+      "Yes"
+     ],
+     [
+      "F29 Parallel Grid Line Reversed",
+      "Grid wires reversed between parallel units",
+      "Manual: 'Grid wires of some machines are reversed relative to others'",
+      "Manual: 'Reconnect the grid wires.' Installer task.",
+      "Yes"
+     ],
+     [
+      "F30 AC HCT Check Abnormal",
+      "AC current sensor sampling abnormal",
+      "Manual: 'AC sensor sampling abnormal'",
+      "Manual: 'Disconnect the AC output side switch and DC input side switch, 5 minutes later close the AC output side switch and DC input side switch. If the fault still exists, contact your dealer or after-sales service center.'",
+      "Yes"
+     ],
+     [
+      "F31 GFCI HCT Check Abnormal",
+      "Leakage current sensor sampling abnormal",
+      "Manual: 'Leakage current sensor sampling abnormal'",
+      "Manual: 'Disconnect the AC output side switch and DC input side switch, 5 minutes later close the AC output side switch and DC input side switch. If the fault still exists, contact your dealer or after-sales service center.'",
+      "Yes"
+     ],
+     [
+      "F32 Inverter Internal Failure",
+      "Internal fault detected",
+      "Manual: 'Inverter fault detected'",
+      "Manual: 'Disconnect the AC output side switch and DC input side switch, 5 minutes later close the AC output side switch and DC input side switch. If the fault still exists, contact your dealer or after-sales service center.'",
+      "Yes"
+     ],
+     [
+      "F33 Flash R/W Abnormal",
+      "Flash memory read/write error",
+      "Manual: 'flash content has changed; flash lifespan exhausted'",
+      "Manual: '1. Upgrade to the latest firmware; 2. Contact the distributor or after-sales service center.'",
+      "Yes"
+     ],
+     [
+      "F34 AFCI Check Failure",
+      "Arc-fault self-check failed",
+      "Manual: 'During the Arc Failure self-check, the Arc Failure module did not detect an Arc Failure as expected.'",
+      "Manual: 'Disconnect the AC output side switch and DC input side switch, 5 minutes later close the AC output side switch and DC input side switch. If the fault still exists, contact your dealer or after-sales service center.'",
+      "Yes"
+     ],
+     [
+      "F35 Cabinet Overtemperature",
+      "Inverter too hot",
+      "Manual: '1. Insufficient ventilation at the inverter installation location. 2. Ambient Overtemperature. 3. Internal fan operating abnormally.'",
+      "Manual: '1. Check whether the ventilation at the inverter installation location is adequate and whether the ambient temperature exceeds the maximum permissible ambient temperature range. 2. If there is no ventilation or Ambient Overtemperature, improve the ventilation and heat dissipation conditions. 3. If ventilation and ambient temperature are normal, contact your dealer or after-sales service center.'",
+      "Usually not"
+     ],
+     [
+      "F36 Bus Overvoltage",
+      "Internal DC bus voltage too high",
+      "Manual: '1. PV voltage too high; 2. Inverter BUS voltage sampling abnormal; 3. ...isolation performance of the dual-split transformer... is poor...'",
+      "Manual: 'Disconnect the AC output side switch and DC input side switch, 5 minutes later close the AC output side switch and DC input side switch. If the fault still exists, contact your dealer or after-sales service center.'",
+      "Yes"
+     ],
+     [
+      "F37 PV Input Overvoltage",
+      "PV string voltage above inverter maximum",
+      "Manual: 'The PV array configuration is incorrect; too many PV modules are connected in series in the string, causing the string open-circuit voltage to exceed the inverter's maximum operating voltage'",
+      "Manual: 'Check the series configuration of the corresponding PV array string to ensure that the string open-circuit voltage does not exceed the inverter's maximum operating voltage. After the PV array is configured correctly, the inverter alarm automatically disappears.' Installer task.",
+      "Yes"
+     ],
+     [
+      "F38 / F39 PV Continuous Hardware / Software Overcurrent",
+      "PV input overcurrent",
+      "Manual: '1. Improper module configuration 2. Hardware damage'",
+      "Manual: 'Disconnect the AC output side switch and DC input side switch, 5 minutes later close the AC output side switch and DC input side switch. If the fault still exists, contact your dealer or after-sales service center.'",
+      "Yes"
+     ]
+    ]
+   },
+   {
+    "key": "sungrow",
+    "label": "Sungrow SG RS single-phase on-grid",
+    "caption": "Sungrow SG RS single-phase on-grid error codes (SG2.0RS-S / 2.5RS-S / 3.0RS-S / 3.0RS / 3.6RS / 4.0RS / 5.0RS / 6.0RS (manual says the code table covers 'all PV inverters' but only some apply per model))",
+    "head": [
+     "Code",
+     "Meaning",
+     "Likely cause",
+     "What to do",
+     "Call installer?"
+    ],
+    "rows": [
+     [
+      "002, 003, 014, 015 Grid Overvoltage",
+      "Grid voltage too high",
+      "Manual: 'Generally, the inverter will be reconnected to the grid after the grid returns to normal.'",
+      "Manual: 'If the fault occurs repeatedly: 1. Measure the actual grid voltage, and contact the local electric power company for solutions if the grid voltage is higher than the set value. 2. Check whether the protection parameters are appropriately set via the App or the LCD. Modify the overvoltage protection values with the consent of the local electric power operator. 3. Contact Sungrow Customer Service if the preceding causes are ruled out and the fault persists.'",
+      "Usually not"
+     ],
+     [
+      "004, 005 Grid Undervoltage",
+      "Grid voltage too low",
+      "Same auto-reconnect note.",
+      "Manual: measure grid voltage / contact power company; check protection parameters; '3. Check whether the AC cable is firmly in place. 4. Contact Sungrow Customer Service...'",
+      "Usually not"
+     ],
+     [
+      "008 Grid Overfrequency",
+      "Grid frequency too high",
+      "Same auto-reconnect note.",
+      "Manual: '1. Measure the actual grid frequency, and contact the local electric power company for solutions if the grid frequency is beyond the set range. 2. Check whether the protection parameters are appropriately set via the App or the LCD. 3. Contact Sungrow Customer Service...'",
+      "Usually not"
+     ],
+     [
+      "009 Grid Underfrequency",
+      "Grid frequency too low",
+      "Same auto-reconnect note.",
+      "Same as 008.",
+      "Usually not"
+     ],
+     [
+      "010 Grid Power Outage",
+      "No grid",
+      "Same auto-reconnect note.",
+      "Manual: '1. Check whether the grid supplies power reliably. 2. Check whether the AC cable is firmly in place. 3. Check whether the AC cable is connected to the correct terminal (whether the live wire and the N wire are correctly in place). 4. Check whether the AC circuit breaker is connected. 5. Contact Sungrow Customer Service...' Owner: check for outage / AC breaker.",
+      "Usually not"
+     ],
+     [
+      "012 Excess Leakage Current",
+      "Leakage current too high",
+      "Manual: '1. The fault can be caused by poor sunlight or damp environment, and generally the inverter will be reconnected to the grid after the environment is improved.'",
+      "Manual: '2. If the environment is normal, check whether the AC and DC cables are well insulated. 3. Contact Sungrow Customer Service...' Installer task if persistent.",
+      "Yes"
+     ],
+     [
+      "013 Grid Abnormal",
+      "Grid parameter out of range",
+      "Same auto-reconnect note.",
+      "Manual: '1. Measure the actual grid, and contact the local electric power company for solutions if the grid parameter exceeds the set range. 2. Contact Sungrow Customer Service...'",
+      "Usually not"
+     ],
+     [
+      "017 Grid Voltage Imbalance",
+      "Phase voltages differ too much (3-phase)",
+      "Same auto-reconnect note.",
+      "Manual: '1. Measure the actual grid voltage. If grid phase voltages differ greatly, contact the electric power company for solutions. 2. ...modify the grid voltage imbalance parameter through the App or the LCD. 3. Contact Sungrow Customer Service...'",
+      "Usually not"
+     ],
+     [
+      "028, 029, 208, 212, 448-479 PV Reverse Connection Fault",
+      "PV string polarity reversed",
+      "Manual: 'Check whether the corresponding string is of reverse polarity.' (28/29 = PV1/PV2; 448-479 = string 1-32)",
+      "Manual: 'If so, disconnect the DC switch and adjust the polarity when the string current drops below 0.5 A. 2. Contact Sungrow Customer Service if the preceding causes are ruled out and the fault persists.' Installer task.",
+      "Yes"
+     ],
+     [
+      "037 Excessively High Ambient Temperature",
+      "Inverter/module too hot",
+      "Manual: 'Generally, the inverter will resume operation when the internal or module temperature returns to normal.'",
+      "Manual: '1. Check whether the ambient temperature of the inverter is too high; 2. Check whether the inverter is in a well-ventilated place; 3. Check whether the inverter is exposed to direct sunlight. Shield it if so; 4. Check whether the fan is running properly. Replace the fan if not; 5. Contact Sungrow Power Customer Service...'",
+      "Usually not"
+     ],
+     [
+      "039 Low System Insulation Resistance",
+      "PV/battery insulation to ground too low",
+      "Manual: 'Wait for the inverter to return to normal. If the fault occurs repeatedly: 1. Check whether the ISO resistance protection value is excessively high via the app or the LCD... 2. Check the resistance to ground of the string and DC cable... 3. If the cable is normal and the fault occurs on rainy days, check it again when the weather turns fine. 4. If there are batteries, check whether battery cables are damaged...'",
+      "Manual: '5. Contact Sungrow Customer Service if the preceding causes are ruled out and the fault persists.' Installer task.",
+      "Yes"
+     ],
+     [
+      "043 Excessively Low Ambient Temperature",
+      "Too cold to operate",
+      "Manual: 'Stop and disconnect the inverter.'",
+      "Manual: 'Restart the inverter when the ambient temperature rises within the operation temperature range.'",
+      "Usually not"
+     ],
+     [
+      "075 Inverter Parallel Communication Alarm",
+      "Parallel communication cable problem",
+      "Manual: '1. Check whether the communication cable and the terminals are abnormal.'",
+      "Manual: '2. Reconnect the communication cable... 3. Contact Sungrow Customer Service...'",
+      "Yes"
+     ],
+     [
+      "084 Reverse Connection Alarm of the Meter/CT",
+      "Energy meter or CT wired backwards",
+      "Manual: '1. Check if the meter is wrongly connected. 2. Check if the input and output wiring of the meter is reversed.'",
+      "Manual: '3. If the existing system is enabled, please check if the rated power setting of the existing inverter is correct.' Installer task.",
+      "Yes"
+     ],
+     [
+      "088 Electric Arc Fault",
+      "DC arc detected",
+      "Manual: '1. Disconnect the DC power supply, and check whether any DC cable is damaged, the connection terminal or fuse is loose or there is a weak contact.'",
+      "Manual: '2. After performing step 1, reconnect the DC power supply, and clear the electric arc fault via the App or the LCD... 3. Contact Sungrow Customer Service if the fault persists.' Installer task.",
+      "Yes"
+     ],
+     [
+      "106 Grounding Cable Fault",
+      "Earth/ground cable problem",
+      "Manual: '1. Check whether the AC cable is correctly connected. 2. Check whether the insulation between the ground cable and the live wire is normal.'",
+      "Manual: '3. Contact Sungrow Customer Service...' Installer task.",
+      "Yes"
+     ],
+     [
+      "264-283 MPPT Reverse Connection",
+      "MPPT input polarity reversed",
+      "Manual: 'Check whether the corresponding string is of reverse polarity.' (264-279 = string 1-20)",
+      "Disconnect DC switch and correct polarity when string current < 0.5 A; else contact Sungrow. Installer task.",
+      "Yes"
+     ],
+     [
+      "323 Grid Confrontation",
+      "Output port connected to a live grid when it should not be",
+      "Manual: '1. Check whether the output port is connected to actual grid. Disconnect it from the grid if so.'",
+      "Manual: '2. Contact Sungrow Customer Service...' Installer task.",
+      "Yes"
+     ],
+     [
+      "332-363 / 364-395 Boost Capacitor Overvoltage Alarm / Fault",
+      "Boost capacitor overvoltage",
+      "Alarm (332-363): 'The inverter can continue running.'",
+      "Alarm: check wiring/terminals and foreign materials. Fault (364-395): 'Disconnect the AC and DC switches, and disconnect the battery side switches if there are batteries. Close the AC and DC switches in turn 15 minutes later and restart the system. 2. If the fault persists, please contact Sungrow Power Customer Service.'",
+      "Yes"
+     ],
+     [
+      "514 Meter Communication Abnormal Alarm",
+      "Meter not communicating",
+      "Manual: '1. Check whether the communication cable and the terminals are abnormal.'",
+      "Manual: '2. Reconnect the communication cable of the meter. 3. Contact Sungrow Customer Service...'",
+      "Yes"
+     ],
+     [
+      "532-547, 564-579 PV Reverse Connection Alarm",
+      "String polarity reversed (alarm level)",
+      "As PV Reverse Connection Fault; 532-547 = string 1-16, 564-579 = string 17-32.",
+      "Same as 028/029.",
+      "Yes"
+     ],
+     [
+      "548-563, 580-595 PV Abnormal Alarm",
+      "String producing abnormally (shading, loose wiring, fuse)",
+      "Manual: '1. Check whether the corresponding module is sheltered... 2. Check whether the battery board wiring is loose... 3. Check if the DC fuse is damaged.'",
+      "Manual: '4. Contact Sungrow Customer Service if the preceding causes are ruled out and the alarm persists.' Owner can check shading/cleanliness; wiring/fuse is installer work.",
+      "Usually not"
+     ],
+     [
+      "System Fault (007, 011, 016, 019-025, 030-034, 036, 038, 040-042, 044-050, 052-058, 060-069, 085, 087, 092, 093, 100-105, 107-114, 116-124, 200-211, 248-255, 300-322, 324-328, 401-412, 600-603, 605, 608, 612, 616, 620, 622-624, 800, 802, 804, 807, 1096-1122)",
+      "Internal system fault",
+      "Manual: 'System Fault'",
+      "Manual: '1. Wait for the inverter to return to normal. 2. Disconnect the AC and DC switches, and disconnect the battery side switches if there are batteries. Close the AC and DC switches in turn 15 minutes later and restart the system. 3. Contact Sungrow Customer Service if the preceding causes are ruled out and the fault persists.'",
+      "Yes"
+     ],
+     [
+      "System Alarm (059, 070-074, 076-083, 089, 216-218, 220-233, 432-434, 500-513, 515-518, 635-638, 900, 901, 910, 911, 996)",
+      "Non-blocking system alarm",
+      "Manual: '1. The inverter can continue running.'",
+      "Manual: '2. Check whether the related wiring and terminal are abnormal, check whether there are any foreign materials or other environmental abnormalities, and take corresponding corrective measures when necessary. 3. If the fault persists, please contact Sungrow Power Customer Service.'",
+      "Usually not"
+     ]
+    ]
+   },
+   {
+    "key": "fronius",
+    "label": "Fronius (Symo / Primo SnapINverter STATE codes; GEN24 1xxx codes)",
+    "caption": "Fronius (Symo / Primo SnapINverter STATE codes; GEN24 1xxx codes) error codes (Symo Hybrid (online manual read; Class 1-5 codes are shared with Symo/Primo/Galvo SnapINverters per Fronius numbering) and Primo GEN24 7.7/10.0 (GEN24 lists only 1030/1173/1191 in its manual))",
+    "head": [
+     "Code",
+     "Meaning",
+     "Likely cause",
+     "What to do",
+     "Call installer?"
+    ],
+    "rows": [
+     [
+      "STATE 102 (also 103, 105, 106, 107, 108, 112)",
+      "AC (grid) voltage too high; class 1 codes = grid conditions outside permissible range",
+      "Manual: 'AC voltage too high' (102); the row covers 103-112 grid voltage/frequency/islanding conditions.",
+      "Manual: inverter resumes 'Following careful testing and when the grid conditions are within the permissible range again'. Remedy: check grid connections; contact the system fitter if the code keeps recurring.",
+      "Usually not"
+     ],
+     [
+      "STATE 301",
+      "Overcurrent AC",
+      "Manual: 'Overcurrent (AC)'",
+      "Manual: short-term interruption to feed-in, after which the inverter repeats its start-up routine; 'if the code is displayed permanently, notify a Fronius-trained service technician'.",
+      "Yes"
+     ],
+     [
+      "STATE 302",
+      "Overcurrent DC or battery not detected",
+      "Manual: 'Overcurrent DC or battery not detected'",
+      "Same as 301.",
+      "Yes"
+     ],
+     [
+      "STATE 303 / 304",
+      "DC module overtemperature (PV) / AC module overtemperature",
+      "Manual: 'DC module overtemperature PV' / 'AC module overtemperature'",
+      "Manual: 'purge the cooling air openings and heat sink'; the fault is rectified automatically; if the code recurs contact the system fitter.",
+      "Usually not"
+     ],
+     [
+      "STATE 305",
+      "No power being fed in, despite closed relays",
+      "Manual: 'No power being fed in, despite closed relays'",
+      "Manual: fault is rectified automatically; contact the system fitter if it recurs.",
+      "Usually not"
+     ],
+     [
+      "STATE 306 (Power low)",
+      "Not enough PV power to feed in (normal at dawn/dusk)",
+      "Manual: 'There is not enough PV power available for feeding energy into the grid and no power has been requested from the battery.' and 'the status codes STATE 306 (Power low) and STATE 307 (DC low) are displayed routinely at these times of day' and 'do not indicate any kind of fault'.",
+      "Manual: wait for sufficient insolation.",
+      "Usually not"
+     ],
+     [
+      "STATE 307 (DC low)",
+      "DC input voltage too low to feed in (normal at night)",
+      "Manual: 'DC input voltage too low for feeding energy into the grid'",
+      "Manual: wait for sufficient insolation.",
+      "Usually not"
+     ],
+     [
+      "STATE 308",
+      "Intermediate circuit voltage too high",
+      "Manual: 'Intermediate circuit voltage too high'",
+      "Manual: fault is rectified automatically; contact the system fitter if it recurs.",
+      "Usually not"
+     ],
+     [
+      "STATE 401",
+      "Unable to communicate with the power stage set",
+      "Manual: 'Unable to communicate with the power stage set'",
+      "Manual: 'The inverter will automatically attempt to connect again and, if possible, will resume feeding energy into the grid.' If displayed permanently, notify a Fronius-trained service engineer.",
+      "Yes"
+     ],
+     [
+      "STATE 406 / 407 / 408",
+      "DC module temperature sensor faulty (PV) / AC module temperature sensor faulty / DC component measured in the grid too high",
+      "Manual descriptions as listed.",
+      "Manual: contact the system engineer if the code keeps recurring.",
+      "Yes"
+     ],
+     [
+      "STATE 412",
+      "Fixed voltage mode selected instead of MPP voltage mode",
+      "Manual: 'Fixed voltage mode has been selected instead of MPP voltage mode, and the fixed voltage has been set to too low or too high a value.'",
+      "Manual: contact the system engineer if the code keeps recurring (settings change).",
+      "Yes"
+     ],
+     [
+      "STATE 416",
+      "No communication between power stage set and control system",
+      "Manual: 'No communication between power stage set and control system'",
+      "Same as 401.",
+      "Yes"
+     ],
+     [
+      "STATE 457",
+      "Grid relay sticking or neutral conductor ground voltage too high",
+      "Manual: 'Grid relay sticking or neutral conductor ground voltage too high'; 'The inverter is not feeding any energy into the grid.'",
+      "Manual: 'check the grounding, so that the neutral conductor ground voltage is below 30 V.' Installer task.",
+      "Yes"
+     ],
+     [
+      "STATE 459 / 460 / 461",
+      "Error recording the measuring signal for the insulation test / DSP reference voltage out of tolerance / DSP data memory error",
+      "Manual descriptions as listed; inverter not feeding in.",
+      "Notify a service engineer if the code is permanent (table layout inference, see notes).",
+      "Yes"
+     ],
+     [
+      "STATE 502",
+      "Insulation fault on solar modules or on the battery",
+      "Manual: 'Insulation fault on solar modules or on the battery'; warning shown on display.",
+      "Manual: contact the system engineer if the code keeps recurring.",
+      "Yes"
+     ],
+     [
+      "STATE 509",
+      "No energy fed into the grid in the past 24 hours",
+      "Manual: 'No energy fed into the grid in the past 24 hours'",
+      "Manual: acknowledge the code and 'check whether all conditions for feed-in are met, for example whether the modules are covered in snow'. Owner: check DC switch, shading/soiling, then installer.",
+      "Usually not"
+     ],
+     [
+      "STATE 522",
+      "DC low (PV), no PV voltage available",
+      "Manual: 'this message appears overnight if no photovoltaics are connected to the Fronius Symo Hybrid' or when the inverter is in standby mode.",
+      "No action at night; if during the day, check DC switch / call installer.",
+      "Usually not"
+     ],
+     [
+      "STATE 558",
+      "Functional incompatibility between PC boards",
+      "Manual: 'Functional incompatibility (one or more PC boards in the inverter are not compatible with each other...'",
+      "Manual: update the inverter firmware (installer/service).",
+      "Yes"
+     ],
+     [
+      "STATE 567",
+      "Power derating caused by overvoltage",
+      "Manual: power is reduced when grid voltage is excessively high.",
+      "Manual: 'As soon as the grid voltage is back within the permissible range' the fault is rectified automatically; contact the system engineer if it recurs.",
+      "Usually not"
+     ],
+     [
+      "1030 WSD Open (GEN24)",
+      "Wired shutdown chain open",
+      "Manual: 'A device that is connected in the WSD chain has interrupted the signal line (e.g., surge protection device) or the bypass installed ex works as standard has been removed and no trigger device has been installed.'",
+      "Manual: 'If the SPD surge protection device has tripped, the inverter must be repaired by an authorized specialist. OR: Install the bypass installed ex works as standard or a trigger device. OR: Turn the WSD (wired shutdown) switch to position 1 (WSD primary device).'",
+      "Yes"
+     ],
+     [
+      "1173 ArcContinuousFault (GEN24)",
+      "Repeated DC arc detected; max auto-reconnects reached",
+      "Manual: 'An electric arc has been identified on the PV system, and the maximum number of automatic connections within 24 hours has been reached.'",
+      "Manual: confirm the status (sensor press 3 s, or Event Log / Notifications) BUT 'Before the status 1173 - ArcContinuousFault is confirmed, the entire photovoltaic system affected must be checked for any possible damage. Damaged components must be repaired by qualified specialists.'",
+      "Yes"
+     ],
+     [
+      "1191 AfciDataTransfer (GEN24)",
+      "Arc identified (info)",
+      "Manual: 'An electric arc has been identified on the PV system.'",
+      "Manual: 'No action required.'",
+      "Usually not"
+     ]
+    ]
+   },
+   {
+    "key": "voltronic-axpert",
+    "label": "Voltronic Power Axpert (base design of many Pakistani rebrands)",
+    "caption": "Voltronic Power Axpert (base design of many Pakistani rebrands) error codes (Axpert VM III 1.5/3/5 kW (manual read). Other Axpert families (VM IV, MKS IV, MAX, MAX II, King) use the same 01-09 / 51-59 numbering with model-specific additions (MAX II adds 11 PV over voltage, 12 DC/DC over current, 13 battery discharge over current, per voltronicpower.com manual listing - not read). Pakistani brands sold as 'Axpert'-type units (e.g. Inverex Axpert, Ziewnic Axpert) are widely reported to be Voltronic OEM units, but no Inverex/Knox manual was fetched to confirm their code tables.)",
+    "head": [
+     "Code",
+     "Meaning",
+     "Likely cause",
+     "What to do",
+     "Call installer?"
+    ],
+    "rows": [
+     [
+      "Fault 01",
+      "Fan is locked / fan fault",
+      "Manual: 'Fan fault'",
+      "Manual: 'Replace the fan.' Owner: check for dust; replacement by installer.",
+      "Yes"
+     ],
+     [
+      "Fault 02",
+      "Over temperature",
+      "Manual: 'Temperature of internal converter component is over 120C.' / 'Internal temperature of inverter component is over 100C.'",
+      "Manual: 'Check whether the air flow of the unit is blocked or whether the ambient temperature is too high.'",
+      "Usually not"
+     ],
+     [
+      "Fault 03",
+      "Battery voltage is too high",
+      "Manual: 'Battery is over-charged.' / 'The battery voltage is too high.'",
+      "Manual: 'Return to repair center.' / 'Check if spec and quantity of batteries are meet requirements.'",
+      "Yes"
+     ],
+     [
+      "Fault 04",
+      "Battery voltage is too low",
+      "Fault table: 'Battery voltage is too low'. Troubleshooting (startup shutdown): 'The battery voltage is too low (<1.91V/Cell)'",
+      "Manual: '1. Re-charge battery. 2. Replace battery.'",
+      "Usually not"
+     ],
+     [
+      "Fault 05",
+      "Output short circuited (or converter over-temperature)",
+      "Manual: 'Output short circuited or over temperature is detected by internal converter components.'",
+      "Manual: 'Check if wiring is connected well and remove abnormal load.'",
+      "Usually not"
+     ],
+     [
+      "Fault 06 / 58",
+      "Output voltage too high / too low",
+      "Manual: 'Output abnormal (Inverter voltage below than 190Vac or is higher than 260Vac)'",
+      "Manual: '1. Reduce the connected load. 2. Return to repair center'",
+      "Yes"
+     ],
+     [
+      "Fault 07",
+      "Overload time out",
+      "Manual: 'Overload error. The inverter is overload 110% and time is up.' Also: 'If PV input voltage is higher than specification, the output power will be derated... it will cause overload.'",
+      "Manual: 'Reduce the connected load by switching off some equipment.' / 'Reduce the number of PV modules in series or the connected load.'",
+      "Usually not"
+     ],
+     [
+      "Fault 08 / 09 / 53 / 57",
+      "Bus voltage too high / bus soft start failed / inverter soft start failed / current sensor failed",
+      "Manual: 'Internal components failed.'",
+      "Manual: 'Return to repair center.'",
+      "Yes"
+     ],
+     [
+      "Fault 51",
+      "Over current or surge",
+      "Manual: 'Over current or surge.'",
+      "Manual: 'Restart the unit, if the error happens again, please return to repair center.'",
+      "Yes"
+     ],
+     [
+      "Fault 52",
+      "Bus voltage is too low",
+      "Manual: 'Bus voltage is too low.'",
+      "Manual: 'Restart the unit, if the error happens again, please return to repair center.'",
+      "Yes"
+     ],
+     [
+      "Fault 55",
+      "Over DC voltage in AC output / output voltage unbalanced",
+      "Manual: 'Output voltage is unbalanced.'",
+      "Manual: 'Restart the unit, if the error happens again, please return to repair center.'",
+      "Yes"
+     ],
+     [
+      "Fault 59",
+      "PV voltage is over limitation",
+      "Manual: 'PV input voltage is beyond the specification.'",
+      "Manual: 'Reduce the number of PV modules in series.' Installer task.",
+      "Yes"
+     ],
+     [
+      "Warning 01",
+      "Fan is locked when inverter is on (beep three times every second)",
+      "Warning table entry.",
+      "Check fan is free; if it persists call installer.",
+      "Usually not"
+     ],
+     [
+      "Warning 02",
+      "Over temperature (no beep)",
+      "Warning table entry.",
+      "Reduce load, improve ventilation.",
+      "Usually not"
+     ],
+     [
+      "Warning 03",
+      "Battery is over-charged (beep once every second)",
+      "Warning table entry.",
+      "Check charger/battery settings with installer.",
+      "Yes"
+     ],
+     [
+      "Warning 04",
+      "Low battery (beep once every second)",
+      "Warning table entry.",
+      "Recharge battery; reduce load.",
+      "Usually not"
+     ],
+     [
+      "Warning 07",
+      "Overload (beep once every 0.5 second)",
+      "Warning table entry.",
+      "Switch off some loads.",
+      "Usually not"
+     ],
+     [
+      "Warning 10",
+      "Output power derating (beep twice every 3 seconds)",
+      "Warning table entry.",
+      "Reduce load; see Fault 07 note on high PV voltage derating.",
+      "Usually not"
+     ],
+     [
+      "Warning 15",
+      "PV energy is low (beep twice every 3 seconds)",
+      "Warning table entry.",
+      "Normal in low sun; no action in manual.",
+      "Usually not"
+     ],
+     [
+      "Warning 16",
+      "High AC input (>280VAC) during BUS soft start",
+      "Warning table entry.",
+      "Wait for utility voltage to normalise; if frequent, have installer check input voltage.",
+      "Usually not"
+     ],
+     [
+      "Warning 32",
+      "Communication failure between inverter and remote display panel",
+      "Warning table entry.",
+      "Check the display panel cable; installer if persistent.",
+      "Usually not"
+     ],
+     [
+      "Warning (battery icon)",
+      "Battery is not connected / Battery equalization",
+      "Warning table entries (no number; icon only). Troubleshooting: 'Battery is disconnected.' -> relay switches on and off repeatedly",
+      "Manual: 'Check if battery wires are connected well.'",
+      "Usually not"
+     ]
+    ]
+   }
+  ],
+  "lookup": {
+   "label": "Brand",
+   "text_label": "Error code or word",
+   "checked": "2026-10-14",
+   "count": 203
+  },
+  "answer": "Pick your inverter brand and type the code on the display to see what it means, its likely cause and what you can safely do yourself. The tables come from the manufacturers' own manuals for Growatt, Huawei, Solis, GoodWe, Sungrow, Fronius and the Voltronic Axpert design behind many Pakistani hybrid inverters. If the fix needs the DC side opened or wiring changed, the table says to call the installer.",
+  "formula": null,
+  "safety": "PV strings and batteries carry dangerous DC voltage and current. Switch off AC and DC isolators in the order your manual gives before touching anything, and leave any work inside the inverter or on the DC side to a licensed electrician or your installer."
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -39,7 +1699,13 @@
      {
       "@type": "ListItem",
       "position": 2,
-      "name": "Solar Inverter Error Codes",
+      "name": "Troubleshooting Tools",
+      "item": "https://wattlyst.com/troubleshoot/"
+     },
+     {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Solar Inverter Error Codes and What to Do",
       "item": "https://wattlyst.com/troubleshoot/inverter-error-codes/"
      }
     ]
@@ -56,12 +1722,14 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/troubleshoot/inverter-error-codes/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-14",
+    "lastReviewed": "2026-10-14"
    },
    {
     "@type": "WebApplication",
     "@id": "https://wattlyst.com/troubleshoot/inverter-error-codes/#app",
-    "name": "Solar Inverter Error Codes",
+    "name": "Solar Inverter Error Codes and What to Do",
     "url": "https://wattlyst.com/troubleshoot/inverter-error-codes/",
     "description": "Look up your solar inverter error code and see what it means and how to fix it safely. Inverex, Growatt, Nitrox, Crown, Fronus and more.",
     "applicationCategory": "UtilitiesApplication",
@@ -88,6 +1756,60 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/troubleshoot/inverter-error-codes/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "What does a solar inverter error code mean?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "It is the inverter reporting which protection tripped: grid voltage or frequency out of range, PV voltage too high, battery too low or too high, over temperature, overload, insulation fault and so on. Pick your brand above and type the code to read the manufacturer's meaning and remedy."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "My Inverex error code is not in the list. What now?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Inverex manuals were not available from the maker's site when we checked, so its codes are not listed yet. Most Inverex hybrids follow the Voltronic Axpert table; compare the number there and with your printed manual, and send us the manual's fault table through the contact page so we can add it."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Why does my on-grid inverter stop every afternoon with a grid voltage code?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "The street voltage rises when many solar systems export at once and the inverter must disconnect above its limit. Note the voltage shown on the display and report it to your DISCO; an installer can also check the AC cable size and connections, which add to the voltage the inverter sees."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Can I clear an error code by restarting the inverter?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Often, for a one-off trip. Switch off AC then DC, wait about a minute, switch on in the order your manual gives. If the code returns, stop restarting and call the installer."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Which codes mean the battery is the problem?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Battery voltage high or low, battery over-current, battery over-temperature and battery communication (BMS) errors. Check the battery breaker and connections are tight and the battery is not flat; lithium batteries also need the communication cable in place."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Where do these tables come from?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "From the manufacturers' own manuals and support pages, listed under Sources with a link for each brand and the date we last checked them. Rows quote the manual; the owner notes are our plain-English reading of that text."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

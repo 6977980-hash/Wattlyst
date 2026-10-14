@@ -4,7 +4,7 @@
 // Template syntax: {{path}} or {{path|spec}}. path is dotted (in.load_w, out.hours, a.ceiling-fan-ac.running_w).
 // spec: a digit = max decimals (default 2), "hm" = hours as "3 h 24 min", "int" = whole number,
 // "pct" = fraction as percent, "rs" = Pakistani rupees with no decimals, "rs2" = rupees with exactly two
-// decimals (per-unit rates: "Rs 33.10"), "raw" = value as is.
+// decimals (per-unit rates: "Rs 33.10"), "yesno" = a true/false flag as Yes/No, "raw" = value as is.
 
 const nf = new Map();
 function numberFormat(decimals) {
@@ -14,6 +14,7 @@ function numberFormat(decimals) {
 
 export function fmt(value, spec = '2') {
   if (typeof value === 'string') return value;
+  if (typeof value === 'boolean') return spec === 'yesno' ? (value ? 'Yes' : 'No') : '';
   if (typeof value !== 'number' || !Number.isFinite(value)) return '';
   if (spec === 'raw') return String(value);
   if (spec === 'int') return numberFormat(0).format(Math.round(value));
@@ -34,7 +35,7 @@ export function fmt(value, spec = '2') {
   return numberFormat(d).format(value);
 }
 
-export const SPECS = ['raw', 'int', 'pct', 'rs', 'rs2', 'hm'];
+export const SPECS = ['raw', 'int', 'pct', 'rs', 'rs2', 'hm', 'yesno'];
 export const isSpec = (spec) => /^\d$/.test(spec) || SPECS.includes(spec);
 
 export function lookup(ctx, path) {

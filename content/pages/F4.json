@@ -1,0 +1,304 @@
+{
+ "id": "F4",
+ "status": "publish",
+ "template": "tool",
+ "h1": "MEPCO Bill Calculator",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "calc": "bill_total",
+ "fields": [
+  {
+   "name": "units",
+   "label": "Units on the MEPCO bill",
+   "unit": "units",
+   "default": 400,
+   "hint": "Units (kWh) for the month, from the bill or from this and last month's meter readings. A south Punjab summer with one AC is often several hundred."
+  },
+  {
+   "name": "sanctioned_kw",
+   "label": "Sanctioned load",
+   "unit": "kW",
+   "default": 2,
+   "hint": "The kW printed in the connection details of the MEPCO bill. It sets the fixed charge; 5 kW and above is billed on ToU rates instead."
+  },
+  {
+   "name": "protected",
+   "label": "Protected consumer",
+   "type": "checkbox",
+   "default": false,
+   "hint": "Tick only if the bill prints the protected category; a summer AC month over the limit removes it."
+  },
+  {
+   "name": "lifeline",
+   "label": "Lifeline consumer (up to one hundred units)",
+   "type": "checkbox",
+   "default": false,
+   "advanced": true,
+   "hint": "Only for very small consumers whose bill shows the lifeline category."
+  },
+  {
+   "name": "period",
+   "label": "Billing quarter for QTA",
+   "type": "select",
+   "options_from": "qta_periods",
+   "default": "2026-09..2026-11",
+   "advanced": true,
+   "hint": "The quarterly tariff adjustment depends on the quarter the bill falls in."
+  },
+  {
+   "name": "fc_surcharge_per_unit",
+   "label": "FC surcharge",
+   "unit": "Rs per unit",
+   "default": "@data.tariff.addons_secondary.fc_surcharge_per_unit.value",
+   "advanced": true,
+   "hint": "Financing cost surcharge per unit, from the bill. Secondary-source default."
+  },
+  {
+   "name": "fpa_per_unit",
+   "label": "FPA",
+   "unit": "Rs per unit",
+   "placeholder": "From your bill (FPA / FCA)",
+   "advanced": true,
+   "hint": "Monthly fuel price adjustment printed on the MEPCO bill, positive or negative. Leave blank if unknown."
+  },
+  {
+   "name": "gst_pct",
+   "label": "GST",
+   "unit": "%",
+   "default": "@data.tariff.addons_secondary.gst_pct.value",
+   "advanced": true,
+   "hint": "Sales tax applied to the bill subtotal."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "total_rs",
+   "label": "Estimated bill",
+   "spec": "rs"
+  },
+  {
+   "key": "energy_rs",
+   "label": "Energy charge",
+   "spec": "rs"
+  },
+  {
+   "key": "fixed_rs",
+   "label": "Fixed charge",
+   "spec": "rs"
+  },
+  {
+   "key": "fc_rs",
+   "label": "FC surcharge",
+   "spec": "rs"
+  },
+  {
+   "key": "qta_rs",
+   "label": "QTA",
+   "spec": "rs"
+  },
+  {
+   "key": "gst_rs",
+   "label": "GST",
+   "spec": "rs"
+  }
+ ],
+ "answer": "A MEPCO home in Multan or anywhere in south Punjab using {{in.units|int}} units in a summer month as an unprotected consumer on a {{in.sanctioned_kw|int}} kW connection pays about {{out.total_rs|rs}}: {{out.energy_rs|rs}} energy charge at {{out.rate|rs2}} per unit, plus fixed charge, FC surcharge, QTA and GST, before the month's FPA. MEPCO bill = units × slab rate + fixed charge + surcharges, then GST.",
+ "how": "{{out.units|int}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw|int}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct|int}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
+ "key_facts": [
+  "MEPCO, the Multan Electric Power Company, supplies south Punjab from Multan through zones in Khanewal, Sahiwal, Bahawalpur, Bahawalnagar, Muzaffargarh, Dera Ghazi Khan, Rahim Yar Khan and Vehari, and bills the uniform NEPRA A-1 domestic tariff for 2026 rather than a tariff of its own.",
+  "An unprotected MEPCO consumer using {{out.units|int}} units pays {{out.rate|rs2}} on every unit, which is {{out.energy_rs|rs}} of energy charge before the fixed charge, FC surcharge, QTA and GST.",
+  "A south Punjab summer month of {{ex.1.out.units|int}} units with one inverter AC costs about {{ex.1.out.total_rs|rs}}, while the same home's protected winter month of {{ex.0.out.units|int}} units costs about {{ex.0.out.total_rs|rs}}.",
+  "The FPA on a MEPCO bill is a per-unit figure that changes every month; on {{ex.3.out.units|int}} units the FPA entered in the fourth example adds {{ex.3.out.fpa_rs|rs}} before GST, which is why two months with the same units can total differently.",
+  "A MEPCO protected consumer is one whose last {{d.protected_months|int}} bills were all at or under {{d.protected_max_units|int}} units on a connection below {{d.tou_threshold_kw|int}} kW; the first AC month of summer usually ends that run."
+ ],
+ "formula": {
+  "text": "Bill = units × slab rate + fixed Rs/kW × sanctioned kW + (FC + QTA + FPA) × units, then + GST",
+  "lines": [
+   "slab rate = rate of the band the month's units reach (unprotected) or slab-wise (protected)",
+   "fixed = Rs per kW of the band reached × sanctioned kW",
+   "FC, QTA, FPA = per-unit surcharges printed on the MEPCO bill",
+   "GST = percentage of the subtotal"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "What is the MEPCO per unit rate?",
+   "p": [
+    "MEPCO bills the uniform A-1 domestic tariff that NEPRA determined and the Government notified for 2026; there is no separate MEPCO tariff. An unprotected home in Multan, Bahawalpur or Rahim Yar Khan pays the rate of the slab its monthly units reach on every unit: {{out.units|int}} units are all billed at {{out.rate|rs2}}. Each slab is dearer than the one below, and the open-ended top slab is the most expensive.",
+    "Protected consumers are billed slab by slab at two low rates, and lifeline consumers lower still. The table below prints the rate for each slab from the tariff file, and the worked examples cover a winter month, a one-AC summer month, a two-AC summer month and a month with the FPA entered."
+   ]
+  },
+  {
+   "h2": "MEPCO summer vs winter units: why the June bill is many times the January bill",
+   "p": [
+    "South Punjab has long, hot summers, so from May to September the AC does most of the consumption. A split inverter AC of one and a half tons draws up to about {{a.ac-split-1-5ton-inverter.running_w|int}} W and a non-inverter one about {{a.ac-split-1-5ton-non-inverter.running_w|int}} W, so eight to ten hours a night adds a few hundred units. The slab the month reaches then applies to every unit, which is why the summer bill grows faster than the units do.",
+    "In the examples, the winter month of {{ex.0.out.units|int}} units stays protected at {{ex.0.out.total_rs|rs}}, the one-AC summer month of {{ex.1.out.units|int}} units costs {{ex.1.out.total_rs|rs}}, and the two-AC month of {{ex.2.out.units|int}} units costs {{ex.2.out.total_rs|rs}}. Use the AC units calculator linked below to estimate your own summer units before entering them here."
+   ]
+  },
+  {
+   "h2": "What is the FPA line on a MEPCO bill?",
+   "p": [
+    "FPA is the fuel price adjustment: a per-unit amount NEPRA sets each month for all ex-WAPDA DISCOs to pass on the difference between the fuel cost assumed in the tariff and the actual cost. It can be a charge or a credit, and it is applied to the units of the month named on the bill. Because it is set after the month ends, it is the one line this calculator cannot know in advance; copy it from the bill into the FPA field under advanced settings.",
+    "GST is charged on the subtotal including the FPA, so a positive FPA also raises the GST line. The fourth worked example shows the effect on {{ex.3.out.units|int}} units."
+   ]
+  },
+  {
+   "h2": "MEPCO bill check vs this MEPCO bill estimate",
+   "p": [
+    "This page estimates the bill from the units, sanctioned load and category you enter. The official MEPCO bill, with the reference number, due date, arrears and the exact FPA, is on the MEPCO website, which links the online bill check on the PITC portal; enter the reference number from the top of any earlier bill there. Use the estimate to see what each printed line should be and to plan the summer months.",
+    "If a bill looks too high, compare its units with the reading dates first: a cycle longer than a month can push the units into a higher slab. The bill audit tool linked below checks that for you."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "units": 120,
+    "protected": true,
+    "sanctioned_kw": 1
+   },
+   "title": "{{in.units|int}} units, protected consumer in a winter month",
+   "text": "Fans and lights only: energy charge {{out.energy_rs|rs}} slab-wise at protected rates, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated MEPCO bill {{out.total_rs|rs}} before FPA."
+  },
+  {
+   "inputs": {
+    "units": 400
+   },
+   "title": "{{in.units|int}} units, summer month with one inverter AC",
+   "text": "All {{out.units|int}} units at {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated MEPCO bill {{out.total_rs|rs}} before FPA."
+  },
+  {
+   "inputs": {
+    "units": 750,
+    "sanctioned_kw": 3
+   },
+   "title": "{{in.units|int}} units, two ACs in a Multan June, {{in.sanctioned_kw|int}} kW connection",
+   "text": "The month reaches the open-ended top slab, so all {{out.units|int}} units are billed at {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated MEPCO bill {{out.total_rs|rs}} before FPA."
+  },
+  {
+   "inputs": {
+    "units": 400,
+    "fpa_per_unit": 2.5
+   },
+   "title": "{{in.units|int}} units with the month's FPA entered from the bill",
+   "text": "Same {{out.units|int}} units as the second example, energy charge {{out.energy_rs|rs}} and fixed charge {{out.fixed_rs|rs}}, but the FPA adds {{out.fpa_rs|rs}} to the subtotal of {{out.subtotal_rs|rs}} and GST becomes {{out.gst_rs|rs}}. Estimated MEPCO bill {{out.total_rs|rs}} including the FPA."
+  }
+ ],
+ "table": {
+  "caption": "Estimated MEPCO bill by units on a {{in.sanctioned_kw|int}} kW connection with the default surcharges and GST, before FPA; unprotected unless marked",
+  "rows": [
+   {
+    "units": 100
+   },
+   {
+    "units": 150,
+    "protected": true
+   },
+   {
+    "units": 300
+   },
+   {
+    "units": 400
+   },
+   {
+    "units": 500
+   },
+   {
+    "units": 600
+   },
+   {
+    "units": 800
+   }
+  ],
+  "columns": [
+   {
+    "label": "Units",
+    "tpl": "{{out.units|int}} ({{out.category}})"
+   },
+   {
+    "label": "Per unit rate",
+    "tpl": "{{out.rate|rs2}}"
+   },
+   {
+    "label": "Energy",
+    "tpl": "{{out.energy_rs|rs}}"
+   },
+   {
+    "label": "Fixed",
+    "tpl": "{{out.fixed_rs|rs}}"
+   },
+   {
+    "label": "Estimated bill",
+    "tpl": "{{out.total_rs|rs}}"
+   }
+  ]
+ },
+ "mistakes": [
+  "Expecting a MEPCO tariff that differs from Lahore or Karachi. The slab rates are the uniform NEPRA rates; only the monthly FPA is specific to the month.",
+  "Estimating the summer from a winter bill. In south Punjab the AC months reach a far higher slab, and every unit of the month is billed at that slab's rate.",
+  "Ticking protected after the first AC month. One bill over {{d.protected_max_units|int}} units moves the home to unprotected rates for the next {{d.protected_months|int}} months.",
+  "Leaving the FPA blank when the bill shows one. GST is charged on the FPA too, so the estimate without it is low in a month with a positive FPA."
+ ],
+ "faq": [
+  {
+   "q": "How do I get a MEPCO bill estimate from my units?",
+   "a": "Enter the units and the sanctioned load from the bill, tick protected only if the bill says so, and add the FPA from the bill under advanced settings. For {{out.units|int}} units on {{out.sanctioned_kw|int}} kW the estimate is {{out.total_rs|rs}} before FPA."
+  },
+  {
+   "q": "What is the MEPCO per unit rate for a home?",
+   "a": "The uniform NEPRA domestic slab rate for the slab the month reaches: {{out.rate|rs2}} per unit for an unprotected home using {{out.units|int}} units. The table above lists the rate for every slab; protected and lifeline consumers pay less."
+  },
+  {
+   "q": "Is the MEPCO tariff the same as other DISCOs?",
+   "a": "Yes. The 2026 tariff notified as SRO 279(I)/2026 is uniform for all ex-WAPDA DISCOs and K-Electric. A MEPCO bill differs from a LESCO bill for the same units only by the month's FPA."
+  },
+  {
+   "q": "How many units does an AC add to a MEPCO summer bill?",
+   "a": "A one and a half ton inverter AC draws up to about {{a.ac-split-1-5ton-inverter.running_w|int}} W, less once the room is cool, so a night of eight to ten hours adds several units a day and a few hundred a month. The AC units calculator linked below gives a figure for your tonnage and hours."
+  },
+  {
+   "q": "Which districts does MEPCO serve?",
+   "a": "The south Punjab districts around Multan, run through zones in Multan, Khanewal, Sahiwal, Bahawalpur, Bahawalnagar, Muzaffargarh, Dera Ghazi Khan, Rahim Yar Khan and Vehari. If your bill carries another company's name, use that company's calculator."
+  },
+  {
+   "q": "How do I check my MEPCO bill online?",
+   "a": "The MEPCO website links an online bill check on the PITC portal; enter the reference number printed at the top of an earlier bill, digits only, to see the current bill. This calculator estimates the bill from units; it does not fetch your account."
+  },
+  {
+   "q": "Why is my MEPCO bill higher than this estimate?",
+   "a": "The estimate leaves out the FPA unless you enter it, and it cannot see arrears, late payment surcharge or meter rent. A reading cycle longer than a month can also push the units into a higher slab; the bill audit tool checks that."
+  }
+ ],
+ "related": [
+  "F5",
+  "F3",
+  "F1",
+  "F2",
+  "E5"
+ ],
+ "next": "N1",
+ "literal_numbers": [
+  "SRO 279(I)/2026",
+  "2026",
+  "A-1"
+ ],
+ "sources": [
+  {
+   "label": "NEPRA tariff decision and SRO for A-1 domestic consumers (tariff PDF)",
+   "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf"
+  },
+  {
+   "label": "MEPCO official website (introduction, zones, online bill link)",
+   "url": "https://mepco.com.pk/introduction/"
+  },
+  {
+   "label": "MEPCO online bill on the PITC portal",
+   "url": "https://bill.pitc.com.pk/mepcobill"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

@@ -3,15 +3,25 @@
  "type": "appliance",
  "silo": "H",
  "url": "/appliances/ceiling-fan/",
- "h1": "Fan Units Per Hour Pakistan",
+ "h1": "Fan Units per Hour in Pakistan: AC Fan vs DC Inverter Fan",
  "title": "Fan Units per Hour in Pakistan (AC vs DC Fan) | Wattlyst",
  "meta": "How many units does a ceiling fan use per hour in Pakistan? Normal AC fan vs DC inverter fan, with daily units, monthly bill and UPS backup.",
  "primary_keyword": "fan units per hour pakistan",
  "wave": 2,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-13",
+ "published": "2026-10-13",
  "author": "ali-ahmad",
+ "related": [
+  "B5",
+  "E1",
+  "D8",
+  "H5",
+  "H7"
+ ],
+ "next": "B1",
  "parent": "H2",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
@@ -22,11 +32,415 @@
    "url": "/appliances/"
   },
   {
-   "name": "Fan Units Per Hour Pakistan",
+   "name": "Fan Units per Hour in Pakistan: AC Fan vs DC Inverter Fan",
    "url": "/appliances/ceiling-fan/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "How many watts does a ceiling fan use?",
+    "p": [
+     "A normal AC ceiling fan of the usual size sold in Pakistan draws about 80 W at full speed, with real fans ranging from about 65 W to 120 W. Older fans with worn bearings and copper-wound motors run at the top of that range; new energy-saver models from makes such as GFC, Pak Fan or Royal sit near the bottom. The number on the fan's label or box is the one to enter in the calculator.",
+     "The 80 W figure is the running draw. A ceiling fan is a small motor, so it also has a brief starting surge of about 120 W, which matters only when you size a UPS or inverter, not for the bill."
+    ]
+   },
+   {
+    "h2": "DC inverter fan consumption: how many units does a DC fan use per hour?",
+    "p": [
+     "A DC inverter fan, also sold as a BLDC or solar fan, draws about 35 W at full speed, which is 0.035 units per hour. Real models range from about 28 W to 50 W, so an advertised figure at the very bottom of that range usually refers to a low speed setting rather than full speed.",
+     "Over a day of 12 hours that is 0.42 units against 0.96 units for an AC fan, and over a month 12.6 units against 28.8. The saving per fan is modest in rupees; the real case for DC fans is a house with many fans, or fans that run on a UPS or solar system."
+    ]
+   },
+   {
+    "h2": "Fan electricity cost per month in Pakistan",
+    "p": [
+     "One AC ceiling fan on 12 hours a day uses about 28.8 units a month, which is about Rs 1,050 at Rs 36.46 per unit. Four fans on the same schedule, a normal summer load for a small house, use about 115.2 units, about Rs 4,200. A fan left on all day and night uses about 57.6 units a month.",
+     "These are energy charges only. Your bill adds a fixed charge per sanctioned kW, surcharges, quarterly adjustments and tax, and the rate per unit depends on the slab your total units reach, so the fans cost more in a month where they push you into a higher slab. The bill calculator linked below turns units into a full bill."
+    ]
+   },
+   {
+    "h2": "Fan on UPS: how long does a fan run on battery backup?",
+    "p": [
+     "Backup time depends on the battery's usable energy divided by the fan's watts, so a 35 W DC fan runs more than twice as long as an 80 W AC fan on the same battery. A tubular battery should only be used to about 50% of its rating, and a home UPS turns about 85% of the battery's energy into AC power, which is why a battery never gives the hours a simple Ah × volts sum suggests.",
+     "The battery backup time calculator in the next step takes your battery Ah, battery type and the watts from this page and gives the backup in hours and minutes for one fan or a whole room."
+    ]
+   },
+   {
+    "h2": "AC fan vs DC inverter fan: which should you buy?",
+    "p": [
+     "For one or two fans on grid power the difference per fan is a few hundred rupees a month: Rs 1,050 against Rs 459 on the default schedule. For a house with four or more fans, long summers and loadshedding, DC fans pay back faster: four DC fans use about 50.4 units a month against 115.2 for four AC fans, and on a UPS or solar system the lower draw also means a smaller battery and inverter.",
+     "Check the label for the full-speed watts before buying; a DC fan is only a saving if its full-speed draw is well below your old fan's."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "How many units does a ceiling fan use per hour in Pakistan?",
+    "a": "About 0.08 units per hour for a normal 80 W AC ceiling fan and about 0.035 units per hour for a 35 W DC inverter fan. Divide the fan's watts by one thousand for your own fan."
+   },
+   {
+    "q": "How many units does a DC inverter fan use per hour?",
+    "a": "About 0.035 units per hour at full speed, since a typical DC fan draws about 35 W. Over 12 hours a day that is 0.42 units a day and about 12.6 units a month."
+   },
+   {
+    "q": "How much does a fan cost per month?",
+    "a": "One AC ceiling fan on 12 hours a day costs about Rs 1,050 a month in energy charge at Rs 36.46 per unit; a DC fan about Rs 459. Four AC fans cost about Rs 4,200. Your slab rate, fixed charges and tax change the final figure."
+   },
+   {
+    "q": "How long will a fan run on a UPS battery?",
+    "a": "It depends on the battery. A tubular battery gives about 50% of its rating as usable energy and a home UPS converts about 85% of that to AC, so the backup equals the usable watt-hours divided by the fan's watts. A 35 W DC fan runs more than twice as long as an 80 W AC fan. The battery backup time calculator gives the hours for your battery."
+   },
+   {
+    "q": "Does running a fan at low speed save electricity?",
+    "a": "With a DC inverter fan, yes: its draw falls steeply with speed. With an AC fan on a capacitor-type regulator the draw falls somewhat; on an old resistance-type dial regulator much of the difference is wasted as heat in the regulator. Enter your fan's full-speed watts for a safe estimate."
+   },
+   {
+    "q": "How many watts does a pedestal fan use?",
+    "a": "About 75 W for an AC pedestal fan and about 30 W for a DC one; a bracket fan is about 70 W and an exhaust fan about 40 W. Pick them in the calculator to see units and cost."
+   },
+   {
+    "q": "Can I run my fans on solar?",
+    "a": "Yes; fans are the easiest solar load. Four AC fans are about 320 W together and four DC fans about 140 W, so even a small system carries them in daylight. The solar size from appliances calculator sizes the panels, inverter and night battery from your fan list."
+   }
+  ],
+  "key_facts": [
+   "A normal AC ceiling fan draws about 80 W at full speed (65 to 120 W depending on make and age), which is 0.08 units per hour; units per hour = watts ÷ one thousand.",
+   "A DC inverter (BLDC) ceiling fan draws about 35 W at full speed (28 to 50 W), less than half of an AC fan, so it uses about 0.035 units per hour.",
+   "One AC ceiling fan running 12 hours a day uses about 28.8 units in a 30-day month, about Rs 1,050 of energy charge at the Pakistan unprotected rate of Rs 36.46 per unit; a DC fan on the same schedule uses about 12.6 units, about Rs 459.",
+   "Four AC ceiling fans for 12 hours a day add about 115.2 units a month to the bill; four DC inverter fans add about 50.4 units.",
+   "On a UPS the fan's watts set the backup time: a DC fan at 35 W runs more than twice as long as an AC fan at 80 W on the same battery."
+  ],
+  "mistakes": [
+   "Trusting an advertised 'thirty watt' DC fan figure. The low number is often the draw at a low speed; at full speed DC fans range from about 28 W to 50 W, so use the full-speed watts on the label.",
+   "Counting the fans by rooms instead of by hours. A fan in an empty room uses the same 0.08 units per hour as one in use; enter the hours each fan really runs.",
+   "Treating the monthly cost as the whole bill. Rs 1,050 is the energy charge at one slab rate; fixed charges, surcharges, tax and a slab change come on top.",
+   "Sizing a UPS on the fan's running watts alone. A ceiling fan motor starts at about 120 W for a moment, and the UPS must also run the lights and TV with it."
+  ],
+  "sources": [
+   {
+    "label": "ARY News: do inverter fans really consume only 30 watts (AC and DC fan wattage)",
+    "url": "https://arynews.tv/do-inverter-fans-really-consume-only-30-watts-unveiling-the-truth/"
+   },
+   {
+    "label": "NEPRA tariff notification for Ex-WAPDA DISCOs (A-1 domestic energy rates)",
+    "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf"
+   },
+   {
+    "label": "Wattlyst methodology and default values",
+    "url": "/methodology/"
+   }
+  ],
+  "tool": {
+   "calc": "home_load",
+   "module": "load.js",
+   "data_keys": [
+    "cables"
+   ],
+   "appliances": {
+    "ceiling-fan-ac": {
+     "name": "Ceiling fan (AC, 56 inch)",
+     "running_w": 80,
+     "starting_w": 120,
+     "typical_hours_per_day": 12,
+     "load_type": "motor"
+    },
+    "ceiling-fan-dc-inverter": {
+     "name": "Ceiling fan (DC / inverter BLDC)",
+     "running_w": 35,
+     "starting_w": 35,
+     "typical_hours_per_day": 12,
+     "load_type": "electronic"
+    },
+    "pedestal-fan": {
+     "name": "Pedestal fan (AC)",
+     "running_w": 75,
+     "starting_w": 110,
+     "typical_hours_per_day": 8,
+     "load_type": "motor"
+    },
+    "pedestal-fan-dc": {
+     "name": "Pedestal fan (DC / inverter)",
+     "running_w": 30,
+     "starting_w": 30,
+     "typical_hours_per_day": 8,
+     "load_type": "electronic"
+    },
+    "bracket-fan": {
+     "name": "Bracket / wall fan",
+     "running_w": 70,
+     "starting_w": 100,
+     "typical_hours_per_day": 8,
+     "load_type": "motor"
+    },
+    "exhaust-fan": {
+     "name": "Exhaust fan (10-12 inch)",
+     "running_w": 40,
+     "starting_w": 60,
+     "typical_hours_per_day": 4,
+     "load_type": "motor"
+    },
+    "air-cooler": {
+     "name": "Room air cooler (evaporative)",
+     "running_w": 200,
+     "starting_w": 300,
+     "typical_hours_per_day": 8,
+     "load_type": "motor"
+    }
+   },
+   "fields": [
+    {
+     "name": "loads",
+     "label": "Your fans",
+     "type": "loads",
+     "catalog": [
+      {
+       "id": "ceiling-fan-ac",
+       "name": "Ceiling fan (AC, 56 inch)",
+       "category": "cooling"
+      },
+      {
+       "id": "ceiling-fan-dc-inverter",
+       "name": "Ceiling fan (DC / inverter BLDC)",
+       "category": "cooling"
+      },
+      {
+       "id": "pedestal-fan",
+       "name": "Pedestal fan (AC)",
+       "category": "cooling"
+      },
+      {
+       "id": "pedestal-fan-dc",
+       "name": "Pedestal fan (DC / inverter)",
+       "category": "cooling"
+      },
+      {
+       "id": "bracket-fan",
+       "name": "Bracket / wall fan",
+       "category": "cooling"
+      },
+      {
+       "id": "exhaust-fan",
+       "name": "Exhaust fan (10-12 inch)",
+       "category": "cooling"
+      },
+      {
+       "id": "air-cooler",
+       "name": "Room air cooler (evaporative)",
+       "category": "cooling"
+      }
+     ],
+     "default": [
+      {
+       "id": "ceiling-fan-ac",
+       "qty": 1
+      }
+     ],
+     "hint": "Pick the fan type, set how many fans and how many hours a day they run. Change the watts if the label on your fan says otherwise."
+    },
+    {
+     "name": "tariff",
+     "label": "Electricity rate",
+     "unit": "Rs per unit",
+     "default": 36.46,
+     "hint": "Energy rate of your slab from the bill. The default is the Pakistan unprotected rate for 301 to 400 units a month."
+    },
+    {
+     "name": "days",
+     "label": "Days in the month",
+     "unit": "days",
+     "default": 30,
+     "advanced": true,
+     "hint": "Billing days; most bills cover 29 to 31 days."
+    },
+    {
+     "name": "volts",
+     "label": "Supply voltage",
+     "unit": "V",
+     "type": "select",
+     "default": 230,
+     "advanced": true,
+     "options": [
+      [
+       230,
+       "230 V (Pakistan, UK, EU)"
+      ],
+      [
+       120,
+       "120 V (US, Canada)"
+      ]
+     ]
+    },
+    {
+     "name": "pf",
+     "label": "Power factor",
+     "unit": "0 to 1",
+     "default": 0.8,
+     "advanced": true,
+     "hint": "Only affects the amps. Fan motors are about 0.8; leave the default unless the label says otherwise."
+    }
+   ],
+   "fixed_inputs": {},
+   "outputs": [
+    {
+     "key": "running_kw",
+     "label": "Units per hour",
+     "spec": "3",
+     "unit": "kWh",
+     "label_ur": "Fi ghanta units",
+     "value": "0.08"
+    },
+    {
+     "key": "daily_kwh",
+     "label": "Units per day",
+     "spec": "2",
+     "unit": "kWh",
+     "label_ur": "Rozana units",
+     "value": "0.96"
+    },
+    {
+     "key": "monthly_units",
+     "label": "Units per month",
+     "spec": "1",
+     "unit": "kWh",
+     "label_ur": "Mahana units",
+     "value": "28.8"
+    },
+    {
+     "key": "monthly_rs",
+     "label": "Monthly cost (energy charge only)",
+     "spec": "rs",
+     "label_ur": "Mahana kharcha (sirf energy charge)",
+     "value": "Rs 1,050"
+    },
+    {
+     "key": "running_w",
+     "label": "Running watts",
+     "spec": "int",
+     "unit": "W",
+     "label_ur": "Chalne ke watts",
+     "value": "80"
+    }
+   ],
+   "how": {
+    "tpl": "{{out.items|int}} fan(s) × {{out.largest_w|int}} W = {{out.running_w|int}} W running. {{out.running_w|int}} W ÷ one thousand = {{out.running_kw|3}} kWh per hour, and one kWh is one unit on the bill. Units per hour × the hours a day you entered = {{out.daily_kwh|2}} units a day; × {{out.days|int}} days = {{out.monthly_units|1}} units a month; × {{out.tariff|rs2}} per unit = {{out.monthly_rs|rs}} a month for the energy charge, before fixed charges, surcharges and tax.",
+    "text": "1 fan(s) × 80 W = 80 W running. 80 W ÷ one thousand = 0.08 kWh per hour, and one kWh is one unit on the bill. Units per hour × the hours a day you entered = 0.96 units a day; × 30 days = 28.8 units a month; × Rs 36.46 per unit = Rs 1,050 a month for the energy charge, before fixed charges, surcharges and tax."
+   },
+   "submit": "Calculate",
+   "data_checked": [
+    {
+     "label": "Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)",
+     "url": "https://webstore.iec.ch/publication/1878",
+     "checked": "2026-10-13"
+    },
+    {
+     "label": "Appliance running and starting watts (Wattlyst appliance data, sources listed on the appliance list page)",
+     "url": "https://wattlyst.com/appliances/",
+     "checked": "2026-10-13"
+    },
+    {
+     "label": "Typical wattage of Ceiling fan (AC, 56 inch) (ARY News: inverter fan watts)",
+     "url": "https://arynews.tv/do-inverter-fans-really-consume-only-30-watts-unveiling-the-truth/",
+     "checked": "2026-10-13"
+    }
+   ]
+  },
+  "examples": [
+   {
+    "title": "One DC inverter fan, twelve hours a day",
+    "text": "35 W ÷ one thousand = 0.035 units per hour. Over twelve hours that is 0.42 units a day and 12.6 units in 30 days, about Rs 459 at Rs 36.46 per unit."
+   },
+   {
+    "title": "Four AC ceiling fans, twelve hours a day",
+    "text": "4 fans × 80 W = 320 W, or 0.32 units per hour. Over twelve hours that is 3.84 units a day and 115.2 units a month, about Rs 4,200 of energy charge."
+   },
+   {
+    "title": "Four DC inverter fans, twelve hours a day",
+    "text": "4 fans × 35 W = 140 W, or 0.14 units per hour. That is 1.68 units a day and 50.4 units a month, about Rs 1,838: the whole house of fans uses less than two AC fans."
+   },
+   {
+    "title": "One AC fan left on all day and night",
+    "text": "80 W × twenty-four hours = 1.92 units a day, 57.6 units a month, about Rs 2,100 at Rs 36.46 per unit."
+   },
+   {
+    "title": "Cost of one hour of one AC fan",
+    "text": "One hour of one 80 W fan is 0.08 units, which costs Rs 2.92 at Rs 36.46 per unit."
+   }
+  ],
+  "table": {
+   "caption": "Units and cost of AC and DC ceiling fans running 12 hours a day for 30 days at Rs 36.46 per unit (energy charge only)",
+   "head": [
+    "Fan (running watts each)",
+    "Fans",
+    "Total watts",
+    "Units per day",
+    "Units per month",
+    "Monthly cost"
+   ],
+   "rows": [
+    [
+     "80 W",
+     "1",
+     "80 W",
+     "0.96",
+     "28.8",
+     "Rs 1,050"
+    ],
+    [
+     "80 W",
+     "2",
+     "160 W",
+     "1.92",
+     "57.6",
+     "Rs 2,100"
+    ],
+    [
+     "80 W",
+     "4",
+     "320 W",
+     "3.84",
+     "115.2",
+     "Rs 4,200"
+    ],
+    [
+     "35 W",
+     "1",
+     "35 W",
+     "0.42",
+     "12.6",
+     "Rs 459"
+    ],
+    [
+     "35 W",
+     "2",
+     "70 W",
+     "0.84",
+     "25.2",
+     "Rs 919"
+    ],
+    [
+     "35 W",
+     "4",
+     "140 W",
+     "1.68",
+     "50.4",
+     "Rs 1,838"
+    ]
+   ]
+  },
+  "answer": "A normal AC ceiling fan in Pakistan uses about 0.08 units per hour (80 W); a DC inverter fan uses about 0.035 units per hour (35 W). Units per hour equal the fan's watts divided by one thousand. At 12 hours a day one AC fan uses about 28.8 units a month, about Rs 1,050 at Rs 36.46 per unit.",
+  "formula": {
+   "text": "units/h = W ÷ 1000; units/day = units/h × hours; units/month = units/day × days; cost = units/month × rate",
+   "lines": [
+    "W = running watts of the fan × number of fans (from the label, or the typical value for the fan type)",
+    "hours = hours a day the fans run; days = billing days in the month",
+    "rate = energy rate of your slab in Rs per unit (one unit = one kWh)",
+    "amps = W ÷ (V × PF) for the UPS or wiring check"
+   ]
+  },
+  "safety": "A fan on a UPS or solar inverter is a small load, but the UPS itself must be connected to the house wiring with correctly rated cable and a fuse or MCB; have a licensed electrician do that connection and check any old fan wiring or regulator that runs warm."
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -49,7 +463,7 @@
      {
       "@type": "ListItem",
       "position": 3,
-      "name": "Fan Units Per Hour Pakistan",
+      "name": "Fan Units per Hour in Pakistan: AC Fan vs DC Inverter Fan",
       "item": "https://wattlyst.com/appliances/ceiling-fan/"
      }
     ]
@@ -66,12 +480,14 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/appliances/ceiling-fan/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-13",
+    "lastReviewed": "2026-10-13"
    },
    {
     "@type": "WebApplication",
     "@id": "https://wattlyst.com/appliances/ceiling-fan/#app",
-    "name": "Fan Units Per Hour Pakistan",
+    "name": "Fan Units per Hour in Pakistan: AC Fan vs DC Inverter Fan",
     "url": "https://wattlyst.com/appliances/ceiling-fan/",
     "description": "How many units does a ceiling fan use per hour in Pakistan? Normal AC fan vs DC inverter fan, with daily units, monthly bill and UPS backup.",
     "applicationCategory": "UtilitiesApplication",
@@ -98,6 +514,68 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/appliances/ceiling-fan/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "How many units does a ceiling fan use per hour in Pakistan?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "About 0.08 units per hour for a normal 80 W AC ceiling fan and about 0.035 units per hour for a 35 W DC inverter fan. Divide the fan's watts by one thousand for your own fan."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many units does a DC inverter fan use per hour?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "About 0.035 units per hour at full speed, since a typical DC fan draws about 35 W. Over 12 hours a day that is 0.42 units a day and about 12.6 units a month."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How much does a fan cost per month?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "One AC ceiling fan on 12 hours a day costs about Rs 1,050 a month in energy charge at Rs 36.46 per unit; a DC fan about Rs 459. Four AC fans cost about Rs 4,200. Your slab rate, fixed charges and tax change the final figure."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How long will a fan run on a UPS battery?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "It depends on the battery. A tubular battery gives about 50% of its rating as usable energy and a home UPS converts about 85% of that to AC, so the backup equals the usable watt-hours divided by the fan's watts. A 35 W DC fan runs more than twice as long as an 80 W AC fan. The battery backup time calculator gives the hours for your battery."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Does running a fan at low speed save electricity?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "With a DC inverter fan, yes: its draw falls steeply with speed. With an AC fan on a capacitor-type regulator the draw falls somewhat; on an old resistance-type dial regulator much of the difference is wasted as heat in the regulator. Enter your fan's full-speed watts for a safe estimate."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many watts does a pedestal fan use?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "About 75 W for an AC pedestal fan and about 30 W for a DC one; a bracket fan is about 70 W and an exhaust fan about 40 W. Pick them in the calculator to see units and cost."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Can I run my fans on solar?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Yes; fans are the easiest solar load. Four AC fans are about 320 W together and four DC fans about 140 W, so even a small system carries them in daylight. The solar size from appliances calculator sizes the panels, inverter and night battery from your fan list."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

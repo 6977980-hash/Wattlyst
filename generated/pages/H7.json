@@ -3,15 +3,24 @@
  "type": "appliance",
  "silo": "H",
  "url": "/appliances/iron/",
- "h1": "Iron Units Per Hour",
+ "h1": "Iron Units per Hour: Watts, Amps and Monthly Cost",
  "title": "Iron Units per Hour (1000W–2000W) | Wattlyst",
  "meta": "How many units an electric iron uses per hour and per month, and whether a UPS, inverter or solar system can run it safely.",
  "primary_keyword": "iron units per hour",
  "wave": 2,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-13",
+ "published": "2026-10-13",
  "author": "ali-ahmad",
+ "related": [
+  "D4",
+  "B5",
+  "H3",
+  "H5"
+ ],
+ "next": "E1",
  "parent": "H2",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
@@ -22,11 +31,343 @@
    "url": "/appliances/"
   },
   {
-   "name": "Iron Units Per Hour",
+   "name": "Iron Units per Hour: Watts, Amps and Monthly Cost",
    "url": "/appliances/iron/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "How many watts is an electric iron?",
+    "p": [
+     "Irons sold in Pakistan under makes such as Philips, Anex, Panasonic and National are rated from about 1,000 W for a basic dry iron to 2,400 W for a large steam iron. The number is printed on the base plate or the label near the cord. A higher rating heats up faster and holds its temperature through thick cloth; it does not iron for longer at the same cost, because the thermostat cuts the element once the plate is hot.",
+     "Enter the printed watts in the calculator. If you only know the amps, multiply by 230 V: an iron has a power factor of 1, so amps × volts gives the watts directly."
+    ]
+   },
+   {
+    "h2": "Iron electricity consumption per hour and per month",
+    "p": [
+     "A 1,000 W iron uses 1 kWh per hour with the element on, a 1,500 W iron 1.5 units and a 2,000 W steam iron 2 units. In practice the element is off part of the time once the plate is hot, so these are the upper limits for an hour of continuous ironing.",
+     "What matters for the bill is the ironing time. Half an hour a day with a 1,000 W iron is about 15 units a month, about Rs 547 at Rs 36.46 per unit; an hour a day is about 30 units, about Rs 1,094. A whole week's ironing done in one long session costs the same as the same minutes spread over the week."
+    ]
+   },
+   {
+    "h2": "Can a UPS run an iron?",
+    "p": [
+     "Most home UPS units cannot. The UPS must be rated above the iron's 1,000 W in watts, not in VA: a line-interactive UPS delivers only about 60% of its VA rating as watts, so a unit sold as one kVA cannot carry even a basic iron, and a 2,000 W steam iron needs a far larger inverter. An iron also has no soft start; the full 1,000 W arrives the instant the thermostat closes.",
+     "Even where the inverter is big enough, the iron drains the battery fast: at 1 kWh per hour it uses the energy of a dozen ceiling fans, so a tubular battery that runs fans for hours gives only minutes of ironing. The UPS backup time calculator shows the runtime for your battery, and the inverter size calculator shows what the iron needs together with the rest of the house."
+    ]
+   },
+   {
+    "h2": "Iron on a solar inverter",
+    "p": [
+     "A hybrid solar inverter runs an iron without trouble in daylight if its continuous rating is above the iron's watts times the usual 1.25 sizing margin, and the panels are producing more than 1,000 W at the time. Ironing at midday on a sunny day costs nothing from the grid or the battery; ironing after sunset pulls 1 kWh per hour from the battery.",
+     "On a small solar system, iron in the afternoon and avoid switching on the water motor or the microwave at the same moment, so the inverter is not pushed past its rating."
+    ]
+   },
+   {
+    "h2": "Why the iron's amps are simple to work out",
+    "p": [
+     "An iron is a resistive load: a heating element with a thermostat. Its power factor is 1, so its watts equal its VA and the current is just watts divided by volts: 1,000 W ÷ 230 V = 4.3 A, and 2,400 W ÷ 230 V = 10.4 A. That current flows through the plug, the socket and the extension cord, which is why a thin extension cord gets warm under a large steam iron; plug the iron straight into a wall socket on a power circuit."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "How many units does an iron use per hour?",
+    "a": "A 1,000 W iron uses 1 kWh per hour with the element on; a 1,500 W iron 1.5 and a 2,000 W steam iron 2. The thermostat cuts the element part of the time, so an hour of ironing usually uses a little less."
+   },
+   {
+    "q": "How many units does an iron use in a month?",
+    "a": "Half an hour a day with a 1,000 W iron is about 15 units in 30 days, about Rs 547 at Rs 36.46 per unit; an hour a day is about 30 units. A 2,000 W steam iron for half an hour a day is about 30 units."
+   },
+   {
+    "q": "Can a UPS run an iron?",
+    "a": "Only a UPS or inverter whose continuous rating in watts is above the iron's 1,000 W, with some margin. Most home UPS units are sized for fans and lights and give only about 60% of their VA rating as watts, so they trip or shut down. Even a big inverter drains a battery fast at 1 kWh per hour."
+   },
+   {
+    "q": "Can I use an iron on a solar inverter?",
+    "a": "Yes, if the hybrid inverter's continuous watts are above the iron's 1,000 W with the usual 1.25 margin and the panels are producing at the time. Iron in daylight so the 1 kWh per hour comes from the panels, not the battery."
+   },
+   {
+    "q": "How many amps does an iron draw?",
+    "a": "Watts divided by volts, because the power factor of a heating element is 1: a 1,000 W iron draws 4.3 A at 230 V and a 2,400 W iron 10.4 A. Use a socket and cord rated for that current."
+   },
+   {
+    "q": "Does a steam iron use more electricity than a dry iron?",
+    "a": "Per hour, yes: steam irons are rated higher, around 2,000 W against about 1,000 W for a basic dry iron, so 2 kWh per hour against 1. Per shirt the gap is smaller because the hotter plate finishes faster and the thermostat rests the element more."
+   },
+   {
+    "q": "Does the thermostat reduce the iron's consumption?",
+    "a": "Yes. Once the plate reaches the set temperature the element switches off until the plate cools a little, so over an hour the iron draws less than its rated 1,000 W on average. The calculator uses the rated watts, which gives a safe upper estimate; a lower setting for synthetics rests the element longer."
+   }
+  ],
+  "key_facts": [
+   "An electric iron is rated between 1,000 W and 2,400 W; a 1,000 W iron uses 1 kWh per hour with the element on and a 2,000 W steam iron about 2 kWh per hour (units per hour = watts ÷ one thousand).",
+   "The thermostat switches the element off once the plate is hot, so over an hour of ironing the real draw is lower than the rating; the figures here are the upper limit for the rated watts.",
+   "At 230 V a 1,000 W iron draws 4.3 A and a 2,400 W iron 10.4 A, with a power factor of 1 because the element is purely resistive, so watts and VA are equal and there is no starting surge.",
+   "Half an hour of ironing a day with a 1,000 W iron is about 15 units in a 30-day month, about Rs 547 of energy charge at Rs 36.46 per unit; an hour a day is about 30 units.",
+   "A UPS or inverter can run an iron only if its continuous rating in watts, not VA, is above the iron's 1,000 W; a line-interactive UPS delivers only about 60% of its VA rating as watts."
+  ],
+  "mistakes": [
+   "Counting the iron as if it ran all day. It is on for minutes, not hours: half an hour a day is only 15 units a month, far less than a fridge or an AC.",
+   "Buying a UPS by its VA rating to run an iron. A line-interactive UPS gives only about 60% of its VA as watts, below the iron's 1,000 W; compare the UPS's watt rating, not its VA.",
+   "Using a thin extension cord or a multi-plug for the iron. At 4.3 A and more, a light cord heats up; plug the iron into a wall socket on a power circuit.",
+   "Adding the iron to a UPS already running fans and a fridge. The iron's 1,000 W alone can be more than the whole backup load, and it empties the battery in minutes."
+  ],
+  "sources": [
+   {
+    "label": "Virginia Tech Extension 2901-9014: appliance wattage table (DOE), electric iron",
+    "url": "https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html"
+   },
+   {
+    "label": "NEPRA tariff notification for Ex-WAPDA DISCOs (A-1 domestic energy rates)",
+    "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf"
+   },
+   {
+    "label": "Wattlyst methodology and default values",
+    "url": "/methodology/"
+   }
+  ],
+  "tool": {
+   "calc": "home_load",
+   "module": "load.js",
+   "data_keys": [
+    "cables"
+   ],
+   "appliances": {
+    "electric-iron": {
+     "name": "Electric iron (dry / steam)",
+     "running_w": 1000,
+     "starting_w": 1000,
+     "typical_hours_per_day": 0.5,
+     "load_type": "resistive"
+    }
+   },
+   "fields": [
+    {
+     "name": "loads",
+     "label": "Your iron",
+     "type": "loads",
+     "catalog": [
+      {
+       "id": "electric-iron",
+       "name": "Electric iron (dry / steam)",
+       "category": "laundry"
+      }
+     ],
+     "default": [
+      {
+       "id": "electric-iron",
+       "qty": 1
+      }
+     ],
+     "hint": "Enter the watts printed on the iron (1000 to 2400 W) and the hours a day you iron. Most homes iron about half an hour a day."
+    },
+    {
+     "name": "tariff",
+     "label": "Electricity rate",
+     "unit": "Rs per unit",
+     "default": 36.46,
+     "hint": "Energy rate of your slab from the bill. The default is the Pakistan unprotected rate for 301 to 400 units a month."
+    },
+    {
+     "name": "days",
+     "label": "Days in the month",
+     "unit": "days",
+     "default": 30,
+     "advanced": true,
+     "hint": "Billing days; most bills cover 29 to 31 days."
+    },
+    {
+     "name": "volts",
+     "label": "Supply voltage",
+     "unit": "V",
+     "type": "select",
+     "default": 230,
+     "advanced": true,
+     "options": [
+      [
+       230,
+       "230 V (Pakistan, UK, EU)"
+      ],
+      [
+       120,
+       "120 V (US, Canada)"
+      ]
+     ]
+    },
+    {
+     "name": "pf",
+     "label": "Power factor",
+     "unit": "0 to 1",
+     "default": 1,
+     "advanced": true,
+     "hint": "An iron is a resistive heating element, so its power factor is 1: watts and VA are the same."
+    }
+   ],
+   "fixed_inputs": {},
+   "outputs": [
+    {
+     "key": "running_kw",
+     "label": "Units per hour",
+     "spec": "2",
+     "unit": "kWh",
+     "label_ur": "Fi ghanta units",
+     "value": "1"
+    },
+    {
+     "key": "amps",
+     "label": "Current",
+     "spec": "1",
+     "unit": "A",
+     "label_ur": "Current (amp)",
+     "value": "4.3"
+    },
+    {
+     "key": "daily_kwh",
+     "label": "Units per day",
+     "spec": "2",
+     "unit": "kWh",
+     "label_ur": "Rozana units",
+     "value": "0.5"
+    },
+    {
+     "key": "monthly_units",
+     "label": "Units per month",
+     "spec": "1",
+     "unit": "kWh",
+     "label_ur": "Mahana units",
+     "value": "15"
+    },
+    {
+     "key": "monthly_rs",
+     "label": "Monthly cost (energy charge only)",
+     "spec": "rs",
+     "label_ur": "Mahana kharcha (sirf energy charge)",
+     "value": "Rs 547"
+    },
+    {
+     "key": "running_w",
+     "label": "Running watts",
+     "spec": "int",
+     "unit": "W",
+     "label_ur": "Chalne ke watts",
+     "value": "1,000"
+    }
+   ],
+   "how": {
+    "tpl": "{{out.running_w|int}} W ÷ one thousand = {{out.running_kw|2}} kWh per hour with the element on. Units per hour × the ironing hours a day you entered = {{out.daily_kwh|2}} kWh a day; × {{out.days|int}} days = {{out.monthly_units|1}} units a month; × {{out.tariff|rs2}} per unit = {{out.monthly_rs|rs}} for the energy charge, before fixed charges, surcharges and tax. Current = {{out.running_w|int}} W ÷ ({{out.volts|int}} V × {{out.pf|1}} power factor) = {{out.amps|1}} A; an iron has no starting surge, so its peak is the same {{out.peak_w|int}} W.",
+    "text": "1,000 W ÷ one thousand = 1 kWh per hour with the element on. Units per hour × the ironing hours a day you entered = 0.5 kWh a day; × 30 days = 15 units a month; × Rs 36.46 per unit = Rs 547 for the energy charge, before fixed charges, surcharges and tax. Current = 1,000 W ÷ (230 V × 1 power factor) = 4.3 A; an iron has no starting surge, so its peak is the same 1,000 W."
+   },
+   "submit": "Calculate",
+   "data_checked": [
+    {
+     "label": "Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)",
+     "url": "https://webstore.iec.ch/publication/1878",
+     "checked": "2026-10-13"
+    },
+    {
+     "label": "Appliance running and starting watts (Wattlyst appliance data, sources listed on the appliance list page)",
+     "url": "https://wattlyst.com/appliances/",
+     "checked": "2026-10-13"
+    },
+    {
+     "label": "Typical wattage of Electric iron (dry / steam) (Virginia Tech Extension 2901-9014 (DOE appliance wattage table))",
+     "url": "https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html",
+     "checked": "2026-10-13"
+    }
+   ]
+  },
+  "examples": [
+   {
+    "title": "1,200 W dry iron, half an hour a day",
+    "text": "1,200 W ÷ one thousand = 1.2 kWh per hour and 5.2 A at 230 V. Half an hour a day is 0.6 kWh a day and 18 units in 30 days, about Rs 656."
+   },
+   {
+    "title": "1,500 W steam iron, half an hour a day",
+    "text": "1.5 kWh per hour and 6.5 A. Half an hour a day gives 22.5 units a month, about Rs 820 at Rs 36.46 per unit."
+   },
+   {
+    "title": "2,000 W steam iron, half an hour a day",
+    "text": "2,000 W is 2 kWh per hour and 8.7 A at 230 V. Half an hour a day is 30 units a month, about Rs 1,094."
+   },
+   {
+    "title": "1,000 W iron, one hour a day",
+    "text": "An hour a day with the element on is 1 kWh a day and 30 units a month, about Rs 1,094 at Rs 36.46 per unit: twice the default half-hour figure."
+   },
+   {
+    "title": "2,400 W heavy steam iron, half an hour a day",
+    "text": "The largest household irons draw 2.4 kWh per hour and 10.4 A, which is why they warm up a thin extension cord. Half an hour a day is 36 units a month, about Rs 1,313."
+   }
+  ],
+  "table": {
+   "caption": "Electric irons by rating, half an hour a day for 30 days at Rs 36.46 per unit and 230 V",
+   "head": [
+    "Iron rating",
+    "Units per hour",
+    "Current",
+    "Units per month",
+    "Monthly cost"
+   ],
+   "rows": [
+    [
+     "1,000 W",
+     "1",
+     "4.3 A",
+     "15",
+     "Rs 547"
+    ],
+    [
+     "1,200 W",
+     "1.2",
+     "5.2 A",
+     "18",
+     "Rs 656"
+    ],
+    [
+     "1,500 W",
+     "1.5",
+     "6.5 A",
+     "22.5",
+     "Rs 820"
+    ],
+    [
+     "1,800 W",
+     "1.8",
+     "7.8 A",
+     "27",
+     "Rs 984"
+    ],
+    [
+     "2,000 W",
+     "2",
+     "8.7 A",
+     "30",
+     "Rs 1,094"
+    ],
+    [
+     "2,400 W",
+     "2.4",
+     "10.4 A",
+     "36",
+     "Rs 1,313"
+    ]
+   ]
+  },
+  "answer": "An electric iron uses about 1 kWh per hour (one kWh is one unit) when its element is on: units per hour equal watts divided by one thousand, so a 1,000 W iron uses 1 kWh an hour and a 2,000 W steam iron about 2. It draws 4.3 A at 230 V with no starting surge. Half an hour a day is about 15 units a month.",
+  "formula": {
+   "text": "units/h = W ÷ 1000; units/day = units/h × hours; units/month = units/day × days; cost = units/month × rate; I = W ÷ (V × PF), PF = 1",
+   "lines": [
+    "W = rated watts printed on the iron (the element's draw when it is on)",
+    "hours = ironing hours a day; days = billing days in the month",
+    "rate = energy rate of your slab in Rs per unit (one unit = one kWh)",
+    "I = current in amps; V = supply voltage; PF = 1 for a resistive heating element, so W = VA"
+   ]
+  },
+  "safety": "An iron is a high-current heating appliance: use a socket and cable rated for it, never a damaged cord, and switch it off at the socket after use. Have a licensed electrician check any socket or extension that runs warm and any UPS or inverter connection to the house wiring."
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -49,7 +390,7 @@
      {
       "@type": "ListItem",
       "position": 3,
-      "name": "Iron Units Per Hour",
+      "name": "Iron Units per Hour: Watts, Amps and Monthly Cost",
       "item": "https://wattlyst.com/appliances/iron/"
      }
     ]
@@ -66,12 +407,14 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/appliances/iron/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-13",
+    "lastReviewed": "2026-10-13"
    },
    {
     "@type": "WebApplication",
     "@id": "https://wattlyst.com/appliances/iron/#app",
-    "name": "Iron Units Per Hour",
+    "name": "Iron Units per Hour: Watts, Amps and Monthly Cost",
     "url": "https://wattlyst.com/appliances/iron/",
     "description": "How many units an electric iron uses per hour and per month, and whether a UPS, inverter or solar system can run it safely.",
     "applicationCategory": "UtilitiesApplication",
@@ -98,6 +441,68 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/appliances/iron/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "How many units does an iron use per hour?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "A 1,000 W iron uses 1 kWh per hour with the element on; a 1,500 W iron 1.5 and a 2,000 W steam iron 2. The thermostat cuts the element part of the time, so an hour of ironing usually uses a little less."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many units does an iron use in a month?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Half an hour a day with a 1,000 W iron is about 15 units in 30 days, about Rs 547 at Rs 36.46 per unit; an hour a day is about 30 units. A 2,000 W steam iron for half an hour a day is about 30 units."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Can a UPS run an iron?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Only a UPS or inverter whose continuous rating in watts is above the iron's 1,000 W, with some margin. Most home UPS units are sized for fans and lights and give only about 60% of their VA rating as watts, so they trip or shut down. Even a big inverter drains a battery fast at 1 kWh per hour."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Can I use an iron on a solar inverter?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Yes, if the hybrid inverter's continuous watts are above the iron's 1,000 W with the usual 1.25 margin and the panels are producing at the time. Iron in daylight so the 1 kWh per hour comes from the panels, not the battery."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many amps does an iron draw?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Watts divided by volts, because the power factor of a heating element is 1: a 1,000 W iron draws 4.3 A at 230 V and a 2,400 W iron 10.4 A. Use a socket and cord rated for that current."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Does a steam iron use more electricity than a dry iron?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Per hour, yes: steam irons are rated higher, around 2,000 W against about 1,000 W for a basic dry iron, so 2 kWh per hour against 1. Per shirt the gap is smaller because the hotter plate finishes faster and the thermostat rests the element more."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Does the thermostat reduce the iron's consumption?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Yes. Once the plate reaches the set temperature the element switches off until the plate cools a little, so over an hour the iron draws less than its rated 1,000 W on average. The calculator uses the rated watts, which gives a safe upper estimate; a lower setting for synthetics rests the element longer."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

@@ -1,0 +1,380 @@
+{
+ "id": "B4",
+ "status": "publish",
+ "template": "tool",
+ "h1": "Battery Capacity Calculator for Appliances",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "calc": "battery_bank",
+ "fields": [
+  {
+   "name": "load_w",
+   "label": "Appliances on backup",
+   "unit": "W",
+   "default": 500,
+   "hint": "Total running watts of everything the battery must run at once, for example four fans and ten LED bulbs is about 440 W. Get it from the appliance load calculator."
+  },
+  {
+   "name": "hours",
+   "label": "Backup hours",
+   "unit": "h",
+   "default": 4,
+   "hint": "How long the appliances must run on battery, for example the length of your longest loadshedding cut."
+  },
+  {
+   "name": "volts",
+   "label": "Inverter battery voltage",
+   "unit": "V",
+   "type": "select",
+   "default": 24,
+   "options": [
+    [
+     12,
+     "12 V (most 1 kVA UPS)"
+    ],
+    [
+     24,
+     "24 V (2 to 3 kW inverters)"
+    ],
+    [
+     48,
+     "48 V (3 to 6 kW inverters)"
+    ],
+    [
+     12.8,
+     "12.8 V lithium"
+    ],
+    [
+     25.6,
+     "25.6 V lithium"
+    ],
+    [
+     51.2,
+     "51.2 V lithium"
+    ]
+   ],
+   "hint": "From the inverter label. A 12 V inverter takes one battery per string, 24 V two, 48 V four."
+  },
+  {
+   "name": "chemistry",
+   "label": "Battery type",
+   "type": "select",
+   "default": "tubular",
+   "options": [
+    [
+     "tubular",
+     "Tubular / lead-acid"
+    ],
+    [
+     "agm",
+     "AGM / dry"
+    ],
+    [
+     "gel",
+     "Gel"
+    ],
+    [
+     "lifepo4",
+     "Lithium (LiFePO4)"
+    ]
+   ]
+  },
+  {
+   "name": "battery_ah",
+   "label": "Capacity of one battery",
+   "unit": "Ah",
+   "default": 200,
+   "hint": "The Ah on the battery you plan to buy, for example 100, 150 or 200 Ah."
+  },
+  {
+   "name": "battery_v",
+   "label": "Voltage of one battery",
+   "unit": "V",
+   "type": "select",
+   "default": 12,
+   "options": [
+    [
+     12,
+     "12 V (tubular, AGM, gel)"
+    ],
+    [
+     12.8,
+     "12.8 V lithium"
+    ],
+    [
+     25.6,
+     "25.6 V lithium"
+    ],
+    [
+     51.2,
+     "51.2 V lithium"
+    ]
+   ],
+   "hint": "Must divide evenly into the inverter voltage: a 48 V inverter takes 12 V or 51.2 V batteries, not 25.6 V."
+  },
+  {
+   "name": "inverter_eff",
+   "label": "Inverter efficiency",
+   "unit": "0 to 1",
+   "default": "@inverter_eff_ups",
+   "advanced": true,
+   "hint": "As a decimal: 0.85 for a basic UPS, 0.9 for a modern hybrid inverter."
+  },
+  {
+   "name": "dod",
+   "label": "Usable depth of discharge",
+   "unit": "0 to 1",
+   "placeholder": "Auto by battery type",
+   "advanced": true,
+   "hint": "As a decimal: 0.5 means half the battery. Leave blank to use the value for your battery type."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "ah_required",
+   "label": "Battery bank needed",
+   "spec": "int",
+   "unit": "Ah"
+  },
+  {
+   "key": "batteries",
+   "label": "Batteries to buy",
+   "spec": "int"
+  },
+  {
+   "key": "series",
+   "label": "In series per string",
+   "spec": "int"
+  },
+  {
+   "key": "strings",
+   "label": "Strings in parallel",
+   "spec": "int"
+  },
+  {
+   "key": "kwh_required",
+   "label": "Energy stored",
+   "spec": "1",
+   "unit": "kWh"
+  }
+ ],
+ "answer": "To run {{out.load_w|int}} W of appliances for {{out.hours|int}} hours on a {{out.volts|1}} V inverter you need a {{out.ah_required|int}} Ah tubular battery bank: {{out.batteries|int}} batteries of {{out.battery_ah|int}} Ah, {{out.series|int}} in series. Battery Ah = watts × hours ÷ (bank volts × usable depth of discharge × inverter efficiency); batteries = bank Ah ÷ one battery's Ah, times the batteries in series.",
+ "how": "{{out.load_w|int}} W × {{out.hours|int}} h = {{out.kwh_required|1}} kWh of energy must come out of the batteries. Divide by {{out.volts|1}} V, by {{out.dod|pct}} usable depth of discharge and by {{out.inverter_eff|pct}} inverter efficiency: {{out.ah_required|int}} Ah. A {{out.volts|1}} V bank made of {{out.battery_v|1}} V batteries needs {{out.series|int}} in series per string; {{out.ah_required|int}} Ah ÷ {{out.battery_ah|int}} Ah per battery, rounded up, is {{out.strings|int}} string(s) in parallel; {{out.series|int}} × {{out.strings|int}} = {{out.batteries|int}} batteries.",
+ "key_facts": [
+  "Battery bank Ah = appliance watts × backup hours ÷ (bank volts × usable depth of discharge × inverter efficiency); for tubular batteries use {{d.dod_lead_acid|pct}} usable and {{d.inverter_eff_ups|pct}} inverter efficiency, for lithium (LiFePO4) {{d.dod_lifepo4|pct}} usable.",
+  "Number of batteries = (bank Ah ÷ Ah of one battery, rounded up) × (bank volts ÷ volts of one battery): a {{ex.1.out.volts|1}} V inverter needs {{ex.1.out.series|int}} batteries of {{ex.1.out.battery_v|1}} V in series per string, so batteries are bought in sets of {{ex.1.out.series|int}}.",
+  "A {{ex.1.out.load_w|int}} W load for {{ex.1.out.hours|int}} hours on a {{ex.1.out.volts|1}} V inverter needs about {{ex.1.out.ah_required|int}} Ah of tubular battery, which is {{ex.1.out.batteries|int}} batteries of {{ex.1.out.battery_ah|int}} Ah.",
+  "A {{ex.3.out.load_w|int}} W load for {{ex.3.out.hours|int}} hours needs {{ex.2.out.ah_required|int}} Ah of tubular battery at {{ex.2.out.volts|1}} V but only {{ex.3.out.ah_required|int}} Ah of lithium at {{ex.3.out.volts|1}} V, because lithium can safely use {{ex.3.out.dod|pct}} of its capacity against {{d.dod_lead_acid|pct}} for tubular."
+ ],
+ "formula": {
+  "text": "Ah = (P × t) ÷ (V × DoD × η); n = ceil(Ah ÷ Ah_battery) × (V ÷ V_battery)",
+  "lines": [
+   "Ah = battery bank capacity in amp hours",
+   "P = appliance load in watts, t = backup hours",
+   "V = inverter battery voltage, DoD = usable depth of discharge, η = inverter efficiency",
+   "n = number of batteries; ceil = round up to a whole number",
+   "V ÷ V_battery = batteries in series per string; ceil(Ah ÷ Ah_battery) = strings in parallel"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "Battery size calculator: from appliance watts to Ah",
+   "p": [
+    "Start with the appliances, not with the battery. Add the running watts of everything that must stay on during a cut (fans, lights, a TV, a WiFi router) and decide how many hours they must run. The calculator turns that into watt hours, then into the amp hours a bank at your inverter voltage must hold. With the default {{out.load_w|int}} W for {{out.hours|int}} hours that is {{out.kwh_required|1}} kWh and {{out.ah_required|int}} Ah at {{out.volts|1}} V.",
+    "Only part of a battery is usable. A tubular or lead-acid battery lasts far longer when it is drained to about {{d.dod_lead_acid|pct}} of its rating, so the calculator doubles the Ah to allow for that. A lithium (LiFePO4) battery can go to about {{d.dod_lifepo4|pct}}, which is why a lithium bank is smaller for the same backup. The inverter also loses some energy as heat, about {{d.inverter_eff_ups|pct}} efficient for a basic UPS."
+   ]
+  },
+  {
+   "h2": "How many batteries for a 3 kW inverter?",
+   "p": [
+    "Most 3 kW hybrid inverters run on a {{ex.1.out.volts|1}} V bank, which means {{ex.1.out.series|int}} batteries of {{ex.1.out.battery_v|1}} V in series before you have any backup at all. How many sets of {{ex.1.out.series|int}} depends on the load and hours: {{ex.1.out.load_w|int}} W for {{ex.1.out.hours|int}} hours needs {{ex.1.out.ah_required|int}} Ah, which is {{ex.1.out.strings|int}} strings of {{ex.1.out.battery_ah|int}} Ah batteries, {{ex.1.out.batteries|int}} batteries in all.",
+    "The inverter's kW rating tells you how much load it can carry, not how many batteries it needs. A 3 kW inverter running only {{ex.0.out.load_w|int}} W of fans and lights needs far fewer batteries than one carrying {{ex.1.out.load_w|int}} W. Size the bank for the load you actually put on backup, and pick the hours from your longest usual outage."
+   ]
+  },
+  {
+   "h2": "How many batteries do I need for a 1 kW or 5 kW inverter?",
+   "p": [
+    "A 1 kW UPS usually runs on {{ex.0.out.volts|1}} V, one battery per string. For {{ex.0.out.load_w|int}} W over {{ex.0.out.hours|int}} hours it needs {{ex.0.out.ah_required|int}} Ah, which is {{ex.0.out.batteries|int}} batteries of {{ex.0.out.battery_ah|int}} Ah in parallel. Many people instead buy one bigger battery and accept shorter backup; the backup time calculator shows how long one battery lasts.",
+    "A 5 kW inverter is normally {{ex.2.out.volts|1}} V. Running {{ex.2.out.load_w|int}} W for {{ex.2.out.hours|int}} hours (an inverter AC plus fans and lights) needs {{ex.2.out.ah_required|int}} Ah: {{ex.2.out.strings|int}} strings of {{ex.2.out.series|int}} tubular batteries, {{ex.2.out.batteries|int}} in total. At that size a lithium bank is usually the better buy: {{ex.3.out.batteries|int}} batteries of {{ex.3.out.battery_ah|int}} Ah at {{ex.3.out.battery_v|1}} V give {{ex.3.out.load_w|int}} W for {{ex.3.out.hours|int}} hours, with less space, weight and maintenance."
+   ]
+  },
+  {
+   "h2": "Battery sizing for home: series, parallel and the bank voltage",
+   "p": [
+    "Batteries in series add volts and keep the Ah; batteries in parallel add Ah and keep the volts. The inverter fixes the bank voltage, so the series count is fixed too: {{out.volts|1}} V ÷ {{out.battery_v|1}} V = {{out.series|int}} in series. Extra capacity comes only from adding whole strings in parallel, which is why the result rounds up to the next full set and why the calculator reports the batteries in series and the strings separately.",
+    "Keep every battery in a bank the same make, capacity and age. A mixed bank charges unevenly and the weakest battery sets the backup for all of them. If the bank voltage you entered is not a whole multiple of the battery voltage the calculator shows an error rather than a wrong count."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "load_w": 600,
+    "hours": 3,
+    "volts": 12,
+    "battery_ah": 150,
+    "battery_v": 12
+   },
+   "title": "{{out.load_w|int}} W for {{out.hours|int}} hours on a {{out.volts|1}} V UPS",
+   "text": "{{out.load_w|int}} W × {{out.hours|int}} h ÷ ({{out.volts|1}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}}) = {{out.ah_required|int}} Ah. With {{out.battery_ah|int}} Ah batteries that is {{out.strings|int}} in parallel, {{out.batteries|int}} batteries."
+  },
+  {
+   "inputs": {
+    "load_w": 1500,
+    "hours": 4,
+    "volts": 48,
+    "battery_ah": 200,
+    "battery_v": 12
+   },
+   "title": "A 3 kW inverter with {{out.load_w|int}} W on backup",
+   "text": "{{out.load_w|int}} W × {{out.hours|int}} h ÷ ({{out.volts|1}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}}) = {{out.ah_required|int}} Ah. A {{out.volts|1}} V bank takes {{out.series|int}} batteries of {{out.battery_v|1}} V in series; {{out.ah_required|int}} Ah needs {{out.strings|int}} strings of {{out.battery_ah|int}} Ah, so {{out.batteries|int}} tubular batteries."
+  },
+  {
+   "inputs": {
+    "load_w": 2500,
+    "hours": 4,
+    "volts": 48,
+    "battery_ah": 200,
+    "battery_v": 12
+   },
+   "title": "A 5 kW inverter running an inverter AC, fans and lights",
+   "text": "{{out.load_w|int}} W × {{out.hours|int}} h = {{out.kwh_required|1}} kWh. At {{out.volts|1}} V with {{out.dod|pct}} usable and {{out.inverter_eff|pct}} efficiency that is {{out.ah_required|int}} Ah: {{out.strings|int}} strings × {{out.series|int}} in series = {{out.batteries|int}} batteries of {{out.battery_ah|int}} Ah."
+  },
+  {
+   "inputs": {
+    "load_w": 2500,
+    "hours": 4,
+    "volts": 51.2,
+    "chemistry": "lifepo4",
+    "battery_ah": 100,
+    "battery_v": 51.2,
+    "inverter_eff": 0.9
+   },
+   "title": "The same load on lithium at {{out.volts|1}} V",
+   "text": "{{out.load_w|int}} W × {{out.hours|int}} h ÷ ({{out.volts|1}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}}) = {{out.ah_required|int}} Ah. Rack lithium batteries come as {{out.battery_v|1}} V units, so {{out.series|int}} per string and {{out.strings|int}} in parallel: {{out.batteries|int}} batteries of {{out.battery_ah|int}} Ah."
+  }
+ ],
+ "table": {
+  "caption": "Tubular battery bank for common backup loads, using {{out.battery_ah|int}} Ah, {{out.battery_v|1}} V batteries",
+  "rows": [
+   {
+    "load_w": 300,
+    "hours": 4,
+    "volts": 12
+   },
+   {
+    "load_w": 500,
+    "hours": 4,
+    "volts": 12
+   },
+   {
+    "load_w": 500,
+    "hours": 4,
+    "volts": 24
+   },
+   {
+    "load_w": 1000,
+    "hours": 4,
+    "volts": 24
+   },
+   {
+    "load_w": 1500,
+    "hours": 4,
+    "volts": 48
+   },
+   {
+    "load_w": 2000,
+    "hours": 6,
+    "volts": 48
+   }
+  ],
+  "columns": [
+   {
+    "label": "Load",
+    "tpl": "{{out.load_w|int}} W"
+   },
+   {
+    "label": "Hours",
+    "tpl": "{{out.hours|int}} h"
+   },
+   {
+    "label": "Bank",
+    "tpl": "{{out.volts|1}} V"
+   },
+   {
+    "label": "Ah needed",
+    "tpl": "{{out.ah_required|int}} Ah"
+   },
+   {
+    "label": "Batteries",
+    "tpl": "{{out.batteries|int}} ({{out.series|int}} in series × {{out.strings|int}} parallel)"
+   }
+  ]
+ },
+ "mistakes": [
+  "Sizing from the inverter's kW instead of the real load. A 3 kW inverter running {{ex.0.out.load_w|int}} W of fans and lights needs far fewer batteries than one carrying {{ex.1.out.load_w|int}} W.",
+  "Using the whole battery. A tubular battery should give only about {{d.dod_lead_acid|pct}} of its Ah on each cycle; plan on that or it will fail within a year or two.",
+  "Adding Ah across a series string. Four {{out.battery_ah|int}} Ah batteries in series on a {{ex.1.out.volts|1}} V inverter are still {{out.battery_ah|int}} Ah, not four times that; only parallel strings add Ah.",
+  "Mixing old and new batteries in one bank. The oldest battery limits the whole bank and the new ones age faster.",
+  "Forgetting that the bank must recharge. A big bank on a small charger will not be full before the next cut; the loadshedding calculator checks recharge time."
+ ],
+ "safety": "A large battery bank stores a lot of energy and can deliver very high short-circuit current. Use fused, correctly sized DC cables, keep lead-acid batteries ventilated, and have a licensed electrician wire the bank and the inverter to the house.",
+ "faq": [
+  {
+   "q": "How many batteries do I need for a 3 kW inverter?",
+   "a": "A 3 kW inverter is usually {{ex.1.out.volts|1}} V, so {{ex.1.out.series|int}} batteries of {{ex.1.out.battery_v|1}} V in series per string. For {{ex.1.out.load_w|int}} W over {{ex.1.out.hours|int}} hours you need {{ex.1.out.ah_required|int}} Ah, which is {{ex.1.out.strings|int}} strings of {{ex.1.out.battery_ah|int}} Ah: {{ex.1.out.batteries|int}} tubular batteries."
+  },
+  {
+   "q": "How many batteries for a 5 kW inverter?",
+   "a": "On {{ex.2.out.volts|1}} V, sets of {{ex.2.out.series|int}}. Running {{ex.2.out.load_w|int}} W for {{ex.2.out.hours|int}} hours needs {{ex.2.out.ah_required|int}} Ah, so {{ex.2.out.batteries|int}} tubular batteries of {{ex.2.out.battery_ah|int}} Ah, or {{ex.3.out.batteries|int}} lithium batteries of {{ex.3.out.battery_ah|int}} Ah at {{ex.3.out.battery_v|1}} V."
+  },
+  {
+   "q": "What battery do I need for a 1 kW inverter or UPS?",
+   "a": "A {{ex.0.out.volts|1}} V UPS carrying {{ex.0.out.load_w|int}} W for {{ex.0.out.hours|int}} hours needs {{ex.0.out.ah_required|int}} Ah, which is {{ex.0.out.batteries|int}} batteries of {{ex.0.out.battery_ah|int}} Ah in parallel. With one {{out.battery_ah|int}} Ah battery the backup is shorter; the backup time calculator shows by how much."
+  },
+  {
+   "q": "What is the battery capacity formula?",
+   "a": "Battery Ah = load watts × backup hours ÷ (bank volts × usable depth of discharge × inverter efficiency). For tubular use {{d.dod_lead_acid|pct}} usable and {{d.inverter_eff_ups|pct}} efficiency; for lithium {{d.dod_lifepo4|pct}} usable. Then batteries = bank Ah ÷ one battery's Ah, rounded up, × batteries in series."
+  },
+  {
+   "q": "How do I calculate battery Ah for an inverter?",
+   "a": "Multiply the watts on backup by the hours to get watt hours, divide by the inverter's battery voltage to get Ah, then divide by the usable fraction and the inverter efficiency. The default {{out.load_w|int}} W for {{out.hours|int}} hours at {{out.volts|1}} V gives {{out.ah_required|int}} Ah."
+  },
+  {
+   "q": "Is 12 V, 24 V or 48 V better for a battery bank?",
+   "a": "The inverter decides. Higher voltage means lower current for the same watts, thinner cables and less loss, which is why inverters above about 2 kW use {{ex.1.out.volts|1}} V. The energy stored is the same: {{ex.1.out.kwh_required|1}} kWh is {{ex.1.out.ah_required|int}} Ah at {{ex.1.out.volts|1}} V or twice the Ah at half the voltage."
+  },
+  {
+   "q": "How many lithium batteries do I need compared with tubular?",
+   "a": "Fewer Ah, because lithium uses about {{d.dod_lifepo4|pct}} of its capacity against {{d.dod_lead_acid|pct}} for tubular. For {{ex.3.out.load_w|int}} W over {{ex.3.out.hours|int}} hours a lithium bank needs {{ex.3.out.ah_required|int}} Ah at {{ex.3.out.volts|1}} V, while tubular needs {{ex.2.out.ah_required|int}} Ah at {{ex.2.out.volts|1}} V."
+  },
+  {
+   "q": "Can I add one more battery later for more backup?",
+   "a": "Only as a whole string: a {{out.volts|1}} V bank of {{out.battery_v|1}} V batteries grows in sets of {{out.series|int}}, and the new set should match the old batteries in make, Ah and age. On a {{ex.0.out.volts|1}} V UPS you can add one battery at a time in parallel."
+  }
+ ],
+ "related": [
+  "B1",
+  "B5",
+  "D4",
+  "H9",
+  "C7",
+  "E2"
+ ],
+ "next": "D4",
+ "literal_numbers": [
+  "LiFePO4",
+  "3 kW",
+  "1 kW",
+  "5 kW",
+  "2 kW",
+  "12 V, 24 V or 48 V"
+ ],
+ "sources": [
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

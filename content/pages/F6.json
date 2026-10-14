@@ -1,0 +1,316 @@
+{
+ "id": "F6",
+ "status": "publish",
+ "template": "tool",
+ "h1": "FESCO Bill Calculator",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "calc": "bill_total",
+ "fields": [
+  {
+   "name": "units",
+   "label": "Units on the FESCO bill",
+   "unit": "units",
+   "default": 350,
+   "hint": "Units (kWh) for the month, from the bill or from this and last month's meter readings."
+  },
+  {
+   "name": "sanctioned_kw",
+   "label": "Sanctioned load",
+   "unit": "kW",
+   "default": 2,
+   "hint": "The kW printed in the connection details of the FESCO bill. Every kW adds to the fixed charge; 5 kW and above is billed on ToU rates instead."
+  },
+  {
+   "name": "protected",
+   "label": "Protected consumer",
+   "type": "checkbox",
+   "default": false,
+   "hint": "Tick only if the bill prints the protected category: six months in a row under the limit on a small connection."
+  },
+  {
+   "name": "lifeline",
+   "label": "Lifeline consumer (up to one hundred units)",
+   "type": "checkbox",
+   "default": false,
+   "advanced": true,
+   "hint": "Only for very small consumers whose bill shows the lifeline category."
+  },
+  {
+   "name": "period",
+   "label": "Billing quarter for QTA",
+   "type": "select",
+   "options_from": "qta_periods",
+   "default": "2026-09..2026-11",
+   "advanced": true,
+   "hint": "The quarterly tariff adjustment depends on the quarter the bill falls in."
+  },
+  {
+   "name": "fc_surcharge_per_unit",
+   "label": "FC surcharge",
+   "unit": "Rs per unit",
+   "default": "@data.tariff.addons_secondary.fc_surcharge_per_unit.value",
+   "advanced": true,
+   "hint": "Financing cost surcharge per unit, from the bill. Secondary-source default."
+  },
+  {
+   "name": "fpa_per_unit",
+   "label": "FPA",
+   "unit": "Rs per unit",
+   "placeholder": "From your bill (FPA / FCA)",
+   "advanced": true,
+   "hint": "Monthly fuel price adjustment printed on the FESCO bill, positive or negative. Leave blank if unknown."
+  },
+  {
+   "name": "gst_pct",
+   "label": "GST",
+   "unit": "%",
+   "default": "@data.tariff.addons_secondary.gst_pct.value",
+   "advanced": true,
+   "hint": "Sales tax applied to the bill subtotal."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "total_rs",
+   "label": "Estimated bill",
+   "spec": "rs"
+  },
+  {
+   "key": "energy_rs",
+   "label": "Energy charge",
+   "spec": "rs"
+  },
+  {
+   "key": "fixed_rs",
+   "label": "Fixed charge",
+   "spec": "rs"
+  },
+  {
+   "key": "fc_rs",
+   "label": "FC surcharge",
+   "spec": "rs"
+  },
+  {
+   "key": "qta_rs",
+   "label": "QTA",
+   "spec": "rs"
+  },
+  {
+   "key": "gst_rs",
+   "label": "GST",
+   "spec": "rs"
+  }
+ ],
+ "answer": "A FESCO home in Faisalabad using {{in.units|int}} units in a month as an unprotected consumer on a {{in.sanctioned_kw|int}} kW connection pays about {{out.total_rs|rs}}: {{out.energy_rs|rs}} energy charge at {{out.rate|rs2}} per unit, {{out.fixed_rs|rs}} fixed charge for the sanctioned load, plus FC surcharge, QTA and GST, before the month's FPA. FESCO bill = units × slab rate + fixed charge + surcharges, then GST.",
+ "how": "{{out.units|int}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw|int}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct|int}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
+ "key_facts": [
+  "FESCO, the Faisalabad Electric Supply Company, supplies Faisalabad, Sargodha, Mianwali, Khushab, Jhang, Bhakkar, Toba Tek Singh and Chiniot from its head office in Faisalabad and bills the uniform NEPRA A-1 domestic tariff for 2026, not a tariff of its own.",
+  "An unprotected FESCO consumer using {{out.units|int}} units pays {{out.rate|rs2}} on every unit, which is {{out.energy_rs|rs}} of energy charge before the fixed charge, FC surcharge, QTA and GST.",
+  "The fixed charge is per kW of sanctioned load at the rate of the slab reached: {{ex.0.out.units|int}} units on {{ex.0.out.sanctioned_kw|int}} kW carry a fixed charge of {{ex.0.out.fixed_rs|rs}}, and the same units on {{ex.1.out.sanctioned_kw|int}} kW carry {{ex.1.out.fixed_rs|rs}}, before GST.",
+  "A FESCO protected consumer is one whose last {{d.protected_months|int}} bills were all at or under {{d.protected_max_units|int}} units on a connection below {{d.tou_threshold_kw|int}} kW; a Faisalabad summer month with an AC usually ends that run.",
+  "GST at {{out.gst_pct|int}}% is charged on the energy charge, fixed charge and surcharges together and adds {{out.gst_rs|rs}} to a {{out.units|int}} unit FESCO bill; the surcharge and GST defaults are secondary-source figures that change."
+ ],
+ "formula": {
+  "text": "Bill = units × slab rate + fixed Rs/kW × sanctioned kW + (FC + QTA + FPA) × units, then + GST",
+  "lines": [
+   "slab rate = rate of the band the month's units reach (unprotected) or slab-wise (protected)",
+   "fixed = Rs per kW of the band reached × sanctioned kW",
+   "FC, QTA, FPA = per-unit surcharges printed on the FESCO bill",
+   "GST = percentage of the subtotal"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "What is the FESCO per unit rate?",
+   "p": [
+    "FESCO bills the uniform A-1 domestic tariff that NEPRA determined and the Government notified for 2026; it sets none of the rates itself. An unprotected home in Faisalabad, Sargodha, Jhang, Mianwali, Khushab, Bhakkar, Toba Tek Singh or Chiniot pays the rate of the slab its monthly units reach on every unit: {{out.units|int}} units are all billed at {{out.rate|rs2}}. Protected consumers pay two low rates slab by slab, and lifeline consumers less again.",
+    "What this page adds to the per unit rate is the fixed charge, which many FESCO consumers overlook. It is charged per kW of sanctioned load, and the rate per kW rises with the slab the month reaches, so the table below is built around sanctioned load rather than units alone."
+   ]
+  },
+  {
+   "h2": "How does the sanctioned load change a FESCO bill?",
+   "p": [
+    "Two homes using the same {{ex.0.out.units|int}} units can get different bills because of the kW printed in their connection details. On {{ex.0.out.sanctioned_kw|int}} kW the fixed charge is {{ex.0.out.fixed_rs|rs}} and the bill comes to {{ex.0.out.total_rs|rs}}; on {{ex.1.out.sanctioned_kw|int}} kW the fixed charge is {{ex.1.out.fixed_rs|rs}} and the bill {{ex.1.out.total_rs|rs}}. The fixed charge is also inside the GST base, so the gap grows a little further after tax.",
+    "A sanctioned load of {{d.tou_threshold_kw|int}} kW or more moves the connection to the time-of-use tariff with peak and off-peak rates and a fixed charge on the higher of half the sanctioned load or the recorded maximum demand, which this calculator does not model. If the bill was raised after a load extension for an AC or a motor, check the kW it now prints."
+   ]
+  },
+  {
+   "h2": "FESCO summer vs winter bills in Faisalabad",
+   "p": [
+    "Faisalabad summers are long and hot, and the AC decides the bill from May to September. A one and a half ton inverter split draws up to about {{a.ac-split-1-5ton-inverter.running_w|int}} W, so a few hundred units a month is normal with one unit running through the night. In the examples, a summer month of {{ex.2.out.units|int}} units on {{ex.2.out.sanctioned_kw|int}} kW costs {{ex.2.out.total_rs|rs}}, while a winter month of {{ex.3.out.units|int}} protected units costs {{ex.3.out.total_rs|rs}}.",
+    "Because the summer months break the protected run, the lower rates come back only after {{d.protected_months|int}} bills in a row under {{d.protected_max_units|int}} units. The AC units calculator linked below estimates the units for your tonnage and hours; enter the result here to see the FESCO bill."
+   ]
+  },
+  {
+   "h2": "FESCO bill check: the printed lines and the reference number",
+   "p": [
+    "This FESCO bill estimate works from the figures you type and does not fetch your account. On the printed bill, take the units from the difference between the two meter readings, the sanctioned load from the connection details, the category from the tariff line and the FPA from its own line. The official bill, with the reference number, due date and arrears, is on the FESCO website, which links the duplicate bill on the PITC portal; enter the reference number from the top of an earlier bill there.",
+    "If the reading dates on the bill cover more than a month, the units may have crossed a slab because of the long cycle; the bill audit tool linked below checks that."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "units": 350,
+    "sanctioned_kw": 2
+   },
+   "title": "{{in.units|int}} units on a {{in.sanctioned_kw|int}} kW connection",
+   "text": "{{out.units|int}} × {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated FESCO bill {{out.total_rs|rs}} before FPA."
+  },
+  {
+   "inputs": {
+    "units": 350,
+    "sanctioned_kw": 4
+   },
+   "title": "Same {{in.units|int}} units on a {{in.sanctioned_kw|int}} kW connection",
+   "text": "The energy charge is unchanged at {{out.energy_rs|rs}}, but the fixed charge rises to {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW. With FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}} and GST {{out.gst_rs|rs}} the estimated FESCO bill is {{out.total_rs|rs}} before FPA."
+  },
+  {
+   "inputs": {
+    "units": 550,
+    "sanctioned_kw": 3
+   },
+   "title": "{{in.units|int}} units, a Faisalabad summer month with an AC, {{in.sanctioned_kw|int}} kW",
+   "text": "{{out.units|int}} × {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated FESCO bill {{out.total_rs|rs}} before FPA."
+  },
+  {
+   "inputs": {
+    "units": 150,
+    "sanctioned_kw": 1,
+    "protected": true
+   },
+   "title": "{{in.units|int}} units, protected consumer in a winter month, {{in.sanctioned_kw|int}} kW",
+   "text": "Energy charge {{out.energy_rs|rs}} slab-wise at protected rates, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated FESCO bill {{out.total_rs|rs}} before FPA."
+  }
+ ],
+ "table": {
+  "caption": "Estimated FESCO bill by units and sanctioned load with the default surcharges and GST, before FPA; unprotected unless marked",
+  "rows": [
+   {
+    "units": 200,
+    "sanctioned_kw": 1,
+    "protected": true
+   },
+   {
+    "units": 350,
+    "sanctioned_kw": 1
+   },
+   {
+    "units": 350,
+    "sanctioned_kw": 2
+   },
+   {
+    "units": 350,
+    "sanctioned_kw": 3
+   },
+   {
+    "units": 350,
+    "sanctioned_kw": 4
+   },
+   {
+    "units": 500,
+    "sanctioned_kw": 2
+   },
+   {
+    "units": 500,
+    "sanctioned_kw": 4
+   },
+   {
+    "units": 700,
+    "sanctioned_kw": 4
+   }
+  ],
+  "columns": [
+   {
+    "label": "Units",
+    "tpl": "{{out.units|int}} ({{out.category}})"
+   },
+   {
+    "label": "Sanctioned load",
+    "tpl": "{{out.sanctioned_kw|int}} kW"
+   },
+   {
+    "label": "Per unit rate",
+    "tpl": "{{out.rate|rs2}}"
+   },
+   {
+    "label": "Fixed",
+    "tpl": "{{out.fixed_rs|rs}}"
+   },
+   {
+    "label": "Energy",
+    "tpl": "{{out.energy_rs|rs}}"
+   },
+   {
+    "label": "Estimated bill",
+    "tpl": "{{out.total_rs|rs}}"
+   }
+  ]
+ },
+ "mistakes": [
+  "Looking for a FESCO tariff of its own. FESCO bills the uniform NEPRA domestic slabs; only the monthly FPA is specific to the month.",
+  "Entering one kW when the bill prints more. After a load extension for an AC or a motor the fixed charge is per kW of the new sanctioned load, every month.",
+  "Ticking protected after the first summer month. One bill over {{d.protected_max_units|int}} units moves the home to unprotected rates for the next {{d.protected_months|int}} months.",
+  "Using this calculator for a connection of {{d.tou_threshold_kw|int}} kW or more. Those are billed on ToU peak and off-peak rates with a different fixed charge."
+ ],
+ "faq": [
+  {
+   "q": "How do I get a FESCO bill estimate from my units?",
+   "a": "Enter the units and the sanctioned load from the bill, tick protected only if the bill prints that category, and add the FPA from the bill under advanced settings. For {{out.units|int}} units on {{out.sanctioned_kw|int}} kW the estimate is {{out.total_rs|rs}} before FPA."
+  },
+  {
+   "q": "What is the FESCO per unit rate for a home?",
+   "a": "The uniform NEPRA domestic slab rate for the slab the month reaches: {{out.rate|rs2}} per unit for an unprotected home using {{out.units|int}} units. Protected and lifeline consumers pay less, and the fixed charge per kW is added on top."
+  },
+  {
+   "q": "Is the FESCO tariff different from LESCO or MEPCO?",
+   "a": "No. The 2026 tariff notified as SRO 279(I)/2026 is uniform for all ex-WAPDA DISCOs and K-Electric. For the same units and sanctioned load a FESCO bill differs from a LESCO bill only by the month's FPA."
+  },
+  {
+   "q": "What is the fixed charge on a FESCO bill?",
+   "a": "A monthly charge per kW of sanctioned load, at a rate that depends on the slab the month reaches. For {{out.units|int}} units on {{out.sanctioned_kw|int}} kW it is {{out.fixed_rs|rs}}; the table above shows how it grows with each extra kW."
+  },
+  {
+   "q": "Which districts does FESCO serve?",
+   "a": "Faisalabad, Sargodha, Mianwali, Khushab, Jhang, Bhakkar, Toba Tek Singh and Chiniot, from its head office in Faisalabad. If your bill carries another company's name, use that company's calculator."
+  },
+  {
+   "q": "How do I check my FESCO bill online?",
+   "a": "The FESCO website links a duplicate bill page on the PITC portal; enter the reference number printed at the top of an earlier bill to see the current bill and due date. This calculator estimates the bill from units; it does not fetch your account."
+  },
+  {
+   "q": "Why does my FESCO bill differ from this estimate?",
+   "a": "The estimate leaves out the FPA unless you enter it, and it cannot see arrears, late payment surcharge or meter rent. Check that the sanctioned kW you entered matches the bill, and if the reading dates cover more than a month, run the bill audit tool."
+  }
+ ],
+ "related": [
+  "F7",
+  "F5",
+  "F1",
+  "F2",
+  "E5"
+ ],
+ "next": "N1",
+ "literal_numbers": [
+  "SRO 279(I)/2026",
+  "2026",
+  "A-1"
+ ],
+ "sources": [
+  {
+   "label": "NEPRA tariff decision and SRO for A-1 domestic consumers (tariff PDF)",
+   "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf"
+  },
+  {
+   "label": "FESCO official website, area of responsibility (districts served)",
+   "url": "https://fesco.com.pk/area_of_responsibility"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

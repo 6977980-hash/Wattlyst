@@ -1,0 +1,273 @@
+{
+ "id": "N5",
+ "status": "publish",
+ "template": "tool",
+ "h1": "Inverter AC Heating Cost vs Gas and Electric Heaters",
+ "author": "ali-ahmad",
+ "published": "2026-10-13",
+ "reviewed": "2026-10-13",
+ "calc": "heating_cost",
+ "fields": [
+  {
+   "name": "q_kw",
+   "label": "Heat needed",
+   "unit": "kW",
+   "default": 2,
+   "hint": "Heat output, not electrical input. A small bedroom needs about 1 to 1.5 kW, a large living room 3 kW or more. A 1 ton AC gives up to about 3.5 kW of heat, a 1.5 ton about 5 kW."
+  },
+  {
+   "name": "cop",
+   "label": "AC heating COP (typical value, edit for your unit)",
+   "unit": "×",
+   "default": "@heat_pump_cop",
+   "hint": "Coefficient of performance: units of heat per unit of electricity. About 3 on a mild day near 7 °C outdoors; closer to 2 on a frosty night. Your AC's spec sheet lists its heating COP."
+  },
+  {
+   "name": "tariff",
+   "label": "Electricity rate",
+   "unit": "Rs per unit",
+   "default": "@data.tariff.unprotected.3.rate",
+   "hint": "Energy rate of your slab from the bill. The default is the Pakistan unprotected rate for 301 to 400 units a month."
+  },
+  {
+   "name": "gas_price",
+   "label": "Gas price",
+   "unit": "Rs per cubic metre",
+   "default": 50,
+   "hint": "From your gas bill. Bills quote Rs per MMBtu; one MMBtu is about 28 cubic metres, so divide by 28 (Rs 1,400 per MMBtu is about Rs 50 per m³). Edit this: it changes with your slab."
+  },
+  {
+   "name": "eta_gas",
+   "label": "Gas heater efficiency",
+   "unit": "0 to 1",
+   "default": "@gas_heater_eff",
+   "advanced": true,
+   "hint": "Share of the gas's heat that reaches the room. About 0.8 for a flued heater; an open radiant heater in a draughty room is lower."
+  },
+  {
+   "name": "cv_mj_m3",
+   "label": "Gas heating value",
+   "unit": "MJ per m³",
+   "default": "@gas_cv_mj_m3",
+   "advanced": true,
+   "hint": "Energy in one cubic metre of pipeline gas, about 37 MJ. Lower for weak winter gas pressure."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "ac_rs_per_h",
+   "label": "Inverter AC in heat mode",
+   "spec": "rs",
+   "unit": "per hour"
+  },
+  {
+   "key": "gas_rs_per_h",
+   "label": "Gas heater",
+   "spec": "rs",
+   "unit": "per hour"
+  },
+  {
+   "key": "heater_rs_per_h",
+   "label": "Electric heater",
+   "spec": "rs",
+   "unit": "per hour"
+  },
+  {
+   "key": "gas_m3_per_h",
+   "label": "Gas used",
+   "spec": "2",
+   "unit": "m³ per hour"
+  }
+ ],
+ "answer": "For {{out.q_kw|1}} kW of heat, an inverter AC in heat mode costs about {{out.ac_rs_per_h|rs}} an hour at {{out.tariff|rs2}} per unit, a gas heater about {{out.gas_rs_per_h|rs}} an hour at {{out.gas_price|rs}} per cubic metre, and an electric heater about {{out.heater_rs_per_h|rs}}. AC cost = heat ÷ COP × tariff, because a heat pump moves about {{out.cop|1}} units of heat for each unit of electricity.",
+ "how": "Inverter AC: {{out.q_kw|1}} kW of heat ÷ COP {{out.cop|1}} = electricity drawn per hour, × {{out.tariff|rs2}} per unit = {{out.ac_rs_per_h|rs}} an hour. Electric heater: every unit becomes one unit of heat, so {{out.q_kw|1}} kW × {{out.tariff|rs2}} = {{out.heater_rs_per_h|rs}} an hour. Gas heater: {{out.q_kw|1}} kW ÷ {{out.eta_gas|pct}} efficiency × 3.6 MJ per kWh ÷ {{out.cv_mj_m3|int}} MJ per m³ = {{out.gas_m3_per_h|2}} m³ an hour, × {{out.gas_price|rs}} = {{out.gas_rs_per_h|rs}} an hour.",
+ "key_facts": [
+  "An inverter AC in heat mode is a heat pump: with a COP of about {{d.heat_pump_cop|1}} it delivers about {{d.heat_pump_cop|1}} units of heat for each unit of electricity, so it costs about one third as much to run as an electric heater giving the same heat.",
+  "For {{out.q_kw|1}} kW of heat at {{out.tariff|rs2}} per unit, an inverter AC costs about {{out.ac_rs_per_h|rs}} an hour and an electric heater about {{out.heater_rs_per_h|rs}} an hour; the electric heater's cost per hour is simply its kW × the rate.",
+  "A gas heater's cost per hour = heat needed ÷ heater efficiency × 3.6 ÷ gas heating value × gas price: at {{d.gas_heater_eff|pct}} efficiency and {{d.gas_cv_mj_m3|int}} MJ per m³, {{out.q_kw|1}} kW of heat burns {{out.gas_m3_per_h|2}} m³ an hour, {{out.gas_rs_per_h|rs}} at {{out.gas_price|rs}} per m³.",
+  "The AC's COP falls as the outdoor temperature drops: at a COP of {{ex.1.out.cop|1}} on a cold night the same {{ex.1.out.q_kw|1}} kW costs {{ex.1.out.ac_rs_per_h|rs}} an hour instead of {{out.ac_rs_per_h|rs}}; the COP is an editable typical value, not a measured figure for your unit."
+ ],
+ "formula": {
+  "text": "AC Rs/h = Q ÷ COP × tariff; heater Rs/h = Q × tariff; gas Rs/h = Q ÷ η × 3.6 ÷ CV × gas price",
+  "lines": [
+   "Q = heat needed in kW (heat output into the room)",
+   "COP = heating coefficient of performance of the AC (editable typical value)",
+   "tariff = electricity energy rate in Rs per unit",
+   "η = gas heater efficiency; CV = heating value of gas in MJ per m³; 3.6 MJ = 1 kWh",
+   "gas price in Rs per cubic metre (gas bills quote Rs per MMBtu; 1 MMBtu is about 28 m³)"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "Inverter AC heating cost per hour",
+   "p": [
+    "An inverter AC in heat mode does not make heat from electricity; it pumps heat from the outdoor air into the room. For each unit of electricity it moves about {{out.cop|1}} units of heat on a mild winter day, which is what the COP means. So {{out.q_kw|1}} kW of heat needs only a fraction of that in electricity, and the cost is about {{out.ac_rs_per_h|rs}} an hour at {{out.tariff|rs2}} per unit. Over a four-hour evening that is roughly four times the hourly figure; over a month of such evenings, the AC units calculator turns the hours into units and a bill share.",
+    "The COP is the number to watch. It is highest when the outdoor air is mild and falls on frosty nights, when the outdoor coil ices up and the unit runs defrost cycles. The default {{d.heat_pump_cop|1}} is a typical value near seven degrees outdoors; the second example shows the same room at a COP of {{ex.1.out.cop|1}}. Your AC's spec sheet lists its rated heating COP, and the colder your city the lower the figure you should enter."
+   ]
+  },
+  {
+   "h2": "Gas heater vs electric heater cost",
+   "p": [
+    "An electric heater (fan, halogen, oil-filled) turns every unit into one unit of heat, no more, so its cost per hour is simply its kW × the rate: {{out.q_kw|1}} kW costs {{out.heater_rs_per_h|rs}} an hour at the default rate, about three times the inverter AC. It is the most expensive way to heat a room on grid electricity, and a two-kilowatt heater also needs its own socket circuit.",
+    "A gas heater burns gas at a flat energy content of about {{out.cv_mj_m3|int}} MJ per cubic metre, and a flued heater puts about {{out.eta_gas|pct}} of that into the room. For {{out.q_kw|1}} kW that is {{out.gas_m3_per_h|2}} m³ an hour, which at {{out.gas_price|rs}} per m³ costs {{out.gas_rs_per_h|rs}}. At that gas price gas is the cheapest of the three; the comparison turns around once the gas rate climbs past the higher winter slabs, which the third example shows, and gas is not an option at all when pressure drops in the evening."
+   ]
+  },
+  {
+   "h2": "Heat pump running cost in Pakistan: when the AC beats gas",
+   "p": [
+    "The break-even depends on your gas slab and your electricity slab. At {{out.gas_price|rs}} per m³ and {{out.tariff|rs2}} per unit, gas wins ({{out.gas_rs_per_h|rs}} against {{out.ac_rs_per_h|rs}} an hour). At {{ex.2.out.gas_price|rs}} per m³, the kind of rate a heavy winter gas user reaches in the upper slabs, gas costs {{ex.2.out.gas_rs_per_h|rs}} an hour while the AC at a COP of {{ex.2.out.cop|1}} costs {{ex.2.out.ac_rs_per_h|rs}}, so the AC is close or ahead. On solar during the day the AC's electricity is nearly free and it wins outright.",
+    "Electricity slabs cut the other way: a home already in the top slab pays {{ex.3.out.tariff|rs2}} per unit, which raises the AC to {{ex.3.out.ac_rs_per_h|rs}} an hour and the electric heater to {{ex.3.out.heater_rs_per_h|rs}}. Enter both of your rates to see your own answer; the defaults are typical, not yours."
+   ]
+  },
+  {
+   "h2": "How much heat does a room need?",
+   "p": [
+    "A closed bedroom of about twelve square metres with a ceiling fan off needs roughly {{ex.0.out.q_kw|1}} kW to feel warm on a cold Lahore or Islamabad night; a large living room with big windows needs {{ex.4.out.q_kw|1}} kW or more. A 1.5 ton inverter AC can deliver up to about five kilowatts of heat, so it covers most rooms; a 1 ton unit about three and a half. These are planning figures: a draughty room with single glazing loses heat faster, and the first hour costs more while the walls warm up.",
+    "The cost scales with the heat: {{ex.0.out.q_kw|1}} kW costs {{ex.0.out.ac_rs_per_h|rs}} an hour on the AC and {{ex.0.out.gas_rs_per_h|rs}} on gas, while {{ex.4.out.q_kw|1}} kW costs {{ex.4.out.ac_rs_per_h|rs}} and {{ex.4.out.gas_rs_per_h|rs}}. Closing doors, drawing curtains and heating one room instead of the house do more for the bill than the choice of heater."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {
+    "q_kw": 1.5
+   },
+   "title": "Small bedroom, {{out.q_kw|1}} kW of heat",
+   "text": "AC: {{out.q_kw|1}} ÷ {{out.cop|1}} × {{out.tariff|rs2}} = {{out.ac_rs_per_h|rs}} an hour. Electric heater: {{out.heater_rs_per_h|rs}}. Gas: {{out.gas_m3_per_h|2}} m³ × {{out.gas_price|rs}} = {{out.gas_rs_per_h|rs}} an hour."
+  },
+  {
+   "inputs": {
+    "q_kw": 2,
+    "cop": 2
+   },
+   "title": "Frosty night, COP down to {{out.cop|1}}",
+   "text": "Same {{out.q_kw|1}} kW room, but the AC now moves only {{out.cop|1}} units of heat per unit of electricity: {{out.ac_rs_per_h|rs}} an hour, up from the default-COP figure in the result above. Gas stays at {{out.gas_rs_per_h|rs}} and the electric heater at {{out.heater_rs_per_h|rs}}."
+  },
+  {
+   "inputs": {
+    "q_kw": 2,
+    "gas_price": 110
+   },
+   "title": "Heavy gas user: gas at {{out.gas_price|rs}} per m³",
+   "text": "In the upper winter gas slabs the same {{out.gas_m3_per_h|2}} m³ an hour costs {{out.gas_rs_per_h|rs}}, while the inverter AC costs {{out.ac_rs_per_h|rs}} at a COP of {{out.cop|1}}. The AC is now the cheaper heater, and the electric heater is still {{out.heater_rs_per_h|rs}}."
+  },
+  {
+   "inputs": {
+    "q_kw": 2,
+    "tariff": 47.2
+   },
+   "title": "Top electricity slab at {{out.tariff|rs2}} per unit",
+   "text": "At the highest unprotected rate the inverter AC costs {{out.ac_rs_per_h|rs}} an hour for {{out.q_kw|1}} kW of heat and the electric heater {{out.heater_rs_per_h|rs}}, while gas at {{out.gas_price|rs}} per m³ stays at {{out.gas_rs_per_h|rs}}."
+  },
+  {
+   "inputs": {
+    "q_kw": 3
+   },
+   "title": "Large living room, {{out.q_kw|1}} kW of heat",
+   "text": "AC {{out.ac_rs_per_h|rs}} an hour, gas {{out.gas_rs_per_h|rs}} ({{out.gas_m3_per_h|2}} m³ an hour), electric heater {{out.heater_rs_per_h|rs}}. A 1.5 ton inverter AC can deliver this much heat; a small electric heater cannot."
+  }
+ ],
+ "table": {
+  "caption": "Cost per hour of heating by heat needed, at a COP of {{out.cop|1}}, {{out.tariff|rs2}} per unit and {{out.gas_price|rs}} per m³ of gas",
+  "rows": [
+   {
+    "q_kw": 1
+   },
+   {
+    "q_kw": 1.5
+   },
+   {
+    "q_kw": 2
+   },
+   {
+    "q_kw": 2.5
+   },
+   {
+    "q_kw": 3
+   },
+   {
+    "q_kw": 4
+   }
+  ],
+  "columns": [
+   {
+    "label": "Heat needed",
+    "tpl": "{{out.q_kw|1}} kW"
+   },
+   {
+    "label": "Inverter AC",
+    "tpl": "{{out.ac_rs_per_h|rs}}"
+   },
+   {
+    "label": "Gas heater",
+    "tpl": "{{out.gas_rs_per_h|rs}} ({{out.gas_m3_per_h|2}} m³)"
+   },
+   {
+    "label": "Electric heater",
+    "tpl": "{{out.heater_rs_per_h|rs}}"
+   }
+  ]
+ },
+ "mistakes": [
+  "Entering the AC's electrical watts as the heat needed. The field is heat output; the AC draws about one third of it in electricity at a COP of {{out.cop|1}}.",
+  "Keeping the default COP on a frosty night. Below freezing the COP drops towards {{ex.1.out.cop|1}} and the AC's advantage shrinks; check your unit's spec sheet and your city's winter nights.",
+  "Comparing a 1 kW electric heater with a 2 kW gas heater. Compare at the same heat output; the calculator does that for you.",
+  "Using the wrong gas rate. Bills quote Rs per MMBtu by slab and the top winter slabs are many times the lowest; convert your own slab to Rs per cubic metre.",
+  "Running a non-inverter AC in heat mode and expecting the same cost. Only inverter units with a heat pump mode give these figures; a plain cooling-only AC has no heat mode."
+ ],
+ "safety": "Never run a gas heater in a closed room without ventilation (carbon monoxide), keep electric heaters away from bedding, and have a licensed electrician check the socket and breaker before using a 2 kW heater; a heavy heater should not share a circuit with an AC.",
+ "faq": [
+  {
+   "q": "How much does an inverter AC cost per hour in heating mode?",
+   "a": "About {{out.ac_rs_per_h|rs}} an hour for {{out.q_kw|1}} kW of heat at {{out.tariff|rs2}} per unit and a COP of {{out.cop|1}}. A larger room needing {{ex.4.out.q_kw|1}} kW costs about {{ex.4.out.ac_rs_per_h|rs}} an hour."
+  },
+  {
+   "q": "Is an inverter AC cheaper than a gas heater for heating?",
+   "a": "At the default gas price of {{out.gas_price|rs}} per m³ gas is cheaper ({{out.gas_rs_per_h|rs}} against {{out.ac_rs_per_h|rs}} an hour). At {{ex.2.out.gas_price|rs}} per m³, the rate of the upper winter slabs, the AC wins ({{ex.2.out.ac_rs_per_h|rs}} against {{ex.2.out.gas_rs_per_h|rs}}). Enter your own gas slab to see which side you are on."
+  },
+  {
+   "q": "Is an inverter AC cheaper than an electric heater?",
+   "a": "Yes, by about the COP. For the same {{out.q_kw|1}} kW of heat the AC costs {{out.ac_rs_per_h|rs}} an hour and an electric heater {{out.heater_rs_per_h|rs}}, because the heater turns one unit of electricity into one unit of heat while the AC moves about {{out.cop|1}} units."
+  },
+  {
+   "q": "What is the heating COP of an inverter AC?",
+   "a": "Typically around {{d.heat_pump_cop|1}} at mild outdoor temperatures, falling towards {{ex.1.out.cop|1}} near freezing. It is the heat delivered divided by the electricity used; the spec sheet of your AC lists the rated value, and the calculator lets you edit it."
+  },
+  {
+   "q": "How much gas does a gas heater use per hour?",
+   "a": "For {{out.q_kw|1}} kW of heat at {{out.eta_gas|pct}} efficiency, about {{out.gas_m3_per_h|2}} cubic metres an hour. A {{ex.4.out.q_kw|1}} kW living-room heater uses about {{ex.4.out.gas_m3_per_h|2}} m³ an hour."
+  },
+  {
+   "q": "What is the cost of a 2 kW electric heater per hour?",
+   "a": "Its kW times your rate: {{out.q_kw|1}} kW × {{out.tariff|rs2}} = {{out.heater_rs_per_h|rs}} an hour at the default slab, and {{ex.3.out.heater_rs_per_h|rs}} in the top slab. Four hours an evening for a month is a large bill; the unit calculator converts the hours to units."
+  },
+  {
+   "q": "Does heating with the AC use more electricity than cooling?",
+   "a": "The figures here are for heating only, per hour of heat delivered. Cooling use depends on the outdoor temperature in the same way; the AC units calculator covers it."
+  }
+ ],
+ "related": [
+  "E5",
+  "F1",
+  "E6",
+  "E2"
+ ],
+ "next": "E5",
+ "literal_numbers": [
+  "1.5 ton",
+  "1 ton",
+  "3.6",
+  "2 kW",
+  "1 kW"
+ ],
+ "sources": [
+  {
+   "label": "NEPRA tariff decision 11 Feb 2026, A-1 domestic energy rates",
+   "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf"
+  },
+  {
+   "label": "Wattlyst methodology and default values (COP, gas efficiency and heating value are typical values awaiting engineer confirmation)",
+   "url": "/methodology/"
+  }
+ ]
+}

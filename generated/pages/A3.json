@@ -3,26 +3,263 @@
  "type": "tool",
  "silo": "A",
  "url": "/converters/12v-watts-to-amps-calculator/",
- "h1": "12v Watts To Amps Calculator",
+ "h1": "12V Watts to Amps Calculator",
  "title": "12V Watts to Amps Calculator (Battery & Solar) | Wattlyst",
  "meta": "Find how many amps a 12V load draws from your battery. Includes inverter losses, a 12V reference table and examples for fans, lights and routers.",
  "primary_keyword": "12v watts to amps calculator",
  "wave": 2,
- "status": "planned",
+ "status": "publish",
+ "reviewed": "2026-10-13",
+ "published": "2026-10-13",
  "author": "ali-ahmad",
+ "related": [
+  "A4",
+  "A10",
+  "A9",
+  "B1",
+  "D6"
+ ],
+ "next": "B2",
  "parent": "P-A",
- "live": false,
+ "live": true,
  "breadcrumb": [
   {
    "name": "Home",
    "url": "/"
   },
   {
-   "name": "12v Watts To Amps Calculator",
+   "name": "Electrical Unit Converters",
+   "url": "/converters/"
+  },
+  {
+   "name": "12V Watts to Amps Calculator",
    "url": "/converters/12v-watts-to-amps-calculator/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "How many amps does a 12 V fan draw?",
+    "p": [
+     "A 12 V DC ceiling fan uses about 35 W, so it draws 35 W ÷ 12 V = 2.92 A straight from the battery. There is no inverter in the way, so there is no conversion loss either; that is why DC fans are the favourite loadshedding load in Pakistan.",
+     "A normal AC ceiling fan running through a UPS is a different story. Its watts are higher and the UPS loses part of the energy as heat, so the battery current is several times the DC fan's. If you want backup hours rather than amps, the 12V battery runtime calculator does the next step."
+    ]
+   },
+   {
+    "h2": "12 V inverter amp draw: why the battery current is higher than watts ÷ volts",
+    "p": [
+     "A 1,000 W inverter running at full output asks the battery for 1,000 W ÷ 12 V = 83.3 A, and that is before losses. A home UPS turns only about 85% of battery energy into AC, so the real current is higher: divide the watts by the efficiency first, then by the volts. The result is the current your battery cables, fuse and terminals must carry all the time the load runs.",
+     "This is the reason 12 V is only used for small inverters. At 24 V the same 1,000 W is 41.7 A and at 48 V it is 20.8 A, which needs thinner cable and wastes less energy in the wiring."
+    ]
+   },
+   {
+    "h2": "12 V battery amps from watts: what the number is used for",
+    "p": [
+     "The amps you get here set the size of everything between the battery and the load. Battery cables, the fuse at the battery terminal, the inverter's DC input and a solar charge controller's load terminals are all rated in amps, not watts. Use the inverter's maximum output watts, not its usual load, so the cable is safe at the worst case.",
+     "Amps are also the link to battery capacity. A battery rated in amp hours delivers one amp for one hour per amp hour, so the current from this page tells you roughly how fast a battery empties; the amp hours to watt hours calculator and the battery backup tools finish that calculation."
+    ]
+   },
+   {
+    "h2": "12 V versus 24 V and 48 V: same watts, fewer amps",
+    "p": [
+     "Pick the voltage from the dropdown and the calculator shows how the current falls. For 1,000 W: 83.3 A at 12 V, 41.7 A at 24 V and 20.8 A at 48 V. The watts are the same in every case; only the current, and so the cable size and the loss in the wiring, change.",
+     "Remember that batteries in series add volts, not amp hours. Two batteries in series on a 24 V inverter store twice the energy of one, and the inverter pulls half the amps from each."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "How many amps is 100 watts at 12 volts?",
+    "a": "100 W ÷ 12 V = 8.33 A of DC current. If the 100 W is an AC load on an inverter, the battery current is higher because of the inverter loss."
+   },
+   {
+    "q": "How many amps does a 1,000 W inverter draw at 12 V?",
+    "a": "At full output, 1,000 W ÷ 12 V = 83.3 A, plus the inverter's own loss. With a home UPS at about 85% efficiency, size the battery cable and fuse comfortably above 83 A."
+   },
+   {
+    "q": "What is the 12 volt watts to amps formula?",
+    "a": "Amps = watts ÷ volts. Battery power is DC, so there is no power factor. For an inverter load, divide the watts by the inverter efficiency first, then by the battery voltage."
+   },
+   {
+    "q": "How many amps does a 12 V fan or router draw?",
+    "a": "A DC ceiling fan of about 35 W draws 2.92 A. A Wi-Fi router draws far less than a fan; look up its watts on the label and use the table above, where a small load of a few watts gives a current well under one amp."
+   },
+   {
+    "q": "Does the same load draw fewer amps at 24 V?",
+    "a": "Yes, half. 1,000 W is 83.3 A at 12 V, 41.7 A at 24 V and 20.8 A at 48 V. The energy drawn from the bank is the same; only the current and the cable size change."
+   },
+   {
+    "q": "Why does my inverter draw more amps than this calculator shows?",
+    "a": "Three reasons: the inverter loses energy as heat (about 85% efficiency for a home UPS), a real battery sags below its nominal voltage under load so the current rises to keep the watts the same, and the inverter itself uses a little power even with no load."
+   },
+   {
+    "q": "What cable size do I need for this current?",
+    "a": "DC cable is chosen for the amps and the length of the run, keeping the voltage drop small because every volt lost at 12 V is a large share of the supply. Use the current from this page with a DC cable table from the inverter maker, and keep battery cables short and thick."
+   }
+  ],
+  "key_facts": [
+   "On a 12 V battery, amps = watts ÷ volts, so a 100 W load draws 8.33 A and a 1,000 W load draws 83.3 A, before any inverter loss.",
+   "A 1,000 W inverter at full load pulls 83.3 A from a 12 V battery before losses; a home UPS is about 85% efficient, so the real battery current is higher still.",
+   "The same watts draw half the amps at 24 V (41.7 A for 1,000 W) and a quarter at 48 V (20.8 A), which is why larger inverters and solar systems use higher battery voltages.",
+   "A 12 V DC ceiling fan of about 35 W draws only 2.92 A, so a small battery can run it for many hours."
+  ],
+  "mistakes": [
+   "Forgetting the inverter loss. The battery side of a UPS carries more current than watts ÷ volts; divide by the inverter efficiency (about 85% for a home UPS) first.",
+   "Mixing up amps and amp hours. Amps is the rate of flow right now; amp hours is how much the battery holds. A load of 8.33 A empties a battery slowly, one of 83 A quickly.",
+   "Using the single-battery voltage for a series bank. Two batteries in series on a 24 V inverter halve the current; pick the bank voltage, not the voltage printed on one battery.",
+   "Dividing solar panel watts by the battery voltage. A nominal 12 V panel actually works at a higher voltage, so its current is lower than watts ÷ 12; use the panel's own voltage, or the solar panel for 12V battery calculator."
+  ],
+  "sources": [
+   {
+    "label": "Victron Energy, Wiring Unlimited (DC cable sizing, fusing and voltage drop)",
+    "url": "https://www.victronenergy.com/upload/documents/Wiring-Unlimited-EN.pdf"
+   },
+   {
+    "label": "Wattlyst methodology and default values",
+    "url": "/methodology/"
+   }
+  ],
+  "tool": {
+   "calc": "watts_to_amps",
+   "module": "conversions.js",
+   "data_keys": [],
+   "appliances": {},
+   "fields": [
+    {
+     "name": "watts",
+     "label": "Load",
+     "unit": "W",
+     "default": 100,
+     "hint": "Watts of the DC load, or the AC watts an inverter is delivering. A 12 V DC fan is about 35 W, a router about 10 W."
+    },
+    {
+     "name": "volts",
+     "label": "Battery or system voltage",
+     "unit": "V",
+     "type": "select",
+     "default": 12,
+     "options": [
+      [
+       12,
+       "12 V (one battery)"
+      ],
+      [
+       24,
+       "24 V (two in series)"
+      ],
+      [
+       48,
+       "48 V (four in series)"
+      ]
+     ],
+     "hint": "Use the bank voltage the load or inverter is wired to, not the voltage of a single cell."
+    }
+   ],
+   "fixed_inputs": {
+    "mode": "dc"
+   },
+   "outputs": [
+    {
+     "key": "amps",
+     "label": "Current drawn",
+     "spec": "2",
+     "unit": "A",
+     "label_ur": "Khincha gaya current",
+     "value": "8.33"
+    }
+   ],
+   "how": {
+    "tpl": "{{in.watts|int}} W ÷ {{in.volts|int}} V = {{out.amps|2}} A. Battery power is DC, so the power factor is one and nothing else is needed. If the load runs through an inverter, the battery supplies more than this: divide the watts by the inverter efficiency (about {{d.inverter_eff_ups|pct}} for a home UPS) before dividing by volts.",
+    "text": "100 W ÷ 12 V = 8.33 A. Battery power is DC, so the power factor is one and nothing else is needed. If the load runs through an inverter, the battery supplies more than this: divide the watts by the inverter efficiency (about 85% for a home UPS) before dividing by volts."
+   },
+   "submit": "Calculate",
+   "data_checked": []
+  },
+  "examples": [
+   {
+    "title": "100 watts at 12 volts",
+    "text": "100 W ÷ 12 V = 8.33 A. A 100 W DC load, for example a few LED lights and a small pump, draws about 8.33 A from the battery."
+   },
+   {
+    "title": "A 12 V DC ceiling fan",
+    "text": "A DC inverter ceiling fan is about 35 W. 35 W ÷ 12 V = 2.92 A."
+   },
+   {
+    "title": "A 1,000 W inverter at 12 V",
+    "text": "1,000 W ÷ 12 V = 83.3 A before inverter losses. With a home UPS at about 85% efficiency the battery supplies more than this, so the cable and fuse must be rated above 83 A."
+   },
+   {
+    "title": "The same 1,000 W on a 24 V bank",
+    "text": "1,000 W ÷ 24 V = 41.7 A. Two batteries in series halve the current for the same load."
+   },
+   {
+    "title": "The same 1,000 W on a 48 V bank",
+    "text": "1,000 W ÷ 48 V = 20.8 A. This is why hybrid solar inverters above a few kilowatts use 48 V batteries."
+   }
+  ],
+  "table": {
+   "caption": "12 volt amp draw chart: DC current for common loads (no inverter loss)",
+   "head": [
+    "Load",
+    "Voltage",
+    "Current"
+   ],
+   "rows": [
+    [
+     "10 W",
+     "12 V",
+     "0.83 A"
+    ],
+    [
+     "20 W",
+     "12 V",
+     "1.67 A"
+    ],
+    [
+     "50 W",
+     "12 V",
+     "4.17 A"
+    ],
+    [
+     "100 W",
+     "12 V",
+     "8.33 A"
+    ],
+    [
+     "200 W",
+     "12 V",
+     "16.67 A"
+    ],
+    [
+     "500 W",
+     "12 V",
+     "41.67 A"
+    ],
+    [
+     "1,000 W",
+     "12 V",
+     "83.33 A"
+    ],
+    [
+     "1,500 W",
+     "12 V",
+     "125 A"
+    ]
+   ]
+  },
+  "answer": "A 100 W load on a 12 V battery draws about 8.33 A. For DC, amps = watts ÷ volts, with no power factor. Double the voltage and the current halves: a 1,000 W inverter load draws 83.3 A at 12 V but 41.7 A at 24 V, which is why bigger inverters use higher battery voltages.",
+  "formula": {
+   "text": "I = P ÷ V",
+   "lines": [
+    "I = current in amps (A)",
+    "P = power in watts (W)",
+    "V = battery or system voltage (V): 12, 24 or 48",
+    "DC has no power factor; for an inverter load use P ÷ inverter efficiency as the watts"
+   ]
+  },
+  "safety": "Low voltage still means high current. A 1,000 W inverter at 12 V carries over 83 A, enough to melt thin wire. Fuse every battery cable close to the battery terminal, use cable sized for the current, keep the run short, and have a licensed electrician connect an inverter to house wiring."
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -39,7 +276,13 @@
      {
       "@type": "ListItem",
       "position": 2,
-      "name": "12v Watts To Amps Calculator",
+      "name": "Electrical Unit Converters",
+      "item": "https://wattlyst.com/converters/"
+     },
+     {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "12V Watts to Amps Calculator",
       "item": "https://wattlyst.com/converters/12v-watts-to-amps-calculator/"
      }
     ]
@@ -56,12 +299,14 @@
     },
     "breadcrumb": {
      "@id": "https://wattlyst.com/converters/12v-watts-to-amps-calculator/#breadcrumb"
-    }
+    },
+    "dateModified": "2026-10-13",
+    "lastReviewed": "2026-10-13"
    },
    {
     "@type": "WebApplication",
     "@id": "https://wattlyst.com/converters/12v-watts-to-amps-calculator/#app",
-    "name": "12v Watts To Amps Calculator",
+    "name": "12V Watts to Amps Calculator",
     "url": "https://wattlyst.com/converters/12v-watts-to-amps-calculator/",
     "description": "Find how many amps a 12V load draws from your battery. Includes inverter losses, a 12V reference table and examples for fans, lights and routers.",
     "applicationCategory": "UtilitiesApplication",
@@ -88,6 +333,68 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/converters/12v-watts-to-amps-calculator/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "How many amps is 100 watts at 12 volts?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "100 W ÷ 12 V = 8.33 A of DC current. If the 100 W is an AC load on an inverter, the battery current is higher because of the inverter loss."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many amps does a 1,000 W inverter draw at 12 V?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "At full output, 1,000 W ÷ 12 V = 83.3 A, plus the inverter's own loss. With a home UPS at about 85% efficiency, size the battery cable and fuse comfortably above 83 A."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What is the 12 volt watts to amps formula?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Amps = watts ÷ volts. Battery power is DC, so there is no power factor. For an inverter load, divide the watts by the inverter efficiency first, then by the battery voltage."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How many amps does a 12 V fan or router draw?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "A DC ceiling fan of about 35 W draws 2.92 A. A Wi-Fi router draws far less than a fan; look up its watts on the label and use the table above, where a small load of a few watts gives a current well under one amp."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Does the same load draw fewer amps at 24 V?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Yes, half. 1,000 W is 83.3 A at 12 V, 41.7 A at 24 V and 20.8 A at 48 V. The energy drawn from the bank is the same; only the current and the cable size change."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Why does my inverter draw more amps than this calculator shows?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Three reasons: the inverter loses energy as heat (about 85% efficiency for a home UPS), a real battery sags below its nominal voltage under load so the current rises to keep the watts the same, and the inverter itself uses a little power even with no load."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What cable size do I need for this current?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "DC cable is chosen for the amps and the length of the run, keeping the voltage drop small because every volt lost at 12 V is a large share of the supply. Use the current from this page with a DC cable table from the inverter maker, and keep battery cables short and thick."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

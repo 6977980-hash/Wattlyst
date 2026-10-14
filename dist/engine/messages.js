@@ -30,6 +30,7 @@ cable_size_unknown:'Pick a standard cable size.',
 load_above_standard_breakers:'This load needs more than the largest single-phase MCB. Split it into separate circuits or ask a licensed electrician about a three-phase connection.',
 load_above_cable_table:'This load is above the largest cable in our table. Split it into separate circuits and consult a licensed electrician.',
 run_too_long_for_table:'This run is too long for the cables in our table: the voltage drop would exceed the limit. Shorten the run, split the load or consult a licensed electrician.',
+price_data_missing:'Price data could not be loaded. Enter the typical price range yourself or refresh the page.',
 internal_non_finite:'These numbers are outside a realistic range. Please check your inputs.',
 };
 const PATTERNS=[

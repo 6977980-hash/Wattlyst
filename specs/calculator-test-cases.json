@@ -4409,5 +4409,204 @@
     },
     "tolerance": 0,
     "note": ""
+  },
+  {
+    "calc": "quote_checker",
+    "name": "10 kW on-grid quote at Rs 1.1M: within the listed 10 kW range",
+    "inputs": {
+      "kwp": 10,
+      "price": 1100000,
+      "type": "on-grid"
+    },
+    "expected": {
+      "rs_per_w": 110,
+      "range_low": 95,
+      "range_high": 120,
+      "range_low_rs": 950000,
+      "range_high_rs": 1200000,
+      "verdict": "within",
+      "range_kw_used": 10
+    },
+    "tolerance": 0.01,
+    "note": "data/solar-prices.json on-grid 10 kW 950,000 to 1,200,000"
+  },
+  {
+    "calc": "quote_checker",
+    "name": "7 kW hybrid: Rs/W interpolated between the 5 kW and 8 kW rows",
+    "inputs": {
+      "kwp": 7,
+      "price": 1500000,
+      "type": "hybrid"
+    },
+    "expected": {
+      "rs_per_w": 214.2857,
+      "range_low": 179.1667,
+      "range_high": 233.3333,
+      "verdict": "within"
+    },
+    "tolerance": 0.01,
+    "note": "5 kW 190-250 Rs/W, 8 kW 173.75-225 Rs/W, t = 2/3"
+  },
+  {
+    "calc": "quote_checker",
+    "name": "2 kW on-grid: below the smallest listed size uses the 3 kW Rs/W",
+    "inputs": {
+      "kwp": 2,
+      "price": 400000,
+      "type": "on-grid"
+    },
+    "expected": {
+      "range_low": 120,
+      "range_high": 150,
+      "verdict": "above",
+      "range_kw_used": 3
+    },
+    "tolerance": 0.01,
+    "note": "200 Rs/W > 150"
+  },
+  {
+    "calc": "quote_checker",
+    "name": "25 kW on-grid: above the largest listed size uses the 20 kW Rs/W",
+    "inputs": {
+      "kwp": 25,
+      "price": 2500000,
+      "type": "on-grid"
+    },
+    "expected": {
+      "range_low": 90,
+      "range_high": 110,
+      "verdict": "within",
+      "range_kw_used": 20
+    },
+    "tolerance": 0.01,
+    "note": ""
+  },
+  {
+    "calc": "quote_checker",
+    "name": "unknown system type",
+    "inputs": {
+      "kwp": 5,
+      "price": 500000,
+      "type": "offgrid"
+    },
+    "expected": {
+      "error": "type_invalid"
+    },
+    "tolerance": 0,
+    "note": ""
+  },
+  {
+    "calc": "quote_checker",
+    "name": "no type and no range: Rs/W only",
+    "inputs": {
+      "kwp": 5,
+      "price": 500000
+    },
+    "expected": {
+      "rs_per_w": 100
+    },
+    "tolerance": 0.001,
+    "note": "no verdict without a range"
+  },
+  {
+    "calc": "solar_price_estimate",
+    "name": "10 kW on-grid typical price and payback at Rs 25,000 a month",
+    "inputs": {
+      "kwp": 10,
+      "type": "on-grid",
+      "monthly_saving_rs": 25000
+    },
+    "expected": {
+      "price_low_rs": 950000,
+      "price_high_rs": 1200000,
+      "price_mid_rs": 1075000,
+      "panels_low_rs": 400000,
+      "panels_high_rs": 460000,
+      "payback_years_low": 3.1667,
+      "payback_years_high": 4
+    },
+    "tolerance": 0.01,
+    "note": "data/solar-prices.json; panels Rs 40-46/W; payback = price / (saving x 12)"
+  },
+  {
+    "calc": "solar_price_estimate",
+    "name": "7 kW hybrid interpolated between 5 and 8 kW",
+    "inputs": {
+      "kwp": 7,
+      "type": "hybrid"
+    },
+    "expected": {
+      "rs_per_w_low": 179.1667,
+      "rs_per_w_high": 233.3333,
+      "price_low_rs": 1254166.67
+    },
+    "tolerance": 0.01,
+    "note": ""
+  },
+  {
+    "calc": "solar_price_estimate",
+    "name": "size must be positive",
+    "inputs": {
+      "kwp": 0,
+      "type": "on-grid"
+    },
+    "expected": {
+      "error": "kwp_must_be_positive"
+    },
+    "tolerance": 0,
+    "note": ""
+  },
+  {
+    "calc": "units",
+    "name": "fan 80 W 12 h 30 days with a tariff: cost line",
+    "inputs": {
+      "watts": 80,
+      "hours": 12,
+      "days": 30,
+      "tariff": 36.46
+    },
+    "expected": {
+      "units": 28.8,
+      "rs": 1050.048
+    },
+    "tolerance": 0.001,
+    "note": "rs = units x tariff"
+  },
+  {
+    "calc": "bill_total",
+    "name": "protected consumer: FPA not charged (NEPRA exemption)",
+    "inputs": {
+      "units": 150,
+      "protected": true,
+      "fpa_per_unit": 2.5182,
+      "fc_surcharge_per_unit": 0,
+      "qta_per_unit": 0,
+      "gst_pct": 0
+    },
+    "expected": {
+      "fpa_rs": 0,
+      "fpa_exempt": true,
+      "fpa_per_unit": 2.5182
+    },
+    "tolerance": 0.001,
+    "note": "SRO 852(I)/2026: lifeline, protected, EVCS and prepaid exempt from the monthly FPA"
+  },
+  {
+    "calc": "bill_total",
+    "name": "unprotected consumer: FPA charged per unit",
+    "inputs": {
+      "units": 300,
+      "sanctioned_kw": 1,
+      "fpa_per_unit": 2.5182,
+      "fc_surcharge_per_unit": 0,
+      "qta_per_unit": 0,
+      "gst_pct": 0
+    },
+    "expected": {
+      "fpa_rs": 755.46,
+      "fpa_exempt": false
+    },
+    "tolerance": 0.01,
+    "note": ""
   }
 ]
