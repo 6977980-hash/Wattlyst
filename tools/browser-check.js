@@ -40,6 +40,13 @@ for (const url of urls) {
   const wide = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   if (wide > 0) fail(`page scrolls sideways by ${wide} px at phone width`);
   if (await page.$('form[data-wl-tool]')) {
+    await page.$eval('form[data-wl-tool] button[type="submit"]', (b) => b.click());
+    await new Promise((r) => setTimeout(r, 400));
+    // The default inputs must give a result, not an error (C8 once said "Fuel data could not be loaded"); an amber
+    // notice on a valid result is fine. Checked before the picker step below adds an empty row, and on the state
+    // itself, since innerText also reads hidden results.
+    const state = await page.$eval('form[data-wl-tool]', (f) => ({ hidden: f.querySelector('.wl-results').hidden, error: (() => { const e = f.querySelector('.wl-error'); return e && !e.hidden && !e.classList.contains('wl-notice') ? e.textContent : ''; })() }));
+    if (state.hidden || state.error) fail(`default inputs give an error: ${state.error || 'results hidden'}`);
     const picker = await page.$('.wl-load-row select');
     if (picker) {
       await picker.focus();
@@ -57,10 +64,6 @@ for (const url of urls) {
     const text = await page.$eval('.wl-results', (el) => el.innerText.trim());
     if (!text) fail('result is blank after Calculate');
     if (/NaN|Infinity|undefined/.test(text)) fail(`bad result text: ${text.slice(0, 120)}`);
-    // The default inputs must give a result, not an error (C8 once said "Fuel data could not be loaded"); an amber
-    // notice on a valid result is fine. innerText above reads hidden results too, so check the state itself.
-    const state = await page.$eval('form[data-wl-tool]', (f) => ({ hidden: f.querySelector('.wl-results').hidden, error: (() => { const e = f.querySelector('.wl-error'); return e && !e.hidden && !e.classList.contains('wl-notice') ? e.textContent : ''; })() }));
-    if (state.hidden || state.error) fail(`default inputs give an error: ${state.error || 'results hidden'}`);
   }
   const bare = scripts.map((u) => u.split('?')[0]);
   const twice = [...new Set(bare.filter((u, i) => bare.indexOf(u) !== i))];
