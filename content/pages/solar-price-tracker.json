@@ -7,13 +7,13 @@
  "author": "ali-ahmad",
  "published": "2026-10-14",
  "reviewed": "2026-10-14",
- "answer": "Solar prices in Pakistan, checked {{ds.checked}}: Tier-1 panels cost {{ds.panel.low|rs2}} to {{ds.panel.high|rs2}} per watt, about {{ds.panel.each_low|rs}} to {{ds.panel.each_high|rs}} for a {{ds.panel.w|int}} W panel. A {{ds.og10.kw|int}} kW on-grid system costs {{ds.og10.low_rs|rs}} to {{ds.og10.high_rs|rs}} installed and a {{ds.hy10.kw|int}} kW hybrid {{ds.hy10.low_rs|rs}} to {{ds.hy10.high_rs|rs}}. Ranges come from dated dealer price lists.",
+ "answer": "Solar prices in Pakistan, checked {{ds.checked}}: Tier-1 panels cost {{ds.panel.low|rs2}} to {{ds.panel.high|rs2}} per watt, about {{ds.panel.each_low|rs}} to {{ds.panel.each_high|rs}} for a {{ds.panel.w|int}} W panel. A {{ds.og10.kw|int}} kW on-grid system costs {{ds.og10.low_rs|rs}} to {{ds.og10.high_rs|rs}} installed and a {{ds.hy10.kw|int}} kW hybrid {{ds.hy10.low_rs|rs}} to {{ds.hy10.high_rs|rs}}. Ranges come from dealer and installer price lists, each shown with its source and date.",
  "key_facts": [
   "A {{ds.og5.kw|int}} kW on-grid solar system costs about {{ds.og5.low_rs|rs}} to {{ds.og5.high_rs|rs}} installed ({{ds.og5.w_low|rs2}} to {{ds.og5.w_high|rs2}} per watt) in the price lists checked on {{ds.checked}}.",
   "Solar panels sell for {{ds.panel.low|rs2}} to {{ds.panel.high|rs2}} per watt (median of {{ds.panel.sources|int}} dealer sources), so panels are well under half of an installed on-grid price.",
   "A {{ds.hybrid_inverter_6.low|rs}} to {{ds.hybrid_inverter_6.high|rs}} range covers most 6 kW hybrid inverters; a 5 kWh lithium battery costs {{ds.lithium_battery_5.low|rs}} to {{ds.lithium_battery_5.high|rs}}.",
   "Smaller systems cost more per watt: {{ds.og3.w_low|rs2}} to {{ds.og3.w_high|rs2}} for {{ds.og3.kw|int}} kW on-grid against {{ds.og10.w_low|rs2}} to {{ds.og10.w_high|rs2}} for {{ds.og10.kw|int}} kW.",
-  "All figures are secondary-source market prices with a date and link for every data point; Wattlyst does not sell solar equipment."
+  "All figures are secondary-source market prices; every data point has a source link and a date, taken from the source where it gives one and marked where it does not. Wattlyst does not sell solar equipment."
  ],
  "sections": [
   {
@@ -33,14 +33,14 @@
   {
    "h2": "Method",
    "p": [
-    "Each month Wattlyst collects current price ranges from Pakistani dealer price lists, installer price guides and news reports. For a size with four or more sources the range is the median of the sources' lows and highs; with fewer sources it is the lowest low and the highest high, so a single source keeps its full range. Obvious data errors and undated or old prices are excluded and the reason is recorded. Every source used is listed below with its date.",
+    "Each month Wattlyst collects current price ranges from Pakistani dealer price lists, installer price guides and news reports. For a size with four or more sources the range is the median of the sources' lows and highs; with fewer sources it is the lowest low and the highest high, so a single source keeps its full range. Obvious data errors and single-figure sources are excluded and the reason is recorded. Prices are dated where the source gives a date; where it does not, the date shown is the one we could infer (for example from the page's image paths) or the day we found it, and the source list says which. Some sources date from earlier in the year rather than this month, so check each one's date in the list below.",
     "The previous month's figures are frozen before the new month replaces them, so the CSV becomes a price history. Corrections go to the contact page."
    ]
   },
   {
    "h2": "Summary for journalists and researchers",
    "p": [
-    "Wattlyst Pakistan Solar Price Tracker, {{ds.checked}}: Tier-1 solar panels {{ds.panel.low|rs2}} to {{ds.panel.high|rs2}} per watt; {{ds.og10.kw|int}} kW on-grid system {{ds.og10.low_rs|rs}} to {{ds.og10.high_rs|rs}} installed; {{ds.hy10.kw|int}} kW hybrid {{ds.hy10.low_rs|rs}} to {{ds.hy10.high_rs|rs}}; 5 kWh lithium battery {{ds.lithium_battery_5.low|rs}} to {{ds.lithium_battery_5.high|rs}}. Compiled from dated dealer price lists; free to quote with a link."
+    "Wattlyst Pakistan Solar Price Tracker, {{ds.checked}}: Tier-1 solar panels {{ds.panel.low|rs2}} to {{ds.panel.high|rs2}} per watt; {{ds.og10.kw|int}} kW on-grid system {{ds.og10.low_rs|rs}} to {{ds.og10.high_rs|rs}} installed; {{ds.hy10.kw|int}} kW hybrid {{ds.hy10.low_rs|rs}} to {{ds.hy10.high_rs|rs}}; 5 kWh lithium battery {{ds.lithium_battery_5.low|rs}} to {{ds.lithium_battery_5.high|rs}}. Compiled from dealer and installer price lists, each with its source and date; free to quote with a link."
    ]
   }
  ],

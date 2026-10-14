@@ -3,7 +3,7 @@
   "source": "specs/formulas.md 'Global defaults' table and section notes; NEPRA Performance Standards (400/230 V, 50 Hz); rho_copper and rho_aluminium from IEC 60364-5-52 Annex G (rho1 = 1.25 x rho20 at working temperature)",
   "checked": "2026-10-14",
   "status": "Engineering defaults, every one editable on the page. Items marked engineer_confirm need PEC engineer sign-off before launch.",
-  "engineer_confirm": ["diversity_home", "heat_pump_cop", "ac_saving_per_degree", "soiling_rate_per_day", "soiling_cap", "gas_heater_eff", "gas_cv_mj_m3", "start_factors", "standard_generator_kva", "planner_day_share", "forecast_sky_bands", "rho_aluminium"]
+  "engineer_confirm": ["diversity_home", "heat_pump_cop", "ac_saving_per_degree", "soiling_rate_per_day", "soiling_cap", "gas_heater_eff", "gas_cv_mj_m3", "start_factors", "standard_generator_kva", "planner_day_share", "forecast_sky_bands", "rho_aluminium", "dc_ac_ratio_max", "forecast_max_day_whm2", "soiling_rate_max_per_day"]
  },
  "v_1ph": 230,
  "v_3ph": 400,
@@ -50,6 +50,8 @@
  "ac_setpoint_range_c": [16, 30],
  "soiling_rate_per_day": 0.003,
  "soiling_cap": 0.25,
+ "soiling_rate_max_per_day": 0.05,
+ "soiling_rate_max_per_day_source": "Upper guard for the dust-loss input (5% of output a day, far above the 0.3%/day planning rate and reported dust-storm losses) so a percent typed as a share (0.3 for 0.3%) is rejected; engineer to confirm",
  "ebike_charger_eff": 0.85,
  "ac_inverter_avg_kw_1_5_ton": 1.0,
  "ac_noninverter_kw_1_5_ton": 1.8,
@@ -59,6 +61,10 @@
  "planner_day_share": 0.5,
  "forecast_tilt_deg": 25,
  "forecast_max_wm2": 1500,
+ "forecast_max_day_whm2": 12000,
+ "dc_ac_ratio_max": 1.3,
+ "dc_ac_ratio_max_source": "Typical string/hybrid inverter DC/AC oversize 1.1-1.3 (manufacturer datasheets' maximum recommended PV input, e.g. 130% of rated AC power); engineer to confirm",
+ "forecast_max_day_whm2_source": "Plane-of-array daily irradiation above about 9 kWh/m2 does not occur at Pakistani latitudes (clear-sky maximum); 12,000 Wh/m2 is a safety cap against bad forecast data; engineer to confirm",
  "forecast_sky_bands": [
   {"min_pct": 85, "label": "Sunny"},
   {"min_pct": 60, "label": "Partly cloudy"},

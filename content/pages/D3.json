@@ -163,29 +163,29 @@
   }
  ],
  "answer": "A small off-grid house with three fans, eight LED bulbs, an inverter fridge, a TV, a pump and a router needs {{out.installed_kw|2}} kW of panels ({{out.panels|int}} panels), a {{out.battery_ah|int}} Ah lithium bank at {{out.battery_v|int}} V for {{out.night_hours|int}} hours of the full load after sunset, and a {{out.inverter_kw|2}} kW inverter. Panels = (day units + night units ÷ charging and inverter efficiency) ÷ sun yield; battery = night units ÷ (volts × usable share × efficiency).",
- "how": "Energy: watts × quantity × hours a day for every appliance = {{out.daily_kwh|1}} units a day; the night share, {{out.night_kwh|1}} units, comes from the battery, so the panels must refill it through charging and inverter losses: {{out.day_kwh|1}} + {{out.night_kwh|1}} ÷ ({{out.battery_inverter_eff|pct}} × {{out.charge_eff|pct}}) = {{out.array_kwh|1}} units a day, ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW of panels a day in your city = {{out.kw_energy|2}} kW. Power: the panels must also carry the {{out.running_w|int}} W running load at midday, ÷ {{out.pr|2}} performance ratio = {{out.kw_power|2}} kW. The larger, {{out.kw|2}} kW, rounded up to whole {{out.panel_w|int}} W panels = {{out.panels|int}} panels, {{out.installed_kw|2}} kW. Battery: {{out.running_w|int}} W × {{out.night_hours|int}} hours = {{out.night_kwh|1}} units after sunset, ÷ ({{out.battery_v|int}} V × {{out.battery_dod|pct}} usable × inverter efficiency) = {{out.battery_ah|int}} Ah, a bank of {{out.battery_kwh|1}} kWh. Inverter: {{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_w|int}} W continuous, with a surge rating of at least {{out.inverter_surge_w|int}} W for the pump.",
+ "how": "Energy: watts × quantity × hours a day for every appliance = {{out.daily_kwh|1}} units a day; the night share, {{out.night_kwh|1}} units, comes from the battery, so the panels must refill it through charging and inverter losses: {{out.day_kwh|1}} + {{out.night_kwh|1}} ÷ ({{out.battery_inverter_eff|pct}} × {{out.charge_eff|pct}}) = {{out.array_kwh|1}} units a day, ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW of panels a day in your city = {{out.kw_energy|2}} kW. Power: the panels must also carry the {{out.running_w|int}} W running load at midday, ÷ {{out.pr|2}} performance ratio = {{out.kw_power|2}} kW. The larger, {{out.kw|2}} kW, rounded up to whole {{out.panel_w|int}} W panels = {{out.panels|int}} panels, {{out.installed_kw|2}} kW. Battery: {{out.running_w|int}} W × {{out.night_hours|int}} hours = {{out.night_kwh|1}} units after sunset, ÷ ({{out.battery_v|int}} V × {{out.battery_dod|pct}} usable × inverter efficiency) = {{out.battery_ah|int}} Ah, a bank of {{out.battery_kwh|1}} kWh. Inverter: the larger of {{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_kw_load|2}} kW for the load and {{out.installed_kw|2}} kW of panels ÷ {{out.dc_ac_ratio_max|1}} = {{out.inverter_kw_array|2}} kW, so the panels are never more than {{out.dc_ac_ratio_max|1}} times the inverter: {{out.inverter_kw|2}} kW continuous, with a surge rating of at least {{out.inverter_surge_w|int}} W for the pump.",
  "key_facts": [
-  "An off-grid solar system has three parts sized separately: panels from the daily units plus the battery refill ({{out.array_kwh|1}} units ÷ {{out.yield_kwh_per_kwp_day|1}} per kW in Lahore = {{out.kw_energy|2}} kW), a battery from the load after sunset ({{out.battery_ah|int}} Ah at {{out.battery_v|int}} V for {{out.night_hours|int}} hours), and an inverter from the running watts ({{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_kw|2}} kW).",
+  "An off-grid solar system has three parts sized separately: panels from the daily units plus the battery refill ({{out.array_kwh|1}} units ÷ {{out.yield_kwh_per_kwp_day|1}} per kW in Lahore = {{out.kw_energy|2}} kW), a battery from the load after sunset ({{out.battery_ah|int}} Ah at {{out.battery_v|int}} V for {{out.night_hours|int}} hours), and an inverter from the running watts ({{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_kw_load|2}} kW), never smaller than the panels ÷ {{out.dc_ac_ratio_max|1}} ({{out.inverter_kw_array|2}} kW); here {{out.inverter_kw|2}} kW.",
   "The battery bank for one night is sized for the full running load for the hours you enter; running it for the whole {{ex.4.out.night_hours|int}} hour night needs {{ex.4.out.battery_ah|int}} Ah at {{ex.4.out.battery_v|int}} V ({{ex.4.out.battery_kwh|1}} kWh), against {{out.battery_ah|int}} Ah for {{out.night_hours|int}} hours.",
   "A tubular bank for the same night is {{ex.2.out.battery_ah|int}} Ah at {{ex.2.out.battery_v|int}} V ({{ex.2.out.battery_kwh|1}} kWh) because only {{d.dod_lead_acid|pct}} of it may be used, against {{d.dod_lifepo4|pct}} for lithium.",
   "Adding one 1 ton inverter AC for eight hours takes the same house to {{ex.1.out.daily_kwh|1}} units a day, {{ex.1.out.panels|int}} panels ({{ex.1.out.installed_kw|2}} kW), a {{ex.1.out.battery_ah|int}} Ah bank at {{ex.1.out.battery_v|int}} V and a {{ex.1.out.inverter_kw|2}} kW inverter."
  ],
  "formula": {
-  "text": "kW = max(E_day ÷ yield, P_run ÷ 1000 ÷ PR); panels = ceil(kW × 1000 ÷ W_panel); Ah = P_run × h_night ÷ (V × DoD × η); P_inv = P_run × m",
+  "text": "kW = max(E_day ÷ yield, P_run ÷ 1000 ÷ PR); panels = ceil(kW × 1000 ÷ W_panel); Ah = P_run × h_night ÷ (V × DoD × η); P_inv = max(P_run × m, kW × 1000 ÷ r_max)",
   "lines": [
    "E_day = Σ watts × qty × hours ÷ 1000, units used in a full day",
    "yield = units one kW of panels makes a day in your city",
    "P_run = total running watts; PR = performance ratio",
    "h_night = hours the full load runs from the battery after sunset",
    "V = bank voltage; DoD = usable share of the battery; η = inverter efficiency",
-   "m = inverter margin; surge ≥ largest starting load"
+   "m = inverter margin; r_max = largest panel-to-inverter (DC/AC) ratio; surge ≥ largest starting load"
   ]
  },
  "sections": [
   {
    "h2": "How is an off-grid solar system designed?",
    "p": [
-    "Off-grid means no grid at all: the panels make every unit, the battery carries every night and the inverter runs every appliance. So each part is sized from the appliance list. The panels must make the day's {{out.daily_kwh|1}} units, refill what the battery gave at night with its charging and inverter losses ({{out.array_kwh|1}} units in all), and carry the {{out.running_w|int}} W running load at noon; the larger rule gives {{out.kw|2}} kW, or {{out.panels|int}} panels of {{out.panel_w|int}} W. The battery must hold the load after sunset: {{out.running_w|int}} W for {{out.night_hours|int}} hours is {{out.night_kwh|1}} units, which at {{out.battery_v|int}} V with lithium is {{out.battery_ah|int}} Ah. The inverter must carry {{out.running_w|int}} W with a margin: {{out.inverter_kw|2}} kW, with a surge of {{out.inverter_surge_w|int}} W for the pump motor.",
+    "Off-grid means no grid at all: the panels make every unit, the battery carries every night and the inverter runs every appliance. So each part is sized from the appliance list. The panels must make the day's {{out.daily_kwh|1}} units, refill what the battery gave at night with its charging and inverter losses ({{out.array_kwh|1}} units in all), and carry the {{out.running_w|int}} W running load at noon; the larger rule gives {{out.kw|2}} kW, or {{out.panels|int}} panels of {{out.panel_w|int}} W. The battery must hold the load after sunset: {{out.running_w|int}} W for {{out.night_hours|int}} hours is {{out.night_kwh|1}} units, which at {{out.battery_v|int}} V with lithium is {{out.battery_ah|int}} Ah. The inverter must carry {{out.running_w|int}} W with a margin and accept the panels: {{out.inverter_kw|2}} kW, with a surge of {{out.inverter_surge_w|int}} W for the pump motor.",
     "Everything in the list counts, including the appliances that run for minutes, because there is no grid to fall back on. Check each one's watts against its label before trusting the result."
    ]
   },
@@ -199,7 +199,7 @@
   {
    "h2": "Off-grid inverter size",
    "p": [
-    "The inverter is sized from the running watts of everything that can be on at once, not from the panels or the battery: {{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_w|int}} W continuous, so a {{out.inverter_kw|2}} kW off-grid or hybrid inverter. Its surge rating must cover the largest motor start, here {{out.inverter_surge_w|int}} W for the water pump; a non-inverter fridge or AC pushes that figure up fast.",
+    "The inverter is sized mainly from the running watts of everything that can be on at once: {{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_kw_load|2}} kW. It must also accept the panels: inverters take an array up to about {{out.dc_ac_ratio_max|1}} times their rating, so it is never smaller than {{out.installed_kw|2}} kW ÷ {{out.dc_ac_ratio_max|1}} = {{out.inverter_kw_array|2}} kW. The larger gives a {{out.inverter_kw|2}} kW off-grid or hybrid inverter. Its surge rating must cover the largest motor start, here {{out.inverter_surge_w|int}} W for the water pump; a non-inverter fridge or AC pushes that figure up fast.",
     "Buy an inverter whose battery voltage matches the bank you chose and whose MPPT input can take the panel kW and string voltage; the charge controller size calculator explains those limits."
    ]
   },
@@ -271,7 +271,7 @@
     "dod": 0.5
    },
    "title": "Small off-grid house on a {{out.battery_v|int}} V tubular bank",
-   "text": "Same inverter ({{out.inverter_kw|2}} kW); the panels become {{out.panels|int}} × {{out.panel_w|int}} W because lead-acid charges at {{out.charge_eff|pct}} efficiency, and the battery becomes {{out.battery_ah|int}} Ah at {{out.battery_v|int}} V, {{out.battery_kwh|1}} kWh, because only {{out.battery_dod|pct}} of a tubular bank may be used each night."
+   "text": "Inverter {{out.inverter_kw|2}} kW, the larger of the load rule and the panels ÷ {{out.dc_ac_ratio_max|1}}; the panels become {{out.panels|int}} × {{out.panel_w|int}} W because lead-acid charges at {{out.charge_eff|pct}} efficiency, and the battery becomes {{out.battery_ah|int}} Ah at {{out.battery_v|int}} V, {{out.battery_kwh|1}} kWh, because only {{out.battery_dod|pct}} of a tubular bank may be used each night."
   },
   {
    "inputs": {
@@ -307,7 +307,7 @@
     "night_hours": 12
    },
    "title": "Worst case: full load for the whole {{out.night_hours|int}} hour night",
-   "text": "Inverter unchanged ({{out.inverter_kw|2}} kW), but the panels grow to {{out.panels|int}} ({{out.installed_kw|2}} kW) because they must refill the bigger night draw. Battery: {{out.running_w|int}} W × {{out.night_hours|int}} h = {{out.night_kwh|1}} units, which is {{out.battery_ah|int}} Ah at {{out.battery_v|int}} V, {{out.battery_kwh|1}} kWh. More than the house uses in a whole day, because it assumes everything runs all night."
+   "text": "The panels grow to {{out.panels|int}} ({{out.installed_kw|2}} kW) because they must refill the bigger night draw, and the inverter grows with them to {{out.inverter_kw|2}} kW so the panels stay within {{out.dc_ac_ratio_max|1}} times its rating. Battery: {{out.running_w|int}} W × {{out.night_hours|int}} h = {{out.night_kwh|1}} units, which is {{out.battery_ah|int}} Ah at {{out.battery_v|int}} V, {{out.battery_kwh|1}} kWh. More than the house uses in a whole day, because it assumes everything runs all night."
   }
  ],
  "table": {
@@ -548,7 +548,7 @@
  "faq": [
   {
    "q": "How do I size an off-grid solar system?",
-   "a": "From the appliance list: panels from the daily units, the battery refill and the midday load ({{out.panels|int}} panels, {{out.installed_kw|2}} kW for the house above), a battery from the load after sunset ({{out.battery_ah|int}} Ah at {{out.battery_v|int}} V for {{out.night_hours|int}} hours), and an inverter from the running watts ({{out.inverter_kw|2}} kW)."
+   "a": "From the appliance list: panels from the daily units, the battery refill and the midday load ({{out.panels|int}} panels, {{out.installed_kw|2}} kW for the house above), a battery from the load after sunset ({{out.battery_ah|int}} Ah at {{out.battery_v|int}} V for {{out.night_hours|int}} hours), and an inverter from the running watts, at least the panels ÷ {{out.dc_ac_ratio_max|1}} ({{out.inverter_kw|2}} kW)."
   },
   {
    "q": "How big should the off-grid battery bank be?",
@@ -556,7 +556,7 @@
   },
   {
    "q": "What size inverter for an off-grid system?",
-   "a": "The running watts of everything on at once times the {{out.margin|2}} margin: {{out.inverter_kw|2}} kW for the house above, with a surge rating of at least {{out.inverter_surge_w|int}} W for the pump. The panels and battery do not set the inverter size."
+   "a": "The running watts of everything on at once times the {{out.margin|2}} margin, but never less than the panel kW ÷ {{out.dc_ac_ratio_max|1}}, because an inverter accepts only so much array: {{out.inverter_kw|2}} kW for the house above, with a surge rating of at least {{out.inverter_surge_w|int}} W for the pump. The battery does not set the inverter size."
   },
   {
    "q": "Can an off-grid solar system run an AC?",

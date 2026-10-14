@@ -109,12 +109,20 @@ function solarSystem(daily_kwh, running_w, surge_w, i, d) {
   const kw = Math.max(kw_energy, kw_power);
   const panels = ceilSafe((kw * 1000) / panel_w);
   const installed_kw = (panels * panel_w) / 1000;
+  // Inverter continuous rating: carry the running load with margin, and do not let the array exceed the
+  // inverter by more than the usual DC/AC oversize (formulas.md D5/D8): ≥ max(P_run × margin, kWp × 1000 / ratio_max).
+  const load_w = running_w * margin;
+  const dc_ac_ratio_max = dflt(d, 'dc_ac_ratio_max');
+  const inverter_w = Math.max(load_w, (installed_kw * 1000) / dc_ac_ratio_max);
   const out = {
     daily_kwh, array_kwh, ...offgrid, running_w, surge_w, ...y, pr, panel_w, margin, kw_energy, kw_power, kw, panels, installed_kw,
     roof_m2: panels * dflt(d, 'panel_area_m2'),
     monthly_kwh_estimate: installed_kw * y.yield_kwh_per_kwp_day * dflt(d, 'days_per_month'),
-    inverter_w: running_w * margin,
-    inverter_kw: (running_w * margin) / 1000,
+    inverter_kw_load: load_w / 1000,
+    inverter_kw_array: installed_kw / dc_ac_ratio_max,
+    dc_ac_ratio_max,
+    inverter_w,
+    inverter_kw: inverter_w / 1000,
     inverter_surge_w: surge_w,
     limited_by: kw_power > kw_energy ? 'power' : 'energy',
   };
@@ -183,7 +191,7 @@ export const charge_controller = calculator((i, d) => {
 export const cleaning_loss = calculator((i, d) => {
   const kwp = pos(i, 'kwp');
   const y = pos(i, 'yield');
-  const rate = num(i, 'rate', { def: dflt(d, 'soiling_rate_per_day'), min: 0, max: 1 });
+  const rate = num(i, 'rate', { def: dflt(d, 'soiling_rate_per_day'), min: 0, max: dflt(d, 'soiling_rate_max_per_day'), code: 'soiling_rate_invalid' });
   const days = nonneg(i, 'days');
   const tariff = nonneg(i, 'tariff');
   const cap = dflt(d, 'soiling_cap');
@@ -205,7 +213,7 @@ export const cleaning_loss = calculator((i, d) => {
   return out;
 });
 
-/** N14: days = (Ah × V × DoD × η_inv) / (daily load Wh − cloudy-day solar Wh). */
+/** N14: days = (Ah × V × DoD × η_inv) / (daily load Wh − cloudy-day solar Wh); optional bank Ah for target_days. */
 export const autonomy = calculator((i, d) => {
   const ah = pos(i, 'ah');
   const v = pos(i, 'v');
@@ -216,5 +224,11 @@ export const autonomy = calculator((i, d) => {
   const deficit_wh = load_wh - solar_wh;
   if (deficit_wh <= 0) throw new CalcError('solar_covers_load', 'solar_wh');
   const usable_wh = ah * v * dod * eta;
-  return { ah, v, dod, eta, load_wh, solar_wh, usable_wh, deficit_wh, days: usable_wh / deficit_wh };
+  const out = { ah, v, dod, eta, load_wh, solar_wh, usable_wh, deficit_wh, days: usable_wh / deficit_wh };
+  // Bank for a chosen number of cloudy days: Ah = days × (E_load − E_solar) ÷ (V × DoD × η).
+  if (has(i, 'target_days')) {
+    out.target_days = pos(i, 'target_days');
+    out.target_ah = (out.target_days * deficit_wh) / (v * dod * eta);
+  }
+  return out;
 });

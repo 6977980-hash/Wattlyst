@@ -106,7 +106,7 @@
   }
  ],
  "answer": "A small one-hall mosque with ceiling fans, tube lights, 1.5 ton inverter ACs, a water pump, a dispenser and a sound system needs about {{out.installed_kw|2}} kW of solar ({{out.panels|int}} panels of {{out.panel_w|int}} W) with a {{out.inverter_kw|2}} kW inverter in Lahore. System size is the larger of daily units ÷ sun yield and running watts ÷ performance ratio.",
- "how": "Energy: each appliance's watts × quantity × hours a day (inverter ACs at their average draw), added up = {{out.daily_kwh|1}} units a day; ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW of panels a day for your city = {{out.kw_energy|2}} kW. Power: {{out.running_w|int}} W running load ÷ {{out.pr|2}} performance ratio = {{out.kw_power|2}} kW, so the panels can carry everything at Zuhr or at the shop's midday peak. The larger, {{out.kw|2}} kW, needs {{out.panels|int}} panels of {{out.panel_w|int}} W = {{out.installed_kw|2}} kW, about {{out.monthly_kwh_estimate|int}} units a month. Inverter = {{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_kw|2}} kW, with a surge rating of at least {{out.inverter_surge_w|int}} W.",
+ "how": "Energy: each appliance's watts × quantity × hours a day (inverter ACs at their average draw), added up = {{out.daily_kwh|1}} units a day; ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW of panels a day for your city = {{out.kw_energy|2}} kW. Power: {{out.running_w|int}} W running load ÷ {{out.pr|2}} performance ratio = {{out.kw_power|2}} kW, so the panels can carry everything at Zuhr or at the shop's midday peak. The larger, {{out.kw|2}} kW, needs {{out.panels|int}} panels of {{out.panel_w|int}} W = {{out.installed_kw|2}} kW, about {{out.monthly_kwh_estimate|int}} units a month. Inverter: the larger of {{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_kw_load|2}} kW for the load and {{out.installed_kw|2}} kW of panels ÷ {{out.dc_ac_ratio_max|1}} = {{out.inverter_kw_array|2}} kW, so the panels are never more than {{out.dc_ac_ratio_max|1}} times the inverter: {{out.inverter_kw|2}} kW continuous, with a surge rating of at least {{out.inverter_surge_w|int}} W.",
  "key_facts": [
   "A small one-hall mosque in Lahore with fans, lights, 1.5 ton inverter ACs, a water pump, a dispenser and a sound system runs about {{out.running_w|int}} W and uses about {{out.daily_kwh|1}} units a day, so it needs about {{out.installed_kw|2}} kW of solar and a {{out.inverter_kw|2}} kW inverter.",
   "A small shop open all day with lights, fans, a deep freezer, a computer, CCTV and Wi-Fi uses about {{ex.2.out.daily_kwh|1}} units a day and needs about {{ex.2.out.installed_kw|2}} kW of solar with a {{ex.2.out.inverter_kw|2}} kW inverter.",
@@ -120,7 +120,7 @@
    "yield = units one kW of panels makes a day in your city",
    "P_run = total running watts, PR = performance ratio",
    "W_panel = watts of one panel",
-   "Inverter kW = P_run × margin ÷ 1000; surge ≥ largest starting load",
+   "Inverter W = max(P_run × margin, kW × 1000 ÷ r_max), r_max = largest panel-to-inverter (DC/AC) ratio; surge ≥ largest starting load",
    "Battery Ah = P_run × night hours ÷ (V × DoD × η)"
   ]
  },

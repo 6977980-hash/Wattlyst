@@ -41,10 +41,10 @@
   },
   {
    "name": "load_wh",
-   "label": "Energy the house uses a day from the battery",
+   "label": "Energy the house uses a day on the solar inverter",
    "unit": "Wh",
    "default": 2000,
-   "hint": "Watts × hours a day of everything on the solar inverter, added up (units a day × 1000). The home load calculator gives it."
+   "hint": "Watts × hours a day of everything on the solar inverter, added up (units a day × 1000), before subtracting solar. The home load calculator gives it."
   },
   {
    "name": "solar_wh",
@@ -52,6 +52,13 @@
    "unit": "Wh",
    "default": 600,
    "hint": "What the panels still make on an overcast or smoggy day: roughly a fifth to two fifths of a normal day. Your inverter app's history from a cloudy day is the best figure. Enter 0 for no sun at all."
+  },
+  {
+   "name": "target_days",
+   "label": "Cloudy days you want the bank to cover",
+   "unit": "days",
+   "default": 2,
+   "hint": "For the bank size below. Grid-tied homes often plan for less than one day; off-grid homes two or three."
   },
   {
    "name": "eta",
@@ -70,6 +77,12 @@
    "unit": "days"
   },
   {
+   "key": "target_ah",
+   "label": "Bank needed for the days you want",
+   "spec": "int",
+   "unit": "Ah"
+  },
+  {
    "key": "usable_wh",
    "label": "Usable battery energy",
    "spec": "int",
@@ -83,7 +96,7 @@
   }
  ],
  "answer": "A {{in.v|int}} V {{in.ah|int}} Ah tubular battery bank carries a {{in.load_wh|int}} Wh daily load for about {{out.days|1}} cloudy days when the panels still make {{in.solar_wh|int}} Wh a day. Days of autonomy = (Ah × V × depth of discharge × inverter efficiency) ÷ (daily load in Wh − cloudy-day solar in Wh). Lithium, at a deeper discharge, lasts longer from the same Ah.",
- "how": "Usable energy: {{out.ah|int}} Ah × {{out.v|int}} V × {{out.dod|pct}} depth of discharge × {{out.eta|pct}} inverter efficiency = {{out.usable_wh|int}} Wh. Shortfall each cloudy day: {{out.load_wh|int}} Wh load − {{out.solar_wh|int}} Wh from the panels = {{out.deficit_wh|int}} Wh. Days: {{out.usable_wh|int}} ÷ {{out.deficit_wh|int}} = {{out.days|1}} days before the bank reaches its safe limit.",
+ "how": "Usable energy: {{out.ah|int}} Ah × {{out.v|int}} V × {{out.dod|pct}} depth of discharge × {{out.eta|pct}} inverter efficiency = {{out.usable_wh|int}} Wh. Shortfall each cloudy day: {{out.load_wh|int}} Wh load − {{out.solar_wh|int}} Wh from the panels = {{out.deficit_wh|int}} Wh. Days: {{out.usable_wh|int}} ÷ {{out.deficit_wh|int}} = {{out.days|1}} days before the bank reaches its safe limit. Bank for {{out.target_days|1}} days: {{out.target_days|1}} × {{out.deficit_wh|int}} Wh ÷ ({{out.v|int}} V × {{out.dod|pct}} × {{out.eta|pct}}) = {{out.target_ah|int}} Ah.",
  "key_facts": [
   "Days of battery autonomy = usable battery Wh ÷ (daily load Wh − Wh the panels still make on a cloudy day); usable Wh = Ah × V × depth of discharge × inverter efficiency.",
   "A {{in.v|int}} V {{in.ah|int}} Ah tubular bank used to {{d.dod_lead_acid|pct}} gives {{out.usable_wh|int}} Wh, enough for about {{out.days|1}} cloudy days at a {{in.load_wh|int}} Wh load with {{in.solar_wh|int}} Wh of cloudy-day solar.",
@@ -91,7 +104,7 @@
   "On a cloudy or smoggy day panels still make a share of their usual output, often a fifth to two fifths; counting it as zero undersizes the days, counting a sunny day oversizes them."
  ],
  "formula": {
-  "text": "Days = (Ah × V × DoD × η) ÷ (E_load − E_solar,cloudy)",
+  "text": "Days = (Ah × V × DoD × η) ÷ (E_load − E_solar,cloudy); bank Ah for D days = D × (E_load − E_solar,cloudy) ÷ (V × DoD × η)",
   "lines": [
    "Ah, V = bank capacity and voltage",
    "DoD = depth of discharge: the share you can use without shortening battery life",
@@ -119,7 +132,7 @@
   {
    "h2": "Days of autonomy solar: how big a battery for the days you want?",
    "p": [
-    "Turn the formula round: bank Ah = days wanted × cloudy-day shortfall ÷ (V × depth of discharge × inverter efficiency). For the default shortfall of {{out.deficit_wh|int}} Wh, every extra day takes another {{out.deficit_wh|int}} Wh of usable energy. Each day of autonomy costs a full day's worth of battery, so most grid-tied homes in Pakistan plan for less than one day and let the grid carry the rest; off-grid homes plan for two or three.",
+    "Turn the formula round: bank Ah = days wanted × cloudy-day shortfall ÷ (V × depth of discharge × inverter efficiency). For {{in.target_days|int}} cloudy days at the default shortfall of {{out.deficit_wh|int}} Wh, a {{in.v|int}} V tubular bank needs {{out.target_ah|int}} Ah; every extra day takes another {{out.deficit_wh|int}} Wh of usable energy. Each day of autonomy costs a full day's worth of battery, so most grid-tied homes in Pakistan plan for less than one day and let the grid carry the rest; off-grid homes plan for two or three.",
     "A smaller load is the cheapest autonomy. Moving the iron, the pump and the AC off the battery inverter on cloudy days adds days from the same bank."
    ]
   },
@@ -222,6 +235,10 @@
   {
    "q": "How many days of autonomy should a solar system have?",
    "a": "Grid-tied homes with a battery usually plan for less than one day, because the grid takes over. Off-grid homes plan for two or three cloudy days; each extra day costs a full day's shortfall in battery."
+  },
+  {
+   "q": "How big a battery do I need for two or three cloudy days?",
+   "a": "Days wanted × the daily shortfall ÷ (bank volts × depth of discharge × inverter efficiency). For {{in.target_days|int}} days at a {{in.load_wh|int}} Wh load with {{in.solar_wh|int}} Wh of cloudy-day solar, a {{in.v|int}} V tubular bank needs about {{out.target_ah|int}} Ah; the calculator works it out for your figures."
   },
   {
    "q": "How much do solar panels make on a cloudy day?",

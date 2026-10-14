@@ -892,14 +892,106 @@
       "kw_inv": 1,
       "hours_year": 1000,
       "tariff": 40,
-      "price_diff": 60000
+      "price_diff": 60000,
+      "duty": 1
     },
     "expected": {
       "annual_saving": 32000,
       "payback_months": 22.5
     },
     "tolerance": 0.01,
-    "note": ""
+    "note": "duty 1 (compressor never cycles off) added 2026-10-14 when the duty input was introduced; same comparison as before."
+  },
+  {
+    "calc": "ac_payback",
+    "name": "default duty 0.8: 1.8 kW x 0.8 = 1.44 kW average vs 1.0 kW, 1200 h, Rs 40, gap 40,000",
+    "inputs": {
+      "kw_noninv": 1.8,
+      "kw_inv": 1,
+      "hours_year": 1200,
+      "tariff": 40,
+      "price_diff": 40000
+    },
+    "expected": {
+      "duty": 0.8,
+      "kw_noninv_avg": 1.44,
+      "units_noninv": 1728,
+      "units_inv": 1200,
+      "rs_noninv": 69120,
+      "rs_inv": 48000,
+      "annual_units_saved": 528,
+      "annual_saving": 21120,
+      "payback_months": 22.7273
+    },
+    "tolerance": 0.01,
+    "note": "formulas.md N10 / E5: non-inverter average = running kW x ac_noninverter_duty"
+  },
+  {
+    "calc": "ac_payback",
+    "name": "more hours than a year has is rejected",
+    "inputs": {
+      "kw_noninv": 1.8,
+      "kw_inv": 1,
+      "hours_year": 9000,
+      "tariff": 40,
+      "price_diff": 40000
+    },
+    "expected": {
+      "error": "hours_year_invalid"
+    },
+    "tolerance": 0,
+    "note": "edge case: 8,760 h max"
+  },
+  {
+    "calc": "ac_payback",
+    "name": "8,760 hours (all year) is accepted",
+    "inputs": {
+      "kw_noninv": 1.8,
+      "kw_inv": 1,
+      "hours_year": 8760,
+      "tariff": 40,
+      "price_diff": 40000,
+      "duty": 1
+    },
+    "expected": {
+      "annual_units_saved": 7008
+    },
+    "tolerance": 0.01,
+    "note": "edge case"
+  },
+  {
+    "calc": "ac_payback",
+    "name": "duty above 1 is rejected",
+    "inputs": {
+      "kw_noninv": 1.8,
+      "kw_inv": 1,
+      "hours_year": 1200,
+      "tariff": 40,
+      "price_diff": 40000,
+      "duty": 1.5
+    },
+    "expected": {
+      "error": "duty_invalid"
+    },
+    "tolerance": 0,
+    "note": "edge case"
+  },
+  {
+    "calc": "ac_payback",
+    "name": "inverter AC above the non-inverter average is rejected",
+    "inputs": {
+      "kw_noninv": 1.8,
+      "kw_inv": 1,
+      "hours_year": 1200,
+      "tariff": 40,
+      "price_diff": 40000,
+      "duty": 0.5
+    },
+    "expected": {
+      "error": "inverter_ac_must_use_less"
+    },
+    "tolerance": 0,
+    "note": "1.8 x 0.5 = 0.9 kW < 1.0 kW"
   },
   {
     "calc": "series_parallel",
@@ -952,6 +1044,44 @@
     },
     "tolerance": 0.01,
     "note": ""
+  },
+  {
+    "calc": "autonomy",
+    "name": "bank for 3 cloudy days at the same load and bank voltage",
+    "inputs": {
+      "ah": 200,
+      "v": 48,
+      "dod": 0.5,
+      "eta": 0.85,
+      "load_wh": 4000,
+      "solar_wh": 1000,
+      "target_days": 3
+    },
+    "expected": {
+      "days": 1.36,
+      "target_days": 3,
+      "target_ah": 441.1765
+    },
+    "tolerance": 0.01,
+    "note": "3 x 3000 / (48 x 0.5 x 0.85) = 9000 / 20.4"
+  },
+  {
+    "calc": "autonomy",
+    "name": "zero target days is rejected",
+    "inputs": {
+      "ah": 200,
+      "v": 48,
+      "dod": 0.5,
+      "eta": 0.85,
+      "load_wh": 4000,
+      "solar_wh": 1000,
+      "target_days": 0
+    },
+    "expected": {
+      "error": "target_days_must_be_positive"
+    },
+    "tolerance": 0,
+    "note": "edge case"
   },
   {
     "calc": "kw_to_kva",
@@ -2049,6 +2179,39 @@
   },
   {
     "calc": "cleaning_loss",
+    "name": "rate typed as a percent (0.3 for 0.3%) is rejected",
+    "inputs": {
+      "kwp": 5,
+      "yield": 4,
+      "rate": 0.3,
+      "days": 10,
+      "tariff": 40
+    },
+    "expected": {
+      "error": "soiling_rate_invalid"
+    },
+    "tolerance": 0,
+    "note": "edge case: data/defaults.json soiling_rate_max_per_day 0.05 (2026-10-14)"
+  },
+  {
+    "calc": "cleaning_loss",
+    "name": "rate at the 5% a day maximum is accepted",
+    "inputs": {
+      "kwp": 5,
+      "yield": 4,
+      "rate": 0.05,
+      "days": 2,
+      "tariff": 40
+    },
+    "expected": {
+      "soiling": 0.1,
+      "loss_kwh_day": 2
+    },
+    "tolerance": 0.001,
+    "note": "edge case"
+  },
+  {
+    "calc": "cleaning_loss",
     "name": "clean when cumulative loss beats Rs 1500 cleaning cost",
     "inputs": {
       "kwp": 5,
@@ -2804,10 +2967,11 @@
       "kw": 2.96,
       "panels": 6,
       "installed_kw": 3.51,
-      "inverter_w": 2212.5
+      "inverter_kw_load": 2.2125,
+      "inverter_w": 2700
     },
     "tolerance": 0.01,
-    "note": "fans use typical 12 h/day from appliances.json; AC energy at avg_w"
+    "note": "fans use typical 12 h/day from appliances.json; AC energy at avg_w. Inverter raised 2026-10-14 to keep the array within dc_ac_ratio_max (formulas.md D5/D8); inverter_kw_load is the old P_run x margin figure."
   },
   {
     "calc": "solar_from_loads",
@@ -3524,11 +3688,12 @@
       "kw_power": 5.7692,
       "panels": 17,
       "installed_kw": 9.945,
-      "inverter_w": 5625,
+      "inverter_kw_load": 5.625,
+      "inverter_w": 7650,
       "inverter_surge_w": 13500
     },
     "tolerance": 0.01,
-    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): very large; 3600 x 12 / 1000 / 4.6; 9391/585 = 16.05 -> 17"
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): very large; 3600 x 12 / 1000 / 4.6; 9391/585 = 16.05 -> 17. Inverter raised 2026-10-14 to keep the array within dc_ac_ratio_max (formulas.md D5/D8); inverter_kw_load is the old P_run x margin figure."
   },
   {
     "calc": "solar_for_ac",
@@ -3567,12 +3732,13 @@
       "kw": 1,
       "panels": 2,
       "installed_kw": 1.17,
-      "inverter_w": 625,
+      "inverter_kw_load": 0.625,
+      "inverter_w": 900,
       "inverter_surge_w": 500,
       "limited_by": "energy"
     },
     "tolerance": 0.01,
-    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): yield input overrides city"
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): yield input overrides city. Inverter raised 2026-10-14 to keep the array within dc_ac_ratio_max (formulas.md D5/D8); inverter_kw_load is the old P_run x margin figure."
   },
   {
     "calc": "solar_from_loads",
@@ -4356,7 +4522,8 @@
       "peak_w": 2340,
       "daily_kwh": 13.04,
       "monthly_units": 391.2,
-      "inverter_w": 2362.5,
+      "inverter_kw_load": 2.3625,
+      "inverter_w": 2700,
       "battery_ah": 102.8807,
       "battery_kwh": 2.4691,
       "panels": 6,
@@ -4371,7 +4538,7 @@
       "generator_pick_kva": 3
     },
     "tolerance": 0.01,
-    "note": "391.2 units x 36.46 (301-400 band); import 195.6 x 28.91 - export 225.6 x 11 = 3173.20; battery 2 kWh / (24 x 0.9 x 0.9); generator max(2362.5, 2340)/0.8 -> 3 kVA"
+    "note": "391.2 units x 36.46 (301-400 band); import 195.6 x 28.91 - export 225.6 x 11 = 3173.20; battery 2 kWh / (24 x 0.9 x 0.9); generator max(2362.5, 2340)/0.8 -> 3 kVA. Inverter raised 2026-10-14 to keep the array within dc_ac_ratio_max (formulas.md D5/D8); inverter_kw_load is the old P_run x margin figure."
   },
   {
     "calc": "home_plan",
@@ -4867,7 +5034,8 @@
       "sky": "Typical day",
       "kwh_per_kwp": 4,
       "psh": 5.1,
-      "city_name": "Lahore"
+      "city_name": "Lahore",
+      "no_loss_overstatement": 0.2821
     },
     "tolerance": 0.001,
     "note": ""
@@ -5000,6 +5168,85 @@
     },
     "tolerance": 0,
     "note": ""
+  },
+  {
+    "calc": "solar_forecast",
+    "name": "N6: a day above the daily irradiation cap is rejected",
+    "inputs": {
+      "kwp": 5,
+      "city": "lahore",
+      "gti_wm2": [
+        600,
+        600,
+        600,
+        600,
+        600,
+        600,
+        600,
+        600,
+        600,
+        600,
+        600,
+        600,
+        600,
+        600,
+        600,
+        600,
+        600,
+        600,
+        600,
+        600,
+        600,
+        600,
+        600,
+        600
+      ]
+    },
+    "expected": {
+      "error": "forecast_invalid"
+    },
+    "tolerance": 0,
+    "note": "24 x 600 = 14,400 Wh/m2 > forecast_max_day_whm2 12,000 (2026-10-14)"
+  },
+  {
+    "calc": "solar_forecast",
+    "name": "N6: a day exactly at the daily cap is accepted",
+    "inputs": {
+      "kwp": 5,
+      "city": "lahore",
+      "gti_wm2": [
+        500,
+        500,
+        500,
+        500,
+        500,
+        500,
+        500,
+        500,
+        500,
+        500,
+        500,
+        500,
+        500,
+        500,
+        500,
+        500,
+        500,
+        500,
+        500,
+        500,
+        500,
+        500,
+        500,
+        500
+      ]
+    },
+    "expected": {
+      "psh": 12,
+      "units": 46.8
+    },
+    "tolerance": 0.001,
+    "note": "edge case: 5 x 12 x 0.78"
   },
   {
     "calc": "solar_forecast",

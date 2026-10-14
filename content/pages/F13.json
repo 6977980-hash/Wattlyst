@@ -62,10 +62,10 @@
    "unit": "kW"
   }
  ],
- "answer": "Peak hours for LESCO and the other ex-WAPDA DISCOs are {{data.tariff.tou.peak_hours.seasons.2.from}} to {{data.tariff.tou.peak_hours.seasons.2.to}} in {{data.tariff.tou.peak_hours.seasons.2.months}} and {{data.tariff.tou.peak_hours.seasons.0.from}} to {{data.tariff.tou.peak_hours.seasons.0.to}} in {{data.tariff.tou.peak_hours.seasons.0.months}}, per NEPRA's 2023 schedule, not yet re-confirmed for 2026. They matter on time-of-use meters ({{d.tou_threshold_kw|int}} kW and above): energy charge = peak units × {{data.tariff.tou.peak|rs2}} + off-peak units × {{data.tariff.tou.offpeak|rs2}}.",
+ "answer": "Peak hours for LESCO and the other ex-WAPDA DISCOs are {{data.tariff.tou.peak_hours.seasons.2.from}} to {{data.tariff.tou.peak_hours.seasons.2.to}} in {{data.tariff.tou.peak_hours.seasons.2.months}} and {{data.tariff.tou.peak_hours.seasons.0.from}} to {{data.tariff.tou.peak_hours.seasons.0.to}} in {{data.tariff.tou.peak_hours.seasons.0.months}}, per NEPRA's 2023 IESCO schedule, not yet re-confirmed for 2026. They matter on time-of-use meters ({{d.tou_threshold_kw|int}} kW and above): energy charge = peak units × {{data.tariff.tou.peak|rs2}} + off-peak units × {{data.tariff.tou.offpeak|rs2}}.",
  "how": "Energy: {{out.peak_units|int}} peak units at the peak rate + {{out.offpeak_units|int}} off-peak units at the off-peak rate = {{out.energy_rs|rs}} for {{out.units|int}} units. Fixed charge: billed on {{out.billable_kw|1}} kW, the higher of half the {{out.sanctioned_kw|1}} kW sanctioned load and the MDI entered ({{out.mdi_kw|1}} kW) = {{out.fixed_rs|rs}}. FC surcharge, QTA, FPA and GST come on top; this tool works out the energy and fixed charge only.",
  "key_facts": [
-  "Under the latest NEPRA schedule found (the 2023 IESCO tariff determination, also published on PITC's bill portal), peak hours are {{data.tariff.tou.peak_hours.seasons.0.from}} to {{data.tariff.tou.peak_hours.seasons.0.to}} in {{data.tariff.tou.peak_hours.seasons.0.months}}, {{data.tariff.tou.peak_hours.seasons.1.from}} to {{data.tariff.tou.peak_hours.seasons.1.to}} in {{data.tariff.tou.peak_hours.seasons.1.months}}, {{data.tariff.tou.peak_hours.seasons.2.from}} to {{data.tariff.tou.peak_hours.seasons.2.to}} in {{data.tariff.tou.peak_hours.seasons.2.months}} and {{data.tariff.tou.peak_hours.seasons.3.from}} to {{data.tariff.tou.peak_hours.seasons.3.to}} in {{data.tariff.tou.peak_hours.seasons.3.months}}; every other hour is off-peak.",
+  "Under the latest NEPRA schedule found (the 2023 IESCO tariff determination; PITC's bill portal confirms only the {{data.tariff.tou.peak_hours.seasons.0.months}} window), peak hours are {{data.tariff.tou.peak_hours.seasons.0.from}} to {{data.tariff.tou.peak_hours.seasons.0.to}} in {{data.tariff.tou.peak_hours.seasons.0.months}}, {{data.tariff.tou.peak_hours.seasons.1.from}} to {{data.tariff.tou.peak_hours.seasons.1.to}} in {{data.tariff.tou.peak_hours.seasons.1.months}}, {{data.tariff.tou.peak_hours.seasons.2.from}} to {{data.tariff.tou.peak_hours.seasons.2.to}} in {{data.tariff.tou.peak_hours.seasons.2.months}} and {{data.tariff.tou.peak_hours.seasons.3.from}} to {{data.tariff.tou.peak_hours.seasons.3.to}} in {{data.tariff.tou.peak_hours.seasons.3.months}}; every other hour is off-peak.",
   "Peak hours change the price only on a time-of-use (ToU) meter, which domestic connections of {{d.tou_threshold_kw|int}} kW sanctioned load or more must have; smaller connections pay the normal slab rate at any hour.",
   "On the A-1 domestic ToU tariff a peak unit costs {{data.tariff.tou.peak|rs2}} and an off-peak unit {{data.tariff.tou.offpeak|rs2}}, so every unit moved out of peak hours saves the difference between the two.",
   "A ToU home using {{out.peak_units|int}} peak and {{out.offpeak_units|int}} off-peak units pays {{out.energy_rs|rs}} in energy charges; with only {{ex.1.in.peak_units|int}} of the same units in peak hours the charge falls to {{ex.1.out.energy_rs|rs}}.",
@@ -84,7 +84,7 @@
   {
    "h2": "LESCO peak hours 2026 by season",
    "p": [
-    "The latest peak-hour schedule we could find on NEPRA's site is the one in its 2023 tariff determination for IESCO, which the PITC bill portal (the billing system the government DISCOs share) also publishes. It gives four seasons, each with a {{data.tariff.tou.peak_hours.seasons.0.hours|int}}-hour evening peak.",
+    "The latest peak-hour schedule we could find on NEPRA's site is the one in its 2023 tariff determination for IESCO. The PITC bill portal (the billing system the government DISCOs share) currently shows only the {{data.tariff.tou.peak_hours.seasons.0.months}} window, which matches it; the other three seasons below come from the 2023 determination alone. It gives four seasons, each with a {{data.tariff.tou.peak_hours.seasons.0.hours|int}}-hour evening peak.",
     "{{data.tariff.tou.peak_hours.seasons.0.months}}: peak {{data.tariff.tou.peak_hours.seasons.0.from}} to {{data.tariff.tou.peak_hours.seasons.0.to}}. {{data.tariff.tou.peak_hours.seasons.1.months}}: peak {{data.tariff.tou.peak_hours.seasons.1.from}} to {{data.tariff.tou.peak_hours.seasons.1.to}}. {{data.tariff.tou.peak_hours.seasons.2.months}}: peak {{data.tariff.tou.peak_hours.seasons.2.from}} to {{data.tariff.tou.peak_hours.seasons.2.to}}. {{data.tariff.tou.peak_hours.seasons.3.months}}: peak {{data.tariff.tou.peak_hours.seasons.3.from}} to {{data.tariff.tou.peak_hours.seasons.3.to}}.",
     "This schedule has not been re-confirmed for 2026. An August 2025 news report said NEPRA asked the DISCOs to propose peak hours ending no later than eleven at night; we have not found a decision adopting a new schedule. The time printed on your own ToU bill or your DISCO's notice overrides this page."
    ]
@@ -92,7 +92,7 @@
   {
    "h2": "Peak hours IESCO, MEPCO and the other DISCOs",
    "p": [
-    "The same schedule applies to all ex-WAPDA DISCOs: LESCO, IESCO, MEPCO, GEPCO, FESCO, PESCO, HESCO, SEPCO, QESCO and TESCO. They bill through the same PITC system, so the peak window on a MEPCO, IESCO or LESCO ToU bill should be the same.",
+    "We expect the same schedule to apply to all ex-WAPDA DISCOs: LESCO, IESCO, MEPCO, GEPCO, FESCO, PESCO, HESCO, SEPCO, QESCO and TESCO. The 2023 determination we found is IESCO's, but the DISCOs bill through the same PITC system, which shows one {{data.tariff.tou.peak_hours.seasons.0.months}} window for all of them. That is an inference for the other seasons, not a published fact, so check the peak time printed on your own ToU bill.",
     "K-Electric is the exception. It sets and publishes its own peak-hour timings for Karachi, so check K-Electric's schedule or your bill rather than the schedule above."
    ]
   },
@@ -217,7 +217,7 @@
   },
   {
    "q": "What are the peak hours for IESCO and MEPCO?",
-   "a": "The same as LESCO: all ex-WAPDA DISCOs use one schedule, the one in NEPRA's IESCO determination and on the PITC bill portal. In {{data.tariff.tou.peak_hours.seasons.2.months}} the peak is {{data.tariff.tou.peak_hours.seasons.2.from}} to {{data.tariff.tou.peak_hours.seasons.2.to}}."
+   "a": "Most likely the same as LESCO. The schedule here is from NEPRA's 2023 IESCO determination; the PITC bill portal, shared by all ex-WAPDA DISCOs, confirms only the {{data.tariff.tou.peak_hours.seasons.0.months}} window, so check your bill for the other seasons. By the 2023 schedule, in {{data.tariff.tou.peak_hours.seasons.2.months}} the peak is {{data.tariff.tou.peak_hours.seasons.2.from}} to {{data.tariff.tou.peak_hours.seasons.2.to}}."
   },
   {
    "q": "What are the off-peak hours?",

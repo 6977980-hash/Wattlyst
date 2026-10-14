@@ -13,7 +13,14 @@
    "label": "Non-inverter AC power while running",
    "unit": "kW",
    "default": "@ac_noninverter_kw_1_5_ton",
-   "hint": "Input watts from the label ÷ 1000. The default is a 1.5 ton non-inverter AC with its compressor on, as in peak summer when it barely switches off. For milder weather, multiply by how much of the hour the compressor runs."
+   "hint": "Input watts from the label ÷ 1000, while the compressor is on. The default is a 1.5 ton non-inverter AC."
+  },
+  {
+   "name": "duty",
+   "label": "Share of each hour the non-inverter compressor runs",
+   "unit": "",
+   "default": "@ac_noninverter_duty",
+   "hint": "Between 0 and 1. The default is the standard planning figure for a non-inverter AC averaged over the season; enter 1 for the hottest weeks, when the compressor hardly switches off."
   },
   {
    "name": "kw_inv",
@@ -27,7 +34,7 @@
    "label": "Hours the AC runs a year",
    "unit": "hours",
    "default": 1200,
-   "hint": "Hours a day × days of AC weather. The default is 8 hours a day for about five months; Karachi and southern Punjab often run more."
+   "hint": "Hours a day × days of AC weather, at most a full year of hours. The default is 8 hours a day for about five months; Karachi and southern Punjab often run more."
   },
   {
    "name": "tariff",
@@ -47,7 +54,7 @@
  "outputs": [
   {
    "key": "payback_months",
-   "label": "Months to pay back the extra price",
+   "label": "Calendar months to pay back the extra price",
    "spec": "1"
   },
   {
@@ -59,20 +66,41 @@
    "key": "annual_units_saved",
    "label": "Units saved a year",
    "spec": "int"
+  },
+  {
+   "key": "units_noninv",
+   "label": "Non-inverter AC units a year",
+   "spec": "int"
+  },
+  {
+   "key": "rs_noninv",
+   "label": "Non-inverter AC energy cost a year",
+   "spec": "rs"
+  },
+  {
+   "key": "units_inv",
+   "label": "Inverter AC units a year",
+   "spec": "int"
+  },
+  {
+   "key": "rs_inv",
+   "label": "Inverter AC energy cost a year",
+   "spec": "rs"
   }
  ],
- "answer": "In peak summer a 1.5 ton inverter AC saves about {{out.annual_units_saved|int}} units a year over a non-inverter AC run {{in.hours_year|int}} hours, {{out.annual_saving|rs}} at {{in.tariff|rs2}} per unit, so an extra price of {{in.price_diff|rs}} pays back in about {{out.payback_months|1}} months. Saving = (non-inverter kW − inverter kW) × hours × tariff; payback = extra price ÷ monthly saving.",
- "how": "Power saved: {{out.kw_noninv|2}} kW − {{out.kw_inv|2}} kW, for {{out.hours_year|int}} hours a year = {{out.annual_units_saved|int}} units. Bill saving: {{out.annual_units_saved|int}} units × {{out.tariff|rs2}} = {{out.annual_saving|rs}} a year. Payback: {{out.price_diff|rs}} ÷ ({{out.annual_saving|rs}} ÷ twelve months) = {{out.payback_months|1}} months.",
+ "answer": "A 1.5 ton non-inverter AC averaging {{out.kw_noninv_avg|2}} kW uses about {{out.units_noninv|int}} units ({{out.rs_noninv|rs}}) in {{in.hours_year|int}} hours a year; an inverter AC averaging {{out.kw_inv|2}} kW uses about {{out.units_inv|int}} ({{out.rs_inv|rs}}). The {{out.annual_saving|rs}} yearly saving pays back an extra {{in.price_diff|rs}} in about {{out.payback_months|1}} calendar months. Payback = extra price ÷ monthly saving.",
+ "how": "Non-inverter average: {{out.kw_noninv|2}} kW × {{out.duty|pct}} compressor on-time = {{out.kw_noninv_avg|2}} kW, × {{out.hours_year|int}} hours = {{out.units_noninv|int}} units, {{out.rs_noninv|rs}} a year. Inverter: {{out.kw_inv|2}} kW × {{out.hours_year|int}} hours = {{out.units_inv|int}} units, {{out.rs_inv|rs}}. Saved: {{out.annual_units_saved|int}} units × {{out.tariff|rs2}} = {{out.annual_saving|rs}} a year. Payback: {{out.price_diff|rs}} ÷ ({{out.annual_saving|rs}} ÷ twelve months) = {{out.payback_months|1}} calendar months.",
  "key_facts": [
-  "Yearly saving of an inverter AC = (non-inverter kW − inverter average kW) × hours a year × tariff; payback in months = the extra price ÷ (yearly saving ÷ twelve).",
-  "Using a 1.5 ton non-inverter AC at {{d.ac_noninverter_kw_1_5_ton|1}} kW with its compressor on and an inverter AC at a planning average of {{d.ac_inverter_avg_kw_1_5_ton|1}} kW, {{in.hours_year|int}} hours a year save about {{out.annual_units_saved|int}} units, {{out.annual_saving|rs}} at {{in.tariff|rs2}} per unit.",
-  "In milder weather, when the non-inverter compressor runs only about {{d.ac_noninverter_duty|pct}} of the hour, the same AC saves about {{ex.1.out.annual_units_saved|int}} units a year and the payback stretches to about {{ex.1.out.payback_months|1}} months for the same example price gap.",
-  "A home on the protected tariff at {{ex.3.in.tariff|rs2}} per unit takes about {{ex.3.out.payback_months|1}} months to recover the same example price gap, because each saved unit is worth less."
+  "Yearly saving of an inverter AC = (non-inverter average kW − inverter average kW) × hours a year × tariff; payback in calendar months = the extra price ÷ (yearly saving ÷ twelve).",
+  "A 1.5 ton non-inverter AC draws {{d.ac_noninverter_kw_1_5_ton|1}} kW with its compressor on and about {{d.ac_noninverter_duty|pct}} of that over a season, {{out.kw_noninv_avg|2}} kW on average; against an inverter AC averaging {{d.ac_inverter_avg_kw_1_5_ton|1}} kW, {{in.hours_year|int}} hours a year save about {{out.annual_units_saved|int}} units, {{out.annual_saving|rs}} at {{in.tariff|rs2}} per unit.",
+  "In the hottest weeks, when the non-inverter compressor hardly switches off, the gap is wider: at that rate all year the same AC would save about {{ex.1.out.annual_units_saved|int}} units and pay back in about {{ex.1.out.payback_months|1}} calendar months, so treat that as the optimistic end.",
+  "A home on the protected tariff at {{ex.3.in.tariff|rs2}} per unit takes about {{ex.3.out.payback_months|1}} calendar months to recover the same example price gap, because each saved unit is worth less."
  ],
  "formula": {
-  "text": "Payback months = ΔPrice ÷ ((kW_non-inverter − kW_inverter) × hours a year × tariff ÷ 12)",
+  "text": "Payback (calendar months) = ΔPrice ÷ ((kW_non-inverter × duty − kW_inverter) × hours a year × tariff ÷ 12)",
   "lines": [
-   "kW_non-inverter = power of the non-inverter AC while it runs (× its on-time share in mild weather)",
+   "kW_non-inverter = power of the non-inverter AC while its compressor runs",
+   "duty = share of each hour the compressor runs, averaged over the season",
    "kW_inverter = average power of the inverter AC over an hour",
    "hours a year = hours a day × days of AC use",
    "tariff = Rs per unit of your slab",
@@ -83,15 +111,15 @@
   {
    "h2": "Inverter AC vs non-inverter AC savings: where they come from",
    "p": [
-    "A non-inverter AC has one speed: its compressor runs at full power until the room reaches the setting, switches off, and starts again with a surge. An inverter AC slows its compressor down as the room cools and keeps it running gently, so it draws less on average. With the defaults the difference is {{out.kw_noninv|2}} kW against {{out.kw_inv|2}} kW, which over {{out.hours_year|int}} hours is {{out.annual_units_saved|int}} units a year.",
-    "Both power figures are planning averages, not measurements of your units. The saving is largest in the hottest weeks, when the non-inverter compressor hardly ever switches off, and smallest in mild weather, when it cycles; the second worked example uses the mild-weather figure."
+    "A non-inverter AC has one speed: its compressor runs at full power until the room reaches the setting, switches off, and starts again with a surge. An inverter AC slows its compressor down as the room cools and keeps it running gently, so it draws less on average. With the defaults the non-inverter AC averages {{out.kw_noninv|2}} kW × {{out.duty|pct}} = {{out.kw_noninv_avg|2}} kW against {{out.kw_inv|2}} kW, which over {{out.hours_year|int}} hours is {{out.units_noninv|int}} units against {{out.units_inv|int}}, a saving of {{out.annual_units_saved|int}} units a year.",
+    "Both average figures are planning values, not measurements of your units. The saving is largest in the hottest weeks, when the non-inverter compressor hardly ever switches off, and smaller in mild weather, when it cycles more; the second worked example shows the peak-summer case."
    ]
   },
   {
    "h2": "Inverter AC payback period",
    "p": [
-    "Payback = the extra price ÷ the saving a month. With the example price gap of {{in.price_diff|rs}} and {{out.annual_saving|rs}} saved a year, that is about {{out.payback_months|1}} months of AC use in peak heat, or about {{ex.1.out.payback_months|1}} months if your weather is milder. The price gap is an example to show the method, not a market price; enter the gap between two real quotes for the same brand and tonnage.",
-    "Count only the months the AC actually runs. If your payback is two summers, it is two years of calendar time, not two years of AC months."
+    "Payback = the extra price ÷ the saving a month. With the example price gap of {{in.price_diff|rs}} and {{out.annual_saving|rs}} saved a year, that is about {{out.payback_months|1}} calendar months, or about {{ex.1.out.payback_months|1}} if the compressor ran flat out every AC hour. The price gap is an example to show the method, not a market price; enter the gap between two real quotes for the same brand and tonnage.",
+    "The months are calendar months. The yearly saving already spreads the summer saving over the whole year, months with the AC off included, so do not count only the months the AC runs."
    ]
   },
   {
@@ -111,33 +139,33 @@
  "examples": [
   {
    "inputs": {},
-   "title": "1.5 ton AC in peak summer, {{in.hours_year|int}} hours a year",
-   "text": "({{out.kw_noninv|2}} − {{out.kw_inv|2}}) kW × {{out.hours_year|int}} h = {{out.annual_units_saved|int}} units × {{out.tariff|rs2}} = {{out.annual_saving|rs}} a year. The example price gap of {{out.price_diff|rs}} pays back in about {{out.payback_months|1}} months."
+   "title": "1.5 ton AC at the planning average, {{in.hours_year|int}} hours a year",
+   "text": "({{out.kw_noninv_avg|2}} − {{out.kw_inv|2}}) kW × {{out.hours_year|int}} h = {{out.annual_units_saved|int}} units × {{out.tariff|rs2}} = {{out.annual_saving|rs}} a year. The example price gap of {{out.price_diff|rs}} pays back in about {{out.payback_months|1}} calendar months."
   },
   {
    "inputs": {
-    "kw_noninv": 1.44
+    "duty": 1
    },
-   "title": "The same AC in milder weather",
-   "text": "When the non-inverter compressor runs about {{d.ac_noninverter_duty|pct}} of the hour, it averages {{out.kw_noninv|2}} kW. The saving falls to {{out.annual_units_saved|int}} units, {{out.annual_saving|rs}} a year, and payback stretches to about {{out.payback_months|1}} months."
+   "title": "Peak summer: the compressor never switches off",
+   "text": "In the hottest weeks the non-inverter AC runs at its full {{out.kw_noninv|2}} kW. If every AC hour were like that, the saving would be {{out.annual_units_saved|int}} units, {{out.annual_saving|rs}} a year, and payback about {{out.payback_months|1}} calendar months. Use it as the best case, not the average."
   },
   {
    "inputs": {
     "hours_year": 2400
    },
    "title": "Long hours: {{in.hours_year|int}} hours a year",
-   "text": "An AC run day and night through a long summer saves {{out.annual_units_saved|int}} units, {{out.annual_saving|rs}} a year, and pays back the example gap in about {{out.payback_months|1}} months."
+   "text": "An AC run day and night through a long summer saves {{out.annual_units_saved|int}} units, {{out.annual_saving|rs}} a year, and pays back the example gap in about {{out.payback_months|1}} calendar months."
   },
   {
    "inputs": {
     "tariff": "@data.tariff.protected.1.rate"
    },
    "title": "Protected consumer at {{in.tariff|rs2}} per unit",
-   "text": "The same units saved, {{out.annual_units_saved|int}} a year, are worth only {{out.annual_saving|rs}} at the protected rate, so the example gap takes about {{out.payback_months|1}} months. Note that an AC usually pushes a home past the protected limit."
+   "text": "The same units saved, {{out.annual_units_saved|int}} a year, are worth only {{out.annual_saving|rs}} at the protected rate, so the example gap takes about {{out.payback_months|1}} calendar months. Note that an AC usually pushes a home past the protected limit."
   }
  ],
  "table": {
-  "caption": "Payback of an example price gap of {{in.price_diff|rs}} for a 1.5 ton inverter AC in peak summer, by hours a year and tariff (example price gap, not a market price)",
+  "caption": "Payback of an example price gap of {{in.price_diff|rs}} for a 1.5 ton inverter AC at the planning average, by hours a year and tariff (example price gap, not a market price)",
   "rows": [
    {
     "hours_year": 600
@@ -178,25 +206,25 @@
    },
    {
     "label": "Payback",
-    "tpl": "{{out.payback_months|1}} months"
+    "tpl": "{{out.payback_months|1}} calendar months"
    }
   ]
  },
  "mistakes": [
   "Comparing label watts. The inverter AC's label shows its maximum; the bill follows its average, about {{d.ac_inverter_avg_kw_1_5_ton|1}} kW for a 1.5 ton unit.",
-  "Counting calendar months as AC months. Payback is measured in months of AC use; a payback of a summer and a half takes two calendar years.",
+  "Comparing a non-inverter AC at full power with an inverter AC at its average. Both must be averages: the non-inverter compressor switches off for part of each hour.",
   "Comparing different brands or tonnage. The price gap is fair only for the same brand, the same tonnage and the same installation.",
-  "Using the peak-summer saving all year. In mild weather the non-inverter AC cycles off and the gap is smaller, as the second example shows."
+  "Using the peak-summer saving all year. In the hottest weeks the gap is widest, as the second example shows; over a season it is smaller."
  ],
  "safety": "Both kinds of AC need their own circuit with the right cable and MCB; an AC on an overloaded socket can overheat the wiring. Have a licensed electrician check the circuit before installing a new AC.",
  "faq": [
   {
    "q": "How much electricity does an inverter AC save?",
-   "a": "With the planning averages here, about {{out.annual_units_saved|int}} units a year for a 1.5 ton AC run {{in.hours_year|int}} hours in peak heat, and about {{ex.1.out.annual_units_saved|int}} units in milder weather. Your figure depends on hours, weather and the models."
+   "a": "With the planning averages here, about {{out.annual_units_saved|int}} units a year for a 1.5 ton AC run {{in.hours_year|int}} hours, and up to about {{ex.1.out.annual_units_saved|int}} units if every hour were like peak summer. Your figure depends on hours, weather and the models."
   },
   {
    "q": "What is the payback period of an inverter AC?",
-   "a": "The extra price ÷ the monthly saving. For the example gap of {{in.price_diff|rs}}, about {{out.payback_months|1}} months of AC use in peak heat at {{in.tariff|rs2}} per unit, longer at lower rates or fewer hours."
+   "a": "The extra price ÷ the monthly saving. For the example gap of {{in.price_diff|rs}}, about {{out.payback_months|1}} calendar months at {{in.tariff|rs2}} per unit, longer at lower rates or fewer hours."
   },
   {
    "q": "Is an inverter AC worth it in Pakistan?",
@@ -207,8 +235,8 @@
    "a": "Yes, twice: it uses fewer units, and it starts without a big surge, so it needs a smaller solar inverter. See how many panels each kind needs with the solar panels for AC calculator."
   },
   {
-   "q": "Why does the non-inverter AC use less in mild weather?",
-   "a": "Its compressor switches off when the room reaches the setting. In mild weather it is off for part of each hour, about {{d.ac_noninverter_duty|pct}} on by our planning figure, so its average draw falls and the inverter AC's advantage shrinks."
+   "q": "Why does a non-inverter AC use less than its rated power?",
+   "a": "Its compressor switches off when the room reaches the setting. Over a season it is on about {{d.ac_noninverter_duty|pct}} of each hour by our planning figure, so its average draw is below its running power; in the hottest weeks it hardly switches off and the inverter AC's advantage is largest."
   },
   {
    "q": "Is the price difference on this page real?",

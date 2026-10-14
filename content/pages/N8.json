@@ -67,7 +67,7 @@
  "how": "Battery energy: {{out.v|int}} V × {{out.ah|1}} Ah ÷ 1000 = the stored units; the charger loses some on the way, so the wall meter counts that ÷ {{out.eta|2}} = {{out.kwh|2}} units for a full charge from empty. Cost of a charge: {{out.kwh|2}} units × {{out.tariff|rs2}} = {{out.rs_per_charge|rs}}. Cost per km: {{out.rs_per_charge|rs}} ÷ {{out.range_km|int}} km = {{out.rs_per_km|rs2}}.",
  "key_facts": [
   "Units to charge an electric bike from empty = battery volts × amp hours ÷ 1000 ÷ charger efficiency; a {{in.v|int}} V {{in.ah|int}} Ah pack takes about {{out.kwh|2}} units from the wall with a charger at {{d.ebike_charger_eff|pct}} efficiency.",
-  "At the Pakistan unprotected rate of {{in.tariff|rs2}} per unit, a {{in.v|int}} V {{in.ah|int}} Ah e-scooter with {{in.range_km|int}} km of range costs about {{out.rs_per_km|rs2}} per km to charge.",
+  "At {{in.tariff|rs2}} per unit, the Pakistan unprotected slab rate for a home using more than {{data.tariff.unprotected.2.upto|int}} and up to {{data.tariff.unprotected.3.upto|int}} units a month, a {{in.v|int}} V {{in.ah|int}} Ah e-scooter with {{in.range_km|int}} km of range costs about {{out.rs_per_km|rs2}} per km to charge.",
   "A {{ex.1.in.v|int}} V {{ex.1.in.ah|int}} Ah e-scooter that goes {{ex.1.in.range_km|int}} km on a charge costs about {{ex.1.out.rs_per_charge|rs}} per full charge and {{ex.1.out.rs_per_km|rs2}} per km at the same rate.",
   "Charging from rooftop solar under net billing is not free: each unit you use is a unit you do not export, so its cost is the buyback rate, about {{ex.2.out.rs_per_km|rs2}} per km for the default bike at {{data.tariff.net_billing.buyback_rs_per_unit_default|rs2}} per unit (a rate not yet notified by NEPRA)."
  ],
