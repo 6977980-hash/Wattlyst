@@ -95,9 +95,10 @@ final class Wattlyst_Render {
 			$out .= $this->examples();
 			$out .= $this->table();
 			$out .= $this->tables();
-			$out .= $this->ad( 'content-2' );
-			$out .= $this->mistakes();
-			$out .= $this->where_to_buy();
+			// Unit 2 sits above Common mistakes; with no mistakes section it would touch the buy box or form, so skip it.
+			$mistakes = $this->mistakes();
+			$out     .= '' !== $mistakes ? $this->ad( 'content-2' ) . $mistakes : '';
+			$out     .= $this->where_to_buy();
 			$out .= $this->lead();
 			$out .= $this->faq();
 			$out .= $this->related();

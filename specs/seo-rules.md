@@ -106,13 +106,18 @@ source it cites and recommends.
 - Safety: wiring/breaker/solar pages always show the licensed-electrician note and never recommend
   undersized cable or breakers.
 - Affiliate or sponsored links: `rel="sponsored"` and a visible disclosure. User links: `rel="ugc"`.
+  Affiliate links live only in `data/affiliates.json` and print in a labelled "Where to buy" box.
+- Lead form (solar quotes): only while `data/site.json` leads.enabled is true; consent checkbox, privacy
+  policy section on what is collected, who receives it and how long it is kept; no ads on its thank-you
+  or error state; the form text promises only what the owner actually does with requests.
 
 ## 8. AdSense program policies
 - Do not place AdSense code before approval. Apply with ~30 quality pages, 4–6 weeks live (Phase 4).
 - Required before applying: Privacy policy that explains Google/third-party cookies and how to opt out,
   a Google-certified CMP (consent banner) for EEA/UK/Switzerland visitors, `ads.txt` at the root
   (`google.com, pub-XXXXXXXX, DIRECT, f08c47fec0942fa0`), clear navigation, original content.
-- Placement: max 3 manual units per tool page (Phase 6); never between the inputs and the Calculate
+- Placement: max 3 manual units per tool page (Phase 6: after Key facts, before Common mistakes, after
+  Related calculators; tool, appliance, guide and lookup pages only, never home, data, embed or trust pages); never between the inputs and the Calculate
   button, never directly under the result button, never in a way that looks like part of the tool;
   label as "Advertisement"; reserved fixed height so ads cause no CLS; content always outweighs ads.
 - Never: ask or hint users to click ads, place ads on error/empty/thank-you pages, pop-under or

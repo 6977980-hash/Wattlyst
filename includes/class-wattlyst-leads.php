@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
 final class Wattlyst_Leads {
 
 	public const POST_TYPE = 'wattlyst_lead';
-	private const CRON     = 'wattlyst_lead_cleanup';
+	public const CRON      = 'wattlyst_lead_cleanup';
 	private const MIN_AGE  = 2; // seconds between building the form and a human sending it
 
 	private Wattlyst_Tools $plugin;
@@ -42,6 +42,7 @@ final class Wattlyst_Leads {
 				'exclude_from_search' => true,
 				'menu_icon'           => 'dashicons-email-alt',
 				'supports'            => array( 'title', 'editor' ),
+				'capability_type'     => self::POST_TYPE,
 				'map_meta_cap'        => false,
 				'capabilities'        => array(
 					'edit_post'          => $cap,
@@ -75,7 +76,9 @@ final class Wattlyst_Leads {
 		if ( ! hash_equals( substr( wp_hash( 'wattlyst_lead|' . $parts[0] ), 0, 16 ), $parts[1] ) ) {
 			return false;
 		}
-		return time() - (int) $parts[0] >= self::MIN_AGE;
+		$age = time() - (int) $parts[0];
+		$max = (int) ( Wattlyst_Tools::instance()->site()['leads']['token_max_age_days'] ?? 0 ) * DAY_IN_SECONDS;
+		return $age >= self::MIN_AGE && ( ! $max || $age <= $max );
 	}
 
 	/** Field value from the POST body, unslashed and sanitised as one line (or several for msg). */
@@ -90,7 +93,10 @@ final class Wattlyst_Leads {
 	/** Positive number typed by the visitor (optional fields), or '' when empty or not a number. */
 	private static function amount( string $v ): string {
 		$v = str_replace( ',', '', $v );
-		return ( is_numeric( $v ) && (float) $v > 0 ) ? (string) ( 0 + $v ) : '';
+		if ( strlen( $v ) > 8 || ! is_numeric( $v ) || ! is_finite( (float) $v ) || (float) $v <= 0 ) {
+			return '';
+		}
+		return (string) ( 0 + $v );
 	}
 
 	public function handle(): void {
@@ -169,7 +175,8 @@ final class Wattlyst_Leads {
 			$fail( 'send' );
 		}
 		if ( ! empty( $site['contact_email'] ) ) {
-			wp_mail( $site['contact_email'], 'New solar quote request: ' . $fields['City'], $body . "\nSaved in WordPress > Solar leads." );
+			// Notice only: the details stay in WordPress, where the retention cleanup deletes them.
+			wp_mail( $site['contact_email'], 'New solar quote request: ' . $fields['City'], 'A new solar quote request was saved. Open it in WordPress > Solar leads: ' . admin_url( 'post.php?post=' . (int) $post_id . '&action=edit' ) );
 		}
 		wp_safe_redirect( add_query_arg( 'lead', 'sent', $back ) . '#wl-lead' );
 		exit;

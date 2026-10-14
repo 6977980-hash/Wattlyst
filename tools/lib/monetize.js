@@ -28,7 +28,7 @@ export function adsConfig(site, fail) {
 /** leads block for the manifest: settings, the page ids that show the form, city options and rendered text. */
 export function leadsConfig(site, form, rows, cities, fail) {
   const l = site.leads || {};
-  for (const k of ['retention_days', 'rate_limit_per_hour']) if (!(Number.isInteger(l[k]) && l[k] > 0)) fail(`data/site.json leads.${k} must be a positive whole number`);
+  for (const k of ['retention_days', 'rate_limit_per_hour', 'token_max_age_days']) if (!(Number.isInteger(l[k]) && l[k] > 0)) fail(`data/site.json leads.${k} must be a positive whole number`);
   for (const id of l.pages || []) if (!rows.some((r) => r.id === id)) fail(`data/site.json leads.pages: unknown page ${id}`);
   const success = rows.find((r) => r.id === form.success_link);
   if (!success) fail('content/lead-form.json success_link: unknown page');
@@ -40,6 +40,7 @@ export function leadsConfig(site, form, rows, cities, fail) {
     pages: l.pages || [],
     retention_days: l.retention_days,
     rate_limit_per_hour: l.rate_limit_per_hour,
+    token_max_age_days: l.token_max_age_days,
     cities: Object.keys(cities).map((id) => ({ id, name: id.replace(/\b\w/g, (m) => m.toUpperCase()) })),
     success_url: success.url,
     copy,

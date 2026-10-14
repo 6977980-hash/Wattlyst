@@ -36,6 +36,7 @@
    ],
    "retention_days": 180,
    "rate_limit_per_hour": 5,
+   "token_max_age_days": 14,
    "cities": [
     {
      "id": "lahore",
@@ -65,7 +66,7 @@
    "success_url": "/solar/solar-quote-checker/",
    "copy": {
     "heading": "Get solar quotes for this system",
-    "intro": "Planning a system like this? Send your city and mobile number and Wattlyst will pass your request to solar installers we work with in your city, so you can compare quotes. It is free and you are not obliged to buy.",
+    "intro": "Planning a system like this? Send your city and mobile number and the Wattlyst team will try to connect you with a solar installer near you, so you can compare quotes. It is free and you are not obliged to buy.",
     "fields": {
      "name": "Your name",
      "phone": "Mobile or WhatsApp number",
@@ -75,16 +76,16 @@
      "kw": "System size in kW (optional)",
      "units": "Monthly units on your bill (optional)",
      "msg": "Anything installers should know (optional)",
-     "consent": "I agree that Wattlyst may share these details with solar installers so they can contact me about a quote."
+     "consent": "I agree that Wattlyst may share these details with a solar installer near me so they can contact me about a quote."
     },
     "button": "Request quotes",
     "privacy": "We keep requests for 180 days, then delete them, and never sell your number to advertisers.",
-    "success": "Thank you. Your request has been received. An installer or the Wattlyst team will contact you on the number you gave. Before you sign, check any quote against current prices with the solar quote checker.",
+    "success": "Thank you. Your request has been received. The Wattlyst team will contact you on the number you gave. Before you sign, check any quote against current prices with the solar quote checker.",
     "errors": {
      "name": "Please enter your name.",
      "phone": "Please enter a Pakistani mobile number, for example 03xx xxxxxxx.",
      "city": "Please choose your city.",
-     "consent": "Please tick the box so we can share your request with installers.",
+     "consent": "Please tick the box so we can share your request with an installer.",
      "rate": "Too many requests from this connection. Please try again later or email us.",
      "spam": "Your request could not be sent. Please try again.",
      "send": "Your request could not be saved. Please email us instead."

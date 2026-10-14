@@ -21,3 +21,6 @@ define( 'WATTLYST_TOOLS_URL', plugin_dir_url( __FILE__ ) );
 require_once WATTLYST_TOOLS_DIR . 'includes/class-wattlyst-tools.php';
 
 Wattlyst_Tools::instance();
+
+// Stop the daily quote-request cleanup when the plugin is switched off.
+register_deactivation_hook( __FILE__, static fn() => wp_clear_scheduled_hook( Wattlyst_Leads::CRON ) );
