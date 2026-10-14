@@ -178,7 +178,7 @@
   "A fifth AC (four 1.5 ton and one 2 ton inverter ACs) raises the same house to about {{ex.1.out.installed_kw|2}} kW of panels ({{ex.1.out.panels|int}} panels) and an inverter of {{ex.1.out.inverter_kw|up2}} kW.",
   "The {{out.installed_kw|2}} kW array needs about {{out.roof_m2|int}} square metres of unshaded roof at {{out.panel_w|int}} W per panel and makes about {{out.monthly_kwh_estimate|int}} units a month in Lahore as a yearly average.",
   "A load of this size is normally on a three-phase {{d.v_3ph|int}} V connection with a sanctioned load well above {{d.tou_threshold_kw|int}} kW, so the inverter is three-phase, the house is on a time-of-use meter, and the net-metering cap equals the sanctioned load.",
-  "Running two 1.5 ton inverter ACs with fans, lights, fridge, freezer and CCTV for {{ex.2.out.night_hours|int}} hours after sunset needs a lithium battery of about {{ex.2.out.battery_ah|int}} Ah at {{ex.2.out.battery_v|int}} V ({{ex.2.out.battery_kwh|1}} units); without the ACs the same night needs about {{ex.3.out.battery_ah|int}} Ah."
+  "Running two 1.5 ton inverter ACs with fans, lights, fridge, freezer and CCTV for {{ex.2.out.night_hours|int}} hours after sunset needs a lithium battery of about {{ex.2.out.battery_ah|up}} Ah at {{ex.2.out.battery_v|int}} V ({{ex.2.out.battery_kwh|1}} units); without the ACs the same night needs about {{ex.3.out.battery_ah|up}} Ah."
  ],
  "formula": {
   "text": "kW = max(E_day ÷ yield, P_run ÷ 1000 ÷ PR); panels = ceil(kW × 1000 ÷ W_panel)",
@@ -224,7 +224,7 @@
    "h2": "Battery for a 1 kanal house: ACs at night or not",
    "p": [
     "A grid-tied system needs no battery. For load-shedding backup the battery field sizes a lithium bank for everything in the list, which for four ACs is a bank nobody installs at home. The third and fourth worked examples list the night loads only, once with two bedroom ACs and once without.",
-    "With two 1.5 ton inverter ACs, fans, lights, fridge, freezer, one TV, router and CCTV for {{ex.2.out.night_hours|int}} hours, the bank is about {{ex.2.out.battery_ah|int}} Ah at {{ex.2.out.battery_v|int}} V ({{ex.2.out.battery_kwh|1}} units). Without the ACs it is about {{ex.3.out.battery_ah|int}} Ah ({{ex.3.out.battery_kwh|1}} units). Many 1 kanal owners put the bedroom ACs on the battery and leave the lounge AC on the grid at night; the list lets you price both choices."
+    "With two 1.5 ton inverter ACs, fans, lights, fridge, freezer, one TV, router and CCTV for {{ex.2.out.night_hours|int}} hours, the bank is about {{ex.2.out.battery_ah|up}} Ah at {{ex.2.out.battery_v|int}} V ({{ex.2.out.battery_kwh|1}} units). Without the ACs it is about {{ex.3.out.battery_ah|up}} Ah ({{ex.3.out.battery_kwh|1}} units). Many 1 kanal owners put the bedroom ACs on the battery and leave the lounge AC on the grid at night; the list lets you price both choices."
    ]
   },
   {
@@ -351,7 +351,7 @@
     "battery_v": 48
    },
    "title": "Night loads with two bedroom ACs: battery for {{out.night_hours|int}} hours",
-   "text": "Only the night loads are listed: eight fans, twenty-four bulbs, fridge, freezer, one TV, router, CCTV and two 1.5 ton inverter ACs, {{out.running_w|int}} W. For {{out.night_hours|int}} hours after sunset the battery must hold {{out.night_kwh|1}} units, about {{out.battery_ah|int}} Ah at {{out.battery_v|int}} V using {{out.battery_dod|pct}} of a lithium bank ({{out.battery_kwh|1}} units rated). The panels for the whole house come from the first example, not from this list."
+   "text": "Only the night loads are listed: eight fans, twenty-four bulbs, fridge, freezer, one TV, router, CCTV and two 1.5 ton inverter ACs, {{out.running_w|int}} W. For {{out.night_hours|int}} hours after sunset the battery must hold {{out.night_kwh|1}} units, about {{out.battery_ah|up}} Ah at {{out.battery_v|int}} V using {{out.battery_dod|pct}} of a lithium bank ({{out.battery_kwh|1}} units rated). The panels for the whole house come from the first example, not from this list."
   },
   {
    "inputs": {
@@ -391,7 +391,7 @@
     "battery_v": 48
    },
    "title": "Night loads without ACs: battery for {{out.night_hours|int}} hours",
-   "text": "Fans, bulbs, fridge, freezer, one TV, router and CCTV only, {{out.running_w|int}} W. For {{out.night_hours|int}} hours the battery must hold {{out.night_kwh|1}} units, about {{out.battery_ah|int}} Ah at {{out.battery_v|int}} V ({{out.battery_kwh|1}} units rated). Keeping the ACs on the grid at night cuts the battery to a third of the previous example."
+   "text": "Fans, bulbs, fridge, freezer, one TV, router and CCTV only, {{out.running_w|int}} W. For {{out.night_hours|int}} hours the battery must hold {{out.night_kwh|1}} units, about {{out.battery_ah|up}} Ah at {{out.battery_v|int}} V ({{out.battery_kwh|1}} units rated). Keeping the ACs on the grid at night cuts the battery to a third of the previous example."
   }
  ],
  "table": {
@@ -878,7 +878,7 @@
   },
   {
    "q": "Can the solar system run the ACs at night?",
-   "a": "Only from a battery or from the grid. Two 1.5 ton inverter ACs with fans, lights, fridge, freezer and CCTV for {{ex.2.out.night_hours|int}} hours need about {{ex.2.out.battery_ah|int}} Ah of lithium at {{ex.2.out.battery_v|int}} V; without the ACs the night needs about {{ex.3.out.battery_ah|int}} Ah. Most owners run one or two bedroom ACs from the battery and the rest from the grid."
+   "a": "Only from a battery or from the grid. Two 1.5 ton inverter ACs with fans, lights, fridge, freezer and CCTV for {{ex.2.out.night_hours|int}} hours need about {{ex.2.out.battery_ah|up}} Ah of lithium at {{ex.2.out.battery_v|int}} V; without the ACs the night needs about {{ex.3.out.battery_ah|up}} Ah. Most owners run one or two bedroom ACs from the battery and the rest from the grid."
   },
   {
    "q": "What is the price of a 1 kanal solar system?",

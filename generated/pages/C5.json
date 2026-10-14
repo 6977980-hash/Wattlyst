@@ -75,7 +75,7 @@
    },
    {
     "q": "What size generator runs a 2 hp pump?",
-    "a": "About 6.99 kVA calculated, so a 7.5 kVA generator. The pump runs at 1,864 W but starts at about 5,593 W, and the starting surge sets the size."
+    "a": "About 7 kVA calculated, so a 7.5 kVA generator. The pump runs at 1,864 W but starts at about 5,593 W, and the starting surge sets the size."
    },
    {
     "q": "How many kVA are required for a submersible pump?",
@@ -222,7 +222,7 @@
     {
      "key": "recommended_kva",
      "label": "Calculated minimum",
-     "spec": "2",
+     "spec": "up2",
      "unit": "kVA",
      "label_ur": "Hisab se kam az kam",
      "value": "3.5"
@@ -245,7 +245,7 @@
     }
    ],
    "how": {
-    "tpl": "{{in.hp|2}} hp × {{d.w_per_hp|1}} W per hp ÷ {{out.motor_eff|pct}} motor efficiency = {{out.pump_run_w|int}} W running. × {{out.start_factor}} start factor = {{out.pump_start_w|int}} W starting. Other loads add {{out.other_w}} W, so the total is {{out.running_w|int}} W running and {{out.peak_w|int}} W at the moment of starting. The larger of {{out.running_w|int}} W × {{out.margin|2}} margin and {{out.peak_w|int}} W is {{out.sized_w|int}} W; ÷ {{out.pf|2}} power factor ÷ 1,000 = {{out.recommended_kva|2}} kVA, rounded up to the next standard size, {{out.standard_kva|1}} kVA.",
+    "tpl": "{{in.hp|2}} hp × {{d.w_per_hp|1}} W per hp ÷ {{out.motor_eff|pct}} motor efficiency = {{out.pump_run_w|int}} W running. × {{out.start_factor}} start factor = {{out.pump_start_w|int}} W starting. Other loads add {{out.other_w}} W, so the total is {{out.running_w|int}} W running and {{out.peak_w|int}} W at the moment of starting. The larger of {{out.running_w|int}} W × {{out.margin|2}} margin and {{out.peak_w|int}} W is {{out.sized_w|int}} W; ÷ {{out.pf|2}} power factor ÷ 1,000 = {{out.recommended_kva|up2}} kVA, rounded up to the next standard size, {{out.standard_kva|1}} kVA.",
     "text": "1 hp × 745.7 W per hp ÷ 80% motor efficiency = 932 W running. × 3 start factor = 2,796 W starting. Other loads add 0 W, so the total is 932 W running and 2,796 W at the moment of starting. The larger of 932 W × 1.25 margin and 2,796 W is 2,796 W; ÷ 0.8 power factor ÷ 1,000 = 3.5 kVA, rounded up to the next standard size, 3.5 kVA."
    },
    "submit": "Calculate",
@@ -271,7 +271,7 @@
    },
    {
     "title": "2 hp pump on its own",
-    "text": "A 2 hp pump runs at 1,864 W and starts at 5,593 W, so it needs 6.99 kVA, or a 7.5 kVA generator."
+    "text": "A 2 hp pump runs at 1,864 W and starts at 5,593 W, so it needs 7 kVA, or a 7.5 kVA generator."
    }
   ],
   "table": {
@@ -295,7 +295,7 @@
      "0.75 hp",
      "699 W",
      "2,097 W",
-     "2.62 kVA",
+     "2.63 kVA",
      "3 kVA"
     ],
     [
@@ -309,14 +309,14 @@
      "1.5 hp",
      "1,398 W",
      "4,195 W",
-     "5.24 kVA",
+     "5.25 kVA",
      "6.5 kVA"
     ],
     [
      "2 hp",
      "1,864 W",
      "5,593 W",
-     "6.99 kVA",
+     "7 kVA",
      "7.5 kVA"
     ],
     [
@@ -444,7 +444,7 @@
       "name": "What size generator runs a 2 hp pump?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "About 6.99 kVA calculated, so a 7.5 kVA generator. The pump runs at 1,864 W but starts at about 5,593 W, and the starting surge sets the size."
+       "text": "About 7 kVA calculated, so a 7.5 kVA generator. The pump runs at 1,864 W but starts at about 5,593 W, and the starting surge sets the size."
       }
      },
      {

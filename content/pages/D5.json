@@ -124,7 +124,7 @@
   "A 1.5 ton inverter AC uses about {{out.daily_kwh|1}} units in {{in.hours|int}} hours (about {{out.ac_avg_w|int}} W average), which in Lahore needs {{out.panels|int}} panels of {{out.panel_w|int}} W, or {{out.installed_kw|2}} kW of solar.",
   "Solar panels for an AC are sized two ways and the larger wins: energy (daily units ÷ the city's units per kW per day) and power (the AC's running watts ÷ the performance ratio of {{d.pr|2}}, so the array can carry the AC at midday without a battery).",
   "A 1 ton inverter AC in Karachi needs {{ex.1.out.panels|int}} panels ({{ex.1.out.installed_kw|2}} kW); a 1.5 ton non-inverter AC in Lahore needs {{ex.2.out.panels|int}} panels ({{ex.2.out.installed_kw|2}} kW) because it uses about {{ex.2.out.daily_kwh|1}} units in the same {{ex.2.in.hours|int}} hours.",
-  "Running a 1.5 ton inverter AC for {{ex.3.in.night_hours|int}} hours after sunset needs about {{ex.3.out.battery_ah|int}} Ah of lithium battery at {{ex.3.out.battery_v|int}} V ({{ex.3.out.battery_kwh|1}} kWh) on top of the panels."
+  "Running a 1.5 ton inverter AC for {{ex.3.in.night_hours|int}} hours after sunset needs about {{ex.3.out.battery_ah|up}} Ah of lithium battery at {{ex.3.out.battery_v|int}} V ({{ex.3.out.battery_kwh|1}} kWh) on top of the panels."
  ],
  "formula": {
   "text": "E = W_avg × h ÷ 1000; kW = max(E ÷ yield, P_run ÷ 1000 ÷ PR); panels = ceil(kW × 1000 ÷ W_panel)",
@@ -157,7 +157,7 @@
    "h2": "Can I run an AC on solar during the day without a battery?",
    "p": [
     "Yes. With night hours left at zero the calculator sizes the panels so that at midday they produce at least the AC's running watts after losses, and a grid-tied or hybrid inverter runs the AC straight from the panels. Clouds reduce output, so on a dull day the inverter draws the shortfall from the grid or the AC cycles down; this is normal for a battery-free system.",
-    "Running the AC after sunset needs a battery. Set the night hours and the calculator adds the lithium battery capacity at your bank voltage: {{ex.3.in.night_hours|int}} hours of a 1.5 ton inverter AC needs about {{ex.3.out.battery_ah|int}} Ah at {{ex.3.out.battery_v|int}} V, about {{ex.3.out.battery_kwh|1}} kWh, using {{d.dod_lifepo4|pct}} of the battery. Batteries roughly double the cost of a solar AC system, so most Pakistani homes run the AC on solar by day and on the grid or a UPS at night."
+    "Running the AC after sunset needs a battery. Set the night hours and the calculator adds the lithium battery capacity at your bank voltage: {{ex.3.in.night_hours|int}} hours of a 1.5 ton inverter AC needs about {{ex.3.out.battery_ah|up}} Ah at {{ex.3.out.battery_v|int}} V, about {{ex.3.out.battery_kwh|1}} kWh, using {{d.dod_lifepo4|pct}} of the battery. Batteries roughly double the cost of a solar AC system, so most Pakistani homes run the AC on solar by day and on the grid or a UPS at night."
    ]
   },
   {
@@ -213,7 +213,7 @@
     "night_hours": 5
    },
    "title": "1.5 ton inverter AC with {{in.night_hours|int}} hours on battery after sunset",
-   "text": "Daytime: {{out.panels|int}} panels ({{out.installed_kw|2}} kW) and a {{out.inverter_kw|up2}} kW inverter as above. Night: {{out.running_w|int}} W × {{in.night_hours|int}} h = {{out.night_kwh|1}} units, ÷ ({{out.battery_v|int}} V × {{out.battery_dod|pct}} usable × hybrid inverter efficiency) = {{out.battery_ah|int}} Ah of lithium battery at {{out.battery_v|int}} V, about {{out.battery_kwh|1}} kWh. The panels are not enlarged for the night energy here; add it with the solar system from loads calculator if the battery must recharge from solar alone."
+   "text": "Daytime: {{out.panels|int}} panels ({{out.installed_kw|2}} kW) and a {{out.inverter_kw|up2}} kW inverter as above. Night: {{out.running_w|int}} W × {{in.night_hours|int}} h = {{out.night_kwh|1}} units, ÷ ({{out.battery_v|int}} V × {{out.battery_dod|pct}} usable × hybrid inverter efficiency) = {{out.battery_ah|up}} Ah of lithium battery at {{out.battery_v|int}} V, about {{out.battery_kwh|1}} kWh. The panels are not enlarged for the night energy here; add it with the solar system from loads calculator if the battery must recharge from solar alone."
   }
  ],
  "table": {
@@ -296,7 +296,7 @@
   },
   {
    "q": "Will the AC run on solar in the evening?",
-   "a": "Only with a battery. Enter the hours after sunset and the calculator gives the lithium battery capacity: {{ex.3.in.night_hours|int}} hours of a 1.5 ton inverter AC needs about {{ex.3.out.battery_ah|int}} Ah at {{ex.3.out.battery_v|int}} V. The panels must then also recharge that battery the next day, which the solar system from loads calculator covers."
+   "a": "Only with a battery. Enter the hours after sunset and the calculator gives the lithium battery capacity: {{ex.3.in.night_hours|int}} hours of a 1.5 ton inverter AC needs about {{ex.3.out.battery_ah|up}} Ah at {{ex.3.out.battery_v|int}} V. The panels must then also recharge that battery the next day, which the solar system from loads calculator covers."
   }
  ],
  "related": [

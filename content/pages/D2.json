@@ -84,7 +84,7 @@
  "key_facts": [
   "Solar panel wattage for a home = daily units ÷ the units each kW of panels makes a day in the city: {{in.monthly_units|int}} units a month in Lahore is {{out.daily_kwh|1}} units a day and needs {{out.kw|2}} kW of panels, or {{out.panels|int}} panels of {{out.panel_w|int}} W.",
   "One kW of panels makes about {{out.yield_kwh_per_kwp_day|1}} units a day in Lahore and {{ex.2.out.yield_kwh_per_kwp_day|1}} in Karachi over the year (Global Solar Atlas), so the same bill needs {{out.panels|int}} panels in Lahore but {{ex.2.out.panels|int}} in Karachi.",
-  "One {{ex.3.out.panel_w|int}} W panel makes about {{ex.3.out.monthly_kwh_estimate|int}} units a month in Lahore as a yearly average, after real-world losses; sixty units a month of usage is covered by exactly {{ex.3.out.panels|int}} panel.",
+  "One {{ex.3.out.panel_w|int}} W panel makes about {{ex.3.out.monthly_kwh_estimate|int}} units a month in Lahore as a yearly average, after real-world losses; {{ex.3.in.monthly_units|int}} units a month of usage is covered by exactly {{ex.3.out.panels|int}} panel.",
   "Panel size does not change the total watts: {{out.kw|2}} kW is {{out.panels|int}} panels of {{out.panel_w|int}} W or {{ex.1.out.panels|int}} panels of {{ex.1.out.panel_w|int}} W, but the smaller panels take {{ex.1.out.roof_m2|1}} m² of roof instead of {{out.roof_m2|1}} m²."
  ],
  "formula": {
@@ -160,7 +160,7 @@
     "monthly_units": 60
    },
    "title": "What one {{out.panel_w|int}} W panel makes in Lahore",
-   "text": "Sixty units a month is {{out.daily_kwh|1}} units a day, which needs {{out.kw|2}} kW, so exactly {{out.panels|int}} panel of {{out.panel_w|int}} W. That panel makes about {{out.monthly_kwh_estimate|int}} units a month as a yearly average, a little more than the sixty needed."
+   "text": "{{in.monthly_units|int}} units a month is {{out.daily_kwh|1}} units a day, which needs {{out.kw|2}} kW, so exactly {{out.panels|int}} panel of {{out.panel_w|int}} W. That panel makes about {{out.monthly_kwh_estimate|int}} units a month as a yearly average, a little more than the {{in.monthly_units|int}} needed."
   },
   {
    "inputs": {

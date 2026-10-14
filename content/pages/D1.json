@@ -75,7 +75,7 @@
   {
    "key": "ah",
    "label": "Battery bank capacity",
-   "spec": "int",
+   "spec": "up",
    "unit": "Ah"
   },
   {
@@ -90,13 +90,13 @@
    "spec": "pct"
   }
  ],
- "answer": "A home that uses {{in.night_kwh|1}} units from the battery each night needs a solar battery bank of about {{out.ah|int}} Ah at {{in.volts|int}} V ({{out.kwh|1}} kWh) with lithium batteries, for {{in.days|int}} day of autonomy. Battery Ah = night units × days ÷ (bank volts × usable depth of discharge × inverter efficiency); a tubular bank must be almost twice as large.",
- "how": "Energy to store = {{in.night_kwh|1}} kWh a night × {{in.days}} day of autonomy. The battery can only give back part of that: the usable share is {{out.dod|pct}} for this battery type and the inverter passes on {{out.inverter_eff|pct}}. So Ah = {{in.night_kwh|1}} kWh × {{in.days}} × 1,000 ÷ ({{in.volts}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}}) = {{out.ah|int}} Ah, which is a bank of {{out.kwh|1}} kWh at {{in.volts}} V. Buy batteries whose Ah add up to at least this at the bank voltage.",
+ "answer": "A home that uses {{in.night_kwh|1}} units from the battery each night needs a solar battery bank of about {{out.ah|up}} Ah at {{in.volts|int}} V ({{out.kwh|1}} kWh) with lithium batteries, for {{in.days|int}} day of autonomy. Battery Ah = night units × days ÷ (bank volts × usable depth of discharge × inverter efficiency); a tubular bank must be almost twice as large.",
+ "how": "Energy to store = {{in.night_kwh|1}} kWh a night × {{in.days}} day of autonomy. The battery can only give back part of that: the usable share is {{out.dod|pct}} for this battery type and the inverter passes on {{out.inverter_eff|pct}}. So Ah = {{in.night_kwh|1}} kWh × {{in.days}} × 1,000 ÷ ({{in.volts}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}}) = {{out.ah|up}} Ah, which is a bank of {{out.kwh|1}} kWh at {{in.volts}} V. Buy batteries whose Ah add up to at least this at the bank voltage.",
  "key_facts": [
-  "A solar battery bank for {{in.night_kwh|1}} units a night is about {{out.ah|int}} Ah at {{in.volts|int}} V ({{out.kwh|1}} kWh) in lithium, using {{d.dod_lifepo4|pct}} of the battery, or {{ex.0.out.ah|int}} Ah at {{ex.0.in.volts|int}} V ({{ex.0.out.kwh|1}} kWh) in tubular, which should only be used to {{d.dod_lead_acid|pct}}.",
+  "A solar battery bank for {{in.night_kwh|1}} units a night is about {{out.ah|up}} Ah at {{in.volts|int}} V ({{out.kwh|1}} kWh) in lithium, using {{d.dod_lifepo4|pct}} of the battery, or {{ex.0.out.ah|up}} Ah at {{ex.0.in.volts|int}} V ({{ex.0.out.kwh|1}} kWh) in tubular, which should only be used to {{d.dod_lead_acid|pct}}.",
   "Solar battery size in Ah = night kWh × days of autonomy × 1,000 ÷ (bank voltage × depth of discharge × inverter efficiency), with a hybrid inverter efficiency of {{d.inverter_eff_hybrid|pct}}.",
-  "Each extra day of autonomy adds a full night of storage: {{ex.1.in.days|int}} days for the same {{ex.1.in.night_kwh|1}} units a night needs {{ex.1.out.ah|int}} Ah at {{ex.1.in.volts|int}} V, twice the one-day bank.",
-  "A home with a five kW solar system that runs fans, a fridge, lights and one inverter AC through the evening uses about {{ex.2.in.night_kwh|1}} units a night and needs about {{ex.2.out.ah|int}} Ah of lithium at {{ex.2.in.volts|int}} V, about {{ex.2.out.kwh|1}} kWh."
+  "Each extra day of autonomy adds a full night of storage: {{ex.1.in.days|int}} days for the same {{ex.1.in.night_kwh|1}} units a night needs {{ex.1.out.ah|up}} Ah at {{ex.1.in.volts|int}} V, twice the one-day bank.",
+  "A home with a five kW solar system that runs fans, a fridge, lights and one inverter AC through the evening uses about {{ex.2.in.night_kwh|1}} units a night and needs about {{ex.2.out.ah|up}} Ah of lithium at {{ex.2.in.volts|int}} V, about {{ex.2.out.kwh|1}} kWh."
  ],
  "formula": {
   "text": "Ah = E_night × days × 1000 ÷ (V_bank × DoD × η_inv); kWh = Ah × V_bank ÷ 1000",
@@ -113,14 +113,14 @@
   {
    "h2": "How many batteries do I need for a solar system?",
    "p": [
-    "Start with the night energy, not the solar size. The panels only matter while the sun is up; the battery carries whatever runs after sunset. For {{in.night_kwh|1}} units a night the bank must hold {{out.kwh|1}} kWh, which is {{out.ah|int}} Ah at {{in.volts|int}} V with lithium batteries. Divide that Ah by the Ah of one battery and round up to get the number of batteries in parallel; a {{in.volts|int}} V bank made of twelve volt batteries also needs four in series per string. The battery bank size calculator does that count for your exact battery.",
-    "Lithium packs are usually sold as a whole bank at the inverter voltage, so you buy one or two packs whose Ah add up to {{out.ah|int}} Ah. Tubular batteries are twelve volt units, so a {{ex.0.in.volts|int}} V tubular bank for the same night needs {{ex.0.out.ah|int}} Ah: that is several parallel strings of two batteries each."
+    "Start with the night energy, not the solar size. The panels only matter while the sun is up; the battery carries whatever runs after sunset. For {{in.night_kwh|1}} units a night the bank must hold {{out.kwh|1}} kWh, which is {{out.ah|up}} Ah at {{in.volts|int}} V with lithium batteries. Divide that Ah by the Ah of one battery and round up to get the number of batteries in parallel; a {{in.volts|int}} V bank made of twelve volt batteries also needs four in series per string. The battery bank size calculator does that count for your exact battery.",
+    "Lithium packs are usually sold as a whole bank at the inverter voltage, so you buy one or two packs whose Ah add up to {{out.ah|up}} Ah. Tubular batteries are twelve volt units, so a {{ex.0.in.volts|int}} V tubular bank for the same night needs {{ex.0.out.ah|up}} Ah: that is several parallel strings of two batteries each."
    ]
   },
   {
    "h2": "What size battery for a 5 kW solar system?",
    "p": [
-    "The solar size does not fix the battery size; the night load does. A five kW system usually belongs to a house that runs fans, a fridge, lights, a TV and one inverter AC into the evening, which draws about {{ex.2.in.night_kwh|1}} units a night. That needs {{ex.2.out.ah|int}} Ah at {{ex.2.in.volts|int}} V, about {{ex.2.out.kwh|1}} kWh of lithium. The same house without the AC at night needs about half: enter your own night units above.",
+    "The solar size does not fix the battery size; the night load does. A five kW system usually belongs to a house that runs fans, a fridge, lights, a TV and one inverter AC into the evening, which draws about {{ex.2.in.night_kwh|1}} units a night. That needs {{ex.2.out.ah|up}} Ah at {{ex.2.in.volts|int}} V, about {{ex.2.out.kwh|1}} kWh of lithium. The same house without the AC at night needs about half: enter your own night units above.",
     "If you want the battery to also run the AC through a full summer night, measure the evening units on your meter for a week and use the highest night, not the average."
    ]
   },
@@ -134,14 +134,14 @@
   {
    "h2": "How many days of autonomy should a solar battery have?",
    "p": [
-    "Days of autonomy means how many nights the battery can carry the house with no sun to recharge it. With the grid available, one day is enough: a cloudy day is covered by the grid, and the battery is sized for one night. Off-grid, two days is a common planning figure and three in a monsoon or winter-fog area. Each day adds a whole night of storage: {{ex.1.in.days|int}} days of autonomy for {{ex.1.in.night_kwh|1}} units a night needs {{ex.1.out.ah|int}} Ah at {{ex.1.in.volts|int}} V, twice the bank for one day.",
+    "Days of autonomy means how many nights the battery can carry the house with no sun to recharge it. With the grid available, one day is enough: a cloudy day is covered by the grid, and the battery is sized for one night. Off-grid, two days is a common planning figure and three in a monsoon or winter-fog area. Each day adds a whole night of storage: {{ex.1.in.days|int}} days of autonomy for {{ex.1.in.night_kwh|1}} units a night needs {{ex.1.out.ah|up}} Ah at {{ex.1.in.volts|int}} V, twice the bank for one day.",
     "More autonomy also means the panels must put back more than one night's energy on the first sunny day, so size the array with that in mind. The off-grid solar calculator sizes panels, battery and inverter together."
    ]
   },
   {
    "h2": "Solar battery storage size in kWh or Ah?",
    "p": [
-    "Both describe the same bank. Ah depends on the bank voltage: {{out.ah|int}} Ah at {{in.volts|int}} V is the same energy as twice that Ah at half the voltage. kWh is what you pay for and what the house uses, so compare quotes in kWh at the inverter's bank voltage. The result shows both; the usable share of the battery is already built in, so a {{out.kwh|1}} kWh bank gives back the {{in.night_kwh|1}} units you entered, not the full nameplate."
+    "Both describe the same bank. Ah depends on the bank voltage: {{out.ah|up}} Ah at {{in.volts|int}} V is the same energy as twice that Ah at half the voltage. kWh is what you pay for and what the house uses, so compare quotes in kWh at the inverter's bank voltage. The result shows both; the usable share of the battery is already built in, so a {{out.kwh|1}} kWh bank gives back the {{in.night_kwh|1}} units you entered, not the full nameplate."
    ]
   }
  ],
@@ -152,21 +152,21 @@
     "dod": 0.5
    },
    "title": "Same night load on a {{in.volts|int}} V tubular bank",
-   "text": "{{in.night_kwh|1}} kWh × {{in.days|int}} × 1,000 ÷ ({{in.volts|int}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}}) = {{out.ah|int}} Ah, a bank of {{out.kwh|1}} kWh. Tubular needs almost twice the energy of lithium because only half of it may be used each night."
+   "text": "{{in.night_kwh|1}} kWh × {{in.days|int}} × 1,000 ÷ ({{in.volts|int}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}}) = {{out.ah|up}} Ah, a bank of {{out.kwh|1}} kWh. Tubular needs almost twice the energy of lithium because only half of it may be used each night."
   },
   {
    "inputs": {
     "days": 2
    },
    "title": "{{in.days|int}} days of autonomy, {{in.volts|int}} V lithium",
-   "text": "{{in.night_kwh|1}} kWh × {{in.days|int}} days ÷ ({{in.volts|int}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}}) = {{out.ah|int}} Ah, a {{out.kwh|1}} kWh bank. The second cloudy night doubles the battery, which is why off-grid banks are large."
+   "text": "{{in.night_kwh|1}} kWh × {{in.days|int}} days ÷ ({{in.volts|int}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}}) = {{out.ah|up}} Ah, a {{out.kwh|1}} kWh bank. The second cloudy night doubles the battery, which is why off-grid banks are large."
   },
   {
    "inputs": {
     "night_kwh": 10
    },
    "title": "House with a five kW solar system and an inverter AC in the evening",
-   "text": "Fans, fridge, lights, TV and an inverter AC for the evening use about {{in.night_kwh|1}} units a night. At {{in.volts|int}} V lithium that is {{out.ah|int}} Ah, a {{out.kwh|1}} kWh bank, for {{in.days|int}} day of autonomy."
+   "text": "Fans, fridge, lights, TV and an inverter AC for the evening use about {{in.night_kwh|1}} units a night. At {{in.volts|int}} V lithium that is {{out.ah|up}} Ah, a {{out.kwh|1}} kWh bank, for {{in.days|int}} day of autonomy."
   },
   {
    "inputs": {
@@ -175,7 +175,7 @@
     "dod": 0.5
    },
    "title": "Small {{in.volts|int}} V tubular setup for lights and fans",
-   "text": "{{in.night_kwh|1}} units a night ÷ ({{in.volts|int}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}}) = {{out.ah|int}} Ah of tubular at {{in.volts|int}} V, a {{out.kwh|1}} kWh bank. Two of the common tubular sizes in parallel cover it."
+   "text": "{{in.night_kwh|1}} units a night ÷ ({{in.volts|int}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}}) = {{out.ah|up}} Ah of tubular at {{in.volts|int}} V, a {{out.kwh|1}} kWh bank. Two of the common tubular sizes in parallel cover it."
   }
  ],
  "table": {
@@ -207,7 +207,7 @@
    },
    {
     "label": "Battery bank",
-    "tpl": "{{out.ah|int}} Ah"
+    "tpl": "{{out.ah|up}} Ah"
    },
    {
     "label": "Energy",
@@ -226,7 +226,7 @@
  "faq": [
   {
    "q": "How do I calculate the solar battery size for my home?",
-   "a": "Count the units the house uses after sunset, multiply by the days of autonomy, then divide by the bank voltage, the usable depth of discharge and the inverter efficiency. For {{in.night_kwh|1}} units a night at {{in.volts|int}} V with lithium that is {{out.ah|int}} Ah, about {{out.kwh|1}} kWh."
+   "a": "Count the units the house uses after sunset, multiply by the days of autonomy, then divide by the bank voltage, the usable depth of discharge and the inverter efficiency. For {{in.night_kwh|1}} units a night at {{in.volts|int}} V with lithium that is {{out.ah|up}} Ah, about {{out.kwh|1}} kWh."
   },
   {
    "q": "How many batteries do I need for a solar system?",
@@ -234,7 +234,7 @@
   },
   {
    "q": "What battery do I need for a 5 kW solar system?",
-   "a": "It depends on the night load, not the array. A typical house with a five kW system uses about {{ex.2.in.night_kwh|1}} units in the evening with an inverter AC, which needs about {{ex.2.out.ah|int}} Ah at {{ex.2.in.volts|int}} V ({{ex.2.out.kwh|1}} kWh) of lithium."
+   "a": "It depends on the night load, not the array. A typical house with a five kW system uses about {{ex.2.in.night_kwh|1}} units in the evening with an inverter AC, which needs about {{ex.2.out.ah|up}} Ah at {{ex.2.in.volts|int}} V ({{ex.2.out.kwh|1}} kWh) of lithium."
   },
   {
    "q": "Is a lithium battery better for solar than tubular?",
@@ -246,7 +246,7 @@
   },
   {
    "q": "Does the battery bank voltage change the energy I need?",
-   "a": "No. {{out.ah|int}} Ah at {{in.volts|int}} V and {{ex.0.out.ah|int}} Ah at {{ex.0.in.volts|int}} V are different Ah for the same type of night, but the kWh is set by the night load and the battery type. Higher bank voltage means lower current and thinner cables."
+   "a": "No. {{out.ah|up}} Ah at {{in.volts|int}} V and {{ex.0.out.ah|up}} Ah at {{ex.0.in.volts|int}} V are different Ah for the same type of night, but the kWh is set by the night load and the battery type. Higher bank voltage means lower current and thinner cables."
   },
   {
    "q": "Do I need to size the solar panels bigger for the battery?",

@@ -169,7 +169,7 @@
   "A typical 10 marla house with three inverter ACs (two 1.5 ton, one 1 ton) has a running load of about {{out.running_w|int}} W and uses about {{out.daily_kwh|1}} units a day, so it needs a solar system of about {{out.installed_kw|2}} kW with a {{out.inverter_kw|up2}} kW inverter.",
   "With two 1.5 ton inverter ACs and no third AC the same house needs about {{ex.1.out.installed_kw|2}} kW of panels ({{ex.1.out.panels|int}} panels) and an inverter of {{ex.1.out.inverter_kw|up2}} kW; each extra inverter AC adds roughly its running watts ÷ performance ratio to the array.",
   "In Lahore one kW of panels makes about {{out.yield_kwh_per_kwp_day|1}} units a day over the year, so the {{out.installed_kw|2}} kW system makes about {{out.monthly_kwh_estimate|int}} units a month, which covers the house's {{out.daily_kwh|1}} units a day with spare units for export.",
-  "Running one 1.5 ton inverter AC with fans, lights, fridge and freezer for {{ex.2.out.night_hours|int}} hours after sunset needs a lithium battery of about {{ex.2.out.battery_ah|int}} Ah at {{ex.2.out.battery_v|int}} V ({{ex.2.out.battery_kwh|1}} units); the same night without the AC needs about {{ex.3.out.battery_ah|int}} Ah.",
+  "Running one 1.5 ton inverter AC with fans, lights, fridge and freezer for {{ex.2.out.night_hours|int}} hours after sunset needs a lithium battery of about {{ex.2.out.battery_ah|up}} Ah at {{ex.2.out.battery_v|int}} V ({{ex.2.out.battery_kwh|1}} units); the same night without the AC needs about {{ex.3.out.battery_ah|up}} Ah.",
   "A system of this size usually needs a sanctioned load above {{d.tou_threshold_kw|int}} kW, which puts the house on a time-of-use meter; the net-metering application is approved only up to the sanctioned load."
  ],
  "formula": {
@@ -216,7 +216,7 @@
    "h2": "Battery for a 10 marla house: with and without the AC at night",
    "p": [
     "A grid-tied system has no battery and runs the house in the day; at night the grid takes over. If you want load-shedding backup, the battery line sizes a lithium bank for every appliance in the list for the hours you enter, which for the whole house with three ACs is far more battery than anyone buys. The third and fourth worked examples list only the night loads instead.",
-    "With fans, lights, fridge, freezer, one TV and one 1.5 ton inverter AC for {{ex.2.out.night_hours|int}} hours the battery is about {{ex.2.out.battery_ah|int}} Ah at {{ex.2.out.battery_v|int}} V ({{ex.2.out.battery_kwh|1}} units). Drop the AC and the same night needs about {{ex.3.out.battery_ah|int}} Ah ({{ex.3.out.battery_kwh|1}} units), less than half. Whether to run the AC at night is the single biggest decision in the battery budget."
+    "With fans, lights, fridge, freezer, one TV and one 1.5 ton inverter AC for {{ex.2.out.night_hours|int}} hours the battery is about {{ex.2.out.battery_ah|up}} Ah at {{ex.2.out.battery_v|int}} V ({{ex.2.out.battery_kwh|1}} units). Drop the AC and the same night needs about {{ex.3.out.battery_ah|up}} Ah ({{ex.3.out.battery_kwh|1}} units), less than half. Whether to run the AC at night is the single biggest decision in the battery budget."
    ]
   },
   {
@@ -326,7 +326,7 @@
     "battery_v": 48
    },
    "title": "Night loads with one AC: battery for {{out.night_hours|int}} hours",
-   "text": "Only the night loads are listed: six fans, sixteen bulbs, fridge, freezer, one TV, router and one 1.5 ton inverter AC, {{out.running_w|int}} W. For {{out.night_hours|int}} hours after sunset the battery must hold {{out.night_kwh|1}} units, about {{out.battery_ah|int}} Ah at {{out.battery_v|int}} V using {{out.battery_dod|pct}} of a lithium bank ({{out.battery_kwh|1}} units rated). The panels for the whole house come from the first example, not from this list."
+   "text": "Only the night loads are listed: six fans, sixteen bulbs, fridge, freezer, one TV, router and one 1.5 ton inverter AC, {{out.running_w|int}} W. For {{out.night_hours|int}} hours after sunset the battery must hold {{out.night_kwh|1}} units, about {{out.battery_ah|up}} Ah at {{out.battery_v|int}} V using {{out.battery_dod|pct}} of a lithium bank ({{out.battery_kwh|1}} units rated). The panels for the whole house come from the first example, not from this list."
   },
   {
    "inputs": {
@@ -362,7 +362,7 @@
     "battery_v": 48
    },
    "title": "Night loads without an AC: battery for {{out.night_hours|int}} hours",
-   "text": "Fans, bulbs, fridge, freezer, one TV and router only, {{out.running_w|int}} W. For {{out.night_hours|int}} hours the battery must hold {{out.night_kwh|1}} units, about {{out.battery_ah|int}} Ah at {{out.battery_v|int}} V ({{out.battery_kwh|1}} units rated). Leaving the AC off at night cuts the battery to less than half of the previous example."
+   "text": "Fans, bulbs, fridge, freezer, one TV and router only, {{out.running_w|int}} W. For {{out.night_hours|int}} hours the battery must hold {{out.night_kwh|1}} units, about {{out.battery_ah|up}} Ah at {{out.battery_v|int}} V ({{out.battery_kwh|1}} units rated). Leaving the AC off at night cuts the battery to less than half of the previous example."
   }
  ],
  "table": {
@@ -778,7 +778,7 @@
   },
   {
    "q": "Can a 10 marla solar system run ACs at night?",
-   "a": "Only from a battery or the grid. One 1.5 ton inverter AC with fans, lights, fridge and freezer for {{ex.2.out.night_hours|int}} hours needs about {{ex.2.out.battery_ah|int}} Ah of lithium at {{ex.2.out.battery_v|int}} V; without the AC the same night needs about {{ex.3.out.battery_ah|int}} Ah. Most houses keep the AC on the grid at night and size the battery for fans and lights."
+   "a": "Only from a battery or the grid. One 1.5 ton inverter AC with fans, lights, fridge and freezer for {{ex.2.out.night_hours|int}} hours needs about {{ex.2.out.battery_ah|up}} Ah of lithium at {{ex.2.out.battery_v|int}} V; without the AC the same night needs about {{ex.3.out.battery_ah|up}} Ah. Most houses keep the AC on the grid at night and size the battery for fans and lights."
   },
   {
    "q": "What is the price of a 10 marla solar system?",
