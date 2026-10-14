@@ -130,6 +130,21 @@ export const solar_from_loads = calculator((i, d) => {
   return { appliances: rows.length, ...solarSystem(daily_kwh, running_w, surge_w, i, d) };
 });
 
+/**
+ * D15: solar for a tubewell / water pump run by a solar pump drive (VFD), no battery.
+ * Pump input W = HP × 745.7 / motor efficiency (formulas.md A); daily kWh = input W × pumping hours;
+ * array from the solar-system rule (energy and midday power); the drive soft-starts, so surge = running
+ * [ENGINEER]; drive size ≥ input W × margin.
+ */
+export const solar_for_pump = calculator((i, d) => {
+  const hp = pos(i, 'hp');
+  const motor_eff = frac(i, 'motor_eff', dflt(d, 'motor_eff'));
+  const hours = pos(i, 'hours');
+  const pump_w = (hp * dflt(d, 'w_per_hp')) / motor_eff;
+  const sys = solarSystem((pump_w * hours) / 1000, pump_w, pump_w, i, d);
+  return { hp, motor_eff, hours, pump_w, pump_kw: pump_w / 1000, ...sys, drive_kw: sys.inverter_kw };
+});
+
 /** MPPT: A = P_array / V_battery × margin. PWM: A = Isc × N_parallel × margin. */
 export const charge_controller = calculator((i, d) => {
   const type = i.type ?? 'mppt';

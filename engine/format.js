@@ -3,7 +3,8 @@
 //
 // Template syntax: {{path}} or {{path|spec}}. path is dotted (in.load_w, out.hours, a.ceiling-fan-ac.running_w).
 // spec: a digit = max decimals (default 2), "hm" = hours as "3 h 24 min", "int" = whole number,
-// "pct" = fraction as percent, "rs" = Pakistani rupees with no decimals, "raw" = value as is.
+// "pct" = fraction as percent, "rs" = Pakistani rupees with no decimals, "rs2" = rupees with exactly two
+// decimals (per-unit rates: "Rs 33.10"), "raw" = value as is.
 
 const nf = new Map();
 function numberFormat(decimals) {
@@ -18,6 +19,7 @@ export function fmt(value, spec = '2') {
   if (spec === 'int') return numberFormat(0).format(Math.round(value));
   if (spec === 'pct') return `${numberFormat(1).format(value * 100)}%`;
   if (spec === 'rs') return `Rs ${numberFormat(0).format(Math.round(value))}`;
+  if (spec === 'rs2') return `Rs ${new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value)}`;
   if (spec === 'hm') {
     const sign = value < 0 ? '-' : '';
     const v = Math.abs(value);
@@ -32,7 +34,7 @@ export function fmt(value, spec = '2') {
   return numberFormat(d).format(value);
 }
 
-export const SPECS = ['raw', 'int', 'pct', 'rs', 'hm'];
+export const SPECS = ['raw', 'int', 'pct', 'rs', 'rs2', 'hm'];
 export const isSpec = (spec) => /^\d$/.test(spec) || SPECS.includes(spec);
 
 export function lookup(ctx, path) {

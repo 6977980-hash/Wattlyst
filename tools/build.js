@@ -8,6 +8,7 @@ import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync, rmSync
 import { join, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parseCsv } from './lib/csv.js';
+import { stripJs } from './lib/strip.js';
 import { render, fmt, placeholders, isSpec, lookup } from '../engine/format.js';
 import { errorMessage } from '../engine/messages.js';
 
@@ -15,9 +16,9 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => readFileSync(join(root, p), 'utf8');
 const readJson = (p) => JSON.parse(read(p));
 
-const ENGINE_MODULES = ['conversions', 'battery', 'sizing', 'solar', 'bill', 'load', 'wiring'];
+const ENGINE_MODULES = ['conversions', 'battery', 'sizing', 'solar', 'bill', 'load', 'wiring', 'planner'];
 /** Data each engine module needs in the browser (keeps page weight down). Appliances are added per page, only the ones its fields use. */
-const MODULE_DATA = { bill: ['tariff'], solar: ['cities'], wiring: ['cables'], load: ['cables'] };
+const MODULE_DATA = { bill: ['tariff'], solar: ['cities'], wiring: ['cables'], load: ['cables'], planner: ['tariff', 'cities'] };
 /** Appliance fields the browser engine and the loads picker need. */
 const APPLIANCE_KEYS = ['name', 'running_w', 'starting_w', 'typical_hours_per_day', 'avg_w', 'load_type'];
 
@@ -492,6 +493,9 @@ export async function build() {
   };
   files['generated/manifest.json'] = JSON.stringify(manifest, null, 1) + '\n';
   files['generated/llms.txt'] = llmsTxt(rows, ctxBase);
+  // The browser loads dist/: the same modules with comments and indentation removed (tools/lib/strip.js).
+  for (const f of readdirSync(join(root, 'engine')).filter((x) => x.endsWith('.js')).sort()) files[`dist/engine/${f}`] = stripJs(read(`engine/${f}`));
+  files['dist/assets/js/wattlyst-tool.js'] = stripJs(read('assets/js/wattlyst-tool.js'));
   return files;
 }
 

@@ -296,7 +296,7 @@
     }
    ],
    "how": {
-    "tpl": "{{out.avg_kw|2}} kW average draw × {{in.hours|int}} hours = {{out.daily_units|1}} units a day. {{out.daily_units|1}} units × {{out.days|int}} days = {{out.monthly_units|int}} units a month. Cost: {{out.avg_kw|2}} kW × Rs {{out.tariff|2}} = {{out.hourly_rs|rs}} per hour; {{out.monthly_units|int}} units × Rs {{out.tariff|2}} = {{out.monthly_rs|rs}} a month in energy charges, before fixed charges, surcharges and taxes.",
+    "tpl": "{{out.avg_kw|2}} kW average draw × {{in.hours|int}} hours = {{out.daily_units|1}} units a day. {{out.daily_units|1}} units × {{out.days|int}} days = {{out.monthly_units|int}} units a month. Cost: {{out.avg_kw|2}} kW × {{out.tariff|rs2}} = {{out.hourly_rs|rs}} per hour; {{out.monthly_units|int}} units × {{out.tariff|rs2}} = {{out.monthly_rs|rs}} a month in energy charges, before fixed charges, surcharges and taxes.",
     "text": "1 kW average draw × 8 hours = 8 units a day. 8 units × 30 days = 240 units a month. Cost: 1 kW × Rs 36.46 = Rs 36 per hour; 240 units × Rs 36.46 = Rs 8,750 a month in energy charges, before fixed charges, surcharges and taxes."
    },
    "submit": "Calculate",

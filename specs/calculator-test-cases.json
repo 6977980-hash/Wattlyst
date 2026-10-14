@@ -4140,5 +4140,274 @@
     },
     "tolerance": 0,
     "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): protected cannot apply above 200 units"
+  },
+  {
+    "calc": "generator_capacity",
+    "name": "5 kVA: capacity, fans + inverter AC + fridge fit, two 1.5 ton inverter ACs",
+    "inputs": {
+      "kva": 5,
+      "loads": [
+        {
+          "id": "ceiling-fan-ac",
+          "qty": 4
+        },
+        {
+          "id": "ac-split-1-5ton-inverter",
+          "hours": 8
+        },
+        {
+          "id": "refrigerator-inverter"
+        }
+      ],
+      "appliance": "ac-split-1-5ton-inverter"
+    },
+    "expected": {
+      "capacity_w": 4000,
+      "max_running_w": 3200,
+      "max_start_w": 4000,
+      "running_w": 1890,
+      "peak_w": 2340,
+      "fits": true,
+      "spare_running_w": 1310,
+      "appliance_count": 2
+    },
+    "tolerance": 0.01,
+    "note": "capacity = kVA x 1000 x PF 0.8; running x 1.25 <= 4000 and peak <= 4000. Inverter AC: min(4000/(1450x1.25)=2.2, (4000-1900)/1450+1=2.45) -> 2"
+  },
+  {
+    "calc": "generator_capacity",
+    "name": "5 kVA cannot start a 1.5 ton non-inverter AC (5400 W start > 4000 W)",
+    "inputs": {
+      "kva": 5,
+      "appliance": "ac-split-1-5ton-non-inverter"
+    },
+    "expected": {
+      "appliance_count": 0,
+      "capacity_w": 4000
+    },
+    "tolerance": 0.001,
+    "note": "(4000-5400)/1800+1 = 0.22 -> 0; same rule as generator_for_ac (7.5 kVA for this AC)"
+  },
+  {
+    "calc": "generator_capacity",
+    "name": "7.5 kVA runs a 1.5 ton non-inverter AC; load check flags a start that is too big",
+    "inputs": {
+      "kva": 7.5,
+      "appliance": "ac-split-1-5ton-non-inverter",
+      "loads": [
+        {
+          "run": 1800,
+          "start": 5400
+        },
+        {
+          "run": 3000
+        }
+      ]
+    },
+    "expected": {
+      "appliance_count": 1,
+      "running_w": 4800,
+      "peak_w": 8400,
+      "running_ok": true,
+      "start_ok": false,
+      "fits": false
+    },
+    "tolerance": 0.001,
+    "note": "capacity 6000 W; running 4800 x 1.25 = 6000 ok; peak 8400 > 6000"
+  },
+  {
+    "calc": "generator_capacity",
+    "name": "kVA must be positive",
+    "inputs": {
+      "kva": 0
+    },
+    "expected": {
+      "error": "kva_must_be_positive"
+    },
+    "tolerance": 0,
+    "note": ""
+  },
+  {
+    "calc": "solar_for_pump",
+    "name": "10 HP tubewell, 6 h a day, Multan",
+    "inputs": {
+      "hp": 10,
+      "hours": 6,
+      "city": "multan"
+    },
+    "expected": {
+      "pump_w": 9321.25,
+      "daily_kwh": 55.9275,
+      "kw_energy": 12.7108,
+      "kw_power": 11.9503,
+      "panels": 22,
+      "installed_kw": 12.87,
+      "drive_kw": 11.6516,
+      "limited_by": "energy"
+    },
+    "tolerance": 0.001,
+    "note": "10 x 745.7 / 0.8 = 9321.25 W; 55.93 kWh / 4.4 = 12.71 kWp; 12.71 kW / 585 W -> 22 panels; drive = 9321.25 x 1.25"
+  },
+  {
+    "calc": "solar_for_pump",
+    "name": "5 HP, 4 h a day, Lahore: midday power rule wins",
+    "inputs": {
+      "hp": 5,
+      "hours": 4,
+      "city": "lahore"
+    },
+    "expected": {
+      "pump_w": 4660.625,
+      "kw_power": 5.9752,
+      "kw_energy": 4.6606,
+      "panels": 11,
+      "limited_by": "power"
+    },
+    "tolerance": 0.001,
+    "note": "4660.6 / 1000 / 0.78 = 5.98 kWp > 18.64 kWh / 4.0 = 4.66 kWp"
+  },
+  {
+    "calc": "solar_for_pump",
+    "name": "pumping hours required",
+    "inputs": {
+      "hp": 5,
+      "city": "lahore"
+    },
+    "expected": {
+      "error": "hours_required"
+    },
+    "tolerance": 0,
+    "note": ""
+  },
+  {
+    "calc": "home_plan",
+    "name": "4 fans + 1.5 ton inverter AC 8 h + inverter fridge, 500 W backup 4 h lithium, Lahore, 4 kW",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ceiling-fan-ac",
+          "qty": 4
+        },
+        {
+          "id": "ac-split-1-5ton-inverter",
+          "hours": 8
+        },
+        {
+          "id": "refrigerator-inverter"
+        }
+      ],
+      "backup_w": 500,
+      "backup_hours": 4,
+      "city": "lahore",
+      "sanctioned_kw": 4
+    },
+    "expected": {
+      "running_w": 1890,
+      "peak_w": 2340,
+      "daily_kwh": 13.04,
+      "monthly_units": 391.2,
+      "inverter_w": 2362.5,
+      "battery_ah": 102.8807,
+      "battery_kwh": 2.4691,
+      "panels": 6,
+      "installed_kw": 3.51,
+      "monthly_solar_kwh": 421.2,
+      "self_used_units": 195.6,
+      "export_units": 225.6,
+      "import_units": 195.6,
+      "bill_before_rs": 14263.152,
+      "bill_after_rs": 3173.196,
+      "saving_rs": 11089.956,
+      "generator_pick_kva": 3
+    },
+    "tolerance": 0.01,
+    "note": "391.2 units x 36.46 (301-400 band); import 195.6 x 28.91 - export 225.6 x 11 = 3173.20; battery 2 kWh / (24 x 0.9 x 0.9); generator max(2362.5, 2340)/0.8 -> 3 kVA"
+  },
+  {
+    "calc": "home_plan",
+    "name": "no backup hours gives no battery; tubular chemistry accepted",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ceiling-fan-ac",
+          "qty": 4
+        },
+        {
+          "id": "ac-split-1-5ton-inverter",
+          "hours": 8
+        },
+        {
+          "id": "refrigerator-inverter"
+        }
+      ],
+      "backup_w": 500,
+      "backup_hours": 0,
+      "chemistry": "tubular",
+      "city": "lahore",
+      "sanctioned_kw": 4
+    },
+    "expected": {
+      "battery_ah": 0,
+      "battery_dod": 0.5
+    },
+    "tolerance": 0.001,
+    "note": ""
+  },
+  {
+    "calc": "home_plan",
+    "name": "5 kW and above must use the ToU bill",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ceiling-fan-ac",
+          "qty": 4
+        },
+        {
+          "id": "ac-split-1-5ton-inverter",
+          "hours": 8
+        },
+        {
+          "id": "refrigerator-inverter"
+        }
+      ],
+      "backup_w": 500,
+      "backup_hours": 4,
+      "city": "lahore",
+      "sanctioned_kw": 5
+    },
+    "expected": {
+      "error": "tou_required_at_5kw"
+    },
+    "tolerance": 0,
+    "note": "net billing and flat bill refuse >= 5 kW (formulas.md contract)"
+  },
+  {
+    "calc": "home_plan",
+    "name": "unknown battery type",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ceiling-fan-ac",
+          "qty": 4
+        },
+        {
+          "id": "ac-split-1-5ton-inverter",
+          "hours": 8
+        },
+        {
+          "id": "refrigerator-inverter"
+        }
+      ],
+      "backup_w": 500,
+      "backup_hours": 4,
+      "chemistry": "nicad",
+      "city": "lahore",
+      "sanctioned_kw": 4
+    },
+    "expected": {
+      "error": "chemistry_invalid"
+    },
+    "tolerance": 0,
+    "note": ""
   }
 ]

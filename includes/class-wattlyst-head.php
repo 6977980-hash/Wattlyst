@@ -148,7 +148,8 @@ final class Wattlyst_Head {
 	}
 
 	private function preload( string $module ): void {
-		$files = array( 'assets/js/wattlyst-tool.js?ver=' . WATTLYST_TOOLS_VERSION, 'engine/format.js', 'engine/messages.js', 'engine/core.js', 'engine/' . basename( $module ) );
+		// dist/ holds the stripped copies built by tools/build.js (same code, no comments or indentation).
+		$files = array( 'dist/assets/js/wattlyst-tool.js?ver=' . WATTLYST_TOOLS_VERSION, 'dist/engine/format.js', 'dist/engine/messages.js', 'dist/engine/core.js', 'dist/engine/' . basename( $module ) );
 		foreach ( $files as $f ) {
 			printf( '<link rel="modulepreload" href="%s">' . "\n", esc_url( Wattlyst_Tools::asset( $f ) ) );
 		}

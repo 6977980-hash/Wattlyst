@@ -40,7 +40,7 @@
    {
     "h2": "What is the LESCO per unit rate in 2026?",
     "p": [
-     "LESCO, the Lahore Electric Supply Company, does not set its own rates. It bills the uniform A-1 domestic tariff that NEPRA determined and the Government notified for 2026, the same slabs as every other DISCO. For an unprotected home the rate of the slab the month's units reach applies to every unit: 300 units are all billed at Rs 33.1, the top slab is the most expensive, and the first hundred units are the cheapest.",
+     "LESCO, the Lahore Electric Supply Company, does not set its own rates. It bills the uniform A-1 domestic tariff that NEPRA determined and the Government notified for 2026, the same slabs as every other DISCO. For an unprotected home the rate of the slab the month's units reach applies to every unit: 300 units are all billed at Rs 33.10, the top slab is the most expensive, and the first hundred units are the cheapest.",
      "The worked examples below print the rate for the protected, the three-hundred-unit, the five-hundred-unit and the lifeline cases, and the table lists the rate for each slab. Add the FPA from your bill for the month's exact figure."
     ]
    },
@@ -66,7 +66,7 @@
    },
    {
     "q": "What is the LESCO per unit price?",
-    "a": "It is the NEPRA domestic slab rate for the slab your month reaches. An unprotected home using 300 units pays Rs 33.1 per unit; the table above gives the rate for each slab, and protected homes pay far less."
+    "a": "It is the NEPRA domestic slab rate for the slab your month reaches. An unprotected home using 300 units pays Rs 33.10 per unit; the table above gives the rate for each slab, and protected homes pay far less."
    },
    {
     "q": "Is the LESCO unit price the same as other DISCOs?",
@@ -87,7 +87,7 @@
   ],
   "key_facts": [
    "LESCO charges the NEPRA uniform A-1 domestic tariff for 2026, so a LESCO bill for a given number of units is the same as any other DISCO's; only the monthly FPA line differs.",
-   "The LESCO per unit rate for an unprotected home using 300 units is Rs 33.1 on every unit, which gives Rs 9,930 before the fixed charge, surcharges and GST.",
+   "The LESCO per unit rate for an unprotected home using 300 units is Rs 33.10 on every unit, which gives Rs 9,930 before the fixed charge, surcharges and GST.",
    "LESCO protected units: a home stays protected only while every one of its last 6 bills is at or under 200 units; protected bills are worked out slab-wise at much lower rates.",
    "GST at 18% is charged on energy, fixed charge and surcharges together, adding Rs 2,053 to a 300 unit LESCO bill; the surcharge and GST values are secondary-source figures that change monthly."
   ],
@@ -236,8 +236,8 @@
     }
    ],
    "how": {
-    "tpl": "{{out.units|int}} units × Rs {{out.rate|2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge {{out.sanctioned_kw|int}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct|int}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
-    "text": "300 units × Rs 33.1 (unprotected slab rate) = Rs 9,930. Fixed charge 1 kW = Rs 350. FC surcharge Rs 969 + QTA Rs 156 + FPA Rs 0. Subtotal Rs 11,405 + GST 18% (Rs 2,053) = Rs 13,458."
+    "tpl": "{{out.units|int}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge {{out.sanctioned_kw|int}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct|int}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
+    "text": "300 units × Rs 33.10 (unprotected slab rate) = Rs 9,930. Fixed charge 1 kW = Rs 350. FC surcharge Rs 969 + QTA Rs 156 + FPA Rs 0. Subtotal Rs 11,405 + GST 18% (Rs 2,053) = Rs 13,458."
    },
    "submit": "Calculate",
    "data_checked": [
@@ -255,7 +255,7 @@
    },
    {
     "title": "300 units, unprotected",
-    "text": "300 × Rs 33.1 = Rs 9,930, fixed charge Rs 350, FC surcharge Rs 969, QTA Rs 156, GST Rs 2,053. Estimated LESCO bill Rs 13,458."
+    "text": "300 × Rs 33.10 = Rs 9,930, fixed charge Rs 350, FC surcharge Rs 969, QTA Rs 156, GST Rs 2,053. Estimated LESCO bill Rs 13,458."
    },
    {
     "title": "500 units with an AC, 2 kW connection",
@@ -306,7 +306,7 @@
     ],
     [
      "300 (unprotected)",
-     "Rs 33.1",
+     "Rs 33.10",
      "Rs 9,930",
      "Rs 350",
      "Rs 13,458"
@@ -327,7 +327,7 @@
     ]
    ]
   },
-  "answer": "A LESCO home using 300 units a month as an unprotected consumer on a 1 kW connection pays about Rs 13,458, of which Rs 9,930 is the energy charge at Rs 33.1 per unit and the rest is fixed charge, FC surcharge, QTA and GST. LESCO bill = units × slab rate + fixed charge + surcharges + GST.",
+  "answer": "A LESCO home using 300 units a month as an unprotected consumer on a 1 kW connection pays about Rs 13,458, of which Rs 9,930 is the energy charge at Rs 33.10 per unit and the rest is fixed charge, FC surcharge, QTA and GST. LESCO bill = units × slab rate + fixed charge + surcharges + GST.",
   "formula": {
    "text": "Bill = units × slab rate + fixed Rs/kW × sanctioned kW + (FC + QTA + FPA) × units, then + GST",
    "lines": [
@@ -430,7 +430,7 @@
       "name": "What is the LESCO per unit price?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "It is the NEPRA domestic slab rate for the slab your month reaches. An unprotected home using 300 units pays Rs 33.1 per unit; the table above gives the rate for each slab, and protected homes pay far less."
+       "text": "It is the NEPRA domestic slab rate for the slab your month reaches. An unprotected home using 300 units pays Rs 33.10 per unit; the table above gives the rate for each slab, and protected homes pay far less."
       }
      },
      {

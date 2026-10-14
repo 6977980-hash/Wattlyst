@@ -33,6 +33,8 @@ test('format: numbers are never blank, NaN or Infinity', () => {
   assert.equal(fmt(1020.4, 'int'), '1,020');
   assert.equal(fmt(0.85, 'pct'), '85%');
   assert.equal(fmt(8275.4, 'rs'), 'Rs 8,275');
+  assert.equal(fmt(33.1, 'rs2'), 'Rs 33.10', 'per-unit rates keep two decimals');
+  assert.equal(fmt(1234.5, 'rs2'), 'Rs 1,234.50');
   assert.equal(fmt(NaN), '');
   assert.equal(fmt(Infinity), '');
   assert.equal(fmt(-0.001), '0', 'no "-0"');
@@ -186,9 +188,10 @@ test('brand images exist at the sizes the head tags and schema declare', () => {
 });
 
 test('a tool page loads under 30 KB of JavaScript (seo-rules.md 4)', () => {
-  const size = (p) => statSync(join(root, p)).size;
+  // Measured on what the browser actually loads: the stripped copies in dist/.
+  const size = (p) => Buffer.byteLength(files[`dist/${p}`]);
   const base = ['assets/js/wattlyst-tool.js', 'engine/format.js', 'engine/messages.js', 'engine/core.js'].reduce((s, p) => s + size(p), 0);
-  for (const m of ['conversions', 'battery', 'sizing', 'solar', 'bill', 'load', 'wiring']) {
+  for (const m of ['conversions', 'battery', 'sizing', 'solar', 'bill', 'load', 'wiring', 'planner']) {
     assert.ok(base + size(`engine/${m}.js`) < 30 * 1024, `${m}: ${base + size(`engine/${m}.js`)} bytes`);
   }
 });
