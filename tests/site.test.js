@@ -130,6 +130,11 @@ test('schema: breadcrumb everywhere, WebApplication on tools, FAQ matches visibl
       assert.equal(app.offers.price, '0');
     }
     if (p.type === 'guide') assert.ok(types.includes('Article') && types.includes('Person'), `${p.id}: Article + Person`);
+    const wp = g.find((n) => /WebPage|AboutPage|ContactPage|CollectionPage/.test(n['@type']));
+    if (p.author && p.type !== 'trust') {
+      assert.ok(wp?.author, `${p.id}: WebPage names its author (WL-50)`);
+      assert.ok(g.some((n) => n['@type'] === 'Person' && n['@id'] === wp.author['@id']), `${p.id}: author Person is in the graph`);
+    }
     const faq = g.find((n) => n['@type'] === 'FAQPage');
     const visible = p.content?.faq || [];
     if (visible.length) {

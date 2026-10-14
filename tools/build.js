@@ -350,6 +350,8 @@ function schemaFor(page, built, ctx) {
     breadcrumb: { '@id': `${abs(page.url)}#breadcrumb` },
     ...(page.reviewed ? { dateModified: page.reviewed, lastReviewed: page.reviewed } : page.modified ? { dateModified: page.modified } : {}),
     ...(site.reviewer.status === 'signed_off' && page.type !== 'trust' ? { reviewedBy: { '@id': `${site.url}#/person/reviewer` } } : {}),
+    // The author box is visible on every content page, so the page names its author too (audit WL-50).
+    ...(page.author && page.type !== 'trust' ? { author: { '@id': `${site.url}#/person/${page.author}` } } : {}),
   };
   graph.push(webPage);
   if (page.type === 'tool' || page.type === 'appliance' || page.type === 'lookup') {
