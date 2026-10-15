@@ -104,7 +104,7 @@ test('uninstall removes options, tasks and quote requests; pages go to draft (WL
   assert.ok(existsSync(join(root, 'uninstall.php')));
   const u = php('uninstall.php');
   assert.match(u, /WP_UNINSTALL_PLUGIN/);
-  for (const k of ['wattlyst_sync_hash', 'wattlyst_indexnow_key', 'wattlyst_lead_cleanup', 'wattlyst_sync', "'wattlyst_lead'", "'draft'"]) assert.ok(u.includes(k), k);
+  for (const k of ['wattlyst_sync_hash', 'wattlyst_indexnow_key', 'wattlyst_indexnow_sent', 'wattlyst_lead_cleanup', 'wattlyst_sync', "'wattlyst_lead'", "'draft'"]) assert.ok(u.includes(k), k);
   assert.match(php('includes/class-wattlyst-pages.php'), /trashed or drafted in WordPress is published again/);
 });
 
@@ -130,4 +130,17 @@ test('Search Console verification tag comes from data/site.json and prints on th
   const head = php('includes/class-wattlyst-head.php');
   assert.match(head, /name="google-site-verification"/);
   assert.match(head, /is_front_page\(\)/);
+});
+
+test('IndexNow: changed pages go out in one batch after each sync, keyed on the sitemap lastmod (growth phase)', () => {
+  const pages = php('includes/class-wattlyst-pages.php');
+  const ep = php('includes/class-wattlyst-endpoints.php');
+  assert.match(pages, /self::purge_cache\(\);[\s\S]*?do_action\( 'wattlyst_synced' \)/, 'batch runs after the sync and purge');
+  assert.match(ep, /add_action\( 'wattlyst_synced', array\( \$this, 'indexnow_changed' \) \)/);
+  assert.match(ep, /\$row\['lastmod'\]/, 'change signal is the manifest lastmod');
+  assert.match(ep, /update_option\( self::OPT_SENT/, 'sent dates saved');
+  assert.match(ep, /array\( 200, 202 \)/, 'saved only when the engine accepted the batch');
+  assert.match(ep, /Wattlyst_Pages::\$syncing/, 'per-post ping quiet during sync');
+  assert.match(ep, /'production' !== wp_get_environment_type\(\)/, 'never pings from a local copy');
+  for (const r of manifest.pages.filter((p) => p.live)) assert.match(r.lastmod || '', /^\d{4}-\d{2}-\d{2}$/, `${r.id} has a lastmod`);
 });

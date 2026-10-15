@@ -9,6 +9,9 @@ defined( 'ABSPATH' ) || exit;
 final class Wattlyst_Pages {
 
 	public const META_ID    = '_wattlyst_id';
+
+	/** True while sync() writes pages, so the per-post IndexNow ping stays quiet (the batch after sync covers them). */
+	public static bool $syncing = false;
 	private const OPT_HASH  = 'wattlyst_sync_hash';
 	private const OPT_LOCK  = 'wattlyst_sync_lock';
 	private const SHORTCODE = 'wattlyst_page';
@@ -126,13 +129,16 @@ final class Wattlyst_Pages {
 			update_option( self::OPT_LOCK, time(), false );
 		}
 		try {
+			self::$syncing = true;
 			$this->sync();
 			update_option( self::OPT_HASH, $hash, false );
 		} finally {
+			self::$syncing = false;
 			delete_option( self::OPT_LOCK );
 		}
 		self::purge_cache();
 		$this->queue_warm();
+		do_action( 'wattlyst_synced' ); // Wattlyst_Endpoints::indexnow_changed sends the changed pages in one batch.
 	}
 
 	/**
