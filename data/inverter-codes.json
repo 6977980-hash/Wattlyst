@@ -1,8 +1,8 @@
 {
  "_meta": {
   "source": "manufacturer manuals listed per brand (PDF or manufacturer support page), all fetched 2026-10-13/14",
-  "checked": "2026-10-14",
-  "notes": "Skipped (no manufacturer manual found): Inverex (Nitrox/Veyron/Aerox) - inverex.com is a parked GoDaddy domain and no official PDF surfaced in search (only ManualsLib listings and retailer pages); Knox - no official site or manual found (retailer w11stop lists datasheets only). Growatt MOD/MID and Growatt SPH hybrids not read (MIN TL-X and SPF ES Plus only). GoodWe F41-F163 not extracted. Huawei alarm IDs come from the L1 (2-6 kW single-phase) manual Issue 10; newer issues exist. Fronius Symo/Primo Class 1-5 STATE codes were read from the Symo Hybrid online manual and GEN24 codes from the GEN24 PDF. 'causes' and 'action' fields quote the manual where quoted; sentences starting 'Owner:' are plain-English guidance derived from the quoted manual text, not additional manufacturer statements. call_installer=true where the manual says to contact dealer/service/repair center or the fix needs DC/AC wiring work.",
+  "checked": "2026-10-15",
+  "notes": "Inverex Nitrox on-grid (12-25 kW) added 2026-10-15 from Inverex's own manual as hosted on ManualsLib. Still skipped: Inverex Veyron/Aerox hybrids (the 'APT Veyron' manuals on ManualsLib do not name Inverex, so they cannot be attributed); Knox - no official site or manual found (retailer w11stop lists datasheets only). Growatt MOD/MID and Growatt SPH hybrids not read (MIN TL-X and SPF ES Plus only). GoodWe F41-F163 not extracted. Huawei alarm IDs come from the L1 (2-6 kW single-phase) manual Issue 10; newer issues exist. Fronius Symo/Primo Class 1-5 STATE codes were read from the Symo Hybrid online manual and GEN24 codes from the GEN24 PDF. 'causes' and 'action' fields quote the manual where quoted; sentences starting 'Owner:' are plain-English guidance derived from the quoted manual text, not additional manufacturer statements. call_installer=true where the manual says to contact dealer/service/repair center or the fix needs DC/AC wiring work.",
   "installer_flags": "call_installer set to true on 2026-10-14 (engineer review) wherever the manual's remedy needs wiring, terminal, protection-setting or part replacement work."
  },
  "brands": [
@@ -1695,6 +1695,582 @@
      "call_installer": false,
      "source_url": "https://ressupply.com/documents/fronius/Primo_GEN24_GEN24_Plus-7.7-10.0_Operating_Instructions.pdf",
      "source_ref": "Fronius Primo GEN24 208-240 7.7/10.0 Operating Instructions 42,0426,0312,EA 017-04092025, 'Status codes and remedy' (p. 133)"
+    }
+   ]
+  },
+  {
+   "id": "inverex-nitrox",
+   "name": "Inverex Nitrox (on-grid, three-phase)",
+   "models": "NITROX-12KW, 15KW, 20KW, 25KW and the -3Ph-5G versions (the manual lists all of them)",
+   "manual_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html",
+   "manual_note": "Inverex's own NITROX-12KW user manual, read as hosted on ManualsLib (inverex.com had no manual download when checked, 2026-10-15). F13 is 'Reserved' and is left out. The manual gives causes for some codes only (table 10.2) and one general action for all.",
+   "codes": [
+    {
+     "code": "F01",
+     "meaning": "DC input polarity reverse fault",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Do not open the DC (solar) side yourself: these voltages are dangerous even in daylight with the breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F02",
+     "meaning": "DC insulation impedance permanent fault",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Do not open the DC (solar) side yourself: these voltages are dangerous even in daylight with the breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F03",
+     "meaning": "DC leakage current fault",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Do not open the DC (solar) side yourself: these voltages are dangerous even in daylight with the breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F04",
+     "meaning": "Ground fault GFDI",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Do not open the DC (solar) side yourself: these voltages are dangerous even in daylight with the breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F05",
+     "meaning": "Read the memory error",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F06",
+     "meaning": "Write the memory error",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F07",
+     "meaning": "GFDI blown fuse",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Do not open the DC (solar) side yourself: these voltages are dangerous even in daylight with the breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F08",
+     "meaning": "GFDI grounding touch failure",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Do not open the DC (solar) side yourself: these voltages are dangerous even in daylight with the breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F09",
+     "meaning": "IGBT damaged by excessive drop voltage",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F10",
+     "meaning": "Auxiliary switch power supply failure",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F11",
+     "meaning": "AC main contactor errors",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F12",
+     "meaning": "AC auxiliary contactor errors",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F14",
+     "meaning": "DC firmware over current",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F15",
+     "meaning": "AC firmware over current",
+     "causes": "Manual (table 10.2): surge loads on the grid.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41) and troubleshooting table 10.2"
+    },
+    {
+     "code": "F16",
+     "meaning": "GFCI (RCD) AC leakage current fault",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. If it trips again, do not keep resetting it: earth leakage can mean a shock risk, so call the installer. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F17",
+     "meaning": "Three phase current, over-current fault",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F18",
+     "meaning": "AC over current fault of hardware",
+     "causes": "Manual (table 10.2): surge loads on the grid.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41) and troubleshooting table 10.2"
+    },
+    {
+     "code": "F19",
+     "meaning": "All hardware failure synthesis",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F20",
+     "meaning": "DC over current fault of the hardware",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F21",
+     "meaning": "DC leakage flow fault",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Do not open the DC (solar) side yourself: these voltages are dangerous even in daylight with the breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F22",
+     "meaning": "Crash stop (if there is a stop button)",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Release the emergency stop button if one is fitted, then restart the inverter. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": false,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F23",
+     "meaning": "AC leakage current is transient over current",
+     "causes": "Manual (table 10.2): ground error, or PV+ or PV- shorted to ground.",
+     "action": "Do not open the DC (solar) side yourself: these voltages are dangerous even in daylight with the breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41) and troubleshooting table 10.2"
+    },
+    {
+     "code": "F24",
+     "meaning": "DC insulation impedance failure",
+     "causes": "Manual (table 10.2): PV+ or PV- to ground resistance is too low.",
+     "action": "Do not open the DC (solar) side yourself: these voltages are dangerous even in daylight with the breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41) and troubleshooting table 10.2"
+    },
+    {
+     "code": "F25",
+     "meaning": "DC reverse irrigation failure",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Do not open the DC (solar) side yourself: these voltages are dangerous even in daylight with the breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F26",
+     "meaning": "The DC busbar is unbalanced",
+     "causes": "Manual (table 10.2): loss of one phase, a poor connection, or inverter hardware damage.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41) and troubleshooting table 10.2"
+    },
+    {
+     "code": "F27",
+     "meaning": "DC end insulation error",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Do not open the DC (solar) side yourself: these voltages are dangerous even in daylight with the breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F28",
+     "meaning": "Inverter 1 DC high fault",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Do not open the DC (solar) side yourself: a high DC voltage can come from the panel string, and these voltages are dangerous even in daylight with the breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F29",
+     "meaning": "AC load switch failure",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F30",
+     "meaning": "AC main contactor failure",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F31",
+     "meaning": "AC secondary contactor failure",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F32",
+     "meaning": "Inverter 2 DC high fault",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Do not open the DC (solar) side yourself: a high DC voltage can come from the panel string, and these voltages are dangerous even in daylight with the breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F33",
+     "meaning": "AC over current",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F34",
+     "meaning": "AC current over load",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F35",
+     "meaning": "No AC grid",
+     "causes": "Manual (table 10.2): 'Grid failure.'",
+     "action": "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": false,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=22",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41) and troubleshooting table 10.2"
+    },
+    {
+     "code": "F36",
+     "meaning": "AC grid phase error",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=23",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F37",
+     "meaning": "AC three-phase voltage imbalance failure",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=23",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F38",
+     "meaning": "AC three-phase current imbalance failure",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=23",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F39",
+     "meaning": "AC over current",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=23",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F40",
+     "meaning": "DC over current",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=23",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F41",
+     "meaning": "AC line W,U over voltage",
+     "causes": "Manual (table 10.2): grid voltage or frequency outside the inverter's normal working range.",
+     "action": "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": false,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=23",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41) and troubleshooting table 10.2"
+    },
+    {
+     "code": "F42",
+     "meaning": "AC line W,U low voltage",
+     "causes": "Manual (table 10.2): grid voltage or frequency outside the inverter's normal working range.",
+     "action": "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": false,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=23",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41) and troubleshooting table 10.2"
+    },
+    {
+     "code": "F43",
+     "meaning": "AC line V,W over voltage",
+     "causes": "Manual (table 10.2): grid voltage or frequency outside the inverter's normal working range.",
+     "action": "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": false,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=23",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41) and troubleshooting table 10.2"
+    },
+    {
+     "code": "F44",
+     "meaning": "AC line V,W low voltage",
+     "causes": "Manual (table 10.2): grid voltage or frequency outside the inverter's normal working range.",
+     "action": "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": false,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=23",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41) and troubleshooting table 10.2"
+    },
+    {
+     "code": "F45",
+     "meaning": "AC line U,V over voltage",
+     "causes": "Manual (table 10.2): grid voltage or frequency outside the inverter's normal working range.",
+     "action": "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": false,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=23",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41) and troubleshooting table 10.2"
+    },
+    {
+     "code": "F46",
+     "meaning": "AC line U,V low voltage",
+     "causes": "Manual (table 10.2): grid voltage or frequency outside the inverter's normal working range.",
+     "action": "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": false,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=23",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41) and troubleshooting table 10.2"
+    },
+    {
+     "code": "F47",
+     "meaning": "AC over frequency",
+     "causes": "Manual (table 10.2): grid voltage or frequency outside the inverter's normal working range.",
+     "action": "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": false,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=23",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41) and troubleshooting table 10.2"
+    },
+    {
+     "code": "F48",
+     "meaning": "AC lower frequency",
+     "causes": "Manual (table 10.2): grid voltage or frequency outside the inverter's normal working range.",
+     "action": "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": false,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=23",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41) and troubleshooting table 10.2"
+    },
+    {
+     "code": "F49",
+     "meaning": "U phase grid current DC over current",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=23",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F50",
+     "meaning": "V phase grid current DC over current",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=23",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F51",
+     "meaning": "W phase grid current DC over current",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=23",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F52",
+     "meaning": "AC inductor A phase current DC current high",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=23",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F53",
+     "meaning": "AC inductor B phase current DC current high",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=23",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F54",
+     "meaning": "AC inductor C phase current DC current high",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=23",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F55",
+     "meaning": "DC busbar voltage is too high",
+     "causes": "Manual (table 10.2): solar (PV) over voltage.",
+     "action": "Do not open the DC (solar) side yourself: these voltages are dangerous even in daylight with the breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=23",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41) and troubleshooting table 10.2"
+    },
+    {
+     "code": "F56",
+     "meaning": "DC busbar voltage is too low",
+     "causes": "Manual (table 10.2): solar (PV) under voltage.",
+     "action": "Do not open the DC (solar) side yourself: these voltages are dangerous even in daylight with the breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=23",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41) and troubleshooting table 10.2"
+    },
+    {
+     "code": "F57",
+     "meaning": "AC reverse irrigation",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=23",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F58",
+     "meaning": "AC grid U over current",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=23",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F59",
+     "meaning": "AC grid V over current",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=23",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F60",
+     "meaning": "AC grid W over current",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=23",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F61",
+     "meaning": "Reactor A phase over current",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=23",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F62",
+     "meaning": "Reactor B phase over current",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=23",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F63",
+     "meaning": "Reactor C phase over current",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": true,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=23",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
+    },
+    {
+     "code": "F64",
+     "meaning": "IGBT heat sink high temperature",
+     "causes": "Manual lists the name only (table 10.1); no cause is given.",
+     "action": "Check that the inverter's air vents are not blocked and that it is out of direct sun. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+     "call_installer": false,
+     "source_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html?page=23",
+     "source_ref": "Inverex NITROX-12KW User Manual, section 10 'Error information and processing', table 10.1 (printed p. 39-41)"
     }
    ]
   },

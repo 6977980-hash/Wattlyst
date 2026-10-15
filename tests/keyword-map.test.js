@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { root } from './load-data.js';
+import { build } from '../tools/build.js';
 
 function parseCsv(text) {
   const rows = [];
@@ -26,6 +27,10 @@ function parseCsv(text) {
 }
 
 const rows = parseCsv(readFileSync(join(root, 'specs/keyword-map.csv'), 'utf8'));
+// A title or meta may carry an engine number as a {{placeholder}} (seo-rules.md 2): the rules apply to the
+// rendered text the page prints; its _len column is not checked because the number moves with the data.
+const built = new Map(JSON.parse((await build())['generated/manifest.json']).pages.map((p) => [p.id, p]));
+const shown = (r, key, col) => (/\{\{/.test(r[key]) ? built.get(r.id)[col] : r[key]);
 const STOP = new Set('a an the to for of in on and or my do i is can what how much many with by per vs at it run need'.split(' '));
 const tokens = (s) => (s.toLowerCase().match(/[a-z0-9.]+/g) || []).filter((t) => !STOP.has(t));
 const BRAND = 'Wattlyst';
@@ -48,17 +53,20 @@ for (const key of ['id', 'url', 'primary_keyword', 'title', 'meta_description'])
 for (const r of rows) {
   test(`keyword map ${r.id}: title, meta and URL follow the rules`, () => {
     const isHome = r.url === '/';
-    assert.ok(r.title.length >= 30 && r.title.length <= 60, `title ${r.title.length} chars (30-60): ${r.title}`);
-    assert.ok(isHome ? r.title.startsWith(BRAND) : r.title.endsWith(`| ${BRAND}`), `brand suffix: ${r.title}`);
-    assert.ok(r.meta_description.length >= 120 && r.meta_description.length <= 155, `meta ${r.meta_description.length} chars (120-155)`);
-    assert.equal(Number(r.title_len), r.title.length, 'title_len column out of date');
-    assert.equal(Number(r.meta_len), r.meta_description.length, 'meta_len column out of date');
+    const title = shown(r, 'title', 'title');
+    const meta = shown(r, 'meta_description', 'meta');
+    assert.ok(!/\{\{|\}\}/.test(title + meta), `placeholder left in title/meta: ${title}`);
+    assert.ok(title.length >= 30 && title.length <= 60, `title ${title.length} chars (30-60): ${title}`);
+    assert.ok(isHome ? title.startsWith(BRAND) : title.endsWith(`| ${BRAND}`), `brand suffix: ${title}`);
+    assert.ok(meta.length >= 120 && meta.length <= 155, `meta ${meta.length} chars (120-155)`);
+    if (title === r.title) assert.equal(Number(r.title_len), r.title.length, 'title_len column out of date');
+    if (meta === r.meta_description) assert.equal(Number(r.meta_len), r.meta_description.length, 'meta_len column out of date');
     assert.ok(/^\/([a-z0-9]+(-[a-z0-9]+)*\/)*$/.test(r.url), `URL must be lowercase-hyphen with trailing slash: ${r.url}`);
     assert.ok(['1', '2', '3'].includes(r.wave), `wave ${r.wave}`);
-    const have = new Set(tokens(`${r.title} ${r.meta_description}`));
+    const have = new Set(tokens(`${title} ${meta}`));
     const missing = tokens(r.primary_keyword.replace('(brand)', '')).filter((t) => !have.has(t));
     assert.deepEqual(missing, [], `primary keyword words missing from title+meta: ${missing}`);
-    assert.ok(!/[<>]/.test(r.title + r.meta_description), 'no HTML in title/meta');
+    assert.ok(!/[<>]/.test(title + meta), 'no HTML in title/meta');
     for (const re of EXCLUDED) assert.ok(!re.test(Object.values(r).join(' ')), `excluded keyword ${re} (user removed it)`);
   });
 }

@@ -9,7 +9,7 @@
  "primary_keyword": "solar inverter error codes",
  "wave": 2,
  "status": "publish",
- "reviewed": "2026-10-14",
+ "reviewed": "2026-10-15",
  "published": "2026-10-14",
  "author": "ali-ahmad",
  "related": [
@@ -49,7 +49,7 @@
    {
     "h2": "Inverex, Nitrox and other Pakistani brands",
     "p": [
-     "We only list codes we could read in a manufacturer's manual. Inverex (Nitrox, Veyron, Aerox) and Knox manuals were not available from the makers' own sites when this page was checked, so their codes are not here yet. Most of these units are Voltronic-based hybrids: start with the Axpert table and your printed manual, and send us a copy of the manual's fault table through the contact page so we can add it with a source.",
+     "We only list codes we could read in a manufacturer's manual. The Inverex Nitrox table comes from Inverex's own user manual for the three-phase on-grid Nitrox models: it names every F code, gives causes for the grid, solar voltage and earth fault codes, and asks you to contact the distributor if a fault stays after a reset. Manuals for the Inverex Veyron and Aerox hybrids and for Knox were not available with the maker's name on them when this page was checked. Most of those units are Voltronic-based hybrids: start with the Axpert table and your printed manual, and send us a copy of the manual's fault table through the contact page so we can add it with a source.",
      "Growatt's off-grid SPF series uses a fault table very close to Axpert's; Growatt's on-grid MIN series uses three-digit error numbers instead. Both tables are below."
     ]
    },
@@ -68,7 +68,7 @@
    },
    {
     "q": "My Inverex error code is not in the list. What now?",
-    "a": "Inverex manuals were not available from the maker's site when we checked, so its codes are not listed yet. Most Inverex hybrids follow the Voltronic Axpert table; compare the number there and with your printed manual, and send us the manual's fault table through the contact page so we can add it."
+    "a": "If you have a Nitrox on-grid inverter, pick Inverex Nitrox in the brand list: every F code from its manual is there. Manuals for the Inverex Veyron and Aerox hybrids were not available with Inverex's name on them when we checked, so those codes are not listed yet. Most of these hybrids follow the Voltronic Axpert table; compare the number there and with your printed manual, and send us the manual's fault table through the contact page so we can add it."
    },
    {
     "q": "Why does my on-grid inverter stop every afternoon with a grid voltage code?",
@@ -132,6 +132,10 @@
    {
     "label": "Fronius (Symo / Primo SnapINverter STATE codes; GEN24 1xxx codes): Fronius Symo Hybrid Operating Instructions (online manual 42",
     "url": "http://manuals.fronius.com/html/4204260222/en.html"
+   },
+   {
+    "label": "Inverex Nitrox (on-grid, three-phase): Inverex NITROX-12KW User Manual",
+    "url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html"
    },
    {
     "label": "Voltronic Power Axpert (base design of many Pakistani rebrands): Voltronic Axpert VM III User Manual v1.8",
@@ -1505,6 +1509,461 @@
     ]
    },
    {
+    "key": "inverex-nitrox",
+    "label": "Inverex Nitrox (on-grid, three-phase)",
+    "caption": "Inverex Nitrox (on-grid, three-phase) error codes (NITROX-12KW, 15KW, 20KW, 25KW and the -3Ph-5G versions (the manual lists all of them))",
+    "head": [
+     "Code",
+     "Meaning",
+     "Likely cause",
+     "What to do",
+     "Call installer?"
+    ],
+    "rows": [
+     [
+      "F01",
+      "DC input polarity reverse fault",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Do not open the DC (solar) side yourself: these voltages are dangerous even in daylight with the breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F02",
+      "DC insulation impedance permanent fault",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Do not open the DC (solar) side yourself: these voltages are dangerous even in daylight with the breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F03",
+      "DC leakage current fault",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Do not open the DC (solar) side yourself: these voltages are dangerous even in daylight with the breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F04",
+      "Ground fault GFDI",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Do not open the DC (solar) side yourself: these voltages are dangerous even in daylight with the breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F05",
+      "Read the memory error",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F06",
+      "Write the memory error",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F07",
+      "GFDI blown fuse",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Do not open the DC (solar) side yourself: these voltages are dangerous even in daylight with the breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F08",
+      "GFDI grounding touch failure",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Do not open the DC (solar) side yourself: these voltages are dangerous even in daylight with the breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F09",
+      "IGBT damaged by excessive drop voltage",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F10",
+      "Auxiliary switch power supply failure",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F11",
+      "AC main contactor errors",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F12",
+      "AC auxiliary contactor errors",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F14",
+      "DC firmware over current",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F15",
+      "AC firmware over current",
+      "Manual (table 10.2): surge loads on the grid.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F16",
+      "GFCI (RCD) AC leakage current fault",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. If it trips again, do not keep resetting it: earth leakage can mean a shock risk, so call the installer. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F17",
+      "Three phase current, over-current fault",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F18",
+      "AC over current fault of hardware",
+      "Manual (table 10.2): surge loads on the grid.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F19",
+      "All hardware failure synthesis",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F20",
+      "DC over current fault of the hardware",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F21",
+      "DC leakage flow fault",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Do not open the DC (solar) side yourself: these voltages are dangerous even in daylight with the breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F22",
+      "Crash stop (if there is a stop button)",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Release the emergency stop button if one is fitted, then restart the inverter. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Usually not"
+     ],
+     [
+      "F23",
+      "AC leakage current is transient over current",
+      "Manual (table 10.2): ground error, or PV+ or PV- shorted to ground.",
+      "Do not open the DC (solar) side yourself: these voltages are dangerous even in daylight with the breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F24",
+      "DC insulation impedance failure",
+      "Manual (table 10.2): PV+ or PV- to ground resistance is too low.",
+      "Do not open the DC (solar) side yourself: these voltages are dangerous even in daylight with the breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F25",
+      "DC reverse irrigation failure",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Do not open the DC (solar) side yourself: these voltages are dangerous even in daylight with the breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F26",
+      "The DC busbar is unbalanced",
+      "Manual (table 10.2): loss of one phase, a poor connection, or inverter hardware damage.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F27",
+      "DC end insulation error",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Do not open the DC (solar) side yourself: these voltages are dangerous even in daylight with the breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F28",
+      "Inverter 1 DC high fault",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Do not open the DC (solar) side yourself: a high DC voltage can come from the panel string, and these voltages are dangerous even in daylight with the breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F29",
+      "AC load switch failure",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F30",
+      "AC main contactor failure",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F31",
+      "AC secondary contactor failure",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F32",
+      "Inverter 2 DC high fault",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Do not open the DC (solar) side yourself: a high DC voltage can come from the panel string, and these voltages are dangerous even in daylight with the breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F33",
+      "AC over current",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F34",
+      "AC current over load",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F35",
+      "No AC grid",
+      "Manual (table 10.2): 'Grid failure.'",
+      "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Usually not"
+     ],
+     [
+      "F36",
+      "AC grid phase error",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F37",
+      "AC three-phase voltage imbalance failure",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F38",
+      "AC three-phase current imbalance failure",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F39",
+      "AC over current",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F40",
+      "DC over current",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F41",
+      "AC line W,U over voltage",
+      "Manual (table 10.2): grid voltage or frequency outside the inverter's normal working range.",
+      "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Usually not"
+     ],
+     [
+      "F42",
+      "AC line W,U low voltage",
+      "Manual (table 10.2): grid voltage or frequency outside the inverter's normal working range.",
+      "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Usually not"
+     ],
+     [
+      "F43",
+      "AC line V,W over voltage",
+      "Manual (table 10.2): grid voltage or frequency outside the inverter's normal working range.",
+      "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Usually not"
+     ],
+     [
+      "F44",
+      "AC line V,W low voltage",
+      "Manual (table 10.2): grid voltage or frequency outside the inverter's normal working range.",
+      "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Usually not"
+     ],
+     [
+      "F45",
+      "AC line U,V over voltage",
+      "Manual (table 10.2): grid voltage or frequency outside the inverter's normal working range.",
+      "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Usually not"
+     ],
+     [
+      "F46",
+      "AC line U,V low voltage",
+      "Manual (table 10.2): grid voltage or frequency outside the inverter's normal working range.",
+      "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Usually not"
+     ],
+     [
+      "F47",
+      "AC over frequency",
+      "Manual (table 10.2): grid voltage or frequency outside the inverter's normal working range.",
+      "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Usually not"
+     ],
+     [
+      "F48",
+      "AC lower frequency",
+      "Manual (table 10.2): grid voltage or frequency outside the inverter's normal working range.",
+      "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Usually not"
+     ],
+     [
+      "F49",
+      "U phase grid current DC over current",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F50",
+      "V phase grid current DC over current",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F51",
+      "W phase grid current DC over current",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F52",
+      "AC inductor A phase current DC current high",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F53",
+      "AC inductor B phase current DC current high",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F54",
+      "AC inductor C phase current DC current high",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F55",
+      "DC busbar voltage is too high",
+      "Manual (table 10.2): solar (PV) over voltage.",
+      "Do not open the DC (solar) side yourself: these voltages are dangerous even in daylight with the breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F56",
+      "DC busbar voltage is too low",
+      "Manual (table 10.2): solar (PV) under voltage.",
+      "Do not open the DC (solar) side yourself: these voltages are dangerous even in daylight with the breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F57",
+      "AC reverse irrigation",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F58",
+      "AC grid U over current",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F59",
+      "AC grid V over current",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F60",
+      "AC grid W over current",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F61",
+      "Reactor A phase over current",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F62",
+      "Reactor B phase over current",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F63",
+      "Reactor C phase over current",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Yes"
+     ],
+     [
+      "F64",
+      "IGBT heat sink high temperature",
+      "Manual lists the name only (table 10.1); no cause is given.",
+      "Check that the inverter's air vents are not blocked and that it is out of direct sun. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Usually not"
+     ]
+    ]
+   },
+   {
     "key": "voltronic-axpert",
     "label": "Voltronic Power Axpert (base design of many Pakistani rebrands)",
     "caption": "Voltronic Power Axpert (base design of many Pakistani rebrands) error codes (Axpert VM III 1.5/3/5 kW (manual read). Other Axpert families (VM IV, MKS IV, MAX, MAX II, King) use the same 01-09 / 51-59 numbering with model-specific additions (MAX II adds 11 PV over voltage, 12 DC/DC over current, 13 battery discharge over current, per voltronicpower.com manual listing - not read). Pakistani brands sold as 'Axpert'-type units (e.g. Inverex Axpert, Ziewnic Axpert) are widely reported to be Voltronic OEM units, but no Inverex/Knox manual was fetched to confirm their code tables.)",
@@ -1676,10 +2135,10 @@
   "lookup": {
    "label": "Brand",
    "text_label": "Error code or word",
-   "checked": "2026-10-14",
-   "count": 203
+   "checked": "2026-10-15",
+   "count": 266
   },
-  "answer": "Pick your inverter brand and type the code on the display to see what it means, its likely cause and what you can safely do yourself. The tables come from the manufacturers' own manuals for Growatt, Huawei, Solis, GoodWe, Sungrow, Fronius and the Voltronic Axpert design behind many Pakistani hybrid inverters. If the fix needs the DC side opened or wiring changed, the table says to call the installer.",
+  "answer": "Pick your inverter brand and type the code on the display to see what it means, its likely cause and what you can safely do yourself. The tables come from the manufacturers' own manuals for Growatt, Huawei, Solis, GoodWe, Sungrow, Fronius, Inverex Nitrox and the Voltronic Axpert design behind many Pakistani hybrid inverters. If the fix needs the DC side opened or wiring changed, the table says to call the installer.",
   "formula": null,
   "safety": "PV strings and batteries carry dangerous DC voltage and current. Switch off AC and DC isolators in the order your manual gives before touching anything, and leave any work inside the inverter or on the DC side to a licensed electrician or your installer."
  },
@@ -1723,8 +2182,8 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/troubleshoot/inverter-error-codes/#breadcrumb"
     },
-    "dateModified": "2026-10-14",
-    "lastReviewed": "2026-10-14",
+    "dateModified": "2026-10-15",
+    "lastReviewed": "2026-10-15",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }
@@ -1777,7 +2236,7 @@
       "name": "My Inverex error code is not in the list. What now?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Inverex manuals were not available from the maker's site when we checked, so its codes are not listed yet. Most Inverex hybrids follow the Voltronic Axpert table; compare the number there and with your printed manual, and send us the manual's fault table through the contact page so we can add it."
+       "text": "If you have a Nitrox on-grid inverter, pick Inverex Nitrox in the brand list: every F code from its manual is there. Manuals for the Inverex Veyron and Aerox hybrids were not available with Inverex's name on them when we checked, so those codes are not listed yet. Most of these hybrids follow the Voltronic Axpert table; compare the number there and with your printed manual, and send us the manual's fault table through the contact page so we can add it."
       }
      },
      {

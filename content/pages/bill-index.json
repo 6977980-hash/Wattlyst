@@ -6,11 +6,12 @@
  "h1": "Pakistan Electricity Bill Index",
  "author": "ali-ahmad",
  "published": "2026-10-14",
- "reviewed": "2026-10-14",
+ "reviewed": "2026-10-15",
  "answer": "In {{ds.cur.label}} bills, an unprotected home using {{ds.u300.units|int}} units pays about {{ds.u300.total_rs|rs}}, {{ds.u300.change}} from {{ds.prev.label}}, mainly because the fuel price adjustment moved from {{ds.prev.fpa|rs2}} to {{ds.cur.fpa|rs2}} per unit. The same uniform tariff applies in LESCO, IESCO, MEPCO, K-Electric and every other DISCO. Bill = energy + fixed charge + surcharges + GST.",
  "key_facts": [
   "{{ds.cur.label}}: {{ds.u100.units|int}} units cost an unprotected home {{ds.u100.total_rs|rs}} and a protected home {{ds.p100.total_rs|rs}}; {{ds.u200.units|int}} units cost {{ds.u200.total_rs|rs}} unprotected and {{ds.p200.total_rs|rs}} protected.",
   "{{ds.u300.units|int}} units cost {{ds.u300.total_rs|rs}} ({{ds.u300.per_unit_rs|rs2}} per unit all-in) and {{ds.u500.units|int}} units cost {{ds.u500.total_rs|rs}} ({{ds.u500.per_unit_rs|rs2}} per unit) in {{ds.cur.label}} bills.",
+  "The units table gives the {{ds.cur.label}} bill at every {{ds.ladder.step|int}} units from {{ds.ladder.from|int}} to {{ds.ladder.to|int}}: {{ds.ladder.top_units|int}} units cost {{ds.ladder.top_rs|rs}} ({{ds.ladder.top_per_unit_rs|rs2}} per unit), and protected rates stop at {{ds.ladder.limit|int}} units. A lifeline home using {{ds.ladder.from|int}} units pays only about {{ds.ladder.lifeline_rs|rs}}: the lifeline rate of {{ds.ladder.lifeline_rate|rs2}} per unit, no fixed charge and no fuel adjustment; tick lifeline in the bill calculator to check yours.",
   "The fuel price adjustment in {{ds.cur.label}} bills is {{ds.cur.fpa|rs2}} per unit for the fuel used in {{ds.cur.fpa_for}}; protected consumers do not pay it, so their bills are {{ds.p200.change}} from {{ds.prev.label}}.",
   "Every figure is computed by the Wattlyst bill engine from the NEPRA A-1 domestic tariff, for a {{ds.sanctioned_kw|int}} kW sanctioned load, and can be reproduced with the bill calculator.",
   "The index is published monthly and is free to reuse with a link (CC BY 4.0); the CSV download carries every line of every bill."
@@ -52,6 +53,10 @@
   {
    "q": "What is the bill for {{ds.u200.units|int}} units for a protected consumer?",
    "a": "About {{ds.p200.total_rs|rs}} in {{ds.cur.label}} bills. Protected consumers pay lower slab rates and no fuel price adjustment; an unprotected home using the same units pays {{ds.u200.total_rs|rs}}."
+  },
+  {
+   "q": "What is the bill for {{ds.ladder.top_units|int}} units?",
+   "a": "About {{ds.ladder.top_rs|rs}} in {{ds.cur.label}} bills for an unprotected home with a {{ds.sanctioned_kw|int}} kW connection, {{ds.ladder.top_per_unit_rs|rs2}} per unit all-in. The units table on this page gives the bill at every {{ds.ladder.step|int}} units from {{ds.ladder.from|int}} to {{ds.ladder.to|int}}."
   },
   {
    "q": "Why did my bill change this month if the tariff did not?",

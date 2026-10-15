@@ -239,6 +239,7 @@ function buildContent(c, ctx) {
   out.mistakes = (c.mistakes || []).map((m, n) => text(ctx, m, scope, `mistake ${n + 1}`));
   out.safety = text(ctx, c.safety, scope, 'safety');
   out.faq = (c.faq || []).map((f, n) => ({ q: text(ctx, f.q, scope, `faq ${n + 1} q`), a: text(ctx, f.a, scope, `faq ${n + 1} a`) }));
+  ctx.scope = scope; // the page's title/meta may carry the same placeholders (SERP idea 4, seo-rules.md 2)
   return out;
 }
 
@@ -644,6 +645,9 @@ export async function build() {
       const appliance = c.appliance ? inp.appliances.items.find((a) => a.id === c.appliance) : null;
       pageCtx = { ...ctxBase, id: r.id, appliance, allRows: rows };
       built = buildContent(c, pageCtx);
+      // Title or meta with an engine number (seo-rules.md 2): rendered from the page's own default result or dataset.
+      if (/\{\{/.test(r.title)) r.title = text(pageCtx, r.title, pageCtx.scope, 'title');
+      if (/\{\{/.test(r.meta)) r.meta = text(pageCtx, r.meta, pageCtx.scope, 'meta description');
       if (pageCtx.dataset) files[`generated/data/${pageCtx.dataset.csv_name}`] = pageCtx.dataset.csv;
     }
     if (r.type === 'trust') {

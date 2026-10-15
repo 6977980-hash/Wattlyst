@@ -199,3 +199,29 @@ test('one FPA source: the Bill Index; F14 pre-fills its newest NEPRA-verified mo
   const f14 = pages.find((p) => p.id === 'F14').content.tool.fields.find((f) => f.name === 'fpa_per_unit');
   assert.equal(f14.default, newest.fpa_per_unit);
 });
+
+test('Bill Index units ladder: every step from data, engine bills, protected only up to the limit, matches the headline rows', async () => {
+  const data = JSON.parse(readFileSync(join(root, 'data/bill-index.json'), 'utf8'));
+  const defaults = JSON.parse(readFileSync(join(root, 'data/defaults.json'), 'utf8'));
+  const { from, to, step } = data.ladder;
+  const page = pages.find((p) => p.id === 'bill-index');
+  const t = page.content.tables[0];
+  assert.equal(t.rows.length, Math.floor((to - from) / step) + 1);
+  const num = (s) => Number(String(s).replace(/[^0-9.]/g, ''));
+  let last = 0;
+  for (const r of t.rows) {
+    const units = num(r[0]);
+    assert.ok(num(r[1]) > last, `${units}: unprotected bill rises with units`);
+    last = num(r[1]);
+    if (units <= defaults.protected_max_units) assert.ok(num(r[3]) > 0 && num(r[3]) < num(r[1]), `${units}: protected bill below unprotected`);
+    else assert.match(r[3], /^Not protected above/);
+    for (const v of r) assert.doesNotMatch(String(v), /NaN|Infinity|undefined|^$/);
+  }
+  // The headline comparison table (second table) must agree with the ladder for the same units.
+  for (const r of page.content.tables[1].rows.filter((x) => x[1] === 'Unprotected')) {
+    const row = t.rows.find((x) => x[0] === r[0]);
+    if (row) assert.equal(row[1], r[2], `${r[0]} units: ladder and headline agree`);
+  }
+  const csv = files['generated/data/pakistan-electricity-bill-index.csv'];
+  assert.ok(csv.includes(`,${to},unprotected,`), 'CSV carries the top of the ladder');
+});
