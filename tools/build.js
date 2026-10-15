@@ -641,6 +641,7 @@ export async function build() {
   const shown = createHash('sha256');
   for (const p of Object.keys(files).filter((x) => x !== 'generated/manifest.json').sort()) shown.update(`${p}\n${files[p]}\n`);
   shown.update(read('assets/css/wattlyst.css'));
+  shown.update(read('assets/css/wattlyst-home.css'));
   manifest.assets.content = shown.digest('hex').slice(0, 16);
   files['generated/manifest.json'] = JSON.stringify(manifest, null, 1) + '\n';
   return files;

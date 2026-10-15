@@ -145,7 +145,7 @@ final class Wattlyst_Head {
 			printf( '<meta name="%s" content="%s">' . "\n", esc_attr( $k ), esc_attr( $v ) );
 		}
 		$this->json_ld( $page['schema'] ?? null );
-		$this->styles();
+		$this->styles( 'home' === $page['type'] );
 		echo Wattlyst_Ads::loader( $site, $page ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in loader()
 		if ( ! empty( $page['content']['tool'] ) ) {
 			$this->preload( $page['content']['tool'] );
@@ -161,10 +161,17 @@ final class Wattlyst_Head {
 	}
 
 	/** Small stylesheet inlined in the head of every front-end page (no extra render-blocking request). */
-	private function styles(): void {
-		$css = WATTLYST_TOOLS_DIR . 'assets/css/wattlyst.css';
-		if ( is_readable( $css ) ) {
-			echo '<style id="wattlyst-css">' . wp_strip_all_tags( (string) file_get_contents( $css ) ) . "</style>\n";
+	/** Inlined styles; the home page adds its own layout file (hero, planner columns, task cards), so other pages stay light. */
+	private function styles( bool $home = false ): void {
+		$files = array( 'wattlyst-css' => 'wattlyst.css' );
+		if ( $home ) {
+			$files['wattlyst-home-css'] = 'wattlyst-home.css';
+		}
+		foreach ( $files as $id => $file ) {
+			$css = WATTLYST_TOOLS_DIR . 'assets/css/' . $file;
+			if ( is_readable( $css ) ) {
+				echo '<style id="' . esc_attr( $id ) . '">' . wp_strip_all_tags( (string) file_get_contents( $css ) ) . "</style>\n";
+			}
 		}
 	}
 

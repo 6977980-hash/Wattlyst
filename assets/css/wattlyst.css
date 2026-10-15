@@ -72,7 +72,7 @@ body.separate-containers .inside-article{border-radius:18px;box-shadow:var(--wl-
 .wl-facts{background:#fff;border-left:4px solid var(--wl-spark)}
 .wl-page .wl-how h2,.wl-page .wl-facts h2{margin-top:0;font-size:1.2rem}
 .wl-how>:last-child,.wl-facts>:last-child,.wl-facts ul{margin-bottom:0}
-.wl-facts ul,.wl-mistakes ul,.wl-card ul{list-style:none;margin-left:0;padding-left:0}
+.wl-facts ul,.wl-mistakes ul{list-style:none;margin-left:0;padding-left:0}
 .wl-facts li{position:relative;padding-left:1.75rem;margin:.45rem 0}
 .wl-facts li::before{content:"";position:absolute;left:.2rem;top:.45em;width:.45rem;height:.8rem;border-right:2.5px solid var(--wl-accent-3);border-bottom:2.5px solid var(--wl-accent-3);transform:rotate(40deg)}
 .wl-eq code{display:block;font:500 1rem/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;background:var(--wl-accent);color:#e9fbf2;padding:.85rem 1.1rem;border-radius:12px;white-space:normal;overflow-wrap:anywhere}
@@ -194,33 +194,6 @@ body .inside-site-info{padding:2rem 16px 1.25rem}
 .wl-remove-row:hover{border-color:#b3261e;color:#b3261e;background:#fff5f6}
 .wl-btn-secondary{display:inline-block;min-height:44px;box-sizing:border-box;line-height:1.2;font-family:inherit;margin:.6rem 0 0;padding:.5rem 1.1rem;font-weight:600;font-size:.95rem;color:var(--wl-accent-2);background:#fff;border:1px solid #9fc4b3;border-radius:999px;cursor:pointer;transition:background .15s,border-color .15s}
 .wl-btn-secondary:hover{background:var(--wl-bg-soft);border-color:var(--wl-accent-2)}
-/* Home: "What do you want to do?" task cards. */
-.wl-tasks{margin:2.5rem 0 1rem}
-.wl-page .wl-tasks>h2{margin:0 0 1rem}
-.wl-cards{columns:3 17rem;column-gap:1rem;margin:0}
-.wl-card{break-inside:avoid;margin:0 0 1rem;border:1px solid var(--wl-line);border-radius:16px;padding:1.15rem 1.2rem;background:#fff;transition:border-color .15s,box-shadow .15s}
-.wl-card:hover{border-color:#9fc4b3;box-shadow:var(--wl-shadow)}
-.wl-card h3{position:relative;display:flex;align-items:center;gap:.7rem;margin:0 0 .5rem;font-size:1.15rem}
-.wl-card h3::before{content:"";flex:none;width:2.4rem;height:2.4rem;border-radius:12px;background:var(--wl-bg-tint);box-shadow:inset 0 0 0 1px #d2e6db}
-.wl-card h3::after{content:"";position:absolute;left:.55rem;top:50%;width:1.3rem;height:1.3rem;margin-top:-.65rem;background:var(--wl-accent-2);-webkit-mask:var(--wl-i) center/contain no-repeat;mask:var(--wl-i) center/contain no-repeat}
-.wl-card h3 a{text-decoration:none;color:var(--wl-accent)}
-.wl-card h3 a:hover{text-decoration:underline}
-.wl-card{--wl-i:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M13 2L4 14h7l-1 8 9-12h-7z'/%3E%3C/svg%3E")}
-.wl-card-battery{--wl-i:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2' y='7' width='17' height='10' rx='2'/%3E%3Cpath d='M22 11v2M6 10v4M10 10v4'/%3E%3C/svg%3E")}
-.wl-card-solar{--wl-i:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='4'/%3E%3Cpath d='M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4'/%3E%3C/svg%3E")}
-.wl-card-generator{--wl-i:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='6' width='18' height='13' rx='2'/%3E%3Cpath d='M13 9l-3 4h4l-3 4M7 6V4h10v2'/%3E%3C/svg%3E")}
-.wl-card-bill{--wl-i:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2z'/%3E%3Cpath d='M9 8h6M9 12h6M9 16h3'/%3E%3C/svg%3E")}
-.wl-card-wiring{--wl-i:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 2v5M15 2v5M6 7h12v4a6 6 0 0 1-12 0zM12 17v5'/%3E%3C/svg%3E")}
-.wl-card-load{--wl-i:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 11l9-8 9 8M5 10v10h14V10'/%3E%3Cpath d='M12.5 12l-2 3h3l-2 3'/%3E%3C/svg%3E")}
-.wl-card-converters{--wl-i:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 8h15l-4-4M20 16H5l4 4'/%3E%3C/svg%3E")}
-.wl-card-guides{--wl-i:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H2zM22 5h-7a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h8z'/%3E%3C/svg%3E")}
-.wl-card-troubleshoot{--wl-i:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3l10 18H2z'/%3E%3Cpath d='M12 10v5M12 18v.01'/%3E%3C/svg%3E")}
-.wl-card-data{--wl-i:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 3v18h18'/%3E%3Cpath d='M8 16v-5M13 16V7M18 16v-8'/%3E%3C/svg%3E")}
-.wl-card-appliances{--wl-i:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='2'/%3E%3Cpath d='M12 10c0-4 1-7 4-7s2 5-2 7M14 12c4 0 7 1 7 4s-5 2-7-2M12 14c0 4-1 7-4 7s-2-5 2-7M10 12c-4 0-7-1-7-4s5-2 7 2'/%3E%3C/svg%3E")}
-.wl-card p{margin:0 0 .6rem;color:var(--wl-muted);font-size:.95rem;line-height:1.55}
-.wl-card li{margin:0;border-top:1px solid #edf3f0}
-.wl-card li a{display:block;padding:.45rem 0;font-size:.95rem;text-decoration:none;line-height:1.4}
-.wl-card li a:hover{text-decoration:underline}
 .wl-next{margin-bottom:.5rem}
 .screen-reader-text{border:0;clip:rect(1px,1px,1px,1px);clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;word-wrap:normal!important}
 .wl-share{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-top:1rem;padding-top:.9rem;border-top:1px solid #e6eeea}
@@ -276,13 +249,6 @@ body .inside-site-info{padding:2rem 16px 1.25rem}
 @media (prefers-reduced-motion:reduce){.wl-page *,.wl-page *::before,.wl-page *::after{transition:none!important}.wl-btn:hover,.wl-children li:hover,.wl-related li a:hover{transform:none}}
 /* Re-audit fixes (WL-77 to WL-81). Results: the headline card takes the full row, the rest share the rows below. */
 @media (min-width:769px){.wl-result:first-child{grid-column:1/-1}}
-/* Home task cards: tools past the first few fold under "Show N more" (links stay in the HTML). */
-.wl-more{margin-top:.25rem}
-.wl-more>summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;min-height:44px;font-weight:600;color:var(--wl-accent-2)}
-.wl-more>summary::-webkit-details-marker{display:none}
-.wl-more>summary::before{content:"+";display:inline-block;width:1.1rem;font-weight:700}
-.wl-more[open]>summary::before{content:"\2212"}
-.wl-more>summary:focus-visible{outline:3px solid var(--wl-ink);outline-offset:2px;box-shadow:0 0 0 2px var(--wl-focus)}
 /* 404 (theme template): hub links as buttons. */
 .wl-404-links{list-style:none;margin:0 0 1rem;padding:0;display:flex;flex-wrap:wrap;gap:.5rem}
 body .wl-404-links a{display:inline-flex;align-items:center;min-height:44px;padding:0 1rem;border:1px solid var(--wl-line);border-radius:999px;background:var(--wl-bg-soft);color:var(--wl-accent);font-weight:600;text-decoration:none}
@@ -296,10 +262,11 @@ body .wl-404-links a:hover{border-color:var(--wl-accent-2);background:var(--wl-b
 .wl-loads tr.wl-load-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(4.25rem,1fr));gap:.45rem;align-items:end;padding:.7rem;margin:0 0 .6rem;border:1px solid var(--wl-line);border-radius:12px;background:#fff}
 .wl-loads tr.wl-load-row td{display:block;padding:0;border:0}
 .wl-loads tr.wl-load-row td:first-child{grid-column:1/-1}
-.wl-loads tr.wl-load-row td .screen-reader-text{position:static;width:auto;height:auto;margin:0 0 .15rem;clip:auto;clip-path:none;overflow:visible;display:block;font-size:.8rem;font-weight:500;line-height:1.25;color:var(--wl-muted)}
+.wl-loads tr.wl-load-row td .screen-reader-text{position:static!important;width:auto;height:auto;margin:0 0 .15rem;clip:auto;clip-path:none;overflow:visible;display:block;font-size:.8rem;font-weight:500;line-height:1.25;color:var(--wl-muted)}
 .wl-loads tr.wl-load-row td:first-child .screen-reader-text{border:0;clip:rect(1px,1px,1px,1px);clip-path:inset(50%);height:1px;width:1px;margin:-1px;overflow:hidden;position:absolute}
 .wl-loads select,.wl-loads input[data-k]{width:100%;min-width:0}
 .wl-loads tr.wl-load-row:nth-child(even){background:#fff}
 }
-/* Home task cards on phones: the hub title and its first tools; the hub page carries the description (WL-78). */
-@media (max-width:600px){.wl-tasks .wl-card>p{display:none}}
+/* Fields in one row line up: labels sit at the bottom of a shared label row, so the inputs share one line
+   even when one label wraps, and the hints start under them (subgrid; older browsers keep the plain grid). */
+@supports (grid-template-rows:subgrid){.wl-fields{row-gap:0}.wl-fields>.wl-field{padding-bottom:1rem}.wl-fields>.wl-field:not(.wl-check):not(.wl-field-loads){grid-row:span 3;display:grid;grid-template-rows:subgrid;row-gap:0}.wl-fields>.wl-field>label{align-self:end}.wl-fields>.wl-field>.wl-hint{align-self:start}}

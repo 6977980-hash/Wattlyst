@@ -32,17 +32,16 @@ final class Wattlyst_Render {
 			$out .= wp_kses_post( $this->c['html'] ?? '' );
 			$out .= $this->dates();
 		} elseif ( 'home' === $type ) {
-			if ( ! empty( $this->c['tool'] ) ) { // Home Power Planner (Phase 4)
-				$out .= $this->tool();
-				$out .= $this->how();
+			if ( ! empty( $this->c['tool'] ) ) { // Home Power Planner (Phase 4): inputs left, sticky plan right on desktop
+				$out .= '<section class="wl-planner" aria-labelledby="wl-plan-title"><div class="wl-planner-head"><h2 id="wl-plan-title">Plan your home power</h2>' .
+					'<ol class="wl-steps"><li>List your appliances</li><li>Set your city and backup</li><li>Read every size</li></ol></div>' .
+					$this->tool( true ) . $this->how() . '</section>';
 			}
 			$out .= $this->cards();
 			$out .= $this->lead();
-			$out .= $this->key_facts();
-			$out .= $this->sections();
-			$out .= $this->faq();
-			$out .= $this->author_box();
-			$out .= $this->dates();
+			$out .= '' !== $this->sections() ? '<div class="wl-home-info">' . $this->sections() . '</div>' : '';
+			// FAQ and author box beside the key facts, so neither runs across the whole page.
+			$out .= '<div class="wl-home-more"><div class="wl-home-main">' . $this->faq( true ) . $this->author_box() . '</div><div class="wl-home-side">' . $this->key_facts() . $this->dates() . '</div></div>';
 		} elseif ( 'data' === $type ) { // Bill Index, Solar Price Tracker (Phase 5)
 			$out .= $this->download();
 			$out .= $this->key_facts();
@@ -204,7 +203,37 @@ final class Wattlyst_Render {
 		$byline = in_array( $type, array( 'home', 'pillar', 'trust', 'embed' ), true ) ? '' : $this->byline();
 		// The home page is the top of the trail, so a one-item "Home" breadcrumb adds nothing there (WL-81).
 		$crumb = 'home' === $type ? '' : $this->breadcrumb();
+		if ( 'home' === $type ) {
+			return $this->home_hero( (string) $answer );
+		}
 		return '<header class="wl-hero">' . $crumb . '<h1 class="wl-h1">' . esc_html( $this->page['h1'] ) . '</h1>' . $this->answer( (string) $answer ) . $byline . '</header>';
+	}
+
+	/**
+	 * Home page header: H1, answer, two calls to action and what the site offers, with every task hub as an icon
+	 * chip beside it (the categories are visible without scrolling). Tool counts are the links each hub card lists.
+	 */
+	private function home_hero( string $answer ): string {
+		$cards = $this->page['cards'] ?? array();
+		$chips = '';
+		$ids   = array();
+		foreach ( $cards as $card ) {
+			$n      = count( $card['children'] );
+			$ids    = array_merge( $ids, array_column( $card['children'], 'id' ) );
+			$chips .= '<li><a class="wl-chip wl-card-' . sanitize_html_class( trim( (string) $card['url'], '/' ) ) . '" href="' . esc_url( Wattlyst_Tools::link( $card['url'] ) ) . '"><span class="wl-ico" aria-hidden="true"></span><span class="wl-chip-name">' . esc_html( $card['label'] ) . '</span><span class="wl-chip-n">' . esc_html( self::tools_label( $n ) ) . '</span></a></li>';
+		}
+		$total = count( array_unique( $ids ) );
+		$cta   = ! empty( $this->c['tool'] ) ? '<a class="wl-cta" href="#wl-plan-title">Start planning</a>' : '';
+		$cta  .= $chips ? '<a class="wl-cta wl-cta-ghost" href="#wl-tasks-title">Browse all calculators</a>' : '';
+		$pills = ( $total ? '<li>' . esc_html( $total . ' free tools' ) . '</li>' : '' ) . '<li>No sign-up</li><li>Formulas shown</li><li>Works on your phone</li>';
+		$text  = '<div class="wl-hero-text"><h1 class="wl-h1">' . esc_html( $this->page['h1'] ) . '</h1>' . $this->answer( $answer ) .
+			( $cta ? '<p class="wl-ctas">' . $cta . '</p>' : '' ) . '<ul class="wl-pills">' . $pills . '</ul></div>';
+		$nav   = $chips ? '<nav class="wl-hero-cats" aria-label="Calculator categories"><p class="wl-hero-cats-title">Browse by task</p><ul>' . $chips . '</ul></nav>' : '';
+		return '<header class="wl-hero wl-hero-home">' . $text . $nav . '</header>';
+	}
+
+	private static function tools_label( int $n ): string {
+		return 1 === $n ? '1 tool' : $n . ' tools';
 	}
 
 	private function answer( string $text ): string {
@@ -230,7 +259,8 @@ final class Wattlyst_Render {
 		return $site['people'][0] ?? null;
 	}
 
-	private function tool(): string {
+	/** Calculator form. $split (home planner) wraps the inputs and the results in two columns for the desktop layout. */
+	private function tool( bool $split = false ): string {
 		$t    = $this->c['tool'];
 		$id   = 'wl-' . strtolower( $this->page['id'] );
 		$main = '';
@@ -293,20 +323,21 @@ final class Wattlyst_Render {
 			'diagram' => $t['diagram'] ?? '',
 			'data'    => $this->tool_data( $t['data_keys'] ?? array(), $t['appliances'] ?? array() ),
 		);
-		$form  = '<form class="wl-tool" id="' . esc_attr( $id ) . '" data-wl-tool novalidate onsubmit="return false">';
-		$form .= '<div class="wl-fields">' . $main . '</div>';
+		$form  = '<form class="wl-tool' . ( $split ? ' wl-tool-split' : '' ) . '" id="' . esc_attr( $id ) . '" data-wl-tool novalidate onsubmit="return false">';
+		$form .= ( $split ? '<div class="wl-in">' : '' ) . '<div class="wl-fields">' . $main . '</div>';
 		if ( '' !== $adv ) {
 			$form .= '<details class="wl-advanced"><summary>Advanced settings</summary><div class="wl-fields">' . $adv . '</div></details>';
 		}
 		$form .= '<button type="submit" class="wl-btn">' . esc_html( $t['submit'] ?? 'Calculate' ) . '</button>';
 		// Without JavaScript the button does nothing (onsubmit), instead of reloading the page with the defaults (audit WL-27).
 		$form .= '<noscript><p class="wl-hint">Turn on JavaScript to calculate with your own numbers. The result below uses the default inputs.</p></noscript>';
+		$form  .= $split ? '</div><div class="wl-out"><p class="wl-out-title">Your plan</p>' : '';
 		$notice = (string) ( $t['notice'] ?? '' ); // a warning on the default result, same text the browser prints
 		// An empty box waits for errors (role=alert); a notice on the default result is amber and polite (audit WL-54, WL-61).
 		$form  .= '' === $notice
 			? '<p class="wl-error" id="' . esc_attr( $id ) . '-error" role="alert" hidden></p>'
 			: '<p class="wl-error wl-notice" id="' . esc_attr( $id ) . '-error" role="status">' . esc_html( $notice ) . '</p>';
-		$form .= '<div class="wl-results" aria-live="polite">' . $results . '</div>' . $this->diagram( $t ) . $share;
+		$form .= '<div class="wl-results" aria-live="polite">' . $results . '</div>' . $this->diagram( $t ) . $share . ( $split ? '</div>' : '' );
 		$form .= '<script type="application/json" class="wl-config">' . wp_json_encode( $config, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ) . '</script>';
 		$form .= '</form>';
 		return $form;
@@ -605,9 +636,12 @@ final class Wattlyst_Render {
 			$links  = $shown ? '<ul>' . implode( '', $shown ) . '</ul>' : '';
 			$links .= $more ? '<details class="wl-more"><summary>' . esc_html( sprintf( 'Show %d more', count( $more ) ) ) . '</summary><ul>' . implode( '', $more ) . '</ul></details>' : '';
 			$slug   = sanitize_html_class( trim( (string) $card['url'], '/' ) );
-			$cards .= '<div class="wl-card wl-card-' . $slug . '"><h3><a href="' . esc_url( Wattlyst_Tools::link( $card['url'] ) ) . '">' . esc_html( $card['label'] ) . '</a></h3><p>' . esc_html( $card['meta'] ) . '</p>' . $links . '</div>';
+			// The hub link covers the whole card (stretched); the tool links and the fold sit above it.
+			$cards .= '<div class="wl-card wl-card-' . $slug . '"><div class="wl-card-top"><span class="wl-ico" aria-hidden="true"></span><span class="wl-count">' . esc_html( self::tools_label( count( $items ) ) ) . '</span></div>' .
+				'<h3><a href="' . esc_url( Wattlyst_Tools::link( $card['url'] ) ) . '">' . esc_html( $card['label'] ) . '</a></h3><p>' . esc_html( $card['meta'] ) . '</p>' . $links .
+				'<span class="wl-card-cta" aria-hidden="true">Open ' . esc_html( $card['label'] ) . '</span></div>';
 		}
-		return $cards ? '<section class="wl-tasks" aria-labelledby="wl-tasks-title"><h2 id="wl-tasks-title">What do you want to do?</h2><div class="wl-cards">' . $cards . '</div></section>' : '';
+		return $cards ? '<section class="wl-tasks" aria-labelledby="wl-tasks-title"><h2 id="wl-tasks-title">What do you want to do?</h2><p class="wl-tasks-lead">Pick a task to open its calculators, or jump straight to a tool.</p><div class="wl-cards">' . $cards . '</div></section>' : '';
 	}
 
 	private function mistakes(): string {
@@ -626,13 +660,16 @@ final class Wattlyst_Render {
 		return $out . '</section>';
 	}
 
-	private function faq(): string {
+	/** FAQ; $fold (home) shows each answer under its question as an open/close row, the first one open. */
+	private function faq( bool $fold = false ): string {
 		if ( empty( $this->c['faq'] ) ) {
 			return '';
 		}
-		$out = '<section class="wl-faq"><h2>Frequently asked questions</h2>';
-		foreach ( $this->c['faq'] as $f ) {
-			$out .= '<h3>' . esc_html( $f['q'] ) . '</h3><p>' . esc_html( $f['a'] ) . '</p>';
+		$out = '<section class="wl-faq' . ( $fold ? ' wl-faq-fold' : '' ) . '"><h2>Frequently asked questions</h2>';
+		foreach ( $this->c['faq'] as $i => $f ) {
+			$out .= $fold
+				? '<details class="wl-qa"' . ( 0 === $i ? ' open' : '' ) . '><summary><h3>' . esc_html( $f['q'] ) . '</h3></summary><p>' . esc_html( $f['a'] ) . '</p></details>'
+				: '<h3>' . esc_html( $f['q'] ) . '</h3><p>' . esc_html( $f['a'] ) . '</p>';
 		}
 		return $out . '</section>';
 	}
