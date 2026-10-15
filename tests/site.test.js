@@ -60,11 +60,14 @@ const kwRows = parseCsv(readFileSync(join(root, 'specs/keyword-map.csv'), 'utf8'
 test('site-pages.csv: titles, metas and URLs follow seo-rules.md 2 and never clash with keyword-map.csv', () => {
   const seen = new Map(kwRows.flatMap((r) => [[`url:${r.url}`, r.id], [`title:${r.title.toLowerCase()}`, r.id], [`meta:${r.meta_description.toLowerCase()}`, r.id]]));
   for (const r of siteRows) {
+    // A {{placeholder}} title is checked as rendered (seo-rules.md 2); its title_len column is not, the number moves.
+    const shownTitle = /\{\{/.test(r.title) ? manifest.pages.find((p) => p.id === r.id).title : r.title;
+    assert.ok(!/\{\{|\}\}/.test(shownTitle), `${r.id}: placeholder left in title`);
     assert.ok(['trust', 'pillar', 'data', 'embed'].includes(r.type), `${r.id}: type`);
-    assert.ok(r.title.length >= 30 && r.title.length <= 60, `${r.id}: title ${r.title.length}`);
-    assert.ok(r.title.endsWith('| Wattlyst'), `${r.id}: brand suffix`);
+    assert.ok(shownTitle.length >= 30 && shownTitle.length <= 60, `${r.id}: title ${shownTitle.length}`);
+    assert.ok(shownTitle.endsWith('| Wattlyst'), `${r.id}: brand suffix`);
     assert.ok(r.meta_description.length >= 120 && r.meta_description.length <= 155, `${r.id}: meta ${r.meta_description.length}`);
-    assert.equal(Number(r.title_len), r.title.length, `${r.id}: title_len`);
+    if (shownTitle === r.title) assert.equal(Number(r.title_len), r.title.length, `${r.id}: title_len`);
     assert.equal(Number(r.meta_len), r.meta_description.length, `${r.id}: meta_len`);
     assert.ok(/^\/([a-z0-9]+(-[a-z0-9]+)*\/)+$/.test(r.url), `${r.id}: url ${r.url}`);
     assert.ok(!/["<>]/.test(r.meta_description), `${r.id}: no quotes/HTML in meta`);
