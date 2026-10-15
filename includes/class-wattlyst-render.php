@@ -9,6 +9,9 @@ defined( 'ABSPATH' ) || exit;
 
 final class Wattlyst_Render {
 
+	/** Tools listed openly per hub card on the home page; the rest sit in a "Show N more" fold. */
+	private const HOME_CARD_LINKS = 3;
+
 	private Wattlyst_Tools $plugin;
 	private array $page;
 	private array $c;
@@ -199,7 +202,9 @@ final class Wattlyst_Render {
 			$answer = $this->c['answer'] ?? '';
 		}
 		$byline = in_array( $type, array( 'home', 'pillar', 'trust', 'embed' ), true ) ? '' : $this->byline();
-		return '<header class="wl-hero">' . $this->breadcrumb() . '<h1 class="wl-h1">' . esc_html( $this->page['h1'] ) . '</h1>' . $this->answer( (string) $answer ) . $byline . '</header>';
+		// The home page is the top of the trail, so a one-item "Home" breadcrumb adds nothing there (WL-81).
+		$crumb = 'home' === $type ? '' : $this->breadcrumb();
+		return '<header class="wl-hero">' . $crumb . '<h1 class="wl-h1">' . esc_html( $this->page['h1'] ) . '</h1>' . $this->answer( (string) $answer ) . $byline . '</header>';
 	}
 
 	private function answer( string $text ): string {
@@ -499,7 +504,7 @@ final class Wattlyst_Render {
 		$head = implode( '', array_map( static fn( $h ) => '<th scope="col">' . esc_html( $h ) . '</th>', $t['head'] ) );
 		$rows = '';
 		foreach ( $t['rows'] as $r ) {
-			$rows .= '<tr>' . implode( '', array_map( static fn( $v ) => '<td>' . esc_html( $v ) . '</td>', $r ) ) . '</tr>';
+			$rows .= '<tr>' . implode( '', array_map( static fn( $v ) => '<td>' . str_replace( 'Rs ', 'Rs&nbsp;', esc_html( $v ) ) . '</td>', $r ) ) . '</tr>';
 		}
 		return '<section class="wl-ref"' . $attrs . '><h2 id="' . esc_attr( $id ) . '">' . esc_html( $t['caption'] ) . '</h2>' .
 			'<div class="wl-table-wrap" role="region" tabindex="0" aria-labelledby="' . esc_attr( $id ) . '"><table class="wl-table" aria-labelledby="' . esc_attr( $id ) . '"><thead><tr>' . $head . '</tr></thead><tbody>' . $rows . '</tbody></table></div></section>';
@@ -588,12 +593,19 @@ final class Wattlyst_Render {
 	private function cards(): string {
 		$cards = '';
 		foreach ( $this->page['cards'] ?? array() as $card ) {
-			$links = '';
+			$items = array();
 			foreach ( $card['children'] as $ch ) {
-				$links .= '<li><a href="' . esc_url( Wattlyst_Tools::link( $ch['url'] ) ) . '">' . esc_html( $ch['h1'] ) . '</a></li>';
+				$items[] = '<li><a href="' . esc_url( Wattlyst_Tools::link( $ch['url'] ) ) . '">' . esc_html( $ch['h1'] ) . '</a></li>';
 			}
+			// Every tool link stays in the HTML (internal links), but on a phone a hub shows its first few tools and
+			// folds the rest, so the home page is not a wall of links (audit WL-78).
+			$cut    = count( $items ) > self::HOME_CARD_LINKS + 1 ? self::HOME_CARD_LINKS : count( $items ); // never fold just one link
+			$shown  = array_slice( $items, 0, $cut );
+			$more   = array_slice( $items, $cut );
+			$links  = $shown ? '<ul>' . implode( '', $shown ) . '</ul>' : '';
+			$links .= $more ? '<details class="wl-more"><summary>' . esc_html( sprintf( 'Show %d more', count( $more ) ) ) . '</summary><ul>' . implode( '', $more ) . '</ul></details>' : '';
 			$slug   = sanitize_html_class( trim( (string) $card['url'], '/' ) );
-			$cards .= '<div class="wl-card wl-card-' . $slug . '"><h3><a href="' . esc_url( Wattlyst_Tools::link( $card['url'] ) ) . '">' . esc_html( $card['label'] ) . '</a></h3><p>' . esc_html( $card['meta'] ) . '</p>' . ( $links ? '<ul>' . $links . '</ul>' : '' ) . '</div>';
+			$cards .= '<div class="wl-card wl-card-' . $slug . '"><h3><a href="' . esc_url( Wattlyst_Tools::link( $card['url'] ) ) . '">' . esc_html( $card['label'] ) . '</a></h3><p>' . esc_html( $card['meta'] ) . '</p>' . $links . '</div>';
 		}
 		return $cards ? '<section class="wl-tasks" aria-labelledby="wl-tasks-title"><h2 id="wl-tasks-title">What do you want to do?</h2><div class="wl-cards">' . $cards . '</div></section>' : '';
 	}
