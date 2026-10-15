@@ -22,6 +22,8 @@ const EXACT = {
   ac_protected_lost: 'With the AC your monthly total goes over the protected limit, so this bill and the bills of the following six months are charged at unprotected rates. Fewer AC hours may keep you protected.',
   protected_max_200_units: 'Protected tariff applies only up to 200 units a month. Above that the unprotected rate applies.',
   lifeline_max_100_units: 'Lifeline tariff applies only up to 100 units a month.',
+  monthly_units_all_zero: 'Enter the units of at least one month.',
+  length_invalid: 'enter a cable length in metres.',
   history_needs_6_months: 'Enter units for each of the last 6 months.',
   period_unknown: 'We do not have the QTA rate for that quarter. Enter the QTA from your bill.',
   surge_w_required: 'Enter the starting (surge) watts of your load, or leave both surge fields blank.',
@@ -64,7 +66,7 @@ const PATTERNS = [
   [/^load_(\d+)_watts_required$/, (m) => `${row(m)}enter its watts.`],
   [/^load_(\d+)_hours_invalid$/, (m) => `${row(m)}hours per day must be a number from 0 to 24.`],
   [/^load_(\d+)_start_invalid$/, (m) => `${row(m)}enter its starting watts as a number (0 or more).`],
-  [/^load_(\d+)_qty_invalid$/, (m) => `${row(m)}enter how many as a number (0 or more).`],
+  [/^load_(\d+)_qty_invalid$/, (m) => `${row(m)}enter how many as a whole number.`],
   [/^(?:load|appliance)_(\d+)_(?:\w+_)?invalid$/, (m) => `${row(m)}enter its watts as a number (0 or more).`],
   [/^(\w+)_required$/, (m, f) => `Enter ${f(m[1])}.`],
   [/^(\w+)_invalid$/, (m, f, pick) => (pick.includes(m[1]) ? `Choose ${f(m[1])} from the list.` : `${cap(f(m[1]))} must be a number, for example 12 or 1500.`)],
@@ -91,6 +93,8 @@ export function noticeCode(out) {
 /** labels: { field: label } from the page; choices: names of the fields that are a list to pick from. */
 export function errorMessage(code, labels = {}, choices = []) {
   if (EXACT[code]) return EXACT[code];
+  const r = /^load_(\d+)_(?:length_(?=r))?(.+)$/.exec(code); // a row of the N18 circuit list: "Appliance 2: " + the plain message
+  if (r && EXACT[r[2]]) return row(r) + EXACT[r[2]];
   const f = (key) => labels[key] || key.replace(/_/g, ' ');
   for (const [re, make] of PATTERNS) {
     const m = code.match(re);

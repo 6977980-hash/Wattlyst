@@ -3,12 +3,14 @@
 
 const MAX_ROWS = 40; // the add button and a shared link stop at the same count (audit WL-34)
 
-/** Appliance-list field: rows of { id, watts, qty, hours } (+ start where the field has the start flag) with add/remove and auto-filled watts and hours. */
+/** Appliance-list field: rows of { id, watts, qty, hours } (+ start where the field has the start flag, length instead of hours with the length flag) with add/remove and auto-filled watts and hours. */
 export function loadsField(form, f, cfg, onChange) {
   const box = form.querySelector(`[data-wl-loads="${f.name}"]`);
   if (!box) return null;
   const body = box.querySelector('tbody');
-  const keys = f.start ? ['watts', 'start', 'qty', 'hours'] : ['watts', 'qty', 'hours'];
+  // N18 circuit sheet: a cable length column in place of hours a day.
+  const last = f.length ? 'length' : 'hours';
+  const keys = f.start ? ['watts', 'start', 'qty', last] : ['watts', 'qty', last];
   const tmpl = box.querySelector('.wl-loads-template');
   let n = body.children.length;
   // The server renders only the chosen option per row; build the full grouped list once and copy it into every select.
@@ -37,7 +39,8 @@ export function loadsField(form, f, cfg, onChange) {
     const a = cfg.data.appliances?.[id];
     if (!a) return;
     tr.querySelector('[data-k="watts"]').value = a.running_w;
-    tr.querySelector('[data-k="hours"]').value = a.typical_hours_per_day ?? '';
+    const h = tr.querySelector('[data-k="hours"]');
+    if (h) h.value = a.typical_hours_per_day ?? '';
     const st = tr.querySelector('[data-k="start"]');
     if (st) st.value = ''; // a listed appliance starts at its own starting watts unless the user types one
   };
@@ -72,7 +75,7 @@ export function loadsField(form, f, cfg, onChange) {
   });
   const rows = () => [...body.querySelectorAll('tr')].map((tr) => Object.fromEntries(['id', ...keys].map((k) => [k, tr.querySelector(`[data-k="${k}"]`).value.trim()])));
   const set = (list) => { body.innerHTML = ''; list.slice(0, MAX_ROWS).forEach(add); cap(); };
-  // ?load= rows: id~watts~qty~hours[~start] (start last, so links made before the column still read).
-  const order = ['id', 'watts', 'qty', 'hours', 'start'];
-  return { rows, set, encode: () => rows().map((r) => order.filter((k) => k in r).map((k) => r[k]).join('~')).join(';'), decode: (s) => s.split(';').map((p) => { const v = p.split('~'); return Object.fromEntries(order.map((k, i) => [k, v[i]])); }) };
+  // ?load= rows: id~watts~qty~hours[~start][~length] (new columns last, so links made before them still read).
+  const order = ['id', 'watts', 'qty', 'hours', 'start', 'length'];
+  return { rows, set, encode: () => rows().map((r) => order.map((k) => r[k] ?? '').join('~').replace(/~+$/, '')).join(';'), decode: (s) => s.split(';').map((p) => { const v = p.split('~'); return Object.fromEntries(order.map((k, i) => [k, v[i]])); }) };
 }

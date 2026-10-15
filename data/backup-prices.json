@@ -1,0 +1,93 @@
+{
+ "_meta": {
+  "source": "Pakistani retailer listings (URLs and quotes on every item), the Honda generator owner's manual and published battery life ranges; no official price list exists",
+  "checked": "2026-10-15",
+  "currency": "PKR",
+  "method": "Equipment only, no installation. Low = lowest listed price, high = highest, over the publishers counted in n_sources; listings seen only in search snippets (W11stop returns HTTP 403) and clearly stale or out-of-range prices are not counted. No retailer page shows its own update date, so every price is 'live on the page on the checked date'. The UPS vs solar vs generator calculator (N7) uses the middle of each range. Batteries, hybrid inverters and panels come from data/component-prices.json and data/solar-prices.json, not from this file.",
+  "status": "Secondary sources only; refresh monthly with data/component-prices.json."
+ },
+ "ups": [
+  {
+   "label": "Home UPS / inverter, about 1 kVA, 12 V battery (without battery)",
+   "kva": 1, "rated_w": 900, "battery_v": 12, "charger_a": 25, "low": 33999, "high": 54499, "n_sources": 3,
+   "rated_w_note": "Lowest continuous rating among the listed 1 kVA models (Inverex 1200VA/900W; Homage 1200VA/1000W).",
+   "charger_a_note": "Grid (AC) charging current at the highest setting of the Homage Vertex listing; no maker datasheet found. Used to check the charger can refill the bank between cuts. Engineer to confirm.",
+   "charger_sources": [
+    { "url": "https://w11stop.com/homage-ups/homage-hvs-1214scc-ups-inverter", "publisher": "W11stop (w11stop.com)", "date": "undated, seen in search 2026-10-15", "quote": "Select able AC charger current 10A or 25A" }
+   ],
+   "sources": [
+    { "url": "https://mns.com.pk/product-category/ups/", "publisher": "MNS (mns.com.pk)", "date": "undated, live 2026-10-15", "quote": "Homage HVS-1214SCC Vertex Series Inverter UPS+Solar 1200VA/1000Watts/12V ₨44,500; Inverex 1KVA (1200VA/900Watts/12V) Solar Inverter Xtron X1200 ₨46,500; Trion-Connect 1201 UPS 12V PKR 39,500" },
+    { "url": "https://shadenterprises.pk/product/inverex-inverter-ups-xp-pro-1200-55-720-watts-modified-sine-wave/", "publisher": "Shad Enterprises (shadenterprises.pk)", "date": "undated, live 2026-10-15", "quote": "NRE UPS 1000W ₨33,999; NS Pro 1200VA Pure Inverter 12V DC (1000) Watt ₨39,499" },
+    { "url": "https://goshop.pk/best-ups-inverter-in-pakistan-with-prices-2026-updated/", "publisher": "GoShop (goshop.pk)", "date": "post dated 2023-01-26, title '2026 Updated'", "quote": "Inverex Veyron 1.2 kW MPPT Solar Inverter Rs. 54,499; Homage HVS-1214-SCC Rs. 39,999", "note": "Weakest source: the post date and the title disagree." }
+   ]
+  },
+  {
+   "label": "Home UPS / inverter, about 2 kVA, 24 V battery (without battery)",
+   "kva": 2, "rated_w": 1600, "battery_v": 24, "charger_a": 25, "low": 46900, "high": 75000, "n_sources": 3,
+   "rated_w_note": "Lowest continuous rating among the listed 2 kVA models (Inverex X2400 2400VA/1600W; Crown Xavier 2400VA/1600W; Homage 2400VA/1800W).",
+   "charger_a_note": "Grid (AC) charging current at the highest setting of the Homage HVS-2414SCC listings; no maker datasheet found. Engineer to confirm.",
+   "charger_sources": [
+    { "url": "https://w11stop.com/homage-ups/homage-hvs-2414scc-ups-inverter", "publisher": "W11stop (w11stop.com)", "date": "undated, seen in search 2026-10-15", "quote": "Select able AC charger current 10A or 25A" },
+    { "url": "https://www.jsbl.com/?p=49532", "publisher": "JSBL (jsbl.com)", "date": "undated, seen in search 2026-10-15", "quote": "Selectable AC charger current 10A or 25A" }
+   ],
+   "sources": [
+    { "url": "https://mns.com.pk/product-category/ups/", "publisher": "MNS (mns.com.pk)", "date": "undated, live 2026-10-15", "quote": "Homage HVS-2414SCC 2400VA/1800Watts/24V ₨58,000; Inverex Xtron X2400 (2400VA/1600Watts/24V) ₨56,500; Crown Xavier 2400VA 1600W 24V ₨55,000; Trion Connect 2201 UPS 24V PKR 46,900" },
+    { "url": "https://shadenterprises.pk/product/inverex-inverter-ups-xp-pro-1200-55-720-watts-modified-sine-wave/", "publisher": "Shad Enterprises (shadenterprises.pk)", "date": "undated, live 2026-10-15", "quote": "NS Pro 2202A UPS Inverter 2.0 KVA 1800 Watt ₨49,999" },
+    { "url": "https://asbaab.pk/", "publisher": "Asbaab (asbaab.pk)", "date": "undated, images 2026-04", "quote": "Homage HVS 2414SCC Vertex Series 1800W UPS ₨65,000; Inverex 2KW Office Solar UPS ₨75,000" }
+   ]
+  }
+ ],
+ "generators": [
+  {
+   "label": "Petrol generator, 2.5 to 3 kVA",
+   "kva": 2.5, "low": 123000, "high": 148900, "n_sources": 3,
+   "kva_note": "Rated at the smallest size in the range so a load is never put on a set that may be smaller.",
+   "sources": [
+    { "url": "https://surmawala.pk/collections/power-solutions", "publisher": "Surmawala (surmawala.pk)", "date": "undated, live 2026-10-15", "quote": "JASCO - 3 kVA -2.8 kW - J4500DC - Petrol n Gas Generator Rs.132,310" },
+    { "url": "https://toolcraft.pk/", "publisher": "Toolcraft (toolcraft.pk)", "date": "undated, live 2026-10-15", "quote": "Jasco Generator 3 KVA Green Series J3000S Rs. 123,000" },
+    { "url": "https://agromaster.pk/product-category/generators/", "publisher": "Agro Master (agromaster.pk)", "date": "undated, live 2026-10-15", "quote": "Honda EZ3000CX 2.5kVA ₨148,900" }
+   ]
+  },
+  {
+   "label": "Petrol generator, 5 to 6.5 kVA",
+   "kva": 5, "low": 252500, "high": 376900, "n_sources": 2,
+   "kva_note": "Rated at the smallest size in the range.",
+   "sources": [
+    { "url": "https://surmawala.pk/collections/power-solutions", "publisher": "Surmawala (surmawala.pk)", "date": "undated, live 2026-10-15", "quote": "Jasco Generator J-9000 DC 6.5Kva Rs.273,710; Jasco 5.5 KW Generator J7500-DC Rs.252,500 (both out of stock)" },
+    { "url": "https://agromaster.pk/product-category/generators/", "publisher": "Agro Master (agromaster.pk)", "date": "undated, live 2026-10-15", "quote": "Original Honda EZ6500CXS Generator ₨376,900 (listed as 5 kVA)" }
+   ]
+  },
+  {
+   "label": "Petrol generator, 10 kVA",
+   "kva": 10, "low": 459550, "high": 459550, "n_sources": 1,
+   "sources": [
+    { "url": "https://surmawala.pk/collections/power-solutions", "publisher": "Surmawala (surmawala.pk)", "date": "undated, live 2026-10-15", "quote": "Jasco 10 Kva Self Start Petrol Generator J12000-DC Rs.459,550" }
+   ]
+  }
+ ],
+ "generator_upkeep": {
+  "oil_change_hours": 100, "oil_l": 1.1, "oil_rs_per_l_low": 1430, "oil_rs_per_l_high": 1700, "n_sources": 1,
+  "note": "Oil change every 100 running hours (or 6 months) after the first 20 hours, 1.1 L sump (GX270/GX390 engines of 3.6 to 5.5 kVA sets). Filters, spark plug and repairs are not included.",
+  "sources": [
+   { "url": "https://cdn.powerequipment.honda.com/pe/pdf/manuals/00X31Z306000.pdf", "publisher": "Honda Motor Co., owner's manual EG4000CL/EG5000CL/EG6500CL", "date": "2010/2011 manual", "quote": "Engine oil change: First month or 20 Hrs., Every 6 months or 100 Hrs.; Oil capacity 1.2 US qt (1.1 L)" },
+   { "url": "https://www.pakwheels.com/accessories-spare-parts/pso-engine-oil/2696366", "publisher": "PakWheels (pakwheels.com)", "date": "undated, live 2026-10-15", "quote": "PSO Generator Oil Multi Grade 20W-40 SG/CD - 1 Litre PKR 1,430; PSO Generator Oil SAE 20W-40 1L PKR 1,700" }
+  ]
+ },
+ "tubular_unit": {
+  "v": 12, "ah": 200,
+  "note": "One tubular battery as priced in data/component-prices.json (12 V 180-220 Ah): 200 Ah is used for the bank count."
+ },
+ "lithium_pack": {
+  "size": "5 kWh (51.2 V 100 Ah, ~5.12 kWh)", "kwh": 5.12,
+  "note": "Home LiFePO4 batteries are sold as whole packs; the 51.2 V 100 Ah pack priced in data/component-prices.json (item size given here) is used, so a small backup still buys one full pack."
+ },
+ "battery_life_years": {
+  "tubular": 3, "lifepo4": 8,
+  "note": "Tubular: published range 2 to 5 years in Pakistani use (AGS 3-5, Osaka 3-4, Phoenix 3-5; 2 to 3 years 'more common'); 3 years is used. LiFePO4: 2,500 to 6,000 cycles at 80% depth of discharge on manufacturer datasheets, one cycle a day; 8 years is used (below the cycle life, allowing for heat). Engineer to confirm both.",
+  "sources": [
+   { "url": "https://solarpricepakistan.com.pk/ags-vs-osaka-vs-phoenix-battery-pakistan/", "publisher": "Solar Price Pakistan", "date": "2026-07-03", "quote": "AGS 3–5 years, Osaka 3–4 years, Phoenix 3–5 years" },
+   { "url": "https://maxpower.com.pk/news/lithium-vs-tubular-batteries-which-one-actually-saves-more-money-in-pakistan/", "publisher": "Max Power (sells lithium batteries)", "date": "undated, about 2026-07", "quote": "2 to 3 years is the more common outcome" },
+   { "url": "https://www.victronenergy.de/upload/documents/Datasheet-12,8-Volt-lithium-iron-phosphate-batteries-Smart-EN.pdf", "publisher": "Victron Energy datasheet", "date": "undated", "quote": "80 % DoD 2500 cycles" }
+  ]
+ }
+}

@@ -1,5 +1,5 @@
 // Page-specific parts of the live calculator, imported by assets/js/wattlyst-tool.js only on the pages that use them
-// (N11 battery diagram, N6 live forecast), so other tool pages do not download them. No formula lives here.
+// (N11 battery diagram, N6 live forecast, N17/N18 result tables), so other tool pages do not download them. No formula lives here.
 
 /** N11 battery diagram: same markup as Wattlyst_Render::battery_grid() (one row per parallel string, minus bus left, fused plus lead right). */
 export function drawGrid(box, series, parallel) {
@@ -30,4 +30,15 @@ export async function forecastFor(c, tilt) {
       .catch(() => null);
   }
   return forecasts[key];
+}
+
+/** N7/N17/N18 result table: caption and one row per item of the engine's list, formatted like the result cards (Wattlyst_Render::rtable). */
+export function drawTable(box, out, t, fmt, render) {
+  box.querySelector('.wl-rtable-title').textContent = render(t.cap, { in: out, out });
+  const body = box.querySelector('tbody');
+  body.textContent = '';
+  for (const item of out[t.key] || []) {
+    const tr = body.insertRow();
+    for (const c of t.columns) tr.insertCell().textContent = `${fmt(item[c.key], c.spec)}${c.suffix || ''}`;
+  }
 }

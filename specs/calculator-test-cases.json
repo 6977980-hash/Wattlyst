@@ -6365,5 +6365,608 @@
     },
     "tolerance": 0,
     "note": "input range from ac_units"
+  },
+  {
+    "calc": "solar_seasonal",
+    "name": "Lahore home with summer ACs, sized for the year",
+    "inputs": {
+      "city": "lahore",
+      "jan": 250,
+      "feb": 230,
+      "mar": 280,
+      "apr": 400,
+      "may": 600,
+      "jun": 700,
+      "jul": 720,
+      "aug": 680,
+      "sep": 560,
+      "oct": 380,
+      "nov": 260,
+      "dec": 260
+    },
+    "expected": {
+      "annual_units": 5320,
+      "kw_annual": 3.64833,
+      "kw_peak": 6.28272,
+      "peak_month": "July",
+      "panels": 7,
+      "installed_kw": 4.095,
+      "grid_units_year": 2660,
+      "export_units_year": 3311.329,
+      "export_credit_rs": 36424.619,
+      "months_short": 4,
+      "kw_from_high_bill": 6,
+      "kw_from_low_bill": 1.91667,
+      "self_used_year": 2660,
+      "worst_month": "July",
+      "worst_short_units": 250.713
+    },
+    "tolerance": 0.001,
+    "note": "N17; pvout_month Lahore from data/cities-pk.json, buyback default Rs 11"
+  },
+  {
+    "calc": "solar_seasonal",
+    "name": "Same bills in Karachi",
+    "inputs": {
+      "city": "karachi",
+      "jan": 250,
+      "feb": 230,
+      "mar": 280,
+      "apr": 400,
+      "may": 600,
+      "jun": 700,
+      "jul": 720,
+      "aug": 680,
+      "sep": 560,
+      "oct": 380,
+      "nov": 260,
+      "dec": 260
+    },
+    "expected": {
+      "kw_annual": 3.1331,
+      "kw_peak": 6.73527,
+      "panels": 6,
+      "installed_kw": 3.51,
+      "grid_units_year": 2660,
+      "export_units_year": 3299.98,
+      "months_short": 5
+    },
+    "tolerance": 0.001,
+    "note": "N17"
+  },
+  {
+    "calc": "solar_seasonal",
+    "name": "Sized for the hardest month: no net shortfall, large export",
+    "inputs": {
+      "city": "lahore",
+      "kw": 6.3,
+      "jan": 250,
+      "feb": 230,
+      "mar": 280,
+      "apr": 400,
+      "may": 600,
+      "jun": 700,
+      "jul": 720,
+      "aug": 680,
+      "sep": 560,
+      "oct": 380,
+      "nov": 260,
+      "dec": 260
+    },
+    "expected": {
+      "panels": 11,
+      "installed_kw": 6.435,
+      "grid_units_year": 2660,
+      "export_units_year": 6723.517,
+      "export_credit_rs": 73958.687,
+      "months_short": 0,
+      "kw_source": "input"
+    },
+    "tolerance": 0.001,
+    "note": "N17"
+  },
+  {
+    "calc": "solar_seasonal",
+    "name": "Flat use in Quetta: one bill and twelve bills nearly agree",
+    "inputs": {
+      "city": "quetta",
+      "jan": 300,
+      "feb": 300,
+      "mar": 300,
+      "apr": 300,
+      "may": 300,
+      "jun": 300,
+      "jul": 300,
+      "aug": 300,
+      "sep": 300,
+      "oct": 300,
+      "nov": 300,
+      "dec": 300
+    },
+    "expected": {
+      "kw_annual": 1.85979,
+      "kw_peak": 2.12766,
+      "kw_from_high_bill": 1.88679,
+      "panels": 4,
+      "months_short": 0
+    },
+    "tolerance": 0.001,
+    "note": "N17"
+  },
+  {
+    "calc": "solar_seasonal",
+    "name": "All months zero is an error",
+    "inputs": {
+      "city": "lahore",
+      "jan": 0,
+      "feb": 0,
+      "mar": 0,
+      "apr": 0,
+      "may": 0,
+      "jun": 0,
+      "jul": 0,
+      "aug": 0,
+      "sep": 0,
+      "oct": 0,
+      "nov": 0,
+      "dec": 0
+    },
+    "expected": {
+      "error": "monthly_units_all_zero"
+    },
+    "tolerance": 0,
+    "note": "N17"
+  },
+  {
+    "calc": "solar_seasonal",
+    "name": "A blank month is an error naming that month",
+    "inputs": {
+      "city": "lahore",
+      "jan": 250,
+      "feb": 230,
+      "apr": 400,
+      "may": 600,
+      "jun": 700,
+      "jul": 720,
+      "aug": 680,
+      "sep": 560,
+      "oct": 380,
+      "nov": 260,
+      "dec": 260
+    },
+    "expected": {
+      "error": "mar_required"
+    },
+    "tolerance": 0,
+    "note": "N17"
+  },
+  {
+    "calc": "solar_seasonal",
+    "name": "Unknown city",
+    "inputs": {
+      "city": "gilgit",
+      "jan": 250,
+      "feb": 230,
+      "mar": 280,
+      "apr": 400,
+      "may": 600,
+      "jun": 700,
+      "jul": 720,
+      "aug": 680,
+      "sep": 560,
+      "oct": 380,
+      "nov": 260,
+      "dec": 260
+    },
+    "expected": {
+      "error": "city_unknown"
+    },
+    "tolerance": 0,
+    "note": "N17"
+  },
+  {
+    "calc": "solar_seasonal",
+    "name": "Negative month is rejected",
+    "inputs": {
+      "city": "lahore",
+      "jan": 250,
+      "feb": 230,
+      "mar": 280,
+      "apr": 400,
+      "may": 600,
+      "jun": 700,
+      "jul": -5,
+      "aug": 680,
+      "sep": 560,
+      "oct": 380,
+      "nov": 260,
+      "dec": 260
+    },
+    "expected": {
+      "error": "jul_too_small"
+    },
+    "tolerance": 0,
+    "note": "N17"
+  },
+  {
+    "calc": "circuit_schedule",
+    "name": "Six-circuit house: lights, sockets, two ACs, geyser, water motor",
+    "inputs": {
+      "loads": [
+        {
+          "id": "led-tube-light",
+          "qty": 10,
+          "length": 20
+        },
+        {
+          "id": "custom",
+          "watts": 2000,
+          "length": 15
+        },
+        {
+          "id": "ac-split-1-5ton-inverter",
+          "length": 12
+        },
+        {
+          "id": "ac-split-2ton-non-inverter",
+          "length": 18
+        },
+        {
+          "id": "electric-geyser-storage",
+          "length": 10
+        },
+        {
+          "id": "water-motor-1hp",
+          "length": 25
+        }
+      ]
+    },
+    "expected": {
+      "circuits_count": 6,
+      "connected_w": 10050,
+      "biggest_breaker_a": 20,
+      "biggest_name": "Split AC 2 ton non-inverter"
+    },
+    "tolerance": 0.001,
+    "note": "N18; each row equals wire_size for that circuit"
+  },
+  {
+    "calc": "circuit_schedule",
+    "name": "One 1.5 ton inverter AC circuit matches the W1 wire and MCB",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ac-split-1-5ton-inverter",
+          "length": 12
+        }
+      ]
+    },
+    "expected": {
+      "biggest_breaker_a": 16,
+      "connected_w": 1450
+    },
+    "tolerance": 0,
+    "note": "N18 vs W1: designed at the maximum input (starting_w)"
+  },
+  {
+    "calc": "circuit_schedule",
+    "name": "Missing cable length names the row",
+    "inputs": {
+      "loads": [
+        {
+          "id": "custom",
+          "watts": 2000
+        }
+      ]
+    },
+    "expected": {
+      "error": "load_0_length_invalid"
+    },
+    "tolerance": 0,
+    "note": "N18"
+  },
+  {
+    "calc": "circuit_schedule",
+    "name": "Run too long for the cable table names the row",
+    "inputs": {
+      "loads": [
+        {
+          "id": "led-tube-light",
+          "length": 10
+        },
+        {
+          "id": "custom",
+          "watts": 2000,
+          "length": 5000
+        }
+      ]
+    },
+    "expected": {
+      "error": "load_1_length_run_too_long_for_table"
+    },
+    "tolerance": 0,
+    "note": "N18"
+  },
+  {
+    "calc": "circuit_schedule",
+    "name": "A load above the largest MCB names the row",
+    "inputs": {
+      "loads": [
+        {
+          "id": "custom",
+          "watts": 20000,
+          "length": 5
+        }
+      ]
+    },
+    "expected": {
+      "error": "load_0_load_above_standard_breakers"
+    },
+    "tolerance": 0,
+    "note": "N18"
+  },
+  {
+    "calc": "circuit_schedule",
+    "name": "Half a quantity is rejected",
+    "inputs": {
+      "loads": [
+        {
+          "id": "custom",
+          "watts": 2000,
+          "length": 5,
+          "qty": 1.5
+        }
+      ]
+    },
+    "expected": {
+      "error": "load_0_qty_invalid"
+    },
+    "tolerance": 0,
+    "note": "N18"
+  },
+  {
+    "calc": "circuit_schedule",
+    "name": "Empty list",
+    "inputs": {
+      "loads": []
+    },
+    "expected": {
+      "error": "loads_required"
+    },
+    "tolerance": 0,
+    "note": "N18"
+  },
+  {
+    "calc": "circuit_schedule",
+    "name": "Air temperature out of range points at the shared field",
+    "inputs": {
+      "loads": [
+        {
+          "id": "custom",
+          "watts": 2000,
+          "length": 5
+        }
+      ],
+      "ambient_c": 90
+    },
+    "expected": {
+      "error": "ambient_out_of_range"
+    },
+    "tolerance": 0,
+    "note": "N18"
+  },
+  {
+    "calc": "solar_seasonal",
+    "name": "Day share 1 (all use in daylight) gives the plain monthly balance",
+    "inputs": {
+      "city": "lahore",
+      "jan": 250,
+      "feb": 230,
+      "mar": 280,
+      "apr": 400,
+      "may": 600,
+      "jun": 700,
+      "jul": 720,
+      "aug": 680,
+      "sep": 560,
+      "oct": 380,
+      "nov": 260,
+      "dec": 260,
+      "day_share": 1
+    },
+    "expected": {
+      "grid_units_year": 643.7045,
+      "export_units_year": 1295.0335,
+      "months_short": 4
+    },
+    "tolerance": 0.001,
+    "note": "N17; self-used = min(solar, units × day_share)"
+  },
+  {
+    "calc": "backup_compare",
+    "name": "600 W through 4 h a day for 5 years: hybrid solar cheapest",
+    "inputs": {
+      "load_w": 600,
+      "hours": 4,
+      "years": 5,
+      "tariff": 36.46
+    },
+    "expected": {
+      "day_kwh": 2.4,
+      "backup_hours": 7200,
+      "ups_kva": 1,
+      "batteries": 3,
+      "ups_total": 601612.045,
+      "gen_kva": 2.5,
+      "l_per_h": 0.488,
+      "gen_total": 1659364.88,
+      "inverter_kw": 4,
+      "lithium_packs": 1,
+      "panels": 2,
+      "solar_total": 416517.5,
+      "cheapest": "hybrid solar"
+    },
+    "tolerance": 0.001,
+    "note": "N7; prices mid of data/backup-prices.json, component-prices.json, solar-prices.json; recomputed by hand from data/"
+  },
+  {
+    "calc": "backup_compare",
+    "name": "300 W through 2 h a day: UPS cheapest",
+    "inputs": {
+      "load_w": 300,
+      "hours": 2,
+      "years": 5,
+      "tariff": 36.46
+    },
+    "expected": {
+      "batteries": 1,
+      "ups_total": 211869.761,
+      "gen_total": 691178.72,
+      "solar_total": 391508.75,
+      "cheapest": "UPS"
+    },
+    "tolerance": 0.001,
+    "note": "N7"
+  },
+  {
+    "calc": "backup_compare",
+    "name": "1200 W through 8 h: 2 kVA UPS with 10 batteries, 3 lithium packs",
+    "inputs": {
+      "load_w": 1200,
+      "hours": 8,
+      "years": 5,
+      "tariff": 36.46
+    },
+    "expected": {
+      "ups_kva": 2,
+      "batteries": 10,
+      "lithium_packs": 3,
+      "panels": 5,
+      "ups_total": 2064162.18,
+      "gen_total": 4834609.52,
+      "solar_total": 1016543.75,
+      "cheapest": "hybrid solar"
+    },
+    "tolerance": 0.001,
+    "note": "N7"
+  },
+  {
+    "calc": "backup_compare",
+    "name": "Ten years: three tubular replacements, one lithium replacement",
+    "inputs": {
+      "load_w": 600,
+      "hours": 4,
+      "years": 10,
+      "tariff": 36.46
+    },
+    "expected": {
+      "ups_repl": 3,
+      "solar_repl": 1,
+      "ups_total": 1158975.09,
+      "gen_total": 3182779.76,
+      "solar_total": 679017.5
+    },
+    "tolerance": 0.001,
+    "note": "N7"
+  },
+  {
+    "calc": "backup_compare",
+    "name": "Load above the largest UPS in the price data: UPS left out, others compared",
+    "inputs": {
+      "load_w": 5000,
+      "hours": 4,
+      "years": 5,
+      "tariff": 36.46
+    },
+    "expected": {
+      "ups_ok": false,
+      "ups_status": "No UPS in our price list carries more than 1280 W",
+      "gen_kva": 10,
+      "inverter_kw": 8,
+      "lithium_packs": 5,
+      "solar_total": 1864587.5,
+      "cheapest": "hybrid solar"
+    },
+    "tolerance": 0,
+    "note": "N7"
+  },
+  {
+    "calc": "backup_compare",
+    "name": "1200 W through 8 h: 25 A charger cannot refill the bank, UPS left out of the cheapest",
+    "inputs": {
+      "load_w": 1200,
+      "hours": 8,
+      "years": 5,
+      "tariff": 36.46
+    },
+    "expected": {
+      "ups_ok": false,
+      "refill_need_kwh": 13.2872,
+      "refill_max_kwh": 9.6,
+      "cheapest": "hybrid solar"
+    },
+    "tolerance": 0.001,
+    "note": "N7; charger check (24 − h) × charger A × V_bank ≥ E ÷ (η_chg × η_inv); 2 kVA UPS 24 V, 25 A"
+  },
+  {
+    "calc": "backup_compare",
+    "name": "Load above every listed generator and hybrid inverter",
+    "inputs": {
+      "load_w": 9000,
+      "hours": 4,
+      "years": 5,
+      "tariff": 36.46
+    },
+    "expected": {
+      "error": "load_w_too_large"
+    },
+    "tolerance": 0,
+    "note": "N7"
+  },
+  {
+    "calc": "backup_compare",
+    "name": "Years are required",
+    "inputs": {
+      "load_w": 600,
+      "hours": 4,
+      "tariff": 36.46
+    },
+    "expected": {
+      "error": "years_required"
+    },
+    "tolerance": 0,
+    "note": "N7"
+  },
+  {
+    "calc": "backup_compare",
+    "name": "More than 24 hours a day",
+    "inputs": {
+      "load_w": 600,
+      "hours": 25,
+      "years": 5,
+      "tariff": 36.46
+    },
+    "expected": {
+      "error": "hours_too_large"
+    },
+    "tolerance": 0,
+    "note": "N7"
+  },
+  {
+    "calc": "wire_size",
+    "name": "Storage geyser: resistive load at PF 1",
+    "inputs": {
+      "appliance": "electric-geyser-storage",
+      "length_m": 10
+    },
+    "expected": {
+      "pf": 1,
+      "watts": 3000,
+      "ib_a": 13.0435,
+      "breaker_a": 16,
+      "area_mm2": 2.5
+    },
+    "tolerance": 0.001,
+    "note": "pf_by_load_type resistive 1.0 (Engineer Reviewer 2026-10-15): I_b = 3000 / 230"
   }
 ]

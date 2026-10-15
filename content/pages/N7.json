@@ -2,298 +2,318 @@
  "id": "N7",
  "status": "publish",
  "template": "tool",
- "h1": "UPS vs Solar vs Generator: Cost Over Five Years",
+ "h1": "UPS vs Solar vs Generator: Cost per Backup Hour Over Five Years",
  "author": "ali-ahmad",
  "published": "2026-10-13",
- "reviewed": "2026-10-13",
- "calc": "tco",
+ "reviewed": "2026-10-15",
+ "calc": "backup_compare",
  "fields": [
   {
-   "name": "capex",
-   "label": "Purchase and installation cost",
-   "unit": "Rs",
-   "default": 120000,
-   "hint": "Example figure, not a market price. Enter your own quote: UPS plus batteries, the complete solar system, or the generator with its changeover switch."
+   "name": "load_w",
+   "label": "Load during a power cut",
+   "unit": "W",
+   "default": 600,
+   "hint": "What runs together on backup: for example four fans, lights, a router and a TV. Add up the watts on the labels or use the home load calculator. Very large loads (a whole house with ACs) are beyond the UPS and generator sizes in our price list."
+  },
+  {
+   "name": "hours",
+   "label": "Power cut hours a day",
+   "unit": "h",
+   "default": 4,
+   "hint": "Average loadshedding hours a day over the year in your area."
   },
   {
    "name": "years",
    "label": "Years to compare",
    "unit": "years",
    "default": 5,
-   "hint": "Five years covers two tubular battery lives and most of one lithium life; try ten to see the long run."
+   "hint": "Five years covers one tubular battery replacement; try ten to see the long run."
   },
   {
-   "name": "energy_cost_per_year",
-   "label": "Energy or fuel cost a year",
-   "unit": "Rs",
-   "default": 15000,
-   "hint": "UPS: the grid units it takes to recharge, times your tariff. Generator: litres an hour × hours a year × price a litre. Solar: usually zero. Example figure."
+   "name": "tariff",
+   "label": "Electricity rate",
+   "unit": "Rs per unit",
+   "default": "@data.tariff.unprotected.3.rate",
+   "hint": "Energy rate of your slab, for the units a UPS takes from the grid to recharge. The default is the unprotected rate for 301 to 400 units a month."
   },
   {
-   "name": "maintenance_per_year",
-   "label": "Maintenance a year",
-   "unit": "Rs",
-   "default": 2000,
-   "hint": "Battery water and terminal cleaning, generator oil, filters and servicing, panel cleaning. Example figure."
+   "name": "city",
+   "label": "City",
+   "type": "select",
+   "options_from": "cities",
+   "default": "lahore",
+   "advanced": true,
+   "hint": "Sets how many solar panels it takes to refill the battery on an average day."
   },
   {
-   "name": "life_years",
-   "label": "Life of the part that wears out",
-   "unit": "years",
-   "default": 2,
-   "hint": "Tubular battery about two years, lithium battery eight or more, small generator engine a few years. Leave blank if nothing needs replacing in the period."
+   "name": "fuel_price",
+   "label": "Petrol price",
+   "unit": "Rs per litre",
+   "placeholder": "Latest price in our data",
+   "advanced": true,
+   "hint": "Leave blank to use the latest petrol price in our data (dated under Sources), or type today's pump price."
   },
   {
-   "name": "replacement_cost",
-   "label": "Cost to replace that part",
-   "unit": "Rs",
-   "default": 60000,
-   "hint": "What the new batteries or the new engine cost each time the life runs out. Example figure."
+   "name": "days",
+   "label": "Days with power cuts a month",
+   "unit": "days",
+   "default": "@days_per_month",
+   "advanced": true,
+   "hint": "Lower it if cuts happen only on some days."
+  },
+  {
+   "name": "panel_w",
+   "label": "Panel size",
+   "unit": "W",
+   "default": "@panel_w",
+   "advanced": true,
+   "hint": "Watts of one solar panel."
   }
  ],
  "outputs": [
   {
-   "key": "tco_rs",
-   "label": "Total cost over the period",
+   "key": "cheapest",
+   "label": "Cheapest over the period",
+   "spec": "raw"
+  },
+  {
+   "key": "cheapest_per_hour",
+   "label": "Cheapest: cost per backup hour",
    "spec": "rs"
   },
   {
-   "key": "running_rs",
-   "label": "Energy and maintenance over the period",
+   "key": "ups_per_hour",
+   "label": "UPS: cost per backup hour",
    "spec": "rs"
   },
   {
-   "key": "replacements",
-   "label": "Replacements in the period",
-   "spec": "int"
+   "key": "gen_per_hour",
+   "label": "Generator: cost per backup hour",
+   "spec": "rs"
   },
   {
-   "key": "replacements_rs",
-   "label": "Cost of replacements",
+   "key": "solar_per_hour",
+   "label": "Hybrid solar: cost per backup hour",
    "spec": "rs"
+  },
+  {
+   "key": "ups_total",
+   "label": "UPS: total over the period",
+   "spec": "rs"
+  },
+  {
+   "key": "gen_total",
+   "label": "Generator: total over the period",
+   "spec": "rs"
+  },
+  {
+   "key": "solar_total",
+   "label": "Hybrid solar: total over the period",
+   "spec": "rs"
+  },
+  {
+   "key": "ups_status",
+   "label": "UPS charger check",
+   "spec": "raw"
   }
  ],
- "answer": "Over {{in.years|int}} years a home UPS bought for {{in.capex|rs}} with a tubular battery costs about {{out.tco_rs|rs}} in total once recharging, upkeep and {{out.replacements|int}} battery replacements are added. Total cost = purchase price + years × (energy or fuel cost a year + maintenance a year) + number of replacements × replacement cost; run the same sum for the solar and generator quotes to compare them.",
- "how": "Purchase and installation {{out.capex|rs}}. Running cost: {{out.years}} years × (energy or fuel cost a year + maintenance a year) = {{out.running_rs|rs}}. Replacements: the part that wears out is replaced each time its life runs out within the period, but not in the final year, giving {{out.replacements|int}} replacements = {{out.replacements_rs|rs}}. Total cost of ownership = {{out.capex|rs}} + {{out.running_rs|rs}} + {{out.replacements_rs|rs}} = {{out.tco_rs|rs}}.",
+ "result_table": {
+  "key": "options",
+  "caption": "The three options over {{out.years|int}} years ({{out.backup_hours|int}} backup hours, equipment prices, installation extra)",
+  "columns": [
+   {
+    "key": "option",
+    "label": "Option",
+    "spec": "raw"
+   },
+   {
+    "key": "buy",
+    "label": "Buy",
+    "spec": "rs"
+   },
+   {
+    "key": "run_year",
+    "label": "Running a year",
+    "spec": "rs"
+   },
+   {
+    "key": "repl_rs",
+    "label": "Battery replacements",
+    "spec": "rs"
+   },
+   {
+    "key": "total",
+    "label": "Total",
+    "spec": "rs"
+   },
+   {
+    "key": "per_hour",
+    "label": "Per backup hour",
+    "spec": "rs"
+   }
+  ]
+ },
+ "answer": "For {{in.load_w|int}} W through {{in.hours|int}} hours of loadshedding a day, the cheapest backup over {{in.years|int}} years is {{out.cheapest|raw}} at about {{out.cheapest_per_hour|rs}} per backup hour. A UPS with tubular batteries costs {{out.ups_per_hour|rs}}, hybrid solar {{out.solar_per_hour|rs}} and a petrol generator {{out.gen_per_hour|rs}}. Total cost = equipment + running cost each year + battery replacements, divided by the hours of backup.",
+ "how": "Backup a day: {{out.load_w}} W × {{out.hours}} h = {{out.day_kwh|2}} kWh; backup hours: {{out.hours}} h × {{out.days}} days × twelve months × {{out.years}} years = {{out.backup_hours|int}} h. UPS: {{out.ups_kva}} kVA, tubular batteries: {{out.batteries|int}} ({{out.bank_wh|int}} Wh needed), {{out.ups_buy|rs}}; recharge {{out.recharge_kwh_year|int}} units a year × {{out.tariff|rs2}} = {{out.ups_run_year|rs}}; battery replacements: {{out.ups_repl|int}}, {{out.ups_repl_rs|rs}}; charger check: {{out.refill_need_kwh|2}} kWh to put back in {{out.refill_hours|int}} grid hours, {{out.charger_a|int}} A at {{out.bank_v}} V gives up to {{out.refill_max_kwh|2}} kWh; total {{out.ups_total|rs}} ÷ {{out.backup_hours|int}} h = {{out.ups_per_hour|rs}}. Generator: {{out.gen_kva}} kVA, {{out.gen_buy|rs}}; {{out.l_per_h|2}} litres an hour × {{out.run_h_year|int}} h × {{out.fuel_price|rs2}} = {{out.fuel_year|rs}} fuel plus {{out.oil_year|rs}} oil a year; total {{out.gen_total|rs}} ÷ {{out.backup_hours|int}} h = {{out.gen_per_hour|rs}}. Hybrid solar: {{out.inverter_kw}} kW inverter, {{out.lithium_packs|int}} lithium pack(s), {{out.panels|int}} panels, {{out.solar_buy|rs}}; battery replacements: {{out.solar_repl|int}}, {{out.solar_repl_rs|rs}}; total {{out.solar_total|rs}} ÷ {{out.backup_hours|int}} h = {{out.solar_per_hour|rs}}.",
  "key_facts": [
-  "Total cost of ownership of a backup system = purchase price + years × (energy or fuel cost a year + maintenance a year) + replacements × replacement cost; comparing only the purchase price favours the generator, comparing only the running cost favours solar.",
-  "With the example figures on this page, a UPS with a tubular battery costs about {{ex.0.out.tco_rs|rs}} over {{ex.0.out.years|int}} years, a UPS with a lithium battery about {{ex.1.out.tco_rs|rs}}, a hybrid solar system with a lithium battery about {{ex.2.out.tco_rs|rs}} before bill savings, and a petrol generator run two hours a day about {{ex.3.out.tco_rs|rs}}.",
-  "A tubular battery replaced every two years costs {{ex.0.out.replacements_rs|rs}} in replacements over {{ex.0.out.years|int}} years in the example; a lithium battery with an eight-year life needs {{ex.1.out.replacements|int}} replacements in the same period.",
-  "A generator is the cheapest to buy and the dearest to run: in the example its fuel and servicing come to {{ex.3.out.running_rs|rs}} over {{ex.3.out.years|int}} years, more than the whole cost of either UPS.",
-  "A UPS with a tubular battery returns only about {{d.charge_eff_lead_acid|pct}} × {{d.inverter_eff_ups|pct}} of the grid units it draws as backup units, so its energy cost a year = backup units used ÷ that product × your tariff."
+  "Cost per backup hour = (equipment + running cost a year × years + battery replacements) ÷ hours of backup over the same years; it puts a cheap-to-buy generator and a dear-to-buy solar system on one scale.",
+  "For {{in.load_w|int}} W through {{in.hours|int}} hours a day a petrol generator burns about {{out.l_per_h|2}} litres an hour, {{out.fuel_year|rs}} of petrol a year, so it is the dearest option within the first year even though it is the cheapest to buy.",
+  "A UPS takes more units from the grid than it delivers: {{out.recharge_kwh_year|int}} units a year here, {{out.ups_run_year|rs}} at {{out.tariff|rs2}} a unit, and its tubular batteries are replaced every {{out.tubular_life_years|int}} years.",
+  "For a small load and short cuts the cheapest changes: {{ex.1.in.load_w|int}} W for {{ex.1.in.hours|int}} hours a day costs {{ex.1.out.ups_per_hour|rs}} per backup hour on a UPS against {{ex.1.out.solar_per_hour|rs}} on hybrid solar, because even a small solar backup buys a whole lithium pack and a hybrid inverter."
  ],
  "formula": {
-  "text": "TCO = C + Y × (E + M) + floor((Y − ε) ÷ L) × R",
+  "text": "Cost per backup hour = (B + Y × R + N × P) ÷ (h × days × twelve × Y)",
   "lines": [
-   "C = purchase and installation cost",
-   "Y = years compared; E = energy or fuel cost a year; M = maintenance a year",
-   "L = life of the part that wears out (battery, engine); R = its replacement cost",
-   "floor((Y − ε) ÷ L) = replacements within the period, none in the final year of life",
-   "Generator fuel a year = litres an hour × hours a year × price a litre (entered by you)",
-   "UPS recharge units a year = backup units used ÷ (charge efficiency × inverter efficiency)"
+   "B = equipment price (middle of the price range in our data, installation extra); Y = years compared",
+   "R = running cost a year: UPS recharge units × tariff; generator fuel (litres an hour × hours × price) + oil changes; hybrid solar none",
+   "N × P = battery replacements within the period × battery price (none in the final year of life)",
+   "Battery bank: UPS tubular Wh = load W × h ÷ (DoD × inverter efficiency); lithium kWh likewise, bought in whole packs",
+   "Generator litres an hour = no-load fuel × rated kW + fuel per kWh × load kW (the fuel calculator's curve)"
   ]
  },
  "sections": [
   {
    "h2": "Which is the cheapest backup for loadshedding?",
    "p": [
-    "It depends on how many hours you need and what you run, so this page does not pick a winner for you; it gives one sum that works for all three and example figures to start from. For fans, lights, a TV and a router through two or three hours of loadshedding a day, a UPS is normally the cheapest over five years because its purchase price is low and its running cost is only the recharge losses. The battery choice decides most of that cost: in the example the tubular UPS costs {{ex.0.out.tco_rs|rs}} and the lithium UPS {{ex.1.out.tco_rs|rs}} over {{ex.0.out.years|int}} years, with the lithium UPS dearer to buy but needing {{ex.1.out.replacements|int}} replacements against {{ex.0.out.replacements|int}} for tubular.",
-    "For ACs, a fridge and a water motor through long cuts, a UPS needs a battery bank few homes buy, and the choice is between solar with a battery and a generator. Solar costs the most up front and almost nothing to run; the generator costs the least up front and the most to run. The longer the daily cut and the more years you count, the more the sum moves towards solar."
+    "With the defaults, {{in.load_w|int}} W for {{in.hours|int}} hours a day over {{in.years|int}} years, the answer is {{out.cheapest|raw}} at {{out.cheapest_total|rs}} in total. The UPS comes to {{out.ups_total|rs}}, hybrid solar to {{out.solar_total|rs}} and the generator to {{out.gen_total|rs}}; solar has no running cost once bought, the generator pays for petrol every hour.",
+    "The answer changes with the load and the hours. For {{ex.1.in.load_w|int}} W over {{ex.1.in.hours|int}} hours a day the cheapest is {{ex.1.out.cheapest|raw}} ({{ex.1.out.cheapest_total|rs}} over {{ex.1.out.years|int}} years), because hybrid solar still has to buy a whole lithium pack and an inverter. Enter your own load and hours above."
    ]
   },
   {
    "h2": "Generator vs UPS running cost",
    "p": [
-    "A generator's running cost is fuel plus servicing. The fuel cost a year is a figure you enter: the generator fuel consumption calculator gives the litres an hour and the cost a month for your generator size, load and fuel, and twelve months of that is the yearly figure. For the example petrol set run two hours a day, fuel and servicing over {{ex.3.out.years|int}} years come to {{ex.3.out.running_rs|rs}}, and with an engine replacement the total is {{ex.3.out.tco_rs|rs}}.",
-    "A UPS's running cost is the electricity it takes to refill the battery. Every unit delivered on backup costs more than a unit from the grid because the charger and the inverter each lose a share: with a tubular battery the charger returns about {{d.charge_eff_lead_acid|pct}} and the UPS inverter about {{d.inverter_eff_ups|pct}} of what goes in. Multiply your backup units a year by that loss and by your tariff for the energy cost field; a lithium battery charged at about {{d.charge_eff_lifepo4|pct}} loses less, which is why the lithium example has the lower energy cost."
+    "A petrol generator runs its engine for every hour of backup, and even lightly loaded it burns a large share of its full-load fuel. At {{out.fuel_price|rs2}} a litre that is {{out.fuel_year|rs}} a year here, plus {{out.oil_year|rs}} of engine oil at one change every {{out.oil_change_hours|int}} running hours. Our fuel curve is fitted to inverter generators, so an open-frame set burns somewhat more and costs more than shown.",
+    "A UPS only pays for the units it takes back from the grid, which are more than it delivers because of charger and inverter losses: {{out.recharge_kwh_year|int}} units, {{out.ups_run_year|rs}} a year. Its real cost is the batteries, replaced every {{out.tubular_life_years|int}} years. Its charger must also refill the batteries between cuts: the calculator checks this with a {{out.charger_a|int}} A charger and leaves a UPS that cannot keep up out of the cheapest, which happens with big loads or very long cuts."
    ]
   },
   {
-   "h2": "Solar vs generator: what the sum leaves out",
+   "h2": "What the hybrid solar figure includes",
    "p": [
-    "The solar example counts the system as a backup only: {{ex.2.out.capex|rs}} to buy, a small yearly cleaning cost, no fuel, and a lithium battery that lasts past the {{ex.2.out.years|int}}-year horizon, for {{ex.2.out.tco_rs|rs}} in total. That is far more than the UPS, but the solar system also runs the house in the day and exports spare units, which the generator and the UPS do not. Work out the yearly bill saving with the net billing calculator and subtract years × saving from the solar total before comparing; for many homes that turns the solar line into the cheapest of the three.",
-    "The generator also has costs the sum cannot see: noise, fumes, fuel storage, the changeover wiring, and the time spent buying fuel. Neither of those is a rupee figure, but they are often what decides the purchase."
+    "The smallest hybrid inverter in our price data that carries the load, lithium batteries in whole packs for one night's backup, and enough panels to refill the battery on an average day in your city. It assumes the sun recharges the battery, so a run of cloudy days would still need the grid.",
+    "It does not count the bill savings solar makes during the day, which usually decide the choice in its favour. It also leaves out mounting, cabling and installation (they add to every option, most to solar), the inverter's own standby draw and grid charging on cloudy days."
    ]
   },
   {
-   "h2": "Ten years instead of five",
+   "h2": "Prices behind the comparison",
    "p": [
-    "Doubling the period does not double every line. Purchase cost is paid once, running cost doubles, and the replacements depend on the life: the tubular UPS replaced every two years needs {{ex.4.out.replacements|int}} battery sets in {{ex.4.out.years|int}} years, for {{ex.4.out.tco_rs|rs}} in total, while the lithium battery with an eight-year life needs one. The reference table runs each option over both five and ten years so you can see how the order changes."
-   ]
-  },
-  {
-   "h2": "Where to get the figures for your own comparison",
-   "p": [
-    "Purchase cost: the installer's or shop's quote, including the changeover switch for a generator, the batteries for a UPS, and structure, cabling and the net-metering application for solar. Energy cost: for the UPS, backup hours a day × load in watts ÷ a thousand × days a year ÷ (charge efficiency × inverter efficiency) × your tariff; for the generator, litres an hour × hours a year × price a litre; for solar, zero or the night units you still buy. Maintenance: water and terminal cleaning for tubular batteries, oil and filters for a generator, cleaning for panels. Life and replacement cost: the battery or engine warranty is a fair guide, and the replacement price is today's price of the same part.",
-    "All figures on this page are examples to show the method; they are not market prices and they are not updated. Replace each one with your own quote before you decide."
+    "Every figure is the middle of a price range from Pakistani retailer listings or our solar price tracker, equipment only, each listed under Sources with its publisher. Retailer prices for the same model differ a lot, so replace them with your own quotes before you decide.",
+    "Battery lives are planning values: tubular {{out.tubular_life_years|int}} years and lithium {{out.lifepo4_life_years|int}} years. Heat, deep discharges and poor charging shorten both."
    ]
   }
  ],
  "examples": [
   {
    "inputs": {},
-   "title": "Home UPS with a tubular battery, five years",
-   "text": "Bought for {{in.capex|rs}}; recharge losses and upkeep {{out.running_rs|rs}} over {{out.years|int}} years; the tubular battery is replaced every two years, {{out.replacements|int}} times, for {{out.replacements_rs|rs}}. Total {{out.tco_rs|rs}}. Example figures, not prices."
+   "title": "Fans, lights, router and TV through four hours a day",
+   "text": "{{out.backup_hours|int}} backup hours over {{out.years|int}} years. UPS {{out.ups_total|rs}} ({{out.ups_per_hour|rs}} an hour), generator {{out.gen_total|rs}} ({{out.gen_per_hour|rs}} an hour), hybrid solar {{out.solar_total|rs}} ({{out.solar_per_hour|rs}} an hour). Cheapest: {{out.cheapest|raw}}."
   },
   {
    "inputs": {
-    "capex": 250000,
-    "years": 5,
-    "energy_cost_per_year": 10000,
-    "maintenance_per_year": 0,
-    "life_years": 8,
-    "replacement_cost": 150000
+    "load_w": 300,
+    "hours": 2
    },
-   "title": "Home UPS with a lithium battery, five years",
-   "text": "Bought for {{in.capex|rs}}, more than the tubular set; recharge losses {{out.running_rs|rs}} over {{out.years|int}} years, lower because the lithium charges more efficiently and needs no water; {{out.replacements|int}} replacements because the battery life is longer than the period. Total {{out.tco_rs|rs}}, less than the tubular UPS despite the higher price."
+   "title": "Small load, short cuts",
+   "text": "{{in.load_w|int}} W for {{in.hours|int}} hours a day needs only {{out.batteries|int}} tubular battery. UPS {{out.ups_per_hour|rs}} per backup hour, hybrid solar {{out.solar_per_hour|rs}}, generator {{out.gen_per_hour|rs}}. Cheapest: {{out.cheapest|raw}}."
   },
   {
    "inputs": {
-    "capex": 900000,
-    "years": 5,
-    "energy_cost_per_year": 0,
-    "maintenance_per_year": 5000,
-    "life_years": 10,
-    "replacement_cost": 300000
+    "load_w": 1200,
+    "hours": 8
    },
-   "title": "Hybrid solar system with a lithium battery, five years",
-   "text": "Bought for {{in.capex|rs}}; no fuel, cleaning {{out.running_rs|rs}} over {{out.years|int}} years, {{out.replacements|int}} replacements. Total {{out.tco_rs|rs}} as a backup system only. Subtract five years of daytime bill savings from the net billing calculator before comparing with the UPS or the generator."
-  },
-  {
-   "inputs": {
-    "capex": 150000,
-    "years": 5,
-    "energy_cost_per_year": 200000,
-    "maintenance_per_year": 15000,
-    "life_years": 4,
-    "replacement_cost": 80000
-   },
-   "title": "Petrol generator run two hours a day, five years",
-   "text": "Bought for {{in.capex|rs}} with its changeover; fuel and servicing {{out.running_rs|rs}} over {{out.years|int}} years; one engine replacement for {{out.replacements_rs|rs}}. Total {{out.tco_rs|rs}}, the dearest of the three for the same two hours a day because the fuel line dominates."
+   "title": "Bigger load through long cuts",
+   "text": "{{in.load_w|int}} W for {{in.hours|int}} hours a day needs {{out.batteries|int}} tubular batteries on a {{out.ups_kva}} kVA UPS, and its charger cannot refill them between cuts ({{out.ups_status|raw}}), so the UPS is left out. Hybrid solar with {{out.lithium_packs|int}} lithium packs costs {{out.solar_per_hour|rs}} per backup hour, the generator {{out.gen_per_hour|rs}}."
   },
   {
    "inputs": {
     "years": 10
    },
-   "title": "The tubular UPS over ten years",
-   "text": "Same UPS and battery as the first example over {{out.years|int}} years: running cost {{out.running_rs|rs}}, {{out.replacements|int}} battery sets for {{out.replacements_rs|rs}}, total {{out.tco_rs|rs}}. Over the longer period the replacement line is bigger than the purchase price."
+   "title": "The default home over ten years",
+   "text": "Over {{in.years|int}} years the UPS needs {{out.ups_repl|int}} battery replacements and the solar system {{out.solar_repl|int}}. Per backup hour: UPS {{out.ups_per_hour|rs}}, generator {{out.gen_per_hour|rs}}, hybrid solar {{out.solar_per_hour|rs}}."
   }
  ],
  "table": {
-  "caption": "Five-year and ten-year cost of ownership for the example backup options, in this order: UPS with tubular battery, UPS with lithium battery, hybrid solar with lithium battery (before bill savings), petrol generator two hours a day, petrol generator six hours a day, then the tubular UPS, the lithium UPS and the solar system again over ten years. Example figures, not market prices",
+  "caption": "Cost per backup hour over {{out.years|int}} years by load and power cut hours (Lahore, equipment prices, installation extra)",
   "rows": [
+   {
+    "load_w": 300,
+    "hours": 2
+   },
+   {
+    "load_w": 600,
+    "hours": 2
+   },
    {},
    {
-    "capex": 250000,
-    "years": 5,
-    "energy_cost_per_year": 10000,
-    "maintenance_per_year": 0,
-    "life_years": 8,
-    "replacement_cost": 150000
+    "load_w": 600,
+    "hours": 8
    },
    {
-    "capex": 900000,
-    "years": 5,
-    "energy_cost_per_year": 0,
-    "maintenance_per_year": 5000,
-    "life_years": 10,
-    "replacement_cost": 300000
+    "load_w": 1000,
+    "hours": 4
    },
    {
-    "capex": 150000,
-    "years": 5,
-    "energy_cost_per_year": 200000,
-    "maintenance_per_year": 15000,
-    "life_years": 4,
-    "replacement_cost": 80000
-   },
-   {
-    "capex": 150000,
-    "years": 5,
-    "energy_cost_per_year": 600000,
-    "maintenance_per_year": 15000,
-    "life_years": 4,
-    "replacement_cost": 80000
-   },
-   {
-    "years": 10
-   },
-   {
-    "capex": 250000,
-    "years": 10,
-    "energy_cost_per_year": 10000,
-    "maintenance_per_year": 0,
-    "life_years": 8,
-    "replacement_cost": 150000
-   },
-   {
-    "capex": 900000,
-    "years": 10,
-    "energy_cost_per_year": 0,
-    "maintenance_per_year": 5000,
-    "life_years": 10,
-    "replacement_cost": 300000
+    "load_w": 1200,
+    "hours": 8
    }
   ],
   "columns": [
    {
-    "label": "Purchase",
-    "tpl": "{{out.capex|rs}}"
+    "label": "Load and cuts",
+    "tpl": "{{out.load_w|int}} W, {{out.hours|int}} h a day"
    },
    {
-    "label": "Years",
-    "tpl": "{{out.years|int}}"
+    "label": "UPS",
+    "tpl": "{{out.ups_per_hour|rs}}"
    },
    {
-    "label": "Energy and upkeep",
-    "tpl": "{{out.running_rs|rs}}"
+    "label": "UPS charger keeps up",
+    "tpl": "{{out.ups_ok|yesno}}"
    },
    {
-    "label": "Replacements",
-    "tpl": "{{out.replacements|int}} for {{out.replacements_rs|rs}}"
+    "label": "Petrol generator",
+    "tpl": "{{out.gen_per_hour|rs}}"
    },
    {
-    "label": "Total cost",
-    "tpl": "{{out.tco_rs|rs}}"
+    "label": "Hybrid solar",
+    "tpl": "{{out.solar_per_hour|rs}}"
+   },
+   {
+    "label": "Cheapest",
+    "tpl": "{{out.cheapest|raw}}"
    }
   ]
  },
  "mistakes": [
-  "Comparing purchase prices only. The generator wins on price and loses on fuel; the five-year total is the fair comparison.",
-  "Forgetting battery replacements. A tubular battery that lasts two years is replaced {{ex.0.out.replacements|int}} times in five years in the example, which is {{ex.0.out.replacements_rs|rs}} on top of the purchase price.",
-  "Treating the solar total as a backup cost alone. It also cuts the day bill and earns export credit; subtract those savings or the comparison is unfair to solar.",
-  "Guessing the generator fuel. Read litres an hour from the manual at your real load; a lightly loaded generator still burns a large share of its full-load fuel.",
-  "Counting the UPS energy at the backup units only. Charger and inverter losses mean the grid units drawn are more than the units delivered; divide by {{d.charge_eff_lead_acid|pct}} × {{d.inverter_eff_ups|pct}} for a tubular UPS."
+  "Comparing purchase prices only. The generator is cheapest to buy and dearest to own; compare the cost per backup hour over the same years.",
+  "Forgetting battery replacements. A tubular bank is replaced every few years, and over the years the replacements can cost more than the UPS itself.",
+  "Sizing the comparison on the whole house. Backup usually runs fans, lights and a few appliances; enter only what runs during a cut.",
+  "Treating the solar total as a backup cost alone. Hybrid solar also cuts the day bill, which this comparison leaves out; installation and standby losses, also left out, work the other way."
  ],
  "safety": "A generator needs a proper changeover switch so it can never feed the grid, and must run outdoors away from windows; a UPS or hybrid inverter connects to the house wiring at mains voltage. Have a licensed electrician fit the changeover, the inverter and the earthing for whichever option you choose.",
  "faq": [
   {
    "q": "Which is cheaper for loadshedding: UPS, solar or generator?",
-   "a": "For fans, lights and a TV through a few hours a day, a UPS: in the example it costs {{ex.0.out.tco_rs|rs}} (tubular) or {{ex.1.out.tco_rs|rs}} (lithium) over five years against {{ex.3.out.tco_rs|rs}} for a petrol generator. For ACs and long cuts, solar wins once its bill savings are counted; the generator is cheapest to buy and dearest to run."
+   "a": "It depends on the load and the hours. For {{in.load_w|int}} W through {{in.hours|int}} hours a day over {{in.years|int}} years, {{out.cheapest|raw}} is cheapest at {{out.cheapest_per_hour|rs}} per backup hour; for {{ex.1.in.load_w|int}} W through {{ex.1.in.hours|int}} hours the cheapest is {{ex.1.out.cheapest|raw}} at {{ex.1.out.cheapest_per_hour|rs}}."
   },
   {
-   "q": "How much does a generator cost to run per year?",
-   "a": "Litres an hour at your load × hours a year × price a litre, plus oil, filters and servicing. The example petrol set run two hours a day has fuel and servicing of {{ex.3.out.running_rs|rs}} over {{ex.3.out.years|int}} years; we do not yet have a fuel table by generator size, so enter your own figure from the manual."
+   "q": "How much does a petrol generator cost per hour?",
+   "a": "For {{in.load_w|int}} W on a {{out.gen_kva}} kVA set, about {{out.l_per_h|2}} litres an hour, {{out.fuel_year|rs}} of petrol a year at {{in.hours|int}} hours a day, plus oil. With the purchase spread over {{in.years|int}} years that is {{out.gen_per_hour|rs}} per backup hour."
   },
   {
    "q": "How much does it cost to recharge a UPS battery?",
-   "a": "The backup units used ÷ (charge efficiency × inverter efficiency) × your tariff. With a tubular battery charged at about {{d.charge_eff_lead_acid|pct}} and a UPS inverter at about {{d.inverter_eff_ups|pct}}, each unit delivered on backup takes noticeably more than one unit from the grid; lithium charged at about {{d.charge_eff_lifepo4|pct}} wastes less."
+   "a": "The units a UPS takes from the grid are its backup units divided by the charger and inverter efficiencies: {{out.recharge_kwh_year|int}} units a year for the default load, {{out.ups_run_year|rs}} at {{out.tariff|rs2}} a unit."
   },
   {
-   "q": "Is a lithium battery cheaper than tubular over five years?",
-   "a": "In the example, yes: the lithium UPS totals {{ex.1.out.tco_rs|rs}} against {{ex.0.out.tco_rs|rs}} for tubular, because the tubular battery is replaced {{ex.0.out.replacements|int}} times. Whether that holds for you depends on the prices you are quoted and on how hard the battery is used."
+   "q": "How long do UPS batteries last in Pakistan?",
+   "a": "Tubular batteries usually last two to five years in Pakistani heat; this calculator uses {{out.tubular_life_years|int}} years. Lithium (LiFePO4) packs are rated for thousands of cycles; it uses {{out.lifepo4_life_years|int}} years."
   },
   {
-   "q": "Does the solar cost include the bill savings?",
-   "a": "No. The sum counts money spent only. Work out the yearly saving with the net billing calculator, multiply by the years, and subtract it from the solar total of {{ex.2.out.tco_rs|rs}} in the example before comparing."
+   "q": "Is solar worth it only for backup?",
+   "a": "For a small load and short cuts, usually not: a whole lithium pack and a hybrid inverter cost more than a UPS. For bigger loads and long cuts it is the cheapest per backup hour even before counting its daytime bill savings."
   },
   {
-   "q": "Why are the replacements not counted in the last year?",
-   "a": "A battery with a two-year life bought at the start of year one is replaced at the start of year three and year five; a replacement due exactly at the end of the period is not bought, because the comparison stops there."
-  },
-  {
-   "q": "Are the prices on this page real?",
-   "a": "No. They are round example figures to show how the sum works, not current market prices, and they are not updated. Enter your own quotes in the calculator."
+   "q": "Does the comparison include installation?",
+   "a": "No. All three use equipment prices only. Installation, wiring and a changeover switch add to each, most to solar."
   }
  ],
  "related": [
@@ -305,7 +325,10 @@
   "C8"
  ],
  "next": "B1",
- "literal_numbers": [],
+ "literal_numbers": [
+  "two to five years",
+  "LiFePO4"
+ ],
  "sources": [
   {
    "label": "OGRA (notified petrol and diesel prices)",

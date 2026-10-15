@@ -1,7 +1,8 @@
-{"_meta":{"source":"Global Solar Atlas long-term averages (api.globalsolaratlas.info/data/lta), optimum tilt","checked":"2026-10-13","fields":"ghi kWh/m2/yr, psh = GTI_opt/365, yield = PV output kWh/kWp/day; lat/lon city centre (GeoNames), used only for the live solar forecast","coords_source":"GeoNames city coordinates (https://www.geonames.org/)"},
- "lahore":{"ghi":1690,"psh":5.1,"yield":4.0,"lat":31.5497,"lon":74.3436},
- "karachi":{"ghi":1981,"psh":5.9,"yield":4.6,"lat":24.8608,"lon":67.0104},
- "islamabad":{"ghi":1756,"psh":5.4,"yield":4.3,"lat":33.6844,"lon":73.0479},
- "peshawar":{"ghi":1704,"psh":5.2,"yield":4.1,"lat":34.008,"lon":71.5785},
- "quetta":{"ghi":2176,"psh":6.8,"yield":5.3,"lat":30.1798,"lon":66.975},
- "multan":{"ghi":1872,"psh":5.7,"yield":4.4,"lat":30.1984,"lon":71.4687}}
+{"_meta":{"source":"Global Solar Atlas long-term averages (api.globalsolaratlas.info/data/lta), optimum tilt","checked":"2026-10-13","fields":"ghi kWh/m2/yr, psh = GTI_opt/365, yield = PV output kWh/kWp/day; lat/lon city centre (GeoNames), used only for the live solar forecast; pvout_month = PV output kWh/kWp for each month January to December (Global Solar Atlas monthly PVOUT, same point and model as yield), used by the 12-month solar sizing tool","coords_source":"GeoNames city coordinates (https://www.geonames.org/)","pvout_month_checked":"2026-10-15"},
+ "lahore":{"ghi":1690,"psh":5.1,"yield":4.0,"lat":31.5497,"lon":74.3436,"pvout_month":[92.1,111.2,140.5,146.1,146.5,130.5,114.6,120.8,126.5,128.5,101.7,99.2]},
+ "karachi":{"ghi":1981,"psh":5.9,"yield":4.6,"lat":24.8608,"lon":67.0104,"pvout_month":[146.3,146.7,167.5,161.0,156.3,132.4,106.9,105.9,135.1,156.2,141.8,141.9]},
+ "islamabad":{"ghi":1756,"psh":5.4,"yield":4.3,"lat":33.6844,"lon":73.0479,"pvout_month":[102.6,105.0,135.1,146.8,157.0,147.8,134.0,132.3,140.9,142.2,110.7,104.7]},
+ "peshawar":{"ghi":1704,"psh":5.2,"yield":4.1,"lat":34.008,"lon":71.5785,"pvout_month":[100.3,102.4,128.5,140.1,148.8,144.0,135.2,133.6,137.0,133.7,105.2,103.4]},
+ "quetta":{"ghi":2176,"psh":6.8,"yield":5.3,"lat":30.1798,"lon":66.975,"pvout_month":[146.7,141.0,166.1,161.3,167.8,161.7,154.5,161.0,174.5,181.9,160.5,158.7]},
+ "multan":{"ghi":1872,"psh":5.7,"yield":4.4,"lat":30.1984,"lon":71.4687,"pvout_month":[104.2,120.8,150.0,150.9,148.3,135.0,129.0,137.1,143.9,145.2,113.6,109.7]}
+}

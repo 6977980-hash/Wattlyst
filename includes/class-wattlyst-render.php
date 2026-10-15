@@ -309,6 +309,7 @@ final class Wattlyst_Render {
 						'default' => $f['default'] ?? null,
 						'catalog' => isset( $f['catalog'] ) ? self::catalog_groups( $f['catalog'] ) : null,
 						'start'   => empty( $f['start'] ) ? null : true,
+						'length'  => empty( $f['length'] ) ? null : true,
 					),
 					static fn( $v ) => null !== $v
 				),
@@ -321,6 +322,7 @@ final class Wattlyst_Render {
 			'h1'      => $this->page['h1'],
 			'live'    => $t['live'] ?? '',
 			'diagram' => $t['diagram'] ?? '',
+			'rtable'  => isset( $t['rtable'] ) ? array( 'key' => $t['rtable']['key'], 'cap' => $t['rtable']['cap'], 'columns' => $t['rtable']['columns'] ) : '',
 			'data'    => $this->tool_data( $t['data_keys'] ?? array(), $t['appliances'] ?? array() ),
 		);
 		$form  = '<form class="wl-tool' . ( $split ? ' wl-tool-split' : '' ) . '" id="' . esc_attr( $id ) . '" data-wl-tool novalidate onsubmit="return false">';
@@ -337,10 +339,29 @@ final class Wattlyst_Render {
 		$form  .= '' === $notice
 			? '<p class="wl-error" id="' . esc_attr( $id ) . '-error" role="alert" hidden></p>'
 			: '<p class="wl-error wl-notice" id="' . esc_attr( $id ) . '-error" role="status">' . esc_html( $notice ) . '</p>';
-		$form .= '<div class="wl-results" aria-live="polite">' . $results . '</div>' . $this->diagram( $t ) . $share . ( $split ? '</div>' : '' );
+		$form .= '<div class="wl-results" aria-live="polite">' . $results . '</div>' . $this->rtable( $id, $t ) . $this->diagram( $t ) . $share . ( $split ? '</div>' : '' );
 		$form .= '<script type="application/json" class="wl-config">' . wp_json_encode( $config, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ) . '</script>';
 		$form .= '</form>';
 		return $form;
+	}
+
+	/**
+	 * Result table (N17 months, N18 circuits): the default rows from the build; the browser redraws the body from the
+	 * engine on every calculation (wattlyst-extra.js drawTable), so the table and the result cards always agree.
+	 */
+	private function rtable( string $id, array $t ): string {
+		$r = $t['rtable'] ?? null;
+		if ( ! $r ) {
+			return '';
+		}
+		$cid  = $id . '-rtable';
+		$head = implode( '', array_map( static fn( $c ) => '<th scope="col">' . esc_html( $c['label'] ) . '</th>', $r['columns'] ) );
+		$rows = '';
+		foreach ( $r['rows'] as $row ) {
+			$rows .= '<tr>' . implode( '', array_map( static fn( $v ) => '<td>' . str_replace( 'Rs ', 'Rs&nbsp;', esc_html( $v ) ) . '</td>', $row ) ) . '</tr>';
+		}
+		return '<div class="wl-rtable" data-wl-rtable><p class="wl-rtable-title" id="' . esc_attr( $cid ) . '">' . esc_html( $r['caption'] ) . '</p>' .
+			'<div class="wl-table-wrap" role="region" tabindex="0" aria-labelledby="' . esc_attr( $cid ) . '"><table class="wl-table" aria-labelledby="' . esc_attr( $cid ) . '"><thead><tr>' . $head . '</tr></thead><tbody>' . $rows . '</tbody></table></div></div>';
 	}
 
 	/**
@@ -422,7 +443,7 @@ final class Wattlyst_Render {
 		foreach ( $f['default'] ?? array() as $n => $row ) {
 			$rows .= $this->loads_row( $fid, $f, (int) $n, $row );
 		}
-		$head  = '<tr><th scope="col">Appliance</th><th scope="col">Watts</th>' . ( empty( $f['start'] ) ? '' : '<th scope="col">Starting watts</th>' ) . '<th scope="col">Qty</th><th scope="col">Hours a day</th><th scope="col"><span class="screen-reader-text">Remove</span></th></tr>';
+		$head  = '<tr><th scope="col">Appliance</th><th scope="col">Watts</th>' . ( empty( $f['start'] ) ? '' : '<th scope="col">Starting watts</th>' ) . '<th scope="col">Qty</th><th scope="col">' . ( empty( $f['length'] ) ? 'Hours a day' : 'Cable length (m)' ) . '</th><th scope="col"><span class="screen-reader-text">Remove</span></th></tr>';
 		$tmpl  = '<template class="wl-loads-template">' . $this->loads_row( $fid, $f, -1, array() ) . '</template>';
 		return '<div class="wl-field wl-field-loads" data-wl-loads="' . esc_attr( $f['name'] ) . '"><span class="wl-label" id="' . esc_attr( $fid ) . '-label">' . esc_html( $f['label'] ?? 'Appliances' ) . '</span>' .
 			'<div class="wl-table-wrap"><table class="wl-table wl-loads" aria-labelledby="' . esc_attr( $fid ) . '-label"><thead>' . $head . '</thead><tbody>' . $rows . '</tbody></table></div>' .
@@ -444,7 +465,7 @@ final class Wattlyst_Render {
 		$cell  = static fn( string $k, string $v, string $label, string $extra = '' ) => '<td><label class="screen-reader-text" for="' . esc_attr( "$fid-$r-$k" ) . '">' . esc_html( $label ) . '</label><input type="text" inputmode="decimal" autocomplete="off" id="' . esc_attr( "$fid-$r-$k" ) . '" data-k="' . esc_attr( $k ) . '" value="' . esc_attr( $v ) . '"' . $extra . '></td>';
 		return '<tr class="wl-load-row">' .
 			'<td><label class="screen-reader-text" for="' . esc_attr( "$fid-$r-id" ) . '">Appliance</label><select id="' . esc_attr( "$fid-$r-id" ) . '" data-k="id">' . $opts . '</select></td>' .
-			$cell( 'watts', $watts, 'Watts' ) . ( empty( $f['start'] ) ? '' : $cell( 'start', isset( $row['start'] ) ? (string) $row['start'] : '', 'Starting watts (blank = automatic)', ' placeholder="auto"' ) ) . $cell( 'qty', $qty, 'Quantity', ' size="3"' ) . $cell( 'hours', $hours, 'Hours a day', ' size="4"' ) .
+			$cell( 'watts', $watts, 'Watts' ) . ( empty( $f['start'] ) ? '' : $cell( 'start', isset( $row['start'] ) ? (string) $row['start'] : '', 'Starting watts (blank = automatic)', ' placeholder="auto"' ) ) . $cell( 'qty', $qty, 'Quantity', ' size="3"' ) . ( empty( $f['length'] ) ? $cell( 'hours', $hours, 'Hours a day', ' size="4"' ) : $cell( 'length', isset( $row['length'] ) ? (string) $row['length'] : '', 'Cable length in metres', ' size="4"' ) ) .
 			'<td><button type="button" class="wl-remove-row" aria-label="Remove this appliance">&times;</button></td></tr>';
 	}
 

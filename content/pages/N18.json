@@ -1,0 +1,406 @@
+{
+ "id": "N18",
+ "status": "publish",
+ "template": "tool",
+ "h1": "Home Wiring Load Schedule: Wire and MCB for Every Circuit",
+ "author": "ali-ahmad",
+ "published": "2026-10-15",
+ "reviewed": "2026-10-15",
+ "calc": "circuit_schedule",
+ "fields": [
+  {
+   "name": "loads",
+   "label": "Circuits in the house (one row per circuit)",
+   "type": "loads",
+   "length": true,
+   "catalog": [
+    "led-tube-light",
+    "led-bulb",
+    "ceiling-fan-ac",
+    "exhaust-fan",
+    "ac-split-1ton-inverter",
+    "ac-split-1-5ton-inverter",
+    "ac-split-2ton-inverter",
+    "ac-split-1ton-non-inverter",
+    "ac-split-1-5ton-non-inverter",
+    "ac-split-2ton-non-inverter",
+    "ac-window-1ton",
+    "electric-geyser-storage",
+    "room-heater-fan",
+    "electric-iron",
+    "electric-kettle",
+    "electric-oven",
+    "microwave-oven",
+    "dishwasher",
+    "washing-machine-automatic",
+    "washing-machine-twin-tub",
+    "water-motor-0-5hp",
+    "water-motor-1hp",
+    "water-motor-1-5hp",
+    "water-motor-2hp"
+   ],
+   "default": [
+    {
+     "id": "led-tube-light",
+     "qty": 10,
+     "length": 20
+    },
+    {
+     "id": "custom",
+     "watts": 2000,
+     "length": 15
+    },
+    {
+     "id": "ac-split-1-5ton-inverter",
+     "length": 12
+    },
+    {
+     "id": "ac-split-2ton-non-inverter",
+     "length": 18
+    },
+    {
+     "id": "electric-geyser-storage",
+     "length": 10
+    },
+    {
+     "id": "water-motor-1hp",
+     "length": 25
+    }
+   ],
+   "hint": "One row for each circuit on the distribution board: pick what it feeds, the quantity on that circuit (for example ten lights) and the cable length from the board to the farthest point, in metres. Choose Custom for a socket circuit and enter the most it will carry."
+  },
+  {
+   "name": "method",
+   "label": "How the cable is installed",
+   "type": "select",
+   "default": "B1",
+   "options": [
+    [
+     "B1",
+     "In conduit inside the wall"
+    ],
+    [
+     "C",
+     "Clipped on the surface"
+    ]
+   ]
+  },
+  {
+   "name": "ambient_c",
+   "label": "Air temperature around the cable",
+   "unit": "°C",
+   "default": "@data.cables.derating.default_ambient_c",
+   "hint": "Hottest air the cables sit in: a conduit under a sunny roof gets far hotter than the room. The default is a Pakistani summer value."
+  },
+  {
+   "name": "circuits",
+   "label": "Circuits sharing one conduit",
+   "unit": "circuits",
+   "default": "@data.cables.derating.default_circuits",
+   "advanced": true,
+   "hint": "How many circuits run together in the busiest conduit. Cables packed together heat each other, so every circuit is sized for it."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "circuits_count",
+   "label": "Circuits",
+   "spec": "int"
+  },
+  {
+   "key": "connected_kw",
+   "label": "Connected load",
+   "spec": "2",
+   "unit": "kW"
+  },
+  {
+   "key": "biggest_breaker_a",
+   "label": "Largest MCB",
+   "spec": "int",
+   "unit": "A"
+  },
+  {
+   "key": "max_drop_pct",
+   "label": "Worst voltage drop",
+   "spec": "1",
+   "unit": "%"
+  }
+ ],
+ "result_table": {
+  "key": "rows",
+  "caption": "Circuit sheet for the electrician: copper cable, {{out.ambient_c|int}} °C, circuits per conduit: {{out.group_circuits|int}}",
+  "columns": [
+   {
+    "key": "n",
+    "label": "No.",
+    "spec": "int"
+   },
+   {
+    "key": "name",
+    "label": "Circuit",
+    "spec": "raw"
+   },
+   {
+    "key": "connected_w",
+    "label": "Load",
+    "spec": "int",
+    "suffix": " W"
+   },
+   {
+    "key": "amps",
+    "label": "Current",
+    "spec": "1",
+    "suffix": " A"
+   },
+   {
+    "key": "breaker_a",
+    "label": "MCB",
+    "spec": "int",
+    "suffix": " A"
+   },
+   {
+    "key": "curve",
+    "label": "Curve",
+    "spec": "raw"
+   },
+   {
+    "key": "area_mm2",
+    "label": "Cable",
+    "spec": "raw",
+    "suffix": " mm²"
+   },
+   {
+    "key": "pk_size",
+    "label": "PK size",
+    "spec": "raw"
+   },
+   {
+    "key": "drop_pct",
+    "label": "Voltage drop",
+    "spec": "1",
+    "suffix": "%"
+   }
+  ]
+ },
+ "answer": "A load schedule lists every circuit with its MCB and cable. For the example house the {{out.circuits_count|int}} circuits carry {{out.connected_kw|2}} kW in all; each one gets the smallest copper cable that carries its current in {{out.ambient_c|int}} °C air and keeps the voltage drop within the limit, the worst being {{out.max_drop_pct|1}}%. The largest MCB is {{out.biggest_breaker_a|int}} A, for the {{out.biggest_name|raw}}.",
+ "how": "Each row: current = design watts ÷ ({{out.volts}} V × power factor of the load type); an inverter AC is designed at its maximum input. MCB = next standard size at or above the current (× the margin for motors and compressors), curve by load type. Cable = smallest size whose rating in {{out.ambient_c}} °C air ({{out.method|raw}}, {{out.group_circuits}} per conduit, factor {{out.derate|2}}) covers the MCB and whose drop over the run stays within the limit (lighting or other). Connected load = {{out.connected_w|int}} W over {{out.circuits_count|int}} circuits.",
+ "key_facts": [
+  "A home wiring load schedule (circuit sheet) gives each circuit its own MCB rating, MCB curve and cable size, so the electrician wires every room to the same rules.",
+  "Every circuit is sized twice: the cable must carry the current at the hottest air temperature ({{out.ambient_c|int}} °C by default), and the voltage drop over the run must stay within the limit for lighting or other circuits.",
+  "Lights take a B curve MCB, sockets, ACs and motors a C curve; a {{table.2.out.rows.0.name|raw}} gets a {{table.2.out.biggest_breaker_a|int}} A MCB on {{table.2.out.rows.0.area_mm2|raw}} mm² cable.",
+  "The connected load of the example house is {{out.connected_kw|2}} kW, which is not the sanctioned load: not everything runs at once, so size the main switch and sanctioned load separately."
+ ],
+ "formula": {
+  "text": "For each circuit: I = P ÷ (V × PF); MCB ≥ I; cable rating × derating ≥ max(I × margin, MCB); voltage drop = 2 × L × I × ρ ÷ A ≤ limit",
+  "lines": [
+   "P = design watts of the circuit (watts × quantity; an inverter AC at its maximum input); V = supply voltage; PF = power factor of the load type",
+   "MCB = next standard size; margin applies to motors and compressors; curve B, C or D by load type",
+   "Derating = factor for the air temperature × factor for circuits grouped in one conduit",
+   "L = cable length one way in metres; ρ = copper resistivity; A = cable area in mm²; limit lighting or other circuits"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "What a home wiring load schedule is and why your electrician needs one",
+   "p": [
+    "A load schedule, or circuit sheet, is the list an electrician wires the distribution board from: one line per circuit with what it feeds, its current, the MCB and the cable. In many Pakistani homes the whole house is wired on habit, the same 7/29 everywhere, which can leave the biggest AC circuit too thin and the lights oversized.",
+    "Fill in your circuits above, press Calculate and use Save as PDF to print the sheet. Each row uses the same rules as the wire size and MCB calculators on this site."
+   ]
+  },
+  {
+   "h2": "How each circuit's MCB and cable are chosen",
+   "p": [
+    "The calculator turns each circuit's watts into amps at {{out.volts}} V with the power factor of its load type. The MCB is the next standard size at or above that current, larger for motors and compressors that run near full current for hours. The curve follows the load: B for lights and heaters, C for sockets, ACs and motors.",
+    "The cable must carry more than the MCB lets through, after the rating is reduced for hot air and for circuits packed together, and the voltage drop over its length must stay within the limit. On short runs the current decides; on long runs, such as a water motor on the roof, the voltage drop often does."
+   ]
+  },
+  {
+   "h2": "Connected load is not your sanctioned load",
+   "p": [
+    "The sheet adds up {{out.connected_kw|2}} kW for the example house, but the lights, geyser, motor and both ACs rarely run together. The main switch and the sanctioned load are sized on the load that runs at the same time, which the sanctioned load calculator works out.",
+    "Keep each heavy appliance on its own circuit. Two ACs on one circuit need a bigger MCB and cable than either alone, and a fault on one switches off the other."
+   ]
+  },
+  {
+   "h2": "Printing the sheet and checking it on site",
+   "p": [
+    "Use Save as PDF under the results to print the table or send it on WhatsApp. Ask the electrician to note the actual cable route length for each circuit, because a longer route than you guessed can push a circuit to the next cable size.",
+    "The sizes are planning values for copper PVC cable. Aluminium cable, three-phase supply and buried runs need a separate design by a licensed electrician."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {},
+   "title": "Six-circuit house in conduit",
+   "text": "{{out.circuits_count|int}} circuits, {{out.connected_kw|2}} kW connected. The {{out.rows.3.name|raw}} needs a {{out.rows.3.breaker_a|int}} A {{out.rows.3.curve|raw}} curve MCB on {{out.rows.3.area_mm2|raw}} mm² ({{out.rows.3.pk_size|raw}}); the lights need only a {{out.rows.0.breaker_a|int}} A MCB on {{out.rows.0.area_mm2|raw}} mm²."
+  },
+  {
+   "inputs": {
+    "method": "C"
+   },
+   "title": "Same house with cables clipped on the surface",
+   "text": "Surface cable cools better than cable in a wall conduit, so it carries more current: the {{out.rows.4.name|raw}} circuit takes {{out.rows.4.area_mm2|raw}} mm² on a {{out.rows.4.breaker_a|int}} A MCB."
+  },
+  {
+   "inputs": {
+    "circuits": 3
+   },
+   "title": "Three circuits sharing one hot conduit",
+   "text": "Grouping lowers every cable's rating (factor {{out.derate|2}} with the air temperature), so the {{out.rows.4.name|raw}} now needs {{out.rows.4.area_mm2|raw}} mm² ({{out.rows.4.pk_size|raw}})."
+  },
+  {
+   "inputs": {
+    "loads": [
+     {
+      "id": "water-motor-1-5hp",
+      "length": 80
+     }
+    ]
+   },
+   "title": "Water motor on a long run to the roof tank",
+   "text": "A {{out.rows.0.name|raw}} at {{out.rows.0.length_m|int}} m draws only {{out.rows.0.amps|1}} A, but on the usual cable the voltage drop would pass the limit, so the sheet picks {{out.rows.0.area_mm2|raw}} mm² ({{out.rows.0.pk_size|raw}}), a {{out.rows.0.drop_pct|1}}% drop, on a {{out.rows.0.breaker_a|int}} A {{out.rows.0.curve|raw}} curve MCB."
+  }
+ ],
+ "table": {
+  "caption": "MCB and cable for common home circuits (copper, in conduit, {{out.ambient_c|int}} °C air, one circuit per conduit)",
+  "rows": [
+   {
+    "loads": [
+     {
+      "id": "led-tube-light",
+      "qty": 10,
+      "length": 20
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "custom",
+      "watts": 2000,
+      "length": 15
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "ac-split-1-5ton-inverter",
+      "length": 12
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "ac-split-2ton-non-inverter",
+      "length": 15
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "electric-geyser-storage",
+      "length": 10
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "water-motor-1hp",
+      "length": 25
+     }
+    ]
+   },
+   {
+    "loads": [
+     {
+      "id": "electric-kettle",
+      "length": 10
+     }
+    ]
+   }
+  ],
+  "columns": [
+   {
+    "label": "Circuit",
+    "tpl": "{{out.rows.0.name|raw}} × {{out.rows.0.qty|int}}, {{out.rows.0.length_m|int}} m"
+   },
+   {
+    "label": "Current",
+    "tpl": "{{out.rows.0.amps|1}} A"
+   },
+   {
+    "label": "MCB",
+    "tpl": "{{out.rows.0.breaker_a|int}} A, curve {{out.rows.0.curve|raw}}"
+   },
+   {
+    "label": "Cable",
+    "tpl": "{{out.rows.0.area_mm2|raw}} mm² ({{out.rows.0.pk_size|raw}})"
+   },
+   {
+    "label": "Voltage drop",
+    "tpl": "{{out.rows.0.drop_pct|1}}%"
+   }
+  ]
+ },
+ "mistakes": [
+  "Wiring the whole house in one cable size. Lights need far less, while an AC or geyser circuit needs more than the usual socket cable.",
+  "Putting two ACs on one circuit. Each AC should have its own MCB and cable.",
+  "Guessing the cable length as the straight distance. Measure the route through the walls and the ceiling, both ways are already counted.",
+  "Adding up the connected load and calling it the sanctioned load. The main switch is sized on what runs at the same time."
+ ],
+ "safety": "This sheet is a planning aid for copper cable on a single-phase supply. A licensed electrician must confirm every cable, MCB, earth and RCD on site before the circuits are energised; cable ratings and the air temperature default await review by a PEC-registered engineer.",
+ "faq": [
+  {
+   "q": "What is a load schedule in house wiring?",
+   "a": "A list of every circuit on the distribution board with what it feeds, its current, MCB rating and curve, and cable size. The example house has {{out.circuits_count|int}} circuits and {{out.connected_kw|2}} kW connected."
+  },
+  {
+   "q": "Which wire and MCB for a 1.5 ton AC circuit?",
+   "a": "For a {{table.2.out.rows.0.name|raw}} on a {{table.2.out.rows.0.length_m|int}} m run in conduit: a {{table.2.out.rows.0.breaker_a|int}} A {{table.2.out.rows.0.curve|raw}} curve MCB and {{table.2.out.rows.0.area_mm2|raw}} mm² ({{table.2.out.rows.0.pk_size|raw}}) copper cable."
+  },
+  {
+   "q": "Which wire and MCB for an electric geyser?",
+   "a": "The {{table.4.out.rows.0.name|raw}} draws {{table.4.out.rows.0.amps|1}} A, so it takes a {{table.4.out.rows.0.breaker_a|int}} A {{table.4.out.rows.0.curve|raw}} curve MCB on {{table.4.out.rows.0.area_mm2|raw}} mm² cable."
+  },
+  {
+   "q": "Why does a long run need a thicker cable?",
+   "a": "Voltage drop grows with length. On a long run the cable that carries the current safely can still lose too many volts, so the next size up is chosen; the sheet shows each circuit's drop."
+  },
+  {
+   "q": "Can I print this circuit sheet for my electrician?",
+   "a": "Yes. Press Calculate, then Save as PDF under the results; the table prints with every circuit, or share the link on WhatsApp."
+  },
+  {
+   "q": "Is the total on this sheet my sanctioned load?",
+   "a": "No. It is the connected load, everything at once. Use the sanctioned load calculator for the load that runs together."
+  }
+ ],
+ "related": [
+  "W2",
+  "W3",
+  "W5",
+  "W1",
+  "N4"
+ ],
+ "next": "N4",
+ "literal_numbers": [
+  "7/29",
+  "1.5 ton",
+  "mm²"
+ ],
+ "sources": [
+  {
+   "label": "IEC 60364-5-52: selection and erection of wiring systems (Table B.52.4 current ratings, voltage drop)",
+   "url": "https://webstore.iec.ch/publication/1878"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}
