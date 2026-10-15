@@ -19,9 +19,9 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => readFileSync(join(root, p), 'utf8');
 const readJson = (p) => JSON.parse(read(p));
 
-const ENGINE_MODULES = ['conversions', 'battery', 'sizing', 'solar', 'bill', 'load', 'wiring', 'planner', 'prices', 'forecast', 'fuel', 'solartools'];
+const ENGINE_MODULES = ['conversions', 'battery', 'sizing', 'solar', 'bill', 'load', 'wiring', 'planner', 'prices', 'forecast', 'fuel', 'solartools', 'acbill'];
 /** Data each engine module needs in the browser (keeps page weight down). Appliances are added per page, only the ones its fields use. */
-const MODULE_DATA = { bill: ['tariff'], solar: ['cities'], wiring: ['cables'], load: ['cables'], planner: ['tariff', 'cities'], prices: ['solar_prices'], forecast: ['cities'] };
+const MODULE_DATA = { bill: ['tariff'], solar: ['cities'], wiring: ['cables'], load: ['cables'], planner: ['tariff', 'cities'], prices: ['solar_prices'], forecast: ['cities'], acbill: ['tariff'] };
 /** Extra data a single calculator needs (shipped only on its page). */
 const CALC_DATA = { generator_fuel: ['generator_fuel'] };
 /** Appliance fields the browser engine and the loads picker need. */

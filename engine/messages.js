@@ -19,6 +19,7 @@ const EXACT = {
   type_invalid: 'Choose MPPT or PWM.',
   usage_required: 'Enter your monthly units or daily kWh.',
   yield_or_city_or_psh_required: 'Pick a city or enter peak sun hours.',
+  ac_protected_lost: 'With the AC your monthly total goes over the protected limit, so this bill and the following bills are charged at unprotected rates. Fewer AC hours may keep you protected.',
   protected_max_200_units: 'Protected tariff applies only up to 200 units a month. Above that the unprotected rate applies.',
   lifeline_max_100_units: 'Lifeline tariff applies only up to 100 units a month.',
   history_needs_6_months: 'Enter units for each of the last 6 months.',
@@ -83,6 +84,7 @@ export function noticeCode(out) {
   if (out.low_confidence === true) return 'price_low_confidence';
   if (out.over_cable_rating === true) return 'cable_over_current_rating';
   if (out.ampacity_checked === false) return 'ampacity_not_checked_aluminium';
+  if (out.protected_lost === true) return 'ac_protected_lost';
   return '';
 }
 

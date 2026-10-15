@@ -1,6 +1,18 @@
 # Progress
 
-## Handoff for next phase (after the design cross-check) — written by the cross-check thread, 2026-10-15
+## Handoff for next phase (after N16, the AC bill calculator) — written by the cross-check thread, 2026-10-15
+
+Owner approved SERP idea 1 on 15 Oct 2026 ("Haan, banao"). Built as page N16 at `/bill/ac-bill-calculator/` (plugin v0.8.6). Formulas and numbers are never repeated here.
+
+**What is where**
+- Engine: `engine/acbill.js` `ac_bill_impact` (own module so the appliance-list pages on `load.js` do not ship `bill.js`; registered in `engine/index.js`, `ENGINE_MODULES` and `MODULE_DATA.acbill = ['tariff']` in `tools/build.js`). It reuses `ac_units` (E5) and `bill_total` (F) and adds the protected-loss penalty. Formula: `specs/formulas.md` "Owner-approved tools (added 2026-10-15)"; 7 spec cases at the end of `specs/calculator-test-cases.json`.
+- Notice: `ac_protected_lost` in `engine/messages.js` (`noticeCode` returns it when `protected_lost`), amber on the default result.
+- Page: `content/pages/N16.json` (silo F, bill hub). Keyword row N16 in `specs/keyword-map.csv` (id N15 was skipped on purpose: the owner removed an earlier N15). "ac bill calculator" and "ac bill calculator pakistan" moved from E5 to N16; E5's H2 no longer says "AC bill calculator" and its Next step is N16. N16 is also linked from F1 and N10.
+- SERP ideas 2 to 4 (season-aware solar from the 12-month bill history, cost per backup hour, printable circuit sheet) are still only proposals: build none without the owner's yes.
+
+**Do not touch**: keep N16 off `load.js` (JS budget on the list pages). The design cross-check notes below still hold.
+
+## Earlier handoff (after the design cross-check) — written by the cross-check thread, 2026-10-15
 
 Owner (15 Oct 2026): cross-check the new design against all earlier work and fix anything it broke; look at the SERP for an idea nobody does (ideas need the owner's yes before any build). Fixed in plugin v0.8.5, CSS only. No formula, number, data or JavaScript changed. Formulas and numbers are never repeated here.
 
@@ -16,7 +28,7 @@ Owner (15 Oct 2026): cross-check the new design against all earlier work and fix
 - Home planner on phones starts about 130 px lower than v0.8.3 (hub chip row + "Plan your home power" heading, both owner-requested); the first field is still above the fold on a 360x640 phone.
 - Home content JSON (`content/pages/H1.json`) has formula, examples, mistakes, safety and sources that the home template has never rendered (since Phase 4). Owner decision whether the homepage should show Sources.
 
-**SERP ideas (proposed to the owner, NOT built; wait for a yes)**: (1) "What will this AC add to my bill": marginal slab cost, slab jump, protected-status loss over the six-month rule, inverter vs non-inverter payback, chaining existing engines; (2) season-aware solar sizing from the 12-month unit history on the bill (needs monthly city yield data); (3) cost per backup hour, generator vs UPS vs hybrid; (4) printable circuit sheet for the electrician (needs Engineer Reviewer). Evidence summary: Toolsfluent is the only real Pakistan calculator competitor; generic calculator SERPs are full of parasite pages; "5 marla solar" and "LESCO bill calculator" have no real informational result.
+**SERP ideas (proposed to the owner)**: (1, built as N16 after the owner's yes) "What will this AC add to my bill": marginal slab cost, slab jump, protected-status loss over the six-month rule, inverter vs non-inverter payback, chaining existing engines; (2) season-aware solar sizing from the 12-month unit history on the bill (needs monthly city yield data); (3) cost per backup hour, generator vs UPS vs hybrid; (4) printable circuit sheet for the electrician (needs Engineer Reviewer). Evidence summary: Toolsfluent is the only real Pakistan calculator competitor; generic calculator SERPs are full of parasite pages; "5 marla solar" and "LESCO bill calculator" have no real informational result.
 
 **Do not touch**: everything in the homepage handoff below still holds. Keep `--wl-stick` as the one sticky offset.
 
@@ -203,6 +215,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | 2026-10-13 | Phase 2: page build step (tools/build.js -> generated/), tool/pillar/appliance/guide/trust templates, server-rendered default result, ?load= state with clean canonical, JSON-LD (WebApplication, BreadcrumbList, Article+Person, Organization+WebSite, FAQPage), robots.txt (AI crawlers), core sitemap, /llms.txt, IndexNow, ads.txt (when pub id set), ad slots (off), 7 trust pages, data/appliances.json (87), brand images, header menu by task, plugin v0.3.0 | done: tests green, Lighthouse mobile 100/100/100/100 (tool template + trust pages, local WP + GeneratePress), Engineer Reviewer PASS after fixes | PR phase-2 |
 | 2026-10-13 | Phase 3: Wave 1, 24 pages live (table below) + 7 pillar hubs; new engine tools (generator for AC/pump, home load, add-an-AC check, AC units, solar for AC / from loads / for 12 V battery, UPS backup, wire/breaker/cable sizing with data/cable-ampacity.json), 245 spec cases, browser field types (appliance, loads, checkbox), plugin v0.4.0 | done: 436 tests green, zero orphan pages (link test), Engineer Reviewer PASS after fixes, Lighthouse mobile >= 95 on every live page (most 99-100), calculators checked in a headless browser on local WP | PR phase-3 |
 | 2026-10-14 | Phase 4: Wave 2, 39 pages live (table below) incl. N1 N2 N3 N4 N5 N7, D14 solar price, Home Power Planner on the homepage (load -> inverter -> battery -> solar -> net billing -> generator), Save as PDF / WhatsApp / copy link, Roman Urdu result toggle, stripped dist/ JS, data/solar-prices.json + data/inverter-codes.json, plugin v0.5.0 | done: tests green, Engineer Reviewer pass, Lighthouse mobile 98-100 on sampled templates, every calculator checked in a headless browser on local WP | PR phase-4 |
+| 2026-10-15 | N16 AC bill calculator (owner approved the SERP idea): what one AC adds to the whole bill, slab jump, protected-status loss and the penalty on the next bills; engine/acbill.js, 7 spec cases; E5 hands the "ac bill calculator" keywords to N16; plugin v0.8.6 | done: tests green, Engineer Reviewer pass, Lighthouse mobile 98/100/100/100 on local WP | #21 |
 | 2026-10-15 | Design cross-check (owner request): subgrid checkbox row, sticky header offset token, shorter phone appliance cards; SERP ideas proposed, none built; plugin v0.8.5 | done: tests green, every live page measured before/after on local WP | PR (this phase) |
 | 2026-10-15 | Homepage redesign (owner request): dark hero with every hub as a chip, planner inputs left and sticky plan right, colour task cards with tool counts, info cards, FAQ beside Key facts; field labels aligned on every calculator (subgrid), phone appliance captions fixed; plugin v0.8.4 | done: tests green, 107 pages checked on local WP | PR (this phase) |
 | 2026-10-15 | Re-audit fix Phase C, SEO and speed hygiene (WL-82 feeds 404 without redirect, WL-83 one robots value, WL-84 sitemap lastmod from the review date, WL-85 block CSS dropped, WL-87 versioned brand image URLs); plugin v0.8.3 | done: tests green, checked on local WP | PR (this phase) |
@@ -326,6 +339,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | N12 | /solar/solar-panel-cleaning-loss-calculator/ | live | #6 | 2026-10-14 |
 | N13 | /solar/solar-for-mosque-and-shop/ | live | #6 | 2026-10-14 |
 | N14 | /solar/solar-autonomy-calculator/ | live | #6 | 2026-10-14 |
+| N16 | /bill/ac-bill-calculator/ | live | #21 | 2026-10-15 |
 | P-X | /data/ | live | #6 | 2026-10-14 |
 | bill-index | /data/pakistan-electricity-bill-index/ | live | #6 | 2026-10-14 |
 | solar-price-tracker | /data/pakistan-solar-price-tracker/ | live | #6 | 2026-10-14 |
