@@ -5,7 +5,7 @@
  "h1": "FPA in Electricity Bill: What It Means and How to Calculate It",
  "author": "ali-ahmad",
  "published": "2026-10-13",
- "reviewed": "2026-10-13",
+ "reviewed": "2026-10-15",
  "calc": "bill_total",
  "submit": "Calculate FPA",
  "fields": [
@@ -21,7 +21,7 @@
    "label": "FPA rate",
    "unit": "Rs per unit",
    "default": "@data.fpa_latest.fpa_per_unit",
-   "hint": "From your bill (FPA, FCA or fuel adjustment line). The pre-filled value is NEPRA's adjustment for {{data.fpa_latest.fpa_for}}, charged on {{data.fpa_latest.label}} bills; replace it with this month's rate. Negative is allowed."
+   "hint": "From your bill (FPA, FCA or fuel adjustment line). The pre-filled value is the latest NEPRA-verified adjustment, the one for {{data.fpa_latest.fpa_for}}, charged on {{data.fpa_latest.label}} bills; replace it with this month's rate. Negative is allowed."
   },
   {
    "name": "sanctioned_kw",
@@ -129,7 +129,7 @@
    "h2": "How is the FPA calculated and who decides it?",
    "p": [
     "The Central Power Purchasing Agency (CPPA-G) files a request with NEPRA after each month closes, showing the actual fuel cost of the generation bought that month against the reference. NEPRA advertises a public hearing, hears the request and objections, and issues a decision with a notification in the official Gazette. The decision names the month the adjustment belongs to and the month in which the DISCOs are to recover it, which is why the FPA on a September bill can refer to July's fuel.",
-    "The arithmetic is a subtraction: actual fuel cost per kWh minus reference fuel cost per kWh. If more expensive fuel ran in a month with poor hydro flows, the rate comes out positive; a month with cheap hydro and low oil prices gives a negative rate. The same rate applies to all ex-WAPDA DISCOs; K-Electric has its own monthly decision."
+    "The arithmetic is a subtraction: actual fuel cost per kWh minus reference fuel cost per kWh. If more expensive fuel ran in a month with poor hydro flows, the rate comes out positive; a month with cheap hydro and low oil prices gives a negative rate. The same rate applies to all ex-WAPDA DISCOs; for K-Electric, check that the month's NEPRA decision covers it, because in some months its adjustment is decided separately."
    ]
   },
   {
@@ -252,7 +252,7 @@
  "faq": [
   {
    "q": "What is the fuel adjustment this month?",
-   "a": "It is whatever NEPRA notified for the month whose fuel is being recovered on your bill. The rate pre-filled on this page is NEPRA's {{data.fpa_latest.fpa_for}} adjustment, charged on later bills; check the NEPRA decision linked under sources and the FPA line on your own bill, and replace the rate here."
+   "a": "It is whatever NEPRA notified for the month whose fuel is being recovered on your bill. The rate pre-filled on this page is the latest NEPRA-verified one, the {{data.fpa_latest.fpa_for}} adjustment charged on {{data.fpa_latest.label}} bills. {{data.fpa_newest.note}} Either way, check the NEPRA decision linked under sources and the FPA line on your own bill, and replace the rate here."
   },
   {
    "q": "How do I calculate FPA charges on my bill?",
@@ -260,7 +260,7 @@
   },
   {
    "q": "What is FCA in an electricity bill?",
-   "a": "The same thing as FPA: fuel charges adjustment is NEPRA's and K-Electric's name for the monthly fuel price adjustment. The rate for K-Electric is decided separately from the ex-WAPDA DISCOs."
+   "a": "The same thing as FPA: fuel charges adjustment is NEPRA's and K-Electric's name for the monthly fuel price adjustment. Check that the month's decision covers K-Electric: in some months its rate is decided separately from the ex-WAPDA DISCOs."
   },
   {
    "q": "Can the FPA be negative?",

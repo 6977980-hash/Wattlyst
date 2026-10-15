@@ -9,7 +9,7 @@
  "primary_keyword": "fesco bill calculator",
  "wave": 2,
  "status": "publish",
- "reviewed": "2026-10-13",
+ "reviewed": "2026-10-15",
  "published": "2026-10-13",
  "author": "ali-ahmad",
  "related": [
@@ -49,14 +49,14 @@
    {
     "h2": "How does the sanctioned load change a FESCO bill?",
     "p": [
-     "Two homes using the same 350 units can get different bills because of the kW printed in their connection details. On 2 kW the fixed charge is Rs 800 and the bill comes to Rs 17,550; on 4 kW the fixed charge is Rs 1,600 and the bill Rs 18,494. The fixed charge is also inside the GST base, so the gap grows a little further after tax.",
+     "Two homes using the same 350 units can get different bills because of the kW printed in their connection details. On 2 kW the fixed charge is Rs 800 and the bill comes to Rs 17,551; on 4 kW the fixed charge is Rs 1,600 and the bill Rs 18,495. The fixed charge is also inside the GST base, so the gap grows a little further after tax.",
      "A sanctioned load of 5 kW or more moves the connection to the time-of-use tariff with peak and off-peak rates and a fixed charge on the higher of half the sanctioned load or the recorded maximum demand, which this calculator does not model. If the bill was raised after a load extension for an AC or a motor, check the kW it now prints."
     ]
    },
    {
     "h2": "FESCO summer vs winter bills in Faisalabad",
     "p": [
-     "Faisalabad summers are long and hot, and the AC decides the bill from May to September. A one and a half ton inverter split draws up to about 1,450 W, so a few hundred units a month is normal with one unit running through the night. In the examples, a summer month of 550 units on 3 kW costs Rs 30,926, while a winter month of 150 protected units costs Rs 3,029.",
+     "Faisalabad summers are long and hot, and the AC decides the bill from May to September. A one and a half ton inverter split draws up to about 1,450 W, so a few hundred units a month is normal with one unit running through the night. In the examples, a summer month of 550 units on 3 kW costs Rs 30,927, while a winter month of 150 protected units costs Rs 3,030.",
      "Because the summer months break the protected run, the lower rates come back only after 6 bills in a row under 200 units. The AC units calculator linked below estimates the units for your tonnage and hours; enter the result here to see the FESCO bill."
     ]
    },
@@ -71,7 +71,7 @@
   "faq": [
    {
     "q": "How do I get a FESCO bill estimate from my units?",
-    "a": "Enter the units and the sanctioned load from the bill, tick protected only if the bill prints that category, and add the FPA from the bill under advanced settings. For 350 units on 2 kW the estimate is Rs 17,550 before FPA."
+    "a": "Enter the units and the sanctioned load from the bill, tick protected only if the bill prints that category, and add the FPA from the bill under advanced settings. For 350 units on 2 kW the estimate is Rs 17,551 before FPA."
    },
    {
     "q": "What is the FESCO per unit rate for a home?",
@@ -108,6 +108,7 @@
    "The fixed charge is per kW of sanctioned load at the rate of the slab reached: 350 units on 2 kW carry a fixed charge of Rs 800, and the same units on 4 kW carry Rs 1,600, before GST.",
    "A FESCO protected consumer is one whose last 6 bills were all at or under 200 units on a connection below 5 kW; a Faisalabad summer month with an AC usually ends that run.",
    "GST at 18% is charged on the energy charge, fixed charge and surcharges together and adds Rs 2,677 to a 350 unit FESCO bill; the surcharge and GST defaults are secondary-source figures that change.",
+   "The bill jumps at 700 units: up to there every unit is billed at Rs 41.85, but one unit more moves all of them to the top slab rate of Rs 47.20, which adds Rs 4,478 to the bill of an unprotected 2 kW home.",
    "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of 7.5% on a monthly bill of Rs 25,000 or more; consumers on the list pay none."
   ],
   "mistakes": [
@@ -226,7 +227,7 @@
      "label": "Estimated bill",
      "spec": "rs",
      "label_ur": "Andazan bill",
-     "value": "Rs 17,550"
+     "value": "Rs 17,551"
     },
     {
      "key": "energy_rs",
@@ -266,7 +267,7 @@
    ],
    "how": {
     "tpl": "{{out.units}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
-    "text": "350 units × Rs 36.46 (unprotected slab rate) = Rs 12,761. Fixed charge for 2 kW = Rs 800. FC surcharge Rs 1,131 + QTA Rs 182 + FPA Rs 0. Subtotal Rs 14,873 + GST 18% (Rs 2,677) = Rs 17,550."
+    "text": "350 units × Rs 36.46 (unprotected slab rate) = Rs 12,761. Fixed charge for 2 kW = Rs 800. FC surcharge Rs 1,131 + QTA Rs 182 + FPA Rs 0. Subtotal Rs 14,874 + GST 18% (Rs 2,677) = Rs 17,551."
    },
    "submit": "Calculate",
    "notice": "",
@@ -281,19 +282,19 @@
   "examples": [
    {
     "title": "350 units on a 2 kW connection",
-    "text": "350 × Rs 36.46 = Rs 12,761, fixed charge Rs 800 for 2 kW, FC surcharge Rs 1,131, QTA Rs 182, GST Rs 2,677. Estimated FESCO bill Rs 17,550 before FPA."
+    "text": "350 × Rs 36.46 = Rs 12,761, fixed charge Rs 800 for 2 kW, FC surcharge Rs 1,131, QTA Rs 182, GST Rs 2,677. Estimated FESCO bill Rs 17,551 before FPA."
    },
    {
     "title": "Same 350 units on a 4 kW connection",
-    "text": "The energy charge is unchanged at Rs 12,761, but the fixed charge rises to Rs 1,600 for 4 kW. With FC surcharge Rs 1,131, QTA Rs 182 and GST Rs 2,821 the estimated FESCO bill is Rs 18,494 before FPA."
+    "text": "The energy charge is unchanged at Rs 12,761, but the fixed charge rises to Rs 1,600 for 4 kW. With FC surcharge Rs 1,131, QTA Rs 182 and GST Rs 2,821 the estimated FESCO bill is Rs 18,495 before FPA."
    },
    {
     "title": "550 units, a Faisalabad summer month with an AC, 3 kW",
-    "text": "550 × Rs 40.22 = Rs 22,121, fixed charge Rs 2,025 for 3 kW, FC surcharge Rs 1,777, QTA Rs 286, GST Rs 4,717. Estimated FESCO bill Rs 30,926 before FPA."
+    "text": "550 × Rs 40.22 = Rs 22,121, fixed charge Rs 2,025 for 3 kW, FC surcharge Rs 1,777, QTA Rs 286, GST Rs 4,718. Estimated FESCO bill Rs 30,927 before FPA."
    },
    {
     "title": "150 units, protected consumer in a winter month, 1 kW",
-    "text": "Energy charge Rs 1,705 slab-wise at protected rates, fixed charge Rs 300 for 1 kW, FC surcharge Rs 485, QTA Rs 78, GST Rs 462. Estimated FESCO bill Rs 3,029 before FPA."
+    "text": "Energy charge Rs 1,705 slab-wise at protected rates, fixed charge Rs 300 for 1 kW, FC surcharge Rs 485, QTA Rs 78, GST Rs 462. Estimated FESCO bill Rs 3,030 before FPA."
    }
   ],
   "table": {
@@ -301,7 +302,7 @@
    "head": [
     "Units",
     "Sanctioned load",
-    "Per unit rate",
+    "Average rate per unit",
     "Fixed",
     "Energy",
     "Estimated bill"
@@ -310,7 +311,7 @@
     [
      "200 (protected)",
      "1 kW",
-     "Rs 13.01",
+     "Rs 11.78",
      "Rs 300",
      "Rs 2,355",
      "Rs 4,018"
@@ -321,7 +322,7 @@
      "Rs 36.46",
      "Rs 400",
      "Rs 12,761",
-     "Rs 17,078"
+     "Rs 17,079"
     ],
     [
      "350 (unprotected)",
@@ -329,7 +330,7 @@
      "Rs 36.46",
      "Rs 800",
      "Rs 12,761",
-     "Rs 17,550"
+     "Rs 17,551"
     ],
     [
      "350 (unprotected)",
@@ -337,7 +338,7 @@
      "Rs 36.46",
      "Rs 1,200",
      "Rs 12,761",
-     "Rs 18,022"
+     "Rs 18,023"
     ],
     [
      "350 (unprotected)",
@@ -345,7 +346,7 @@
      "Rs 36.46",
      "Rs 1,600",
      "Rs 12,761",
-     "Rs 18,494"
+     "Rs 18,495"
     ],
     [
      "500 (unprotected)",
@@ -369,11 +370,11 @@
      "Rs 41.85",
      "Rs 2,700",
      "Rs 29,295",
-     "Rs 40,851"
+     "Rs 40,852"
     ]
    ]
   },
-  "answer": "A FESCO home in Faisalabad using 350 units in a month as an unprotected consumer on a 2 kW connection pays about Rs 17,550: Rs 12,761 energy charge at Rs 36.46 per unit, Rs 800 fixed charge for the sanctioned load, plus FC surcharge, QTA and GST, before the month's FPA. FESCO bill = units × slab rate + fixed charge + surcharges, then GST.",
+  "answer": "A FESCO home in Faisalabad using 350 units in a month as an unprotected consumer on a 2 kW connection pays about Rs 17,551: Rs 12,761 energy charge at Rs 36.46 per unit, Rs 800 fixed charge for the sanctioned load, plus FC surcharge, QTA and GST, before the month's FPA. FESCO bill = units × slab rate + fixed charge + surcharges, then GST.",
   "formula": {
    "text": "Bill = units × slab rate + fixed Rs/kW × sanctioned kW + (FC + QTA + FPA) × units, then + GST",
    "lines": [
@@ -425,8 +426,8 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/bill/fesco-bill-calculator/#breadcrumb"
     },
-    "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13",
+    "dateModified": "2026-10-15",
+    "lastReviewed": "2026-10-15",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }
@@ -471,7 +472,7 @@
       "name": "How do I get a FESCO bill estimate from my units?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Enter the units and the sanctioned load from the bill, tick protected only if the bill prints that category, and add the FPA from the bill under advanced settings. For 350 units on 2 kW the estimate is Rs 17,550 before FPA."
+       "text": "Enter the units and the sanctioned load from the bill, tick protected only if the bill prints that category, and add the FPA from the bill under advanced settings. For 350 units on 2 kW the estimate is Rs 17,551 before FPA."
       }
      },
      {

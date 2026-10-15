@@ -33,6 +33,9 @@ export function billIndex(ctx, fail) {
     if (!r.ok) fail(`bill-index: ${m.month} ${l.units} ${l.category} gives ${r.error}`);
     return r;
   };
+  // A month whose FPA comes from a news report, not a published NEPRA decision, is marked "(FPA reported)" (WL-115).
+  const lab = (m) => (m.fpa_verified ? m.label : `${m.label} (FPA reported)`);
+  const status = (m) => (m.fpa_verified ? 'notified by NEPRA' : 'reported in the news; the NEPRA decision is not yet published');
   const levels = ix.levels.map((l) => {
     const a = run(cur, l);
     const b = run(prev, l);
@@ -42,8 +45,9 @@ export function billIndex(ctx, fail) {
     return { ...l, key: `${l.category === 'protected' ? 'p' : 'u'}${l.units}`, label: `${fmt(l.units, 'int')} units, ${l.category}`, cur: a, prev: b, diff, pct };
   });
   const scope = {
-    cur: { label: cur.label, fpa: cur.fpa_per_unit, fpa_for: cur.fpa_for, qta_period: cur.qta_period.replace('..', ' to ') },
-    prev: { label: prev.label, fpa: prev.fpa_per_unit, fpa_for: prev.fpa_for },
+    cur: { label: cur.label, fpa: cur.fpa_per_unit, fpa_for: cur.fpa_for, qta_period: cur.qta_period.replace('..', ' to '), status: status(cur),
+      ke_note: cur.fpa_ke ? 'That is why every company in the table above shows the same bill for the same units.' : 'Its source does not cover K-Electric, so the K-Electric row leaves the FPA out; every other company shows the same bill for the same units.' },
+    prev: { label: prev.label, fpa: prev.fpa_per_unit, fpa_for: prev.fpa_for, status: status(prev) },
     sanctioned_kw: ix.sanctioned_kw,
     discos: ix.discos.length,
     months: ix.months.length,
@@ -69,29 +73,32 @@ export function billIndex(ctx, fail) {
   scope.ladder = { from: lad.from, to: lad.to, step: lad.step, count: ladder.length, limit, top_units: top.units, top_rs: top.u.total_rs, top_per_unit_rs: top.u.total_rs / top.units, lifeline_rs: life.total_rs, lifeline_rate: life.rate };
   const tables = [
     {
-      caption: `Electricity bill for every ${fmt(lad.step, 'int')} units, ${fmt(lad.from, 'int')} to ${fmt(lad.to, 'int')}, ${cur.label} (${fmt(ix.sanctioned_kw, 'int')} kW sanctioned load)`,
+      caption: `Electricity bill for every ${fmt(lad.step, 'int')} units, ${fmt(lad.from, 'int')} to ${fmt(lad.to, 'int')}, ${lab(cur)} (${fmt(ix.sanctioned_kw, 'int')} kW sanctioned load)`,
       head: ['Units a month', 'Unprotected bill', 'Per unit (unprotected)', 'Protected bill'],
       rows: ladder.map((r) => [fmt(r.units, 'int'), fmt(r.u.total_rs, 'rs'), fmt(r.u.total_rs / r.units, 'rs2'), r.p ? fmt(r.p.total_rs, 'rs') : `Not protected above ${fmt(limit, 'int')} units`]),
     },
     {
-      caption: `Electricity bill by units, ${cur.label} vs ${prev.label} (${fmt(ix.sanctioned_kw, 'int')} kW sanctioned load)`,
+      caption: `Electricity bill by units, ${lab(cur)} vs ${lab(prev)} (${fmt(ix.sanctioned_kw, 'int')} kW sanctioned load)`,
       head: ['Units a month', 'Consumer', `${cur.label} bill`, `${prev.label} bill`, 'Change', 'Per unit'],
       rows: levels.map((l) => [fmt(l.units, 'int'), l.category === 'protected' ? 'Protected' : 'Unprotected', fmt(l.cur.total_rs, 'rs'), fmt(l.prev.total_rs, 'rs'), changeText(l.diff, l.pct), fmt(l.cur.total_rs / l.units, 'rs2')]),
     },
     {
-      caption: `What makes up the ${cur.label} bill`,
+      caption: `What makes up the ${lab(cur)} bill`,
       head: ['Units', 'Consumer', 'Energy', 'Fixed', 'FC surcharge', 'QTA', 'FPA', 'GST', 'Total'],
       rows: levels.map((l) => [fmt(l.units, 'int'), l.category === 'protected' ? 'Protected' : 'Unprotected', fmt(l.cur.energy_rs, 'rs'), fmt(l.cur.fixed_rs, 'rs'), fmt(l.cur.fc_rs, 'rs'), fmt(l.cur.qta_rs, 'rs'), fmt(l.cur.fpa_rs, 'rs'), fmt(l.cur.gst_rs, 'rs'), fmt(l.cur.total_rs, 'rs')]),
     },
     {
-      caption: `${cur.label} unprotected bill in every distribution company`,
+      caption: `${lab(cur)} unprotected bill in every distribution company`,
       head: ['Company', ...levels.filter((l) => l.category === 'unprotected').map((l) => `${fmt(l.units, 'int')} units`)],
-      rows: ix.discos.map((d) => [d.name, ...levels.filter((l) => l.category === 'unprotected').map((l) => fmt(l.cur.total_rs, 'rs'))]),
+      // K-Electric's FCA is decided separately: when the month's FPA source does not cover it, its row leaves the FPA out (WL-115).
+      rows: ix.discos.map((d) => (d.ke && !cur.fpa_ke
+        ? [`${d.name}, FPA not included`, ...levels.filter((l) => l.category === 'unprotected').map((l) => fmt(run({ ...cur, fpa_per_unit: 0 }, l).total_rs, 'rs'))]
+        : [d.name, ...levels.filter((l) => l.category === 'unprotected').map((l) => fmt(l.cur.total_rs, 'rs'))])),
     },
   ];
-  const ch = chart(`Monthly bill, ${prev.label} and ${cur.label}`, levels.map((l) => ({ label: l.label, bars: [
-    { name: prev.label, value: l.prev.total_rs, text: fmt(l.prev.total_rs, 'rs') },
-    { name: cur.label, value: l.cur.total_rs, text: fmt(l.cur.total_rs, 'rs') },
+  const ch = chart(`Monthly bill, ${lab(prev)} and ${lab(cur)}`, levels.map((l) => ({ label: l.label, bars: [
+    { name: lab(prev), value: l.prev.total_rs, text: fmt(l.prev.total_rs, 'rs') },
+    { name: lab(cur), value: l.cur.total_rs, text: fmt(l.cur.total_rs, 'rs') },
   ] })), 'Rs');
   const csvRows = [];
   const csvLevels = [...ix.levels];

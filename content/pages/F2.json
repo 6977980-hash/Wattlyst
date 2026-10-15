@@ -5,7 +5,7 @@
  "h1": "LESCO Bill Calculator",
  "author": "ali-ahmad",
  "published": "2026-10-13",
- "reviewed": "2026-10-13",
+ "reviewed": "2026-10-15",
  "calc": "bill_total",
  "fields": [
   {
@@ -103,13 +103,14 @@
    "spec": "rs"
   }
  ],
- "answer": "A LESCO home using {{in.units|int}} units a month as an unprotected consumer on a {{in.sanctioned_kw|int}} kW connection pays about {{out.total_rs|rs}}, of which {{out.energy_rs|rs}} is the energy charge at {{out.rate|rs2}} per unit and the rest is fixed charge, FC surcharge, QTA and GST. LESCO bill = units × slab rate + fixed charge + surcharges + GST.",
+ "answer": "A LESCO home using {{in.units|int}} units a month as an unprotected consumer on a {{in.sanctioned_kw|int}} kW connection pays about {{out.total_rs|rs}}, of which {{out.energy_rs|rs}} is the energy charge at {{out.rate|rs2}} per unit and the rest is fixed charge, FC surcharge, QTA and GST, before the month's FPA. LESCO bill = units × slab rate + fixed charge + surcharges + GST.",
  "how": "{{out.units}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
  "key_facts": [
   "LESCO charges the NEPRA uniform A-1 domestic tariff for 2026, so a LESCO bill for a given number of units is the same as any other DISCO's; only the monthly FPA line differs.",
   "The LESCO per unit rate for an unprotected home using {{out.units|int}} units is {{out.rate|rs2}} on every unit, which gives {{out.energy_rs|rs}} before the fixed charge, surcharges and GST.",
   "LESCO protected units: a home stays protected only while every one of its last {{d.protected_months|int}} bills is at or under {{d.protected_max_units|int}} units; protected bills are worked out slab-wise at much lower rates.",
   "GST at {{out.gst_pct|int}}% is charged on energy, fixed charge and surcharges together, adding {{out.gst_rs|rs}} to a {{out.units|int}} unit LESCO bill; the surcharge and GST values are secondary-source figures that change monthly.",
+  "The bill jumps at {{out.cliff_units|int}} units: up to there every unit is billed at {{data.tariff.unprotected.6.rate|rs2}}, but one unit more moves all of them to the top slab rate of {{data.tariff.unprotected.7.rate|rs2}}, which adds {{out.cliff_rs|rs}} to the bill of an unprotected {{out.sanctioned_kw|int}} kW home.",
   "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of {{data.tariff.addons_secondary.income_tax_235.rate_pct_non_atl|1}}% on a monthly bill of {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}} or more; consumers on the list pay none."
  ],
  "formula": {
@@ -212,8 +213,8 @@
     "tpl": "{{out.units|int}} ({{out.category}})"
    },
    {
-    "label": "Per unit rate",
-    "tpl": "{{out.rate|rs2}}"
+    "label": "Average rate per unit",
+    "tpl": "{{out.avg_rate|rs2}}"
    },
    {
     "label": "Energy",

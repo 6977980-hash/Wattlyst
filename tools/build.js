@@ -19,9 +19,9 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => readFileSync(join(root, p), 'utf8');
 const readJson = (p) => JSON.parse(read(p));
 
-const ENGINE_MODULES = ['conversions', 'battery', 'sizing', 'solar', 'bill', 'load', 'wiring', 'planner', 'prices', 'forecast', 'fuel', 'solartools', 'acbill', 'seasonal', 'circuits', 'backup', 'decision'];
+const ENGINE_MODULES = ['conversions', 'battery', 'sizing', 'solar', 'bill', 'load', 'wiring', 'planner', 'prices', 'forecast', 'fuel', 'solartools', 'acbill', 'sanction', 'seasonal', 'circuits', 'backup', 'decision'];
 /** Data each engine module needs in the browser (keeps page weight down). Appliances are added per page, only the ones its fields use. */
-const MODULE_DATA = { bill: ['tariff'], solar: ['cities'], wiring: ['cables'], load: ['cables'], planner: ['tariff', 'cities'], prices: ['solar_prices'], forecast: ['cities'], acbill: ['tariff'], seasonal: ['cities'], circuits: ['cables'], backup: ['cities', 'solar_prices', 'generator_fuel', 'component_prices', 'backup_prices'], decision: ['tariff', 'cities', 'solar_prices', 'generator_fuel', 'component_prices', 'backup_prices'] };
+const MODULE_DATA = { bill: ['tariff'], solar: ['cities'], wiring: ['cables'], planner: ['tariff', 'cities'], prices: ['solar_prices'], forecast: ['cities'], acbill: ['tariff'], sanction: ['cables'], seasonal: ['cities'], circuits: ['cables'], backup: ['cities', 'solar_prices', 'generator_fuel', 'component_prices', 'backup_prices'], decision: ['tariff', 'cities', 'solar_prices', 'generator_fuel', 'component_prices', 'backup_prices'] };
 /** Extra data a single calculator needs (shipped only on its page). */
 const CALC_DATA = { generator_fuel: ['generator_fuel'] };
 /** Appliance fields the browser engine and the loads picker need. */
@@ -39,6 +39,9 @@ export async function loadInputs() {
   // One source for the FPA (audit WL-13): the newest NEPRA-verified month of the Bill Index. Pages that pre-fill
   // an FPA read data.fpa_latest; data/tariff-pk-2026.json keeps no copy.
   data.fpa_latest = data.bill_index.months.find((m) => m.fpa_verified === true) || null;
+  // The newest Bill Index month, when its FPA is only reported in the news, is named next to the verified rate (WL-115).
+  const newest = data.bill_index.months[0];
+  data.fpa_newest = { ...newest, note: newest === data.fpa_latest ? `${newest.label} bills use this rate.` : `${newest.label} bills carry ${fmt(newest.fpa_per_unit, "rs2")} per unit for ${newest.fpa_for}, reported in the news; this page keeps the latest NEPRA-verified rate until that decision is published.` };
   const modules = {};
   for (const m of ENGINE_MODULES) modules[m] = await import(pathToFileURL(join(root, 'engine', `${m}.js`)).href);
   const keywordRows = parseCsv(read('specs/keyword-map.csv'));

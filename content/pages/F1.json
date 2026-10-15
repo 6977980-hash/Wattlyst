@@ -5,7 +5,7 @@
  "h1": "Electricity Bill Calculator Pakistan",
  "author": "ali-ahmad",
  "published": "2026-10-13",
- "reviewed": "2026-10-13",
+ "reviewed": "2026-10-15",
  "calc": "bill_total",
  "fields": [
   {
@@ -103,14 +103,15 @@
    "spec": "rs"
   }
  ],
- "answer": "An unprotected home using {{in.units|int}} units a month on a {{in.sanctioned_kw|int}} kW connection pays about {{out.total_rs|rs}}: {{out.energy_rs|rs}} in energy charges at {{out.rate|rs2}} per unit, plus the fixed charge, FC surcharge, QTA and {{out.gst_pct|int}}% GST. Bill = units × slab rate + fixed charge + surcharges, then GST on the subtotal.",
+ "answer": "An unprotected home using {{in.units|int}} units a month on a {{in.sanctioned_kw|int}} kW connection pays about {{out.total_rs|rs}}: {{out.energy_rs|rs}} in energy charges at {{out.rate|rs2}} per unit, plus the fixed charge, FC surcharge, QTA and {{out.gst_pct|int}}% GST, before the month's FPA. Bill = units × slab rate + fixed charge + surcharges, then GST on the subtotal.",
  "how": "Energy: {{out.units}} units × {{out.rate|rs2}} (the {{out.category}} rate of the slab reached) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge = {{out.fc_rs|rs}}, QTA = {{out.qta_rs|rs}}, FPA = {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}}; GST at {{out.gst_pct}}% = {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}.",
  "key_facts": [
   "An unprotected consumer pays the rate of the slab the monthly total reaches on every unit: {{out.units|int}} units are all charged at {{out.rate|rs2}}, giving {{out.energy_rs|rs}} in energy charges.",
   "A protected consumer is billed slab-wise with the benefit of the lower slab, and the category needs every one of the last {{d.protected_months|int}} months at or under {{d.protected_max_units|int}} units.",
-  "The fixed charge is Rs per kW of sanctioned load and rises with the slab; a {{out.sanctioned_kw|int}} kW connection using {{out.units|int}} units pays {{out.fixed_rs|rs}} a month before using a single unit.",
+  "The fixed charge is Rs per kW of sanctioned load and rises with the slab: a {{out.sanctioned_kw|int}} kW connection using {{out.units|int}} units pays {{out.fixed_rs|rs}} of it, and even a month with no units pays the lowest slab's {{data.tariff.unprotected.0.fixed_per_kw|rs}} per kW.",
   "GST at {{out.gst_pct|int}}% is applied to the subtotal of energy, fixed charge and surcharges, which adds {{out.gst_rs|rs}} to a {{out.units|int}} unit bill; the surcharge and GST figures are from secondary sources and change monthly.",
   "Lifeline rates apply only up to {{data.tariff.lifeline.1.upto|int}} units, with no fixed charge, and a connection of {{d.tou_threshold_kw|int}} kW or more is billed on a peak and off-peak (ToU) meter instead of slabs.",
+  "The bill jumps at {{out.cliff_units|int}} units: up to there every unit is billed at {{data.tariff.unprotected.6.rate|rs2}}, but one unit more moves all of them to the top slab rate of {{data.tariff.unprotected.7.rate|rs2}}, which adds {{out.cliff_rs|rs}} to the bill of an unprotected {{out.sanctioned_kw|int}} kW home.",
   "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of {{data.tariff.addons_secondary.income_tax_235.rate_pct_non_atl|1}}% on a monthly bill of {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}} or more; consumers on the list pay none."
  ],
  "formula": {
@@ -233,8 +234,8 @@
     "tpl": "{{out.units|int}} ({{out.category}})"
    },
    {
-    "label": "Rate",
-    "tpl": "{{out.rate|rs2}}"
+    "label": "Average rate per unit",
+    "tpl": "{{out.avg_rate|rs2}}"
    },
    {
     "label": "Energy",

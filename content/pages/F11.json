@@ -5,7 +5,7 @@
  "h1": "TESCO Bill Calculator",
  "author": "ali-ahmad",
  "published": "2026-10-13",
- "reviewed": "2026-10-13",
+ "reviewed": "2026-10-15",
  "calc": "bill_total",
  "fields": [
   {
@@ -110,6 +110,7 @@
   "The TESCO per unit rate for an unprotected home using {{out.units|int}} units is {{out.rate|rs2}} on every unit, giving {{out.energy_rs|rs}} in energy charges before the fixed charge, surcharges and GST.",
   "A TESCO consumer whose last {{d.protected_months|int}} bills were all at or under {{d.protected_max_units|int}} units is billed slab-wise at the protected rates; the second example below shows how much lower that makes the same month.",
   "The slab rates on a TESCO bill are identical to those on a PESCO bill from Peshawar or Mardan; the two companies differ only in the area they serve and in the FPA printed for the month.",
+  "The bill jumps at {{out.cliff_units|int}} units: up to there every unit is billed at {{data.tariff.unprotected.6.rate|rs2}}, but one unit more moves all of them to the top slab rate of {{data.tariff.unprotected.7.rate|rs2}}, which adds {{out.cliff_rs|rs}} to the bill of an unprotected {{out.sanctioned_kw|int}} kW home.",
   "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of {{data.tariff.addons_secondary.income_tax_235.rate_pct_non_atl|1}}% on a monthly bill of {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}} or more; consumers on the list pay none."
  ],
  "formula": {
@@ -222,8 +223,8 @@
     "tpl": "{{out.units|int}} ({{out.category}})"
    },
    {
-    "label": "Per unit rate",
-    "tpl": "{{out.rate|rs2}}"
+    "label": "Average rate per unit",
+    "tpl": "{{out.avg_rate|rs2}}"
    },
    {
     "label": "Energy",

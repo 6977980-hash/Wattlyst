@@ -5,7 +5,7 @@
  "h1": "PESCO Bill Calculator",
  "author": "ali-ahmad",
  "published": "2026-10-13",
- "reviewed": "2026-10-13",
+ "reviewed": "2026-10-15",
  "calc": "bill_total",
  "fields": [
   {
@@ -119,6 +119,7 @@
   "The QTA changes by quarter: the same {{ex.1.out.units|int}} units come to about {{ex.1.out.total_rs|rs}} in the September to November quarter and about {{ex.2.out.total_rs|rs}} in the June to August quarter, when the adjustment was a credit.",
   "A Khyber Pakhtunkhwa winter month of {{ex.3.out.units|int}} units with a fan heater and an electric geyser costs about {{ex.3.out.total_rs|rs}} unprotected, against about {{ex.0.out.total_rs|rs}} for a protected spring month of {{ex.0.out.units|int}} units.",
   "Protection on PESCO needs every one of the last {{d.protected_months|int}} bills at or under {{d.protected_max_units|int}} units on a connection below {{d.tou_threshold_kw|int}} kW; one heater month over the limit ends it for the next {{d.protected_months|int}} bills.",
+  "The bill jumps at {{out.cliff_units|int}} units: up to there every unit is billed at {{data.tariff.unprotected.6.rate|rs2}}, but one unit more moves all of them to the top slab rate of {{data.tariff.unprotected.7.rate|rs2}}, which adds {{out.cliff_rs|rs}} to the bill of an unprotected {{out.sanctioned_kw|int}} kW home.",
   "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of {{data.tariff.addons_secondary.income_tax_235.rate_pct_non_atl|1}}% on a monthly bill of {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}} or more; consumers on the list pay none."
  ],
  "formula": {
@@ -236,8 +237,8 @@
     "tpl": "{{out.units|int}} ({{out.category}})"
    },
    {
-    "label": "Per unit rate",
-    "tpl": "{{out.rate|rs2}}"
+    "label": "Average rate per unit",
+    "tpl": "{{out.avg_rate|rs2}}"
    },
    {
     "label": "Energy",

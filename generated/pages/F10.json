@@ -9,7 +9,7 @@
  "primary_keyword": "qesco bill calculator",
  "wave": 2,
  "status": "publish",
- "reviewed": "2026-10-13",
+ "reviewed": "2026-10-15",
  "published": "2026-10-13",
  "author": "ali-ahmad",
  "related": [
@@ -107,6 +107,7 @@
    "The QESCO per unit rate for an unprotected home using 250 units is Rs 33.10 on every unit, giving Rs 8,275 in energy charges before the fixed charge, surcharges and GST.",
    "This calculator is for domestic A-1 connections only; QESCO's agricultural tubewell consumers are billed on the separate agricultural tariff and subsidy arrangements, which these slabs do not cover.",
    "A QESCO home stays protected only while every one of the last 6 bills is at or under 200 units; in Quetta an electric heater month in winter can break the run as easily as an AC month does elsewhere.",
+   "The bill jumps at 700 units: up to there every unit is billed at Rs 41.85, but one unit more moves all of them to the top slab rate of Rs 47.20, which adds Rs 4,478 to the bill of an unprotected 1 kW home.",
    "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of 7.5% on a monthly bill of Rs 25,000 or more; consumers on the list pay none."
   ],
   "mistakes": [
@@ -265,7 +266,7 @@
    ],
    "how": {
     "tpl": "{{out.units}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
-    "text": "250 units × Rs 33.10 (unprotected slab rate) = Rs 8,275. Fixed charge for 1 kW = Rs 350. FC surcharge Rs 808 + QTA Rs 130 + FPA Rs 0. Subtotal Rs 9,562 + GST 18% (Rs 1,721) = Rs 11,284."
+    "text": "250 units × Rs 33.10 (unprotected slab rate) = Rs 8,275. Fixed charge for 1 kW = Rs 350. FC surcharge Rs 808 + QTA Rs 130 + FPA Rs 0. Subtotal Rs 9,563 + GST 18% (Rs 1,721) = Rs 11,284."
    },
    "submit": "Calculate",
    "notice": "",
@@ -280,7 +281,7 @@
   "examples": [
    {
     "title": "180 units, QESCO protected consumer",
-    "text": "Energy charge Rs 2,095 slab-wise at protected rates, fixed charge Rs 300 for 1 kW, FC surcharge Rs 581, QTA Rs 93, GST Rs 553. Estimated QESCO bill Rs 3,622."
+    "text": "Energy charge Rs 2,095 slab-wise at protected rates, fixed charge Rs 300 for 1 kW, FC surcharge Rs 581, QTA Rs 93, GST Rs 552. Estimated QESCO bill Rs 3,621."
    },
    {
     "title": "250 units, unprotected, no heating or cooling",
@@ -288,7 +289,7 @@
    },
    {
     "title": "480 units in a Quetta winter with an electric heater, 2 kW",
-    "text": "480 × Rs 38.95 = Rs 18,696, fixed charge Rs 1,000 for 2 kW, FC surcharge Rs 1,550, QTA Rs 249, GST Rs 3,869. Estimated QESCO bill Rs 25,365 before FPA."
+    "text": "480 × Rs 38.95 = Rs 18,696, fixed charge Rs 1,000 for 2 kW, FC surcharge Rs 1,550, QTA Rs 249, GST Rs 3,869. Estimated QESCO bill Rs 25,364 before FPA."
    },
    {
     "title": "60 units, lifeline consumer",
@@ -299,7 +300,7 @@
    "caption": "Estimated QESCO domestic bill by units on a 1 kW connection with the default surcharges and GST, before FPA; unprotected unless marked",
    "head": [
     "Units",
-    "Per unit rate",
+    "Average rate per unit",
     "Energy",
     "Fixed",
     "Estimated bill"
@@ -310,11 +311,11 @@
      "Rs 22.44",
      "Rs 2,020",
      "Rs 275",
-     "Rs 3,106"
+     "Rs 3,107"
     ],
     [
      "160 (protected)",
-     "Rs 13.01",
+     "Rs 11.47",
      "Rs 1,835",
      "Rs 300",
      "Rs 3,227"
@@ -324,7 +325,7 @@
      "Rs 28.91",
      "Rs 4,626",
      "Rs 300",
-     "Rs 6,520"
+     "Rs 6,521"
     ],
     [
      "250 (unprotected)",
@@ -338,14 +339,14 @@
      "Rs 36.46",
      "Rs 12,761",
      "Rs 400",
-     "Rs 17,078"
+     "Rs 17,079"
     ],
     [
      "480 (unprotected)",
      "Rs 38.95",
      "Rs 18,696",
      "Rs 500",
-     "Rs 24,775"
+     "Rs 24,774"
     ],
     [
      "620 (unprotected)",
@@ -408,8 +409,8 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/bill/qesco-bill-calculator/#breadcrumb"
     },
-    "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13",
+    "dateModified": "2026-10-15",
+    "lastReviewed": "2026-10-15",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }

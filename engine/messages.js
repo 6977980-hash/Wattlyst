@@ -20,6 +20,7 @@ const EXACT = {
   usage_required: 'Enter your monthly units or daily kWh.',
   yield_or_city_or_psh_required: 'Pick a city or enter peak sun hours.',
   ac_protected_lost: 'With the AC your monthly total goes over the protected limit, so this bill and the bills of the following six months are charged at unprotected rates. Fewer AC hours may keep you protected.',
+  ac_above_sanctioned: 'This AC alone is above your sanctioned load: apply for a higher one before installing it.',
   protected_max_200_units: 'Protected tariff applies only up to 200 units a month. Above that the unprotected rate applies.',
   lifeline_max_100_units: 'Lifeline tariff applies only up to 100 units a month.',
   monthly_units_all_zero: 'Enter the units of at least one month.',
@@ -88,6 +89,7 @@ export function noticeCode(out) {
   if (out.over_cable_rating === true) return 'cable_over_current_rating';
   if (out.ampacity_checked === false) return 'ampacity_not_checked_aluminium';
   if (out.protected_lost === true) return 'ac_protected_lost';
+  if (out.ac_above_sanctioned === true) return 'ac_above_sanctioned';
   return '';
 }
 

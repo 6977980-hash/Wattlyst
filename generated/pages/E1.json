@@ -9,7 +9,7 @@
  "primary_keyword": "home electrical load calculator",
  "wave": 1,
  "status": "publish",
- "reviewed": "2026-10-13",
+ "reviewed": "2026-10-15",
  "published": "2026-10-13",
  "author": "ali-ahmad",
  "related": [
@@ -86,10 +86,10 @@
    }
   ],
   "tool": {
-   "calc": "home_load",
-   "module": "load.js",
+   "calc": "home_load_bill",
+   "module": "acbill.js",
    "data_keys": [
-    "cables"
+    "tariff"
    ],
    "appliances": {
     "ceiling-fan-ac": {
@@ -1207,15 +1207,7 @@
      "label": "Sanctioned load",
      "unit": "kW",
      "placeholder": "Optional, from your bill",
-     "hint": "The kW printed on your electricity bill. Leave blank if you do not know it."
-    },
-    {
-     "name": "tariff",
-     "label": "Electricity rate",
-     "unit": "Rs per unit",
-     "default": 36.46,
-     "advanced": true,
-     "hint": "Energy rate of your slab. The default is the Pakistan unprotected rate for 301 to 400 units a month."
+     "hint": "The kW printed on your electricity bill; it sets the fixed charge in the bill estimate. Blank uses 1 kW. At 5 kW or more the bill is on a ToU meter: use the ToU bill option."
     },
     {
      "name": "pf",
@@ -1269,23 +1261,22 @@
     },
     {
      "key": "monthly_rs",
-     "label": "Estimated energy cost a month",
+     "label": "Estimated monthly bill",
      "spec": "rs",
-     "label_ur": "Mahana energy ka andazan kharcha",
-     "value": "Rs 16,786"
+     "value": "Rs 23,506"
     }
    ],
    "how": {
-    "tpl": "Running load = the watts of every appliance × its quantity, added up = {{out.running_w|int}} W. Peak load adds the starting surge of the largest motor = {{out.peak_w|int}} W. Current = {{out.running_w|int}} W ÷ ({{out.volts}} V × {{out.pf|2}} power factor) = {{out.amps|1}} A. Energy = each appliance's watts × hours a day (an inverter AC counts at its average draw, below its rated watts), added up = {{out.daily_kwh|1}} units a day, × {{out.days|int}} days = {{out.monthly_units|int}} units a month; × {{out.tariff|rs2}} per unit = {{out.monthly_rs|rs}} before fixed charges and taxes.",
-    "text": "Running load = the watts of every appliance × its quantity, added up = 3,085 W. Peak load adds the starting surge of the largest motor = 4,885 W. Current = 3,085 W ÷ (230 V × 0.8 power factor) = 16.8 A. Energy = each appliance's watts × hours a day (an inverter AC counts at its average draw, below its rated watts), added up = 15.1 units a day, × 30 days = 460 units a month; × Rs 36.46 per unit = Rs 16,786 before fixed charges and taxes."
+    "tpl": "Running load = the watts of every appliance × its quantity, added up = {{out.running_w|int}} W. Peak load adds the starting surge of the largest motor = {{out.peak_w|int}} W. Current = {{out.running_w|int}} W ÷ ({{out.volts}} V × {{out.pf|2}} power factor) = {{out.amps|1}} A. Energy = each appliance's watts × hours a day (an inverter AC counts at its average draw, below its rated watts), added up = {{out.daily_kwh|1}} units a day, × {{out.days|int}} days = {{out.monthly_units|int}} units a month. Bill: {{out.monthly_units|int}} units reach the {{out.bill_rate|rs2}} slab, so every unit is charged at that rate = {{out.bill_energy_rs|rs}}, plus the fixed charge for {{out.bill_kw|int}} kW, FC surcharge, QTA and GST (no FPA, unprotected) = {{out.monthly_rs|rs}} a month, the same as the electricity bill calculator gives for these units.",
+    "text": "Running load = the watts of every appliance × its quantity, added up = 3,085 W. Peak load adds the starting surge of the largest motor = 4,885 W. Current = 3,085 W ÷ (230 V × 0.8 power factor) = 16.8 A. Energy = each appliance's watts × hours a day (an inverter AC counts at its average draw, below its rated watts), added up = 15.1 units a day, × 30 days = 460 units a month. Bill: 460 units reach the Rs 38.95 slab, so every unit is charged at that rate = Rs 17,933, plus the fixed charge for 1 kW, FC surcharge, QTA and GST (no FPA, unprotected) = Rs 23,506 a month, the same as the electricity bill calculator gives for these units."
    },
    "submit": "Calculate",
    "notice": "",
    "data_checked": [
     {
-     "label": "Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)",
-     "url": "https://webstore.iec.ch/publication/1878",
-     "checked": "2026-10-14"
+     "label": "Pakistan electricity tariff (NEPRA notification)",
+     "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf",
+     "checked": "2026-10-13"
     },
     {
      "label": "Appliance running and starting watts (Wattlyst appliance data, sources listed on the appliance list page)",
@@ -1301,7 +1292,7 @@
    },
    {
     "title": "Family home with two inverter ACs",
-    "text": "Five fans, twelve bulbs, a fridge, two 1.5 ton inverter ACs, an iron and a water pump come to 5,564 W running and 7,364 W at peak, or 30.2 A. Expect about 741 units a month, about Rs 27,022 in energy charges at the default rate, using 111% of a 5 kW sanctioned load."
+    "text": "Five fans, twelve bulbs, a fridge, two 1.5 ton inverter ACs, an iron and a water pump come to 5,564 W running and 7,364 W at peak, or 30.2 A. Expect about 741 units a month, an estimated bill of Rs 47,290 at the Rs 47.20 slab, using 139% of a 4 kW sanctioned load."
    },
    {
     "title": "Non-inverter AC plus an electric geyser on a 2 kW connection",
@@ -1408,8 +1399,8 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/load/home-electrical-load-calculator/#breadcrumb"
     },
-    "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13",
+    "dateModified": "2026-10-15",
+    "lastReviewed": "2026-10-15",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }
