@@ -1,6 +1,23 @@
 # Progress
 
-## Handoff for next phase (after the planner whole-bill saving, net billing group B) — written by the net billing review thread, 2026-10-15
+## Handoff for next phase (after the growth phase: indexing + off-page plan) — written by the growth thread, 2026-10-15
+
+Owner said "next phase new thread"; no build phase was left, so this was the off-page/growth phase from `specs/offpage-plan.md`. Plugin v0.8.10. No formula, number, data or page text changed.
+
+**What is where**
+- Owner action plan with drafts (indexing steps, brand profiles, journalist/installer/university emails, forum answer drafts, SERP content-gap ideas, tracking sheet): Claude Doc "Wattlyst growth plan: October 2026", https://claude.ai/code/artifact/cd425966-5265-4b0c-b9e3-9a3d32958ef3 . `specs/offpage-plan.md` section 6 points to it.
+- IndexNow batch: `Wattlyst_Pages::maybe_sync` fires `wattlyst_synced` after sync + purge; `Wattlyst_Endpoints::indexnow_changed` sends every live page whose manifest `lastmod` differs from option `wattlyst_indexnow_sent` in one request and saves the dates only on HTTP 200/202. `indexnow_on_publish` now covers only the owner's own (unmanaged) posts; `Wattlyst_Pages::$syncing` keeps it quiet during a sync. Production host only. Test: `tests/wordpress.test.js` "IndexNow".
+
+**Do not touch / watch**
+- The batch depends on `lastmod` (reviewed || modified in the content JSON). A page whose text changes without a new `reviewed`/`modified` date is not re-announced; bump the date when a page really changes.
+- Never post, email or reach out for the owner; drafts go in the growth doc.
+
+**Open to-dos**
+- Owner: Search Console request-indexing for the 10 listed URLs, Bing Webmaster import from GSC, create LinkedIn/Facebook/X/YouTube profiles and send the URLs (then add them to `data/site.json` `organization_same_as`, build, merge).
+- Owner decision on the 4 SERP content-gap ideas in the growth doc (units table 50 to 1,000 on the Bill Index, Inverex/Nitrox codes, DISCO option on F1, engine numbers in titles). None is built.
+- Everything open from the earlier handoffs below still stands (PEC reviewer, hPanel items, monthly data refresh, GST on export credit).
+
+## Earlier handoff (after the planner whole-bill saving, net billing group B) — written by the net billing review thread, 2026-10-15
 
 Owner said "baqi fixes pe kaam kro": group B from the net billing review is built in plugin v0.8.9. The Home Power Planner now shows the saving on the whole bill (headline result) and, below it, the energy-charge part.
 
@@ -270,6 +287,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | 2026-10-13 | Phase 3: Wave 1, 24 pages live (table below) + 7 pillar hubs; new engine tools (generator for AC/pump, home load, add-an-AC check, AC units, solar for AC / from loads / for 12 V battery, UPS backup, wire/breaker/cable sizing with data/cable-ampacity.json), 245 spec cases, browser field types (appliance, loads, checkbox), plugin v0.4.0 | done: 436 tests green, zero orphan pages (link test), Engineer Reviewer PASS after fixes, Lighthouse mobile >= 95 on every live page (most 99-100), calculators checked in a headless browser on local WP | PR phase-3 |
 | 2026-10-14 | Phase 4: Wave 2, 39 pages live (table below) incl. N1 N2 N3 N4 N5 N7, D14 solar price, Home Power Planner on the homepage (load -> inverter -> battery -> solar -> net billing -> generator), Save as PDF / WhatsApp / copy link, Roman Urdu result toggle, stripped dist/ JS, data/solar-prices.json + data/inverter-codes.json, plugin v0.5.0 | done: tests green, Engineer Reviewer pass, Lighthouse mobile 98-100 on sampled templates, every calculator checked in a headless browser on local WP | PR phase-4 |
 | 2026-10-15 | N16 AC bill calculator (owner approved the SERP idea): what one AC adds to the whole bill, slab jump, protected-status loss and the penalty on the next bills; engine/acbill.js, 7 spec cases; E5 hands the "ac bill calculator" keywords to N16; plugin v0.8.6 | done: tests green, Engineer Reviewer pass after fixes (tariff checked date on the page, AC hours ≤ 24 and days ≤ 31 for E5 too, rate wording), Lighthouse mobile 98/100/100/100 on local WP | #21 |
+| 2026-10-15 | Growth phase (owner: "next phase new thread"): IndexNow now announces changed pages in one batch after each sync (all live pages on the first run), owner growth plan with outreach and forum drafts in a Claude Doc; plugin v0.8.10 | done: tests green, local WP checked (stubbed IndexNow), no formula or page change | #25 |
 | 2026-10-15 | Net billing group B (owner: "baqi fixes pe kaam kro"): Home Power Planner saving on the whole bill (fixed charge, FC surcharge, GST; export credit set against the bill after GST), energy-charge saving shown under it; plugin v0.8.9 | done: tests green, Engineer Reviewer, local WP checked | PR (this thread) |
 | 2026-10-15 | Net billing review (owner: "ok fix kro"): buyback default now NEPRA's national average energy purchase price with primary sources (was a news figure), wording on D10 D11 H1 N8 N12 N17, old-agreement rule from NEPRA amendment, H1 inverter line names the array; Search Console verification meta tag on the home page; plugin v0.8.8 | done: tests green, Engineer Reviewer, local WP checked | PR (this thread) |
 | 2026-10-15 | SERP ideas 2 to 4 (owner: "bna do"): N17 solar size from the twelve-month bill (monthly PV output per city, net-billing month split), N18 home wiring load schedule (circuit sheet, wire + MCB per circuit), N7 upgraded to cost per backup hour (UPS vs petrol generator vs hybrid solar, dated price data); generic result table; resistive PF 1.0; plugin v0.8.7 | done: tests green, Engineer Reviewer fixes applied, checked on local WP | #22 |

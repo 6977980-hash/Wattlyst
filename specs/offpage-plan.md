@@ -32,3 +32,7 @@ After each profile is live, add its URL to `data/site.json` `organization_same_a
 ## 5. Tracking (monthly)
 Keep a sheet with: month, referring domains (Google Search Console > Links, Bing Webmaster Tools), new links and where from, pages in top 20 (Search Console > Performance, average position <= 20), embeds seen (Search Console links to /embed-calculators/ pages, or a search for "Calculator by Wattlyst").
 Phase 5 gate (build-plan.md): first referring domains from real sites; 10+ pages in the top 20.
+
+## 6. Growth phase action plan (2026-10-15)
+Owner checklist, indexing steps (Search Console request indexing, Bing import from GSC), brand profile text, email and forum drafts, SERP content-gap ideas waiting for the owner, and the monthly tracking sheet: Claude Doc "Wattlyst growth plan: October 2026", https://claude.ai/code/artifact/cd425966-5265-4b0c-b9e3-9a3d32958ef3 .
+Bing and other IndexNow engines get every changed page automatically after each deploy (plugin v0.8.10).
