@@ -13,6 +13,9 @@ final class Wattlyst_Pages {
 	private const OPT_LOCK  = 'wattlyst_sync_lock';
 	private const SHORTCODE = 'wattlyst_page';
 	public const CRON       = 'wattlyst_sync';
+	public const WARM       = 'wattlyst_warm';
+	private const OPT_WARM  = 'wattlyst_warm_queue';
+	private const WARM_BATCH = 10;
 
 	private Wattlyst_Tools $plugin;
 
@@ -23,6 +26,7 @@ final class Wattlyst_Pages {
 		add_action( 'init', array( $this, 'register' ) );
 		add_action( 'init', array( $this, 'maybe_sync' ), 20 );
 		add_action( self::CRON, array( $this, 'maybe_sync' ) );
+		add_action( self::WARM, array( $this, 'warm' ) );
 		add_filter( 'generate_show_title', array( $this, 'hide_theme_title' ) );
 		add_filter( 'generate_sidebar_layout', array( $this, 'no_sidebar' ) );
 		add_filter( 'comments_open', array( $this, 'no_comments' ), 10, 2 );
@@ -125,6 +129,51 @@ final class Wattlyst_Pages {
 			delete_option( self::OPT_LOCK );
 		}
 		self::purge_cache();
+		$this->queue_warm();
+	}
+
+	/**
+	 * After a purge every page is uncached, and several visitors or crawlers at once can exhaust the host's
+	 * database connections (audit WL-75: HTTP 500 "Error establishing a database connection" right after a
+	 * deploy). The cron event below re-fills the page cache one page at a time, home and hubs first, so only one
+	 * extra database connection is used and the cache is warm again within a few minutes.
+	 */
+	private function queue_warm(): void {
+		$first = array();
+		$rest  = array();
+		foreach ( $this->plugin->manifest()['pages'] as $row ) {
+			if ( empty( $row['live'] ) ) {
+				continue;
+			}
+			$url = 'home' === $row['type'] ? home_url( '/' ) : Wattlyst_Tools::link( $row['url'] );
+			if ( in_array( $row['type'], array( 'home', 'pillar' ), true ) ) {
+				$first[] = $url;
+			} else {
+				$rest[] = $url;
+			}
+		}
+		update_option( self::OPT_WARM, array_values( array_unique( array_merge( $first, $rest ) ) ), false );
+		wp_clear_scheduled_hook( self::WARM );
+		wp_schedule_single_event( time() + 15, self::WARM );
+	}
+
+	/** One batch of the warm-up: fetch each page in turn (never in parallel), then schedule the next batch. */
+	public function warm(): void {
+		$queue = get_option( self::OPT_WARM );
+		if ( ! is_array( $queue ) || ! $queue ) {
+			delete_option( self::OPT_WARM );
+			return;
+		}
+		$batch = array_splice( $queue, 0, self::WARM_BATCH );
+		update_option( self::OPT_WARM, $queue, false );
+		foreach ( $batch as $url ) {
+			wp_remote_get( $url, array( 'timeout' => 20, 'redirection' => 0, 'user-agent' => 'Wattlyst cache warm-up (+' . home_url( '/' ) . ')' ) );
+		}
+		if ( $queue ) {
+			wp_schedule_single_event( time() + 10, self::WARM, array( count( $queue ) ) );
+		} else {
+			delete_option( self::OPT_WARM );
+		}
 	}
 
 	/**
