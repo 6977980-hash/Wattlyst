@@ -2,7 +2,7 @@
 
 ## Handoff for next phase (after the homepage compact layout) — written by the decision engine thread, 2026-10-15
 
-Owner asked for a compact homepage, arrangement only ("han" to the audit in `/mnt/project-files/electricity-tool-hub/audit/homepage-compact-2026-10-15.md`). Plugin v0.8.14. No formula, data, engine or page text changed.
+Owner asked for a compact homepage, arrangement only ("han" to the audit in `/mnt/project-files/electricity-tool-hub/audit/homepage-compact-2026-10-15.md`). Plugin v0.8.14; follow-up v0.8.15 (owner screenshots): planner fields in two aligned columns, task cards equal height (`grid-auto-rows:1fr`, two tools shown via `HOME_CARD_LINKS`, descriptions and tool names clamped). No formula, data, engine or page text changed.
 
 **What is where**
 - Folds, all text still in the HTML: `Wattlyst_Render::how( true )` (home "how" as one `<li>` per sentence, first three shown, checkbox toggle `.wl-tg`/`.wl-tg-l`, no script), `key_facts( 3 )` (rest under `details.wl-more`), `sections( true )` (first paragraph open, rest under "Read more"). Only the home branch of `html()` passes these flags.
@@ -345,6 +345,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | 2026-10-15 | Home Power Decision Engine on H1 (owner: "han"): on-grid vs hybrid vs UPS/generator, budget, net over years, data dates; D14/N3 live price-notice fix; plugin v0.8.12 | done: tests green, Engineer Reviewer fixes applied, local WP checked | PR #27 |
 | 2026-10-15 | Decision Engine fourth setup (owner: "bna do"): on-grid solar + UPS or generator, UPS recharge on the net-billed bill; plugin v0.8.13 | done: tests green, Engineer Reviewer, local WP checked | PR #28 |
 | 2026-10-15 | Homepage compact layout (owner: "han"): folds for how/key facts/sections, setups table marks and phone cards, tighter planner; plugin v0.8.14 | done: tests green, local WP checked | PR #29 |
+| 2026-10-15 | Homepage follow-up (owner screenshots): aligned planner fields, equal-height task cards; plugin v0.8.15 | done: tests green, local WP checked | PR #30 |
 | 2026-10-15 | SERP ideas (owner: "4ron idea cover krny hain"): Bill Index units table 50 to 1,000 with lifeline line, engine numbers in four titles, Inverex Nitrox error codes; idea 3 already live as F2-F12; plugin v0.8.11 | done: tests green, Engineer Reviewer fixes applied (caption kW, lifeline line, F16/F28/F32 safety), local WP checked | PR (this thread) |
 | 2026-10-15 | Growth phase (owner: "next phase new thread"): IndexNow now announces changed pages in one batch after each sync (all live pages on the first run), owner growth plan with outreach and forum drafts in a Claude Doc; plugin v0.8.10 | done: tests green, local WP checked (stubbed IndexNow), no formula or page change | #25 |
 | 2026-10-15 | Net billing group B (owner: "baqi fixes pe kaam kro"): Home Power Planner saving on the whole bill (fixed charge, FC surcharge, GST; export credit set against the bill after GST), energy-charge saving shown under it; plugin v0.8.9 | done: tests green, Engineer Reviewer, local WP checked | PR (this thread) |

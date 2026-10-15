@@ -72,7 +72,7 @@
 .wl-tasks{margin:2.5rem 0 1rem}
 .wl-page .wl-tasks>h2{margin:0 0 .35rem;font-size:1.9rem;text-align:center;letter-spacing:-.02em}
 .wl-page .wl-tasks-lead{text-align:center;color:var(--wl-muted);max-width:38rem;margin:0 auto 1.6rem}
-.wl-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,16.5rem),1fr));gap:1rem;align-items:start}
+.wl-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,16.5rem),1fr));gap:1rem;grid-auto-rows:1fr}
 .wl-card{position:relative;display:flex;flex-direction:column;padding:1rem 1.1rem .9rem;border:1px solid var(--wl-line);border-radius:18px;background:#fff;box-shadow:0 1px 2px rgba(19,34,28,.05);overflow:hidden;transition:transform .18s,box-shadow .18s,border-color .18s}
 .wl-card::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--wl-c)}
 .wl-card:hover{transform:translateY(-4px);border-color:var(--wl-c);box-shadow:var(--wl-shadow-lg)}
@@ -81,13 +81,14 @@
 .wl-page .wl-card h3{margin:0 0 .4rem;font-size:1.22rem}
 .wl-page .wl-card h3 a{color:var(--wl-ink);text-decoration:none}
 .wl-card h3 a::after{content:"";position:absolute;inset:0;z-index:0}
-.wl-page .wl-card p{margin:0 0 .7rem;color:var(--wl-muted);font-size:.93rem;line-height:1.55}
+.wl-page .wl-card p{margin:0 0 .7rem;color:var(--wl-muted);font-size:.93rem;line-height:1.55;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .wl-page .wl-card ul{list-style:none;margin:0;padding:0}
 .wl-card li{margin:0;border-top:1px solid #edf3f0}
 .wl-page .wl-card li a{position:relative;z-index:1;display:flex;align-items:center;gap:.55rem;min-height:44px;padding:.35rem 0;font-size:.93rem;font-weight:500;line-height:1.35;color:var(--wl-ink);text-decoration:none}
 .wl-card li a::before{content:"";flex:none;width:.38rem;height:.38rem;border-right:2px solid var(--wl-c);border-top:2px solid var(--wl-c);transform:rotate(45deg)}
 .wl-page .wl-card li a:hover{color:var(--wl-c);text-decoration:underline}
-.wl-card-cta{padding-top:.5rem;display:flex;align-items:center;gap:.45rem;font-size:.95rem;font-weight:700;color:var(--wl-c)}
+.wl-card li span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.wl-card-cta{margin-top:auto;padding-top:.5rem;white-space:nowrap;display:flex;align-items:center;gap:.45rem;font-size:.9rem;font-weight:700;color:var(--wl-c)}
 .wl-card-cta::after{content:"\2192";transition:transform .18s}
 .wl-card:hover .wl-card-cta::after{transform:translateX(5px)}
 /* Tools past the first few fold under "Show N more" (links stay in the HTML, WL-78). */
@@ -146,7 +147,7 @@
 #wl-h1 .wl-hint{font-size:.8rem;line-height:1.4;margin-top:.2rem}
 #wl-h1 .wl-rtable td{font-size:.9rem;padding:.55rem .6rem}
 @media (min-width:601px){#wl-h1 .wl-loads td{padding:.25rem .45rem}}
-@media (min-width:769px){#wl-h1 .wl-in>.wl-fields{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (min-width:769px){#wl-h1 .wl-in>.wl-fields{grid-template-columns:repeat(2,minmax(0,1fr))}#wl-h1 .wl-field>label{font-size:.9rem}}
 @media (min-width:1024px){.wl-home-info{grid-template-columns:repeat(2,minmax(0,1fr))}.wl-home-info>section:first-child{grid-column:1/-1;columns:2;column-gap:2rem}.wl-home-info>section:first-child::before,.wl-home-info>section:first-child>h2{column-span:all}}
 @media (max-width:600px){
 #wl-h1 .wl-loads thead{position:static;width:auto;height:auto;clip:auto;clip-path:none;display:block}
