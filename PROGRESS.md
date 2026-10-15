@@ -1,6 +1,22 @@
 # Progress
 
-## Handoff for next phase (after the net billing buyback fix) — written by the net billing review thread, 2026-10-15
+## Handoff for next phase (after the planner whole-bill saving, net billing group B) — written by the net billing review thread, 2026-10-15
+
+Owner said "baqi fixes pe kaam kro": group B from the net billing review is built in plugin v0.8.9. The Home Power Planner now shows the saving on the whole bill (headline result) and, below it, the energy-charge part.
+
+**What is where**
+- Rule: `specs/formulas.md` H1 planner paragraph ("Whole bill"). Engine: `engine/planner.js` `home_plan` calls `bill_total` from `engine/bill.js` twice (all units before, imported units after) and sets the export credit against the bill after GST; outputs `full_before_rs`, `full_import_rs`, `export_credit_rs`, `full_after_rs`, `full_carry_forward_rs`, `full_saving_rs`, `fixed_before_rs`, `fixed_after_rs`, `gst_pct`.
+- Page: `content/pages/H1.json` outputs (`full_saving_rs` first, `saving_rs` labelled "Of which energy charge"), answer, step text, FAQ, `how`/`how_ur`. Spec cases: the default home_plan case carries the whole-bill values; a new case covers a credit larger than the import bill.
+
+**Do not touch / watch**
+- GST on the export credit is the cautious reading (not reduced by exports), marked [VERIFY] in formulas.md; change it only with a real net-billing bill as the source.
+- QTA and FPA are zero in the planner (no period input); the bill calculators keep them.
+
+**Open to-dos**
+- Confirm the GST treatment from a prosumer's net-billing bill.
+- Everything open from the earlier handoffs below still stands.
+
+## Earlier handoff (after the net billing buyback fix) — written by the net billing review thread, 2026-10-15
 
 Owner asked to check an outside review of the net billing / solar saving figures and approved fix groups A (buyback rate from NEPRA), C (planner inverter wording) and D (NEPRA basis line). Group B (planner saving on the whole bill: fixed charge, surcharges, GST) is not built; it waits for the owner and for the open GST-on-export-credit question. Review verdict and sources: `/mnt/project-files/electricity-tool-hub/audit/net-billing-review-2026-10-15.md`. Plugin v0.8.8.
 
@@ -15,7 +31,7 @@ Owner asked to check an outside review of the net billing / solar saving figures
 - The spec case "Import 400, export 300 units, buyback 11" uses an explicit 11 on purpose (editable field), keep it.
 
 **Open to-dos**
-- Group B (whole-bill saving in the planner) if the owner approves; confirm how GST treats the export credit under net billing first.
+- ~~Group B (whole-bill saving in the planner)~~ built in v0.8.9, see the handoff above.
 - Everything open from the earlier handoffs below still stands.
 
 ## Earlier handoff (after N17, N18 and the N7 upgrade: SERP ideas 2 to 4) — written by the cross-check thread, 2026-10-15
@@ -254,6 +270,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | 2026-10-13 | Phase 3: Wave 1, 24 pages live (table below) + 7 pillar hubs; new engine tools (generator for AC/pump, home load, add-an-AC check, AC units, solar for AC / from loads / for 12 V battery, UPS backup, wire/breaker/cable sizing with data/cable-ampacity.json), 245 spec cases, browser field types (appliance, loads, checkbox), plugin v0.4.0 | done: 436 tests green, zero orphan pages (link test), Engineer Reviewer PASS after fixes, Lighthouse mobile >= 95 on every live page (most 99-100), calculators checked in a headless browser on local WP | PR phase-3 |
 | 2026-10-14 | Phase 4: Wave 2, 39 pages live (table below) incl. N1 N2 N3 N4 N5 N7, D14 solar price, Home Power Planner on the homepage (load -> inverter -> battery -> solar -> net billing -> generator), Save as PDF / WhatsApp / copy link, Roman Urdu result toggle, stripped dist/ JS, data/solar-prices.json + data/inverter-codes.json, plugin v0.5.0 | done: tests green, Engineer Reviewer pass, Lighthouse mobile 98-100 on sampled templates, every calculator checked in a headless browser on local WP | PR phase-4 |
 | 2026-10-15 | N16 AC bill calculator (owner approved the SERP idea): what one AC adds to the whole bill, slab jump, protected-status loss and the penalty on the next bills; engine/acbill.js, 7 spec cases; E5 hands the "ac bill calculator" keywords to N16; plugin v0.8.6 | done: tests green, Engineer Reviewer pass after fixes (tariff checked date on the page, AC hours ≤ 24 and days ≤ 31 for E5 too, rate wording), Lighthouse mobile 98/100/100/100 on local WP | #21 |
+| 2026-10-15 | Net billing group B (owner: "baqi fixes pe kaam kro"): Home Power Planner saving on the whole bill (fixed charge, FC surcharge, GST; export credit set against the bill after GST), energy-charge saving shown under it; plugin v0.8.9 | done: tests green, Engineer Reviewer, local WP checked | PR (this thread) |
 | 2026-10-15 | Net billing review (owner: "ok fix kro"): buyback default now NEPRA's national average energy purchase price with primary sources (was a news figure), wording on D10 D11 H1 N8 N12 N17, old-agreement rule from NEPRA amendment, H1 inverter line names the array; Search Console verification meta tag on the home page; plugin v0.8.8 | done: tests green, Engineer Reviewer, local WP checked | PR (this thread) |
 | 2026-10-15 | SERP ideas 2 to 4 (owner: "bna do"): N17 solar size from the twelve-month bill (monthly PV output per city, net-billing month split), N18 home wiring load schedule (circuit sheet, wire + MCB per circuit), N7 upgraded to cost per backup hour (UPS vs petrol generator vs hybrid solar, dated price data); generic result table; resistive PF 1.0; plugin v0.8.7 | done: tests green, Engineer Reviewer fixes applied, checked on local WP | #22 |
 | 2026-10-15 | Design cross-check (owner request): subgrid checkbox row, sticky header offset token, shorter phone appliance cards; SERP ideas proposed, none built; plugin v0.8.5 | done: tests green, every live page measured before/after on local WP | PR (this phase) |

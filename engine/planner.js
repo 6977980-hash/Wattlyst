@@ -4,13 +4,14 @@
 import { calculator, CalcError, frac, nonneg, pos, dflt, has } from './core.js';
 import { inverter_size, generator_size } from './sizing.js';
 import { solar_from_loads, solar_battery } from './solar.js';
-import { bill_energy, net_billing } from './bill.js';
+import { bill_energy, bill_total, net_billing } from './bill.js';
 
 /**
  * Monthly solar split: self-used = min(solar, use × day share); export = solar − self-used;
- * import = use − self-used, with the array capped at the sanctioned kW (net-billing limit). Bills are
- * energy charges at the slab tariff only; fixed charge, per-unit surcharges and GST are left out, so the
- * real saving is somewhat higher than this estimate.
+ * import = use − self-used, with the array capped at the sanctioned kW (net-billing limit). Two bill
+ * comparisons: energy charge only, and the whole bill (section F bill_total: energy + fixed + FC surcharge
+ * + QTA + FPA, GST on that), where the import bill carries every charge and the export credit is set
+ * against the bill after GST.
  */
 export const home_plan = calculator((i, d) => {
   const inv = inverter_size.raw(i, d);
@@ -61,6 +62,17 @@ export const home_plan = calculator((i, d) => {
     bill_before_rs: before.energy_rs, rate_before: before.rate, bill_after_rs: nb.net_energy_rs, carry_forward_rs: nb.carry_forward_rs,
     saving_rs: Math.max(0, before.energy_rs - nb.net_energy_rs),
     solar_above_sanctioned: above,
+  });
+  // Whole bill: the same add-on defaults as the bill calculator (section F). Under net billing the imported
+  // units carry the fixed charge, surcharges and GST; the export credit is then set against that bill.
+  const full_before = bill_total.raw({ ...bill, units: monthly_units }, d);
+  const full_import = bill_total.raw({ ...bill, units: import_units }, d);
+  const full_diff = full_import.total_rs - nb.export_credit_rs;
+  Object.assign(out, {
+    full_before_rs: full_before.total_rs, full_import_rs: full_import.total_rs, export_credit_rs: nb.export_credit_rs,
+    full_after_rs: Math.max(0, full_diff), full_carry_forward_rs: Math.max(0, -full_diff),
+    full_saving_rs: Math.max(0, full_before.total_rs - Math.max(0, full_diff)),
+    fixed_before_rs: full_before.fixed_rs, fixed_after_rs: full_import.fixed_rs, gst_pct: full_before.gst_pct,
   });
 
   const gen = generator_size.raw(i, d);
