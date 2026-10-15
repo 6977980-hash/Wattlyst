@@ -123,3 +123,19 @@ export function backupAtEnd(d, e) {
   return { ...d, component_prices: { items: d.component_prices.items.map(one) },
     backup_prices: { ...bp, ups: bp.ups.map(one), generators: bp.generators.map(one), generator_upkeep: { ...up, oil_rs_per_l_low: up[`oil_rs_per_l_${e}`], oil_rs_per_l_high: up[`oil_rs_per_l_${e}`] } } };
 }
+
+/**
+ * Home decision engine: N7's UPS (only when its charger refills the bank) or petrol generator for a backup load, whichever
+ * costs less over the years with the UPS grid recharge at upsMonth(extra units a month: the recharge less the backup energy the home already uses) rupees a month; the buy price
+ * of the same option with every equipment range at its low and high end. Null when the load is above the price lists.
+ */
+export function standbyFor(bin, d, upsMonth) {
+  const n = backup_compare(bin, d);
+  if (!n.ok) return null;
+  // The backup load is already in the home's monthly units; the grid only adds the charge and UPS losses on top.
+  const r = Math.max(0, n.recharge_kwh_year / 12 - n.day_kwh * n.days);
+  const run = upsMonth(r);
+  const u = n.ups_ok && n.ups_buy + n.ups_repl_rs + bin.years * 12 * run <= n.gen_total;
+  const [lo, hi] = ['low', 'high'].map((e) => backup_compare(bin, backupAtEnd(d, e))[u ? 'ups_buy' : 'gen_buy']);
+  return { u, r, lo, hi, key: u ? 'ups' : 'gen', option: u ? `UPS ${n.ups_kva} kVA + ${n.batteries} tubular batter${n.batteries > 1 ? 'ies' : 'y'}` : `Petrol generator ${n.gen_kva} kVA`, repl: u ? n.ups_repl_rs : 0, run: u ? run : n.gen_run_year / 12 };
+}
