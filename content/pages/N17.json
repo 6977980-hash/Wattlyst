@@ -1,0 +1,371 @@
+{
+ "id": "N17",
+ "status": "publish",
+ "template": "tool",
+ "h1": "Solar System Size from Your Electricity Bill, Month by Month",
+ "author": "ali-ahmad",
+ "published": "2026-10-15",
+ "reviewed": "2026-10-15",
+ "calc": "solar_seasonal",
+ "fields": [
+  {
+   "name": "city",
+   "label": "City",
+   "type": "select",
+   "options_from": "cities",
+   "default": "lahore",
+   "hint": "Sets what one kW of solar makes in each month in that city, from Global Solar Atlas data."
+  },
+  {
+   "name": "jan",
+   "label": "Units in January",
+   "unit": "kWh",
+   "default": 250,
+   "hint": "Copy the units of each month from the history table on your bill. The defaults are an example home with ACs in summer."
+  },
+  {
+   "name": "feb",
+   "label": "Units in February",
+   "unit": "kWh",
+   "default": 230
+  },
+  {
+   "name": "mar",
+   "label": "Units in March",
+   "unit": "kWh",
+   "default": 280
+  },
+  {
+   "name": "apr",
+   "label": "Units in April",
+   "unit": "kWh",
+   "default": 400
+  },
+  {
+   "name": "may",
+   "label": "Units in May",
+   "unit": "kWh",
+   "default": 600
+  },
+  {
+   "name": "jun",
+   "label": "Units in June",
+   "unit": "kWh",
+   "default": 700
+  },
+  {
+   "name": "jul",
+   "label": "Units in July",
+   "unit": "kWh",
+   "default": 720
+  },
+  {
+   "name": "aug",
+   "label": "Units in August",
+   "unit": "kWh",
+   "default": 680
+  },
+  {
+   "name": "sep",
+   "label": "Units in September",
+   "unit": "kWh",
+   "default": 560
+  },
+  {
+   "name": "oct",
+   "label": "Units in October",
+   "unit": "kWh",
+   "default": 380
+  },
+  {
+   "name": "nov",
+   "label": "Units in November",
+   "unit": "kWh",
+   "default": 260
+  },
+  {
+   "name": "dec",
+   "label": "Units in December",
+   "unit": "kWh",
+   "default": 260
+  },
+  {
+   "name": "kw",
+   "label": "System size to test",
+   "unit": "kW",
+   "placeholder": "Blank = size for the year",
+   "advanced": true,
+   "hint": "Leave blank to test the size that covers the whole year. Enter a size from a quote to see its month-by-month balance."
+  },
+  {
+   "name": "panel_w",
+   "label": "Panel size",
+   "unit": "W",
+   "default": "@panel_w",
+   "advanced": true,
+   "hint": "Watts of one panel. Changes the panel count and the size rounded up to whole panels."
+  },
+  {
+   "name": "buyback_rs",
+   "label": "Buyback rate",
+   "unit": "Rs per unit",
+   "default": "@data.tariff.net_billing.buyback_rs_per_unit_default",
+   "advanced": true,
+   "hint": "Rs per exported unit under net billing; not yet confirmed on a NEPRA page, change it when your DISCO tells you the rate."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "installed_kw",
+   "label": "Solar size for the year",
+   "spec": "2",
+   "unit": "kW"
+  },
+  {
+   "key": "panels",
+   "label": "Panels",
+   "spec": "int"
+  },
+  {
+   "key": "kw_peak",
+   "label": "Size to cover the hardest month",
+   "spec": "2",
+   "unit": "kW"
+  },
+  {
+   "key": "grid_units_year",
+   "label": "Units still from the grid a year",
+   "spec": "int"
+  },
+  {
+   "key": "export_units_year",
+   "label": "Units exported a year",
+   "spec": "int"
+  },
+  {
+   "key": "export_credit_rs",
+   "label": "Credit for exported units a year",
+   "spec": "rs"
+  },
+  {
+   "key": "covered_pct",
+   "label": "Share of the year's units covered",
+   "spec": "int",
+   "unit": "%"
+  }
+ ],
+ "result_table": {
+  "key": "months",
+  "caption": "Month by month with {{out.installed_kw|2}} kW of solar",
+  "columns": [
+   {
+    "key": "month",
+    "label": "Month",
+    "spec": "raw"
+   },
+   {
+    "key": "units",
+    "label": "Units used",
+    "spec": "int"
+   },
+   {
+    "key": "solar",
+    "label": "Solar units",
+    "spec": "int"
+   },
+   {
+    "key": "grid",
+    "label": "From the grid",
+    "spec": "int"
+   },
+   {
+    "key": "exported",
+    "label": "Exported",
+    "spec": "int"
+   }
+  ]
+ },
+ "answer": "Size solar from all twelve months on your bill, not from one bill. The default Lahore home uses {{out.annual_units|int}} units a year, which needs {{out.installed_kw|2}} kW ({{out.panels|int}} panels). A single bill would suggest anything from {{out.kw_from_low_bill|2}} kW ({{out.low_month|raw}}) to {{out.kw_from_high_bill|2}} kW ({{out.high_month|raw}}), and covering {{out.peak_month|raw}} fully would take {{out.kw_peak|2}} kW.",
+ "how": "Year: {{out.annual_units|int}} units ÷ {{out.pvout_year|int}} units per kW a year in {{out.city_name|raw}} = {{out.kw_annual|2}} kW. System tested: {{out.kw|2}} kW, rounded up to {{out.panels|int}} panels × {{out.panel_w}} W = {{out.installed_kw|2}} kW, making {{out.solar_year|int}} units a year. Hardest month: {{out.peak_month|raw}}, {{out.peak_units|int}} units ÷ {{out.peak_pvout|1}} units per kW = {{out.kw_peak|2}} kW. Each month, solar = system kW × that month's units per kW; any shortfall comes from the grid ({{out.grid_units_year|int}} units a year, {{out.months_short|int}} months short) and any surplus is exported: {{out.export_units_year|int}} units × {{out.buyback_rs|rs2}} = {{out.export_credit_rs|rs}}.",
+ "key_facts": [
+  "One kW of solar in Lahore makes about {{out.pvout_year|int}} units a year, but far more in spring than in the foggy winter or the monsoon, so the same system gives a surplus in some months and a shortfall in others.",
+  "Sizing from one bill misleads: the default home's lowest bill ({{out.low_month|raw}}) suggests {{out.kw_from_low_bill|2}} kW and its highest ({{out.high_month|raw}}) suggests {{out.kw_from_high_bill|2}} kW.",
+  "Sized for the whole year, {{out.installed_kw|2}} kW covers {{out.covered_pct|int}}% of the year's units; {{out.months_short|int}} summer months still take {{out.grid_units_year|int}} units from the grid.",
+  "Covering the hardest month ({{out.peak_month|raw}}) would need {{out.kw_peak|2}} kW; under net billing the extra winter surplus earns only the buyback rate of {{out.buyback_rs|rs2}} a unit."
+ ],
+ "formula": {
+  "text": "kW for the year = Σ monthly units ÷ Σ monthly units per kW of solar",
+  "lines": [
+   "Units per kW of solar for each month = Global Solar Atlas PV output for the city (kWh per kWp in that month)",
+   "kW for the hardest month = the largest of (month's units ÷ month's units per kW)",
+   "Solar in a month = system kW × that month's units per kW; from the grid = units − solar if positive; exported = solar − units if positive",
+   "Credit = exported units × buyback rate"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "Why one electricity bill gives the wrong solar size",
+   "p": [
+    "Most solar calculators divide one month's units by thirty and by the yearly average sun hours. That works only when every month looks alike. A home with ACs uses {{out.high_units|int}} units in {{out.high_month|raw}} and {{out.low_units|int}} in {{out.low_month|raw}}, so the answer swings from {{out.kw_from_low_bill|2}} kW to {{out.kw_from_high_bill|2}} kW depending on which bill you pick up.",
+    "The sun changes too. In Lahore one kW makes about {{out.peak_pvout|int}} units in {{out.peak_month|raw}} but more in spring, because July is hazy and humid with monsoon cloud. Using all twelve months removes both guesses."
+   ]
+  },
+  {
+   "h2": "How the month-by-month balance works",
+   "p": [
+    "For each month the calculator multiplies the system size by that month's PV output for your city, then compares it with the units you used. A shortfall is bought from the grid and a surplus is exported.",
+    "With {{out.installed_kw|2}} kW the default home takes {{out.grid_units_year|int}} units from the grid over {{out.months_short|int}} months and exports {{out.export_units_year|int}} units in the others. This is a monthly balance: night-time use still comes from the grid, so the real import is higher unless you add a battery."
+   ]
+  },
+  {
+   "h2": "Should you size solar for summer or for the whole year?",
+   "p": [
+    "Sizing for the hardest month ({{out.kw_peak|2}} kW here) leaves large surpluses from October to April. Under net billing each exported unit earns the buyback rate, {{out.buyback_rs|rs2}} in our default, while a unit bought from the grid costs your slab rate, so oversizing for summer pays back slowly.",
+    "Sizing for the year is the usual compromise. If your sanctioned load allows it and the summer bill is the problem, test a size between the two in Advanced settings and look at the months short and the units exported."
+   ]
+  },
+  {
+   "h2": "Where to find your twelve months of units",
+   "p": [
+    "Pakistani electricity bills print a history of the last twelve months of units next to the current reading. Copy each month into its box. If a month is missing, enter the same month from an older bill or your best estimate.",
+    "Use units, not rupees: the rupee amount changes with slabs, taxes and the FPA, while the units are what the panels have to make."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {},
+   "title": "Lahore home with summer ACs",
+   "text": "{{out.annual_units|int}} units a year ÷ {{out.pvout_year|int}} units per kW = {{out.kw_annual|2}} kW, rounded up to {{out.panels|int}} panels = {{out.installed_kw|2}} kW. It exports {{out.export_units_year|int}} units in the cooler months and still takes {{out.grid_units_year|int}} units from the grid in summer, worst in {{out.worst_month|raw}} ({{out.worst_grid_units|int}} units)."
+  },
+  {
+   "inputs": {
+    "city": "karachi"
+   },
+   "title": "The same bills in Karachi",
+   "text": "One kW makes {{out.pvout_year|int}} units a year in Karachi, so {{out.installed_kw|2}} kW covers the year. The monsoon makes {{out.peak_month|raw}} the hardest month: covering it fully would take {{out.kw_peak|2}} kW."
+  },
+  {
+   "inputs": {
+    "kw": 6.3
+   },
+   "title": "Sizing for the hardest month instead",
+   "text": "A {{out.installed_kw|2}} kW system covers {{out.covered_pct|int}}% of the year's units, but it exports {{out.export_units_year|int}} units a year, worth only {{out.export_credit_rs|rs}} at {{out.buyback_rs|rs2}} a unit."
+  },
+  {
+   "inputs": {
+    "city": "islamabad",
+    "jan": 350,
+    "feb": 330,
+    "mar": 300,
+    "apr": 300,
+    "may": 320,
+    "jun": 340,
+    "jul": 350,
+    "aug": 340,
+    "sep": 320,
+    "oct": 300,
+    "nov": 320,
+    "dec": 360
+   },
+   "title": "Islamabad home with an electric heater in winter",
+   "text": "Units peak in winter, when the sun is weakest, so {{out.installed_kw|2}} kW for the year still leaves {{out.months_short|int}} months short; {{out.peak_month|raw}} is the hardest month and would need {{out.kw_peak|2}} kW."
+  }
+ ],
+ "table": {
+  "caption": "Solar size for the default twelve-month history ({{out.annual_units|int}} units a year) by city",
+  "rows": [
+   {
+    "city": "lahore"
+   },
+   {
+    "city": "karachi"
+   },
+   {
+    "city": "islamabad"
+   },
+   {
+    "city": "peshawar"
+   },
+   {
+    "city": "quetta"
+   },
+   {
+    "city": "multan"
+   }
+  ],
+  "columns": [
+   {
+    "label": "City",
+    "tpl": "{{out.city_name|raw}}"
+   },
+   {
+    "label": "Size for the year",
+    "tpl": "{{out.installed_kw|2}} kW"
+   },
+   {
+    "label": "Size for the hardest month",
+    "tpl": "{{out.kw_peak|2}} kW ({{out.peak_month|raw}})"
+   },
+   {
+    "label": "From the grid a year",
+    "tpl": "{{out.grid_units_year|int}} units"
+   },
+   {
+    "label": "Exported a year",
+    "tpl": "{{out.export_units_year|int}} units"
+   }
+  ]
+ },
+ "mistakes": [
+  "Sizing from the summer bill alone. It gives the biggest system and the largest winter surplus, sold back at the low buyback rate.",
+  "Sizing from a winter bill. The system then falls well short from May to September, when units and bills are highest.",
+  "Using the yearly average sun hours for every month. December and July make far fewer units per kW than April.",
+  "Entering rupees instead of units. The bill amount includes slabs, taxes and the FPA; solar is sized on units."
+ ],
+ "safety": "A solar system on the roof and its grid connection must be installed by a licensed electrician or an AEDB-certified installer, and net billing needs your DISCO's approval and a sanctioned load at least as large as the system.",
+ "faq": [
+  {
+   "q": "How do I calculate solar system size from my electricity bill?",
+   "a": "Add the units of all twelve months on the bill and divide by what one kW of solar makes in your city in a year. The default Lahore home uses {{out.annual_units|int}} units a year and needs {{out.installed_kw|2}} kW."
+  },
+  {
+   "q": "Why do different calculators give such different solar sizes for my home?",
+   "a": "Most use one bill. The default home's bills suggest anything from {{out.kw_from_low_bill|2}} kW to {{out.kw_from_high_bill|2}} kW depending on the month; twelve months give one answer."
+  },
+  {
+   "q": "Will my solar system cover my bill in July?",
+   "a": "Usually not fully when it is sized for the year. In the default example {{out.worst_month|raw}} still takes {{out.worst_grid_units|int}} units from the grid, because use is high and monsoon cloud lowers output."
+  },
+  {
+   "q": "Is it worth sizing solar for the summer peak?",
+   "a": "Only if you accept a large winter surplus. Covering {{out.peak_month|raw}} needs {{out.kw_peak|2}} kW in the default example, and the extra units in other months earn only the buyback rate."
+  },
+  {
+   "q": "Does this include the battery for night use?",
+   "a": "No. It balances units month by month. For backup at night or in loadshedding, size a battery with the solar battery calculator."
+  },
+  {
+   "q": "Where is the twelve-month history on my bill?",
+   "a": "Pakistani DISCO bills print the units of the past twelve months in a small table, usually next to the meter readings. Copy each month into its box."
+  }
+ ],
+ "related": [
+  "D7",
+  "D10",
+  "D11",
+  "D2",
+  "F1"
+ ],
+ "next": "D14",
+ "sources": [
+  {
+   "label": "Global Solar Atlas: monthly PV output (PVOUT) for each city",
+   "url": "https://globalsolaratlas.info/"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

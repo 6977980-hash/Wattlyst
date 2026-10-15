@@ -1,0 +1,915 @@
+{
+ "id": "N18",
+ "type": "tool",
+ "silo": "W",
+ "url": "/wiring/home-wiring-load-schedule/",
+ "h1": "Home Wiring Load Schedule: Wire and MCB for Every Circuit",
+ "title": "Home Wiring Load Schedule: Wire & MCB per Circuit | Wattlyst",
+ "meta": "List every circuit in your house and get the wire size, MCB and voltage drop for each one, in a printable sheet to hand to your electrician.",
+ "primary_keyword": "home wiring load schedule",
+ "wave": 3,
+ "status": "publish",
+ "reviewed": "2026-10-15",
+ "published": "2026-10-15",
+ "author": "ali-ahmad",
+ "related": [
+  "W2",
+  "W3",
+  "W5",
+  "W1",
+  "N4"
+ ],
+ "next": "N4",
+ "parent": "P-W",
+ "live": true,
+ "breadcrumb": [
+  {
+   "name": "Home",
+   "url": "/"
+  },
+  {
+   "name": "Wiring Calculators",
+   "url": "/wiring/"
+  },
+  {
+   "name": "Home Wiring Load Schedule: Wire and MCB for Every Circuit",
+   "url": "/wiring/home-wiring-load-schedule/"
+  }
+ ],
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "What a home wiring load schedule is and why your electrician needs one",
+    "p": [
+     "A load schedule, or circuit sheet, is the list an electrician wires the distribution board from: one line per circuit with what it feeds, its current, the MCB and the cable. In many Pakistani homes the whole house is wired on habit, the same 7/29 everywhere, which leaves the AC and geyser circuits too thin and the lights oversized.",
+     "Fill in your circuits above, press Calculate and use Save as PDF to print the sheet. Each row uses the same rules as the wire size and MCB calculators on this site."
+    ]
+   },
+   {
+    "h2": "How each circuit's MCB and cable are chosen",
+    "p": [
+     "The calculator turns each circuit's watts into amps at 230 V with the power factor of its load type. The MCB is the next standard size at or above that current, larger for motors and compressors that run near full current for hours. The curve follows the load: B for lights and heaters, C for sockets, ACs and motors.",
+     "The cable must carry more than the MCB lets through, after the rating is reduced for hot air and for circuits packed together, and the voltage drop over its length must stay within the limit. On short runs the current decides; on long runs, such as a water motor on the roof, the voltage drop often does."
+    ]
+   },
+   {
+    "h2": "Connected load is not your sanctioned load",
+    "p": [
+     "The sheet adds up 10.05 kW for the example house, but the lights, geyser, motor and both ACs rarely run together. The main switch and the sanctioned load are sized on the load that runs at the same time, which the sanctioned load calculator works out.",
+     "Keep each heavy appliance on its own circuit. Two ACs on one circuit need a bigger MCB and cable than either alone, and a fault on one switches off the other."
+    ]
+   },
+   {
+    "h2": "Printing the sheet and checking it on site",
+    "p": [
+     "Use Save as PDF under the results to print the table or send it on WhatsApp. Ask the electrician to note the actual cable route length for each circuit, because a longer route than you guessed can push a circuit to the next cable size.",
+     "The sizes are planning values for copper PVC cable. Aluminium cable, three-phase supply and buried runs need a separate design by a licensed electrician."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "What is a load schedule in house wiring?",
+    "a": "A list of every circuit on the distribution board with what it feeds, its current, MCB rating and curve, and cable size. The example house has 6 circuits and 10.05 kW connected."
+   },
+   {
+    "q": "Which wire and MCB for a 1.5 ton AC circuit?",
+    "a": "For a Split AC 1.5 ton inverter on a 12 m run in conduit: a 16 A C curve MCB and 2.5 mm² (7/29) copper cable."
+   },
+   {
+    "q": "Which wire and MCB for an electric geyser?",
+    "a": "The Electric geyser (storage, 40-gallon class) draws 16.3 A, so it takes a 20 A B curve MCB on 4 mm² cable."
+   },
+   {
+    "q": "Why does a long run need a thicker cable?",
+    "a": "Voltage drop grows with length. On a long run the cable that carries the current safely can still lose too many volts, so the next size up is chosen; the sheet shows each circuit's drop."
+   },
+   {
+    "q": "Can I print this circuit sheet for my electrician?",
+    "a": "Yes. Press Calculate, then Save as PDF under the results; the table prints with every circuit, or share the link on WhatsApp."
+   },
+   {
+    "q": "Is the total on this sheet my sanctioned load?",
+    "a": "No. It is the connected load, everything at once. Use the sanctioned load calculator for the load that runs together."
+   }
+  ],
+  "key_facts": [
+   "A home wiring load schedule (circuit sheet) gives each circuit its own MCB rating, MCB curve and cable size, so the electrician wires every room to the same rules.",
+   "Every circuit is sized twice: the cable must carry the current at the hottest air temperature (45 °C by default), and the voltage drop over the run must stay within the limit for lighting or other circuits.",
+   "Lights take a B curve MCB, sockets, ACs and motors a C curve; a Split AC 1.5 ton inverter gets a 16 A MCB on 2.5 mm² cable.",
+   "The connected load of the example house is 10.05 kW, which is not the sanctioned load: not everything runs at once, so size the main switch and sanctioned load separately."
+  ],
+  "mistakes": [
+   "Wiring the whole house in one cable size. Lights need far less, while an AC or geyser circuit needs more than the usual socket cable.",
+   "Putting two ACs on one circuit. Each AC should have its own MCB and cable.",
+   "Guessing the cable length as the straight distance. Measure the route through the walls and the ceiling, both ways are already counted.",
+   "Adding up the connected load and calling it the sanctioned load. The main switch is sized on what runs at the same time."
+  ],
+  "sources": [
+   {
+    "label": "IEC 60364-5-52: selection and erection of wiring systems (Table B.52.4 current ratings, voltage drop)",
+    "url": "https://webstore.iec.ch/publication/1878"
+   },
+   {
+    "label": "Wattlyst methodology and default values",
+    "url": "/methodology/"
+   }
+  ],
+  "tool": {
+   "calc": "circuit_schedule",
+   "module": "circuits.js",
+   "data_keys": [
+    "cables"
+   ],
+   "appliances": {
+    "led-tube-light": {
+     "name": "LED tube light (4 ft)",
+     "running_w": 20,
+     "starting_w": 20,
+     "typical_hours_per_day": 6,
+     "load_type": "lighting"
+    },
+    "led-bulb": {
+     "name": "LED bulb (9-12 W)",
+     "running_w": 12,
+     "starting_w": 12,
+     "typical_hours_per_day": 6,
+     "load_type": "lighting"
+    },
+    "ceiling-fan-ac": {
+     "name": "Ceiling fan (AC, 56 inch)",
+     "running_w": 80,
+     "starting_w": 120,
+     "typical_hours_per_day": 12,
+     "load_type": "motor"
+    },
+    "exhaust-fan": {
+     "name": "Exhaust fan (10-12 inch)",
+     "running_w": 40,
+     "starting_w": 60,
+     "typical_hours_per_day": 4,
+     "load_type": "motor"
+    },
+    "ac-split-1ton-inverter": {
+     "name": "Split AC 1 ton inverter",
+     "running_w": 900,
+     "starting_w": 1200,
+     "typical_hours_per_day": 8,
+     "avg_w": 650,
+     "load_type": "inverter_compressor"
+    },
+    "ac-split-1-5ton-inverter": {
+     "name": "Split AC 1.5 ton inverter",
+     "running_w": 1450,
+     "starting_w": 1900,
+     "typical_hours_per_day": 8,
+     "avg_w": 1000,
+     "load_type": "inverter_compressor"
+    },
+    "ac-split-2ton-inverter": {
+     "name": "Split AC 2 ton inverter",
+     "running_w": 1900,
+     "starting_w": 2500,
+     "typical_hours_per_day": 8,
+     "avg_w": 1300,
+     "load_type": "inverter_compressor"
+    },
+    "ac-split-1ton-non-inverter": {
+     "name": "Split AC 1 ton non-inverter",
+     "running_w": 1200,
+     "starting_w": 3600,
+     "typical_hours_per_day": 8,
+     "avg_w": 960,
+     "load_type": "compressor"
+    },
+    "ac-split-1-5ton-non-inverter": {
+     "name": "Split AC 1.5 ton non-inverter",
+     "running_w": 1800,
+     "starting_w": 5400,
+     "typical_hours_per_day": 8,
+     "avg_w": 1440,
+     "load_type": "compressor"
+    },
+    "ac-split-2ton-non-inverter": {
+     "name": "Split AC 2 ton non-inverter",
+     "running_w": 2400,
+     "starting_w": 7200,
+     "typical_hours_per_day": 8,
+     "avg_w": 1920,
+     "load_type": "compressor"
+    },
+    "ac-window-1ton": {
+     "name": "Window AC (about 1 ton / 12-13k BTU)",
+     "running_w": 1350,
+     "starting_w": 4000,
+     "typical_hours_per_day": 8,
+     "avg_w": 1080,
+     "load_type": "compressor"
+    },
+    "electric-geyser-storage": {
+     "name": "Electric geyser (storage, 40-gallon class)",
+     "running_w": 3000,
+     "starting_w": 3000,
+     "typical_hours_per_day": 3,
+     "load_type": "resistive"
+    },
+    "room-heater-fan": {
+     "name": "Room heater (fan heater)",
+     "running_w": 2000,
+     "starting_w": 2000,
+     "typical_hours_per_day": 4,
+     "load_type": "resistive"
+    },
+    "electric-iron": {
+     "name": "Electric iron (dry / steam)",
+     "running_w": 1000,
+     "starting_w": 1000,
+     "typical_hours_per_day": 0.5,
+     "load_type": "resistive"
+    },
+    "electric-kettle": {
+     "name": "Electric kettle",
+     "running_w": 2000,
+     "starting_w": 2000,
+     "typical_hours_per_day": 0.3,
+     "load_type": "resistive"
+    },
+    "electric-oven": {
+     "name": "Electric oven (baking / toaster oven, large)",
+     "running_w": 1500,
+     "starting_w": 1500,
+     "typical_hours_per_day": 0.5,
+     "load_type": "resistive"
+    },
+    "microwave-oven": {
+     "name": "Microwave oven",
+     "running_w": 1100,
+     "starting_w": 1100,
+     "typical_hours_per_day": 0.3,
+     "load_type": "electronic"
+    },
+    "dishwasher": {
+     "name": "Dishwasher (with drying)",
+     "running_w": 1800,
+     "starting_w": 1800,
+     "typical_hours_per_day": 1,
+     "load_type": "resistive"
+    },
+    "washing-machine-automatic": {
+     "name": "Washing machine (automatic, top/front load, no heater)",
+     "running_w": 500,
+     "starting_w": 2250,
+     "typical_hours_per_day": 1,
+     "load_type": "motor"
+    },
+    "washing-machine-twin-tub": {
+     "name": "Washing machine (twin tub, semi-automatic)",
+     "running_w": 400,
+     "starting_w": 1200,
+     "typical_hours_per_day": 1,
+     "load_type": "motor"
+    },
+    "water-motor-0-5hp": {
+     "name": "Water pump / donkey motor 0.5 hp",
+     "running_w": 600,
+     "starting_w": 1800,
+     "typical_hours_per_day": 1,
+     "load_type": "motor"
+    },
+    "water-motor-1hp": {
+     "name": "Water pump / donkey motor 1 hp",
+     "running_w": 1000,
+     "starting_w": 2800,
+     "typical_hours_per_day": 1,
+     "load_type": "motor"
+    },
+    "water-motor-1-5hp": {
+     "name": "Water pump 1.5 hp",
+     "running_w": 1500,
+     "starting_w": 4500,
+     "typical_hours_per_day": 1,
+     "load_type": "motor"
+    },
+    "water-motor-2hp": {
+     "name": "Water pump 2 hp",
+     "running_w": 2000,
+     "starting_w": 6000,
+     "typical_hours_per_day": 1,
+     "load_type": "motor"
+    }
+   },
+   "fields": [
+    {
+     "name": "loads",
+     "label": "Circuits in the house (one row per circuit)",
+     "type": "loads",
+     "length": true,
+     "catalog": [
+      {
+       "id": "led-tube-light",
+       "name": "LED tube light (4 ft)",
+       "category": "lighting"
+      },
+      {
+       "id": "led-bulb",
+       "name": "LED bulb (9-12 W)",
+       "category": "lighting"
+      },
+      {
+       "id": "ceiling-fan-ac",
+       "name": "Ceiling fan (AC, 56 inch)",
+       "category": "cooling"
+      },
+      {
+       "id": "exhaust-fan",
+       "name": "Exhaust fan (10-12 inch)",
+       "category": "cooling"
+      },
+      {
+       "id": "ac-split-1ton-inverter",
+       "name": "Split AC 1 ton inverter",
+       "category": "cooling"
+      },
+      {
+       "id": "ac-split-1-5ton-inverter",
+       "name": "Split AC 1.5 ton inverter",
+       "category": "cooling"
+      },
+      {
+       "id": "ac-split-2ton-inverter",
+       "name": "Split AC 2 ton inverter",
+       "category": "cooling"
+      },
+      {
+       "id": "ac-split-1ton-non-inverter",
+       "name": "Split AC 1 ton non-inverter",
+       "category": "cooling"
+      },
+      {
+       "id": "ac-split-1-5ton-non-inverter",
+       "name": "Split AC 1.5 ton non-inverter",
+       "category": "cooling"
+      },
+      {
+       "id": "ac-split-2ton-non-inverter",
+       "name": "Split AC 2 ton non-inverter",
+       "category": "cooling"
+      },
+      {
+       "id": "ac-window-1ton",
+       "name": "Window AC (about 1 ton / 12-13k BTU)",
+       "category": "cooling"
+      },
+      {
+       "id": "electric-geyser-storage",
+       "name": "Electric geyser (storage, 40-gallon class)",
+       "category": "heating"
+      },
+      {
+       "id": "room-heater-fan",
+       "name": "Room heater (fan heater)",
+       "category": "heating"
+      },
+      {
+       "id": "electric-iron",
+       "name": "Electric iron (dry / steam)",
+       "category": "laundry"
+      },
+      {
+       "id": "electric-kettle",
+       "name": "Electric kettle",
+       "category": "kitchen"
+      },
+      {
+       "id": "electric-oven",
+       "name": "Electric oven (baking / toaster oven, large)",
+       "category": "kitchen"
+      },
+      {
+       "id": "microwave-oven",
+       "name": "Microwave oven",
+       "category": "kitchen"
+      },
+      {
+       "id": "dishwasher",
+       "name": "Dishwasher (with drying)",
+       "category": "kitchen"
+      },
+      {
+       "id": "washing-machine-automatic",
+       "name": "Washing machine (automatic, top/front load, no heater)",
+       "category": "laundry"
+      },
+      {
+       "id": "washing-machine-twin-tub",
+       "name": "Washing machine (twin tub, semi-automatic)",
+       "category": "laundry"
+      },
+      {
+       "id": "water-motor-0-5hp",
+       "name": "Water pump / donkey motor 0.5 hp",
+       "category": "water"
+      },
+      {
+       "id": "water-motor-1hp",
+       "name": "Water pump / donkey motor 1 hp",
+       "category": "water"
+      },
+      {
+       "id": "water-motor-1-5hp",
+       "name": "Water pump 1.5 hp",
+       "category": "water"
+      },
+      {
+       "id": "water-motor-2hp",
+       "name": "Water pump 2 hp",
+       "category": "water"
+      }
+     ],
+     "default": [
+      {
+       "id": "led-tube-light",
+       "qty": 10,
+       "length": 20
+      },
+      {
+       "id": "custom",
+       "watts": 2000,
+       "length": 15
+      },
+      {
+       "id": "ac-split-1-5ton-inverter",
+       "length": 12
+      },
+      {
+       "id": "ac-split-2ton-non-inverter",
+       "length": 18
+      },
+      {
+       "id": "electric-geyser-storage",
+       "length": 10
+      },
+      {
+       "id": "water-motor-1hp",
+       "length": 25
+      }
+     ],
+     "hint": "One row for each circuit on the distribution board: pick what it feeds, the quantity on that circuit (for example ten lights) and the cable length from the board to the farthest point, in metres. Choose Custom for a socket circuit and enter the most it will carry."
+    },
+    {
+     "name": "method",
+     "label": "How the cable is installed",
+     "type": "select",
+     "default": "B1",
+     "options": [
+      [
+       "B1",
+       "In conduit inside the wall"
+      ],
+      [
+       "C",
+       "Clipped on the surface"
+      ]
+     ]
+    },
+    {
+     "name": "ambient_c",
+     "label": "Air temperature around the cable",
+     "unit": "°C",
+     "default": 45,
+     "hint": "Hottest air the cables sit in: a conduit under a sunny roof gets far hotter than the room. The default is a Pakistani summer value."
+    },
+    {
+     "name": "circuits",
+     "label": "Circuits sharing one conduit",
+     "unit": "circuits",
+     "default": 1,
+     "advanced": true,
+     "hint": "How many circuits run together in the busiest conduit. Cables packed together heat each other, so every circuit is sized for it."
+    }
+   ],
+   "fixed_inputs": {},
+   "outputs": [
+    {
+     "key": "circuits_count",
+     "label": "Circuits",
+     "spec": "int",
+     "value": "6"
+    },
+    {
+     "key": "connected_kw",
+     "label": "Connected load",
+     "spec": "2",
+     "unit": "kW",
+     "value": "10.05"
+    },
+    {
+     "key": "biggest_breaker_a",
+     "label": "Largest MCB",
+     "spec": "int",
+     "unit": "A",
+     "value": "20"
+    },
+    {
+     "key": "max_drop_pct",
+     "label": "Worst voltage drop",
+     "spec": "1",
+     "unit": "%",
+     "value": "1.3"
+    }
+   ],
+   "how": {
+    "tpl": "Each row: current = design watts ÷ ({{out.volts}} V × power factor of the load type); an inverter AC is designed at its maximum input. MCB = next standard size at or above the current (× the margin for motors and compressors), curve by load type. Cable = smallest size whose rating in {{out.ambient_c}} °C air ({{out.method|raw}}, {{out.group_circuits}} per conduit, factor {{out.derate|2}}) covers the MCB and whose drop over the run stays within the limit (lighting or other). Connected load = {{out.connected_w|int}} W over {{out.circuits_count|int}} circuits.",
+    "text": "Each row: current = design watts ÷ (230 V × power factor of the load type); an inverter AC is designed at its maximum input. MCB = next standard size at or above the current (× the margin for motors and compressors), curve by load type. Cable = smallest size whose rating in 45 °C air (B1, 1 per conduit, factor 0.79) covers the MCB and whose drop over the run stays within the limit (lighting or other). Connected load = 10,050 W over 6 circuits."
+   },
+   "submit": "Calculate",
+   "rtable": {
+    "key": "rows",
+    "caption": "Circuit sheet for the electrician: copper cable, 45 °C, 1 circuit per conduit",
+    "columns": [
+     {
+      "key": "n",
+      "label": "No.",
+      "spec": "int"
+     },
+     {
+      "key": "name",
+      "label": "Circuit",
+      "spec": "raw"
+     },
+     {
+      "key": "connected_w",
+      "label": "Load",
+      "spec": "int",
+      "suffix": " W"
+     },
+     {
+      "key": "amps",
+      "label": "Current",
+      "spec": "1",
+      "suffix": " A"
+     },
+     {
+      "key": "breaker_a",
+      "label": "MCB",
+      "spec": "int",
+      "suffix": " A"
+     },
+     {
+      "key": "curve",
+      "label": "Curve",
+      "spec": "raw"
+     },
+     {
+      "key": "area_mm2",
+      "label": "Cable",
+      "spec": "raw",
+      "suffix": " mm²"
+     },
+     {
+      "key": "pk_size",
+      "label": "PK size",
+      "spec": "raw"
+     },
+     {
+      "key": "drop_pct",
+      "label": "Voltage drop",
+      "spec": "1",
+      "suffix": "%"
+     }
+    ],
+    "rows": [
+     [
+      "1",
+      "LED tube light (4 ft)",
+      "200 W",
+      "1.1 A",
+      "6 A",
+      "B",
+      "1 mm²",
+      "3/29",
+      "0.4%"
+     ],
+     [
+      "2",
+      "Socket circuit (custom)",
+      "2,000 W",
+      "10.9 A",
+      "16 A",
+      "C",
+      "2.5 mm²",
+      "7/29",
+      "1.3%"
+     ],
+     [
+      "3",
+      "Split AC 1.5 ton inverter",
+      "1,450 W",
+      "9.2 A",
+      "16 A",
+      "C",
+      "2.5 mm²",
+      "7/29",
+      "0.9%"
+     ],
+     [
+      "4",
+      "Split AC 2 ton non-inverter",
+      "2,400 W",
+      "13 A",
+      "20 A",
+      "C",
+      "4 mm²",
+      "7/36",
+      "1.1%"
+     ],
+     [
+      "5",
+      "Electric geyser (storage, 40-gallon class)",
+      "3,000 W",
+      "16.3 A",
+      "20 A",
+      "B",
+      "4 mm²",
+      "7/36",
+      "0.8%"
+     ],
+     [
+      "6",
+      "Water pump / donkey motor 1 hp",
+      "1,000 W",
+      "5.4 A",
+      "10 A",
+      "C",
+      "2.5 mm²",
+      "7/29",
+      "1.1%"
+     ]
+    ]
+   },
+   "notice": "",
+   "data_checked": [
+    {
+     "label": "Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)",
+     "url": "https://webstore.iec.ch/publication/1878",
+     "checked": "2026-10-14"
+    },
+    {
+     "label": "Appliance running and starting watts (Wattlyst appliance data, sources listed on the appliance list page)",
+     "url": "https://wattlyst.com/appliances/",
+     "checked": "2026-10-13"
+    }
+   ]
+  },
+  "examples": [
+   {
+    "title": "Six-circuit house in conduit",
+    "text": "6 circuits, 10.05 kW connected. The Split AC 2 ton non-inverter needs a 20 A C curve MCB on 4 mm² (7/36); the lights need only a 6 A MCB on 1 mm²."
+   },
+   {
+    "title": "Same house with cables clipped on the surface",
+    "text": "Surface cable cools better than cable in a wall conduit, so it carries more current: the Electric geyser (storage, 40-gallon class) circuit takes 2.5 mm² on a 20 A MCB."
+   },
+   {
+    "title": "Three circuits sharing one hot conduit",
+    "text": "Grouping lowers every cable's rating (factor 0.55 with the air temperature), so the Electric geyser (storage, 40-gallon class) now needs 6 mm² (7/44)."
+   },
+   {
+    "title": "Water motor on a long run to the roof tank",
+    "text": "A Water pump 1.5 hp at 80 m draws only 8.2 A, but on the usual cable the voltage drop would pass the limit, so the sheet picks 4 mm² (7/36), a 3.2% drop, on a 16 A C curve MCB."
+   }
+  ],
+  "table": {
+   "caption": "MCB and cable for common home circuits (copper, in conduit, 45 °C air, one circuit per conduit)",
+   "head": [
+    "Circuit",
+    "Current",
+    "MCB",
+    "Cable",
+    "Voltage drop"
+   ],
+   "rows": [
+    [
+     "LED tube light (4 ft) × 10, 20 m",
+     "1.1 A",
+     "6 A, curve B",
+     "1 mm² (3/29)",
+     "0.4%"
+    ],
+    [
+     "Socket circuit (custom) × 1, 15 m",
+     "10.9 A",
+     "16 A, curve C",
+     "2.5 mm² (7/29)",
+     "1.3%"
+    ],
+    [
+     "Split AC 1.5 ton inverter × 1, 12 m",
+     "9.2 A",
+     "16 A, curve C",
+     "2.5 mm² (7/29)",
+     "0.9%"
+    ],
+    [
+     "Split AC 2 ton non-inverter × 1, 15 m",
+     "13 A",
+     "20 A, curve C",
+     "4 mm² (7/36)",
+     "1%"
+    ],
+    [
+     "Electric geyser (storage, 40-gallon class) × 1, 10 m",
+     "16.3 A",
+     "20 A, curve B",
+     "4 mm² (7/36)",
+     "0.8%"
+    ],
+    [
+     "Water pump / donkey motor 1 hp × 1, 25 m",
+     "5.4 A",
+     "10 A, curve C",
+     "2.5 mm² (7/29)",
+     "1.1%"
+    ],
+    [
+     "Electric kettle × 1, 10 m",
+     "10.9 A",
+     "16 A, curve B",
+     "2.5 mm² (7/29)",
+     "0.9%"
+    ]
+   ]
+  },
+  "answer": "A load schedule lists every circuit with its MCB and cable. For the example house the 6 circuits carry 10.05 kW in all; each one gets the smallest copper cable that carries its current in 45 °C air and keeps the voltage drop within the limit, the worst being 1.3%. The largest MCB is 20 A, for the Split AC 2 ton non-inverter.",
+  "formula": {
+   "text": "For each circuit: I = P ÷ (V × PF); MCB ≥ I; cable rating × derating ≥ max(I × margin, MCB); voltage drop = 2 × L × I × ρ ÷ A ≤ limit",
+   "lines": [
+    "P = design watts of the circuit (watts × quantity; an inverter AC at its maximum input); V = supply voltage; PF = power factor of the load type",
+    "MCB = next standard size; margin applies to motors and compressors; curve B, C or D by load type",
+    "Derating = factor for the air temperature × factor for circuits grouped in one conduit",
+    "L = cable length one way in metres; ρ = copper resistivity; A = cable area in mm²; limit lighting or other circuits"
+   ]
+  },
+  "safety": "This sheet is a planning aid for copper cable on a single-phase supply. A licensed electrician must confirm every cable, MCB, earth and RCD on site before the circuits are energised; cable ratings and the air temperature default await review by a PEC-registered engineer."
+ },
+ "schema": {
+  "@context": "https://schema.org",
+  "@graph": [
+   {
+    "@type": "BreadcrumbList",
+    "@id": "https://wattlyst.com/wiring/home-wiring-load-schedule/#breadcrumb",
+    "itemListElement": [
+     {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://wattlyst.com/"
+     },
+     {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Wiring Calculators",
+      "item": "https://wattlyst.com/wiring/"
+     },
+     {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Home Wiring Load Schedule: Wire and MCB for Every Circuit",
+      "item": "https://wattlyst.com/wiring/home-wiring-load-schedule/"
+     }
+    ]
+   },
+   {
+    "@type": "WebPage",
+    "@id": "https://wattlyst.com/wiring/home-wiring-load-schedule/#webpage",
+    "url": "https://wattlyst.com/wiring/home-wiring-load-schedule/",
+    "name": "Home Wiring Load Schedule: Wire & MCB per Circuit | Wattlyst",
+    "description": "List every circuit in your house and get the wire size, MCB and voltage drop for each one, in a printable sheet to hand to your electrician.",
+    "inLanguage": "en",
+    "isPartOf": {
+     "@id": "https://wattlyst.com/#website"
+    },
+    "breadcrumb": {
+     "@id": "https://wattlyst.com/wiring/home-wiring-load-schedule/#breadcrumb"
+    },
+    "dateModified": "2026-10-15",
+    "lastReviewed": "2026-10-15",
+    "author": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    }
+   },
+   {
+    "@type": "WebApplication",
+    "@id": "https://wattlyst.com/wiring/home-wiring-load-schedule/#app",
+    "name": "Home Wiring Load Schedule: Wire and MCB for Every Circuit",
+    "url": "https://wattlyst.com/wiring/home-wiring-load-schedule/",
+    "description": "List every circuit in your house and get the wire size, MCB and voltage drop for each one, in a printable sheet to hand to your electrician.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript for live results",
+    "isAccessibleForFree": true,
+    "offers": {
+     "@type": "Offer",
+     "price": "0",
+     "priceCurrency": "PKR"
+    },
+    "publisher": {
+     "@id": "https://wattlyst.com/#organization"
+    }
+   },
+   {
+    "@type": "Person",
+    "@id": "https://wattlyst.com/#/person/ali-ahmad",
+    "name": "Ali Ahmad",
+    "jobTitle": "Founder, Author",
+    "sameAs": [
+     "https://www.linkedin.com/in/ali-ahmad-chaudhry-12777486/"
+    ],
+    "worksFor": {
+     "@id": "https://wattlyst.com/#organization"
+    }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/wiring/home-wiring-load-schedule/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "What is a load schedule in house wiring?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "A list of every circuit on the distribution board with what it feeds, its current, MCB rating and curve, and cable size. The example house has 6 circuits and 10.05 kW connected."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Which wire and MCB for a 1.5 ton AC circuit?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "For a Split AC 1.5 ton inverter on a 12 m run in conduit: a 16 A C curve MCB and 2.5 mm² (7/29) copper cable."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Which wire and MCB for an electric geyser?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "The Electric geyser (storage, 40-gallon class) draws 16.3 A, so it takes a 20 A B curve MCB on 4 mm² cable."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Why does a long run need a thicker cable?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Voltage drop grows with length. On a long run the cable that carries the current safely can still lose too many volts, so the next size up is chosen; the sheet shows each circuit's drop."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Can I print this circuit sheet for my electrician?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Yes. Press Calculate, then Save as PDF under the results; the table prints with every circuit, or share the link on WhatsApp."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Is the total on this sheet my sanctioned load?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "No. It is the connected load, everything at once. Use the sanctioned load calculator for the load that runs together."
+      }
+     }
+    ]
+   },
+   {
+    "@type": "Organization",
+    "@id": "https://wattlyst.com/#organization",
+    "name": "Wattlyst",
+    "url": "https://wattlyst.com/",
+    "slogan": "Electricity math, done right.",
+    "logo": {
+     "@type": "ImageObject",
+     "url": "https://wattlyst.com/wp-content/plugins/wattlyst-tools/assets/brand/logo-512.png",
+     "width": 512,
+     "height": 512
+    },
+    "email": "contact@wattlyst.com",
+    "foundingDate": "2026",
+    "founder": {
+     "@id": "https://wattlyst.com/#/person/ali-ahmad"
+    },
+    "contactPoint": {
+     "@type": "ContactPoint",
+     "contactType": "customer support",
+     "email": "contact@wattlyst.com",
+     "availableLanguage": [
+      "en"
+     ]
+    }
+   }
+  ]
+ }
+}

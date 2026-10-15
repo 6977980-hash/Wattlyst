@@ -19,9 +19,9 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => readFileSync(join(root, p), 'utf8');
 const readJson = (p) => JSON.parse(read(p));
 
-const ENGINE_MODULES = ['conversions', 'battery', 'sizing', 'solar', 'bill', 'load', 'wiring', 'planner', 'prices', 'forecast', 'fuel', 'solartools', 'acbill'];
+const ENGINE_MODULES = ['conversions', 'battery', 'sizing', 'solar', 'bill', 'load', 'wiring', 'planner', 'prices', 'forecast', 'fuel', 'solartools', 'acbill', 'seasonal', 'circuits'];
 /** Data each engine module needs in the browser (keeps page weight down). Appliances are added per page, only the ones its fields use. */
-const MODULE_DATA = { bill: ['tariff'], solar: ['cities'], wiring: ['cables'], load: ['cables'], planner: ['tariff', 'cities'], prices: ['solar_prices'], forecast: ['cities'], acbill: ['tariff'] };
+const MODULE_DATA = { bill: ['tariff'], solar: ['cities'], wiring: ['cables'], load: ['cables'], planner: ['tariff', 'cities'], prices: ['solar_prices'], forecast: ['cities'], acbill: ['tariff'], seasonal: ['cities'], circuits: ['cables'] };
 /** Extra data a single calculator needs (shipped only on its page). */
 const CALC_DATA = { generator_fuel: ['generator_fuel'] };
 /** Appliance fields the browser engine and the loads picker need. */
@@ -196,6 +196,7 @@ function buildContent(c, ctx) {
       how: c.how ? { tpl: c.how, text: text(ctx, c.how, scope, 'how'), ...(c.how_ur ? { tpl_ur: c.how_ur, text_ur: text(ctx, c.how_ur, scope, 'how_ur') } : {}) } : null,
       submit: c.submit || 'Calculate',
       ...(c.diagram ? { diagram: c.diagram } : {}),
+      ...(c.result_table ? { rtable: resultTable(ctx, c, result, scope) } : {}),
       ...(c.live ? { live: c.live } : {}),
       notice: noticeCode(result) ? errorMessage(noticeCode(result)) : '',
       data_checked: dataChecked(module, { ...ctx, usesAppliances: fields.some((f) => f.type === 'appliance' || f.type === 'loads') }),
@@ -238,6 +239,22 @@ function buildContent(c, ctx) {
   out.safety = text(ctx, c.safety, scope, 'safety');
   out.faq = (c.faq || []).map((f, n) => ({ q: text(ctx, f.q, scope, `faq ${n + 1} q`), a: text(ctx, f.a, scope, `faq ${n + 1} a`) }));
   return out;
+}
+
+/**
+ * Result table (N17 months, N18 circuits): one row per item of an array the engine returns, columns formatted with
+ * the same specs as the result cards; the browser redraws it from the engine on every calculation (wattlyst-extra.js drawTable).
+ */
+function resultTable(ctx, c, result, scope) {
+  const t = c.result_table;
+  const list = result[t.key];
+  if (!Array.isArray(list) || !list.length) fail(`${c.id}: result_table key ${t.key} is not a list in ${c.calc}`);
+  for (const col of t.columns) {
+    if (col.spec && !isSpec(col.spec)) fail(`${c.id}: result_table column ${col.key} uses unknown format ${col.spec}`);
+    if (!(col.key in list[0])) fail(`${c.id}: result_table column ${col.key} missing from ${c.calc} rows`);
+  }
+  const columns = t.columns.map((col) => ({ key: col.key, label: col.label, spec: col.spec || '2', ...(col.suffix ? { suffix: col.suffix } : {}) }));
+  return { key: t.key, caption: text(ctx, t.caption, scope, 'result table caption'), columns, rows: list.map((r) => columns.map((col) => `${fmt(r[col.key], col.spec)}${col.suffix || ''}`)) };
 }
 
 /** H2: one table per category of data/appliances.json, units per hour and per typical day from the engine (conversions.units). */
@@ -303,11 +320,12 @@ function dataChecked(module, ctx) {
   if (module === 'bill' || module === 'acbill') out.push({ label: 'Pakistan electricity tariff (NEPRA notification)', url: ctx.data.tariff._meta.source_url || null, checked: ctx.data.tariff._meta.checked });
   const prices = module === 'prices';
   if (module === 'solar' || module === 'solartools' || module === 'forecast') out.push({ label: 'Peak sun hours by city (Global Solar Atlas)', url: 'https://globalsolaratlas.info/', checked: ctx.citiesMeta.checked });
+  if (module === 'seasonal') out.push({ label: 'Monthly solar output by city (Global Solar Atlas PVOUT)', url: 'https://globalsolaratlas.info/', checked: ctx.citiesMeta.pvout_month_checked });
   if (ctx.calc === 'heating_cost') {
     out.push({ label: 'Pakistan electricity tariff (NEPRA notification)', url: ctx.data.tariff._meta.source_url || null, checked: ctx.data.tariff._meta.checked });
     const g = ctx.data.tariff.gas_domestic;
     out.push({ label: `Domestic gas slab prices (${g.source}; not yet matched to the OGRA notification)`, url: g.source_url, checked: g.checked });
-  } else if (module === 'wiring' || module === 'load') out.push({ label: 'Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)', url: 'https://webstore.iec.ch/publication/1878', checked: ctx.cables._meta.checked });
+  } else if (module === 'wiring' || module === 'load' || module === 'circuits') out.push({ label: 'Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)', url: 'https://webstore.iec.ch/publication/1878', checked: ctx.cables._meta.checked });
   if (ctx.calc === 'generator_fuel') {
     const f = ctx.data.generator_fuel;
     out.push({ label: 'Generator fuel curve (fitted from manufacturer run-time data, listed under Sources)', url: null, checked: f._meta.checked });

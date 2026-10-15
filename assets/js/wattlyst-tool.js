@@ -12,7 +12,7 @@ async function init(form) {
   const q = ver ? `?ver=${ver}` : '';
   const hasList = cfg.fields.some((f) => f.type === 'loads');
   // The appliance list, the N6 live forecast and the N11 diagram live in their own modules, loaded only where used.
-  const [mod, list, extra] = await Promise.all([import(`../../engine/${cfg.module}${q}`), hasList && import(`./wattlyst-loads.js${q}`), (cfg.live || cfg.diagram) && import(`./wattlyst-extra.js${q}`)]);
+  const [mod, list, extra] = await Promise.all([import(`../../engine/${cfg.module}${q}`), hasList && import(`./wattlyst-loads.js${q}`), (cfg.live || cfg.diagram || cfg.rtable) && import(`./wattlyst-extra.js${q}`)]);
   const calc = mod[cfg.calc];
   if (typeof calc !== 'function') return;
   const labels = Object.fromEntries(cfg.fields.map((f) => [f.name, f.label.replace(/^[A-Z](?=[a-z])/, (c) => c.toLowerCase())]));
@@ -51,7 +51,8 @@ async function init(form) {
     return el(name);
   };
   const share = form.querySelector('.wl-share');
-  const diagram = form.querySelector('[data-wl-diagram]');
+  // The N11 diagram or the N17/N18 result table (a page has at most one): hidden on an error, redrawn on a result.
+  const diagram = form.querySelector('[data-wl-diagram],[data-wl-rtable]');
 
   // One element carries an error (red, role=alert) or a notice on a valid result (amber, role=status) (audit WL-54, WL-61).
   const say = (text, isError) => {
@@ -99,6 +100,7 @@ async function init(form) {
       node.closest('.wl-result').hidden = !node.textContent;
     }
     if (diagram && cfg.diagram === 'battery_grid') extra.drawGrid(diagram, Math.round(out.n_series), Math.round(out.n_parallel));
+    if (cfg.rtable) extra.drawTable(diagram, out[cfg.rtable.key], cfg.rtable.columns, fmt);
     if (howEl && cfg.how) {
       const text = render(form.dataset.lang === 'ur' && cfg.how_ur ? cfg.how_ur : cfg.how, { in: out, out, d: cfg.data.defaults, data: cfg.data });
       howEl.hidden = text === null;

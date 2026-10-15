@@ -6365,5 +6365,391 @@
     },
     "tolerance": 0,
     "note": "input range from ac_units"
+  },
+  {
+    "calc": "solar_seasonal",
+    "name": "Lahore home with summer ACs, sized for the year",
+    "inputs": {
+      "city": "lahore",
+      "jan": 250,
+      "feb": 230,
+      "mar": 280,
+      "apr": 400,
+      "may": 600,
+      "jun": 700,
+      "jul": 720,
+      "aug": 680,
+      "sep": 560,
+      "oct": 380,
+      "nov": 260,
+      "dec": 260
+    },
+    "expected": {
+      "annual_units": 5320,
+      "kw_annual": 3.64833,
+      "kw_peak": 6.28272,
+      "peak_month": "July",
+      "panels": 7,
+      "installed_kw": 4.095,
+      "grid_units_year": 643.7045,
+      "export_units_year": 1295.0335,
+      "export_credit_rs": 14245.3685,
+      "months_short": 4,
+      "kw_from_high_bill": 6,
+      "kw_from_low_bill": 1.91667
+    },
+    "tolerance": 0.001,
+    "note": "N17; pvout_month Lahore from data/cities-pk.json, buyback default Rs 11"
+  },
+  {
+    "calc": "solar_seasonal",
+    "name": "Same bills in Karachi",
+    "inputs": {
+      "city": "karachi",
+      "jan": 250,
+      "feb": 230,
+      "mar": 280,
+      "apr": 400,
+      "may": 600,
+      "jun": 700,
+      "jul": 720,
+      "aug": 680,
+      "sep": 560,
+      "oct": 380,
+      "nov": 260,
+      "dec": 260
+    },
+    "expected": {
+      "kw_annual": 3.1331,
+      "kw_peak": 6.73527,
+      "panels": 6,
+      "installed_kw": 3.51,
+      "grid_units_year": 1025.534,
+      "export_units_year": 1665.514,
+      "months_short": 5
+    },
+    "tolerance": 0.001,
+    "note": "N17"
+  },
+  {
+    "calc": "solar_seasonal",
+    "name": "Sized for the hardest month: no shortfall, large export",
+    "inputs": {
+      "city": "lahore",
+      "kw": 6.3,
+      "jan": 250,
+      "feb": 230,
+      "mar": 280,
+      "apr": 400,
+      "may": 600,
+      "jun": 700,
+      "jul": 720,
+      "aug": 680,
+      "sep": 560,
+      "oct": 380,
+      "nov": 260,
+      "dec": 260
+    },
+    "expected": {
+      "panels": 11,
+      "installed_kw": 6.435,
+      "grid_units_year": 0,
+      "export_units_year": 4063.517,
+      "export_credit_rs": 44698.687,
+      "months_short": 0,
+      "kw_source": "input"
+    },
+    "tolerance": 0.001,
+    "note": "N17"
+  },
+  {
+    "calc": "solar_seasonal",
+    "name": "Flat use in Quetta: one bill and twelve bills nearly agree",
+    "inputs": {
+      "city": "quetta",
+      "jan": 300,
+      "feb": 300,
+      "mar": 300,
+      "apr": 300,
+      "may": 300,
+      "jun": 300,
+      "jul": 300,
+      "aug": 300,
+      "sep": 300,
+      "oct": 300,
+      "nov": 300,
+      "dec": 300
+    },
+    "expected": {
+      "kw_annual": 1.85979,
+      "kw_peak": 2.12766,
+      "kw_from_high_bill": 1.88679,
+      "panels": 4,
+      "grid_units_year": 0
+    },
+    "tolerance": 0.001,
+    "note": "N17"
+  },
+  {
+    "calc": "solar_seasonal",
+    "name": "All months zero is an error",
+    "inputs": {
+      "city": "lahore",
+      "jan": 0,
+      "feb": 0,
+      "mar": 0,
+      "apr": 0,
+      "may": 0,
+      "jun": 0,
+      "jul": 0,
+      "aug": 0,
+      "sep": 0,
+      "oct": 0,
+      "nov": 0,
+      "dec": 0
+    },
+    "expected": {
+      "error": "monthly_units_all_zero"
+    },
+    "tolerance": 0,
+    "note": "N17"
+  },
+  {
+    "calc": "solar_seasonal",
+    "name": "A blank month is an error naming that month",
+    "inputs": {
+      "city": "lahore",
+      "jan": 250,
+      "feb": 230,
+      "apr": 400,
+      "may": 600,
+      "jun": 700,
+      "jul": 720,
+      "aug": 680,
+      "sep": 560,
+      "oct": 380,
+      "nov": 260,
+      "dec": 260
+    },
+    "expected": {
+      "error": "mar_required"
+    },
+    "tolerance": 0,
+    "note": "N17"
+  },
+  {
+    "calc": "solar_seasonal",
+    "name": "Unknown city",
+    "inputs": {
+      "city": "gilgit",
+      "jan": 250,
+      "feb": 230,
+      "mar": 280,
+      "apr": 400,
+      "may": 600,
+      "jun": 700,
+      "jul": 720,
+      "aug": 680,
+      "sep": 560,
+      "oct": 380,
+      "nov": 260,
+      "dec": 260
+    },
+    "expected": {
+      "error": "city_unknown"
+    },
+    "tolerance": 0,
+    "note": "N17"
+  },
+  {
+    "calc": "solar_seasonal",
+    "name": "Negative month is rejected",
+    "inputs": {
+      "city": "lahore",
+      "jan": 250,
+      "feb": 230,
+      "mar": 280,
+      "apr": 400,
+      "may": 600,
+      "jun": 700,
+      "jul": -5,
+      "aug": 680,
+      "sep": 560,
+      "oct": 380,
+      "nov": 260,
+      "dec": 260
+    },
+    "expected": {
+      "error": "jul_too_small"
+    },
+    "tolerance": 0,
+    "note": "N17"
+  },
+  {
+    "calc": "circuit_schedule",
+    "name": "Six-circuit house: lights, sockets, two ACs, geyser, water motor",
+    "inputs": {
+      "loads": [
+        {
+          "id": "led-tube-light",
+          "qty": 10,
+          "length": 20
+        },
+        {
+          "id": "custom",
+          "watts": 2000,
+          "length": 15
+        },
+        {
+          "id": "ac-split-1-5ton-inverter",
+          "length": 12
+        },
+        {
+          "id": "ac-split-2ton-non-inverter",
+          "length": 18
+        },
+        {
+          "id": "electric-geyser-storage",
+          "length": 10
+        },
+        {
+          "id": "water-motor-1hp",
+          "length": 25
+        }
+      ]
+    },
+    "expected": {
+      "circuits_count": 6,
+      "connected_w": 10050,
+      "biggest_breaker_a": 20,
+      "biggest_name": "Split AC 2 ton non-inverter"
+    },
+    "tolerance": 0.001,
+    "note": "N18; each row equals wire_size for that circuit"
+  },
+  {
+    "calc": "circuit_schedule",
+    "name": "One 1.5 ton inverter AC circuit matches the W1 wire and MCB",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ac-split-1-5ton-inverter",
+          "length": 12
+        }
+      ]
+    },
+    "expected": {
+      "biggest_breaker_a": 16,
+      "connected_w": 1450
+    },
+    "tolerance": 0,
+    "note": "N18 vs W1: designed at the maximum input (starting_w)"
+  },
+  {
+    "calc": "circuit_schedule",
+    "name": "Missing cable length names the row",
+    "inputs": {
+      "loads": [
+        {
+          "id": "custom",
+          "watts": 2000
+        }
+      ]
+    },
+    "expected": {
+      "error": "load_0_length_invalid"
+    },
+    "tolerance": 0,
+    "note": "N18"
+  },
+  {
+    "calc": "circuit_schedule",
+    "name": "Run too long for the cable table names the row",
+    "inputs": {
+      "loads": [
+        {
+          "id": "led-tube-light",
+          "length": 10
+        },
+        {
+          "id": "custom",
+          "watts": 2000,
+          "length": 5000
+        }
+      ]
+    },
+    "expected": {
+      "error": "load_1_length_run_too_long_for_table"
+    },
+    "tolerance": 0,
+    "note": "N18"
+  },
+  {
+    "calc": "circuit_schedule",
+    "name": "A load above the largest MCB names the row",
+    "inputs": {
+      "loads": [
+        {
+          "id": "custom",
+          "watts": 20000,
+          "length": 5
+        }
+      ]
+    },
+    "expected": {
+      "error": "load_0_load_above_standard_breakers"
+    },
+    "tolerance": 0,
+    "note": "N18"
+  },
+  {
+    "calc": "circuit_schedule",
+    "name": "Half a quantity is rejected",
+    "inputs": {
+      "loads": [
+        {
+          "id": "custom",
+          "watts": 2000,
+          "length": 5,
+          "qty": 1.5
+        }
+      ]
+    },
+    "expected": {
+      "error": "load_0_qty_invalid"
+    },
+    "tolerance": 0,
+    "note": "N18"
+  },
+  {
+    "calc": "circuit_schedule",
+    "name": "Empty list",
+    "inputs": {
+      "loads": []
+    },
+    "expected": {
+      "error": "loads_required"
+    },
+    "tolerance": 0,
+    "note": "N18"
+  },
+  {
+    "calc": "circuit_schedule",
+    "name": "Air temperature out of range points at the shared field",
+    "inputs": {
+      "loads": [
+        {
+          "id": "custom",
+          "watts": 2000,
+          "length": 5
+        }
+      ],
+      "ambient_c": 90
+    },
+    "expected": {
+      "error": "ambient_out_of_range"
+    },
+    "tolerance": 0,
+    "note": "N18"
   }
 ]
