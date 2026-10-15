@@ -218,6 +218,35 @@ body .inside-site-info{padding:2rem 16px 1.25rem}
 .wl-embed textarea{width:100%;font:0.85rem/1.4 ui-monospace,Consolas,monospace;box-sizing:border-box;border:1px solid var(--wl-field);border-radius:8px;padding:.5rem;background:var(--wl-bg-soft)}
 .wl-embed button{margin:.35rem 0}
 .wl-rtable{margin:1rem 0}.wl-rtable-title{font-weight:700;margin:0 0 .5rem}.wl-rtable td{white-space:nowrap}
+/* Result table marks (rtable(), drawTable): the recommended row and net saved/cost figures. Home "how" steps: three shown,
+   the rest behind a checkbox toggle (no script), all printed. */
+.wl-rtable tr.wl-rec td{background:#e9f7ef;font-weight:700}
+.wl-rtable tr.wl-rec td:first-child{box-shadow:inset 4px 0 0 var(--wl-accent-3)}
+.wl-rtable td.wl-good{color:var(--wl-accent-2);font-weight:700}
+.wl-rtable td.wl-bad{color:#9a3412;font-weight:700}
+.wl-rtable tr.wl-rec td:first-child::before{content:"Recommended";display:block;width:max-content;margin:0 0 .3rem;padding:.1rem .55rem;border-radius:999px;background:var(--wl-accent-3);color:#fff;font-size:.72rem;letter-spacing:.03em}
+.wl-how-steps ol{margin:.25rem 0 .25rem;padding-left:1.4rem}
+.wl-how-steps li{margin:.3rem 0;line-height:1.55}
+.wl-tg{position:absolute;opacity:0;width:1px;height:1px}
+.wl-tg:not(:checked)~ol li:nth-child(n+4){display:none}
+.wl-tg-l{display:inline-flex;align-items:center;min-height:44px;font-weight:700;color:var(--wl-accent-2);cursor:pointer}
+.wl-tg-l::before{content:"+";width:1.1rem}
+.wl-tg:checked~.wl-tg-l::before{content:"\2212"}
+.wl-tg:checked~.wl-tg-l span:first-child,.wl-tg:not(:checked)~.wl-tg-l span:last-child,.wl-how-steps ol[hidden]~.wl-tg-l{display:none}
+.wl-tg:focus-visible~.wl-tg-l{outline:3px solid var(--wl-ink);outline-offset:2px}
+@media print{.wl-tg~ol li{display:list-item!important}.wl-tg-l{display:none!important}}
+/* The home planner's setups table becomes one card per setup on phones, the column name beside each value (data-l). */
+@media (max-width:768px){
+.wl-tool-split .wl-rtable .wl-table-wrap{overflow:visible;border:0;box-shadow:none}
+.wl-tool-split .wl-rtable :is(table,tbody,tr,td){display:block}
+.wl-tool-split .wl-rtable thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.wl-tool-split .wl-rtable tr{margin:0 0 .6rem;padding:.6rem .75rem;border:1px solid var(--wl-line);border-radius:12px;background:#fff}
+.wl-tool-split .wl-rtable tr.wl-rec{border:2px solid var(--wl-accent-3);background:#f3faf6}
+.wl-tool-split .wl-rtable td,.wl-tool-split .wl-rtable tr.wl-rec td{display:flex;justify-content:space-between;gap:.75rem;padding:.15rem 0;border:0;background:none;text-align:right;white-space:normal;line-height:1.35}
+.wl-tool-split .wl-rtable td::before{content:attr(data-l);flex:none;max-width:45%;font-weight:500;color:var(--wl-muted);text-align:left}
+.wl-tool-split .wl-rtable td:first-child,.wl-tool-split .wl-rtable tr.wl-rec td:first-child{display:block;padding:0 0 .4rem;margin:0 0 .3rem;border-bottom:1px solid #e6eeea;font-weight:700;text-align:left;box-shadow:none}
+.wl-tool-split .wl-rtable tr:not(.wl-rec) td:first-child::before{content:none}
+}
 .wl-diagram{margin:1rem 0;overflow-x:auto}
 .wl-grid{display:inline-flex;align-items:stretch;padding:.5rem;border:1px dashed var(--wl-line);border-radius:8px}
 .wl-strings{display:flex;flex-direction:column;gap:.35rem;padding:.2rem 0}

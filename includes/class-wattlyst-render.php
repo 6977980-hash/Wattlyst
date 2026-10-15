@@ -35,13 +35,13 @@ final class Wattlyst_Render {
 			if ( ! empty( $this->c['tool'] ) ) { // Home Power Planner (Phase 4): inputs left, sticky plan right on desktop
 				$out .= '<section class="wl-planner" aria-labelledby="wl-plan-title"><div class="wl-planner-head"><h2 id="wl-plan-title">Plan your home power</h2>' .
 					'<ol class="wl-steps"><li>List your appliances</li><li>Set your city and backup</li><li>Get every size and the best setup</li></ol></div>' .
-					$this->tool( true ) . $this->how() . $this->data_used() . '</section>';
+					$this->tool( true ) . $this->how( true ) . $this->data_used() . '</section>';
 			}
 			$out .= $this->cards();
 			$out .= $this->lead();
-			$out .= '' !== $this->sections() ? '<div class="wl-home-info">' . $this->sections() . '</div>' : '';
+			$out .= '' !== $this->sections() ? '<div class="wl-home-info">' . $this->sections( true ) . '</div>' : '';
 			// FAQ and author box beside the key facts, so neither runs across the whole page.
-			$out .= '<div class="wl-home-more"><div class="wl-home-main">' . $this->faq( true ) . $this->author_box() . '</div><div class="wl-home-side">' . $this->key_facts() . $this->dates() . '</div></div>';
+			$out .= '<div class="wl-home-more"><div class="wl-home-main">' . $this->faq( true ) . $this->author_box() . '</div><div class="wl-home-side">' . $this->key_facts( 3 ) . $this->dates() . '</div></div>';
 		} elseif ( 'data' === $type ) { // Bill Index, Solar Price Tracker (Phase 5)
 			$out .= $this->download();
 			$out .= $this->key_facts();
@@ -358,11 +358,22 @@ final class Wattlyst_Render {
 		$cid  = $id . '-rtable';
 		$head = implode( '', array_map( static fn( $c ) => '<th scope="col">' . esc_html( $c['label'] ) . '</th>', $r['columns'] ) );
 		$rows = '';
+		$labels = array_column( $r['columns'], 'label' );
 		foreach ( $r['rows'] as $row ) {
-			$rows .= '<tr>' . implode( '', array_map( static fn( $v ) => '<td>' . str_replace( 'Rs ', 'Rs&nbsp;', esc_html( $v ) ) . '</td>', $row ) ) . '</tr>';
+			$cells = '';
+			foreach ( array_values( $row ) as $n => $v ) {
+				$cells .= '<td data-l="' . esc_attr( $labels[ $n ] ?? '' ) . '"' . self::cell_class( (string) $v ) . '>' . str_replace( 'Rs ', 'Rs&nbsp;', esc_html( $v ) ) . '</td>';
+			}
+			// The recommended row is marked for the eye; the same rule runs in the browser (wattlyst-extra.js drawTable).
+			$rows .= '<tr' . ( str_contains( (string) reset( $row ), '(recommended)' ) ? ' class="wl-rec"' : '' ) . '>' . $cells . '</tr>';
 		}
 		return '<div class="wl-rtable" data-wl-rtable><p class="wl-rtable-title" id="' . esc_attr( $cid ) . '">' . esc_html( $r['caption'] ) . '</p>' .
 			'<div class="wl-table-wrap" role="region" tabindex="0" aria-labelledby="' . esc_attr( $cid ) . '"><table class="wl-table" aria-labelledby="' . esc_attr( $cid ) . '"><thead><tr>' . $head . '</tr></thead><tbody>' . $rows . '</tbody></table></div></div>';
+	}
+
+	/** A net figure that reads "... saved" or "... cost" gets a colour class (same rule as wattlyst-extra.js). */
+	private static function cell_class( string $v ): string {
+		return str_ends_with( $v, ' saved' ) ? ' class="wl-good"' : ( str_ends_with( $v, ' cost' ) ? ' class="wl-bad"' : '' );
 	}
 
 	/**
@@ -495,29 +506,40 @@ final class Wattlyst_Render {
 		return '<div class="wl-field">' . $label . $input . $hint . '</div>';
 	}
 
-	private function how(): string {
+	private function how( bool $steps = false ): string {
 		$how = $this->c['tool']['how'] ?? null;
 		if ( ! $how ) {
 			return '';
 		}
-		return '<section class="wl-how"><h2>How this result was calculated</h2><p data-wl-how>' . esc_html( $how['text'] ) . '</p></section>';
+		if ( ! $steps ) {
+			return '<section class="wl-how"><h2>How this result was calculated</h2><p data-wl-how>' . esc_html( $how['text'] ) . '</p></section>';
+		}
+		// Home: one sentence per step, the first three shown and the rest behind a toggle (all of it stays in the HTML);
+		// the browser splits its live text the same way (wattlyst-extra.js drawTable).
+		$li = implode( '', array_map( static fn( $x ) => '<li>' . esc_html( $x ) . '</li>', preg_split( '/(?<=\.)\s+(?=[A-Z])/u', $how['text'] ) ) );
+		return '<section class="wl-how wl-how-steps"><h2>How this result was calculated</h2><input type="checkbox" id="wl-how-all" class="wl-tg"><ol data-wl-how data-wl-steps>' . $li . '</ol>' .
+			'<label for="wl-how-all" class="wl-tg-l"><span>Show every step</span><span>Show fewer steps</span></label></section>';
 	}
 
 	/** Home: the dated data behind the plan and the setup prices (the home page has no Sources list). */
 	private function data_used(): string {
 		$items = '';
 		foreach ( $this->c['tool']['data_checked'] ?? array() as $d ) {
-			$items .= '<li>' . ( $d['url'] ? '<a href="' . esc_url( $d['url'] ) . '" rel="noopener">' . esc_html( $d['label'] ) . '</a>' : esc_html( $d['label'] ) ) . ', checked <time datetime="' . esc_attr( $d['checked'] ) . '">' . esc_html( self::date( $d['checked'] ) ) . '</time></li>';
+			$items .= '<li>' . ( $d['url'] ? '<a href="' . esc_url( $d['url'] ) . '" rel="noopener">' . esc_html( $d['label'] ) . '</a>' : esc_html( $d['label'] ) ) . ' <span class="wl-du-d">checked <time datetime="' . esc_attr( $d['checked'] ) . '">' . esc_html( self::date( $d['checked'] ) ) . '</time></span></li>';
 		}
 		return $items ? '<section class="wl-data-used"><h2>Data and prices used</h2><ul>' . $items . '</ul></section>' : '';
 	}
 
-	private function key_facts(): string {
+	/** Key facts; with $show (home) only the first $show are open and the rest fold under "Show all" (still in the HTML). */
+	private function key_facts( int $show = 0 ): string {
 		if ( empty( $this->c['key_facts'] ) ) {
 			return '';
 		}
-		$li = implode( '', array_map( static fn( $k ) => '<li>' . esc_html( $k ) . '</li>', $this->c['key_facts'] ) );
-		return '<section class="wl-facts"><h2>Key facts</h2><ul>' . $li . '</ul></section>';
+		$li   = static fn( array $k ) => implode( '', array_map( static fn( $x ) => '<li>' . esc_html( $x ) . '</li>', $k ) );
+		$all  = $this->c['key_facts'];
+		$more = $show && count( $all ) > $show ? array_slice( $all, $show ) : array();
+		$fold = $more ? '<details class="wl-more"><summary>Show all ' . count( $all ) . ' key facts</summary><ul>' . $li( $more ) . '</ul></details>' : '';
+		return '<section class="wl-facts"><h2>Key facts</h2><ul>' . $li( $more ? array_slice( $all, 0, $show ) : $all ) . '</ul>' . $fold . '</section>';
 	}
 
 	private function formula(): string {
@@ -529,14 +551,15 @@ final class Wattlyst_Render {
 		return '<section class="wl-formula"><h2>Formula</h2><p class="wl-eq"><code>' . esc_html( $f['text'] ) . '</code></p>' . ( $lines ? '<ul>' . $lines . '</ul>' : '' ) . '</section>';
 	}
 
-	private function sections(): string {
+	/** Text sections; with $fold (home) only the first paragraph is open and the rest folds under "Read more". */
+	private function sections( bool $fold = false ): string {
 		$out = '';
 		foreach ( $this->c['sections'] ?? array() as $s ) {
 			$out .= '<section><h2>' . esc_html( $s['h2'] ) . '</h2>';
-			foreach ( $s['p'] as $p ) {
-				$out .= '<p>' . esc_html( $p ) . '</p>';
+			foreach ( $s['p'] as $n => $p ) {
+				$out .= ( $fold && 1 === $n ? '<details class="wl-more"><summary>Read more</summary>' : '' ) . '<p>' . esc_html( $p ) . '</p>';
 			}
-			$out .= '</section>';
+			$out .= ( $fold && count( $s['p'] ) > 1 ? '</details>' : '' ) . '</section>';
 		}
 		return $out;
 	}

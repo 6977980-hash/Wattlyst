@@ -100,12 +100,12 @@ async function init(form) {
       node.closest('.wl-result').hidden = !node.textContent;
     }
     if (diagram && cfg.diagram === 'battery_grid') extra.drawGrid(diagram, Math.round(out.n_series), Math.round(out.n_parallel));
-    if (cfg.rtable) extra.drawTable(diagram, out, cfg.rtable, fmt, render);
     if (howEl && cfg.how) {
       const text = render(form.dataset.lang === 'ur' && cfg.how_ur ? cfg.how_ur : cfg.how, { in: out, out, d: cfg.data.defaults, data: cfg.data });
       howEl.hidden = text === null;
       if (text !== null) howEl.textContent = text;
     }
+    if (cfg.rtable) extra.drawTable(diagram, out, cfg.rtable, fmt, render);
     if (pushState) history.replaceState(null, '', shareUrl(window.location.href));
   };
 
