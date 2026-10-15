@@ -225,3 +225,20 @@ test('Bill Index units ladder: every step from data, engine bills, protected onl
   const csv = files['generated/data/pakistan-electricity-bill-index.csv'];
   assert.ok(csv.includes(`,${to},unprotected,`), 'CSV carries the top of the ladder');
 });
+
+test('every tool page gives the same default result with the browser copy of the data as at build (decision engine)', async () => {
+  // The browser gets only manifest.data[data_keys] + the page's appliances (Wattlyst_Render::tool_data). A field the
+  // engine reads but the browser copy drops (n_sources made every price range "low confidence" live) breaks this.
+  const { calculators } = await import('../engine/index.js');
+  const { data } = await import('./load-data.js');
+  const bad = [];
+  for (const p of pages.filter((x) => x.content?.tool?.calc)) {
+    const t = p.content.tool;
+    const inputs = { ...t.fixed_inputs, ...Object.fromEntries(t.fields.filter((f) => f.default !== undefined).map((f) => [f.name, f.default])) };
+    const browser = { defaults: manifest.data.defaults, ...Object.fromEntries(t.data_keys.filter((k) => manifest.data[k]).map((k) => [k, manifest.data[k]])), ...(t.appliances ? { appliances: t.appliances } : {}) };
+    const a = calculators[t.calc](structuredClone(inputs), data);
+    const b = calculators[t.calc](structuredClone(inputs), browser);
+    try { assert.deepEqual(b, a); } catch { bad.push(p.id); }
+  }
+  assert.deepEqual(bad, []);
+});

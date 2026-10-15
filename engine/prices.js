@@ -7,7 +7,7 @@ import { calculator, CalcError, has, pos, num, pick, dflt } from './core.js';
  * interpolated linearly by kW and divided by the watts, so the price never falls as the size rises when the
  * listed sizes do not (audit WL-11); below the smallest or above the largest listed size the nearest end's Rs/W.
  */
-function priceRange(d, type, kwp) {
+export function priceRange(d, type, kwp) {
   const rows = (d?.solar_prices?.systems || []).filter((r) => r.type === type && r.kw > 0).sort((a, b) => a.kw - b.kw);
   if (!rows.length) throw new CalcError('price_data_missing', 'type');
   const perW = (r) => ({ lo: r.low_rs / (r.kw * 1000), hi: r.high_rs / (r.kw * 1000) });
