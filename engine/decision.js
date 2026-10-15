@@ -5,7 +5,7 @@ import { calculator, CalcError, num, has, ceilSafe, dflt } from './core.js';
 import { fmt } from './format.js';
 import { home_plan } from './planner.js';
 import { standbyFor } from './backup.js';
-import { priceRange, inverterAt } from './prices.js';
+import { priceRange, hybridPremium } from './prices.js';
 import { bill_total } from './bill.js';
 
 const mid = (r) => (r.low + r.high) / 2;
@@ -32,13 +32,16 @@ export const home_decision = calculator((i, d) => {
   const need = p.backup_hours > 0;
   const W = fmt(p.backup_w, 'int');
   const hours = `${fmt(p.backup_hours, '1')} h of ${W} W`;
-  const kw = p.installed_kw;
+  // Net billing accepts an array only up to the sanctioned load, so the solar setups are priced and named at the
+  // array it accepts (the planner's net_billing_kw, the same array its saving counts), never at panels with no benefit (WL-91).
+  // kw is 0 when not one panel fits the sanctioned load: then no solar setup is offered.
+  const kw = p.net_billing_kw;
   const pr = priceRange(d, 'on-grid', kw);
   const out = { ...p, years, budget_rs: budget, low_confidence: pr.low_confidence };
   const setups = [];
   // One setup: price at the low, middle and high end, replacements, monthly saving and running cost.
   const add = (id, key, option, low, high, repl, saving, running, backup, ok = true) => {
-    const s = { key, option, low, high, buy: (low + high) / 2, repl, saving, running, backup, ok };
+    const s = { key, option, buy: (low + high) / 2, repl, saving, running, backup, ok };
     s.net_rs = s.buy + repl + months * (running - saving);
     s.net = ok ? net(s.net_rs) : 'Not counted';
     s.price = ok ? `${rs(low)} to ${rs(high)}` : backup;
@@ -47,8 +50,10 @@ export const home_decision = calculator((i, d) => {
     return s;
   };
   const og = [pr.lo * kw * 1000, pr.hi * kw * 1000];
-  const o = add('ongrid', 'ongrid', `On-grid solar ${fmt(kw, '2')} kW`, ...og, 0, p.full_saving_rs, 0, 'None: switches off in a power cut');
-  const lines = [`${o.option}, installed: ${o.price}, saves ${rs(o.saving)} a month, no backup in a cut, net ${o.net}.`];
+  const NOSUN = 'Sanctioned load too small';
+  const K = kw ? ` ${fmt(kw, '2')} kW` : '';
+  const o = add('ongrid', 'ongrid', `On-grid solar${K}`, ...og, 0, p.full_saving_rs, 0, kw ? 'None: switches off in a power cut' : NOSUN, kw > 0);
+  const lines = kw ? [`${o.option}, installed: ${o.price}, saves ${rs(o.saving)} a month, no backup in a cut, net ${o.net}.`] : [];
 
   if (need) {
     // Hybrid: the planner's backup energy as a 48 V class bank bought whole (LiFePO4 51.2 V packs or 12 V tubular units
@@ -61,15 +66,12 @@ export const home_decision = calculator((i, d) => {
     if (!item) throw new CalcError('price_data_missing', 'chemistry');
     const s = units > 1;
     const battery = li ? `${units} lithium pack${s ? 's' : ''} of ${fmt(bp.lithium_pack.kwh, '2')} kWh (51.2 V)` : `${units} tubular batter${s ? 'ies' : 'y'} of ${t.v} V ${t.ah} Ah (${bank_v} V bank)`;
-    const hkw = Math.max(p.inverter_kw, (p.backup_w * p.margin) / 1000);
-    const [hy, hw, above] = inverterAt(cp, 'hybrid_inverter', hkw);
-    const [on, ow] = inverterAt(cp, 'ongrid_inverter', p.inverter_kw);
-    const premium = Math.max(0, hy - on);
+    const [premium, known, hw, above, hkw] = hybridPremium(cp, p.net_billing_inverter_kw, (p.backup_w * p.margin) / 1000);
     const repl = Math.max(0, Math.floor((years - 1e-9) / bp.battery_life_years[p.chemistry]));
     const bat = units * mid(item);
-    const h = add('hybrid', 'hybrid', `Hybrid solar ${fmt(kw, '2')} kW + ${battery}`, og[0] + premium + units * item.low, og[1] + premium + units * item.high, repl * bat, p.full_saving_rs, 0, `${hours} from the battery`);
-    lines.push(`${h.option}: ${h.price} (the on-grid price plus ${rs(bat)} of battery and ${rs(premium)} extra for a ${fmt(hkw, 'up1')} kW grid-tie hybrid inverter${above ? ' (above our list: rough)' : ''}), battery replacements ${rs(repl * bat)}, net ${h.net}.`);
-    Object.assign(out, { hybrid_battery: battery, hybrid_battery_units: units, hybrid_battery_rs: bat, hybrid_inverter_kw: hkw, hybrid_premium_rs: premium, hybrid_replacements: repl, low_confidence: out.low_confidence || hw || ow || weak(item) });
+    const h = add('hybrid', 'hybrid', `Hybrid solar${K} + ${battery}`, og[0] + premium + units * item.low, og[1] + premium + units * item.high, repl * bat, p.full_saving_rs, 0, kw ? `${hours} from the battery` : NOSUN, kw > 0);
+    if (kw) lines.push(`${h.option}: ${h.price} (the on-grid price plus ${rs(bat)} of battery; ${known ? `${rs(premium)} extra for` : 'extra cost not known (none added) for'} a ${fmt(hkw, 'up1')} kW grid-tie hybrid inverter${above ? ' (above our list: rough)' : ''}), battery replacements ${rs(repl * bat)}, net ${h.net}.`);
+    Object.assign(out, { hybrid_battery: battery, hybrid_battery_units: units, hybrid_inverter_kw: hkw, hybrid_premium_rs: premium, hybrid_replacements: repl, low_confidence: out.low_confidence || hw || weak(item) });
 
     // UPS or generator: N7 for the backup load; the UPS recharge is priced on the whole bill (section F bill_total of
     // the month's units plus the recharge units, less the bill without them), as the solar saving is.
@@ -82,8 +84,8 @@ export const home_decision = calculator((i, d) => {
       lines.push(`${b.option} for ${W} W: ${b.price}, ${u ? `grid recharge adds ${rs(b.running)} a month to the bill` : `petrol and oil cost ${rs(b.running)} a month`}, net ${b.net}.`);
       // On-grid solar + the same UPS or generator: a UPS recharges through the net-billed bill, as extra imported units.
       const cs = u ? p.full_before_rs - Math.max(0, bt(p.import_units + sb.r) - p.export_credit_rs) : p.full_saving_rs;
-      const c = add('combo', 'combo', `${o.option} + ${b.option}`, og[0] + sb.lo, og[1] + sb.hi, sb.repl, Math.max(0, cs), (u ? 0 : sb.run) + Math.max(0, -cs), b.backup);
-      lines.push(`${c.option}: ${c.price}, saves ${rs(c.saving)} a month${u ? (c.running ? `, the recharge adds ${rs(c.running)} a month` : ' with the recharge on the bill') : ` and burns ${rs(c.running)} of petrol and oil`}, net ${c.net}.`);
+      const c = add('combo', 'combo', `${o.option} + ${b.option}`, og[0] + sb.lo, og[1] + sb.hi, sb.repl, Math.max(0, cs), kw ? (u ? 0 : sb.run) + Math.max(0, -cs) : 0, kw ? b.backup : NOSUN, kw > 0);
+      if (kw) lines.push(`${c.option}: ${c.price}, saves ${rs(c.saving)} a month${u ? (c.running ? `, the recharge adds ${rs(c.running)} a month` : ' with the recharge on the bill') : ` and burns ${rs(c.running)} of petrol and oil`}, net ${c.net}.`);
     } else {
       for (const [id, name] of SB) add(id, id, name, 0, 0, 0, 0, 0, 'Not available for this backup load', false);
       lines.push(`A UPS or generator for ${W} W is above our price lists.`);
@@ -94,8 +96,8 @@ export const home_decision = calculator((i, d) => {
   }
 
   // Candidates: the setups that give backup when backup is asked for, else on-grid solar and staying on the grid.
-  const grid = { key: 'grid', option: 'Stay on the grid (no purchase)', low: 0, high: 0, buy: 0, saving: 0, running: 0, backup: 'None', net: rs(0), net_rs: 0, price: rs(0) };
-  const pool = need ? setups.filter((x) => x.ok && x !== o) : [o, grid];
+  const grid = { key: 'grid', option: 'Stay on the grid (no purchase)', buy: 0, saving: 0, running: 0, backup: 'None', net: rs(0), net_rs: 0, price: rs(0) };
+  const pool = need ? setups.filter((x) => x.ok && x !== o) : kw ? [o, grid] : [grid];
   const fits = pool.filter((x) => !budget || x.buy <= budget + 1e-9);
   const over = pool.length > 0 && !fits.length;
   const pick = fits.length ? fits.reduce((a, b) => (b.net_rs < a.net_rs - 1e-9 || (Math.abs(b.net_rs - a.net_rs) <= 1e-9 && b.buy < a.buy) ? b : a))

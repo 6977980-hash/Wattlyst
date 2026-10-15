@@ -1,6 +1,28 @@
 # Progress
 
-## Handoff for next phase (after full-audit fix Phase 1: homepage and phone bugs) — written by the audit Phase 1 thread, 2026-10-15
+## Handoff for next phase (after full-audit fix Phase 2a: decision engine sizing and pricing, P0) — written by the audit Phase 2a thread, 2026-10-15
+
+Owner: every audit fix phase runs in its own thread and ends with this note. Phase plan: `/mnt/project-files/electricity-tool-hub/audit/fix-phases-2026-10-15.md` (Phases 1 and 2a ticked). Next is **Phase 2b** (decision engine modelling): read only its section there plus its report lines. Plugin v0.8.17. Rules live only in `specs/formulas.md` (D5/D8 bullet, H1 planner paragraph, Home Power Decision Engine bullet) and the new spec cases at the end of `specs/calculator-test-cases.json`.
+
+**What is where**
+- WL-92 sizing rule: `solarSystem` in `engine/solar.js` takes a `power` flag; `solar_from_loads` passes it only for `off_grid` (D3), `solar_for_ac` (D5) and `solar_for_pump` (D15) keep it. Output `power_rule` says which; `kw_power` is still returned and shown in page text. The planner (`engine/planner.js`) follows automatically through `solar_from_loads`.
+- WL-91 billed array: `home_plan` now also returns `net_billing_inverter_kw` (its inverter rule at the billed array). `home_decision` (`engine/decision.js`) prices and names every solar setup at `net_billing_kw` with that inverter; when no panel fits the sanctioned load the three solar setups are "not available" and never picked. The planner's `solar_above_sanctioned` notice text (`engine/messages.js`) now says the setups count only the panels that fit.
+- WL-100 premium: `hybridPremium` in `engine/prices.js` (hybrid kW, premium, known flag); the decision text says the extra cost is "not known (none added)" instead of a zero premium.
+- Page text rewritten for the energy rule: `content/pages/D8.json`, `D12.json`, `D13.json`, `N13.json` (answer, how, key fact, sections, mistakes, FAQ) and `H1.json` (how, how_ur, key fact). D3, D5, D15 text unchanged (they keep the power rule).
+- Tests: `tests/decision-sizing.test.js` (DE-01, DE-02, MD-01 moved from the audit branch and adapted to `tests/load-data.js`; premium wording; inverter middle and low prices never fall with size). All failed on the old engine.
+
+**Do not touch / watch**
+- Homepage JS budget is full again (a few dozen bytes left in the 30 KB test): `decision.js` was shrunk to fit. Put new decision code in helpers of `prices.js`/`backup.js`/`planner.js` or shrink first. `messages.js` counts on every page.
+- Default numbers changed on D8, D12, D13 and N13 (fewer panels, same inverters) and on the homepage only for lists whose running load beat their units; the homepage default result is unchanged except the hybrid line wording.
+- The audit test folder on branch `claude/project-thread-1qfruz` (PR #31) stays out of main.
+
+**Open to-dos**
+- [ENGINEER] WL-92 rule choice (energy sizing for grid-tied lists instead of a diversity factor) is marked in formulas.md for the PEC reviewer.
+- Grid-tied pages still size the inverter from the running load with margin, so the inverter can now be well above the panel kW (N13, D13); whether a grid-tied inverter needs to carry the whole load is an engineer item, and the D8/D13 "Is a 5/15 kW system enough" FAQ answers are MD-02 in Phase 4.
+- Data item (owner): the on-grid 5 kW inverter row's high price comes from an unverified three-phase snippet, the 5 kW and 10 kW on-grid middle prices are equal, and there are no 3 kW on-grid or 3 to 5 kW export-capable hybrid rows; re-source `data/component-prices.json`. Until then the homepage default shows the hybrid premium as not known. MD-03 (hybrid always dearer than on-grid) waits for that data.
+- Everything open from the earlier handoffs below still stands (WL-139 phone Calculate button, Roman Urdu on N7/N16/N18, N11 warning).
+
+## Earlier handoff (after full-audit fix Phase 1: homepage and phone bugs) — written by the audit Phase 1 thread, 2026-10-15
 
 Owner: every audit fix phase runs in its own thread and ends with this note. Phase plan, IDs and report lines per phase: `/mnt/project-files/electricity-tool-hub/audit/fix-phases-2026-10-15.md` (Phase 1 ticked). Next is **Phase 2a** (decision engine sizing and pricing, P0): read only its section there plus its report lines. Plugin v0.8.16, PR #32. No formula, data, engine or page text changed.
 
@@ -372,6 +394,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | 2026-10-15 | Homepage compact layout (owner: "han"): folds for how/key facts/sections, setups table marks and phone cards, tighter planner; plugin v0.8.14 | done: tests green, local WP checked | PR #29 |
 | 2026-10-15 | Homepage follow-up (owner screenshots): aligned planner fields, equal-height task cards; plugin v0.8.15 | done: tests green, local WP checked | PR #30 |
 | 2026-10-15 | Full audit fix Phase 1 (owner: phases in own threads): homepage share link (WL-89), desktop error layout (WL-90), phone headings, focus ring, result table cards, small UI items (WL-133..137; WL-139 left open, see handoff); plugin v0.8.16 | done: tests green, local WP + browser checks, axe 0 on / | PR #32 |
+| 2026-10-15 | Full audit fix Phase 2a (decision engine P0): grid-tied lists sized by energy like D7 (WL-92 [ENGINEER], H1 D8 D12 D13 N13), decision setups priced at the array net billing accepts (WL-91), hybrid premium shown as not known instead of zero (WL-100); plugin v0.8.17 | done: tests green, Engineer Reviewer (4 defects fixed), local WP checked | PR #33 |
 | 2026-10-15 | SERP ideas (owner: "4ron idea cover krny hain"): Bill Index units table 50 to 1,000 with lifeline line, engine numbers in four titles, Inverex Nitrox error codes; idea 3 already live as F2-F12; plugin v0.8.11 | done: tests green, Engineer Reviewer fixes applied (caption kW, lifeline line, F16/F28/F32 safety), local WP checked | PR (this thread) |
 | 2026-10-15 | Growth phase (owner: "next phase new thread"): IndexNow now announces changed pages in one batch after each sync (all live pages on the first run), owner growth plan with outreach and forum drafts in a Claude Doc; plugin v0.8.10 | done: tests green, local WP checked (stubbed IndexNow), no formula or page change | #25 |
 | 2026-10-15 | Net billing group B (owner: "baqi fixes pe kaam kro"): Home Power Planner saving on the whole bill (fixed charge, FC surcharge, GST; export credit set against the bill after GST), energy-charge saving shown under it; plugin v0.8.9 | done: tests green, Engineer Reviewer, local WP checked | PR (this thread) |

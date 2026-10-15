@@ -83,8 +83,12 @@ export const panel_for_12v = calculator((i, d) => {
   return out;
 });
 
-/** Panels, inverter and (optional) night battery for a daily energy and a running/starting load. */
-function solarSystem(daily_kwh, running_w, surge_w, i, d) {
+/**
+ * Panels, inverter and (optional) night battery for a daily energy and a running/starting load. `power` = the array
+ * must also carry the running load at midday (off-grid D3, solar-only loads D5 and D15); a grid-tied or hybrid array
+ * (D8 house lists, H1) is sized by energy only, because the grid covers the midday peak (audit WL-92, [ENGINEER]).
+ */
+function solarSystem(daily_kwh, running_w, surge_w, i, d, power = true) {
   const y = yieldFor(i, d);
   const panel_w = pos(i, 'panel_w', dflt(d, 'panel_w'));
   const pr = frac(i, 'pr', dflt(d, 'pr'));
@@ -108,10 +112,11 @@ function solarSystem(daily_kwh, running_w, surge_w, i, d) {
     array_kwh = load_kwh - night_kwh + night_kwh / (bat.inverter_eff * charge_eff);
     offgrid = { off_grid: true, charge_eff, battery_inverter_eff: bat.inverter_eff, load_kwh, day_kwh: load_kwh - night_kwh };
   }
-  // Energy: the array must make the day's kWh. Power: at midday it must also carry the running load (kWp × PR ≥ P_run).
+  // Energy: the array must make the day's kWh. Power: where it applies, at midday it must also carry the running
+  // load (kWp × PR ≥ P_run); kw_power is still returned for the pages that show it next to the energy rule.
   const kw_energy = array_kwh / y.yield_kwh_per_kwp_day;
   const kw_power = running_w / 1000 / pr;
-  const kw = Math.max(kw_energy, kw_power);
+  const kw = power ? Math.max(kw_energy, kw_power) : kw_energy;
   const panels = ceilSafe((kw * 1000) / panel_w);
   const installed_kw = (panels * panel_w) / 1000;
   // Inverter continuous rating: carry the running load with margin, and do not let the array exceed the
@@ -129,7 +134,8 @@ function solarSystem(daily_kwh, running_w, surge_w, i, d) {
     inverter_w,
     inverter_kw: inverter_w / 1000,
     inverter_surge_w: surge_w,
-    limited_by: kw_power > kw_energy ? 'power' : 'energy',
+    power_rule: power,
+    limited_by: power && kw_power > kw_energy ? 'power' : 'energy',
   };
   if (bat) Object.assign(out, { night_hours, night_kwh, battery_v: bat.volts, battery_dod: bat.dod, battery_ah: bat.ah, battery_kwh: bat.kwh });
   return out;
@@ -147,13 +153,16 @@ export const solar_for_ac = calculator((i, d) => {
   return { ac: i.ac.trim(), ac_name: ac.name, ac_run_w: ac.running_w, ac_start_w: ac.starting_w, ac_avg_w: avg_w, hours, ...solarSystem(daily_kwh, ac.running_w, ac.starting_w, i, d) };
 });
 
-/** D8: solar system from an appliance list (same rows as home_load): daily kWh and running load → panels, inverter, battery. */
+/**
+ * D8: solar system from an appliance list (same rows as home_load): daily kWh and running load → panels, inverter, battery.
+ * Grid-tied and hybrid lists are sized by energy; only an off-grid list (D3) keeps the midday power rule (WL-92).
+ */
 export const solar_from_loads = calculator((i, d) => {
   const rows = loadRows(i.loads, d);
   const { running_w, surge_w } = sumLoads(rows);
   const daily_kwh = rows.reduce((s, r) => s + r.energy_w * r.qty * r.hours, 0) / 1000;
   if (!(daily_kwh > 0)) throw new CalcError('hours_required', 'loads');
-  return { appliances: rows.length, ...solarSystem(daily_kwh, running_w, surge_w, i, d) };
+  return { appliances: rows.length, ...solarSystem(daily_kwh, running_w, surge_w, i, d, bool(i.off_grid)) };
 });
 
 /**

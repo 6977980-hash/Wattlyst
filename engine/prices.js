@@ -38,6 +38,19 @@ export function inverterAt(items, category, kw) {
 }
 
 /**
+ * Hybrid inverter premium for the decision engine (formulas.md H1): the hybrid inverter also carries the backup load,
+ * so hkW = max(kW, backup kW); premium = middle price of a hybrid inverter at hkW less an on-grid one at kW, never
+ * below 0. When the lists price the hybrid at or below the on-grid unit the premium is not known (counted as 0, the
+ * page says so, WL-100). Returns [premium, known, a row rests on one source, hybrid above the list, hkW].
+ */
+export function hybridPremium(items, kw, backup_kw) {
+  const hkw = Math.max(kw, backup_kw);
+  const [hy, hw, above] = inverterAt(items, 'hybrid_inverter', hkw);
+  const [on, ow] = inverterAt(items, 'ongrid_inverter', kw);
+  return [Math.max(0, hy - on), hy - on > 1e-9, hw || ow, above, hkw];
+}
+
+/**
  * N3: Rs/W = price / (kWp × 1000), compared with the typical range for the type (priceRange) or an
  * explicit range_low/range_high in Rs per W. Verdict: below / within / above. Never names an installer as cheating.
  */

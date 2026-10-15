@@ -40,7 +40,7 @@ const EXACT = {
   ambient_out_of_range: 'Enter an air temperature around the cable between 10 and 60 °C.',
   circuits_out_of_range: 'Enter how many circuits share the conduit or bundle, from 1 to 20.',
   run_too_long_for_table: 'This run is too long for the cables in our table: the voltage drop would exceed the limit. Shorten the run, split the load or consult a licensed electrician.',
-  solar_above_sanctioned: 'Your solar array is larger than your sanctioned load. Net billing allows an array up to the sanctioned kW, so the bill step counts only the panels that fit within it. Apply for a higher sanctioned load or plan fewer panels.',
+  solar_above_sanctioned: 'Your solar array is larger than your sanctioned load. Net billing allows an array up to the sanctioned kW, so the bill and the setups count only the panels that fit. Apply for a higher sanctioned load or plan fewer panels.',
   price_low_confidence: 'The typical price range for this size rests on a single published price list, so treat it as a rough guide and compare at least two more quotes.',
   above_standard_sizes: 'This is above the largest standard size we list. Split the array or circuit into two, or ask a licensed electrician or engineer; the sizes shown are the calculated minimums.',
   generator_above_standard_sizes: 'This is above the largest generator size we list. Use two generators on separate circuits or a larger industrial set, and ask a licensed electrician; the size shown is the calculated minimum.',
