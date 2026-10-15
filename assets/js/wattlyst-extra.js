@@ -39,6 +39,20 @@ export function drawTable(box, out, t, fmt, render) {
   body.textContent = '';
   for (const item of out[t.key] || []) {
     const tr = body.insertRow();
-    for (const c of t.columns) tr.insertCell().textContent = `${fmt(item[c.key], c.spec)}${c.suffix || ''}`;
+    for (const c of t.columns) {
+      const td = tr.insertCell();
+      td.textContent = `${fmt(item[c.key], c.spec)}${c.suffix || ''}`;
+      td.dataset.l = c.label;
+      // Same marks as the build (class-wattlyst-render.php rtable): net saved or cost, and the recommended row.
+      td.className = / saved$/.test(td.textContent) ? 'wl-good' : / cost$/.test(td.textContent) ? 'wl-bad' : '';
+    }
+    tr.className = /\(recommended\)/.test(tr.cells[0]?.textContent) ? 'wl-rec' : '';
+  }
+  // Home: the "how" text (already updated) as one step per sentence, as the build prints it.
+  const how = document.querySelector('[data-wl-steps]');
+  if (how && !how.children.length) {
+    const text = how.textContent;
+    how.textContent = '';
+    for (const x of text.split(/(?<=\.)\s+(?=[A-Z])/)) how.appendChild(document.createElement('li')).textContent = x;
   }
 }

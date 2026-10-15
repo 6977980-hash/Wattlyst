@@ -1,6 +1,23 @@
 # Progress
 
-## Handoff for next phase (after the Home Power Decision Engine and its combo setup) — written by the decision engine thread, 2026-10-15
+## Handoff for next phase (after the homepage compact layout) — written by the decision engine thread, 2026-10-15
+
+Owner asked for a compact homepage, arrangement only ("han" to the audit in `/mnt/project-files/electricity-tool-hub/audit/homepage-compact-2026-10-15.md`). Plugin v0.8.14. No formula, data, engine or page text changed.
+
+**What is where**
+- Folds, all text still in the HTML: `Wattlyst_Render::how( true )` (home "how" as one `<li>` per sentence, first three shown, checkbox toggle `.wl-tg`/`.wl-tg-l`, no script), `key_facts( 3 )` (rest under `details.wl-more`), `sections( true )` (first paragraph open, rest under "Read more"). Only the home branch of `html()` passes these flags.
+- Live redraw: `assets/js/wattlyst-extra.js` `drawTable` marks `tr.wl-rec` (row naming "(recommended)"), `td.wl-good`/`td.wl-bad` (net "saved"/"cost"), `data-l` column labels, and re-splits the live "how" text into steps (`[data-wl-steps]`); `wattlyst-tool.js` now calls `drawTable` after the "how" text is set. `rtable()` in PHP prints the same marks.
+- CSS: marks, `.wl-tg` toggle and the phone card view of the split-mode setups table are in `assets/css/wattlyst.css` (after `.wl-rtable`); home-only compaction (fields in three columns, loads header on phones, phone task cards as hub tiles, info grid, `#wl-h1` rules) in `assets/css/wattlyst-home.css`.
+
+**Do not touch / watch**
+- `assets/css/wattlyst-home.css` is near its 20 KB test budget, and the homepage JS budget has under 100 bytes left: put new shared styles in `wattlyst.css`, new script in `wattlyst-extra.js`.
+- Touch targets stay 44 px (design test).
+
+**Open to-dos**
+- Phone task cards now show only the hub (tools are on the hub page); revisit if the owner wants tool links back on phones.
+- Everything open from the decision engine handoff below still stands.
+
+## Earlier handoff (after the Home Power Decision Engine and its combo setup) — written by the decision engine thread, 2026-10-15
 
 Owner approved idea 7 of their pasted suggestions ("han", 15 Oct 2026): the homepage planner now also picks a setup. Plugin v0.8.12, PR #27. Owner then asked for a fourth setup, on-grid solar + UPS or generator ("bna do"): plugin v0.8.13. Formula and numbers live only in `specs/formulas.md` ("Home Power Decision Engine" bullet in "Owner-approved tools") and the `home_decision` cases at the end of `specs/calculator-test-cases.json`.
 
@@ -327,6 +344,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | 2026-10-15 | N16 AC bill calculator (owner approved the SERP idea): what one AC adds to the whole bill, slab jump, protected-status loss and the penalty on the next bills; engine/acbill.js, 7 spec cases; E5 hands the "ac bill calculator" keywords to N16; plugin v0.8.6 | done: tests green, Engineer Reviewer pass after fixes (tariff checked date on the page, AC hours ≤ 24 and days ≤ 31 for E5 too, rate wording), Lighthouse mobile 98/100/100/100 on local WP | #21 |
 | 2026-10-15 | Home Power Decision Engine on H1 (owner: "han"): on-grid vs hybrid vs UPS/generator, budget, net over years, data dates; D14/N3 live price-notice fix; plugin v0.8.12 | done: tests green, Engineer Reviewer fixes applied, local WP checked | PR #27 |
 | 2026-10-15 | Decision Engine fourth setup (owner: "bna do"): on-grid solar + UPS or generator, UPS recharge on the net-billed bill; plugin v0.8.13 | done: tests green, Engineer Reviewer, local WP checked | PR #28 |
+| 2026-10-15 | Homepage compact layout (owner: "han"): folds for how/key facts/sections, setups table marks and phone cards, tighter planner; plugin v0.8.14 | done: tests green, local WP checked | PR #29 |
 | 2026-10-15 | SERP ideas (owner: "4ron idea cover krny hain"): Bill Index units table 50 to 1,000 with lifeline line, engine numbers in four titles, Inverex Nitrox error codes; idea 3 already live as F2-F12; plugin v0.8.11 | done: tests green, Engineer Reviewer fixes applied (caption kW, lifeline line, F16/F28/F32 safety), local WP checked | PR (this thread) |
 | 2026-10-15 | Growth phase (owner: "next phase new thread"): IndexNow now announces changed pages in one batch after each sync (all live pages on the first run), owner growth plan with outreach and forum drafts in a Claude Doc; plugin v0.8.10 | done: tests green, local WP checked (stubbed IndexNow), no formula or page change | #25 |
 | 2026-10-15 | Net billing group B (owner: "baqi fixes pe kaam kro"): Home Power Planner saving on the whole bill (fixed charge, FC surcharge, GST; export credit set against the bill after GST), energy-charge saving shown under it; plugin v0.8.9 | done: tests green, Engineer Reviewer, local WP checked | PR (this thread) |
