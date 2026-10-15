@@ -9,11 +9,12 @@
 
 defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
 
-foreach ( array( 'wattlyst_sync_hash', 'wattlyst_sync_lock', 'wattlyst_indexnow_key' ) as $opt ) {
+foreach ( array( 'wattlyst_sync_hash', 'wattlyst_sync_lock', 'wattlyst_warm_queue', 'wattlyst_indexnow_key' ) as $opt ) {
 	delete_option( $opt );
 }
 wp_clear_scheduled_hook( 'wattlyst_lead_cleanup' );
 wp_clear_scheduled_hook( 'wattlyst_sync' );
+wp_clear_scheduled_hook( 'wattlyst_warm' );
 
 $wattlyst_leads = get_posts( array( 'post_type' => 'wattlyst_lead', 'post_status' => 'any', 'fields' => 'ids', 'numberposts' => -1 ) );
 foreach ( $wattlyst_leads as $wattlyst_id ) {

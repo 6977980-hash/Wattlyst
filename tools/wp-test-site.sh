@@ -23,6 +23,9 @@ require '$W/index.php';
 PHP
 WP="php $DIR/dl/wp-cli.phar --allow-root --path=$W"
 $WP config create --dbname=wp --dbuser=x --dbpass=x --skip-check >/dev/null
+# PHP's built-in server handles one request at a time, so WP-Cron's loopback request (the cache warm-up fetches
+# pages from the same server) would block it. WP-CLI below runs the page sync instead.
+$WP config set DISABLE_WP_CRON true --raw >/dev/null
 $WP core install --url="http://127.0.0.1:$PORT" --title=Wattlyst --admin_user=admin --admin_password="$(openssl rand -hex 12)" --admin_email=test@example.com --skip-email >/dev/null
 $WP theme activate generatepress >/dev/null
 $WP rewrite structure '/%postname%/' >/dev/null
