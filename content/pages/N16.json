@@ -56,8 +56,8 @@
    "name": "sanctioned_kw",
    "label": "Sanctioned load",
    "unit": "kW",
-   "default": "@default_sanctioned_kw",
-   "hint": "The kW printed on the bill; most homes are one to five. It sets the fixed charge."
+   "default": 2,
+   "hint": "The kW printed on the bill; most homes are one to five, and a home with an AC needs more than {{d.default_sanctioned_kw|int}} kW. It sets the fixed charge."
   },
   {
    "name": "days",

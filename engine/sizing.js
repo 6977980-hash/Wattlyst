@@ -1,5 +1,5 @@
-// C. Inverter & generator sizing (specs/formulas.md section C), sanctioned load (G, N4).
-import { calculator, CalcError, num, pos, frac, nonneg, ceilSafe, dflt, appliance, has, pick } from './core.js';
+// C. Inverter & generator sizing (specs/formulas.md section C).
+import { calculator, CalcError, num, pos, frac, nonneg, dflt, appliance, has, pick } from './core.js';
 
 /**
  * loads: [{ name, run, start, qty }] for appliances ON AT THE SAME TIME. start defaults to run.
@@ -138,35 +138,4 @@ export const generator_for_pump = calculator((i, d) => {
   const pump_start_w = pump_run_w * start_factor;
   const loads = [{ name: 'pump', run: pump_run_w, start: pump_start_w }, ...otherLoads(i)];
   return { hp, motor_eff, start_factor, shaft_w, pump_run_w, pump_start_w, other_w: loads[1]?.run ?? 0, ...generatorFor(loads, i, d) };
-});
-
-/**
- * N4: demand = connected (running) kW × diversity; recommended = max(min kW, ceil(demand)).
- * A motor's starting surge lasts seconds and does not register on the MDI, so it does not raise the
- * sanctioned load; it is returned only as a note for inverter/generator sizing. [ENGINEER]
- * ≥ 5 kW: ToU meter mandatory and not protected. Net-billing cap = sanctioned kW.
- */
-export const sanctioned_load = calculator((i, d) => {
-  let connected_kw;
-  if (Array.isArray(i.appliances_w)) {
-    connected_kw = i.appliances_w.reduce((s, w, idx) => s + num({ w }, 'w', { min: 0, code: `appliance_${idx}_invalid` }), 0) / 1000;
-    if (!(connected_kw > 0)) throw new CalcError('loads_required', 'appliances_w');
-  } else {
-    connected_kw = pos(i, 'connected_kw');
-  }
-  const diversity = frac(i, 'diversity', dflt(d, 'diversity_home'));
-  const largest_start_kw = nonneg(i, 'largest_start_kw', 0);
-  const demand_kw = connected_kw * diversity;
-  const recommended_kw = Math.max(dflt(d, 'min_sanctioned_kw'), ceilSafe(demand_kw));
-  const tou_kw = dflt(d, 'tou_threshold_kw');
-  return { connected_kw, diversity, demand_kw, largest_start_kw, start_exceeds_sanctioned: largest_start_kw > recommended_kw, recommended_kw, tou_warning: recommended_kw >= tou_kw, net_billing_cap_kw: recommended_kw };
-});
-
-/** E: load check against sanctioned kW; amps = W / (V × PF). */
-export const load_check = calculator((i, d) => {
-  const total_w = pos(i, 'total_w', undefined, 'load_must_be_positive');
-  const sanctioned_kw = pos(i, 'sanctioned_kw');
-  const volts = pos(i, 'volts', dflt(d, 'v_1ph'));
-  const pf = frac(i, 'pf', dflt(d, 'pf_mixed'));
-  return { total_w, sanctioned_kw, volts, pf, total_kw: total_w / 1000, amps: total_w / (volts * pf), within_sanctioned: total_w / 1000 <= sanctioned_kw, load_pct: (total_w / 1000 / sanctioned_kw) * 100 };
 });

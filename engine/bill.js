@@ -83,7 +83,7 @@ export const bill_tou = calculator((i, d) => {
  * protected consumers (NEPRA exempts them, SRO 852(I)/2026); the per-unit rates are echoed for page text.
  * QTA/FPA may be negative (a credit).
  */
-export const bill_total = calculator((i, d) => {
+function billLines(i, d) {
   const base = bill_energy.raw(i, d);
   const a = tariffOf(d).addons_secondary || {};
   // Lifeline: FC surcharge and GST defaults are 0 until confirmed on a lifeline bill [VERIFY]; the user can still enter them.
@@ -94,16 +94,33 @@ export const bill_total = calculator((i, d) => {
   const qtaDefault = period && /^\d{4}-\d{2}\.\.\d{4}-\d{2}$/.test(period) && Object.hasOwn(qtaTable, period) ? qtaTable[period] : undefined;
   if (period && typeof qtaDefault !== 'number') throw new CalcError('period_unknown', 'period');
   const qta = num(i, 'qta_per_unit', { def: qtaDefault ?? 0 });
-  const fpa = num(i, 'fpa_per_unit', { def: a.fpa_per_unit?.value ?? 0 });
+  // FPA bounded by the range NEPRA has notified (data/tariff-pk-2026.json addons_secondary.fpa_per_unit.min/max, WL-118).
+  const fpa = num(i, 'fpa_per_unit', { def: a.fpa_per_unit?.value ?? 0, min: a.fpa_per_unit?.min, max: a.fpa_per_unit?.max });
   const gst_pct = num(i, 'gst_pct', { def: life ? 0 : a.gst_pct?.value ?? 0, min: 0, max: 100 });
-  const fc_rs = fc * base.units;
-  const qta_rs = base.category === 'lifeline' ? 0 : qta * base.units;
+  // A bill prints whole rupees: each line is rounded, the subtotal is the sum of the printed lines and GST is
+  // rounded on that subtotal, so the printed lines always add up to the printed total (WL-109).
+  const R = Math.round;
+  const energy_rs = R(base.energy_rs), fixed_rs = R(base.fixed_rs);
+  const fc_rs = R(fc * base.units);
+  const qta_rs = base.category === 'lifeline' ? 0 : R(qta * base.units);
   const fpa_exempt = base.category !== 'unprotected';
-  const fpa_rs = fpa_exempt ? 0 : fpa * base.units;
-  const subtotal_rs = Math.max(0, base.energy_rs + base.fixed_rs + fc_rs + qta_rs + fpa_rs);
-  const gst_rs = (subtotal_rs * gst_pct) / 100;
-  return { ...base, fc_surcharge_per_unit: fc, qta_per_unit: qta, fpa_per_unit: fpa, fpa_exempt, fc_rs, qta_rs, fpa_rs, subtotal_rs, gst_pct, gst_rs, total_rs: subtotal_rs + gst_rs };
-}, { allowNegative: ['qta_rs', 'fpa_rs', 'qta_per_unit', 'fpa_per_unit'] });
+  const fpa_rs = fpa_exempt ? 0 : R(fpa * base.units);
+  const subtotal_rs = Math.max(0, energy_rs + fixed_rs + fc_rs + qta_rs + fpa_rs);
+  const gst_rs = R((subtotal_rs * gst_pct) / 100);
+  // Average energy rate per unit: a protected bill is charged slab by slab, so its average is below the top slab's rate (WL-114).
+  const avg_rate = base.units > 0 ? base.energy_rs / base.units : base.rate;
+  return { ...base, energy_rs, fixed_rs, avg_rate, fc_surcharge_per_unit: fc, qta_per_unit: qta, fpa_per_unit: fpa, fpa_exempt, fc_rs, qta_rs, fpa_rs, subtotal_rs, gst_pct, gst_rs, total_rs: subtotal_rs + gst_rs };
+}
+
+export const bill_total = calculator((i, d) => {
+  const out = billLines(i, d);
+  // Top-slab cliff for page text (WL-117): one unit past the last closed unprotected band moves every unit to the
+  // open-ended rate; same sanctioned load and add-ons as this bill.
+  const bands = tariffOf(d).unprotected;
+  const edge = bands[bands.length - 2].upto;
+  const at = (units) => billLines({ ...i, units, protected: false, lifeline: false }, d).total_rs;
+  return { ...out, cliff_units: edge, cliff_rs: at(edge + 1) - at(edge) };
+}, { allowNegative: ['qta_rs', 'fpa_rs', 'qta_per_unit', 'fpa_per_unit', 'cliff_rs'] });
 
 /** Protected: last 6 months each ≤ 200 units, not ToU, sanctioned < 5 kW. */
 export const protected_check = calculator((i, d) => {
@@ -111,10 +128,11 @@ export const protected_check = calculator((i, d) => {
   const months = dflt(d, 'protected_months');
   const limit = dflt(d, 'protected_max_units');
   if (!Array.isArray(h) || h.length !== months) throw new CalcError(`history_needs_${months}_months`, 'history');
-  h.forEach((u, idx) => num({ history: u }, 'history', { min: 0, code: `history_${idx + 1}_invalid` }));
+  // Each month parsed like every other input ("1,500" = 1500), and the check runs on the parsed numbers (WL-113).
+  const units = h.map((u, idx) => num({ history: u }, 'history', { min: 0, code: `history_${idx + 1}_invalid` }));
   const sanctioned_kw = pos(i, 'sanctioned_kw', dflt(d, 'default_sanctioned_kw'));
   const tou = bool(i.tou) || sanctioned_kw >= dflt(d, 'tou_threshold_kw');
-  const max_month = Math.max(...h);
+  const max_month = Math.max(...units);
   const reasons = [];
   if (max_month > limit) reasons.push('month_over_200');
   if (tou) reasons.push('tou_or_5kw');
@@ -148,10 +166,18 @@ export const net_billing = calculator((i, d) => {
   };
 });
 
+/** Protected energy + fixed with every slab limit scaled by `scale` (a reading cycle longer or shorter than the billing month). */
+function proratedProtected(t, units, scale, kw) {
+  // The top limit never falls below the units: units_30 within the limit can scale back a hair under it in floating point.
+  const bands = t.protected.map((b, k, all) => ({ ...b, upto: k === all.length - 1 ? Math.max(b.upto * scale, units) : b.upto * scale }));
+  return energyCharge({ protected: bands }, units, 'protected', kw);
+}
+
 /**
  * N1 bill audit: units_30 = units × bill_month_days / days; slab_jump if the 30-day-equivalent falls in a lower band;
  * if 'protected' history was all ≤ 200 but this bill > 200 only because of a long cycle, flag it.
- * Estimate only, never an official finding.
+ * Fair bill: unprotected = every unit at the band the 30-day equivalent reaches; protection at risk = the protected
+ * bill with each slab limit pro-rated by days ÷ bill_month_days (WL-111). Estimate only, never an official finding.
  */
 export const bill_audit = calculator((i, d) => {
   const t = tariffOf(d);
@@ -163,18 +189,25 @@ export const bill_audit = calculator((i, d) => {
   const limit = dflt(d, 'protected_max_units');
   // Only a cycle longer than 30 days can push units into a higher band; a short cycle never overcharges.
   const slab_jump = bandIndex(bands, units_30) < bandIndex(bands, units);
-  const out = {
-    units, days, units_30, long_cycle: days > dflt(d, 'max_normal_cycle_days'), slab_jump,
-    protection_at_risk: units > limit && units_30 <= limit,
-  };
+  const protection_at_risk = units > limit && units_30 <= limit;
+  const out = { units, days, units_30, long_cycle: days > dflt(d, 'max_normal_cycle_days'), slab_jump, protection_at_risk };
   if (has(i, 'sanctioned_kw')) {
     const kw = pos(i, 'sanctioned_kw');
     const actual = energyCharge(t, units, 'unprotected', kw);
-    // Fair estimate = all billed units at the rate (and fixed charge) of the band the 30-day equivalent reaches.
-    const fair = energyCharge(t, units_30, 'unprotected', kw);
-    const fair_rs = units * fair.rate + fair.fixed_rs;
+    // A home that lost protected status only to the long cycle should have had its protected bill, slab limits
+    // pro-rated to the days read; otherwise all billed units at the rate (and fixed charge) of the band the 30-day equivalent reaches.
+    let fair_rs;
+    if (protection_at_risk) {
+      const p = proratedProtected(t, units, days / cycle, kw);
+      fair_rs = p.energy_rs + p.fixed_rs;
+    } else {
+      const fair = energyCharge(t, units_30, 'unprotected', kw);
+      fair_rs = units * fair.rate + fair.fixed_rs;
+    }
     out.billed_rs = actual.energy_rs + actual.fixed_rs;
     out.fair_rs = fair_rs;
+    out.fair_protected = protection_at_risk;
+    out.fair_basis = protection_at_risk ? 'the protected rates the home had, each protected slab stretched to the days read' : `the slab ${Math.round(units_30)} units would reach`;
     out.extra_rs = Math.max(0, out.billed_rs - fair_rs);
   }
   if (has(i, 'prev_year_units')) {

@@ -1,6 +1,32 @@
 # Progress
 
-## Handoff for next phase (after full-audit fix Phase 2b: decision engine modelling) — written by the audit Phase 2b thread, 2026-10-15
+## Handoff for next phase (after full-audit fix Phase 3: bill calculators) — written by the audit Phase 3 thread, 2026-10-15
+
+Owner: every audit fix phase runs in its own thread and ends with this note. Phase plan: `/mnt/project-files/electricity-tool-hub/audit/fix-phases-2026-10-15.md` (Phases 1, 2a, 2b, 3 ticked). Next is **Phase 4** (battery, generator, wiring, solar tools): read only its section there plus its report lines. Plugin v0.8.19. Rules live only in `specs/formulas.md` (section F bullets Rounding, FPA input range, Average rate, Top-slab cliff, Protected check; N1 bill audit bullets; N4 and E4 bullets; E1 bullet; N16 bullet; Data pages bullet) and the spec cases at the end of `specs/calculator-test-cases.json`.
+
+**What is where**
+- WL-109 rounded bill lines: `billLines` in `engine/bill.js` (each printed line whole rupees, GST on the rounded subtotal); `bill_total` wraps it and adds `avg_rate` (WL-114) and `cliff_units`/`cliff_rs` (WL-117). Every caller (planner, decision, N16, Bill Index) now gets whole-rupee lines.
+- WL-118 FPA range: `min`/`max` (with `range_note`, `range_source`) on `addons_secondary.fpa_per_unit` in `data/tariff-pk-2026.json`; N16 notice `ac_above_sanctioned` (`engine/acbill.js`, text in `engine/messages.js`); N16 default sanctioned load is now a page default in `content/pages/N16.json`.
+- WL-110 one sanctioned-load rule: new module `engine/sanction.js` (`sanctionedFor`, N4 `sanctioned_load`, E3 `load_check`, E4 `add_ac_check` moved out of `sizing.js`/`load.js` to keep the page JS budgets); E4 outputs `demand_kw`, `needed_kw`, `verdict`; E4's first field is now the connected load (every appliance installed), so diversity is applied once (Engineer Reviewer); E4 page text rewritten (`content/pages/E4.json`).
+- WL-111 N1: pro-rated protected fair bill in `bill_audit` (`proratedProtected`, outputs `fair_protected`, `fair_basis`); N1 how and example 2 text.
+- WL-112 E1: calc `home_load_bill` in `engine/acbill.js` (no rate field any more; sanctioned load sets the fixed charge, 5 kW+ gives the ToU message); E1 example 2 moved to a 4 kW connection.
+- WL-113 `protected_check` parses each month. WL-114 F tables print "Average rate per unit"; F1 fixed-charge fact; N1 example 3 wording. WL-116 F1/F2 answers say "before the month's FPA"; H1 "one engine" paragraph softened.
+- WL-115: `tools/lib/datasets.js` `billIndex` (`lab()` "(FPA reported)", `status()`, K-Electric row uses `fpa_ke`); `data/bill-index.json` month fields `fpa_ke`, disco `ke`; F14 FAQ/hint use `data.fpa_newest.note` (built in `tools/build.js` next to `fpa_latest`); F14 meta in `specs/keyword-map.csv`.
+- Tests: `tests/bill-calculators.test.js` (MF-01 to MF-07 from the audit branch, adapted, plus WL-115 to WL-118). All MF tests failed on v0.8.18.
+
+**Do not touch / watch**
+- Homepage JS budget: about a dozen bytes left in the 30 KB test (H1 = tool script + base incl. `messages.js` + `decision.js` + loads). Any new message text costs every page; the list pages on `load.js` have room again because E4/N4 left it.
+- `bill_total` now returns whole rupees: compare bills with an exact or rupee tolerance, not 0.01 on decimals.
+- The audit test folder on branch `claude/project-thread-1qfruz` (PR #31) stays out of main.
+
+**Open to-dos**
+- [ENGINEER] E4 now uses N4's diversity 0.6 on the connected load, so many homes that "overloaded" before now fit; E1's own sanctioned-load check still compares the connected running load (not changed, the audit only named E4). N1 assumes the home was protected before when protection is at risk (page says so).
+- WL-149 not done: no primary notification found for the PTV fee removal (only news, June to August 2025), so the F1 FAQ and Bill Index still name the TV fee "where it is still charged"; drop it once a gazette/SRO is found.
+- Engineer Reviewer repeated the open tariff questions (formulas.md section F, WL-14a/b): fixed charge per kW or per consumer, and a previous-slab benefit for unprotected 1-200 units; both need the SRO 279(I)/2026 text (owner/PEC).
+- The FPA range rests on a secondary source (see `range_note` and `range_source` in the tariff file); marked `range_verified: false`.
+- Everything open from the earlier handoffs below still stands (WL-139, Roman Urdu on N7/N16/N18, N11 warning, component price rows, Phase 2b [ENGINEER] items).
+
+## Earlier handoff (after full-audit fix Phase 2b: decision engine modelling) — written by the audit Phase 2b thread, 2026-10-15
 
 Owner: every audit fix phase runs in its own thread and ends with this note. Phase plan: `/mnt/project-files/electricity-tool-hub/audit/fix-phases-2026-10-15.md` (Phases 1, 2a, 2b ticked). Next is **Phase 3** (bill calculators): read only its section there plus its report lines. Plugin v0.8.18, PR #34. Rules live only in `specs/formulas.md` (Global defaults table rows `yield` and `days_per_month`, N7 bullet, H1 planner paragraph, Home Power Decision Engine bullet) and the spec cases at the end of `specs/calculator-test-cases.json`.
 
@@ -420,6 +446,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | 2026-10-15 | Full audit fix Phase 1 (owner: phases in own threads): homepage share link (WL-89), desktop error layout (WL-90), phone headings, focus ring, result table cards, small UI items (WL-133..137; WL-139 left open, see handoff); plugin v0.8.16 | done: tests green, local WP + browser checks, axe 0 on / | PR #32 |
 | 2026-10-15 | Full audit fix Phase 2a (decision engine P0): grid-tied lists sized by energy like D7 (WL-92 [ENGINEER], H1 D8 D12 D13 N13), decision setups priced at the array net billing accepts (WL-91), hybrid premium shown as not known instead of zero (WL-100); plugin v0.8.17 | done: tests green, Engineer Reviewer (4 defects fixed), local WP checked | PR #33 |
 | 2026-10-15 | Full audit fix Phase 2b (decision engine modelling): power cuts spread over the day, generator credited with the grid units it supplies, UPS/generator/hybrid must start the backup load, UPS rows by real VA, matching battery voltages, close calls and runner-up, budget on the low price, backup above the home rejected, N7 claims from engine outputs, one month length (365 ÷ 12) and yield from monthly PVOUT (WL-93 to WL-106, WL-108); plugin v0.8.18 | done: tests green, Engineer Reviewer (5 defects fixed), local WP + browser check | PR #34 |
+| 2026-10-15 | Full audit fix Phase 3 (bill calculators): printed bill lines add up (WL-109), E4 uses the N4 sanctioned-load rule (WL-110 [ENGINEER]), N1 fair bill on pro-rated protected slabs (WL-111), E1 priced as a whole bill (WL-112), "1,500" in history (WL-113), wording and average rate (WL-114), reported FPA month and K-Electric row (WL-115), bill basis named (WL-116), top-slab cliff fact (WL-117), FPA range and N16 notice (WL-118); WL-149 left (no primary source); plugin v0.8.19 | done: tests green, Engineer Reviewer (3 defects fixed: E4 connected load, N1 float edge, Bill Index K-Electric sentence), local WP + browser check | PLACEHOLDER_PR |
 | 2026-10-15 | SERP ideas (owner: "4ron idea cover krny hain"): Bill Index units table 50 to 1,000 with lifeline line, engine numbers in four titles, Inverex Nitrox error codes; idea 3 already live as F2-F12; plugin v0.8.11 | done: tests green, Engineer Reviewer fixes applied (caption kW, lifeline line, F16/F28/F32 safety), local WP checked | PR (this thread) |
 | 2026-10-15 | Growth phase (owner: "next phase new thread"): IndexNow now announces changed pages in one batch after each sync (all live pages on the first run), owner growth plan with outreach and forum drafts in a Claude Doc; plugin v0.8.10 | done: tests green, local WP checked (stubbed IndexNow), no formula or page change | #25 |
 | 2026-10-15 | Net billing group B (owner: "baqi fixes pe kaam kro"): Home Power Planner saving on the whole bill (fixed charge, FC surcharge, GST; export credit set against the bill after GST), energy-charge saving shown under it; plugin v0.8.9 | done: tests green, Engineer Reviewer, local WP checked | PR (this thread) |

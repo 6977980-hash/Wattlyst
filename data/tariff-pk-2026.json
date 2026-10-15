@@ -110,7 +110,13 @@
   "fpa_per_unit": {
    "value": null,
    "note": "Changes monthly and is not applied by default (a blank field = 0). The monthly FPA history lives only in data/bill-index.json (months[].fpa_per_unit); pages that explain the FPA pre-fill its newest NEPRA-verified month (build: data.fpa_latest; audit WL-13). Not charged to lifeline, protected, EV charging station and prepaid consumers (NEPRA review decision on the March 2026 FCA, SRO 852(I)/2026).",
-   "verified": true
+   "verified": true,
+   "min": -15,
+   "max": 15,
+   "range_note": "Input bound only (audit WL-118): a sanity range wider than any monthly FCA NEPRA has notified for domestic consumers (the largest, Rs 9.90 per unit for June 2022, was charged in August 2022 bills). A value outside it is almost certainly a typing mistake (for example the bill's FPA amount in rupees instead of the rate per unit). Widen it if NEPRA ever notifies a larger adjustment.",
+   "range_source": "Dawn, 'Nepra approves Rs9.90 per unit fuel price hike' (July 2022); secondary",
+   "range_checked": "2026-10-15",
+   "range_verified": false
   },
   "income_tax_235": {
    "threshold_rs": 25000,

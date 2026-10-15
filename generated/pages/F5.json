@@ -9,7 +9,7 @@
  "primary_keyword": "gepco bill calculator",
  "wave": 2,
  "status": "publish",
- "reviewed": "2026-10-13",
+ "reviewed": "2026-10-15",
  "published": "2026-10-13",
  "author": "ali-ahmad",
  "related": [
@@ -49,7 +49,7 @@
    {
     "h2": "GEPCO tariff: what one unit over a slab costs",
     "p": [
-     "Unprotected domestic slabs are 100 units wide, and the rate of the slab reached applies to every unit of the month, not just the units above the line. So a month of 210 units is billed at Rs 33.10 on all of them and costs Rs 9,544, while a protected month of 190 units costs Rs 3,820. The gap between those two bills is the price of a few units of extra use at the wrong time.",
+     "Unprotected domestic slabs are 100 units wide, and the rate of the slab reached applies to every unit of the month, not just the units above the line. So a month of 210 units is billed at Rs 33.10 on all of them and costs Rs 9,544, while a protected month of 190 units costs Rs 3,821. The gap between those two bills is the price of a few units of extra use at the wrong time.",
      "The same thing happens at every edge further up: in the table, compare the row just under a boundary with the row just over it. If a month looks like it will land a few units into the next slab, moving a wash, an iron session or a pump run to after the reading date keeps the whole month in the lower slab."
     ]
    },
@@ -105,9 +105,10 @@
   "key_facts": [
    "GEPCO, the Gujranwala Electric Power Company, supplies Gujranwala, Gujrat, Sialkot, Narowal, Hafizabad, Mandi Bahauddin and Wazirabad from its head office in Gujranwala and bills the uniform NEPRA A-1 domestic tariff for 2026, not a tariff of its own.",
    "An unprotected GEPCO consumer using 250 units pays Rs 33.10 on every unit, which is Rs 8,275 of energy charge before the fixed charge, FC surcharge, QTA and GST.",
-   "Crossing a slab costs more than the extra units: 190 protected units cost about Rs 3,820, while 210 unprotected units, only a few more, cost about Rs 9,544 because the whole month moves to the unprotected rate of Rs 33.10.",
+   "Crossing a slab costs more than the extra units: 190 protected units cost about Rs 3,821, while 210 unprotected units, only a few more, cost about Rs 9,544 because the whole month moves to the unprotected rate of Rs 33.10.",
    "Protection on GEPCO needs every one of the last 6 bills at or under 200 units on a connection below 5 kW; a single bill over the limit ends it for the next 6 months.",
    "GST at 18% is charged on the energy charge, fixed charge and surcharges together and adds Rs 1,721 to a 250 unit GEPCO bill; the surcharge and GST defaults are secondary-source figures that change.",
+   "The bill jumps at 700 units: up to there every unit is billed at Rs 41.85, but one unit more moves all of them to the top slab rate of Rs 47.20, which adds Rs 4,478 to the bill of an unprotected 1 kW home.",
    "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of 7.5% on a monthly bill of Rs 25,000 or more; consumers on the list pay none."
   ],
   "mistakes": [
@@ -270,7 +271,7 @@
    ],
    "how": {
     "tpl": "{{out.units}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
-    "text": "250 units × Rs 33.10 (unprotected slab rate) = Rs 8,275. Fixed charge for 1 kW = Rs 350. FC surcharge Rs 808 + QTA Rs 130 + FPA Rs 0. Subtotal Rs 9,562 + GST 18% (Rs 1,721) = Rs 11,284."
+    "text": "250 units × Rs 33.10 (unprotected slab rate) = Rs 8,275. Fixed charge for 1 kW = Rs 350. FC surcharge Rs 808 + QTA Rs 130 + FPA Rs 0. Subtotal Rs 9,563 + GST 18% (Rs 1,721) = Rs 11,284."
    },
    "submit": "Calculate",
    "notice": "",
@@ -285,7 +286,7 @@
   "examples": [
    {
     "title": "190 units, protected consumer just under the limit",
-    "text": "Energy charge Rs 2,225 slab-wise at the two protected rates, fixed charge Rs 300 for 1 kW, FC surcharge Rs 614, QTA Rs 99, GST Rs 583. Estimated GEPCO bill Rs 3,820 before FPA."
+    "text": "Energy charge Rs 2,225 slab-wise at the two protected rates, fixed charge Rs 300 for 1 kW, FC surcharge Rs 614, QTA Rs 99, GST Rs 583. Estimated GEPCO bill Rs 3,821 before FPA."
    },
    {
     "title": "210 units, the month that ends protection",
@@ -304,7 +305,7 @@
    "caption": "Estimated GEPCO bill at the slab edges on a 1 kW connection with the default surcharges and GST, before FPA; unprotected unless marked",
    "head": [
     "Units",
-    "Per unit rate",
+    "Average rate per unit",
     "Energy",
     "Fixed",
     "Estimated bill"
@@ -319,7 +320,7 @@
     ],
     [
      "200 (protected)",
-     "Rs 13.01",
+     "Rs 11.78",
      "Rs 2,355",
      "Rs 300",
      "Rs 4,018"
@@ -336,7 +337,7 @@
      "Rs 33.10",
      "Rs 6,653",
      "Rs 350",
-     "Rs 9,153"
+     "Rs 9,152"
     ],
     [
      "300 (unprotected)",
@@ -350,7 +351,7 @@
      "Rs 36.46",
      "Rs 10,974",
      "Rs 400",
-     "Rs 14,754"
+     "Rs 14,752"
     ],
     [
      "400 (unprotected)",
@@ -364,7 +365,7 @@
      "Rs 38.95",
      "Rs 15,619",
      "Rs 500",
-     "Rs 20,795"
+     "Rs 20,794"
     ]
    ]
   },
@@ -420,8 +421,8 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/bill/gepco-bill-calculator/#breadcrumb"
     },
-    "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13",
+    "dateModified": "2026-10-15",
+    "lastReviewed": "2026-10-15",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }

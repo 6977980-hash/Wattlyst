@@ -1,8 +1,8 @@
-// N16. What one AC adds to the monthly bill (specs/formulas.md "Owner-approved tools"). Its own module, so the
-// appliance-list pages on load.js do not ship the bill engine.
+// Load tools priced as a whole bill: N16 (what one AC adds) and E1's bill (home_load_bill). Their own module, so the
+// appliance pages on load.js do not ship the bill engine.
 import { calculator, CalcError, has, nonneg, dflt, bool } from './core.js';
 import { bill_total } from './bill.js';
-import { ac_units } from './load.js';
+import { ac_units, home_load } from './load.js';
 
 /**
  * N16 AC bill impact: what one AC adds to the whole monthly bill (formulas.md "Owner-approved tools").
@@ -35,5 +35,17 @@ export const ac_bill_impact = calculator((i, d) => {
     before_rate: before.rate, after_rate: after.rate, before_category: before.category, after_category: after.category,
     slab_jump: after.band_index > before.band_index || after.category !== before.category,
     protected_lost, protected_limit: limit, lock_months, lock_per_month, lock_extra_rs,
+    // The AC alone above the sanctioned load: the page warns (a higher sanctioned load first, WL-118).
+    ac_above_sanctioned: (ac.ac_rated_w ?? ac.avg_kw * 1000) / 1000 > after.sanctioned_kw,
   };
+});
+
+/**
+ * E1: home load (home_load) with its monthly units priced as a whole unprotected bill at the slab they reach
+ * (section F bill_total, default add-ons, sanctioned load blank = the default kW), so E1 and F1 give the same bill (WL-112).
+ */
+export const home_load_bill = calculator((i, d) => {
+  const out = home_load.raw(i, d);
+  const b = bill_total.raw({ units: out.monthly_units, sanctioned_kw: i.sanctioned_kw, protected: false }, d);
+  return { ...out, bill_kw: b.sanctioned_kw, bill_rate: b.rate, bill_energy_rs: b.energy_rs, monthly_rs: b.total_rs };
 });

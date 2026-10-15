@@ -43,14 +43,14 @@
    {
     "h2": "How much will an AC increase my electricity bill?",
     "p": [
-     "Take the bill without the AC and the bill with it, and subtract. With the defaults, a Split AC 1.5 ton inverter running 8 hours a day adds 243 units to a home that used 180. The bill goes from Rs 3,622 to Rs 21,921, which is Rs 18,299 more a month, or Rs 75.19 for each unit the AC uses.",
+     "Take the bill without the AC and the bill with it, and subtract. With the defaults, a Split AC 1.5 ton inverter running 8 hours a day adds 243 units to a home that used 180. The bill goes from Rs 3,975 to Rs 22,511, which is Rs 18,536 more a month, or Rs 76.17 for each unit the AC uses.",
      "That is far above the Rs 38.95 slab rate, because the AC does not only add its own units: it re-prices the units the home was already using. An estimate that multiplies the AC's units by one rate misses this, so it reads too low exactly when it matters."
     ]
    },
    {
     "h2": "Why the AC pushes you into a higher slab",
     "p": [
-     "On the unprotected domestic tariff every unit is charged at the rate of the slab the monthly total reaches. An unprotected home on 250 units pays Rs 33.10 per unit; with the AC it reaches 493 units and pays Rs 38.95 on all of them. The bill rises by Rs 14,165, Rs 58.20 for each AC unit.",
+     "On the unprotected domestic tariff every unit is charged at the rate of the slab the monthly total reaches. An unprotected home on 250 units pays Rs 33.10 per unit; with the AC it reaches 493 units and pays Rs 38.95 on all of them. The bill rises by Rs 14,341, Rs 58.93 for each AC unit.",
      "The fixed charge per sanctioned kW also rises with the slab, and the per-unit surcharges and GST grow with the units, so the calculator prices the whole bill twice rather than adding one line."
     ]
    },
@@ -58,7 +58,7 @@
     "h2": "Protected consumers: the six-month cost of one hot month",
     "p": [
      "A home is protected only while each of its last 6 bills stayed within 200 units. A single AC month above that limit moves the home to unprotected rates, and it stays there for the next 6 bills even after the AC is switched off.",
-     "With the defaults the penalty on those later bills is Rs 3,669 a month, Rs 22,012 in all, on top of the Rs 18,299 extra in the AC month itself. It is a floor: summer bills with the AC running cost more. If your usage sits just under the limit, fewer AC hours can keep protection, as the third worked example shows."
+     "With the defaults the penalty on those later bills is Rs 3,669 a month, Rs 22,014 in all, on top of the Rs 18,536 extra in the AC month itself. It is a floor: summer bills with the AC running cost more. If your usage sits just under the limit, fewer AC hours can keep protection, as the third worked example shows."
     ]
    },
    {
@@ -71,15 +71,15 @@
   "faq": [
    {
     "q": "How much does a 1.5 ton inverter AC add to the electricity bill?",
-    "a": "Running 8 hours a day it adds about 243 units a month. For a protected home on 180 units that is Rs 18,299 more a month; for an unprotected home on 250 units, Rs 14,165 more."
+    "a": "Running 8 hours a day it adds about 243 units a month. For a protected home on 180 units that is Rs 18,536 more a month; for an unprotected home on 250 units, Rs 14,341 more."
    },
    {
     "q": "Why is my bill so high after I started using the AC?",
-    "a": "Because the AC pushes the whole month into a higher slab or off the protected tariff, and every unit is then charged at the higher rate. In the default example each AC unit really costs Rs 75.19."
+    "a": "Because the AC pushes the whole month into a higher slab or off the protected tariff, and every unit is then charged at the higher rate. In the default example each AC unit really costs Rs 76.17."
    },
    {
     "q": "Will using an AC make me lose protected status?",
-    "a": "Yes, if the month's total goes over 200 units. Then the next 6 bills are charged at unprotected rates even without the AC; in the default example that costs at least Rs 22,012 more."
+    "a": "Yes, if the month's total goes over 200 units. Then the next 6 bills are charged at unprotected rates even without the AC; in the default example that costs at least Rs 22,014 more."
    },
    {
     "q": "How many hours can I run an AC and stay protected?",
@@ -97,9 +97,9 @@
   "key_facts": [
    "What an AC adds to a Pakistani electricity bill is the bill with the AC minus the bill without it, not the AC's units × one slab rate, because the slab the whole home reaches sets the rate of every unit.",
    "A Split AC 1.5 ton inverter running 8 hours a day for 30 days uses about 243 units a month.",
-   "A protected home on 180 units pays about Rs 3,622; adding that AC takes it to 423 units at the unprotected Rs 38.95 rate, about Rs 21,921, so each AC unit really costs Rs 75.19.",
-   "One month above 200 units ends protected status: the next 6 bills are charged at unprotected rates even without the AC, at least Rs 22,012 more in this example.",
-   "An unprotected home on 250 units pays about Rs 14,165 more a month for the same AC, Rs 58.20 for each AC unit, because the total moves from the Rs 33.10 slab to the Rs 38.95 slab."
+   "A protected home on 180 units pays about Rs 3,975; adding that AC takes it to 423 units at the unprotected Rs 38.95 rate, about Rs 22,511, so each AC unit really costs Rs 76.17.",
+   "One month above 200 units ends protected status: the next 6 bills are charged at unprotected rates even without the AC, at least Rs 22,014 more in this example.",
+   "An unprotected home on 250 units pays about Rs 14,341 more a month for the same AC, Rs 58.93 for each AC unit, because the total moves from the Rs 33.10 slab to the Rs 38.95 slab."
   ],
   "mistakes": [
    "Multiplying the AC's units by your current slab rate. The AC moves the whole bill to a higher slab, so the real extra is the difference of two full bills.",
@@ -248,8 +248,8 @@
      "name": "sanctioned_kw",
      "label": "Sanctioned load",
      "unit": "kW",
-     "default": 1,
-     "hint": "The kW printed on the bill; most homes are one to five. It sets the fixed charge."
+     "default": 2,
+     "hint": "The kW printed on the bill; most homes are one to five, and a home with an AC needs more than 1 kW. It sets the fixed charge."
     },
     {
      "name": "days",
@@ -313,19 +313,19 @@
      "key": "extra_rs",
      "label": "Extra on your bill a month",
      "spec": "rs",
-     "value": "Rs 18,299"
+     "value": "Rs 18,536"
     },
     {
      "key": "after_rs",
      "label": "Bill with the AC",
      "spec": "rs",
-     "value": "Rs 21,921"
+     "value": "Rs 22,511"
     },
     {
      "key": "before_rs",
      "label": "Bill without the AC",
      "spec": "rs",
-     "value": "Rs 3,622"
+     "value": "Rs 3,975"
     },
     {
      "key": "ac_units",
@@ -337,7 +337,7 @@
      "key": "rs_per_ac_unit",
      "label": "Real cost of each AC unit",
      "spec": "rs2",
-     "value": "Rs 75.19"
+     "value": "Rs 76.17"
     },
     {
      "key": "protected_lost",
@@ -349,12 +349,12 @@
      "key": "lock_extra_rs",
      "label": "Penalty on the next bills without the AC",
      "spec": "rs",
-     "value": "Rs 22,012"
+     "value": "Rs 22,014"
     }
    ],
    "how": {
     "tpl": "AC: {{out.avg_kw|2}} kW × {{out.hours}} hours = {{out.daily_units|1}} units a day; {{out.daily_units|1}} units × {{out.days}} days = {{out.ac_units|int}} units a month. Without the AC: {{out.other_units}} units on the {{out.before_category|raw}} tariff = {{out.before_rs|rs}}. With the AC: {{out.total_units|int}} units on the {{out.after_category|raw}} tariff (top slab rate {{out.after_rate|rs2}} per unit) = {{out.after_rs|rs}}, including fixed charge, surcharges and GST; an FPA counts only if you enter it. Extra: {{out.after_rs|rs}} − {{out.before_rs|rs}} = {{out.extra_rs|rs}}; {{out.extra_rs|rs}} ÷ {{out.ac_units|int}} AC units = {{out.rs_per_ac_unit|rs2}} for each unit the AC uses. Protection penalty: {{out.lock_months|int}} bills × {{out.lock_per_month|rs}} = {{out.lock_extra_rs|rs}}.",
-    "text": "AC: 1 kW × 8 hours = 8 units a day; 8 units × 30.42 days = 243 units a month. Without the AC: 180 units on the protected tariff = Rs 3,622. With the AC: 423 units on the unprotected tariff (top slab rate Rs 38.95 per unit) = Rs 21,921, including fixed charge, surcharges and GST; an FPA counts only if you enter it. Extra: Rs 21,921 − Rs 3,622 = Rs 18,299; Rs 18,299 ÷ 243 AC units = Rs 75.19 for each unit the AC uses. Protection penalty: 6 bills × Rs 3,669 = Rs 22,012."
+    "text": "AC: 1 kW × 8 hours = 8 units a day; 8 units × 30.42 days = 243 units a month. Without the AC: 180 units on the protected tariff = Rs 3,975. With the AC: 423 units on the unprotected tariff (top slab rate Rs 38.95 per unit) = Rs 22,511, including fixed charge, surcharges and GST; an FPA counts only if you enter it. Extra: Rs 22,511 − Rs 3,975 = Rs 18,536; Rs 18,536 ÷ 243 AC units = Rs 76.17 for each unit the AC uses. Protection penalty: 6 bills × Rs 3,669 = Rs 22,014."
    },
    "submit": "Calculate",
    "notice": "With the AC your monthly total goes over the protected limit, so this bill and the bills of the following six months are charged at unprotected rates. Fewer AC hours may keep you protected.",
@@ -374,23 +374,23 @@
   "examples": [
    {
     "title": "Protected home on 180 units adds a Split AC 1.5 ton inverter",
-    "text": "1 kW × 8 h × 30 days = 243 AC units, 423 in all. The bill goes from Rs 3,622 (protected) to Rs 21,921 (unprotected), Rs 18,299 more, and the next 6 bills cost at least Rs 22,012 more in all."
+    "text": "1 kW × 8 h × 30 days = 243 AC units, 423 in all. The bill goes from Rs 3,975 (protected) to Rs 22,511 (unprotected), Rs 18,536 more, and the next 6 bills cost at least Rs 22,014 more in all."
    },
    {
     "title": "Unprotected home on 250 units",
-    "text": "The same 243 AC units take the home to 493 units, from the Rs 33.10 slab to the Rs 38.95 slab. The bill goes from Rs 11,284 to Rs 25,448, Rs 14,165 more, Rs 58.20 for each AC unit."
+    "text": "The same 243 AC units take the home to 493 units, from the Rs 33.10 slab to the Rs 38.95 slab. The bill goes from Rs 11,697 to Rs 26,038, Rs 14,341 more, Rs 58.93 for each AC unit."
    },
    {
     "title": "Short evenings with a Split AC 1 ton inverter keep protection",
-    "text": "2 hours a day add 40 units, so the home stays at 160 units, within the protected limit. The bill goes from Rs 2,436 to Rs 3,218, only Rs 782 more, and there is no penalty on later bills."
+    "text": "2 hours a day add 40 units, so the home stays at 160 units, within the protected limit. The bill goes from Rs 2,790 to Rs 3,572, only Rs 782 more, and there is no penalty on later bills."
    },
    {
     "title": "Split AC 1.5 ton non-inverter in a home on 300 units",
-    "text": "A non-inverter AC averages 1.44 kW, so 8 hours a day add 350 units and the home reaches 650. The bill goes from Rs 13,458 to Rs 35,795, Rs 22,337 more a month."
+    "text": "A non-inverter AC averages 1.44 kW, so 8 hours a day add 350 units and the home reaches 650. The bill goes from Rs 13,871 to Rs 36,592, Rs 22,721 more a month."
    }
   ],
   "table": {
-   "caption": "What a Split AC 1.5 ton inverter running 8 hours a day adds to the monthly bill, by usage without the AC (1 kW, default FC surcharge, QTA and GST, FPA not included)",
+   "caption": "What a Split AC 1.5 ton inverter running 8 hours a day adds to the monthly bill, by usage without the AC (2 kW, default FC surcharge, QTA and GST, FPA not included)",
    "head": [
     "Units without the AC",
     "Bill without the AC",
@@ -401,49 +401,49 @@
    "rows": [
     [
      "100 (protected)",
-     "Rs 1,922",
-     "Rs 16,763",
-     "Rs 14,841",
-     "Rs 8,956"
+     "Rs 2,158",
+     "Rs 17,235",
+     "Rs 15,077",
+     "Rs 9,486"
     ],
     [
      "180 (protected)",
-     "Rs 3,622",
-     "Rs 21,921",
-     "Rs 18,299",
-     "Rs 22,012"
+     "Rs 3,975",
+     "Rs 22,511",
+     "Rs 18,536",
+     "Rs 22,014"
     ],
     [
      "200 (protected)",
-     "Rs 4,018",
-     "Rs 22,929",
-     "Rs 18,911",
-     "Rs 24,263"
+     "Rs 4,372",
+     "Rs 23,519",
+     "Rs 19,147",
+     "Rs 24,264"
     ],
     [
      "200 (unprotected)",
-     "Rs 8,062",
-     "Rs 22,929",
-     "Rs 14,867",
+     "Rs 8,416",
+     "Rs 23,519",
+     "Rs 15,103",
      "Rs 0"
     ],
     [
      "300 (unprotected)",
-     "Rs 13,458",
-     "Rs 28,988",
-     "Rs 15,530",
+     "Rs 13,871",
+     "Rs 29,784",
+     "Rs 15,913",
      "Rs 0"
     ],
     [
      "400 (unprotected)",
-     "Rs 19,451",
-     "Rs 35,414",
-     "Rs 15,963",
+     "Rs 19,923",
+     "Rs 36,211",
+     "Rs 16,288",
      "Rs 0"
     ]
    ]
   },
-  "answer": "A Split AC 1.5 ton inverter running 8 hours a day adds about 243 units a month. For a protected home on 180 units that raises the bill from Rs 3,622 to Rs 21,921, Rs 18,299 more, because every unit moves to the unprotected Rs 38.95 rate. Losing protection then costs at least Rs 22,012 over the next 6 bills.",
+  "answer": "A Split AC 1.5 ton inverter running 8 hours a day adds about 243 units a month. For a protected home on 180 units that raises the bill from Rs 3,975 to Rs 22,511, Rs 18,536 more, because every unit moves to the unprotected Rs 38.95 rate. Losing protection then costs at least Rs 22,014 over the next 6 bills.",
   "formula": {
    "text": "Extra = Bill(other units + AC units) − Bill(other units); AC units = kW_avg × h × days",
    "lines": [
@@ -541,7 +541,7 @@
       "name": "How much does a 1.5 ton inverter AC add to the electricity bill?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Running 8 hours a day it adds about 243 units a month. For a protected home on 180 units that is Rs 18,299 more a month; for an unprotected home on 250 units, Rs 14,165 more."
+       "text": "Running 8 hours a day it adds about 243 units a month. For a protected home on 180 units that is Rs 18,536 more a month; for an unprotected home on 250 units, Rs 14,341 more."
       }
      },
      {
@@ -549,7 +549,7 @@
       "name": "Why is my bill so high after I started using the AC?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Because the AC pushes the whole month into a higher slab or off the protected tariff, and every unit is then charged at the higher rate. In the default example each AC unit really costs Rs 75.19."
+       "text": "Because the AC pushes the whole month into a higher slab or off the protected tariff, and every unit is then charged at the higher rate. In the default example each AC unit really costs Rs 76.17."
       }
      },
      {
@@ -557,7 +557,7 @@
       "name": "Will using an AC make me lose protected status?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Yes, if the month's total goes over 200 units. Then the next 6 bills are charged at unprotected rates even without the AC; in the default example that costs at least Rs 22,012 more."
+       "text": "Yes, if the month's total goes over 200 units. Then the next 6 bills are charged at unprotected rates even without the AC; in the default example that costs at least Rs 22,014 more."
       }
      },
      {

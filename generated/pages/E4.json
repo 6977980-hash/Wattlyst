@@ -9,7 +9,7 @@
  "primary_keyword": "home load calculator before adding ac",
  "wave": 1,
  "status": "publish",
- "reviewed": "2026-10-13",
+ "reviewed": "2026-10-15",
  "published": "2026-10-13",
  "author": "ali-ahmad",
  "related": [
@@ -41,21 +41,21 @@
    {
     "h2": "Can my meter handle another AC?",
     "p": [
-     "The meter itself only records units; what limits you is the sanctioned load in kW on your bill, the main breaker at the meter and the service cable into the house. Add the AC's running watts to what already runs together and compare the new total with the sanctioned kW. In the default case 1,500 W plus a Split AC 1.5 ton inverter makes 2,950 W, which is 148% of a 2 kW connection: too much.",
-     "On a 5 kW connection the same home is at 59% with 2.05 kW of headroom, so the answer depends on the sanctioned load far more than on the meter. Also check that the main breaker rating is above the new current of 16 A."
+     "The meter itself only records units; what limits you is the sanctioned load in kW on your bill, the main breaker at the meter and the service cable into the house. Add the AC's running watts to the connected load, take the share expected to run at once (0.6 for a home) and round up to a whole kW. In the default case 1,500 W plus a Split AC 1.5 ton inverter makes 2,950 W, an expected demand of 1.77 kW, so it needs 2 kW: on 2 kW it is within the sanctioned load.",
+     "On a 1 kW connection the same home needs a higher sanctioned load first, at least 2 kW, and on 5 kW it uses 35% with 3.23 kW of headroom, so the answer depends on the sanctioned load far more than on the meter. Also check that the main breaker rating is above the new current of 16 A."
     ]
    },
    {
     "h2": "How do I add an AC to my house load?",
     "p": [
-     "First find the load running now: use the home load calculator with only the appliances that are on at the same time on a summer evening, or add up their labels. Then pick the AC. The calculator adds the AC's running watts, which is the right number for the check because on a hot afternoon an inverter AC runs near its rated input for long stretches; its lower average draw is for the electricity bill, not for the load.",
-     "The result shows the new total in watts and amps, how much of the sanctioned load it uses, and the MCB rating for the AC's own circuit. If you plan a second AC, run the calculator again with the first result as the load running now."
+     "First find the connected load: add up the running watts of every appliance in the house with the home load calculator, or from their labels. Then pick the AC. The calculator adds the AC's running watts, which is the right number for the check because on a hot afternoon an inverter AC runs near its rated input for long stretches; its lower average draw is for the electricity bill, not for the load.",
+     "The result shows the new total in watts and amps, how much of the sanctioned load it uses, and the MCB rating for the AC's own circuit. If you plan a second AC, run the calculator again with the first result as the connected load."
     ]
    },
    {
     "h2": "What sanctioned load do I need for an AC?",
     "p": [
-     "The sanctioned load must be at least the new total in kW, rounded up to a whole kW. With 1,500 W of other load and a Split AC 1.5 ton inverter the new total is 2.95 kW, so a 2 kW connection is not enough and the next whole kW above 2.95 kW is the minimum to apply for. A small home with 800 W of fans, lights and a fridge can add a Split AC 1 ton inverter on 2 kW at 85%.",
+     "The sanctioned load must cover the expected demand, the new total × 0.6, rounded up to a whole kW; the sanctioned load calculator uses the same rule. With 1,500 W of other load and a Split AC 1.5 ton inverter the new total is 2.95 kW and the demand 1.77 kW, so 2 kW is the minimum to apply for. A small home with 800 W of fans, lights and a fridge can add a Split AC 1 ton inverter on 2 kW at 51%.",
      "Apply for a little more than the minimum if you expect to add appliances, but remember the fixed charge on the bill is per sanctioned kW, and that 5 kW or more puts the connection on the time-of-use tariff."
     ]
    },
@@ -76,18 +76,18 @@
    {
     "h2": "Can my meter take two ACs?",
     "p": [
-     "Run the check twice. The 1,500 W home above reaches 2,950 W with the first Split AC 1.5 ton inverter; a second one on top takes it to 4,400 W and 23.9 A, which is 88% of a 5 kW connection. Two 1.5 ton ACs plus normal household load therefore need a 5 kW sanctioned load in practice, and each AC needs its own circuit and MCB."
+     "Run the check twice. The 1,500 W home above reaches 2,950 W with the first Split AC 1.5 ton inverter; a second one on top takes it to 4,400 W and 23.9 A, an expected demand of 2.64 kW. Two 1.5 ton ACs plus normal household load therefore need a 3 kW sanctioned load, and each AC needs its own circuit and MCB."
     ]
    }
   ],
   "faq": [
    {
     "q": "Can my meter handle a 1.5 ton AC?",
-    "a": "If the load running now plus the AC's 1,450 W stays within the sanctioned kW on your bill and the main breaker rating, yes. With 1,500 W already running you need more than a 2 kW sanctioned load; with 5 kW it fits at 59%."
+    "a": "If the expected demand, (the connected load + the AC's 1,450 W) × 0.6 rounded up to a whole kW, stays within the sanctioned kW on your bill and the main breaker rating, yes. With 1,500 W already connected it needs 2 kW: on 1 kW it needs a higher sanctioned load first, at least 2 kW, and on 5 kW it fits at 35%."
    },
    {
     "q": "What sanctioned load is needed for two ACs?",
-    "a": "Two 1.5 ton inverter ACs with normal household load come to about 4,400 W, which is 88% of a 5 kW sanctioned load, so 5 kW is the practical minimum, and that connection is billed on the time-of-use tariff."
+    "a": "Two 1.5 ton inverter ACs with normal household load come to about 4,400 W connected and 2.64 kW of expected demand, so 3 kW is the minimum sanctioned load, below the 5 kW at which a connection moves to time-of-use billing."
    },
    {
     "q": "Does an inverter AC need less sanctioned load than a non-inverter?",
@@ -112,8 +112,8 @@
   ],
   "key_facts": [
    "A Split AC 1.5 ton inverter adds about 1,450 W of running load and up to 1,900 W at full speed; a non-inverter AC of the same size adds a starting surge of about three times its running watts for a second or two.",
-   "Current after adding an AC = (load running now + the AC's running watts) ÷ (volts × power factor): the default home goes from 8.2 A to 16 A at 230 V.",
-   "If the new total in kW is above the sanctioned load on the bill, apply to the DISCO for a higher sanctioned load before the AC is installed; at 5 kW or more a domestic connection moves to time-of-use billing.",
+   "Current with everything on after adding an AC = (connected load + the AC's running watts) ÷ (volts × power factor): the default home goes from 8.2 A to 16 A at 230 V.",
+   "The sanctioned load a home needs is its connected load × 0.6 diversity, rounded up to a whole kW, the same rule as the sanctioned load calculator; if that is above the kW on the bill, apply to the DISCO for a higher sanctioned load before the AC is installed. At 5 kW or more a domestic connection moves to time-of-use billing.",
    "Every AC needs its own circuit from the distribution board, with a copper cable of at least 2.5 mm² (7/29) and its own MCB; a Split AC 1.5 ton inverter needs a 16 A type C MCB on 2.5 mm² (7/29) cable, sized at the AC's maximum input with a safety margin; the AC wire size page also checks your cable length."
   ],
   "mistakes": [
@@ -142,7 +142,7 @@
   ],
   "tool": {
    "calc": "add_ac_check",
-   "module": "load.js",
+   "module": "sanction.js",
    "data_keys": [
     "cables"
    ],
@@ -199,10 +199,10 @@
    "fields": [
     {
      "name": "current_w",
-     "label": "Load running now",
+     "label": "Connected load now",
      "unit": "W",
      "default": 1500,
-     "hint": "Everything that runs at the same time today, in watts, from the home load calculator or your appliance labels."
+     "hint": "Every appliance installed today, in watts, added up from the home load calculator or your appliance labels (not only what runs together); the sanctioned load rule takes the share that runs at once."
     },
     {
      "name": "ac",
@@ -299,19 +299,24 @@
     },
     {
      "key": "amps_after",
-     "label": "Current with the AC on",
+     "label": "Current with everything on",
      "spec": "1",
      "unit": "A",
-     "label_ur": "AC chalne par current",
      "value": "16"
     },
     {
+     "key": "needed_kw",
+     "label": "Sanctioned load needed",
+     "spec": "int",
+     "unit": "kW",
+     "value": "2"
+    },
+    {
      "key": "load_pct",
-     "label": "Of sanctioned load",
+     "label": "Expected demand, of sanctioned load",
      "spec": "int",
      "unit": "%",
-     "label_ur": "Sanctioned load ka hissa",
-     "value": "148"
+     "value": "89"
     },
     {
      "key": "ac_breaker_a",
@@ -323,17 +328,12 @@
     }
    ],
    "how": {
-    "tpl": "{{in.current_w}} W running now + {{out.ac_run_w|int}} W for the {{out.ac_name|raw}} = {{out.new_total_w|int}} W. {{out.new_total_w|int}} W ÷ ({{out.volts}} V × {{out.pf|2}} power factor) = {{out.amps_after|1}} A, up from {{out.amps_now|1}} A today. {{out.new_total_kw|2}} kW ÷ {{out.sanctioned_kw}} kW sanctioned = {{out.load_pct|int}}% of the sanctioned load. For a moment at compressor start or full speed the load is {{in.current_w}} W + {{out.ac_start_w|int}} W = {{out.peak_w|int}} W ({{out.peak_amps|1}} A). The AC's own circuit is designed at the AC's maximum input: {{out.ac_design_w|int}} W ÷ ({{out.volts}} V × {{out.ac_pf|2}}, the AC's own power factor) = {{out.ac_ib_a|1}} A; with the margin a compressor load gets, the next standard MCB is {{out.ac_breaker_a|int}} A type {{out.ac_curve|raw}} on a cable rated at least {{out.ac_cable_a|1}} A: {{out.ac_cable_mm2|1}} mm², rated {{out.ac_cable_rating_a|int}} A in {{out.ambient_c}} °C air, the same as on the AC wire size page.",
-    "text": "1,500 W running now + 1,450 W for the Split AC 1.5 ton inverter = 2,950 W. 2,950 W ÷ (230 V × 0.8 power factor) = 16 A, up from 8.2 A today. 2.95 kW ÷ 2 kW sanctioned = 148% of the sanctioned load. For a moment at compressor start or full speed the load is 1,500 W + 1,900 W = 3,400 W (18.5 A). The AC's own circuit is designed at the AC's maximum input: 1,900 W ÷ (230 V × 0.9, the AC's own power factor) = 9.2 A; with the margin a compressor load gets, the next standard MCB is 16 A type C on a cable rated at least 16 A: 2.5 mm², rated 19 A in 45 °C air, the same as on the AC wire size page."
+    "tpl": "{{in.current_w}} W connected now + {{out.ac_run_w|int}} W for the {{out.ac_name|raw}} = {{out.new_total_w|int}} W. {{out.new_total_w|int}} W ÷ ({{out.volts}} V × {{out.pf|2}} power factor) = {{out.amps_after|1}} A, up from {{out.amps_now|1}} A today. Expected demand = {{out.new_total_kw|2}} kW × {{out.diversity|1}} diversity (not everything runs at once) = {{out.demand_kw|2}} kW, rounded up to a whole kW = {{out.needed_kw|int}} kW of sanctioned load, the same rule as the sanctioned load calculator; on {{out.sanctioned_kw}} kW the home {{out.verdict|raw}} ({{out.load_pct|int}}% of it). For a moment at compressor start or full speed the load is {{in.current_w}} W + {{out.ac_start_w|int}} W = {{out.peak_w|int}} W ({{out.peak_amps|1}} A). The AC's own circuit is designed at the AC's maximum input: {{out.ac_design_w|int}} W ÷ ({{out.volts}} V × {{out.ac_pf|2}}, the AC's own power factor) = {{out.ac_ib_a|1}} A; with the margin a compressor load gets, the next standard MCB is {{out.ac_breaker_a|int}} A type {{out.ac_curve|raw}} on a cable rated at least {{out.ac_cable_a|1}} A: {{out.ac_cable_mm2|1}} mm², rated {{out.ac_cable_rating_a|int}} A in {{out.ambient_c}} °C air, the same as on the AC wire size page.",
+    "text": "1,500 W connected now + 1,450 W for the Split AC 1.5 ton inverter = 2,950 W. 2,950 W ÷ (230 V × 0.8 power factor) = 16 A, up from 8.2 A today. Expected demand = 2.95 kW × 0.6 diversity (not everything runs at once) = 1.77 kW, rounded up to a whole kW = 2 kW of sanctioned load, the same rule as the sanctioned load calculator; on 2 kW the home is within the sanctioned load (89% of it). For a moment at compressor start or full speed the load is 1,500 W + 1,900 W = 3,400 W (18.5 A). The AC's own circuit is designed at the AC's maximum input: 1,900 W ÷ (230 V × 0.9, the AC's own power factor) = 9.2 A; with the margin a compressor load gets, the next standard MCB is 16 A type C on a cable rated at least 16 A: 2.5 mm², rated 19 A in 45 °C air, the same as on the AC wire size page."
    },
    "submit": "Calculate",
    "notice": "",
    "data_checked": [
-    {
-     "label": "Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)",
-     "url": "https://webstore.iec.ch/publication/1878",
-     "checked": "2026-10-14"
-    },
     {
      "label": "Appliance running and starting watts (Wattlyst appliance data, sources listed on the appliance list page)",
      "url": "https://wattlyst.com/appliances/",
@@ -343,80 +343,81 @@
   },
   "examples": [
    {
-    "title": "1,500 W home adds a Split AC 1.5 ton inverter on a 2 kW connection",
-    "text": "1,500 W + 1,450 W = 2,950 W, or 16 A. That is 148% of the 2 kW sanctioned load, so this connection is overloaded: apply for a higher sanctioned load first. The AC's own circuit needs a 16 A type C MCB on 2.5 mm² cable."
+    "title": "1,500 W home adds a Split AC 1.5 ton inverter on a 1 kW connection",
+    "text": "1,500 W + 1,450 W = 2,950 W, or 16 A. The expected demand of 1.77 kW is 177% of the 1 kW sanctioned load, so this connection needs a higher sanctioned load first, at least 2 kW. The AC's own circuit needs a 16 A type C MCB on 2.5 mm² cable."
    },
    {
     "title": "The same AC on a 5 kW connection",
-    "text": "1,500 W + 1,450 W = 2,950 W, or 16 A, which is 59% of 5 kW with 2.05 kW of headroom. This connection can take the AC and still has room for another one."
+    "text": "1,500 W + 1,450 W = 2,950 W, or 16 A, an expected demand of 1.77 kW: 35% of 5 kW with 3.23 kW of headroom. This connection can take the AC and still has room for another one."
    },
    {
     "title": "Small home adds a Split AC 1 ton inverter",
-    "text": "800 W of fans, lights and a fridge + 900 W = 1,700 W, or 9.2 A. At 85% of a 2 kW sanctioned load this fits, with 0.3 kW to spare. The AC circuit needs a 10 A type C MCB on a cable rated at least 10 A: 2.5 mm², rated 19 A in 45 °C air, the same as on the AC wire size page."
+    "text": "800 W of fans, lights and a fridge + 900 W = 1,700 W, or 9.2 A. The expected demand of 1.02 kW is 51% of a 2 kW sanctioned load, so it fits with 0.98 kW to spare. The AC circuit needs a 10 A type C MCB on a cable rated at least 10 A: 2.5 mm², rated 19 A in 45 °C air, the same as on the AC wire size page."
    },
    {
-    "title": "Split AC 1.5 ton non-inverter on a 3 kW connection",
-    "text": "2,000 W + 1,800 W = 3,800 W, or 20.7 A, which is 127% of 3 kW: over the limit. Worse, the compressor start of 5,400 W pushes the peak to 7,400 W, or 40.2 A for a moment. An inverter AC or a higher sanctioned load is the fix."
+    "title": "Split AC 1.5 ton non-inverter on a 2 kW connection",
+    "text": "2,000 W + 1,800 W = 3,800 W, or 20.7 A, an expected demand of 2.28 kW: this 2 kW connection needs a higher sanctioned load first, at least 3 kW. Worse, the compressor start of 5,400 W pushes the peak to 7,400 W, or 40.2 A for a moment. An inverter AC or a higher sanctioned load is the fix."
    },
    {
     "title": "Second Split AC 1.5 ton inverter in a home that already runs one",
-    "text": "2,950 W including the first AC + 1,450 W = 4,400 W, or 23.9 A. That is 88% of a 5 kW sanctioned load, so two ACs fit on 5 kW with 0.6 kW left."
+    "text": "2,950 W including the first AC + 1,450 W = 4,400 W, or 23.9 A, an expected demand of 2.64 kW. That needs 3 kW of sanctioned load, so two ACs fit on 3 kW at 88% with 0.36 kW left."
    }
   ],
   "table": {
-   "caption": "Adding a Split AC 1.5 ton inverter to different loads running now, checked against a 2 kW sanctioned load at 230 V",
+   "caption": "Adding a Split AC 1.5 ton inverter to different connected loads, checked against a 2 kW sanctioned load at 230 V",
    "head": [
-    "Load running now",
+    "Connected load now",
     "New total",
     "Current",
-    "Sanctioned load needed (at least)",
-    "Of the sanctioned load"
+    "Sanctioned load needed",
+    "Expected demand, of the sanctioned load"
    ],
    "rows": [
     [
      "500 W",
      "1,950 W",
      "10.6 A",
-     "1.95 kW",
-     "98%"
+     "2 kW",
+     "59%"
     ],
     [
      "1,000 W",
      "2,450 W",
      "13.3 A",
-     "2.45 kW",
-     "123%"
+     "2 kW",
+     "74%"
     ],
     [
      "1,500 W",
      "2,950 W",
      "16 A",
-     "2.95 kW",
-     "148%"
+     "2 kW",
+     "89%"
     ],
     [
      "2,000 W",
      "3,450 W",
      "18.8 A",
-     "3.45 kW",
-     "173%"
+     "3 kW",
+     "103%"
     ],
     [
      "3,000 W",
      "4,450 W",
      "24.2 A",
-     "4.45 kW",
-     "223%"
+     "3 kW",
+     "134%"
     ]
    ]
   },
-  "answer": "Adding a Split AC 1.5 ton inverter (1,450 W running) to a home drawing 1,500 W gives a new total of 2,950 W, or 16 A at 230 V. That is 148% of a 2 kW sanctioned load, so this meter needs a higher sanctioned load first. New total = current watts + the AC's running watts.",
+  "answer": "Adding a Split AC 1.5 ton inverter (1,450 W running) to a home with 1,500 W gives a new total of 2,950 W, or 16 A at 230 V. Not everything runs at once, so the expected demand is 2.95 kW × 0.6 = 1.77 kW, which needs a 2 kW sanctioned load: this home on 2 kW is within the sanctioned load. New total = current watts + the AC's running watts.",
   "formula": {
-   "text": "P_new = P_now + P_ac; I = P_new ÷ (V × PF); load % = P_new ÷ (sanctioned kW × 1000) × 100",
+   "text": "P_new = P_now + P_ac; I = P_new ÷ (V × PF); sanctioned kW needed = ceil(P_new ÷ 1000 × diversity)",
    "lines": [
-    "P_now = watts running at the same time today",
+    "P_now = connected load today (every appliance installed, running watts)",
     "P_ac = the AC's running watts (its starting watts give the momentary peak)",
     "I = current in amps, V = supply voltage, PF = power factor",
+    "diversity = the share of the connected load expected to run at once (home default, as on the sanctioned load calculator); load % = expected demand ÷ sanctioned kW",
     "AC circuit: I_ac = P_ac,max ÷ (V × PF_ac) with P_ac,max = the AC's maximum input; MCB = next standard size ≥ I_ac × margin (compressor load); cable rated (after the air-temperature correction) ≥ the MCB and ≥ I_ac × margin"
    ]
   },
@@ -462,8 +463,8 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/load/load-before-adding-ac/#breadcrumb"
     },
-    "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13",
+    "dateModified": "2026-10-15",
+    "lastReviewed": "2026-10-15",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }
@@ -508,7 +509,7 @@
       "name": "Can my meter handle a 1.5 ton AC?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "If the load running now plus the AC's 1,450 W stays within the sanctioned kW on your bill and the main breaker rating, yes. With 1,500 W already running you need more than a 2 kW sanctioned load; with 5 kW it fits at 59%."
+       "text": "If the expected demand, (the connected load + the AC's 1,450 W) × 0.6 rounded up to a whole kW, stays within the sanctioned kW on your bill and the main breaker rating, yes. With 1,500 W already connected it needs 2 kW: on 1 kW it needs a higher sanctioned load first, at least 2 kW, and on 5 kW it fits at 35%."
       }
      },
      {
@@ -516,7 +517,7 @@
       "name": "What sanctioned load is needed for two ACs?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Two 1.5 ton inverter ACs with normal household load come to about 4,400 W, which is 88% of a 5 kW sanctioned load, so 5 kW is the practical minimum, and that connection is billed on the time-of-use tariff."
+       "text": "Two 1.5 ton inverter ACs with normal household load come to about 4,400 W connected and 2.64 kW of expected demand, so 3 kW is the minimum sanctioned load, below the 5 kW at which a connection moves to time-of-use billing."
       }
      },
      {

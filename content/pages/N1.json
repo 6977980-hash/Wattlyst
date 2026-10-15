@@ -5,7 +5,7 @@
  "h1": "Electricity Bill Overbilling Check",
  "author": "ali-ahmad",
  "published": "2026-10-13",
- "reviewed": "2026-10-13",
+ "reviewed": "2026-10-15",
  "calc": "bill_audit",
  "submit": "Check the bill",
  "fields": [
@@ -72,7 +72,7 @@
   }
  ],
  "answer": "This electricity bill overbilling check converts the units on your bill to a normal thirty-day month (units × thirty ÷ days between readings) and recomputes the slab. A bill of {{in.units|int}} units read after {{in.days|int}} days is {{out.units_30|int}} units a month; billed at the higher slab it carries about {{out.extra_rs|rs}} more in energy and fixed charge than the normal-month slab would. An estimate, not an official finding.",
- "how": "{{out.units}} units × {{d.bill_month_days|int}} ÷ {{out.days}} days = {{out.units_30|int}} units in a normal month. Energy and fixed charge as billed, at the slab for {{out.units}} units: {{out.billed_rs|rs}}. The same {{out.units}} units at the slab {{out.units_30|int}} units would reach: {{out.fair_rs|rs}}. Possible extra from the long reading cycle: {{out.extra_rs|rs}} before surcharges and GST.",
+ "how": "{{out.units}} units × {{d.bill_month_days|int}} ÷ {{out.days}} days = {{out.units_30|int}} units in a normal month. Energy and fixed charge as billed, at the slab for {{out.units}} units: {{out.billed_rs|rs}}. The same {{out.units}} units at {{out.fair_basis|raw}}: {{out.fair_rs|rs}}. Possible extra from the long reading cycle: {{out.extra_rs|rs}} before surcharges and GST.",
  "key_facts": [
   "A reading cycle longer than {{d.max_normal_cycle_days|int}} days can push a bill into a higher unprotected slab, and because every unit is then charged at the higher rate, the extra is not just the extra days: {{in.units|int}} units over {{in.days|int}} days carries about {{out.extra_rs|rs}} more than the same units billed at the normal-month slab.",
   "The check scales the units to a {{d.bill_month_days|int}}-day month, {{out.units_30|int}} here, and compares the slab reached with the slab the bill used; a short cycle never produces an overcharge, only a long one.",
@@ -134,7 +134,7 @@
     "days": 34
    },
    "title": "{{in.units|int}} units over {{in.days|int}} days: protected status at risk",
-   "text": "{{out.units_30|int}} units in a normal month, under the protected limit, but the bill shows more than {{d.protected_max_units|int}}. Energy and fixed charge as billed {{out.billed_rs|rs}}, at the normal-month slab {{out.fair_rs|rs}}, extra {{out.extra_rs|rs}}; losing protected status for the next {{d.protected_months|int}} bills would cost far more."
+   "text": "{{out.units_30|int}} units in a normal month, under the protected limit, but the bill shows more than {{d.protected_max_units|int}}, so the long cycle alone cost the protected status. Energy and fixed charge as billed {{out.billed_rs|rs}}; the protected bill the home should have had, with each protected slab stretched to {{out.days|int}} days, is {{out.fair_rs|rs}}, so the possible extra is {{out.extra_rs|rs}}, and losing protected status for the next {{d.protected_months|int}} bills would cost more still."
   },
   {
    "inputs": {
@@ -143,7 +143,7 @@
     "sanctioned_kw": 2
    },
    "title": "{{in.units|int}} units over {{in.days|int}} days on a two kW connection",
-   "text": "{{out.units_30|int}} units in a normal month. Billed {{out.billed_rs|rs}} in energy and fixed charge; at the normal-month slab {{out.fair_rs|rs}}. Possible extra {{out.extra_rs|rs}}, including the higher fixed charge per kW of the top slab."
+   "text": "{{out.units_30|int}} units in a normal month. Billed {{out.billed_rs|rs}} in energy and fixed charge; at the normal-month slab {{out.fair_rs|rs}}. Possible extra {{out.extra_rs|rs}}, including the higher fixed charge per kW of the higher slab."
   },
   {
    "inputs": {

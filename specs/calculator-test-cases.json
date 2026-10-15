@@ -1155,11 +1155,11 @@
     "expected": {
       "energy_rs": 8275,
       "fixed_rs": 700,
-      "fc_rs": 807.5,
-      "qta_rs": 129.85,
-      "subtotal_rs": 9912.35,
-      "gst_rs": 1784.223,
-      "total_rs": 11696.573
+      "fc_rs": 808,
+      "qta_rs": 130,
+      "subtotal_rs": 9913,
+      "gst_rs": 1784,
+      "total_rs": 11697
     },
     "tolerance": 0.01,
     "note": "add-on rates are secondary sources; GST base = all charges (engineer/tax check)"
@@ -1176,8 +1176,8 @@
       "fc_surcharge_per_unit": 0
     },
     "expected": {
-      "qta_rs": -297.855,
-      "total_rs": 1706.645
+      "qta_rs": -298,
+      "total_rs": 1707
     },
     "tolerance": 0.01,
     "note": "QTA Jun-Aug 2026 was negative"
@@ -1992,7 +1992,7 @@
   },
   {
     "calc": "bill_audit",
-    "name": "35-day cycle bill compared with 30-day slab",
+    "name": "35-day cycle bill: protection at risk, fair bill = protected slabs pro-rated to 35 days",
     "inputs": {
       "units": 230,
       "days": 35,
@@ -2001,14 +2001,14 @@
     },
     "expected": {
       "billed_rs": 8313,
-      "fair_rs": 7249.3,
-      "extra_rs": 1063.7,
+      "fair_rs": 3304.133,
+      "extra_rs": 5008.867,
       "spike": true,
       "protection_at_risk": true,
       "long_cycle": true
     },
     "tolerance": 0.01,
-    "note": "edge case"
+    "note": "edge case; audit 2026-10-15 (WL-111): 230 units over 35 days is 197 units in a 30-day month, so the home lost protected status only to the long cycle. Fair = 116.67 x 10.54 + 113.33 x 13.01 + 300 x 2 kW (slab limits x 35/30) = 3,304.13"
   },
   {
     "calc": "bill_audit",
@@ -2427,9 +2427,9 @@
       "gst_pct": ""
     },
     "expected": {
-      "fc_rs": 807.5,
+      "fc_rs": 808,
       "gst_pct": 18,
-      "total_rs": 11543.35
+      "total_rs": 11544
     },
     "tolerance": 0.01,
     "note": "reviewer fix 13 Oct"
@@ -2446,7 +2446,7 @@
       "fc_surcharge_per_unit": 0
     },
     "expected": {
-      "qta_rs": 129.85
+      "qta_rs": 130
     },
     "tolerance": 0.01,
     "note": "reviewer fix 13 Oct"
@@ -3178,20 +3178,21 @@
     "expected": {
       "new_total_w": 2950,
       "peak_w": 3400,
-      "amps_after": 16.0326,
-      "peak_amps": 18.4783,
-      "within_sanctioned": false,
-      "load_pct": 147.5,
-      "headroom_kw": 0,
-      "ac_ib_a": 9.1787,
+      "amps_after": 16.033,
+      "peak_amps": 18.478,
+      "within_sanctioned": true,
+      "load_pct": 88.5,
+      "headroom_kw": 0.23,
+      "ac_ib_a": 9.179,
       "ac_breaker_a": 16,
       "ac_cable_a": 16,
       "ac_cable_mm2": 2.5,
       "ac_curve": "C",
-      "ac_pf": 0.9
+      "ac_pf": 0.9,
+      "needed_kw": 2
     },
     "tolerance": 0.01,
-    "note": "AC circuit sized like the wiring pages: inverter AC at max input 1900 W, motor margin -> 16 A type C on 2.5 mm2; audit 2026-10-14 (WL-10): the AC circuit uses the AC's own PF (inverter 0.9), as W1 does: 1900 / (230 x 0.9)"
+    "note": "AC circuit sized like the wiring pages: inverter AC at max input 1900 W, motor margin -> 16 A type C on 2.5 mm2; audit 2026-10-14 (WL-10): the AC circuit uses the AC's own PF (inverter 0.9), as W1 does: 1900 / (230 x 0.9); audit 2026-10-15 (WL-110): sanctioned load needed follows N4: 2.95 kW x 0.6 diversity = 1.77 kW -> 2 kW, so 2 kW is enough; load % = demand / sanctioned"
   },
   {
     "calc": "add_ac_check",
@@ -3203,8 +3204,9 @@
     },
     "expected": {
       "within_sanctioned": true,
-      "headroom_kw": 2.05,
-      "load_pct": 59
+      "headroom_kw": 3.23,
+      "load_pct": 35.4,
+      "needed_kw": 2
     },
     "tolerance": 0.01,
     "note": "Phase 3"
@@ -4018,10 +4020,11 @@
       "new_total_kw": 0.9,
       "peak_w": 1200,
       "amps_now": 0,
-      "amps_after": 4.8913,
+      "amps_after": 4.891,
       "within_sanctioned": true,
-      "load_pct": 90,
-      "headroom_kw": 0.1
+      "load_pct": 54,
+      "headroom_kw": 0.46,
+      "needed_kw": 1
     },
     "tolerance": 0.01,
     "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): zero current load"
@@ -4065,13 +4068,14 @@
     },
     "expected": {
       "new_total_w": 5500,
-      "within_sanctioned": false,
-      "load_pct": 110,
-      "ac_ib_a": 24.4565,
+      "within_sanctioned": true,
+      "load_pct": 66,
+      "ac_ib_a": 24.457,
       "ac_breaker_a": 32,
       "ac_cable_a": 32,
       "ac_cable_mm2": 4,
-      "ac_pk_size": "7/36"
+      "ac_pk_size": "7/36",
+      "needed_kw": 4
     },
     "tolerance": 0.01,
     "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): very large; 24.46 x 1.25 = 30.6 -> 32 A; 4 mm2 B1 = 32 A >= 32 A"
@@ -4597,11 +4601,11 @@
       "bill_before_rs": 14462.836,
       "bill_after_rs": 3878.498,
       "saving_rs": 10584.338,
-      "full_before_rs": 20466.041,
-      "full_import_rs": 8938.023,
+      "full_before_rs": 20466,
+      "full_import_rs": 8939,
       "export_credit_rs": 1855.465,
-      "full_after_rs": 7082.558,
-      "full_saving_rs": 13383.483,
+      "full_after_rs": 7083.535,
+      "full_saving_rs": 13382.465,
       "fixed_before_rs": 1600,
       "fixed_after_rs": 1200,
       "generator_pick_kva": 3
@@ -4634,10 +4638,10 @@
     },
     "expected": {
       "export_credit_rs": 13693.472,
-      "full_import_rs": 8938.023,
+      "full_import_rs": 8939,
       "full_after_rs": 0,
-      "full_carry_forward_rs": 4755.448,
-      "full_saving_rs": 20466.041,
+      "full_carry_forward_rs": 4754.472,
+      "full_saving_rs": 20466,
       "bill_after_rs": 0
     },
     "tolerance": 0.01,
@@ -4668,9 +4672,9 @@
     "expected": {
       "net_billing_panels": 0,
       "export_units": 0,
-      "full_before_rs": 18814.041,
-      "full_import_rs": 18814.041,
-      "full_after_rs": 18814.041,
+      "full_before_rs": 18814,
+      "full_import_rs": 18814,
+      "full_after_rs": 18814,
       "full_saving_rs": 0,
       "fixed_before_rs": 200
     },
@@ -4702,8 +4706,8 @@
     },
     "expected": {
       "export_credit_rs": 0,
-      "full_after_rs": 8938.023,
-      "full_saving_rs": 11528.017
+      "full_after_rs": 8939,
+      "full_saving_rs": 11527
     },
     "tolerance": 0.01,
     "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
@@ -4731,11 +4735,11 @@
       "sanctioned_kw": 3
     },
     "expected": {
-      "full_before_rs": 19994.041,
-      "full_import_rs": 8584.023,
+      "full_before_rs": 19994,
+      "full_import_rs": 8585,
       "export_credit_rs": 1277.473,
-      "full_after_rs": 7306.551,
-      "full_saving_rs": 12687.49,
+      "full_after_rs": 7307.527,
+      "full_saving_rs": 12686.473,
       "fixed_before_rs": 1200,
       "fixed_after_rs": 900,
       "panels": 6,
@@ -5068,7 +5072,7 @@
       "gst_pct": 0
     },
     "expected": {
-      "fpa_rs": 755.46,
+      "fpa_rs": 755,
       "fpa_exempt": false
     },
     "tolerance": 0.01,
@@ -6286,15 +6290,15 @@
     "expected": {
       "ac_units": 240,
       "total_units": 420,
-      "before_rs": 3511.916,
-      "after_rs": 21494.408,
-      "extra_rs": 17982.492,
-      "rs_per_ac_unit": 74.92705,
+      "before_rs": 3512,
+      "after_rs": 21495,
+      "extra_rs": 17983,
+      "rs_per_ac_unit": 74.929,
       "after_category": "unprotected",
       "protected_lost": true,
       "slab_jump": true,
       "lock_months": 6,
-      "lock_extra_rs": 22011.72
+      "lock_extra_rs": 22008
     },
     "tolerance": 0.01,
     "note": "before: (100x10.54 + 80x13.01 + 300 fixed + 180x3.23) x 1.18 = 3511.916; after 420 unprotected: (420x38.95 + 500 + 420x3.23) x 1.18 = 21494.408; lock: 6 x ((180x28.91 + 300 + 581.4) x 1.18 - 3511.916) = 22011.72"
@@ -6314,9 +6318,9 @@
       "protected": false
     },
     "expected": {
-      "before_rs": 11130.35,
-      "after_rs": 25145.711,
-      "extra_rs": 14015.361,
+      "before_rs": 11131,
+      "after_rs": 25146,
+      "extra_rs": 14015,
       "before_rate": 33.1,
       "after_rate": 38.95,
       "slab_jump": true,
@@ -6344,9 +6348,9 @@
     },
     "expected": {
       "ac_units": 30,
-      "before_rs": 1860.86,
-      "after_rs": 2553.756,
-      "extra_rs": 692.896,
+      "before_rs": 1861,
+      "after_rs": 2554,
+      "extra_rs": 693,
       "after_category": "protected",
       "protected_lost": false,
       "slab_jump": true,
@@ -7118,7 +7122,7 @@
       "decision_key": "hybrid",
       "decision": "Hybrid solar 3.51 kW + 1 lithium pack of 5.12 kWh (51.2 V)",
       "installed_kw": 3.51,
-      "full_saving_rs": 13929.897,
+      "full_saving_rs": 13929.444,
       "ongrid_low_rs": 363750,
       "ongrid_high_rs": 602000,
       "ongrid_rs": 482875,
@@ -7132,7 +7136,7 @@
       "standby_low_rs": 115239,
       "standby_high_rs": 199499,
       "standby_rs": 157369,
-      "standby_running_rs": 1163.062,
+      "standby_running_rs": 1162,
       "standby_repl_rs": 339360,
       "combo_option": "On-grid solar 3.51 kW + UPS 1.2 kVA + 2 tubular batteries",
       "combo_low_rs": 478989,
@@ -7140,7 +7144,7 @@
       "combo_repl_rs": 339360,
       "combo_running_rs": 0,
       "decision_price": "Rs 578,750 to Rs 912,000",
-      "decision_net": "Rs 627,024 saved",
+      "decision_net": "Rs 626,969 saved",
       "over_budget": false,
       "budget_gap_rs": 0,
       "years": 10
@@ -7397,7 +7401,7 @@
       "standby_rs": 0,
       "standby_available": false,
       "combo_available": false,
-      "ongrid_net": "Rs 1,188,713 saved"
+      "ongrid_net": "Rs 1,188,658 saved"
     },
     "tolerance": 0.01,
     "note": "Full audit 2026-10-15 Phase 2b: cuts spread over the day (WL-93), generator credited with the grid units it supplies (WL-95), UPS labelled 1.2 kVA (WL-97), 30.42-day months (WL-106); recomputed from data/."
@@ -7439,7 +7443,7 @@
       "decision_key": "grid",
       "decision": "Stay on the grid (no purchase)",
       "decision_rs": 0,
-      "ongrid_net": "Rs 315,716 cost"
+      "ongrid_net": "Rs 315,722 cost"
     },
     "tolerance": 0.01,
     "note": "Full audit 2026-10-15 Phase 2b: cuts spread over the day (WL-93), generator credited with the grid units it supplies (WL-95), UPS labelled 1.2 kVA (WL-97), 30.42-day months (WL-106); recomputed from data/."
@@ -8160,10 +8164,10 @@
       "grid_share": 0,
       "ongrid_saving_rs": 0,
       "standby_option": "Petrol generator 2.5 kVA",
-      "standby_saving_rs": 14011.305,
-      "combo_saving_rs": 14011.305,
+      "standby_saving_rs": 14011,
+      "combo_saving_rs": 14011,
       "combo_running_rs": 112600.384,
-      "hybrid_saving_rs": 12095.454
+      "hybrid_saving_rs": 12095
     },
     "tolerance": 0.01,
     "note": "Full audit 2026-10-15 WL-93: g = 1 - 24/24 = 0, so on-grid solar makes nothing; the hybrid uses its solar in the home but exports nothing; the UPS cannot refill with no grid, so the generator, credited with the 300 W x 24 h x 30.42 days of grid units it supplies (WL-95)."
@@ -8202,9 +8206,9 @@
     },
     "expected": {
       "grid_share": 0.833,
-      "ongrid_saving_rs": 12188.574,
-      "hybrid_saving_rs": 13624.157,
-      "full_saving_rs": 13929.897,
+      "ongrid_saving_rs": 12188.703,
+      "hybrid_saving_rs": 13623.703,
+      "full_saving_rs": 13929.444,
       "close_call": true,
       "runner_up": "On-grid solar 3.51 kW + UPS 1.2 kVA + 2 tubular batteries"
     },
@@ -8246,8 +8250,8 @@
     "expected": {
       "standby_option": "Petrol generator 2.5 kVA",
       "standby_running_rs": 70258.154,
-      "standby_saving_rs": 11306.481,
-      "standby_net": "Rs 7,210,151 cost",
+      "standby_saving_rs": 11307,
+      "standby_net": "Rs 7,210,088 cost",
       "backup_surge_w": 580
     },
     "tolerance": 0.01,
@@ -8490,5 +8494,282 @@
     },
     "tolerance": 0.01,
     "note": "Full audit 2026-10-15 WL-97, WL-104: 720 x 1.25 = 900 W = the rated W of the 1.2 kVA row."
+  },
+  {
+    "calc": "bill_total",
+    "name": "Printed lines add up: 300 units 1 kW, default add-ons, quarter 2026-09..2026-11",
+    "inputs": {
+      "units": 300,
+      "sanctioned_kw": 1,
+      "period": "2026-09..2026-11"
+    },
+    "expected": {
+      "energy_rs": 9930,
+      "fixed_rs": 350,
+      "fc_rs": 969,
+      "qta_rs": 156,
+      "fpa_rs": 0,
+      "subtotal_rs": 11405,
+      "gst_rs": 2053,
+      "total_rs": 13458,
+      "avg_rate": 33.1
+    },
+    "tolerance": 0,
+    "note": "audit 2026-10-15 (full audit fix Phase 3), WL-109: each line rounded to whole rupees: 9,930 + 350 + 969 (3.23 x 300) + 156 (0.5194 x 300 = 155.82) = 11,405; GST round(11,405 x 18%) = 2,053; total 13,458"
+  },
+  {
+    "calc": "bill_total",
+    "name": "Protected 150 units: average rate per unit below the top protected slab rate",
+    "inputs": {
+      "units": 150,
+      "protected": true,
+      "sanctioned_kw": 1
+    },
+    "expected": {
+      "rate": 13.01,
+      "avg_rate": 11.363,
+      "energy_rs": 1705
+    },
+    "tolerance": 0.01,
+    "note": "audit 2026-10-15 (full audit fix Phase 3), WL-114: (100 x 10.54 + 50 x 13.01) / 150 = 11.36; the slab rate column printed 13.01"
+  },
+  {
+    "calc": "bill_total",
+    "name": "Top-slab cliff: one unit past 700 moves every unit to the open-ended rate",
+    "inputs": {
+      "units": 300,
+      "sanctioned_kw": 1
+    },
+    "expected": {
+      "cliff_units": 700,
+      "cliff_rs": 4478
+    },
+    "tolerance": 0,
+    "note": "audit 2026-10-15 (full audit fix Phase 3), WL-117: bill(701) - bill(700) at 1 kW, default add-ons: 701 x 47.20 = 33,087 vs 700 x 41.85 = 29,295 (fixed 675 both), +FC/QTA/GST"
+  },
+  {
+    "calc": "bill_total",
+    "name": "FPA above the notified range is an input error",
+    "inputs": {
+      "units": 300,
+      "sanctioned_kw": 1,
+      "fpa_per_unit": 100
+    },
+    "expected": {
+      "error": "fpa_per_unit_too_large"
+    },
+    "tolerance": 0.01,
+    "note": "audit 2026-10-15 (full audit fix Phase 3), WL-118: bound from data/tariff-pk-2026.json addons_secondary.fpa_per_unit.max"
+  },
+  {
+    "calc": "bill_total",
+    "name": "FPA credit below the notified range is an input error",
+    "inputs": {
+      "units": 300,
+      "sanctioned_kw": 1,
+      "fpa_per_unit": -100
+    },
+    "expected": {
+      "error": "fpa_per_unit_too_small"
+    },
+    "tolerance": 0.01,
+    "note": "audit 2026-10-15 (full audit fix Phase 3), WL-118: a -100 FPA used to zero the bill with lines that could not reconcile"
+  },
+  {
+    "calc": "bill_audit",
+    "name": "Protection at risk: 210 units over 34 days, fair bill on protected slabs pro-rated to 34 days",
+    "inputs": {
+      "units": 210,
+      "days": 34,
+      "sanctioned_kw": 1
+    },
+    "expected": {
+      "protection_at_risk": true,
+      "fair_protected": true,
+      "billed_rs": 7301,
+      "fair_rs": 2752.167,
+      "extra_rs": 4548.833
+    },
+    "tolerance": 0.01,
+    "note": "audit 2026-10-15 (full audit fix Phase 3), WL-111: billed 210 x 33.10 + 350 = 7,301; fair = (100 x 34/30) x 10.54 + (210 - 113.33) x 13.01 + 300 = 2,752.17; extra 4,548.83 (the old unprotected-only fair bill said 929.90)"
+  },
+  {
+    "calc": "bill_audit",
+    "name": "No protection risk: 450 units over 38 days keeps the unprotected fair bill",
+    "inputs": {
+      "units": 450,
+      "days": 38,
+      "sanctioned_kw": 2
+    },
+    "expected": {
+      "protection_at_risk": false,
+      "fair_protected": false,
+      "billed_rs": 18527.5,
+      "fair_rs": 17207,
+      "extra_rs": 1320.5
+    },
+    "tolerance": 0.01,
+    "note": "audit 2026-10-15 (full audit fix Phase 3): units_30 = 355.3 (301-400 band): fair = 450 x 36.46 + 400 x 2"
+  },
+  {
+    "calc": "protected_check",
+    "name": "History typed with a thousands comma (\"1,500\") is read as 1500",
+    "inputs": {
+      "history": [
+        100,
+        120,
+        150,
+        180,
+        190,
+        "1,500"
+      ]
+    },
+    "expected": {
+      "protected": false,
+      "max_month": 1500
+    },
+    "tolerance": 0.01,
+    "note": "audit 2026-10-15 (full audit fix Phase 3), WL-113: used to return internal_non_finite"
+  },
+  {
+    "calc": "add_ac_check",
+    "name": "Second 1.5 ton inverter AC on a 3 kW connection: N4 rule gives 3 kW",
+    "inputs": {
+      "current_w": 2950,
+      "ac": "ac-split-1-5ton-inverter",
+      "sanctioned_kw": 3
+    },
+    "expected": {
+      "new_total_w": 4400,
+      "demand_kw": 2.64,
+      "needed_kw": 3,
+      "needed_tou": false,
+      "within_sanctioned": true,
+      "load_pct": 88,
+      "headroom_kw": 0.36
+    },
+    "tolerance": 0.01,
+    "note": "audit 2026-10-15 (full audit fix Phase 3), WL-110: 4.4 kW connected x 0.6 = 2.64 kW -> 3 kW, the same as N4 sanctioned_load for 4.4 kW [ENGINEER: diversity 0.6]"
+  },
+  {
+    "calc": "add_ac_check",
+    "name": "Same two-AC home on 2 kW: needs 3 kW, not within",
+    "inputs": {
+      "current_w": 2950,
+      "ac": "ac-split-1-5ton-inverter",
+      "sanctioned_kw": 2
+    },
+    "expected": {
+      "needed_kw": 3,
+      "within_sanctioned": false,
+      "load_pct": 132,
+      "headroom_kw": 0
+    },
+    "tolerance": 0.01,
+    "note": "audit 2026-10-15 (full audit fix Phase 3), WL-110"
+  },
+  {
+    "calc": "home_load_bill",
+    "name": "E1 list priced as a whole bill at the slab its units reach",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ceiling-fan-ac",
+          "qty": 4,
+          "hours": 12
+        },
+        {
+          "id": "refrigerator-inverter"
+        },
+        {
+          "id": "ac-split-1-5ton-inverter",
+          "hours": 8
+        }
+      ]
+    },
+    "expected": {
+      "monthly_units": 396.677,
+      "bill_kw": 1,
+      "bill_rate": 36.46,
+      "monthly_rs": 19050
+    },
+    "tolerance": 0.01,
+    "note": "audit 2026-10-15 (full audit fix Phase 3), WL-112: monthly_rs = bill_total(monthly units, unprotected, sanctioned blank = 1 kW, default add-ons), not units x a fixed rate"
+  },
+  {
+    "calc": "home_load_bill",
+    "name": "E1 bill on the sanctioned load entered",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ceiling-fan-ac",
+          "qty": 4,
+          "hours": 12
+        },
+        {
+          "id": "refrigerator-inverter"
+        },
+        {
+          "id": "ac-split-1-5ton-inverter",
+          "hours": 8
+        }
+      ],
+      "sanctioned_kw": 3
+    },
+    "expected": {
+      "bill_kw": 3,
+      "monthly_rs": 19994,
+      "within_sanctioned": true
+    },
+    "tolerance": 0.01,
+    "note": "audit 2026-10-15 (full audit fix Phase 3), WL-112: fixed charge for 3 kW"
+  },
+  {
+    "calc": "home_load_bill",
+    "name": "E1 at 5 kW: ToU meter, flat slab bill not available",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ceiling-fan-ac",
+          "qty": 4
+        }
+      ],
+      "sanctioned_kw": 5
+    },
+    "expected": {
+      "error": "tou_required_at_5kw"
+    },
+    "tolerance": 0.01,
+    "note": "audit 2026-10-15 (full audit fix Phase 3), WL-112: same rule as the bill calculator"
+  },
+  {
+    "calc": "ac_bill_impact",
+    "name": "A 1.5 ton AC on a 1 kW connection flags the sanctioned load",
+    "inputs": {
+      "ac": "ac-split-1-5ton-inverter",
+      "hours": 8,
+      "other_units": 200,
+      "sanctioned_kw": 1
+    },
+    "expected": {
+      "ac_above_sanctioned": true
+    },
+    "tolerance": 0.01,
+    "note": "audit 2026-10-15 (full audit fix Phase 3), WL-118: the AC's rated running watts alone exceed the sanctioned kW"
+  },
+  {
+    "calc": "ac_bill_impact",
+    "name": "The same AC on 2 kW: no sanctioned-load warning",
+    "inputs": {
+      "ac": "ac-split-1-5ton-inverter",
+      "hours": 8,
+      "other_units": 200,
+      "sanctioned_kw": 2
+    },
+    "expected": {
+      "ac_above_sanctioned": false
+    },
+    "tolerance": 0.01,
+    "note": "audit 2026-10-15 (full audit fix Phase 3), WL-118"
   }
 ]

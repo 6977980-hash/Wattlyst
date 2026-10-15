@@ -5,7 +5,7 @@
  "h1": "MEPCO Bill Calculator",
  "author": "ali-ahmad",
  "published": "2026-10-13",
- "reviewed": "2026-10-13",
+ "reviewed": "2026-10-15",
  "calc": "bill_total",
  "fields": [
   {
@@ -111,6 +111,7 @@
   "A south Punjab summer month of {{ex.1.out.units|int}} units with one inverter AC costs about {{ex.1.out.total_rs|rs}}, while the same home's protected winter month of {{ex.0.out.units|int}} units costs about {{ex.0.out.total_rs|rs}}.",
   "The FPA on a MEPCO bill is a per-unit figure that changes every month; on {{ex.3.out.units|int}} units the FPA entered in the fourth example adds {{ex.3.out.fpa_rs|rs}} before GST, which is why two months with the same units can total differently.",
   "A MEPCO protected consumer is one whose last {{d.protected_months|int}} bills were all at or under {{d.protected_max_units|int}} units on a connection below {{d.tou_threshold_kw|int}} kW; the first AC month of summer usually ends that run.",
+  "The bill jumps at {{out.cliff_units|int}} units: up to there every unit is billed at {{data.tariff.unprotected.6.rate|rs2}}, but one unit more moves all of them to the top slab rate of {{data.tariff.unprotected.7.rate|rs2}}, which adds {{out.cliff_rs|rs}} to the bill of an unprotected {{out.sanctioned_kw|int}} kW home.",
   "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of {{data.tariff.addons_secondary.income_tax_235.rate_pct_non_atl|1}}% on a monthly bill of {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}} or more; consumers on the list pay none."
  ],
  "formula": {
@@ -218,8 +219,8 @@
     "tpl": "{{out.units|int}} ({{out.category}})"
    },
    {
-    "label": "Per unit rate",
-    "tpl": "{{out.rate|rs2}}"
+    "label": "Average rate per unit",
+    "tpl": "{{out.avg_rate|rs2}}"
    },
    {
     "label": "Energy",

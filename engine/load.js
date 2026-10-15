@@ -1,7 +1,6 @@
 // E. Load, AC, units (specs/formulas.md section E) and load/cost tools from section G.
 import { calculator, CalcError, has, pos, frac, nonneg, num, dflt, appliance } from './core.js';
 import { sumLoads, loadRows } from './sizing.js';
-import { breaker_size } from './wiring.js';
 
 /** Hours in a (non-leap) year: the most an AC can run in one (N10). A calendar fact, not an editable default. */
 const HOURS_PER_YEAR = 365 * 24;
@@ -60,29 +59,6 @@ export const home_load = calculator((i, d) => {
     out.load_pct = (running_w / 1000 / out.sanctioned_kw) * 100;
   }
   return out;
-});
-
-/**
- * E4: can the home take another AC? New total = current running W + the AC's running W; peak adds its
- * starting step; amps = W / (V × PF); checked against the sanctioned load; MCB and cable for the AC's own circuit from breaker_size (formulas.md W).
- */
-export const add_ac_check = calculator((i, d) => {
-  const current_w = nonneg(i, 'current_w');
-  const ac = appliance(d, i.ac, 'ac');
-  const sanctioned_kw = pos(i, 'sanctioned_kw', dflt(d, 'default_sanctioned_kw'));
-  const volts = pos(i, 'volts', dflt(d, 'v_1ph'));
-  const pf = frac(i, 'pf', dflt(d, 'pf_mixed'));
-  const new_total_w = current_w + ac.running_w;
-  const peak_w = current_w + ac.starting_w;
-  // The AC's own circuit follows the wiring pages' rule (formulas.md W): inverter AC at its maximum input, the AC's own
-  // power factor (not the home's mixed PF), motor-type margin on the MCB, cable derated as on the wiring pages.
-  const circuit = breaker_size.raw({ appliance: i.ac, volts, margin: i.margin, ambient_c: i.ambient_c, circuits: i.circuits }, d);
-  return {
-    current_w, ac: i.ac.trim(), ac_name: ac.name, ac_run_w: ac.running_w, ac_start_w: ac.starting_w, sanctioned_kw, volts, pf,
-    new_total_w, new_total_kw: new_total_w / 1000, peak_w, amps_now: current_w / (volts * pf), amps_after: new_total_w / (volts * pf), peak_amps: peak_w / (volts * pf),
-    within_sanctioned: new_total_w / 1000 <= sanctioned_kw, load_pct: (new_total_w / 1000 / sanctioned_kw) * 100, headroom_kw: Math.max(0, sanctioned_kw - new_total_w / 1000),
-    ac_run_amps: ac.running_w / (volts * circuit.pf), ac_ib_a: circuit.ib_a, ac_design_w: circuit.watts, ac_breaker_a: circuit.breaker_a, ac_curve: circuit.curve, ac_cable_a: circuit.min_cable_a, ac_pf: circuit.pf, ac_cable_mm2: circuit.area_mm2, ac_cable_rating_a: circuit.ampacity_a, ac_pk_size: circuit.pk_size, ambient_c: circuit.ambient_c,
-  };
 });
 
 /**

@@ -5,7 +5,7 @@
  "h1": "HESCO Bill Calculator",
  "author": "ali-ahmad",
  "published": "2026-10-13",
- "reviewed": "2026-10-13",
+ "reviewed": "2026-10-15",
  "calc": "bill_total",
  "fields": [
   {
@@ -110,6 +110,7 @@
   "The HESCO per unit rate for an unprotected home using {{out.units|int}} units is {{out.rate|rs2}} on every unit, which gives {{out.energy_rs|rs}} before the fixed charge, surcharges and GST.",
   "A HESCO consumer stays protected only while every one of the last {{d.protected_months|int}} bills is at or under {{d.protected_max_units|int}} units; in lower Sindh a single summer month with a fan-and-AC load above that limit moves the home to unprotected rates.",
   "GST at {{out.gst_pct|int}}% is charged on energy, fixed charge and surcharges together, adding {{out.gst_rs|rs}} to a {{out.units|int}} unit HESCO bill; the surcharge and GST values are secondary-source figures that change over time.",
+  "The bill jumps at {{out.cliff_units|int}} units: up to there every unit is billed at {{data.tariff.unprotected.6.rate|rs2}}, but one unit more moves all of them to the top slab rate of {{data.tariff.unprotected.7.rate|rs2}}, which adds {{out.cliff_rs|rs}} to the bill of an unprotected {{out.sanctioned_kw|int}} kW home.",
   "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of {{data.tariff.addons_secondary.income_tax_235.rate_pct_non_atl|1}}% on a monthly bill of {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}} or more; consumers on the list pay none."
  ],
  "formula": {
@@ -218,8 +219,8 @@
     "tpl": "{{out.units|int}} ({{out.category}})"
    },
    {
-    "label": "Per unit rate",
-    "tpl": "{{out.rate|rs2}}"
+    "label": "Average rate per unit",
+    "tpl": "{{out.avg_rate|rs2}}"
    },
    {
     "label": "Energy",
