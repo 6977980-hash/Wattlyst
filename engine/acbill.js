@@ -1,11 +1,11 @@
-// N16. What one AC adds to the monthly bill (specs/formulas.md G "AC bill impact"). Its own module, so the
+// N16. What one AC adds to the monthly bill (specs/formulas.md "Owner-approved tools"). Its own module, so the
 // appliance-list pages on load.js do not ship the bill engine.
 import { calculator, CalcError, has, nonneg, dflt, bool } from './core.js';
 import { bill_total } from './bill.js';
 import { ac_units } from './load.js';
 
 /**
- * N16 AC bill impact: what one AC adds to the whole monthly bill (formulas.md G "AC bill impact").
+ * N16 AC bill impact: what one AC adds to the whole monthly bill (formulas.md "Owner-approved tools").
  * AC units from E5 (ac_units); bill before = section F bill_total of the other units; bill after = bill_total of
  * other + AC units. A protected home whose total passes the protected limit is billed unprotected, and stays
  * unprotected for the next protected_months bills: lock_extra_rs = months × (other units billed unprotected − bill before).

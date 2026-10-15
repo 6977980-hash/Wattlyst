@@ -6324,5 +6324,46 @@
     },
     "tolerance": 0,
     "note": "edge case: very large; both on the open-ended band"
+  },
+  {
+    "calc": "ac_units",
+    "name": "More than 24 AC hours a day is rejected",
+    "inputs": {
+      "ac": "ac-split-1-5ton-inverter",
+      "hours": 30
+    },
+    "expected": {
+      "error": "hours_too_large"
+    },
+    "tolerance": 0,
+    "note": "a day has 24 hours (Engineer Reviewer, N16)"
+  },
+  {
+    "calc": "ac_units",
+    "name": "More than 31 days in a billing month is rejected",
+    "inputs": {
+      "ac": "ac-split-1-5ton-inverter",
+      "hours": 8,
+      "days": 400
+    },
+    "expected": {
+      "error": "days_too_large"
+    },
+    "tolerance": 0,
+    "note": "a billing month has at most 31 days"
+  },
+  {
+    "calc": "ac_bill_impact",
+    "name": "AC hours above 24 are rejected on the bill page too",
+    "inputs": {
+      "ac": "ac-split-1-5ton-inverter",
+      "hours": 25,
+      "other_units": 150
+    },
+    "expected": {
+      "error": "hours_too_large"
+    },
+    "tolerance": 0,
+    "note": "input range from ac_units"
   }
 ]

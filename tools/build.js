@@ -300,7 +300,7 @@ function fuelSources(ctx) {
 /** "Last checked" lines for the data a tool depends on, so a data refresh re-dates the page. */
 function dataChecked(module, ctx) {
   const out = [];
-  if (module === 'bill') out.push({ label: 'Pakistan electricity tariff (NEPRA notification)', url: ctx.data.tariff._meta.source_url || null, checked: ctx.data.tariff._meta.checked });
+  if (module === 'bill' || module === 'acbill') out.push({ label: 'Pakistan electricity tariff (NEPRA notification)', url: ctx.data.tariff._meta.source_url || null, checked: ctx.data.tariff._meta.checked });
   const prices = module === 'prices';
   if (module === 'solar' || module === 'solartools' || module === 'forecast') out.push({ label: 'Peak sun hours by city (Global Solar Atlas)', url: 'https://globalsolaratlas.info/', checked: ctx.citiesMeta.checked });
   if (ctx.calc === 'heating_cost') {

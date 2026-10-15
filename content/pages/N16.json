@@ -139,7 +139,7 @@
   }
  ],
  "answer": "A {{out.ac_name|raw}} running {{in.hours|int}} hours a day adds about {{out.ac_units|int}} units a month. For a protected home on {{in.other_units|int}} units that raises the bill from {{out.before_rs|rs}} to {{out.after_rs|rs}}, {{out.extra_rs|rs}} more, because every unit moves to the unprotected {{out.after_rate|rs2}} rate. Losing protection then costs at least {{out.lock_extra_rs|rs}} over the next {{out.lock_months|int}} bills.",
- "how": "AC: {{out.avg_kw|2}} kW × {{out.hours}} hours = {{out.daily_units|1}} units a day; {{out.daily_units|1}} units × {{out.days}} days = {{out.ac_units|int}} units a month. Without the AC: {{out.other_units}} units on the {{out.before_category|raw}} tariff = {{out.before_rs|rs}}. With the AC: {{out.total_units|int}} units on the {{out.after_category|raw}} tariff at {{out.after_rate|rs2}} per unit = {{out.after_rs|rs}}, including fixed charge, surcharges and GST. Extra: {{out.after_rs|rs}} − {{out.before_rs|rs}} = {{out.extra_rs|rs}}; {{out.extra_rs|rs}} ÷ {{out.ac_units|int}} AC units = {{out.rs_per_ac_unit|rs2}} for each unit the AC uses. Protection penalty: {{out.lock_months|int}} bills × {{out.lock_per_month|rs}} = {{out.lock_extra_rs|rs}}.",
+ "how": "AC: {{out.avg_kw|2}} kW × {{out.hours}} hours = {{out.daily_units|1}} units a day; {{out.daily_units|1}} units × {{out.days}} days = {{out.ac_units|int}} units a month. Without the AC: {{out.other_units}} units on the {{out.before_category|raw}} tariff = {{out.before_rs|rs}}. With the AC: {{out.total_units|int}} units on the {{out.after_category|raw}} tariff (top slab rate {{out.after_rate|rs2}} per unit) = {{out.after_rs|rs}}, including fixed charge, surcharges and GST; an FPA counts only if you enter it. Extra: {{out.after_rs|rs}} − {{out.before_rs|rs}} = {{out.extra_rs|rs}}; {{out.extra_rs|rs}} ÷ {{out.ac_units|int}} AC units = {{out.rs_per_ac_unit|rs2}} for each unit the AC uses. Protection penalty: {{out.lock_months|int}} bills × {{out.lock_per_month|rs}} = {{out.lock_extra_rs|rs}}.",
  "key_facts": [
   "What an AC adds to a Pakistani electricity bill is the bill with the AC minus the bill without it, not the AC's units × one slab rate, because the slab the whole home reaches sets the rate of every unit.",
   "A {{out.ac_name|raw}} running {{in.hours|int}} hours a day for {{out.days|int}} days uses about {{out.ac_units|int}} units a month.",
@@ -161,7 +161,7 @@
    "h2": "How much will an AC increase my electricity bill?",
    "p": [
     "Take the bill without the AC and the bill with it, and subtract. With the defaults, a {{out.ac_name|raw}} running {{in.hours|int}} hours a day adds {{out.ac_units|int}} units to a home that used {{in.other_units|int}}. The bill goes from {{out.before_rs|rs}} to {{out.after_rs|rs}}, which is {{out.extra_rs|rs}} more a month, or {{out.rs_per_ac_unit|rs2}} for each unit the AC uses.",
-    "That is far above the {{out.after_rate|rs2}} slab rate, because the AC does not only add its own units: it re-prices the units the home was already using. Most AC bill calculators multiply the AC's units by one rate and miss this, so their figure is too low exactly when it matters."
+    "That is far above the {{out.after_rate|rs2}} slab rate, because the AC does not only add its own units: it re-prices the units the home was already using. An estimate that multiplies the AC's units by one rate misses this, so it reads too low exactly when it matters."
    ]
   },
   {
@@ -189,7 +189,7 @@
   {
    "inputs": {},
    "title": "Protected home on {{in.other_units|int}} units adds a {{out.ac_name|raw}}",
-   "text": "{{out.avg_kw|2}} kW × {{in.hours|int}} h × {{out.days|int}} days = {{out.ac_units|int}} AC units, {{out.total_units|int}} in all. The bill goes from {{out.before_rs|rs}} (protected) to {{out.after_rs|rs}} (unprotected), {{out.extra_rs|rs}} more, and the next {{out.lock_months|int}} bills cost {{out.lock_extra_rs|rs}} more in all."
+   "text": "{{out.avg_kw|2}} kW × {{in.hours|int}} h × {{out.days|int}} days = {{out.ac_units|int}} AC units, {{out.total_units|int}} in all. The bill goes from {{out.before_rs|rs}} (protected) to {{out.after_rs|rs}} (unprotected), {{out.extra_rs|rs}} more, and the next {{out.lock_months|int}} bills cost at least {{out.lock_extra_rs|rs}} more in all."
   },
   {
    "inputs": {
@@ -219,7 +219,7 @@
   }
  ],
  "table": {
-  "caption": "What a {{out.ac_name|raw}} running {{in.hours|int}} hours a day adds to the monthly bill, by usage without the AC ({{in.sanctioned_kw|int}} kW, default FC surcharge, QTA and GST)",
+  "caption": "What a {{out.ac_name|raw}} running {{in.hours|int}} hours a day adds to the monthly bill, by usage without the AC ({{in.sanctioned_kw|int}} kW, default FC surcharge, QTA and GST, FPA not included)",
   "rows": [
    {
     "other_units": 100
@@ -294,7 +294,7 @@
   },
   {
    "q": "Does it work for LESCO, IESCO, MEPCO and other DISCOs?",
-   "a": "Yes. Every DISCO uses the same national domestic tariff; only the FPA and some surcharges differ, and you can enter those from your own bill under Advanced settings."
+   "a": "Yes. Every DISCO uses the same national domestic tariff; only the FPA differs, and you can enter it from your own bill under Advanced settings."
   }
  ],
  "related": [
