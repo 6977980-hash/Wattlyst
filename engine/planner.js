@@ -58,6 +58,8 @@ export const home_plan = calculator((i, d) => {
   const nb = net_billing.raw({ ...bill, import_units, export_units, buyback_rs: has(i, 'buyback_rs') ? i.buyback_rs : undefined }, d);
   Object.assign(out, {
     net_billing_panels: nb_panels, net_billing_kw: nb_kw, net_billing_solar_kwh: nb_solar_kwh,
+    // The inverter rule above for the array net billing accepts (the decision step prices solar at it, WL-91).
+    net_billing_inverter_kw: Math.max(out.inverter_kw_load, nb_kw / out.dc_ac_ratio_max),
     day_share, self_used_units: self_used, export_units, import_units, sanctioned_kw: before.sanctioned_kw, buyback_rs: nb.buyback_rs,
     bill_before_rs: before.energy_rs, rate_before: before.rate, bill_after_rs: nb.net_energy_rs, carry_forward_rs: nb.carry_forward_rs,
     saving_rs: Math.max(0, before.energy_rs - nb.net_energy_rs),

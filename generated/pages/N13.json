@@ -43,7 +43,7 @@
     "h2": "Solar system for mosque: sized around prayer times",
     "p": [
      "A mosque's load comes in blocks: fans and lights through each congregation, ACs mainly for Zuhr, Asr and Isha in summer, the water pump for wudu, and a longer, fuller Jummah once a week. The default list averages those hours over the week. It is a Wattlyst estimate for a small one-hall mosque, not a survey of mosques, so change the counts and hours to match yours.",
-     "Zuhr and Asr fall in full sun, so the panels carry those prayers directly. Fajr, Maghrib and Isha are in the dark, so their load comes from the grid or a battery. That is why the power rule, 5,540 W ÷ 0.78, decides the panel size here: 7.1 kW against 4.06 kW from the energy rule."
+     "Zuhr and Asr fall in full sun, so the panels serve those prayers directly. Fajr, Maghrib and Isha are in the dark, so their load comes from the grid or a battery. The panels are sized to make the week's average units a day (4.06 kW); panels big enough to carry the whole 5,540 W at Zuhr would need 7.1 kW and make far more units than the mosque uses, sold back at the low buyback rate."
     ]
    },
    {
@@ -63,7 +63,7 @@
    {
     "h2": "What does a solar system for a mosque or shop cost?",
     "p": [
-     "We do not print a price on this page because panel and inverter prices move with the dollar rate. The solar price estimator gives the current range for a 7.61 kW system from dated price lists, and the quote checker compares a quote you have against that range.",
+     "We do not print a price on this page because panel and inverter prices move with the dollar rate. The solar price estimator gives the current range for a 4.1 kW system from dated price lists, and the quote checker compares a quote you have against that range.",
      "A complete quote includes the panels, the inverter, mounting structure, DC and AC cables, breakers, surge protection, earthing and installation, and for a grid-tied system the net-billing application. Mosque committees often collect donations against a quote: ask for an itemised quote so donors can see what each part costs."
     ]
    }
@@ -71,11 +71,11 @@
   "faq": [
    {
     "q": "How many kW of solar does a mosque need?",
-    "a": "The small one-hall mosque here needs about 7.61 kW with a 6.93 kW inverter; the larger mosque with 2 ton ACs about 16.38 kW. Enter your own fans, lights, ACs and hours for your figure."
+    "a": "The small one-hall mosque here needs about 4.1 kW with a 6.93 kW inverter; the larger mosque with 2 ton ACs about 9.95 kW. Enter your own fans, lights, ACs and hours for your figure."
    },
    {
     "q": "Can a mosque run its ACs on solar?",
-    "a": "In daylight, yes: Zuhr and Asr fall in full sun, and the panels are sized so the running load of 5,540 W, ACs included, runs on sun at midday. Maghrib, Isha and Fajr run from the grid or a battery."
+    "a": "In daylight, mostly: Zuhr and Asr fall in full sun, and the panels make the day's units, ACs included; when the 5,540 W running load is more than the panels give at that moment, the grid supplies the rest. Maghrib, Isha and Fajr run from the grid or a battery."
    },
    {
     "q": "What size solar system does a small shop need?",
@@ -87,7 +87,7 @@
    },
    {
     "q": "How much does a solar system for a mosque cost?",
-    "a": "Prices change with the dollar rate, so we do not print one here. Use the solar price estimator for the current range for 7.61 kW, and ask installers for an itemised quote."
+    "a": "Prices change with the dollar rate, so we do not print one here. Use the solar price estimator for the current range for 4.1 kW, and ask installers for an itemised quote."
    },
    {
     "q": "Where do the mosque and shop load lists come from?",
@@ -95,13 +95,13 @@
    }
   ],
   "key_facts": [
-   "A small one-hall mosque in Lahore with fans, lights, 1.5 ton inverter ACs, a water pump, a dispenser and a sound system runs about 5,540 W and uses about 16.2 units a day, so it needs about 7.61 kW of solar and a 6.93 kW inverter.",
+   "A small one-hall mosque in Lahore with fans, lights, 1.5 ton inverter ACs, a water pump, a dispenser and a sound system runs about 5,540 W and uses about 16.2 units a day, so it needs about 4.1 kW of solar and a 6.93 kW inverter.",
    "A small shop open all day with lights, fans, a deep freezer, a computer, CCTV and Wi-Fi uses about 8.4 units a day and needs about 2.34 kW of solar with a 1.8 kW inverter.",
    "Adding a 1.5 ton inverter AC for most of the opening hours to that shop raises the need to about 4.68 kW of solar and a 3.6 kW inverter.",
    "The mosque and shop load lists on this page are Wattlyst estimates from typical fit-outs, not measurements of any one building; change every row to match yours before you ask for quotes."
   ],
   "mistakes": [
-   "Sizing a mosque from its yearly bill. The winter bill is small and the summer Zuhr load with ACs is large; the panels must carry the summer running load at midday.",
+   "Sizing a mosque from its yearly bill. The winter bill is small and the summer Zuhr load with ACs is large; size from the summer list of loads and hours, as this page does.",
    "Using the default list without checking. The mosque and shop lists are estimates; count your own fans, lights and ACs and the hours they run.",
    "Forgetting the water pump for wudu. It runs for a short time but its starting surge sets the inverter's surge rating.",
    "Sizing a battery for every load. Night prayers usually need fans and lights only; list those alone for a battery you can afford.",
@@ -1312,14 +1312,14 @@
      "spec": "2",
      "unit": "kW",
      "label_ur": "Solar system ka size",
-     "value": "7.61"
+     "value": "4.1"
     },
     {
      "key": "panels",
      "label": "Panels",
      "spec": "int",
      "label_ur": "Panels",
-     "value": "13"
+     "value": "7"
     },
     {
      "key": "inverter_kw",
@@ -1342,12 +1342,12 @@
      "label": "Units the system makes a month",
      "spec": "int",
      "label_ur": "System ke mahana units",
-     "value": "913"
+     "value": "491"
     }
    ],
    "how": {
-    "tpl": "Energy: each appliance's watts × quantity × hours a day (inverter ACs at their average draw), added up = {{out.daily_kwh|1}} units a day; ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW of panels a day for your city = {{out.kw_energy|2}} kW. Power: {{out.running_w|int}} W running load ÷ {{out.pr|2}} performance ratio = {{out.kw_power|2}} kW, so the panels can carry everything at Zuhr or at the shop's midday peak. The larger, {{out.kw|2}} kW, needs {{out.panels|int}} panels of {{out.panel_w}} W = {{out.installed_kw|2}} kW, about {{out.monthly_kwh_estimate|int}} units a month. Inverter: the larger of {{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_kw_load|2}} kW for the load and {{out.installed_kw|2}} kW of panels ÷ {{out.dc_ac_ratio_max|1}} = {{out.inverter_kw_array|2}} kW, so the panels are never more than {{out.dc_ac_ratio_max|1}} times the inverter: {{out.inverter_kw|up2}} kW continuous, with a surge rating of at least {{out.inverter_surge_w|int}} W.",
-    "text": "Energy: each appliance's watts × quantity × hours a day (inverter ACs at their average draw), added up = 16.2 units a day; ÷ 4 units per kW of panels a day for your city = 4.06 kW. Power: 5,540 W running load ÷ 0.78 performance ratio = 7.1 kW, so the panels can carry everything at Zuhr or at the shop's midday peak. The larger, 7.1 kW, needs 13 panels of 585 W = 7.61 kW, about 913 units a month. Inverter: the larger of 5,540 W × 1.25 = 6.93 kW for the load and 7.61 kW of panels ÷ 1.3 = 5.85 kW, so the panels are never more than 1.3 times the inverter: 6.93 kW continuous, with a surge rating of at least 7,340 W."
+    "tpl": "Energy: each appliance's watts × quantity × hours a day (inverter ACs at their average draw), added up = {{out.daily_kwh|1}} units a day; ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW of panels a day for your city = {{out.kw_energy|2}} kW. A grid-tied system is sized by energy: when the {{out.running_w|int}} W running load at Zuhr or at the shop's midday peak is more than the panels give, the grid supplies the rest. {{out.kw|2}} kW needs {{out.panels|int}} panels of {{out.panel_w}} W = {{out.installed_kw|2}} kW, about {{out.monthly_kwh_estimate|int}} units a month. Inverter: the larger of {{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_kw_load|2}} kW for the load and {{out.installed_kw|2}} kW of panels ÷ {{out.dc_ac_ratio_max|1}} = {{out.inverter_kw_array|2}} kW, so the panels are never more than {{out.dc_ac_ratio_max|1}} times the inverter: {{out.inverter_kw|up2}} kW continuous, with a surge rating of at least {{out.inverter_surge_w|int}} W.",
+    "text": "Energy: each appliance's watts × quantity × hours a day (inverter ACs at their average draw), added up = 16.2 units a day; ÷ 4 units per kW of panels a day for your city = 4.06 kW. A grid-tied system is sized by energy: when the 5,540 W running load at Zuhr or at the shop's midday peak is more than the panels give, the grid supplies the rest. 4.06 kW needs 7 panels of 585 W = 4.1 kW, about 491 units a month. Inverter: the larger of 5,540 W × 1.25 = 6.93 kW for the load and 4.1 kW of panels ÷ 1.3 = 3.15 kW, so the panels are never more than 1.3 times the inverter: 6.93 kW continuous, with a surge rating of at least 7,340 W."
    },
    "submit": "Calculate",
    "notice": "",
@@ -1367,11 +1367,11 @@
   "examples": [
    {
     "title": "Small mosque, one hall",
-    "text": "6 kinds of load, 5,540 W running, 16.2 units a day: 7.61 kW of solar (13 panels), a 6.93 kW inverter, about 913 units a month."
+    "text": "6 kinds of load, 5,540 W running, 16.2 units a day: 4.1 kW of solar (7 panels), a 6.93 kW inverter, about 491 units a month."
    },
    {
     "title": "Larger mosque with main hall and veranda",
-    "text": "More fans and lights, 2 ton inverter ACs, a bigger pump, extra dispensers and the sound system: 12,720 W running, 38.1 units a day. Solar 16.38 kW (28 panels), inverter 15.9 kW, which installers may split across two inverters."
+    "text": "More fans and lights, 2 ton inverter ACs, a bigger pump, extra dispensers and the sound system: 12,720 W running, 38.1 units a day. Solar 9.95 kW (17 panels), inverter 15.9 kW, which installers may split across two inverters."
    },
    {
     "title": "Small shop open all day",
@@ -1383,7 +1383,7 @@
    },
    {
     "title": "Small mosque with 2 hours of battery for Maghrib and Isha",
-    "text": "Panels and inverter stay at 7.61 kW and 6.93 kW; the battery must hold 11.1 units, about 285 Ah at 48 V. That assumes the whole list runs after dark; with fans and lights only, the battery is far smaller."
+    "text": "Panels and inverter stay at 4.1 kW and 6.93 kW; the battery must hold 11.1 units, about 285 Ah at 48 V. That assumes the whole list runs after dark; with fans and lights only, the battery is far smaller."
    }
   ],
   "table": {
@@ -1400,18 +1400,18 @@
     [
      "5,540 W running, 16.2 units a day",
      "4 units per kW a day",
-     "7.61 kW",
-     "13 × 585 W",
+     "4.1 kW",
+     "7 × 585 W",
      "6.93 kW",
-     "913"
+     "491"
     ],
     [
      "12,720 W running, 38.1 units a day",
      "4 units per kW a day",
-     "16.38 kW",
-     "28 × 585 W",
+     "9.95 kW",
+     "17 × 585 W",
      "15.9 kW",
-     "1,966"
+     "1,193"
     ],
     [
      "650 W running, 8.4 units a day",
@@ -1432,10 +1432,10 @@
     [
      "5,540 W running, 16.2 units a day",
      "4.6 units per kW a day",
-     "7.61 kW",
-     "13 × 585 W",
+     "4.1 kW",
+     "7 × 585 W",
      "6.93 kW",
-     "1,049"
+     "565"
     ],
     [
      "2,140 W running, 16.9 units a day",
@@ -1447,7 +1447,7 @@
     ]
    ]
   },
-  "answer": "A small one-hall mosque with ceiling fans, tube lights, 1.5 ton inverter ACs, a water pump, a dispenser and a sound system needs about 7.61 kW of solar (13 panels of 585 W) with a 6.93 kW inverter in Lahore. System size is the larger of daily units ÷ sun yield and running watts ÷ performance ratio.",
+  "answer": "A small one-hall mosque with ceiling fans, tube lights, 1.5 ton inverter ACs, a water pump, a dispenser and a sound system needs about 4.1 kW of solar (7 panels of 585 W) with a 6.93 kW inverter in Lahore. The panels are sized from the daily units ÷ the city's sun yield; the grid covers the moments when everything runs at once.",
   "formula": {
    "text": "kW = max(E_day ÷ yield, P_run ÷ 1000 ÷ PR); panels = ceil(kW × 1000 ÷ W_panel)",
    "lines": [
@@ -1548,7 +1548,7 @@
       "name": "How many kW of solar does a mosque need?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "The small one-hall mosque here needs about 7.61 kW with a 6.93 kW inverter; the larger mosque with 2 ton ACs about 16.38 kW. Enter your own fans, lights, ACs and hours for your figure."
+       "text": "The small one-hall mosque here needs about 4.1 kW with a 6.93 kW inverter; the larger mosque with 2 ton ACs about 9.95 kW. Enter your own fans, lights, ACs and hours for your figure."
       }
      },
      {
@@ -1556,7 +1556,7 @@
       "name": "Can a mosque run its ACs on solar?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "In daylight, yes: Zuhr and Asr fall in full sun, and the panels are sized so the running load of 5,540 W, ACs included, runs on sun at midday. Maghrib, Isha and Fajr run from the grid or a battery."
+       "text": "In daylight, mostly: Zuhr and Asr fall in full sun, and the panels make the day's units, ACs included; when the 5,540 W running load is more than the panels give at that moment, the grid supplies the rest. Maghrib, Isha and Fajr run from the grid or a battery."
       }
      },
      {
@@ -1580,7 +1580,7 @@
       "name": "How much does a solar system for a mosque cost?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Prices change with the dollar rate, so we do not print one here. Use the solar price estimator for the current range for 7.61 kW, and ask installers for an itemised quote."
+       "text": "Prices change with the dollar rate, so we do not print one here. Use the solar price estimator for the current range for 4.1 kW, and ask installers for an itemised quote."
       }
      },
      {
