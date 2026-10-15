@@ -17,7 +17,7 @@ Owner said "bna do" (15 Oct 2026) to the three remaining SERP ideas. Built in pl
 - N7 prices are middle of retailer ranges (equipment only); refresh `data/backup-prices.json` monthly with `component-prices.json`. Battery lives and oil interval are [ENGINEER].
 
 **Open to-dos**
-- Engineer Reviewer nice-to-haves left: N18 design-watts column for inverter ACs, microwave curve, N17 `kw` upper cap.
+- Engineer Reviewer nice-to-haves left: N18 design-watts column for inverter ACs, microwave curve, N17 `kw` and N7 `panel_w` bounds; N7 oil sump per generator size, 24 V hybrid vs 51.2 V pack match, minimum panels per MPPT string, inverter standby draw; refresh the petrol price from OGRA. UPS charger amps in `data/backup-prices.json` are retailer-listing values (engineer to confirm).
 - Owner hPanel items from the re-audit are still open.
 
 ## Earlier handoff (after N16, the AC bill calculator) — written by the cross-check thread, 2026-10-15

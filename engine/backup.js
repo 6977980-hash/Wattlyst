@@ -9,6 +9,8 @@ const sizeKw = (s) => parseFloat(String(s));
  * Backup energy a day E = load W × outage h. Backup hours over the period = h × days × 12 × years.
  * UPS: smallest listed UPS with rated W ≥ load × margin; tubular bank Wh = E ÷ (DoD × η_inv), strings = ceil(Wh ÷ (V_bank × Ah)),
  *   batteries = strings × V_bank ÷ V_battery; grid recharge = E ÷ (η_chg × η_inv) × tariff; replacements every tubular life.
+ *   The charger must put back E ÷ (η_inv × η_chg) in the grid hours left, (24 − h) × charger A × V_bank; a UPS that cannot
+ *   (or no listed UPS large enough) is shown but left out of the cheapest (ups_ok false, ups_status says why).
  * Generator: smallest listed set with kVA × PF ≥ load × margin; fuel L/h = C8 curve; oil change every N hours.
  * Hybrid solar: smallest listed hybrid inverter with kW ≥ load × margin; LiFePO4 kWh = E ÷ (DoD × η_hybrid);
  *   bought in whole packs (data/backup-prices.json lithium_pack, priced in data/component-prices.json);
@@ -37,8 +39,9 @@ export const backup_compare = calculator((i, d) => {
   const per_year = days * 12;
 
   // UPS with tubular batteries
-  const ups = [...bp.ups].sort((a, b) => a.rated_w - b.rated_w).find((u) => u.rated_w >= need_w - 1e-9);
-  if (!ups) throw new CalcError('load_w_too_large', 'load_w');
+  const upsList = [...bp.ups].sort((a, b) => a.rated_w - b.rated_w);
+  const ups = upsList.find((u) => u.rated_w >= need_w - 1e-9) || upsList[upsList.length - 1];
+  const ups_fits = ups.rated_w >= need_w - 1e-9;
   const tub = bp.tubular_unit;
   const tubItem = cp.find((x) => x.category === 'tubular_battery');
   const dod_t = dflt(d, 'dod_lead_acid');
@@ -54,6 +57,10 @@ export const backup_compare = calculator((i, d) => {
   const ups_repl = Math.max(0, Math.floor((years - 1e-9) / life_t));
   const ups_repl_rs = ups_repl * batteries * mid(tubItem);
   const ups_total = ups_buy + years * ups_run_year + ups_repl_rs;
+  const refill_need_kwh = day_kwh / (dflt(d, 'charge_eff_lead_acid') * eta_ups);
+  const refill_max_kwh = ((24 - hours) * ups.charger_a * ups.battery_v) / 1000;
+  const ups_ok = ups_fits && refill_max_kwh >= refill_need_kwh;
+  const ups_status = !ups_fits ? `No UPS in our price list carries more than ${Math.floor(ups.rated_w / margin)} W` : ups_ok ? 'Charger can refill the batteries between cuts' : 'Charger too small to refill the batteries between cuts';
 
   // Petrol generator
   const pf = dflt(d, 'pf_generator');
@@ -89,20 +96,21 @@ export const backup_compare = calculator((i, d) => {
   const solar_total = solar_buy + solar_repl_rs;
 
   const options = [
-    { key: 'ups', name: 'UPS', option: `UPS ${ups.kva} kVA + ${batteries} tubular`, buy: ups_buy, run_year: ups_run_year, replacements: ups_repl, repl_rs: ups_repl_rs, total: ups_total, per_hour: ups_total / backup_hours },
-    { key: 'gen', name: 'Petrol generator', option: `Petrol generator ${gen.kva} kVA`, buy: gen_buy, run_year: gen_run_year, replacements: 0, repl_rs: 0, total: gen_total, per_hour: gen_total / backup_hours },
-    { key: 'solar', name: 'Hybrid solar', option: `Hybrid solar ${inv.kw} kW + ${li_packs} lithium pack${li_packs > 1 ? 's' : ''}`, buy: solar_buy, run_year: 0, replacements: solar_repl, repl_rs: solar_repl_rs, total: solar_total, per_hour: solar_total / backup_hours },
-  ];
-  const best = options.reduce((b, o) => (o.total < b.total ? o : b), options[0]);
+    ups_fits && { key: 'ups', name: 'UPS', ok: ups_ok, option: `UPS ${ups.kva} kVA + ${batteries} tubular${ups_ok ? '' : ' (not counted: see check)'}`, buy: ups_buy, run_year: ups_run_year, replacements: ups_repl, repl_rs: ups_repl_rs, total: ups_total, per_hour: ups_total / backup_hours },
+    { key: 'gen', name: 'petrol generator', option: `Petrol generator ${gen.kva} kVA`, buy: gen_buy, run_year: gen_run_year, replacements: 0, repl_rs: 0, total: gen_total, per_hour: gen_total / backup_hours },
+    { key: 'solar', name: 'hybrid solar', option: `Hybrid solar ${inv.kw} kW + ${li_packs} lithium pack${li_packs > 1 ? 's' : ''}`, buy: solar_buy, run_year: 0, replacements: solar_repl, repl_rs: solar_repl_rs, total: solar_total, per_hour: solar_total / backup_hours },
+  ].filter(Boolean);
+  const best = options.filter((o) => o.ok !== false).reduce((b, o) => (o.total < b.total ? o : b));
   return {
+    ups_ok, ups_status, refill_need_kwh, refill_max_kwh, refill_hours: 24 - hours, charger_a: ups.charger_a,
     load_w, hours, days, years, tariff, fuel, fuel_price, city, margin, day_kwh, backup_hours,
     ups_kva: ups.kva, ups_rated_w: ups.rated_w, bank_v: ups.battery_v, battery_ah: tub.ah, battery_v: tub.v, bank_wh, batteries, recharge_kwh_year, tubular_life_years: life_t,
     gen_kva: gen.kva, gen_rated_kw: gen.kva * pf, l_per_h, run_h_year, fuel_year, oil_year, oil_change_hours: up.oil_change_hours,
     inverter_kw: inv.kw, lithium_need_kwh: li_need_kwh, lithium_packs: li_packs, lithium_kwh: li_kwh, panels, panel_w, solar_kw: (panels * panel_w) / 1000, lifepo4_life_years: life_l,
-    ups_buy, ups_run_year, ups_repl, ups_repl_rs, ups_total, ups_per_hour: ups_total / backup_hours,
+    ...(ups_fits ? { ups_buy, ups_run_year, ups_repl, ups_repl_rs, ups_total, ups_per_hour: ups_total / backup_hours } : {}),
     gen_buy, gen_run_year, gen_total, gen_per_hour: gen_total / backup_hours,
     solar_buy, solar_repl, solar_repl_rs, solar_total, solar_per_hour: solar_total / backup_hours,
-    cheapest: best.name, cheapest_key: best.key,
+    cheapest: best.name, cheapest_key: best.key, cheapest_total: best.total, cheapest_per_hour: best.per_hour,
     options,
   };
 });

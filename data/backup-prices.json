@@ -9,8 +9,12 @@
  "ups": [
   {
    "label": "Home UPS / inverter, about 1 kVA, 12 V battery (without battery)",
-   "kva": 1, "rated_w": 900, "battery_v": 12, "low": 33999, "high": 54499, "n_sources": 3,
+   "kva": 1, "rated_w": 900, "battery_v": 12, "charger_a": 25, "low": 33999, "high": 54499, "n_sources": 3,
    "rated_w_note": "Lowest continuous rating among the listed 1 kVA models (Inverex 1200VA/900W; Homage 1200VA/1000W).",
+   "charger_a_note": "Grid (AC) charging current at the highest setting of the Homage Vertex listing; no maker datasheet found. Used to check the charger can refill the bank between cuts. Engineer to confirm.",
+   "charger_sources": [
+    { "url": "https://w11stop.com/homage-ups/homage-hvs-1214scc-ups-inverter", "publisher": "W11stop (w11stop.com)", "date": "undated, seen in search 2026-10-15", "quote": "Select able AC charger current 10A or 25A" }
+   ],
    "sources": [
     { "url": "https://mns.com.pk/product-category/ups/", "publisher": "MNS (mns.com.pk)", "date": "undated, live 2026-10-15", "quote": "Homage HVS-1214SCC Vertex Series Inverter UPS+Solar 1200VA/1000Watts/12V ₨44,500; Inverex 1KVA (1200VA/900Watts/12V) Solar Inverter Xtron X1200 ₨46,500; Trion-Connect 1201 UPS 12V PKR 39,500" },
     { "url": "https://shadenterprises.pk/product/inverex-inverter-ups-xp-pro-1200-55-720-watts-modified-sine-wave/", "publisher": "Shad Enterprises (shadenterprises.pk)", "date": "undated, live 2026-10-15", "quote": "NRE UPS 1000W ₨33,999; NS Pro 1200VA Pure Inverter 12V DC (1000) Watt ₨39,499" },
@@ -19,8 +23,13 @@
   },
   {
    "label": "Home UPS / inverter, about 2 kVA, 24 V battery (without battery)",
-   "kva": 2, "rated_w": 1600, "battery_v": 24, "low": 46900, "high": 75000, "n_sources": 3,
+   "kva": 2, "rated_w": 1600, "battery_v": 24, "charger_a": 25, "low": 46900, "high": 75000, "n_sources": 3,
    "rated_w_note": "Lowest continuous rating among the listed 2 kVA models (Inverex X2400 2400VA/1600W; Crown Xavier 2400VA/1600W; Homage 2400VA/1800W).",
+   "charger_a_note": "Grid (AC) charging current at the highest setting of the Homage HVS-2414SCC listings; no maker datasheet found. Engineer to confirm.",
+   "charger_sources": [
+    { "url": "https://w11stop.com/homage-ups/homage-hvs-2414scc-ups-inverter", "publisher": "W11stop (w11stop.com)", "date": "undated, seen in search 2026-10-15", "quote": "Select able AC charger current 10A or 25A" },
+    { "url": "https://www.jsbl.com/?p=49532", "publisher": "JSBL (jsbl.com)", "date": "undated, seen in search 2026-10-15", "quote": "Selectable AC charger current 10A or 25A" }
+   ],
    "sources": [
     { "url": "https://mns.com.pk/product-category/ups/", "publisher": "MNS (mns.com.pk)", "date": "undated, live 2026-10-15", "quote": "Homage HVS-2414SCC 2400VA/1800Watts/24V ₨58,000; Inverex Xtron X2400 (2400VA/1600Watts/24V) ₨56,500; Crown Xavier 2400VA 1600W 24V ₨55,000; Trion Connect 2201 UPS 24V PKR 46,900" },
     { "url": "https://shadenterprises.pk/product/inverex-inverter-ups-xp-pro-1200-55-720-watts-modified-sine-wave/", "publisher": "Shad Enterprises (shadenterprises.pk)", "date": "undated, live 2026-10-15", "quote": "NS Pro 2202A UPS Inverter 2.0 KVA 1800 Watt ₨49,999" },

@@ -6804,7 +6804,7 @@
       "lithium_packs": 1,
       "panels": 2,
       "solar_total": 416517.5,
-      "cheapest": "Hybrid solar"
+      "cheapest": "hybrid solar"
     },
     "tolerance": 0.001,
     "note": "N7; prices mid of data/backup-prices.json, component-prices.json, solar-prices.json; recomputed by hand from data/"
@@ -6845,7 +6845,7 @@
       "ups_total": 2064162.18,
       "gen_total": 4834609.52,
       "solar_total": 1016543.75,
-      "cheapest": "Hybrid solar"
+      "cheapest": "hybrid solar"
     },
     "tolerance": 0.001,
     "note": "N7"
@@ -6871,9 +6871,48 @@
   },
   {
     "calc": "backup_compare",
-    "name": "Load above the largest UPS in the price data",
+    "name": "Load above the largest UPS in the price data: UPS left out, others compared",
     "inputs": {
       "load_w": 5000,
+      "hours": 4,
+      "years": 5,
+      "tariff": 36.46
+    },
+    "expected": {
+      "ups_ok": false,
+      "ups_status": "No UPS in our price list carries more than 1280 W",
+      "gen_kva": 10,
+      "inverter_kw": 8,
+      "lithium_packs": 5,
+      "solar_total": 1864587.5,
+      "cheapest": "hybrid solar"
+    },
+    "tolerance": 0,
+    "note": "N7"
+  },
+  {
+    "calc": "backup_compare",
+    "name": "1200 W through 8 h: 25 A charger cannot refill the bank, UPS left out of the cheapest",
+    "inputs": {
+      "load_w": 1200,
+      "hours": 8,
+      "years": 5,
+      "tariff": 36.46
+    },
+    "expected": {
+      "ups_ok": false,
+      "refill_need_kwh": 13.2872,
+      "refill_max_kwh": 9.6,
+      "cheapest": "hybrid solar"
+    },
+    "tolerance": 0.001,
+    "note": "N7; charger check (24 − h) × charger A × V_bank ≥ E ÷ (η_chg × η_inv); 2 kVA UPS 24 V, 25 A"
+  },
+  {
+    "calc": "backup_compare",
+    "name": "Load above every listed generator and hybrid inverter",
+    "inputs": {
+      "load_w": 9000,
       "hours": 4,
       "years": 5,
       "tariff": 36.46
