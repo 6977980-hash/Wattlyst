@@ -23,14 +23,12 @@ final class Wattlyst_Render {
 	public function html(): string {
 		$type = $this->page['type'];
 		$out  = '<div class="wl-page wl-type-' . esc_attr( $type ) . '">';
-		$out .= $this->breadcrumb();
-		$out .= '<h1 class="wl-h1">' . esc_html( $this->page['h1'] ) . '</h1>';
+		$out .= $this->hero( $type );
 
 		if ( 'trust' === $type ) {
 			$out .= wp_kses_post( $this->c['html'] ?? '' );
 			$out .= $this->dates();
 		} elseif ( 'home' === $type ) {
-			$out .= $this->answer( $this->c['answer'] ?? $this->page['meta'] );
 			if ( ! empty( $this->c['tool'] ) ) { // Home Power Planner (Phase 4)
 				$out .= $this->tool();
 				$out .= $this->how();
@@ -43,7 +41,6 @@ final class Wattlyst_Render {
 			$out .= $this->author_box();
 			$out .= $this->dates();
 		} elseif ( 'data' === $type ) { // Bill Index, Solar Price Tracker (Phase 5)
-			$out .= $this->answer( $this->c['answer'] ?? '' );
 			$out .= $this->download();
 			$out .= $this->key_facts();
 			$out .= $this->chart();
@@ -54,12 +51,10 @@ final class Wattlyst_Render {
 			$out .= $this->author_box();
 			$out .= $this->sources();
 		} elseif ( 'embed' === $type ) {
-			$out .= $this->answer( $this->c['answer'] ?? '' );
 			$out .= $this->embeds();
 			$out .= $this->sections();
 			$out .= $this->sources();
 		} elseif ( 'lookup' === $type ) {
-			$out .= $this->answer( $this->c['answer'] ?? '' );
 			$out .= $this->lookup();
 			$out .= $this->key_facts();
 			$out .= $this->ad( 'content-1' );
@@ -73,7 +68,6 @@ final class Wattlyst_Render {
 			$out .= $this->author_box();
 			$out .= $this->sources();
 		} elseif ( 'pillar' === $type ) {
-			$out .= $this->answer( ( $this->c['answer'] ?? '' ) ?: ( $this->c['intro'] ?? '' ) ?: $this->page['meta'] );
 			$out .= $this->children();
 			$out .= $this->key_facts();
 			$out .= $this->sections();
@@ -84,7 +78,6 @@ final class Wattlyst_Render {
 				$out .= $this->sources();
 			}
 		} else {
-			$out .= $this->answer( $this->c['answer'] ?? '' );
 			if ( ! empty( $this->c['tool'] ) ) {
 				$out .= $this->tool();
 				$out .= $this->how();
@@ -194,8 +187,42 @@ final class Wattlyst_Render {
 		return '<nav class="wl-breadcrumb" aria-label="Breadcrumb"><ol>' . implode( '', $items ) . '</ol></nav>';
 	}
 
+	/** Page header (design Phase 7): breadcrumb, H1, the one-sentence answer and, on content pages, who wrote it and when it was reviewed. */
+	private function hero( string $type ): string {
+		if ( 'trust' === $type ) {
+			$answer = '';
+		} elseif ( 'home' === $type ) {
+			$answer = $this->c['answer'] ?? $this->page['meta'];
+		} elseif ( 'pillar' === $type ) {
+			$answer = ( $this->c['answer'] ?? '' ) ?: ( $this->c['intro'] ?? '' ) ?: $this->page['meta'];
+		} else {
+			$answer = $this->c['answer'] ?? '';
+		}
+		$byline = in_array( $type, array( 'home', 'pillar', 'trust', 'embed' ), true ) ? '' : $this->byline();
+		return '<header class="wl-hero">' . $this->breadcrumb() . '<h1 class="wl-h1">' . esc_html( $this->page['h1'] ) . '</h1>' . $this->answer( (string) $answer ) . $byline . '</header>';
+	}
+
 	private function answer( string $text ): string {
 		return '' === $text ? '' : '<p class="wl-answer">' . esc_html( $text ) . '</p>';
+	}
+
+	/** One line under the answer: author and review date (the same values as the author box and "Last reviewed"). */
+	private function byline(): string {
+		$author = $this->author();
+		if ( ! $author || empty( $this->page['reviewed'] ) ) {
+			return '';
+		}
+		return '<p class="wl-byline">By <span>' . esc_html( $author['name'] ) . '</span> <span aria-hidden="true">&middot;</span> Reviewed <time datetime="' . esc_attr( $this->page['reviewed'] ) . '">' . esc_html( self::date( $this->page['reviewed'] ) ) . '</time></p>';
+	}
+
+	private function author(): ?array {
+		$site = $this->plugin->site();
+		foreach ( $site['people'] ?? array() as $p ) {
+			if ( $p['id'] === ( $this->page['author'] ?? '' ) ) {
+				return $p;
+			}
+		}
+		return $site['people'][0] ?? null;
 	}
 
 	private function tool(): string {
@@ -565,9 +592,10 @@ final class Wattlyst_Render {
 			foreach ( $card['children'] as $ch ) {
 				$links .= '<li><a href="' . esc_url( Wattlyst_Tools::link( $ch['url'] ) ) . '">' . esc_html( $ch['h1'] ) . '</a></li>';
 			}
-			$cards .= '<div class="wl-card"><h2><a href="' . esc_url( Wattlyst_Tools::link( $card['url'] ) ) . '">' . esc_html( $card['label'] ) . '</a></h2><p>' . esc_html( $card['meta'] ) . '</p>' . ( $links ? '<ul>' . $links . '</ul>' : '' ) . '</div>';
+			$slug   = sanitize_html_class( trim( (string) $card['url'], '/' ) );
+			$cards .= '<div class="wl-card wl-card-' . $slug . '"><h3><a href="' . esc_url( Wattlyst_Tools::link( $card['url'] ) ) . '">' . esc_html( $card['label'] ) . '</a></h3><p>' . esc_html( $card['meta'] ) . '</p>' . ( $links ? '<ul>' . $links . '</ul>' : '' ) . '</div>';
 		}
-		return $cards ? '<section class="wl-cards" aria-label="Tools by task">' . $cards . '</section>' : '';
+		return $cards ? '<section class="wl-tasks" aria-labelledby="wl-tasks-title"><h2 id="wl-tasks-title">What do you want to do?</h2><div class="wl-cards">' . $cards . '</div></section>' : '';
 	}
 
 	private function mistakes(): string {
@@ -630,13 +658,7 @@ final class Wattlyst_Render {
 
 	private function author_box(): string {
 		$site   = $this->plugin->site();
-		$author = null;
-		foreach ( $site['people'] ?? array() as $p ) {
-			if ( $p['id'] === ( $this->page['author'] ?? '' ) ) {
-				$author = $p;
-			}
-		}
-		$author = $author ?? ( $site['people'][0] ?? null );
+		$author = $this->author();
 		if ( ! $author ) {
 			return '';
 		}
