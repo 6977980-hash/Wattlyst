@@ -309,6 +309,14 @@ function browserFuel(f) {
 }
 
 /** Browser copy of data/backup-prices.json: every number engine/backup.js reads, no sources or notes. */
+// Data the engine never reads: notes, sources (incl. *_note, *_source) and verification flags (data/ keeps them for the pages and reviewers).
+const LEAN_DROP = new Set(['_meta', 'note', 'notes', 'source', 'sources', 'source_url', 'verified', 'excludes']);
+function lean(o) {
+  if (Array.isArray(o)) return o.map(lean);
+  if (!o || typeof o !== 'object') return o;
+  return Object.fromEntries(Object.entries(o).filter(([k]) => !LEAN_DROP.has(k) && !/_(note|source)$/.test(k)).map(([k, v]) => [k, lean(v)]));
+}
+
 function browserBackup(b) {
   const strip = (o) => Object.fromEntries(Object.entries(o).filter(([k]) => !['label', 'sources', 'note', 'rated_w_note', 'kva_note', 'bank_v_note', 'charger_a_note', 'charger_sources'].includes(k)));
   return { ups: b.ups.map(strip), generators: b.generators.map(strip), generator_upkeep: strip(b.generator_upkeep), tubular_unit: strip(b.tubular_unit), lithium_pack: strip(b.lithium_pack), battery_life_years: strip(b.battery_life_years) };
@@ -680,7 +688,8 @@ export async function build() {
     site: { brand: site.brand, url: site.url, tagline: site.tagline, contact_email: site.contact_email, logo: site.logo, og_image: site.og_image, twitter_image: site.twitter_image, verification: site.verification || {}, ads, leads, people: site.people, reviewer: site.reviewer.status === 'signed_off'
       ? { status: 'signed_off', name: site.reviewer.name, credential: site.reviewer.credential, same_as: site.reviewer.same_as || [], signed_off: site.reviewer.signed_off }
       : { status: site.reviewer.status } },
-    data: { defaults: inp.data.defaults, tariff: inp.data.tariff, cities: inp.data.cities, cables: inp.cables,
+    // Browser copy: notes and sources stay in data/ (they are shipped on every calculator page, Lighthouse budget).
+    data: { defaults: lean(inp.data.defaults), tariff: lean({ ...inp.data.tariff, gas_domestic: undefined }), cities: lean(inp.data.cities), cables: lean(inp.cables),
       // Browser copy of the price ranges: numbers only (sources and quotes stay on the quote-checker page).
       solar_prices: { checked: inp.solarPrices._meta.checked, panel_rs_per_w: { low: inp.solarPrices.panel_rs_per_w.low, high: inp.solarPrices.panel_rs_per_w.high }, systems: inp.solarPrices.systems.map(({ type, kw, low_rs, high_rs, n_sources }) => ({ type, kw, low_rs, high_rs, n_sources })) },
       // C8 fuel curve and fuel prices, numbers only (the generator test points stay in data/, the page lists them).
