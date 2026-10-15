@@ -33,3 +33,17 @@ test('page header, byline and footer hub links come from the same data as the re
   const pages = read('includes/class-wattlyst-pages.php');
   assert.match(pages, /function footer\([\s\S]*?manifest\(\)\['nav'\][\s\S]*?! empty\( \$row\['live'\] \)/, 'footer hub links: live nav hubs only');
 });
+
+test('re-audit design follow-ups stay in place (WL-77 to WL-81)', () => {
+  const head = read('includes/class-wattlyst-head.php');
+  assert.match(head, /if \( ! \$page \) \{\s*\/\/[^\n]*\n\s*\$this->styles\(\);/, 'brand CSS also on WordPress 404 and search pages, which share the footer (WL-77)');
+  const pages = read('includes/class-wattlyst-pages.php');
+  for (const f of ['generate_404_title', 'generate_404_text', 'get_search_form']) assert.ok(pages.includes(`'${f}'`), `404 filter ${f}`);
+  assert.match(pages, /is_404\(\) \? 'no-sidebar'/);
+  const render = read('includes/class-wattlyst-render.php');
+  assert.match(render, /<details class="wl-more"><summary>/, 'home hub cards fold extra tools; links stay in the HTML (WL-78)');
+  assert.match(css, /@media \(max-width:600px\)\{[\s\S]*?\.wl-loads tr\.wl-load-row\{display:grid/, 'appliance rows stack on phones (WL-79)');
+  assert.match(css, /@media print\{[^@]*\.wl-result:first-child \.wl-result-label[^{]*\{color:#000\}/, 'headline label readable in Save as PDF (WL-80)');
+  assert.match(css, /@media print\{[^@]*print-color-adjust:exact/, 'chart bars print (WL-80)');
+  assert.match(render, /'Rs&nbsp;'/, 'money values do not break after Rs (WL-81)');
+});

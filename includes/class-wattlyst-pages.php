@@ -31,6 +31,9 @@ final class Wattlyst_Pages {
 		add_filter( 'generate_sidebar_layout', array( $this, 'no_sidebar' ) );
 		add_filter( 'comments_open', array( $this, 'no_comments' ), 10, 2 );
 		add_filter( 'generate_copyright', array( $this, 'footer' ) );
+		add_filter( 'generate_404_title', array( $this, 'not_found_title' ) );
+		add_filter( 'generate_404_text', array( $this, 'not_found_text' ) );
+		add_filter( 'get_search_form', array( $this, 'no_search_on_404' ) );
 		add_action( 'wp_footer', array( $this, 'tool_script' ) );
 		add_filter( 'wp_nav_menu_args', array( $this, 'menu_args' ) );
 	}
@@ -292,7 +295,7 @@ final class Wattlyst_Pages {
 	}
 
 	public function no_sidebar( $layout ) {
-		return self::current_id() ? 'no-sidebar' : $layout;
+		return self::current_id() || is_404() ? 'no-sidebar' : $layout;
 	}
 
 	public function no_comments( $open, $post_id ) {
@@ -327,6 +330,30 @@ final class Wattlyst_Pages {
 		}
 		$out .= '<nav class="wl-footer-col wl-footer-nav" aria-label="Site information"><p class="wl-footer-head">' . esc_html( $brand ) . '</p><ul>' . implode( '', $links ) . '</ul></nav></div>';
 		return $out . sprintf( '<p class="wl-copy">&copy; %s %s</p>', esc_html( wp_date( 'Y' ) ), esc_html( $brand ) );
+	}
+
+	/**
+	 * 404 page (audit WL-77): the theme's "Maybe try searching?" pointed to WordPress search, which finds nothing
+	 * useful on a site without posts. Instead it names the planner and every live hub.
+	 */
+	public function not_found_title( $title ): string {
+		return 'Page not found';
+	}
+
+	public function not_found_text( $text ): string {
+		$links = array();
+		foreach ( $this->plugin->manifest()['nav'] ?? array() as $n ) {
+			$row = $this->plugin->row( $n['id'] );
+			if ( $row && ! empty( $row['live'] ) ) {
+				$links[] = sprintf( '<li><a href="%s">%s</a></li>', esc_url( Wattlyst_Tools::link( $n['url'] ) ), esc_html( $n['label'] ) );
+			}
+		}
+		$out = 'This page does not exist or has moved. Start with the <a href="' . esc_url( home_url( '/' ) ) . '">Home Power Planner</a>, or pick a task:';
+		return $out . ( $links ? '</p><ul class="wl-404-links">' . implode( '', $links ) . '</ul><p>' : '' );
+	}
+
+	public function no_search_on_404( $form ) {
+		return is_404() ? '' : $form;
 	}
 
 	/* ---------------------------------------------------------------- render */

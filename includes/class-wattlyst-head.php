@@ -80,11 +80,12 @@ final class Wattlyst_Head {
 
 	public function head(): void {
 		$page = $this->current();
-		if ( is_front_page() && ! $page ) {
-			$this->json_ld( $this->plugin->manifest()['website_schema'] ?? null );
-			return;
-		}
 		if ( ! $page ) {
+			// WordPress's own pages (404, search) share the header and footer, so they get the same styles (WL-77).
+			$this->styles();
+			if ( is_front_page() ) {
+				$this->json_ld( $this->plugin->manifest()['website_schema'] ?? null );
+			}
 			return;
 		}
 		$site  = $this->plugin->site();
@@ -141,7 +142,7 @@ final class Wattlyst_Head {
 		echo '<script type="application/ld+json">' . wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG ) . "</script>\n";
 	}
 
-	/** Small stylesheet inlined on Wattlyst pages only (no extra render-blocking request). */
+	/** Small stylesheet inlined in the head of every front-end page (no extra render-blocking request). */
 	private function styles(): void {
 		$css = WATTLYST_TOOLS_DIR . 'assets/css/wattlyst.css';
 		if ( is_readable( $css ) ) {

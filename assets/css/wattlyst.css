@@ -41,7 +41,7 @@ body.separate-containers .inside-article{border-radius:18px;box-shadow:var(--wl-
 .wl-field [aria-invalid=true]{border-color:#b00020;border-width:2px}
 .wl-unit{font-weight:400;color:var(--wl-muted)}
 .wl-hint{font-size:.85rem;line-height:1.5;color:var(--wl-muted);margin:.35rem 0 0}
-.wl-check{display:flex;gap:.5rem;align-items:center}
+.wl-check{display:flex;flex-wrap:wrap;gap:.25rem .5rem;align-items:center}.wl-field.wl-check .wl-hint{flex-basis:100%;margin-top:0}
 .wl-advanced{margin:1.1rem 0 0;border-top:1px dashed var(--wl-line);padding-top:.25rem}
 .wl-advanced summary{cursor:pointer;font-weight:600;color:var(--wl-accent-2);min-height:44px;display:flex;align-items:center;gap:.55rem;list-style:none}
 .wl-advanced summary::-webkit-details-marker{display:none}
@@ -226,7 +226,7 @@ body .inside-site-info{padding:2rem 16px 1.25rem}
 .wl-share{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-top:1rem;padding-top:.9rem;border-top:1px solid #e6eeea}
 .wl-share .wl-btn-secondary{margin:0;text-decoration:none;display:inline-flex;align-items:center}
 .wl-share-note{font-size:.9rem;color:var(--wl-muted);word-break:break-all}
-@media print{.site-header,.site-footer,.main-navigation,.wl-share,.wl-btn,.wl-advanced,.wl-ad,.wl-lead,.wl-buy,.wl-remove-row,.wl-add-row,.wl-related,.wl-tasks,.wl-cards,.wl-breadcrumb{display:none!important}.wl-tool,.wl-hero{border:0;background:none;padding:0;box-shadow:none}.wl-tool::before{display:none}.wl-page{color:#000}.wl-h1,.wl-result output,.wl-result:first-child output,.wl-result:first-child .wl-unit{color:#000}.wl-result:first-child{background:none}.wl-page a{text-decoration:none;color:#000}.wl-dates::after{content:" · wattlyst.com"}}
+@media print{.site-header,.site-footer,.main-navigation,.wl-share,.wl-btn,.wl-advanced,.wl-ad,.wl-lead,.wl-buy,.wl-remove-row,.wl-add-row,.wl-related,.wl-tasks,.wl-cards,.wl-breadcrumb{display:none!important}.wl-tool,.wl-hero{border:0;background:none;padding:0;box-shadow:none}.wl-tool::before{display:none}.wl-page{color:#000}.wl-h1,.wl-result output,.wl-result:first-child output,.wl-result:first-child .wl-unit{color:#000}.wl-result:first-child{background:none}.wl-result:first-child .wl-result-label,.wl-eq code,.wl-table thead th{color:#000}.wl-eq code,.wl-table thead th{background:none}.wl-table thead th{border-bottom:2px solid #000}.wl-bar-fill{-webkit-print-color-adjust:exact;print-color-adjust:exact}.wl-more>ul{display:block}.wl-page a{text-decoration:none;color:#000}.wl-dates::after{content:" · wattlyst.com"}}
 .wl-download{display:flex;flex-wrap:wrap;gap:.5rem 1rem;align-items:center;font-size:.95rem;color:var(--wl-muted);margin:0 0 1.25rem}
 .wl-chart{margin:1.75rem 0;padding:1.25rem;border:1px solid var(--wl-line);border-radius:var(--wl-r);background:#fff;box-shadow:var(--wl-shadow)}
 .wl-chart figcaption{font-weight:700;margin-bottom:.75rem}
@@ -274,3 +274,32 @@ body .inside-site-info{padding:2rem 16px 1.25rem}
 .wl-page .wl-buy h2{margin-top:0}
 .wl-disclosure{font-size:.875rem;color:var(--wl-muted)}
 @media (prefers-reduced-motion:reduce){.wl-page *,.wl-page *::before,.wl-page *::after{transition:none!important}.wl-btn:hover,.wl-children li:hover,.wl-related li a:hover{transform:none}}
+/* Re-audit fixes (WL-77 to WL-81). Results: the headline card takes the full row, the rest share the rows below. */
+@media (min-width:769px){.wl-result:first-child{grid-column:1/-1}}
+/* Home task cards: tools past the first few fold under "Show N more" (links stay in the HTML). */
+.wl-more{margin-top:.25rem}
+.wl-more>summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;min-height:44px;font-weight:600;color:var(--wl-accent-2)}
+.wl-more>summary::-webkit-details-marker{display:none}
+.wl-more>summary::before{content:"+";display:inline-block;width:1.1rem;font-weight:700}
+.wl-more[open]>summary::before{content:"\2212"}
+.wl-more>summary:focus-visible{outline:3px solid var(--wl-ink);outline-offset:2px;box-shadow:0 0 0 2px var(--wl-focus)}
+/* 404 (theme template): hub links as buttons. */
+.wl-404-links{list-style:none;margin:0 0 1rem;padding:0;display:flex;flex-wrap:wrap;gap:.5rem}
+body .wl-404-links a{display:inline-flex;align-items:center;min-height:44px;padding:0 1rem;border:1px solid var(--wl-line);border-radius:999px;background:var(--wl-bg-soft);color:var(--wl-accent);font-weight:600;text-decoration:none}
+body .wl-404-links a:hover{border-color:var(--wl-accent-2);background:var(--wl-bg-tint)}
+/* Appliance list on phones: each row becomes a small card (appliance on top, the numbers below, labels shown),
+   so Qty, Hours and Remove are visible without scrolling the table sideways (WL-79). */
+@media (max-width:600px){
+.wl-loads,.wl-loads tbody{display:block;border:0;border-radius:0;overflow:visible}
+.wl-loads thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);clip-path:inset(50%)}
+.wl-field-loads .wl-table-wrap{overflow:visible;border:0;background:none}
+.wl-loads tr.wl-load-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(4.25rem,1fr));gap:.45rem;align-items:end;padding:.7rem;margin:0 0 .6rem;border:1px solid var(--wl-line);border-radius:12px;background:#fff}
+.wl-loads tr.wl-load-row td{display:block;padding:0;border:0}
+.wl-loads tr.wl-load-row td:first-child{grid-column:1/-1}
+.wl-loads tr.wl-load-row td .screen-reader-text{position:static;width:auto;height:auto;margin:0 0 .15rem;clip:auto;clip-path:none;overflow:visible;display:block;font-size:.8rem;font-weight:500;line-height:1.25;color:var(--wl-muted)}
+.wl-loads tr.wl-load-row td:first-child .screen-reader-text{border:0;clip:rect(1px,1px,1px,1px);clip-path:inset(50%);height:1px;width:1px;margin:-1px;overflow:hidden;position:absolute}
+.wl-loads select,.wl-loads input[data-k]{width:100%;min-width:0}
+.wl-loads tr.wl-load-row:nth-child(even){background:#fff}
+}
+/* Home task cards on phones: the hub title and its first tools; the hub page carries the description (WL-78). */
+@media (max-width:600px){.wl-tasks .wl-card>p{display:none}}
