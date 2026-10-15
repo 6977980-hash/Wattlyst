@@ -50,7 +50,7 @@
     "h2": "Iron electricity consumption per hour and per month",
     "p": [
      "A 1,000 W iron uses 1 kWh per hour with the element on, a 1,500 W iron 1.5 units and a 2,000 W steam iron 2 units. In practice the element is off part of the time once the plate is hot, so these are the upper limits for an hour of continuous ironing.",
-     "What matters for the bill is the ironing time. Half an hour a day with a 1,000 W iron is about 15 units a month, about Rs 547 at Rs 36.46 per unit; an hour a day is about 30 units, about Rs 1,094. A whole week's ironing done in one long session costs the same as the same minutes spread over the week."
+     "What matters for the bill is the ironing time. Half an hour a day with a 1,000 W iron is about 15.2 units a month, about Rs 555 at Rs 36.46 per unit; an hour a day is about 30.4 units, about Rs 1,109. A whole week's ironing done in one long session costs the same as the same minutes spread over the week."
     ]
    },
    {
@@ -81,7 +81,7 @@
    },
    {
     "q": "How many units does an iron use in a month?",
-    "a": "Half an hour a day with a 1,000 W iron is about 15 units in 30 days, about Rs 547 at Rs 36.46 per unit; an hour a day is about 30 units. A 2,000 W steam iron for half an hour a day is about 30 units."
+    "a": "Half an hour a day with a 1,000 W iron is about 15.2 units in 30 days, about Rs 555 at Rs 36.46 per unit; an hour a day is about 30.4 units. A 2,000 W steam iron for half an hour a day is about 30.4 units."
    },
    {
     "q": "Can a UPS run an iron?",
@@ -108,11 +108,11 @@
    "An electric iron is rated between 1,000 W and 2,400 W; a 1,000 W iron uses 1 kWh per hour with the element on and a 2,000 W steam iron about 2 kWh per hour (units per hour = watts ÷ one thousand).",
    "The thermostat switches the element off once the plate is hot, so over an hour of ironing the real draw is lower than the rating; the figures here are the upper limit for the rated watts.",
    "At 230 V a 1,000 W iron draws 4.3 A and a 2,400 W iron 10.4 A, with a power factor of 1 because the element is purely resistive, so watts and VA are equal and there is no starting surge.",
-   "Half an hour of ironing a day with a 1,000 W iron is about 15 units in a 30-day month, about Rs 547 of energy charge at Rs 36.46 per unit; an hour a day is about 30 units.",
+   "Half an hour of ironing a day with a 1,000 W iron is about 15.2 units in a 30-day month, about Rs 555 of energy charge at Rs 36.46 per unit; an hour a day is about 30.4 units.",
    "A UPS or inverter can run an iron only if its continuous rating in watts, not VA, is above the iron's 1,000 W; a line-interactive UPS delivers only about 60% of its VA rating as watts."
   ],
   "mistakes": [
-   "Counting the iron as if it ran all day. It is on for minutes, not hours: half an hour a day is only 15 units a month, far less than a fridge or an AC.",
+   "Counting the iron as if it ran all day. It is on for minutes, not hours: half an hour a day is only 15.2 units a month, far less than a fridge or an AC.",
    "Buying a UPS by its VA rating to run an iron. A line-interactive UPS gives only about 60% of its VA as watts, below the iron's 1,000 W; compare the UPS's watt rating, not its VA.",
    "Using a thin extension cord or a multi-plug for the iron. At 4.3 A and more, a light cord heats up; plug the iron into a wall socket on a power circuit.",
    "Adding the iron to a UPS already running fans and a fridge. The iron's 1,000 W alone can be more than the whole backup load, and it empties the battery in minutes."
@@ -177,7 +177,7 @@
      "name": "days",
      "label": "Days in the month",
      "unit": "days",
-     "default": 30,
+     "default": 30.42,
      "advanced": true,
      "hint": "Billing days; most bills cover 29 to 31 days."
     },
@@ -240,14 +240,14 @@
      "spec": "1",
      "unit": "kWh",
      "label_ur": "Mahana units",
-     "value": "15"
+     "value": "15.2"
     },
     {
      "key": "monthly_rs",
      "label": "Monthly cost (energy charge only)",
      "spec": "rs",
      "label_ur": "Mahana kharcha (sirf energy charge)",
-     "value": "Rs 547"
+     "value": "Rs 555"
     },
     {
      "key": "running_w",
@@ -260,7 +260,7 @@
    ],
    "how": {
     "tpl": "{{out.running_w|int}} W ÷ one thousand = {{out.running_kw|2}} kWh per hour with the element on. Units per hour × the ironing hours a day you entered = {{out.daily_kwh|2}} kWh a day; × {{out.days}} days = {{out.monthly_units|1}} units a month; × {{out.tariff|rs2}} per unit = {{out.monthly_rs|rs}} for the energy charge, before fixed charges, surcharges and tax. Current = {{out.running_w|int}} W ÷ ({{out.volts}} V × {{out.pf|1}} power factor) = {{out.amps|1}} A; an iron has no starting surge, so its peak is the same {{out.peak_w|int}} W.",
-    "text": "1,000 W ÷ one thousand = 1 kWh per hour with the element on. Units per hour × the ironing hours a day you entered = 0.5 kWh a day; × 30 days = 15 units a month; × Rs 36.46 per unit = Rs 547 for the energy charge, before fixed charges, surcharges and tax. Current = 1,000 W ÷ (230 V × 1 power factor) = 4.3 A; an iron has no starting surge, so its peak is the same 1,000 W."
+    "text": "1,000 W ÷ one thousand = 1 kWh per hour with the element on. Units per hour × the ironing hours a day you entered = 0.5 kWh a day; × 30.42 days = 15.2 units a month; × Rs 36.46 per unit = Rs 555 for the energy charge, before fixed charges, surcharges and tax. Current = 1,000 W ÷ (230 V × 1 power factor) = 4.3 A; an iron has no starting surge, so its peak is the same 1,000 W."
    },
    "submit": "Calculate",
    "notice": "",
@@ -285,23 +285,23 @@
   "examples": [
    {
     "title": "1,200 W dry iron, half an hour a day",
-    "text": "1,200 W ÷ one thousand = 1.2 kWh per hour and 5.2 A at 230 V. Half an hour a day is 0.6 kWh a day and 18 units in 30 days, about Rs 656."
+    "text": "1,200 W ÷ one thousand = 1.2 kWh per hour and 5.2 A at 230 V. Half an hour a day is 0.6 kWh a day and 18.3 units in 30 days, about Rs 665."
    },
    {
     "title": "1,500 W steam iron, half an hour a day",
-    "text": "1.5 kWh per hour and 6.5 A. Half an hour a day gives 22.5 units a month, about Rs 820 at Rs 36.46 per unit."
+    "text": "1.5 kWh per hour and 6.5 A. Half an hour a day gives 22.8 units a month, about Rs 832 at Rs 36.46 per unit."
    },
    {
     "title": "2,000 W steam iron, half an hour a day",
-    "text": "2,000 W is 2 kWh per hour and 8.7 A at 230 V. Half an hour a day is 30 units a month, about Rs 1,094."
+    "text": "2,000 W is 2 kWh per hour and 8.7 A at 230 V. Half an hour a day is 30.4 units a month, about Rs 1,109."
    },
    {
     "title": "1,000 W iron, one hour a day",
-    "text": "An hour a day with the element on is 1 kWh a day and 30 units a month, about Rs 1,094 at Rs 36.46 per unit: twice the default half-hour figure."
+    "text": "An hour a day with the element on is 1 kWh a day and 30.4 units a month, about Rs 1,109 at Rs 36.46 per unit: twice the default half-hour figure."
    },
    {
     "title": "2,400 W heavy steam iron, half an hour a day",
-    "text": "The largest household irons draw 2.4 kWh per hour and 10.4 A, which is why they warm up a thin extension cord. Half an hour a day is 36 units a month, about Rs 1,313."
+    "text": "The largest household irons draw 2.4 kWh per hour and 10.4 A, which is why they warm up a thin extension cord. Half an hour a day is 36.5 units a month, about Rs 1,331."
    }
   ],
   "table": {
@@ -318,47 +318,47 @@
      "1,000 W",
      "1",
      "4.3 A",
-     "15",
-     "Rs 547"
+     "15.2",
+     "Rs 555"
     ],
     [
      "1,200 W",
      "1.2",
      "5.2 A",
-     "18",
-     "Rs 656"
+     "18.3",
+     "Rs 665"
     ],
     [
      "1,500 W",
      "1.5",
      "6.5 A",
-     "22.5",
-     "Rs 820"
+     "22.8",
+     "Rs 832"
     ],
     [
      "1,800 W",
      "1.8",
      "7.8 A",
-     "27",
-     "Rs 984"
+     "27.4",
+     "Rs 998"
     ],
     [
      "2,000 W",
      "2",
      "8.7 A",
-     "30",
-     "Rs 1,094"
+     "30.4",
+     "Rs 1,109"
     ],
     [
      "2,400 W",
      "2.4",
      "10.4 A",
-     "36",
-     "Rs 1,313"
+     "36.5",
+     "Rs 1,331"
     ]
    ]
   },
-  "answer": "An electric iron uses about 1 kWh per hour (one kWh is one unit) when its element is on: units per hour equal watts divided by one thousand, so a 1,000 W iron uses 1 kWh an hour and a 2,000 W steam iron about 2. It draws 4.3 A at 230 V with no starting surge. Half an hour a day is about 15 units a month.",
+  "answer": "An electric iron uses about 1 kWh per hour (one kWh is one unit) when its element is on: units per hour equal watts divided by one thousand, so a 1,000 W iron uses 1 kWh an hour and a 2,000 W steam iron about 2. It draws 4.3 A at 230 V with no starting surge. Half an hour a day is about 15.2 units a month.",
   "formula": {
    "text": "units/h = W ÷ 1000; units/day = units/h × hours; units/month = units/day × days; cost = units/month × rate; I = W ÷ (V × PF), PF = 1",
    "lines": [
@@ -464,7 +464,7 @@
       "name": "How many units does an iron use in a month?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Half an hour a day with a 1,000 W iron is about 15 units in 30 days, about Rs 547 at Rs 36.46 per unit; an hour a day is about 30 units. A 2,000 W steam iron for half an hour a day is about 30 units."
+       "text": "Half an hour a day with a 1,000 W iron is about 15.2 units in 30 days, about Rs 555 at Rs 36.46 per unit; an hour a day is about 30.4 units. A 2,000 W steam iron for half an hour a day is about 30.4 units."
       }
      },
      {

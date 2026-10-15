@@ -26,11 +26,11 @@ export function priceRange(d, type, kwp) {
 }
 
 /**
- * Middle price of an inverter type at kW from the export-capable rows: exact size, linear between listed sizes,
- * nearest end's Rs per kW outside. Returns [price, a row used rests on one source, kW above the list].
+ * Middle price of an inverter type at kW from the export-capable rows (of battery voltage v when given, WL-98): exact
+ * size, linear between listed sizes, nearest end's Rs per kW outside. Returns [price, a row used rests on one source, kW above the list].
  */
-export function inverterAt(items, category, kw) {
-  const rows = items.filter((x) => x.category === category && x.export_capable !== false).map((x) => ({ kw: parseFloat(x.size), rs: (x.low + x.high) / 2, w: (x.n_sources ?? 0) < 2 })).sort((a, b) => a.kw - b.kw);
+export function inverterAt(items, category, kw, bv) {
+  const rows = items.filter((x) => x.category === category && x.export_capable !== false && (!bv || x.bank_v === bv)).map((x) => ({ kw: parseFloat(x.size), rs: (x.low + x.high) / 2, w: (x.n_sources ?? 0) < 2 })).sort((a, b) => a.kw - b.kw);
   const a = rows.filter((r) => r.kw <= kw).pop() || rows[0];
   const b = rows.find((r) => r.kw > kw);
   const v = !b || kw <= a.kw ? (a.rs / a.kw) * kw : a.rs + ((b.rs - a.rs) * (kw - a.kw)) / (b.kw - a.kw);
@@ -41,13 +41,28 @@ export function inverterAt(items, category, kw) {
  * Hybrid inverter premium for the decision engine (formulas.md H1): the hybrid inverter also carries the backup load,
  * so hkW = max(kW, backup kW); premium = middle price of a hybrid inverter at hkW less an on-grid one at kW, never
  * below 0. When the lists price the hybrid at or below the on-grid unit the premium is not known (counted as 0, the
- * page says so, WL-100). Returns [premium, known, a row rests on one source, hybrid above the list, hkW].
+ * page says so, WL-100). Only hybrid rows built for the bank voltage v count. Returns [premium, known, a row rests on
+ * one source, hybrid above the list, hkW].
  */
-export function hybridPremium(items, kw, backup_kw) {
+export function hybridPremium(items, kw, backup_kw, v) {
   const hkw = Math.max(kw, backup_kw);
-  const [hy, hw, above] = inverterAt(items, 'hybrid_inverter', hkw);
+  const [hy, hw, above] = inverterAt(items, 'hybrid_inverter', hkw, v);
   const [on, ow] = inverterAt(items, 'ongrid_inverter', kw);
   return [Math.max(0, hy - on), hy - on > 1e-9, hw || ow, above, hkw];
+}
+
+/**
+ * Decision engine ranking (formulas.md H1): the setup with the lowest net (ties: the lower middle price), the runner-up,
+ * and a close call when the runner-up's net range (at its low and high price) overlaps the pick's and neither is staying
+ * on the grid (WL-94). Returns [pick, runner-up, close] ([] for no setups).
+ */
+export function rank(xs) {
+  if (!xs.length) return [];
+  const best = (a, b) => (b.net_rs < a.net_rs - 1e-9 || (Math.abs(b.net_rs - a.net_rs) <= 1e-9 && b.buy < a.buy) ? b : a);
+  const pick = xs.reduce(best);
+  const rest = xs.filter((x) => x !== pick);
+  const ru = rest.length ? rest.reduce(best) : null;
+  return [pick, ru, Boolean(ru && ru.key !== 'grid' && pick.key !== 'grid' && ru.lo <= pick.hi + 1e-9 && pick.lo <= ru.hi + 1e-9)];
 }
 
 /**

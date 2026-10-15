@@ -56,7 +56,7 @@
    {
     "h2": "Fridge units per month and monthly cost",
     "p": [
-     "A non-inverter fridge on the default hours uses about 48 units in a 30-day month, about Rs 1,750 at Rs 36.46 per unit. An inverter fridge uses about 36 units, about Rs 1,313.",
+     "A non-inverter fridge on the default hours uses about 48.7 units in a 30-day month, about Rs 1,775 at Rs 36.46 per unit. An inverter fridge uses about 36.5 units, about Rs 1,331.",
      "That is the energy charge only. Because the fridge runs every day of the year it is part of the base load that decides your slab, so in a month near a slab boundary its units can cost more than this. The bill calculator turns total units into a full bill."
     ]
    },
@@ -70,7 +70,7 @@
    {
     "h2": "Deep freezer units per day",
     "p": [
-     "A chest deep freezer draws about 200 W and runs about 10 hours a day, which is 2 units per day and 60 units a month, about Rs 2,188. Keeping it full, away from the sun and with a clean condenser keeps the hours down."
+     "A chest deep freezer draws about 200 W and runs about 10 hours a day, which is 2 units per day and 60.8 units a month, about Rs 2,218. Keeping it full, away from the sun and with a clean condenser keeps the hours down."
     ]
    },
    {
@@ -88,7 +88,7 @@
    },
    {
     "q": "How many units does a fridge use per month?",
-    "a": "About 48 units for a non-inverter fridge and 36 for an inverter fridge in a 30-day month, about Rs 1,750 and Rs 1,313 at Rs 36.46 per unit."
+    "a": "About 48.7 units for a non-inverter fridge and 36.5 for an inverter fridge in a 30-day month, about Rs 1,775 and Rs 1,331 at Rs 36.46 per unit."
    },
    {
     "q": "How many watts does a refrigerator use?",
@@ -96,11 +96,11 @@
    },
    {
     "q": "How much electricity does an inverter fridge consume?",
-    "a": "About 1.2 units a day, 36 a month, on the typical figures: less than a non-inverter fridge because its compressor runs slowly and steadily instead of switching on and off at full power."
+    "a": "About 1.2 units a day, 36.5 a month, on the typical figures: less than a non-inverter fridge because its compressor runs slowly and steadily instead of switching on and off at full power."
    },
    {
     "q": "How many units does a deep freezer use per day?",
-    "a": "About 2 units per day for a chest deep freezer, 60 units a month, about Rs 2,188 at Rs 36.46 per unit."
+    "a": "About 2 units per day for a chest deep freezer, 60.8 units a month, about Rs 2,218 at Rs 36.46 per unit."
    },
    {
     "q": "What are a fridge's starting watts?",
@@ -114,15 +114,15 @@
   "key_facts": [
    "A non-inverter fridge of the usual Pakistani size (twelve to sixteen cubic feet) draws about 200 W while the compressor runs (100 to 350 W by size and age) and uses about 1.6 units per day; units per day = running watts × compressor hours ÷ one thousand.",
    "A fridge is plugged in all day but its compressor switches on and off with the thermostat; the 8 hours used here are the hours the compressor actually runs, which is why a fridge uses far less than its watts × twenty-four hours.",
-   "An inverter fridge draws about 120 W and varies its compressor speed instead of switching on and off, using about 1.2 units per day and 36 units a month against 48 for a non-inverter fridge.",
-   "A chest deep freezer uses about 2 units per day (60 a month), so a fridge plus a deep freezer add about 108 units a month to the bill.",
+   "An inverter fridge draws about 120 W and varies its compressor speed instead of switching on and off, using about 1.2 units per day and 36.5 units a month against 48.7 for a non-inverter fridge.",
+   "A chest deep freezer uses about 2 units per day (60.8 a month), so a fridge plus a deep freezer add about 109.5 units a month to the bill.",
    "A non-inverter fridge compressor starts at about 1,200 W for a moment, several times its running watts; a UPS, inverter or generator must handle that surge, while an inverter fridge starts at about 200 W."
   ],
   "mistakes": [
    "Multiplying the fridge's watts by twenty-four hours. The compressor cycles on and off; count the hours it actually runs, about 8 a day for a typical non-inverter fridge.",
    "Sizing a UPS on running watts. A non-inverter fridge starts at about 1,200 W for a moment; a UPS rated only for the running watts trips.",
    "Ignoring the season. In the hottest months the compressor runs longer, so the summer bill shows more fridge units than the winter one.",
-   "Treating the monthly cost as the whole bill. Rs 1,750 is the energy charge at one slab rate; fixed charges, surcharges and tax come on top."
+   "Treating the monthly cost as the whole bill. Rs 1,775 is the energy charge at one slab rate; fixed charges, surcharges and tax come on top."
   ],
   "sources": [
    {
@@ -220,7 +220,7 @@
      "name": "days",
      "label": "Days in the month",
      "unit": "days",
-     "default": 30,
+     "default": 30.42,
      "advanced": true,
      "hint": "Billing days; most bills cover 29 to 31 days."
     },
@@ -267,14 +267,14 @@
      "spec": "1",
      "unit": "kWh",
      "label_ur": "Mahana units",
-     "value": "48"
+     "value": "48.7"
     },
     {
      "key": "monthly_rs",
      "label": "Monthly cost (energy charge only)",
      "spec": "rs",
      "label_ur": "Mahana kharcha (sirf energy charge)",
-     "value": "Rs 1,750"
+     "value": "Rs 1,775"
     },
     {
      "key": "running_w",
@@ -295,7 +295,7 @@
    ],
    "how": {
     "tpl": "{{out.items|int}} appliance(s) running {{out.running_w|int}} W together. Running watts × the compressor hours a day you entered ÷ one thousand = {{out.daily_kwh|2}} units a day; × {{out.days}} days = {{out.monthly_units|1}} units a month; × {{out.tariff|rs2}} per unit = {{out.monthly_rs|rs}} for the energy charge, before fixed charges, surcharges and tax. Starting surge of the largest compressor: {{out.peak_w|int}} W in total for a moment, {{out.peak_amps|1}} A.",
-    "text": "1 appliance(s) running 200 W together. Running watts × the compressor hours a day you entered ÷ one thousand = 1.6 units a day; × 30 days = 48 units a month; × Rs 36.46 per unit = Rs 1,750 for the energy charge, before fixed charges, surcharges and tax. Starting surge of the largest compressor: 1,200 W in total for a moment, 6.5 A."
+    "text": "1 appliance(s) running 200 W together. Running watts × the compressor hours a day you entered ÷ one thousand = 1.6 units a day; × 30.42 days = 48.7 units a month; × Rs 36.46 per unit = Rs 1,775 for the energy charge, before fixed charges, surcharges and tax. Starting surge of the largest compressor: 1,200 W in total for a moment, 6.5 A."
    },
    "submit": "Calculate",
    "notice": "",
@@ -320,23 +320,23 @@
   "examples": [
    {
     "title": "One inverter fridge",
-    "text": "120 W × its compressor hours = 1.2 units a day, 36 units in 30 days, about Rs 1,313 at Rs 36.46 per unit. Starting surge only 200 W."
+    "text": "120 W × its compressor hours = 1.2 units a day, 36.5 units in 30 days, about Rs 1,331 at Rs 36.46 per unit. Starting surge only 200 W."
    },
    {
     "title": "One chest deep freezer",
-    "text": "200 W running = 2 units a day and 60 units a month, about Rs 2,188. Starting surge about 1,200 W."
+    "text": "200 W running = 2 units a day and 60.8 units a month, about Rs 2,218. Starting surge about 1,200 W."
    },
    {
     "title": "Non-inverter fridge plus deep freezer",
-    "text": "400 W together when both compressors run: 3.6 units a day, 108 units a month, about Rs 3,938. Peak when one starts while the other runs: 1,400 W."
+    "text": "400 W together when both compressors run: 3.6 units a day, 109.5 units a month, about Rs 3,993. Peak when one starts while the other runs: 1,400 W."
    },
    {
     "title": "Old 300 W fridge in a hot kitchen",
-    "text": "With a worn seal the compressor runs about twelve hours a day: 3.6 units a day and 108 units a month, about Rs 3,938, against Rs 1,313 for a new inverter fridge."
+    "text": "With a worn seal the compressor runs about twelve hours a day: 3.6 units a day and 109.5 units a month, about Rs 3,993, against Rs 1,331 for a new inverter fridge."
    },
    {
     "title": "Hot and cold water dispenser",
-    "text": "500 W while the heater or cooler runs: 3 units a day and 90 units a month, about Rs 3,281. Switching off the hot tank when not needed saves most of it."
+    "text": "500 W while the heater or cooler runs: 3 units a day and 91.3 units a month, about Rs 3,327. Switching off the hot tank when not needed saves most of it."
    }
   ],
   "table": {
@@ -351,42 +351,42 @@
     [
      "100 W",
      "0.8",
-     "24",
-     "Rs 875"
+     "24.3",
+     "Rs 887"
     ],
     [
      "150 W",
      "1.2",
-     "36",
-     "Rs 1,313"
+     "36.5",
+     "Rs 1,331"
     ],
     [
      "200 W",
      "1.6",
-     "48",
-     "Rs 1,750"
+     "48.7",
+     "Rs 1,775"
     ],
     [
      "250 W",
      "2",
-     "60",
-     "Rs 2,188"
+     "60.8",
+     "Rs 2,218"
     ],
     [
      "300 W",
      "2.4",
-     "72",
-     "Rs 2,625"
+     "73",
+     "Rs 2,662"
     ],
     [
      "350 W",
      "2.8",
-     "84",
-     "Rs 3,063"
+     "85.2",
+     "Rs 3,106"
     ]
    ]
   },
-  "answer": "A normal non-inverter fridge uses about 1.6 units per day and an inverter fridge about 1.2. Units per day = running watts × compressor hours a day ÷ one thousand: a 200 W fridge whose compressor runs about 8 hours a day uses 1.6 units, 48 a month, about Rs 1,750 at Rs 36.46 per unit.",
+  "answer": "A normal non-inverter fridge uses about 1.6 units per day and an inverter fridge about 1.2. Units per day = running watts × compressor hours a day ÷ one thousand: a 200 W fridge whose compressor runs about 8 hours a day uses 1.6 units, 48.7 a month, about Rs 1,775 at Rs 36.46 per unit.",
   "formula": {
    "text": "units/day = running W × compressor hours ÷ 1000; units/month = units/day × days; cost = units/month × rate",
    "lines": [
@@ -492,7 +492,7 @@
       "name": "How many units does a fridge use per month?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "About 48 units for a non-inverter fridge and 36 for an inverter fridge in a 30-day month, about Rs 1,750 and Rs 1,313 at Rs 36.46 per unit."
+       "text": "About 48.7 units for a non-inverter fridge and 36.5 for an inverter fridge in a 30-day month, about Rs 1,775 and Rs 1,331 at Rs 36.46 per unit."
       }
      },
      {
@@ -508,7 +508,7 @@
       "name": "How much electricity does an inverter fridge consume?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "About 1.2 units a day, 36 a month, on the typical figures: less than a non-inverter fridge because its compressor runs slowly and steadily instead of switching on and off at full power."
+       "text": "About 1.2 units a day, 36.5 a month, on the typical figures: less than a non-inverter fridge because its compressor runs slowly and steadily instead of switching on and off at full power."
       }
      },
      {
@@ -516,7 +516,7 @@
       "name": "How many units does a deep freezer use per day?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "About 2 units per day for a chest deep freezer, 60 units a month, about Rs 2,188 at Rs 36.46 per unit."
+       "text": "About 2 units per day for a chest deep freezer, 60.8 units a month, about Rs 2,218 at Rs 36.46 per unit."
       }
      },
      {

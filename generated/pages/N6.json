@@ -67,7 +67,7 @@
    },
    {
     "q": "How many units does a 5 kW solar system make per day in Pakistan?",
-    "a": "About 4.6 units per kW a day in Karachi and 4 in Lahore on average, so around 20 units a day in Lahore, more in summer and on clear days, less in foggy winter weeks."
+    "a": "About 4.7 units per kW a day in Karachi and 4 in Lahore on average, so around 20 units a day in Lahore, more in summer and on clear days, less in foggy winter weeks."
    },
    {
     "q": "Where does the forecast come from?",
@@ -88,7 +88,7 @@
   ],
   "key_facts": [
    "Solar output on a given day = system kW × peak sun hours on the panels that day × performance ratio; Wattlyst uses a ratio of 0.78.",
-   "A typical day in Lahore gives 4 units per kW of panels, Karachi 4.6 and Quetta 5.3 (long-term Global Solar Atlas averages).",
+   "A typical day in Lahore gives 4 units per kW of panels, Karachi 4.7 and Quetta 5.3 (long-term Global Solar Atlas averages).",
    "The live forecast is the hourly sunshine on a south-facing panel tilted at 25 degrees, from the free Open-Meteo weather service, added up for tomorrow.",
    "A day at 85% or more of the typical output is shown as sunny; below 30% it is overcast or rainy.",
    "Forecasts are estimates: haze, dust storms and passing clouds are hard to predict, and the panel temperature and inverter limits are not modelled."
@@ -223,12 +223,12 @@
      "label": "Value of those units",
      "spec": "rs",
      "label_ur": "Un units ki qeemat",
-     "value": "Rs 729"
+     "value": "Rs 728"
     }
    ],
    "how": {
     "tpl": "{{out.day_label}}: {{out.kwp|2}} kW × {{out.kwh_per_kwp|2}} kWh per kW ({{out.psh|1}} peak sun hours, {{out.sky}}) = {{out.units|1}} units, {{out.pct_of_typical|int}}% of a typical day. At {{out.tariff|rs2}} a unit that is worth {{out.rs_value|rs}}.",
-    "text": "Typical day (long-term average): 5 kW × 4 kWh per kW (5.1 peak sun hours, Typical day) = 20 units, 100% of a typical day. At Rs 36.46 a unit that is worth Rs 729."
+    "text": "Typical day (long-term average): 5 kW × 4 kWh per kW (5.1 peak sun hours, Typical day) = 20 units, 100% of a typical day. At Rs 36.46 a unit that is worth Rs 728."
    },
    "submit": "Show my solar output",
    "live": "open_meteo",
@@ -252,7 +252,7 @@
    },
    {
     "title": "Typical day, 10 kW in Karachi",
-    "text": "10 kW × 4.6 units per kW = 46 units, worth Rs 1,677 at Rs 36.46 a unit."
+    "text": "10 kW × 4.7 units per kW = 46.5 units, worth Rs 1,696 at Rs 36.46 a unit."
    },
    {
     "title": "Typical day, 3 kW in Quetta",
@@ -274,18 +274,18 @@
     ],
     [
      "Karachi",
-     "4.6",
-     "23"
+     "4.7",
+     "23.3"
     ],
     [
      "Islamabad",
      "4.3",
-     "21.5"
+     "21.4"
     ],
     [
      "Peshawar",
      "4.1",
-     "20.5"
+     "20.7"
     ],
     [
      "Quetta",
@@ -295,7 +295,7 @@
     [
      "Multan",
      "4.4",
-     "22"
+     "21.8"
     ]
    ]
   },
@@ -405,7 +405,7 @@
       "name": "How many units does a 5 kW solar system make per day in Pakistan?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "About 4.6 units per kW a day in Karachi and 4 in Lahore on average, so around 20 units a day in Lahore, more in summer and on clear days, less in foggy winter weeks."
+       "text": "About 4.7 units per kW a day in Karachi and 4 in Lahore on average, so around 20 units a day in Lahore, more in summer and on clear days, less in foggy winter weeks."
       }
      },
      {

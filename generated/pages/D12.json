@@ -43,8 +43,8 @@
    {
     "h2": "What is the load of a 10 marla house?",
     "p": [
-     "A 10 marla house usually has three or four bedrooms, a lounge, a drawing room, a kitchen and two or three bathrooms, so it carries more ACs and more fans than a 5 marla house. The default list is a summer evening in such a house: six ceiling fans, sixteen LED bulbs, an inverter fridge, a deep freezer, two TVs, two 1.5 ton inverter ACs in the bedrooms, a 1 ton inverter AC in the drawing room, a 1 hp water pump, an iron, an automatic washing machine and a WiFi router. Together they come to 7,452 W running, 33 units a day and about 1,053 units a month.",
-     "The ACs set the size. Three inverter ACs are more than half of the running load and most of the summer units, so they decide both the panels (from the daily units, 8.25 kW) and the inverter (from the running load). Panels big enough to carry every AC at once at midday would need 9.55 kW and make more units than the house uses; that rule is for off-grid systems. Edit the list to match your house; a house that uses two ACs at a time is the second worked example below."
+     "A 10 marla house usually has three or four bedrooms, a lounge, a drawing room, a kitchen and two or three bathrooms, so it carries more ACs and more fans than a 5 marla house. The default list is a summer evening in such a house: six ceiling fans, sixteen LED bulbs, an inverter fridge, a deep freezer, two TVs, two 1.5 ton inverter ACs in the bedrooms, a 1 ton inverter AC in the drawing room, a 1 hp water pump, an iron, an automatic washing machine and a WiFi router. Together they come to 7,452 W running, 33 units a day and about 1,066 units a month.",
+     "The ACs set the size. Three inverter ACs are more than half of the running load and most of the summer units, so they decide both the panels (from the daily units, 8.26 kW) and the inverter (from the running load). Panels big enough to carry every AC at once at midday would need 9.55 kW and make more units than the house uses; that rule is for off-grid systems. Edit the list to match your house; a house that uses two ACs at a time is the second worked example below."
     ]
    },
    {
@@ -94,11 +94,11 @@
    },
    {
     "q": "What solar system does a 10 marla house with two ACs need?",
-    "a": "With two 1.5 ton inverter ACs and the same fans, lights, fridge, freezer, pump and washing machine, the house needs 7.61 kW of panels (13 panels) and an inverter of 8.19 kW, making about 913 units a month in Lahore."
+    "a": "With two 1.5 ton inverter ACs and the same fans, lights, fridge, freezer, pump and washing machine, the house needs 7.61 kW of panels (13 panels) and an inverter of 8.19 kW, making about 924 units a month in Lahore."
    },
    {
     "q": "How many units does a 10 marla solar system make a month?",
-    "a": "About 1,053 units a month for the 8.78 kW system in Lahore as a yearly average, against about 33 units a day used by the house. Summer makes more and winter less; pick your city for its own sun yield."
+    "a": "About 1,066 units a month for the 8.78 kW system in Lahore as a yearly average, against about 33 units a day used by the house. Summer makes more and winter less; pick your city for its own sun yield."
    },
    {
     "q": "What sanctioned load do I need for a 10 marla solar system?",
@@ -116,7 +116,7 @@
   "key_facts": [
    "A typical 10 marla house with three inverter ACs (two 1.5 ton, one 1 ton) has a running load of about 7,452 W and uses about 33 units a day, so it needs a solar system of about 8.78 kW with a 9.32 kW inverter.",
    "With two 1.5 ton inverter ACs and no third AC the same house needs about 7.61 kW of panels (13 panels) and an inverter of 8.19 kW; each extra inverter AC adds roughly its daily units (average watts × hours) ÷ the city's yield to the array.",
-   "In Lahore one kW of panels makes about 4 units a day over the year, so the 8.78 kW system makes about 1,053 units a month, which covers the house's 33 units a day with spare units for export.",
+   "In Lahore one kW of panels makes about 4 units a day over the year, so the 8.78 kW system makes about 1,066 units a month, which covers the house's 33 units a day with spare units for export.",
    "Running one 1.5 ton inverter AC with fans, lights, fridge and freezer for 6 hours after sunset needs a lithium battery of about 390 Ah at 48 V (18.7 units); the same night without the AC needs about 167 Ah.",
    "A system of this size usually needs a sanctioned load above 5 kW, which puts the house on a time-of-use meter; the net-metering application is approved only up to the sanctioned load."
   ],
@@ -1395,12 +1395,12 @@
      "label": "Units the system makes a month",
      "spec": "int",
      "label_ur": "System ke mahana units",
-     "value": "1,053"
+     "value": "1,066"
     }
    ],
    "how": {
     "tpl": "Energy: watts × quantity × hours a day for each appliance (inverter ACs count at their average draw, not their rated watts), added up = {{out.daily_kwh|1}} units a day; ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW of panels a day in your city = {{out.kw_energy|2}} kW. A grid-tied or hybrid system is sized by energy: when the {{out.running_w|int}} W running load is more than the panels give at that moment, the grid supplies the rest. {{out.kw|2}} kW needs {{out.panels|int}} panels of {{out.panel_w}} W = {{out.installed_kw|2}} kW installed, which makes about {{out.monthly_kwh_estimate|int}} units a month on about {{out.roof_m2|int}} square metres of roof. Inverter: the larger of {{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_kw_load|2}} kW for the load and {{out.installed_kw|2}} kW of panels ÷ {{out.dc_ac_ratio_max|1}} = {{out.inverter_kw_array|2}} kW, so the panels are never more than {{out.dc_ac_ratio_max|1}} times the inverter: {{out.inverter_kw|up2}} kW continuous, with a surge rating of at least {{out.inverter_surge_w|int}} W for the water pump.",
-    "text": "Energy: watts × quantity × hours a day for each appliance (inverter ACs count at their average draw, not their rated watts), added up = 33 units a day; ÷ 4 units per kW of panels a day in your city = 8.25 kW. A grid-tied or hybrid system is sized by energy: when the 7,452 W running load is more than the panels give at that moment, the grid supplies the rest. 8.25 kW needs 15 panels of 585 W = 8.78 kW installed, which makes about 1,053 units a month on about 39 square metres of roof. Inverter: the larger of 7,452 W × 1.25 = 9.32 kW for the load and 8.78 kW of panels ÷ 1.3 = 6.75 kW, so the panels are never more than 1.3 times the inverter: 9.32 kW continuous, with a surge rating of at least 9,252 W for the water pump."
+    "text": "Energy: watts × quantity × hours a day for each appliance (inverter ACs count at their average draw, not their rated watts), added up = 33 units a day; ÷ 4 units per kW of panels a day in your city = 8.26 kW. A grid-tied or hybrid system is sized by energy: when the 7,452 W running load is more than the panels give at that moment, the grid supplies the rest. 8.26 kW needs 15 panels of 585 W = 8.78 kW installed, which makes about 1,066 units a month on about 39 square metres of roof. Inverter: the larger of 7,452 W × 1.25 = 9.32 kW for the load and 8.78 kW of panels ÷ 1.3 = 6.75 kW, so the panels are never more than 1.3 times the inverter: 9.32 kW continuous, with a surge rating of at least 9,252 W for the water pump."
    },
    "submit": "Calculate",
    "notice": "",
@@ -1420,11 +1420,11 @@
   "examples": [
    {
     "title": "Typical 10 marla house with three inverter ACs",
-    "text": "Six fans, sixteen bulbs, inverter fridge, deep freezer, two TVs, two 1.5 ton and one 1 ton inverter ACs, water pump, iron, washing machine and router: 7,452 W running and 33 units a day. Solar system 8.78 kW (15 panels), inverter 9.32 kW, about 1,053 units a month."
+    "text": "Six fans, sixteen bulbs, inverter fridge, deep freezer, two TVs, two 1.5 ton and one 1 ton inverter ACs, water pump, iron, washing machine and router: 7,452 W running and 33 units a day. Solar system 8.78 kW (15 panels), inverter 9.32 kW, about 1,066 units a month."
    },
    {
     "title": "10 marla house with two 1.5 ton inverter ACs",
-    "text": "The same house without the drawing-room AC: 6,552 W running and 29.1 units a day. Solar system 7.61 kW (13 panels), inverter 8.19 kW, about 913 units a month. One AC fewer means fewer daily units and a lower running load, so both the panels and the inverter come down."
+    "text": "The same house without the drawing-room AC: 6,552 W running and 29.1 units a day. Solar system 7.61 kW (13 panels), inverter 8.19 kW, about 924 units a month. One AC fewer means fewer daily units and a lower running load, so both the panels and the inverter come down."
    },
    {
     "title": "Night loads with one AC: battery for 6 hours",
@@ -1450,49 +1450,49 @@
      "3.51 kW",
      "6 × 585 W",
      "4.57 kW, surge 5,452 W",
-     "421"
+     "427"
     ],
     [
      "5,102 W running, 21.1 units a day",
      "5.85 kW",
      "10 × 585 W",
      "6.38 kW, surge 6,902 W",
-     "702"
+     "711"
     ],
     [
      "6,552 W running, 29.1 units a day",
      "7.61 kW",
      "13 × 585 W",
      "8.19 kW, surge 8,352 W",
-     "913"
+     "924"
     ],
     [
      "7,452 W running, 33 units a day",
      "8.78 kW",
      "15 × 585 W",
      "9.32 kW, surge 9,252 W",
-     "1,053"
+     "1,066"
     ],
     [
      "8,002 W running, 37.1 units a day",
      "9.36 kW",
      "16 × 585 W",
      "10.01 kW, surge 9,802 W",
-     "1,123"
+     "1,138"
     ],
     [
      "7,252 W running, 36.1 units a day",
      "9.36 kW",
      "16 × 585 W",
      "9.07 kW, surge 10,852 W",
-     "1,123"
+     "1,138"
     ],
     [
      "11,002 W running, 43.1 units a day",
      "11.12 kW",
      "19 × 585 W",
      "13.76 kW, surge 12,802 W",
-     "1,334"
+     "1,351"
     ]
    ]
   },
@@ -1613,7 +1613,7 @@
       "name": "What solar system does a 10 marla house with two ACs need?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "With two 1.5 ton inverter ACs and the same fans, lights, fridge, freezer, pump and washing machine, the house needs 7.61 kW of panels (13 panels) and an inverter of 8.19 kW, making about 913 units a month in Lahore."
+       "text": "With two 1.5 ton inverter ACs and the same fans, lights, fridge, freezer, pump and washing machine, the house needs 7.61 kW of panels (13 panels) and an inverter of 8.19 kW, making about 924 units a month in Lahore."
       }
      },
      {
@@ -1621,7 +1621,7 @@
       "name": "How many units does a 10 marla solar system make a month?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "About 1,053 units a month for the 8.78 kW system in Lahore as a yearly average, against about 33 units a day used by the house. Summer makes more and winter less; pick your city for its own sun yield."
+       "text": "About 1,066 units a month for the 8.78 kW system in Lahore as a yearly average, against about 33 units a day used by the house. Summer makes more and winter less; pick your city for its own sun yield."
       }
      },
      {

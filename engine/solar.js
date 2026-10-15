@@ -17,7 +17,7 @@ function yieldFor(i, d) {
   return { yield_kwh_per_kwp_day: psh * pr, yield_source: 'psh', psh, pr };
 }
 
-/** E = monthly_units / 30 (or daily_kwh); kWp = E / yield; panels = ceil(kWp × 1000 / panel_W). */
+/** E = monthly_units / days_per_month (or daily_kwh); kWp = E / yield; panels = ceil(kWp × 1000 / panel_W). */
 export const solar_size = calculator((i, d) => {
   let daily_kwh;
   const echo = {}; // the monthly units entered, for the page text (audit WL-23)

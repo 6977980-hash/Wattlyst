@@ -2,6 +2,7 @@
  "_meta": {
   "source": "specs/formulas.md 'Global defaults' table and section notes; NEPRA Performance Standards (400/230 V, 50 Hz); rho_copper and rho_aluminium from IEC 60364-5-52 Annex G (rho1 = 1.25 x rho20 at working temperature)",
   "checked": "2026-10-14",
+  "days": "days_per_month = 365 ÷ 12 (an average calendar month, two decimals) for every day, month and year conversion, so a year is 12 × days_per_month on every page and matches the 365-day yearly yield (full audit 2026-10-15 WL-106). bill_month_days = the 30-day billing month the bill check (N1) scales a reading cycle to.",
   "status": "Engineering defaults, every one editable on the page. Items marked engineer_confirm need PEC engineer sign-off before launch.",
   "engineer_confirm": ["diversity_home", "heat_pump_cop", "ac_saving_per_degree", "soiling_rate_per_day", "soiling_cap", "gas_heater_eff", "gas_cv_mj_m3", "start_factors", "standard_generator_kva", "planner_day_share", "hybrid_bank_v", "forecast_sky_bands", "rho_aluminium", "dc_ac_ratio_max", "forecast_max_day_whm2", "soiling_rate_max_per_day", "pf_by_load_type", "ac_life_years"]
  },
@@ -22,7 +23,8 @@
  "charge_eff_lifepo4": 0.95,
  "margin": 1.25,
  "pr": 0.78,
- "days_per_month": 30,
+ "days_per_month": 30.42,
+ "bill_month_days": 30,
  "panel_w": 585,
  "panel_area_m2": 2.6,
  "standard_panel_w": [10, 20, 30, 50, 100, 150, 180, 200, 250, 300, 330, 400, 450, 550, 585],

@@ -1,6 +1,30 @@
 # Progress
 
-## Handoff for next phase (after full-audit fix Phase 2a: decision engine sizing and pricing, P0) — written by the audit Phase 2a thread, 2026-10-15
+## Handoff for next phase (after full-audit fix Phase 2b: decision engine modelling) — written by the audit Phase 2b thread, 2026-10-15
+
+Owner: every audit fix phase runs in its own thread and ends with this note. Phase plan: `/mnt/project-files/electricity-tool-hub/audit/fix-phases-2026-10-15.md` (Phases 1, 2a, 2b ticked). Next is **Phase 3** (bill calculators): read only its section there plus its report lines. Plugin v0.8.18, PR #34. Rules live only in `specs/formulas.md` (Global defaults table rows `yield` and `days_per_month`, N7 bullet, H1 planner paragraph, Home Power Decision Engine bullet) and the spec cases at the end of `specs/calculator-test-cases.json`.
+
+**What is where**
+- One net-billed month for every decision setup: `netSaving` in `engine/planner.js` (shares of solar made, export allowed, extra units). `home_decision` (`engine/decision.js`) calls it for on-grid, hybrid, UPS, generator credit and combo; `grid_share` output (WL-93, WL-95).
+- Ranking and close call: `rank` in `engine/prices.js`; outputs `close_call`, `runner_up`, `budget_low_end` (WL-94, WL-105).
+- Backup checks and start: `home_plan` throws `backup_above_home` (message in `engine/messages.js`), makes backup watts optional at zero hours and returns `backup_surge_w` (WL-96, WL-103, WL-105).
+- N7 `backup_compare` (`engine/backup.js`): optional `surge_w` (N7 field "Starting watts"), UPS, generator and hybrid inverter must carry and start the load; only hybrid rows whose `bank_v` matches the lithium pack; outputs `cheapest_buy`, `first_year_dearest` for page text. `standbyFor` (same bill baseline, generator credit) and `hybridBank` (hybrid battery bank, moved out of decision.js) live here too.
+- Data: `data/backup-prices.json` UPS rows labelled by real VA, `lithium_pack.bank_v`; `data/component-prices.json` `bank_v` on hybrid inverter rows (browser copy carries it, `tools/build.js`); `data/defaults.json` `days_per_month` (average calendar month) and `bill_month_days` (N1 only); `data/cities-pk.json` `yield` from the monthly PVOUT values (WL-97, WL-98, WL-106).
+- Page text: `content/pages/H1.json` (answer in kWh, how/how_ur cuts sentence, step seven, "What this comparison leaves out" paragraph, FAQ, N7 in related, backup hours hint); `N7.json` (key facts and FAQ from engine outputs, home planner sentence, surge field, H1 in related instead of D15); `D7.json`, `D2.json`, `E1.json` formula/how text use the data month length; `N1.json` uses `bill_month_days`.
+- Tests: `tests/decision-modelling.test.js` (DE-03 to DE-07, DE-12, browser copy over many inputs, plus close call, voltage pairs, not-counted list vs spec, N7/H1 cross sentence, N7 claims, budget, one month length). All DE tests failed on the old engine.
+
+**Do not touch / watch**
+- Homepage JS budget: `decision.js` was shrunk again (logic moved to `prices.js`/`backup.js`/`planner.js` helpers); the 30 KB test still counts only the page's own module, so the real chain is larger (Phase 6, WL-136, must count the whole chain). `messages.js` counts on every page and the C1 page is also near the limit.
+- Many default numbers moved slightly site-wide with the month length and yield; the homepage default home now sits just above the 400-unit slab, so its bill and the UPS running cost changed more than the rest.
+- The audit test folder on branch `claude/project-thread-1qfruz` (PR #31) stays out of main.
+
+**Open to-dos**
+- [ENGINEER] marked in formulas.md: even spread of cuts, hybrid exporting only while the grid is on and using its full daytime self-use in a cut, `bank_v` of each inverter row, a start factor for UPS/hybrid inverters above their continuous rating (now they must carry the start continuously, which leaves many motor backups to the generator).
+- [ENGINEER] H1 prices a small hybrid by Rs per kW from the smallest 48 V row, while N7 buys that whole unit: the two pages differ below the list until a 3 to 5 kW export-capable 48 V row is sourced (same data item as the premium "not known").
+- Data items from the Phase 2a handoff below (re-source inverter rows) still stand.
+- Everything open from the earlier handoffs below still stands (WL-139 phone Calculate button, Roman Urdu on N7/N16/N18, N11 warning).
+
+## Earlier handoff (after full-audit fix Phase 2a: decision engine sizing and pricing, P0) — written by the audit Phase 2a thread, 2026-10-15
 
 Owner: every audit fix phase runs in its own thread and ends with this note. Phase plan: `/mnt/project-files/electricity-tool-hub/audit/fix-phases-2026-10-15.md` (Phases 1 and 2a ticked). Next is **Phase 2b** (decision engine modelling): read only its section there plus its report lines. Plugin v0.8.17. Rules live only in `specs/formulas.md` (D5/D8 bullet, H1 planner paragraph, Home Power Decision Engine bullet) and the new spec cases at the end of `specs/calculator-test-cases.json`.
 
@@ -395,6 +419,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | 2026-10-15 | Homepage follow-up (owner screenshots): aligned planner fields, equal-height task cards; plugin v0.8.15 | done: tests green, local WP checked | PR #30 |
 | 2026-10-15 | Full audit fix Phase 1 (owner: phases in own threads): homepage share link (WL-89), desktop error layout (WL-90), phone headings, focus ring, result table cards, small UI items (WL-133..137; WL-139 left open, see handoff); plugin v0.8.16 | done: tests green, local WP + browser checks, axe 0 on / | PR #32 |
 | 2026-10-15 | Full audit fix Phase 2a (decision engine P0): grid-tied lists sized by energy like D7 (WL-92 [ENGINEER], H1 D8 D12 D13 N13), decision setups priced at the array net billing accepts (WL-91), hybrid premium shown as not known instead of zero (WL-100); plugin v0.8.17 | done: tests green, Engineer Reviewer (4 defects fixed), local WP checked | PR #33 |
+| 2026-10-15 | Full audit fix Phase 2b (decision engine modelling): power cuts spread over the day, generator credited with the grid units it supplies, UPS/generator/hybrid must start the backup load, UPS rows by real VA, matching battery voltages, close calls and runner-up, budget on the low price, backup above the home rejected, N7 claims from engine outputs, one month length (365 ÷ 12) and yield from monthly PVOUT (WL-93 to WL-106, WL-108); plugin v0.8.18 | done: tests green, Engineer Reviewer (5 defects fixed), local WP + browser check | PR #34 |
 | 2026-10-15 | SERP ideas (owner: "4ron idea cover krny hain"): Bill Index units table 50 to 1,000 with lifeline line, engine numbers in four titles, Inverex Nitrox error codes; idea 3 already live as F2-F12; plugin v0.8.11 | done: tests green, Engineer Reviewer fixes applied (caption kW, lifeline line, F16/F28/F32 safety), local WP checked | PR (this thread) |
 | 2026-10-15 | Growth phase (owner: "next phase new thread"): IndexNow now announces changed pages in one batch after each sync (all live pages on the first run), owner growth plan with outreach and forum drafts in a Claude Doc; plugin v0.8.10 | done: tests green, local WP checked (stubbed IndexNow), no formula or page change | #25 |
 | 2026-10-15 | Net billing group B (owner: "baqi fixes pe kaam kro"): Home Power Planner saving on the whole bill (fixed charge, FC surcharge, GST; export credit set against the bill after GST), energy-charge saving shown under it; plugin v0.8.9 | done: tests green, Engineer Reviewer, local WP checked | PR (this thread) |

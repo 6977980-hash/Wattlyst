@@ -127,7 +127,7 @@
  "key_facts": [
   "Home electrical load in watts = the sum of the running watts of every appliance that is on at the same time; divide by volts × power factor to get amps.",
   "Peak load adds the starting surge of the largest motor or compressor only once, because two motors rarely start in the same instant.",
-  "Monthly units (kWh) = watts × hours a day ÷ 1,000 × {{d.days_per_month|int}} days, added over every appliance; this is the number your electricity bill is based on.",
+  "Monthly units (kWh) = watts × hours a day ÷ 1,000 × {{d.days_per_month|2}} days, added over every appliance; this is the number your electricity bill is based on.",
   "The default example home above ({{out.items|int}} appliances of {{out.appliances|int}} kinds) draws {{out.running_w|int}} W running, {{out.peak_w|int}} W at peak and uses about {{out.monthly_units|int}} units a month."
  ],
  "formula": {
@@ -405,7 +405,7 @@
   },
   {
    "q": "How many units does this load use per month?",
-   "a": "Each appliance's watts × hours a day ÷ 1,000 gives its units a day; add them and multiply by {{d.days_per_month|int}}. The default home above uses about {{out.daily_kwh|1}} units a day and {{out.monthly_units|int}} a month."
+   "a": "Each appliance's watts × hours a day ÷ 1,000 gives its units a day; add them and multiply by {{d.days_per_month|2}}. The default home above uses about {{out.daily_kwh|1}} units a day and {{out.monthly_units|int}} a month."
   },
   {
    "q": "Can I use this load to size a UPS, inverter or solar system?",

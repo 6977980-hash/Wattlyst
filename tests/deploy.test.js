@@ -116,3 +116,17 @@ test('Lighthouse gate takes the median of three runs and needs 95 in every categ
   assert.match(src, /\[1\]/, 'median of three');
   for (const c of ['performance', 'accessibility', 'best-practices', 'seo']) assert.ok(src.includes(c), c);
 });
+
+test('browser data carries no notes or sources (shipped inline on every calculator page, homepage Lighthouse)', () => {
+  const bad = [];
+  const walk = (o, p) => {
+    if (!o || typeof o !== 'object') return;
+    for (const [k, v] of Object.entries(o)) {
+      if (['_meta', 'note', 'notes', 'source', 'sources', 'source_url'].includes(k) || /_(note|source)$/.test(k)) bad.push(`${p}.${k}`);
+      walk(v, `${p}.${k}`);
+    }
+  };
+  walk(manifest.data, 'data');
+  assert.deepEqual(bad, []);
+  assert.equal(manifest.data.tariff.gas_domestic, undefined, 'gas prices are page text only, the engine never reads them');
+});
