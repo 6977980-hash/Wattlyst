@@ -44,7 +44,7 @@
   },
   {
    "q": "Why is the saving an energy-charge estimate only?",
-   "a": "The planner compares only the energy charge of {{out.monthly_units|int}} units with the net-billing energy charge after {{out.self_used_units|int}} self-used and {{out.export_units|int}} exported units. Fixed charge, per-unit surcharges and GST are left out; most of them also fall when you import fewer units, so the real saving is usually somewhat higher than this estimate. The buyback rate is NEPRA's national average energy purchase price for {{data.tariff.net_billing.buyback_period}}; it stays editable because NEPRA sets it again each year. Agreements signed before {{data.tariff.net_billing.existing_cutoff}} stay on the old net-metering terms until they expire."
+   "a": "The planner compares only the energy charge of {{out.monthly_units|int}} units with the net-billing energy charge after {{out.self_used_units|int}} self-used and {{out.export_units|int}} exported units. Fixed charge, per-unit surcharges and GST are left out; most of them also fall when you import fewer units, so the real saving is usually somewhat higher than this estimate. The buyback rate is NEPRA's national average energy purchase price for {{data.tariff.net_billing.buyback_period}}; it stays editable because NEPRA sets it again each year. Agreements signed before {{data.tariff.net_billing.existing_cutoff}} stay on the old net-metering terms until they expire, unless the system is enlarged, which moves it to net billing."
   },
   {
    "q": "Are the calculators free?",
