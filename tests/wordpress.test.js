@@ -144,3 +144,12 @@ test('IndexNow: changed pages go out in one batch after each sync, keyed on the 
   assert.match(ep, /'production' !== wp_get_environment_type\(\)/, 'never pings from a local copy');
   for (const r of manifest.pages.filter((p) => p.live)) assert.match(r.lastmod || '', /^\d{4}-\d{2}-\d{2}$/, `${r.id} has a lastmod`);
 });
+
+test('a shared homepage plan (/?load=a:1,b:2) is served as is, not 301ed to a re-encoded copy (WL-89)', () => {
+  assert.match(wpsite, /add_filter\( 'redirect_canonical', array\( \$this, 'keep_share_link' \) \)/);
+  assert.match(wpsite, /function keep_share_link\( \$redirect \) \{\s*return is_front_page\(\) && isset\( \$_GET\['load'\] \) \? false : \$redirect;/);
+});
+
+test('Escape closes the GeneratePress phone menu, added by the plugin without editing the theme (WL-137)', () => {
+  assert.match(wpsite, /wp_add_inline_script\( 'generate-menu', "[^"]*Escape[^"]*\.menu-toggle\[aria-expanded=\\"true\\"\][^"]*b\.click\(\);b\.focus\(\)/);
+});

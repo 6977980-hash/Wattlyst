@@ -2,7 +2,9 @@
 // Chrome at phone width and fails on: a JavaScript error, any script fetched twice (WL-55), the WordPress
 // emoji script (WL-57), or a calculator whose result after Calculate is blank, an error, or shows NaN / Infinity / undefined.
 // On pages with an appliance list it also picks an appliance from the picker and adds a row. Every page must
-// fit the phone width with no sideways scroll (audit WL-05).
+// fit the phone width with no sideways scroll (audit WL-05), and no result table may scroll sideways (WL-135).
+// On the homepage it also checks a shared ?load= link round trip (WL-89) and, at 1366 and 1920 px, that an
+// input error keeps the inputs in place and the first click on the button still submits (WL-90).
 // Usage: node tools/browser-check.js <node_modules dir with puppeteer-core + chrome-launcher> <url>... | --all=<base url>
 // (--all checks every live page in generated/manifest.json plus /embed/<id>/ of one tool.)
 // (both come with the lighthouse install in CI; set CHROME_PATH to use a specific Chrome.)
@@ -64,6 +66,8 @@ for (const url of urls) {
     const text = await page.$eval('.wl-results', (el) => el.innerText.trim());
     if (!text) fail('result is blank after Calculate');
     if (/NaN|Infinity|undefined/.test(text)) fail(`bad result text: ${text.slice(0, 120)}`);
+    const rt = await page.$$eval('.wl-rtable .wl-table-wrap', (ws) => ws.map((w) => w.scrollWidth - w.clientWidth).filter((d) => d > 0));
+    if (rt.length) fail(`result table scrolls sideways by ${rt.join(', ')} px at phone width`);
   }
   const bare = scripts.map((u) => u.split('?')[0]);
   const twice = [...new Set(bare.filter((u, i) => bare.indexOf(u) !== i))];
@@ -72,6 +76,53 @@ for (const url of urls) {
   console.log(url, `${scripts.length} scripts`, problems.length === before ? 'ok' : 'FAILED');
   await page.close();
 }
+const home = urls.find((u) => new URL(u).pathname === '/');
+if (home) await homeChecks(home);
 await browser.close();
 for (const p of problems) console.error(p);
 process.exit(problems.length ? 1 : 0);
+
+async function homeChecks(url) {
+  const fail = (msg) => problems.push(`${url}: ${msg}`);
+  const wait = () => new Promise((r) => setTimeout(r, 400));
+  // Share round trip: change row 1's quantity, Calculate (the URL now carries ?load=), open that URL in a new page.
+  let page = await browser.newPage();
+  await page.setViewport({ width: 390, height: 844, isMobile: true });
+  await page.goto(url, { waitUntil: 'networkidle0' });
+  const qty = await page.$eval('.wl-load-row [data-k="qty"]', (q) => { q.value = String(Number(q.value) + 2); q.dispatchEvent(new Event('input', { bubbles: true })); return q.value; });
+  await page.$eval('form[data-wl-tool] button[type="submit"]', (b) => b.click());
+  await wait();
+  const shared = page.url();
+  const want = await page.$eval('.wl-results', (el) => el.innerText.trim());
+  await page.close();
+  page = await browser.newPage();
+  await page.setViewport({ width: 390, height: 844, isMobile: true });
+  const res = await page.goto(shared, { waitUntil: 'networkidle0' });
+  if (!shared.includes('?load=')) fail('Calculate did not put ?load= in the address');
+  if (res.request().redirectChain().length) fail(`share link ${shared} redirects`);
+  const got = await page.$eval('.wl-load-row [data-k="qty"]', (q) => q.value);
+  if (got !== qty || (await page.$eval('.wl-results', (el) => el.innerText.trim())) !== want) fail(`share link did not restore the plan (qty ${got}, want ${qty})`);
+  await page.close();
+  // Error layout on desktop: the inputs keep their box and a real mouse click on the button submits.
+  for (const [width, height] of [[1366, 768], [1920, 1080]]) {
+    page = await browser.newPage();
+    await page.setViewport({ width, height });
+    await page.goto(url, { waitUntil: 'networkidle0' });
+    const box = () => page.$eval('.wl-tool-split > .wl-in', (el) => { const r = el.getBoundingClientRect(); return `${Math.round(r.x)}/${Math.round(r.width)}`; });
+    const before = await box();
+    const field = await page.$('.wl-load-row [data-k="watts"]');
+    await field.click({ clickCount: 3 });
+    await field.type('abc');
+    await page.keyboard.press('Tab');
+    await wait();
+    const after = await box();
+    if (after !== before) fail(`at ${width} px an error moves the inputs (${before} -> ${after})`);
+    await page.$eval('form[data-wl-tool]', (f) => f.addEventListener('submit', () => { f.dataset.sent = '1'; }));
+    await page.click('form[data-wl-tool] button[type="submit"]');
+    await wait();
+    if (!(await page.$eval('form[data-wl-tool]', (f) => f.dataset.sent))) fail(`at ${width} px the first click on the button after an error does not submit`);
+    if ((await page.evaluate(() => document.activeElement?.dataset.k)) !== 'watts') fail(`at ${width} px the error does not focus the field`);
+    await page.close();
+  }
+  console.log(url, 'home share + error layout', 'checked');
+}
