@@ -21,6 +21,7 @@ final class Wattlyst_Head {
 		add_filter( 'pre_get_document_title', array( $this, 'title' ), 99 );
 		add_action( 'wp_head', array( $this, 'head' ), 1 );
 		add_action( 'wp_head', array( $this, 'icons' ), 2 );
+		add_action( 'wp_head', array( $this, 'verification' ), 2 );
 		add_filter( 'rank_math/json_ld', array( $this, 'rank_math_front_schema' ), 99 );
 		add_filter( 'wp_robots', array( $this, 'robots' ), 99 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'drop_block_styles' ), 100 );
@@ -216,6 +217,14 @@ final class Wattlyst_Head {
 		printf( '<link rel="icon" href="%s" type="image/svg+xml">' . "\n", esc_url( Wattlyst_Tools::asset( $b . 'icon.svg' ) ) );
 		printf( '<link rel="apple-touch-icon" href="%s">' . "\n", esc_url( Wattlyst_Tools::asset( $b . 'apple-touch-icon.png' ) ) );
 		echo '<meta name="theme-color" content="#0b3d2e">' . "\n";
+	}
+
+	/** Search Console HTML-tag verification from data/site.json `verification`; Google reads it on the home page only. */
+	public function verification(): void {
+		$code = (string) ( $this->plugin->site()['verification']['google'] ?? '' );
+		if ( '' !== $code && is_front_page() ) {
+			printf( '<meta name="google-site-verification" content="%s">' . "\n", esc_attr( $code ) );
+		}
 	}
 
 	/** On the front page our Organization + WebSite graph replaces Rank Math's, so the entity is defined once. */

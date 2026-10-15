@@ -122,3 +122,12 @@ test('re-audit SEO hygiene: feed 404 without a redirect, robots respects noindex
   assert.match(head, /function drop_block_styles\(\)[\s\S]*?'wp-block-library'[\s\S]*?'global-styles'/, 'no block CSS on Wattlyst pages (WL-85)');
   assert.match(php('includes/class-wattlyst-tools.php'), /'assets\/brand\/'[\s\S]*?filemtime/, 'brand image URLs carry the file time (WL-87)');
 });
+
+test('Search Console verification tag comes from data/site.json and prints on the front page only', () => {
+  const code = readJson('data/site.json').verification?.google;
+  assert.match(code, /^[A-Za-z0-9_-]{20,}$/);
+  assert.equal(manifest.site.verification.google, code, 'manifest ships the code to PHP');
+  const head = php('includes/class-wattlyst-head.php');
+  assert.match(head, /name="google-site-verification"/);
+  assert.match(head, /is_front_page\(\)/);
+});
