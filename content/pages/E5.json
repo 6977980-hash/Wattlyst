@@ -76,10 +76,10 @@
    "spec": "rs"
   }
  ],
- "answer": "A {{out.ac_name|raw}} uses about {{out.avg_kw|1}} unit (kWh) per hour on average in Pakistan, so {{in.hours|int}} hours a day is about {{out.daily_units|1}} units a day and {{out.monthly_units|int}} units a month, costing about {{out.monthly_rs|rs}} at {{out.tariff|rs2}} per unit. Units = average kW × hours; an inverter AC's average is well below its {{out.ac_rated_w|int}} W rated input.",
+ "answer": "A {{out.ac_name|raw}} uses about {{out.avg_kw|1}} unit (kWh) per hour on average in Pakistan, and {{out.avg_kw_low|1}} to {{out.avg_kw_high|1}} depending on the room, the heat outside and the set temperature. At {{in.hours|int}} hours a day that is about {{out.monthly_units|int}} units and {{out.monthly_rs|rs}} a month at {{out.tariff|rs2}} per unit, well below what its {{out.ac_rated_w|int}} W rated input suggests.",
  "how": "{{out.avg_kw|2}} kW average draw × {{in.hours}} hours = {{out.daily_units|1}} units a day. {{out.daily_units|1}} units × {{out.days}} days = {{out.monthly_units|int}} units a month. Cost: {{out.avg_kw|2}} kW × {{out.tariff|rs2}} = {{out.hourly_rs|rs}} per hour; {{out.monthly_units|int}} units × {{out.tariff|rs2}} = {{out.monthly_rs|rs}} a month in energy charges, before fixed charges, surcharges and taxes.",
  "key_facts": [
-  "A 1.5 ton inverter AC uses about {{out.avg_kw|1}} unit (kWh) per hour on average: its rated input is {{out.ac_rated_w|int}} W, but once the room is cool the compressor slows down and the draw falls to a few hundred watts.",
+  "A 1.5 ton inverter AC uses about {{out.avg_kw|1}} unit (kWh) per hour on average, {{out.avg_kw_low|1}} to {{out.avg_kw_high|1}} depending on the room and the heat outside: its rated input is {{out.ac_rated_w|int}} W, but once the room is cool the compressor slows down and the draw falls to a few hundred watts.",
   "Running {{in.hours|int}} hours a day, a 1.5 ton inverter AC uses about {{out.daily_units|1}} units a day and {{out.monthly_units|int}} units a month.",
   "At {{out.tariff|rs2}} per unit the AC alone costs about {{out.hourly_rs|rs}} an hour and {{out.monthly_rs|rs}} a month in energy charges; the slab rate rises as the whole home's units go up.",
   "A 1.5 ton non-inverter AC uses about {{ex.1.out.avg_kw|2}} units per hour, because its {{ex.1.out.ac_rated_w|int}} W compressor runs at full power about {{d.ac_noninverter_duty|pct}} of the time, so its monthly bill is {{ex.1.out.monthly_rs|rs}} for the same hours."
@@ -105,7 +105,7 @@
    "h2": "How does this AC units calculator work?",
    "p": [
     "It multiplies the average kW by the hours a day and the days in the month to get the AC's units, then by your slab rate: {{out.monthly_units|int}} units × {{out.tariff|rs2}} = {{out.monthly_rs|rs}}. That is the energy charge of the AC on its own. Your real bill adds the rest of the home, fixed charges per sanctioned kW, surcharges and taxes.",
-    "On the unprotected domestic tariff all units are charged at the rate of the slab the whole home reaches, so an AC that pushes your monthly total into a higher slab raises the rate on every unit, not just its own. To see what the AC adds to your whole bill, including a slab jump or the loss of protected status, use the AC bill calculator linked below."
+    "On the unprotected domestic tariff all units are charged at the rate of the slab the whole home reaches, so an AC that pushes your monthly total into a higher slab raises the rate on every unit, not just its own. To see what the AC adds to your whole bill, including a slab jump or the loss of protected status, use the [[N16|AC bill calculator]]."
    ]
   },
   {

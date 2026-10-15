@@ -100,9 +100,9 @@ test('content: numbers in page text come from the engine or data/, never typed (
     const allowed = c.literal_numbers || [];
     const texts = [c.answer, c.intro, c.how, c.how_ur, c.safety, ...(c.key_facts || []), ...(c.mistakes || []),
       ...(c.faq || []).flatMap((x) => [x.q, x.a]), ...(c.examples || []).flatMap((x) => [x.title, x.text]),
-      c.table?.caption, ...(c.sections || []).flatMap((s) => [s.h2, ...(s.p || [])])].filter(Boolean);
+      c.table?.caption, ...(c.sections || []).flatMap((s) => [s.h2, ...(s.p || [])])].filter((x) => typeof x === 'string' && x); // a hub's { from, n } key fact is another page's built text
     for (const t of texts) {
-      let s = t.replace(/\{\{[^}]*\}\}/g, '');
+      let s = t.replace(/\{\{[^}]*\}\}/g, '').replace(/\[\[[\w-]+\|/g, ''); // [[ID|anchor]]: the ID is not page text (WL-140)
       for (const a of allowed) s = s.split(a).join('');
       assert.ok(!/\d/.test(s), `${c.id}: typed number in "${t}" (use a {{placeholder}} or list it in literal_numbers)`);
     }
@@ -119,14 +119,18 @@ test('every rendered string is free of NaN, Infinity, undefined and negative res
   }
 });
 
-test('schema: breadcrumb everywhere, WebApplication on tools, FAQ matches visible FAQ, no fake ratings', () => {
+test('schema: breadcrumb on every page but home, WebApplication on tools, FAQ matches visible FAQ, no fake ratings', () => {
   for (const p of pages) {
     const g = p.schema['@graph'];
     const types = g.map((n) => n['@type']);
-    assert.ok(types.includes('BreadcrumbList'), `${p.id}: BreadcrumbList`);
     assert.ok(types.includes('Organization'), `${p.id}: Organization`);
-    const bc = g.find((n) => n['@type'] === 'BreadcrumbList').itemListElement;
-    assert.equal(bc.length, p.breadcrumb.length, `${p.id}: schema breadcrumb = visible breadcrumb`);
+    if (p.type === 'home') { // no visible breadcrumb on the home page (WL-81), so no BreadcrumbList (WL-143)
+      assert.ok(!types.includes('BreadcrumbList') && !/#breadcrumb/.test(JSON.stringify(p.schema)), `${p.id}: no BreadcrumbList on the home page`);
+    } else {
+      assert.ok(types.includes('BreadcrumbList'), `${p.id}: BreadcrumbList`);
+      const bc = g.find((n) => n['@type'] === 'BreadcrumbList').itemListElement;
+      assert.equal(bc.length, p.breadcrumb.length, `${p.id}: schema breadcrumb = visible breadcrumb`);
+    }
     if (p.type === 'tool' || p.type === 'appliance' || p.type === 'lookup') {
       const app = g.find((n) => n['@type'] === 'WebApplication');
       assert.ok(app, `${p.id}: WebApplication`);

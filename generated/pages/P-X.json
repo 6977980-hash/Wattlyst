@@ -8,10 +8,12 @@
  "meta": "Original Pakistan electricity data: a monthly bill index for every DISCO and a solar price tracker, each with a chart, the method and a CSV download.",
  "primary_keyword": "",
  "wave": 0,
- "status": "auto",
+ "status": "publish",
  "nav_label": "Data",
  "nav_order": 10,
  "author": "ali-ahmad",
+ "related": [],
+ "next": null,
  "parent": null,
  "children": [
   "bill-index",
@@ -29,7 +31,89 @@
    "url": "/data/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "What each dataset is for",
+    "p": [
+     "The Pakistan Electricity Bill Index shows what a month's bill should be for a given number of units, protected and unprotected, with the month's FPA. Use it to check a bill or compare months; the electricity bill calculator works out your own bill.",
+     "The Pakistan Solar Price Tracker records panel, system, inverter and battery prices with their sources and dates. Use it to judge a quote with the solar quote checker, or to see how prices moved before you buy."
+    ],
+    "l": [
+     [
+      {
+       "t": "Pakistan Electricity Bill Index",
+       "u": "/data/pakistan-electricity-bill-index/"
+      },
+      {
+       "t": "electricity bill calculator",
+       "u": "/bill/electricity-bill-calculator-pakistan/"
+      }
+     ],
+     [
+      {
+       "t": "Pakistan Solar Price Tracker",
+       "u": "/data/pakistan-solar-price-tracker/"
+      },
+      {
+       "t": "solar quote checker",
+       "u": "/solar/solar-quote-checker/"
+      }
+     ]
+    ]
+   },
+   {
+    "h2": "Using the data",
+    "p": [
+     "Both datasets are free to reuse with credit to Wattlyst and a link to the page. Journalists and researchers can download the CSV from each page; the method section on each page explains how the figures are built and where they come from."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "How often is the data updated?",
+    "a": "Every month. Each page shows the date its data was last checked, and the CSV download carries the same figures as the tables."
+   },
+   {
+    "q": "Can I use the data in my article?",
+    "a": "Yes, under the Creative Commons Attribution licence: credit Wattlyst and link to the page you took the figures from."
+   },
+   {
+    "q": "Where do the numbers come from?",
+    "a": "The Bill Index runs the NEPRA domestic tariff through the same engine as the bill calculators. The Solar Price Tracker collects dated dealer and installer price lists and news reports, each listed under Sources on the page."
+   },
+   {
+    "q": "Is the Bill Index an official bill?",
+    "a": "No. It is an estimate from the notified tariff for a stated sanctioned load. Your own bill also carries arrears, meter rent or tax that the index leaves out; the overbilling check helps with a bill that looks wrong.",
+    "l": [
+     {
+      "t": "overbilling check",
+      "u": "/bill/bill-audit-overbilling-checker/"
+     }
+    ]
+   }
+  ],
+  "key_facts": [
+   "October 2026: 100 units cost an unprotected home Rs 3,870 and a protected home Rs 2,158; 200 units cost Rs 8,678 unprotected and Rs 4,372 protected.",
+   "300 units cost Rs 14,264 (Rs 47.55 per unit all-in) and 500 units cost Rs 27,028 (Rs 54.06 per unit) in October 2026 bills.",
+   "A 5 kW on-grid solar system costs about Rs 550,000 to Rs 900,000 installed (Rs 110 to Rs 180 per watt) in the price lists checked on 2026-10-14."
+  ],
+  "mistakes": [],
+  "sources": [
+   {
+    "label": "NEPRA: uniform domestic tariff for ex-WAPDA DISCOs and K-Electric, 2026",
+    "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf"
+   },
+   {
+    "label": "How Wattlyst calculates: formulas, default values and data sources",
+    "url": "/methodology/"
+   }
+  ],
+  "answer": "Wattlyst publishes two original datasets for Pakistan, each refreshed monthly with a chart, its method and a free CSV under CC BY: the Bill Index, the bill at every step of units for every DISCO, and the Solar Price Tracker, dated prices of panels, systems, inverters and batteries from dealer and installer lists.",
+  "formula": null,
+  "safety": ""
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -80,6 +164,44 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/data/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "How often is the data updated?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Every month. Each page shows the date its data was last checked, and the CSV download carries the same figures as the tables."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Can I use the data in my article?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Yes, under the Creative Commons Attribution licence: credit Wattlyst and link to the page you took the figures from."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Where do the numbers come from?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "The Bill Index runs the NEPRA domestic tariff through the same engine as the bill calculators. The Solar Price Tracker collects dated dealer and installer price lists and news reports, each listed under Sources on the page."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Is the Bill Index an official bill?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "No. It is an estimate from the notified tariff for a stated sanctioned load. Your own bill also carries arrears, meter rent or tax that the index leaves out; the overbilling check helps with a bill that looks wrong."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

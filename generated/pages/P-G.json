@@ -8,10 +8,12 @@
  "meta": "Plain-English electricity guides: net billing in Pakistan, peak hours, FPA charges, lithium vs tubular batteries and inverter vs UPS explained.",
  "primary_keyword": "",
  "wave": 0,
- "status": "auto",
+ "status": "publish",
  "nav_label": "Guides",
  "nav_order": 8,
  "author": "ali-ahmad",
+ "related": [],
+ "next": null,
  "parent": null,
  "children": [
   "D11",
@@ -32,7 +34,106 @@
    "url": "/guides/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "Bills and solar rules",
+    "p": [
+     "The net billing guide explains how new solar connections are billed and how that compares with the old net metering. The peak hours guide lists peak and off-peak timings for time-of-use meters, and the FPA guide explains the monthly fuel price adjustment line and who is exempt from it."
+    ],
+    "l": [
+     [
+      {
+       "t": "net billing guide",
+       "u": "/guides/net-billing-pakistan/"
+      },
+      {
+       "t": "peak hours guide",
+       "u": "/guides/peak-hours-pakistan/"
+      },
+      {
+       "t": "FPA guide",
+       "u": "/guides/fpa-in-electricity-bill/"
+      }
+     ]
+    ]
+   },
+   {
+    "h2": "Backup choices",
+    "p": [
+     "The lithium vs tubular battery guide compares usable energy, life and cost, and the inverter vs UPS guide explains switching speed, waveform and solar charging. To price the choice for your own backup hours, use the UPS vs solar vs generator cost calculator."
+    ],
+    "l": [
+     [
+      {
+       "t": "lithium vs tubular battery",
+       "u": "/guides/lithium-vs-tubular-battery/"
+      },
+      {
+       "t": "inverter vs UPS",
+       "u": "/guides/inverter-vs-ups/"
+      },
+      {
+       "t": "UPS vs solar vs generator cost calculator",
+       "u": "/load/ups-vs-solar-vs-generator-cost/"
+      }
+     ]
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "What is the difference between net metering and net billing?",
+    "a": "Under net metering, exported units cancelled imported units at the same rate. Under net billing, imports are billed at the slab rate and exports are bought at a flat buyback rate, so an exported unit is worth much less. New connections are on net billing."
+   },
+   {
+    "q": "What is the FPA on my bill?",
+    "a": "The fuel price adjustment: the per-unit difference between the actual and the reference fuel cost of a past month, decided by NEPRA. Lifeline and protected consumers do not pay it; the FPA guide shows how to check the line.",
+    "l": [
+     {
+      "t": "FPA guide",
+      "u": "/guides/fpa-in-electricity-bill/"
+     }
+    ]
+   },
+   {
+    "q": "Is lithium better than tubular?",
+    "a": "Lithium can be used to about 90% of its rating against about 50% for tubular and lasts more cycles, but costs more to buy. Which works out cheaper depends on how much backup you use; the guide compares both.",
+    "l": [
+     {
+      "t": "guide",
+      "u": "/guides/lithium-vs-tubular-battery/"
+     }
+    ]
+   },
+   {
+    "q": "UPS or inverter for a home?",
+    "a": "Both turn battery power into AC during a cut; they differ in switching speed, size, waveform and whether they charge from solar. The inverter vs UPS guide explains which suits a home.",
+    "l": [
+     {
+      "t": "inverter vs UPS guide",
+      "u": "/guides/inverter-vs-ups/"
+     }
+    ]
+   }
+  ],
+  "key_facts": [
+   "Pakistan replaced net metering with net billing for new solar connections under the NEPRA (Prosumer) Regulations 2026, notified 9 Feb 2026: imported units are billed at the normal slab rate and exported units are credited at a separate buyback rate.",
+   "FPA, the fuel price adjustment (printed as FCA, fuel charges adjustment, on K-Electric and NEPRA documents), is a monthly per-unit figure that NEPRA determines after a public hearing and notifies in the Gazette; the DISCOs apply it to a later month's bills.",
+   "A tubular battery should be discharged to about 50% of its rated capacity for a reasonable life; a LiFePO4 lithium battery can be discharged to about 90%, so the same Ah and volts give nearly double the usable backup."
+  ],
+  "mistakes": [],
+  "sources": [
+   {
+    "label": "How Wattlyst calculates: formulas, default values and data sources",
+    "url": "/methodology/"
+   }
+  ],
+  "answer": "These guides explain the rules and choices behind the calculators in plain English: net billing and the buyback rate, peak and off-peak hours, the FPA line on your bill, lithium versus tubular batteries, and whether a home needs a UPS or an inverter. Each guide links to the calculator that works out your own numbers.",
+  "formula": null,
+  "safety": ""
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -83,6 +184,44 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/guides/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "What is the difference between net metering and net billing?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Under net metering, exported units cancelled imported units at the same rate. Under net billing, imports are billed at the slab rate and exports are bought at a flat buyback rate, so an exported unit is worth much less. New connections are on net billing."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What is the FPA on my bill?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "The fuel price adjustment: the per-unit difference between the actual and the reference fuel cost of a past month, decided by NEPRA. Lifeline and protected consumers do not pay it; the FPA guide shows how to check the line."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Is lithium better than tubular?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Lithium can be used to about 90% of its rating against about 50% for tubular and lasts more cycles, but costs more to buy. Which works out cheaper depends on how much backup you use; the guide compares both."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "UPS or inverter for a home?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Both turn battery power into AC during a cut; they differ in switching speed, size, waveform and whether they charge from solar. The inverter vs UPS guide explains which suits a home."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

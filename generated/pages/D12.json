@@ -62,10 +62,19 @@
     ]
    },
    {
-    "h2": "Sanctioned load and the net-metering cap",
+    "h2": "Sanctioned load and the net billing cap",
     "p": [
-     "Your DISCO approves a net-metering system only up to your sanctioned load in kW, so a 8.78 kW system normally needs a sanctioned load at least that large. A sanctioned load of 5 kW or more puts the house on a time-of-use meter with peak and off-peak rates, which changes how your night units are billed; the net billing calculator shows the bill before and after solar.",
+     "Your DISCO approves a net billing system only up to your sanctioned load in kW, so a 8.78 kW system normally needs a sanctioned load at least that large. A sanctioned load of 5 kW or more puts the house on a time-of-use meter with peak and off-peak rates, which changes how your night units are billed; the net billing calculator shows the bill before and after solar.",
      "If your current sanctioned load is smaller, apply for a load extension before the solar application, or size the system to the sanctioned load and keep the extra ACs off the solar inverter. The running load of 7,452 W is a good starting figure for the extension form."
+    ],
+    "l": [
+     [
+      {
+       "t": "net billing",
+       "u": "/guides/net-billing-pakistan/"
+      }
+     ],
+     []
     ]
    },
    {
@@ -79,7 +88,7 @@
     "h2": "What does a 10 marla solar system cost?",
     "p": [
      "We do not print a price because panel, inverter and battery prices in Pakistan move with the exchange rate from month to month. Ask installers for a complete quote in Rs per watt of panels for a 8.78 kW system with a 9.32 kW inverter, so that quotes compare like for like, and add the battery separately with its usable units stated.",
-     "A complete quote includes the panels, the inverter, the mounting structure, DC and AC cables, breakers and surge protection, earthing, installation labour, the net-metering application and the bidirectional meter. A quote that leaves any of these out looks cheaper than it is."
+     "A complete quote includes the panels, the inverter, the mounting structure, DC and AC cables, breakers and surge protection, earthing, installation labour, the net billing application and the bidirectional meter. A quote that leaves any of these out looks cheaper than it is."
     ]
    }
   ],
@@ -102,7 +111,7 @@
    },
    {
     "q": "What sanctioned load do I need for a 10 marla solar system?",
-    "a": "At least the system size in kW, because the DISCO approves net metering only up to the sanctioned load. The running load of the default house is 7,452 W, and a sanctioned load of 5 kW or more comes with a time-of-use meter."
+    "a": "At least the system size in kW, because the DISCO approves net billing only up to the sanctioned load. The running load of the default house is 7,452 W, and a sanctioned load of 5 kW or more comes with a time-of-use meter."
    },
    {
     "q": "Can a 10 marla solar system run ACs at night?",
@@ -110,7 +119,7 @@
    },
    {
     "q": "What is the price of a 10 marla solar system?",
-    "a": "Prices change with the exchange rate, so we do not print one. Compare quotes in Rs per watt for a complete 8.78 kW system with a 9.32 kW inverter, including structure, cables, protection, installation and the net-metering application, and price the battery separately."
+    "a": "Prices change with the exchange rate, so we do not print one. Compare quotes in Rs per watt for a complete 8.78 kW system with a 9.32 kW inverter, including structure, cables, protection, installation and the net billing application, and price the battery separately."
    }
   ],
   "key_facts": [
@@ -118,11 +127,11 @@
    "With two 1.5 ton inverter ACs and no third AC the same house needs about 7.61 kW of panels (13 panels) and an inverter of 8.19 kW; each extra inverter AC adds roughly its daily units (average watts × hours) ÷ the city's yield to the array.",
    "In Lahore one kW of panels makes about 4 units a day over the year, so the 8.78 kW system makes about 1,066 units a month, which covers the house's 33 units a day with spare units for export.",
    "Running one 1.5 ton inverter AC with fans, lights, fridge and freezer for 6 hours after sunset needs a lithium battery of about 390 Ah at 48 V (18.7 units); the same night without the AC needs about 167 Ah.",
-   "A system of this size usually needs a sanctioned load above 5 kW, which puts the house on a time-of-use meter; the net-metering application is approved only up to the sanctioned load."
+   "A system of this size usually needs a sanctioned load above 5 kW, which puts the house on a time-of-use meter; the net billing application is approved only up to the sanctioned load."
   ],
   "mistakes": [
    "Sizing from the bill of a house that will add ACs. The bill shows past units; list the ACs you plan to run, with their hours, so the daily units and the running load include them.",
-   "Ordering a ten kW inverter with a five kW sanctioned load. The DISCO caps the net-metering system at the sanctioned load, so apply for the load extension first.",
+   "Ordering a ten kW inverter with a five kW sanctioned load. The DISCO caps the net billing system at the sanctioned load, so apply for the load extension first.",
    "Sizing the battery for the whole list. The battery line assumes every appliance runs after dark; list only the night loads, and decide whether the AC is one of them, before you price a battery.",
    "Counting inverter ACs at their rated watts for energy. An inverter AC cycles down once the room is cool, so the daily units use its average draw; the running load and the inverter size still use the rated watts.",
    "Expecting rated panel watts every day. The performance ratio of 78% covers heat, dust, cable loss and cloud; the monthly units shown are a yearly average, not a sunny-day peak."
@@ -219,6 +228,10 @@
      "starting_w": 1900,
      "typical_hours_per_day": 8,
      "avg_w": 1000,
+     "avg_w_range": [
+      500,
+      1400
+     ],
      "load_type": "inverter_compressor"
     },
     "ac-split-1-5ton-non-inverter": {
@@ -1508,7 +1521,7 @@
     "Battery Ah = P_run × night hours ÷ (V × DoD × η)"
    ]
   },
-  "safety": "A rooftop solar system of this size connects to the grid and to your house wiring at mains voltage, and its DC side runs at several hundred volts; have a licensed electrician and a DISCO-approved installer do the wiring, earthing, surge protection and net-metering connection."
+  "safety": "A rooftop solar system of this size connects to the grid and to your house wiring at mains voltage, and its DC side runs at several hundred volts; have a licensed electrician and a DISCO-approved installer do the wiring, earthing, surge protection and net billing connection."
  },
  "lead": true,
  "schema": {
@@ -1629,7 +1642,7 @@
       "name": "What sanctioned load do I need for a 10 marla solar system?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "At least the system size in kW, because the DISCO approves net metering only up to the sanctioned load. The running load of the default house is 7,452 W, and a sanctioned load of 5 kW or more comes with a time-of-use meter."
+       "text": "At least the system size in kW, because the DISCO approves net billing only up to the sanctioned load. The running load of the default house is 7,452 W, and a sanctioned load of 5 kW or more comes with a time-of-use meter."
       }
      },
      {
@@ -1645,7 +1658,7 @@
       "name": "What is the price of a 10 marla solar system?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Prices change with the exchange rate, so we do not print one. Compare quotes in Rs per watt for a complete 8.78 kW system with a 9.32 kW inverter, including structure, cables, protection, installation and the net-metering application, and price the battery separately."
+       "text": "Prices change with the exchange rate, so we do not print one. Compare quotes in Rs per watt for a complete 8.78 kW system with a 9.32 kW inverter, including structure, cables, protection, installation and the net billing application, and price the battery separately."
       }
      }
     ]

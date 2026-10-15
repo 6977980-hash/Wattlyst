@@ -1,0 +1,57 @@
+{
+ "id": "P-G",
+ "status": "publish",
+ "answer": "These guides explain the rules and choices behind the calculators in plain English: net billing and the buyback rate, peak and off-peak hours, the FPA line on your bill, lithium versus tubular batteries, and whether a home needs a UPS or an inverter. Each guide links to the calculator that works out your own numbers.",
+ "key_facts": [
+  {
+   "from": "D11",
+   "n": 0
+  },
+  {
+   "from": "F14",
+   "n": 0
+  },
+  {
+   "from": "H8",
+   "n": 0
+  }
+ ],
+ "sections": [
+  {
+   "h2": "Bills and solar rules",
+   "p": [
+    "The [[D11|net billing guide]] explains how new solar connections are billed and how that compares with the old net metering. The [[F13|peak hours guide]] lists peak and off-peak timings for time-of-use meters, and the [[F14|FPA guide]] explains the monthly fuel price adjustment line and who is exempt from it."
+   ]
+  },
+  {
+   "h2": "Backup choices",
+   "p": [
+    "The [[H8|lithium vs tubular battery]] guide compares usable energy, life and cost, and the [[H9|inverter vs UPS]] guide explains switching speed, waveform and solar charging. To price the choice for your own backup hours, use the [[N7|UPS vs solar vs generator cost calculator]]."
+   ]
+  }
+ ],
+ "faq": [
+  {
+   "q": "What is the difference between net metering and net billing?",
+   "a": "Under net metering, exported units cancelled imported units at the same rate. Under net billing, imports are billed at the slab rate and exports are bought at a flat buyback rate, so an exported unit is worth much less. New connections are on net billing."
+  },
+  {
+   "q": "What is the FPA on my bill?",
+   "a": "The fuel price adjustment: the per-unit difference between the actual and the reference fuel cost of a past month, decided by NEPRA. Lifeline and protected consumers do not pay it; the [[F14|FPA guide]] shows how to check the line."
+  },
+  {
+   "q": "Is lithium better than tubular?",
+   "a": "Lithium can be used to about {{d.dod_lifepo4|pct}} of its rating against about {{d.dod_lead_acid|pct}} for tubular and lasts more cycles, but costs more to buy. Which works out cheaper depends on how much backup you use; the [[H8|guide]] compares both."
+  },
+  {
+   "q": "UPS or inverter for a home?",
+   "a": "Both turn battery power into AC during a cut; they differ in switching speed, size, waveform and whether they charge from solar. The [[H9|inverter vs UPS guide]] explains which suits a home."
+  }
+ ],
+ "sources": [
+  {
+   "label": "How Wattlyst calculates: formulas, default values and data sources",
+   "url": "/methodology/"
+  }
+ ]
+}

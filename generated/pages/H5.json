@@ -57,7 +57,20 @@
     "h2": "1 hp motor starting current",
     "p": [
      "A pump motor starting from rest draws a surge of current until it reaches speed. The appliance data used here puts the surge of a 1 hp water motor at about 2,800 W, nearly three times the running watts, for a second or two. At 230 V and a 0.8 power factor that is 15.2 A at start against 5.4 A running. A submersible pump of the same size starts harder, at about 3,300 W or 17.9 A.",
-     "This surge is why a pump needs its own circuit with a type C MCB rather than the type B breaker used for lights, and why a long, thin cable to a pump in the lawn drops the voltage at start and makes the motor hum and overheat. The MCB size and wire size calculators linked below pick the breaker, curve and cable for your motor and cable length."
+     "This surge is why a pump needs its own circuit with a type C MCB rather than the type B breaker used for lights, and why a long, thin cable to a pump in the lawn drops the voltage at start and makes the motor hum and overheat. The MCB size and wire size calculators pick the breaker, curve and cable for your motor and cable length."
+    ],
+    "l": [
+     [],
+     [
+      {
+       "t": "MCB size",
+       "u": "/wiring/breaker-size-calculator/"
+      },
+      {
+       "t": "wire size calculators",
+       "u": "/wiring/wire-size-calculator/"
+      }
+     ]
     ]
    },
    {
@@ -65,19 +78,53 @@
     "p": [
      "Only if its surge rating covers the starting watts and its continuous rating covers the running watts with a margin. A 1 hp motor needs 2,800 W for a moment at start and 1,000 W while running, so a small home UPS rated for fans and lights will trip or shut down the moment the motor starts, even though its VA rating sounds large enough. A line-interactive UPS delivers only about 60% of its VA rating as watts, which makes the gap worse.",
      "A hybrid solar inverter or a sine-wave inverter with a stated surge capacity above 2,800 W can run the pump, and the battery then drains at 1 kWh per hour of pumping. The inverter size calculator adds the motor's starting surge to your other loads and gives the continuous and surge rating you need."
+    ],
+    "l": [
+     [],
+     [
+      {
+       "t": "inverter size calculator",
+       "u": "/solar/inverter-size-calculator/"
+      }
+     ]
     ]
    },
    {
     "h2": "Water motor on solar",
     "p": [
-     "A pump is a good solar load because it can run at midday when the panels produce the most. The array must carry the running watts of 1,000 W on its own, and the inverter must handle the 2,800 W start; a dedicated solar pump drive with a soft start removes the surge, but a normal hybrid inverter does not. The solar size from appliances calculator sizes the panels and inverter for the pump together with the rest of the house.",
+     "A pump is a good solar load because it can run at midday when the panels produce the most. The array must carry the running watts of 1,000 W on its own, and the inverter must handle the 2,800 W start; a dedicated solar pump drive with a soft start removes the surge, but a normal hybrid inverter does not. For a tubewell or a larger pump, size the panels with the solar for a water pump calculator. The solar size from appliances calculator sizes the panels and inverter for the pump together with the rest of the house.",
      "Run the pump in daylight on a timer or the tank float switch so it never draws from the battery at night, and the pump's 30.4 units a month come from the sun instead of the grid."
+    ],
+    "l": [
+     [
+      {
+       "t": "solar for a water pump",
+       "u": "/solar/tubewell-solar-calculator/"
+      },
+      {
+       "t": "solar size from appliances calculator",
+       "u": "/solar/solar-system-for-5-marla-house/"
+      }
+     ],
+     []
     ]
    },
    {
     "h2": "What size generator runs a 1 hp water pump?",
     "p": [
-     "The generator must supply the 2,800 W start, which is far above the running load, so a small generator chosen on running watts alone stalls when the motor starts. The generator size for well pump calculator in the next step applies the motor starting rule to your pump size and any lights or fans running with it, and gives the next standard kVA."
+     "The generator must supply the 2,800 W start, which is far above the running load, so a small generator chosen on running watts alone stalls when the motor starts. The generator size for well pump calculator applies the motor starting rule to your pump size and any lights or fans running with it, and gives the next standard kVA; the guide to the starting watts of a motor on a generator explains why the start, not the running load, sets the size."
+    ],
+    "l": [
+     [
+      {
+       "t": "generator size for well pump calculator",
+       "u": "/generator/generator-for-well-pump/"
+      },
+      {
+       "t": "starting watts of a motor on a generator",
+       "u": "/generator/generator-starting-watts-calculator/"
+      }
+     ]
     ]
    }
   ],

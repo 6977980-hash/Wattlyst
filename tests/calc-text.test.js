@@ -36,7 +36,7 @@ export function wordsToNumber(phrase) {
 const MIN = 20;
 const TEXT_KEYS = (c) => [c.answer, c.intro, c.how, c.how_ur, c.safety, ...(c.key_facts || []), ...(c.mistakes || []),
   ...(c.faq || []).flatMap((x) => [x.q, x.a]), ...(c.examples || []).flatMap((x) => [x.title, x.text]),
-  c.table?.caption, ...(c.sections || []).flatMap((s) => [s.h2, ...(s.p || [])])].filter(Boolean);
+  c.table?.caption, ...(c.sections || []).flatMap((s) => [s.h2, ...(s.p || [])])].filter((x) => typeof x === 'string' && x); // a hub's { from, n } key fact is another page's text
 
 test('wordsToNumber reads the phrases used on the site', () => {
   assert.equal(wordsToNumber('a thousand'), 1000);
@@ -59,7 +59,7 @@ test('no number in words repeats a figure the page prints from the engine or dat
     const printed = new Set([...JSON.stringify({ ...g, tool: { outputs: g.tool?.outputs?.map((o) => o.value) } }).matchAll(/\d[\d,]*(?:\.\d+)?/g)].map((m) => Number(m[0].replace(/,/g, ''))));
     const allowed = c.literal_numbers || [];
     for (const t of TEXT_KEYS(c)) {
-      let s = t.replace(/\{\{[^}]*\}\}/g, '#');
+      let s = t.replace(/\{\{[^}]*\}\}/g, '#').replace(/\[\[[\w-]+\|/g, '');
       for (const a of allowed) s = s.split(a).join('');
       for (const m of s.matchAll(PHRASE)) {
         // A bare "hundred" ("a few hundred watts") is not a figure, and "a thousand" / "one thousand" is the

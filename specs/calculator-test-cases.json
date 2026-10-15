@@ -9425,5 +9425,20 @@
     },
     "tolerance": 0.001,
     "note": ""
+  },
+  {
+    "calc": "ac_units",
+    "name": "WL-146: the 1.5 ton inverter AC returns the planning range of its average draw",
+    "inputs": {
+      "ac": "ac-split-1-5ton-inverter",
+      "hours": 8
+    },
+    "expected": {
+      "avg_kw": 1,
+      "avg_kw_low": 0.5,
+      "avg_kw_high": 1.4
+    },
+    "tolerance": 0.001,
+    "note": "formulas.md E: range 0.5-1.4 for 1.5 ton"
   }
 ]

@@ -1,0 +1,2 @@
+const nf=new Intl.NumberFormat('en-US',{maximumFractionDigits:2});export function marketRs(v){if(typeof v !=='number'||!Number.isFinite(v)||v<=0)return '';const step=10**(Math.floor(Math.log10(v))-2);return `Rs ${nf.format(Math.round(v/step)*step)}`;}
+export function roughHours(v){if(typeof v !=='number'||!Number.isFinite(v)||v<0)return '';const m=Math.floor((v*60)/5+1e-9)*5;const h=Math.floor(m/60);const r=m % 60;if(h===0)return r===0?'under 5 min':`${r} min`;return r===0?`${nf.format(h)} h`:`${nf.format(h)} h ${r} min`;}

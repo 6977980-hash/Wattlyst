@@ -8,10 +8,12 @@
  "meta": "Wiring calculators for wire size, MCB breaker size, solar DC cable and voltage drop. Always confirm final wiring with a licensed electrician.",
  "primary_keyword": "",
  "wave": 0,
- "status": "auto",
+ "status": "publish",
  "nav_label": "Wiring",
  "nav_order": 5,
  "author": "ali-ahmad",
+ "related": [],
+ "next": null,
  "parent": null,
  "children": [
   "W1",
@@ -33,7 +35,113 @@
    "url": "/wiring/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "Which wiring calculator do I need?",
+    "p": [
+     "For one circuit, the wire size calculator gives the cable and the MCB size calculator the breaker and its curve; for an air conditioner, the wire size for an AC page has the common case worked out.",
+     "For the whole house, the home wiring load schedule sizes every circuit on one sheet. For solar panels and batteries, the solar DC cable calculator keeps the DC drop low, and the voltage drop calculator checks any cable you already have."
+    ],
+    "l": [
+     [
+      {
+       "t": "wire size calculator",
+       "u": "/wiring/wire-size-calculator/"
+      },
+      {
+       "t": "MCB size calculator",
+       "u": "/wiring/breaker-size-calculator/"
+      },
+      {
+       "t": "wire size for an AC",
+       "u": "/wiring/wire-size-for-1-5-ton-ac/"
+      }
+     ],
+     [
+      {
+       "t": "home wiring load schedule",
+       "u": "/wiring/home-wiring-load-schedule/"
+      },
+      {
+       "t": "solar DC cable calculator",
+       "u": "/wiring/solar-cable-size-calculator/"
+      },
+      {
+       "t": "voltage drop calculator",
+       "u": "/wiring/voltage-drop-calculator/"
+      }
+     ]
+    ]
+   },
+   {
+    "h2": "Current rating and voltage drop: two separate checks",
+    "p": [
+     "A cable must carry the circuit's current without overheating, which sets a minimum size from the current rating table, and it must deliver enough voltage at the far end, which can call for a larger size on a long run. The calculators take the larger of the two, holding lighting circuits to a 3% drop and other circuits to 5%."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "What size wire do I need for an AC?",
+    "a": "It depends on the AC's current and the length of the run. The AC wire size calculator works out a typical split AC circuit, and the wire size calculator any other load and length.",
+    "l": [
+     {
+      "t": "AC wire size calculator",
+      "u": "/wiring/wire-size-for-1-5-ton-ac/"
+     },
+     {
+      "t": "wire size calculator",
+      "u": "/wiring/wire-size-calculator/"
+     }
+    ]
+   },
+   {
+    "q": "What is the difference between a type B and a type C MCB?",
+    "a": "A type B MCB trips quickly on a short overcurrent and suits lights and sockets; a type C rides through the starting surge of motors and compressors such as pumps and ACs. The MCB size calculator picks the curve from the load type.",
+    "l": [
+     {
+      "t": "MCB size calculator",
+      "u": "/wiring/breaker-size-calculator/"
+     }
+    ]
+   },
+   {
+    "q": "Is solar DC cable sized the same way?",
+    "a": "The same two checks apply, but the current at battery voltage is high and DC runs are held to a lower drop, so DC cables often come out thicker. The solar DC cable calculator sizes them.",
+    "l": [
+     {
+      "t": "solar DC cable calculator",
+      "u": "/wiring/solar-cable-size-calculator/"
+     }
+    ]
+   },
+   {
+    "q": "Do I still need an electrician?",
+    "a": "Yes. These calculators give planning sizes from standard tables; a licensed electrician must confirm the cable, breaker, earthing and installation method on site."
+   }
+  ],
+  "key_facts": [
+   "Wire size = the smallest copper cable whose current rating covers the design current × 1.25 (and the MCB) and whose voltage drop over the run stays under 5% for power circuits or 3% for lighting.",
+   "MCB rating = the next standard size above the design current (watts ÷ volts ÷ power factor); standard domestic MCBs run from 6 A to 63 A.",
+   "Voltage drop = 2 × length × current × resistivity ÷ area (single-phase and DC) or √3 × length × current × resistivity ÷ area (three-phase), with copper resistivity of 0.0225 Ω·mm²/m at working temperature."
+  ],
+  "mistakes": [],
+  "sources": [
+   {
+    "label": "IEC 60364-5-52, current-carrying capacity of PVC copper cables",
+    "url": "https://webstore.iec.ch/publication/1878"
+   },
+   {
+    "label": "How Wattlyst calculates: formulas, default values and data sources",
+    "url": "/methodology/"
+   }
+  ],
+  "answer": "Wiring calculators pick the copper cable and the MCB for a circuit from its load, its length and the kind of load, and check the voltage drop over the run, for mains and for solar DC. They use IEC current ratings for PVC copper cable; have a licensed electrician confirm the final wiring before any work.",
+  "formula": null,
+  "safety": ""
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -84,6 +192,44 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/wiring/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "What size wire do I need for an AC?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "It depends on the AC's current and the length of the run. The AC wire size calculator works out a typical split AC circuit, and the wire size calculator any other load and length."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What is the difference between a type B and a type C MCB?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "A type B MCB trips quickly on a short overcurrent and suits lights and sockets; a type C rides through the starting surge of motors and compressors such as pumps and ACs. The MCB size calculator picks the curve from the load type."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Is solar DC cable sized the same way?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "The same two checks apply, but the current at battery voltage is high and DC runs are held to a lower drop, so DC cables often come out thicker. The solar DC cable calculator sizes them."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Do I still need an electrician?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Yes. These calculators give planning sizes from standard tables; a licensed electrician must confirm the cable, breaker, earthing and installation method on site."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

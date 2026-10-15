@@ -1,0 +1,58 @@
+{
+ "id": "P-C",
+ "status": "publish",
+ "answer": "Generator calculators size a set for what must run during a power cut: the running watts of everything on at once plus the starting surge of the largest motor, turned into kVA with the power factor and rounded up to a size that is sold. They also show what a given kVA can run and what it costs in fuel.",
+ "key_facts": [
+  {
+   "from": "C2",
+   "n": 0
+  },
+  {
+   "from": "C3",
+   "n": 0
+  },
+  {
+   "from": "C7",
+   "n": 0
+  }
+ ],
+ "sections": [
+  {
+   "h2": "Which generator calculator do I need?",
+   "p": [
+    "For a whole home, start with the [[C1|generator size calculator]]; for a list of appliances, the [[C2|generator watts calculator]]. If a motor or compressor is on the list, the [[C3|starting watts calculator]] and the guide to [[C4|running vs starting watts]] show why it sets the size.",
+    "For one big load, use the [[C5|generator size for a well pump]] or the [[C6|generator size for an AC]]. If you already own a set, [[C7|what a generator can run]] turns its kVA into usable watts, and the [[C8|fuel consumption calculator]] gives the litres and rupees an hour."
+   ]
+  },
+  {
+   "h2": "Why the starting surge decides the size",
+   "p": [
+    "Running watts are what an appliance draws while it works; a motor or compressor draws several times that for a second or two as it starts. In the default home on the generator size calculator the running load is {{pg.C1.out.running_w|int}} W but the peak is {{pg.C1.out.peak_w|int}} W, which is why it needs {{pg.C1.out.standard_kva|1}} kVA. Starting one motor at a time keeps the peak, and the generator, smaller."
+   ]
+  }
+ ],
+ "faq": [
+  {
+   "q": "What size generator do I need for my house?",
+   "a": "{{pg.C1.out.standard_kva|1}} kVA for a typical home with fans, lights, an inverter fridge, a TV, one inverter AC and a water motor. More ACs or a non-inverter AC need more; enter your own list in the [[C1|generator size calculator]]."
+  },
+  {
+   "q": "How many watts does a kVA give?",
+   "a": "Usable watts are the kVA times one thousand times the power factor, about {{d.pf_generator|pct}} on most sets, so a generator never carries its full kVA figure in watts. [[C7|What a generator can run]] lists the usable watts for each size."
+  },
+  {
+   "q": "Petrol or diesel generator?",
+   "a": "Petrol sets cover the small and middle sizes and cost less to buy; diesel is more common in the larger sizes and uses less fuel per unit of electricity. The [[C8|fuel consumption calculator]] compares the running cost of both."
+  },
+  {
+   "q": "Is a generator cheaper than solar or a UPS for backup?",
+   "a": "It depends on how many hours of backup you need a year. A generator is cheap to buy and costly to run; the [[N7|UPS vs solar vs generator calculator]] compares the cost per backup hour over the years you pick."
+  }
+ ],
+ "sources": [
+  {
+   "label": "How Wattlyst calculates: formulas, default values and data sources",
+   "url": "/methodology/"
+  }
+ ]
+}

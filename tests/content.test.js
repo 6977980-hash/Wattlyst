@@ -30,7 +30,7 @@ for (const p of live.filter((x) => ['tool', 'appliance', 'guide', 'pillar', 'hom
     assert.ok(n >= 40 && n <= 75, `direct answer is ${n} words (40-60 target, seo-rules.md 5)`);
     assert.ok((c.key_facts || []).length >= 3, 'at least 3 key facts (seo-rules.md 6)');
     assert.ok((c.faq || []).length >= 4 && c.faq.length <= 8, `${(c.faq || []).length} FAQs (4-8)`);
-    assert.ok(p.reviewed, 'last reviewed date');
+    assert.ok(p.reviewed || (p.type === 'pillar' && p.modified), 'last reviewed date (a hub: its newest page, WL-142)');
     assert.ok((c.sources || []).length >= 1, 'sources');
     if (p.type === 'data') {
       assert.ok(c.chart?.groups?.length >= 3, 'data page chart');

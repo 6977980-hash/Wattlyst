@@ -51,7 +51,7 @@
    "options": [
     [
      "on-grid",
-     "On-grid (net metering, no battery)"
+     "On-grid (net billing, no battery)"
     ],
     [
      "hybrid",
@@ -107,12 +107,12 @@
    "unit": "years"
   }
  ],
- "answer": "A {{in.kwp|int}} kW on-grid solar system in Pakistan costs about {{out.price_low_rs|rs}} to {{out.price_high_rs|rs}} installed ({{out.rs_per_w_low|rs2}} to {{out.rs_per_w_high|rs2}} per watt) in installer price lists and reports checked on the date under Sources; hybrid systems with a battery cost more. If the system removes {{in.monthly_saving_rs|rs}} a month from the bill, the simple payback is {{out.payback_years_low|1}} to {{out.payback_years_high|1}} years. Price = kW × one thousand × typical rupees per watt.",
+ "answer": "A {{in.kwp|int}} kW on-grid solar system in Pakistan costs about {{out.price_low_rs|rsm}} to {{out.price_high_rs|rsm}} installed ({{out.rs_per_w_low|rsm}} to {{out.rs_per_w_high|rsm}} per watt) in the installer price lists under Sources; a hybrid system costs more. If it removes {{in.monthly_saving_rs|rs}} a month from the bill, the simple payback is {{out.payback_years_low|1}} to {{out.payback_years_high|1}} years.",
  "how": "Typical {{in.type}} price for {{in.kwp}} kW: {{out.rs_per_w_low|rs2}} to {{out.rs_per_w_high|rs2}} per watt × {{out.system_w|int}} W = {{out.price_low_rs|rs}} to {{out.price_high_rs|rs}}. Panels alone at {{out.panel_rs_per_w_low|rs2}} to {{out.panel_rs_per_w_high|rs2}} per watt = {{out.panels_low_rs|rs}} to {{out.panels_high_rs|rs}}. Payback: {{out.price_low_rs|rs}} ÷ ({{in.monthly_saving_rs|rs}} × 12) = {{out.payback_years_low|1}} years at the low end, {{out.payback_years_high|1}} years at the high end.",
  "key_facts": [
-  "A {{in.kwp|int}} kW on-grid solar system was quoted at about {{out.price_low_rs|rs}} to {{out.price_high_rs|rs}} installed in Pakistan in the price lists and reports Wattlyst checked on the date under Sources, that is {{out.rs_per_w_low|rs2}} to {{out.rs_per_w_high|rs2}} per watt.",
-  "Tier-one panels alone cost about {{out.panel_rs_per_w_low|rs2}} to {{out.panel_rs_per_w_high|rs2}} per watt; the inverter, structure, cables, protection, labour and net-metering paperwork make up the rest of an installed price.",
-  "Price per watt is lower for large systems than for small ones, although sources disagree between neighbouring sizes: a {{ex.0.in.kwp|int}} kW system is about {{ex.0.out.rs_per_w_low|rs2}} to {{ex.0.out.rs_per_w_high|rs2}} per watt, a {{ex.3.in.kwp|int}} kW system about {{ex.3.out.rs_per_w_low|rs2}} to {{ex.3.out.rs_per_w_high|rs2}}.",
+  "A {{in.kwp|int}} kW on-grid solar system was quoted at about {{out.price_low_rs|rsm}} to {{out.price_high_rs|rsm}} installed in Pakistan in the price lists and reports Wattlyst checked on the date under Sources, that is {{out.rs_per_w_low|rsm}} to {{out.rs_per_w_high|rsm}} per watt.",
+  "Tier-one panels alone cost about {{out.panel_rs_per_w_low|rs2}} to {{out.panel_rs_per_w_high|rs2}} per watt; the inverter, structure, cables, protection, labour and net billing paperwork make up the rest of an installed price.",
+  "Price per watt is lower for large systems than for small ones, although sources disagree between neighbouring sizes: a {{ex.0.in.kwp|int}} kW system is about {{ex.0.out.rs_per_w_low|rsm}} to {{ex.0.out.rs_per_w_high|rsm}} per watt, a {{ex.3.in.kwp|int}} kW system about {{ex.3.out.rs_per_w_low|rsm}} to {{ex.3.out.rs_per_w_high|rsm}}.",
   "Simple payback = installed price ÷ yearly bill saving; it ignores panel degradation, tariff changes and financing cost, so treat it as a first screen, not a forecast.",
   "These are secondary-source market prices (installer lists, news, price guides), not an official rate; they move with the rupee, panel prices and tax policy and are refreshed monthly."
  ],
@@ -128,22 +128,22 @@
   {
    "h2": "{{in.kwp|int}} kW solar system price in Pakistan",
    "p": [
-    "A {{in.kwp|int}} kW on-grid system, the most common size for a house with two or three ACs, was quoted at {{out.price_low_rs|rs}} to {{out.price_high_rs|rs}} installed. Panels are about {{out.panels_low_rs|rs}} to {{out.panels_high_rs|rs}} of that; the inverter is usually the next biggest line, then the structure and installation. A hybrid {{in.kwp|int}} kW system with a lithium battery costs more; see the hybrid example below.",
-    "Prices in this range normally include tier-one panels, an on-grid inverter, a galvanised structure, DC and AC cabling with breakers and surge protection, earthing, installation and the net-metering application. Elevated structures, long cable runs and sales tax are often extra."
+    "A {{in.kwp|int}} kW on-grid system, the most common size for a house with two or three ACs, was quoted at {{out.price_low_rs|rsm}} to {{out.price_high_rs|rsm}} installed. Panels are about {{out.panels_low_rs|rsm}} to {{out.panels_high_rs|rsm}} of that; the inverter is usually the next biggest line, then the structure and installation. A hybrid {{in.kwp|int}} kW system with a lithium battery costs more; see the hybrid example below.",
+    "Prices in this range normally include tier-one panels, an on-grid inverter, a galvanised structure, DC and AC cabling with breakers and surge protection, earthing, installation and the net billing application. Elevated structures, long cable runs and sales tax are often extra."
    ]
   },
   {
    "h2": "{{ex.0.in.kwp|int}} kW and {{ex.1.in.kwp|int}} kW solar system price",
    "p": [
-    "Large systems cost less per watt than small ones because the inverter, structure, labour and paperwork are spread over more panels: a {{ex.0.in.kwp|int}} kW system is about {{ex.0.out.rs_per_w_low|rs2}} to {{ex.0.out.rs_per_w_high|rs2}} per watt and a {{ex.3.in.kwp|int}} kW system about {{ex.3.out.rs_per_w_low|rs2}} to {{ex.3.out.rs_per_w_high|rs2}}. Between neighbouring small sizes the price lists do not always follow this rule, so compare quotes for your exact size. If your roof and sanctioned load allow it, a slightly larger system is often better value per watt.",
-    "Use the solar system size calculator to find the size your bill needs before pricing it; an oversized on-grid system exports units at the buyback rate, which is far below the price you pay for imported units."
+    "Large systems cost less per watt than small ones because the inverter, structure, labour and paperwork are spread over more panels: a {{ex.0.in.kwp|int}} kW system is about {{ex.0.out.rs_per_w_low|rsm}} to {{ex.0.out.rs_per_w_high|rsm}} per watt and a {{ex.3.in.kwp|int}} kW system about {{ex.3.out.rs_per_w_low|rsm}} to {{ex.3.out.rs_per_w_high|rsm}}. Between neighbouring small sizes the price lists do not always follow this rule, so compare quotes for your exact size. If your roof and sanctioned load allow it, a slightly larger system is often better value per watt.",
+    "Use the [[D7|solar system size calculator]] to find the size your bill needs before pricing it; an oversized on-grid system exports units at the buyback rate, which is far below the price you pay for imported units."
    ]
   },
   {
    "h2": "Solar system on installments: what the payback means",
    "p": [
     "Banks and installers offer solar on monthly installments. The simple payback above tells you whether the installment can be lower than the bill it replaces: a {{in.kwp|int}} kW system paying back in {{out.payback_years_low|1}} to {{out.payback_years_high|1}} years at {{in.monthly_saving_rs|rs}} a month of savings leaves little room for financing cost over a short term, more over a longer one. Compare the total installment cost, not the monthly figure, with the cash price.",
-    "Payback here is simple: price divided by yearly saving. It does not include panel degradation, tariff changes, maintenance or interest. Use it to rank options, then ask for a written quote and check it with the quote checker."
+    "Payback here is simple: price divided by yearly saving. It does not include panel degradation, tariff changes, maintenance or interest. Use it to rank options, then ask for a written quote and check it with the [[N3|quote checker]]; the [[solar-price-tracker|solar price tracker]] shows how these prices have moved month by month."
    ]
   }
  ],
@@ -162,7 +162,7 @@
     "monthly_saving_rs": 13000
    },
    "title": "{{in.kwp|int}} kW on-grid system",
-   "text": "{{out.price_low_rs|rs}} to {{out.price_high_rs|rs}} installed ({{out.rs_per_w_low|rs2}} to {{out.rs_per_w_high|rs2}} per watt); payback {{out.payback_years_low|1}} to {{out.payback_years_high|1}} years at {{in.monthly_saving_rs|rs}} a month."
+   "text": "{{out.price_low_rs|rsm}} to {{out.price_high_rs|rsm}} installed ({{out.rs_per_w_low|rsm}} to {{out.rs_per_w_high|rsm}} per watt); payback {{out.payback_years_low|1}} to {{out.payback_years_high|1}} years at {{in.monthly_saving_rs|rs}} a month."
   },
   {
    "inputs": {
@@ -171,7 +171,7 @@
     "monthly_saving_rs": 25000
    },
    "title": "{{in.kwp|int}} kW hybrid system with battery",
-   "text": "{{out.price_low_rs|rs}} to {{out.price_high_rs|rs}} ({{out.rs_per_w_low|rs2}} to {{out.rs_per_w_high|rs2}} per watt); the battery size behind each quote differs, so compare battery kWh separately. Payback {{out.payback_years_low|1}} to {{out.payback_years_high|1}} years."
+   "text": "{{out.price_low_rs|rsm}} to {{out.price_high_rs|rsm}} ({{out.rs_per_w_low|rsm}} to {{out.rs_per_w_high|rsm}} per watt); the battery size behind each quote differs, so compare battery kWh separately. Payback {{out.payback_years_low|1}} to {{out.payback_years_high|1}} years."
   },
   {
    "inputs": {
@@ -179,7 +179,7 @@
     "monthly_saving_rs": 45000
    },
    "title": "{{in.kwp|int}} kW on-grid system",
-   "text": "{{out.rs_per_w_low|rs2}} to {{out.rs_per_w_high|rs2}} per watt, {{out.price_low_rs|rs}} to {{out.price_high_rs|rs}} installed; a system this size needs a sanctioned load to match under net billing."
+   "text": "{{out.rs_per_w_low|rsm}} to {{out.rs_per_w_high|rsm}} per watt, {{out.price_low_rs|rsm}} to {{out.price_high_rs|rsm}} installed; a system this size needs a sanctioned load to match under net billing."
   }
  ],
  "table": {
@@ -225,11 +225,11 @@
    },
    {
     "label": "Typical price",
-    "tpl": "{{out.price_low_rs|rs}} to {{out.price_high_rs|rs}}"
+    "tpl": "{{out.price_low_rs|rsm}} to {{out.price_high_rs|rsm}}"
    },
    {
     "label": "Per watt",
-    "tpl": "{{out.rs_per_w_low|rs2}} to {{out.rs_per_w_high|rs2}}"
+    "tpl": "{{out.rs_per_w_low|rsm}} to {{out.rs_per_w_high|rsm}}"
    }
   ]
  },
@@ -243,15 +243,15 @@
  "faq": [
   {
    "q": "What is the price of a {{in.kwp|int}} kW solar system in Pakistan?",
-   "a": "About {{out.price_low_rs|rs}} to {{out.price_high_rs|rs}} installed for an on-grid system in the installer price lists and reports we checked (date under Sources), that is {{out.rs_per_w_low|rs2}} to {{out.rs_per_w_high|rs2}} per watt. A hybrid system with a battery costs more."
+   "a": "About {{out.price_low_rs|rsm}} to {{out.price_high_rs|rsm}} installed for an on-grid system in the installer price lists and reports we checked (date under Sources), that is {{out.rs_per_w_low|rsm}} to {{out.rs_per_w_high|rsm}} per watt. A hybrid system with a battery costs more."
   },
   {
    "q": "How much does a {{ex.1.in.kwp|int}} kW solar system cost?",
-   "a": "About {{ex.1.out.price_low_rs|rs}} to {{ex.1.out.price_high_rs|rs}} installed on-grid. Per watt it is dearer than a {{in.kwp|int}} kW system because the fixed parts of the job are spread over fewer panels."
+   "a": "About {{ex.1.out.price_low_rs|rsm}} to {{ex.1.out.price_high_rs|rsm}} installed on-grid. Per watt it is dearer than a {{in.kwp|int}} kW system because the fixed parts of the job are spread over fewer panels."
   },
   {
    "q": "How much does a {{ex.0.in.kwp|int}} kW solar system cost?",
-   "a": "About {{ex.0.out.price_low_rs|rs}} to {{ex.0.out.price_high_rs|rs}} installed on-grid, around {{ex.0.out.rs_per_w_low|rs2}} to {{ex.0.out.rs_per_w_high|rs2}} per watt. Hybrid versions with a small battery cost noticeably more."
+   "a": "About {{ex.0.out.price_low_rs|rsm}} to {{ex.0.out.price_high_rs|rsm}} installed on-grid, around {{ex.0.out.rs_per_w_low|rsm}} to {{ex.0.out.rs_per_w_high|rsm}} per watt. Hybrid versions with a small battery cost noticeably more."
   },
   {
    "q": "Is a hybrid solar system worth the extra price?",

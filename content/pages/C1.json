@@ -86,7 +86,7 @@
    "unit": "W"
   }
  ],
- "answer": "A home running four fans, ten LED bulbs, an inverter fridge, a TV, a 1.5 ton inverter AC and a 1 hp water motor needs a {{out.standard_kva|1}} kVA generator: {{out.running_w|int}} W running and {{out.peak_w|int}} W when the pump starts. Generator kVA = the larger of running watts × {{d.margin|2}} or peak watts, ÷ {{d.pf_generator|2}} power factor ÷ 1,000, rounded up to a size sold.",
+ "answer": "A home with four fans, ten LED bulbs, an inverter fridge, a TV, a 1.5 ton inverter AC and a 1 hp water motor needs a {{out.standard_kva|1}} kVA generator: {{out.running_w|int}} W running, {{out.peak_w|int}} W when the pump starts. kVA = the larger of running watts × {{d.margin|2}} or peak watts, ÷ {{d.pf_generator|2}} power factor ÷ 1,000.",
  "how": "Your list runs at {{out.running_w|int}} W in total. When its largest motor starts, the peak is {{out.peak_w|int}} W. The generator is sized on the larger of {{out.running_w|int}} W × {{out.margin|2}} margin and {{out.peak_w|int}} W, which is {{out.sized_w|int}} W; ÷ {{out.pf|2}} power factor ÷ 1,000 = {{out.recommended_kva|up2}} kVA, so the next standard size is {{out.standard_kva|1}} kVA.",
  "key_facts": [
   "A typical Pakistani home with four fans, ten LED bulbs, an inverter fridge, a TV, one 1.5 ton inverter AC and a 1 hp water motor runs at about {{out.running_w|int}} W and needs a {{out.standard_kva|1}} kVA generator, because the pump's start lifts the peak to {{out.peak_w|int}} W.",
@@ -117,7 +117,7 @@
    "h2": "Generator size for refrigerator and AC",
    "p": [
     "A fridge and an AC are the two loads that decide most home generator sizes. An inverter fridge and an inverter AC start softly, so a home with both plus fans and lights needs {{ex.1.out.standard_kva|1}} kVA. Swap them for a non-inverter fridge and a 1.5 ton non-inverter AC and the AC compressor's start pushes the peak to {{ex.3.out.peak_w|int}} W, which needs {{ex.3.out.standard_kva|1}} kVA.",
-    "If you are about to buy both a generator and an AC, the inverter AC also lets you buy a smaller generator; whether its higher price pays back in units saved is what the inverter AC payback calculator works out. If the AC is already a non-inverter unit, the generator size for a 1.5 ton AC page shows each AC size on its own."
+    "If you are about to buy both a generator and an AC, the inverter AC also lets you buy a smaller generator; whether its higher price pays back in units saved is what the [[N10|inverter AC payback calculator]] works out. If the AC is already a non-inverter unit, the [[C6|generator size for a 1.5 ton AC]] page shows each AC size on its own."
    ]
   },
   {
@@ -130,15 +130,15 @@
   {
    "h2": "Generator for home in Pakistan: sizes sold and what fits",
    "p": [
-    "Home generators in Pakistan are sold in steps such as {{d.standard_generator_kva.0|1}}, {{d.standard_generator_kva.3|1}}, {{d.standard_generator_kva.5|1}} and {{d.standard_generator_kva.6|1}} kVA, and the calculator always rounds up to the next step, never down. The kVA figure is not the usable watts: usable watts = kVA × 1,000 × {{d.pf_generator|2}} power factor, and the page on what a generator can run lists them for each size.",
-    "Petrol sets cover the small and middle sizes; diesel is more common in the larger sizes and uses less fuel per unit of electricity. Once you know the size, the fuel consumption calculator shows what it will cost to run for your loadshedding hours."
+    "Home generators in Pakistan are sold in steps such as {{d.standard_generator_kva.0|1}}, {{d.standard_generator_kva.3|1}}, {{d.standard_generator_kva.5|1}} and {{d.standard_generator_kva.6|1}} kVA, and the calculator always rounds up to the next step, never down. The kVA figure is not the usable watts: usable watts = kVA × 1,000 × {{d.pf_generator|2}} power factor, and the page on [[C7|what a generator can run]] lists them for each size.",
+    "Petrol sets cover the small and middle sizes; diesel is more common in the larger sizes and uses less fuel per unit of electricity. Once you know the size, the [[C8|fuel consumption calculator]] shows what it will cost to run for your loadshedding hours, and the [[N7|backup cost comparison]] shows whether a generator is cheaper than solar or a UPS for the same backup."
    ]
   },
   {
    "h2": "Whole house generator: which loads to leave off",
    "p": [
     "Sizing a generator for the whole house at once, geyser, iron, microwave, every AC and the pump together, gives a set far bigger than most homes need for a few hours a day. Heaters and irons draw a lot while they are on but are easy to time, and only one motor needs to start at a time if you switch them on one after another.",
-    "A practical home list is what must stay on (fridge, fans, lights, router, one AC) plus the one motor you cannot schedule. Enter that list, then use the starting watts calculator if you are unsure which motor sets the peak."
+    "A practical home list is what must stay on (fridge, fans, lights, router, one AC) plus the one motor you cannot schedule. Enter that list, then use the [[C3|starting watts calculator]] if you are unsure which motor sets the peak."
    ]
   }
  ],

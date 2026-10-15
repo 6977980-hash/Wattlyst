@@ -1,6 +1,30 @@
 # Progress
 
-## Handoff for next phase (after full-audit fix Phase 4: battery, generator, wiring, solar tools) — written by the audit Phase 4 thread, 2026-10-15
+## Handoff for next phase (after full-audit fix Phase 5: SEO, content, internal links) — written by the audit Phase 5 thread, 2026-10-15
+
+Owner: every audit fix phase runs in its own thread and ends with this note. Phase plan: `/mnt/project-files/electricity-tool-hub/audit/fix-phases-2026-10-15.md` (Phases 1 to 5 ticked). Next is **Phase 6**: read only its section there plus its report lines. Plugin v0.8.21, PR #37. Rules live only in `specs/formulas.md` (E5 bullet, `avg_w_range` sentence) and the spec case at the end of `specs/calculator-test-cases.json`; titles and metas only in `specs/keyword-map.csv` and `specs/site-pages.csv`.
+
+**What is where**
+- WL-140 in-text links: write `[[ID|anchor]]` in section paragraphs, worked examples and FAQ answers of `content/pages/*.json` (nowhere else: the build fails). `linked`/`withLinks` in `tools/build.js` resolve them (unknown, non-live or self link fails the build) and store plain text plus `l`; `Wattlyst_Render::linked()` prints them. Tests that scan text strip the `[[ID|` part.
+- WL-142 hubs: `content/pages/P-A.json` to `P-X.json`. Hubs build after every other page (`builtById`, `results` in the build loop): a key fact `{from, n}` copies another page's built fact, `{{pg.<ID>.out.x}}` reads another page's default result. Hub dates: `dates()` in `class-wattlyst-render.php` ("Last updated" from `modified` when there is no review date). P-F h1/title/meta in `specs/site-pages.csv`.
+- WL-143 no home BreadcrumbList: `schemaFor` in `tools/build.js`. WL-144: menu `aria-current` (`menu_fallback`), footer "Appliance watts" (`footer()`) in `class-wattlyst-pages.php`; feed 404 as HTML (`not_found` in `class-wattlyst-site.php`); embed link text in `embeds()`; "All ..." link keeps acronyms.
+- WL-145 metas: `specs/keyword-map.csv` (F1 to F11, F13, D10, D14; E5 and D9 titles). WL-146: `avg_w_range` on the 1.5 ton inverter AC in `data/appliances.json`, `ac_units` outputs `avg_kw_low/high` (`engine/load.js`), E5 text. WL-147 D9 headings.
+- WL-150 rough figures: `engine/approx.js` (build only) formats `rsm` (market prices) and `hm5` (runtimes) in page text; the build refuses them in live `how`/`how_ur` and result captions. Worked examples with arithmetic keep exact formats.
+- WL-151 N7 source labels: `backupSources` in `tools/build.js`. WL-152 "net billing" wording on D8, D12, D13, D14, N3 (NEPRA document titles and the keyword "net metering application" kept). WL-153: nine answers trimmed to 60 words, E1 new sections, B1 and E1 sources.
+- Tests: `tests/seo-content.test.js` (own tests; the audit branch had none for WL-140 to WL-153).
+
+**Do not touch / watch**
+- Homepage JS budget unchanged by this phase (still about 30 bytes left). Page text only; no browser JS changed.
+- The audit test folder on branch `claude/project-thread-1qfruz` (PR #31) stays out of main.
+
+**Open to-dos**
+- D9, D14 and the Solar Price Tracker still cite a competitor price site (Toolsfluent) as a price source: replace with dealer lists at the next price refresh.
+- WL-144 Related `link_text` not built (in-text links cover it); the link-graph test still counts only related/next/parent links as inbound.
+- [ENGINEER] E5 range 0.5 to 1.4 units per hour (`avg_w_range_note`).
+- A10 title "kWh to Ah" (from the Phase 4 note) not changed.
+- Everything open from the earlier handoffs below still stands.
+
+## Earlier handoff (after full-audit fix Phase 4: battery, generator, wiring, solar tools) — written by the audit Phase 4 thread, 2026-10-15
 
 Owner: every audit fix phase runs in its own thread and ends with this note. Phase plan: `/mnt/project-files/electricity-tool-hub/audit/fix-phases-2026-10-15.md` (Phases 1 to 4 ticked). Next is **Phase 5** (SEO, content, internal links): read only its section there plus its report lines. Plugin v0.8.20, PR #36. Rules live only in `specs/formulas.md` (section B "Battery-side draw" bullet; section W design-current and voltage-drop bullets; D6 and N3 sub-bullets "Full audit 2026-10-15"; D3 "Weakest month" sub-bullet; C8 WL-148 sub-bullet; N6 bullet) and the spec cases at the end of `specs/calculator-test-cases.json`.
 
@@ -474,6 +498,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | 2026-10-15 | Full audit fix Phase 2b (decision engine modelling): power cuts spread over the day, generator credited with the grid units it supplies, UPS/generator/hybrid must start the backup load, UPS rows by real VA, matching battery voltages, close calls and runner-up, budget on the low price, backup above the home rejected, N7 claims from engine outputs, one month length (365 ÷ 12) and yield from monthly PVOUT (WL-93 to WL-106, WL-108); plugin v0.8.18 | done: tests green, Engineer Reviewer (5 defects fixed), local WP + browser check | PR #34 |
 | 2026-10-15 | Full audit fix Phase 3 (bill calculators): printed bill lines add up (WL-109), E4 uses the N4 sanctioned-load rule (WL-110 [ENGINEER]), N1 fair bill on pro-rated protected slabs (WL-111), E1 priced as a whole bill (WL-112), "1,500" in history (WL-113), wording and average rate (WL-114), reported FPA month and K-Electric row (WL-115), bill basis named (WL-116), top-slab cliff fact (WL-117), FPA range and N16 notice (WL-118); WL-149 left (no primary source); plugin v0.8.19 | done: tests green, Engineer Reviewer (3 defects fixed: E4 connected load, N1 float edge, Bill Index K-Electric sentence), local WP + browser check | PR #35 |
 | 2026-10-15 | Full audit fix Phase 4 (battery, generator, wiring, solar): UPS idle draw in B1 to B5 (WL-120), DC battery current with inverter efficiency and DC fuses (WL-121), page claims corrected (WL-119, WL-123, WL-127), round-up minimum sizes (WL-122), row error messages (WL-124), W2 lighting circuit (WL-125), cable_rating derated and ceilSafe (WL-126), D3 weakest month shown (WL-128 [ENGINEER]), hour and PSH caps (WL-129), N6 sky label (WL-130), D6 above largest panel (WL-131), price notice outside listed sizes (WL-132), generator datasheets (WL-148 [ENGINEER]); plugin v0.8.20 | done: tests green, Engineer Reviewer (2 defects fixed: H8/H9 backup formula, W5 DC current), local WP + browser check | PR #36 |
+| 2026-10-15 | Full audit fix Phase 5 (SEO, content, internal links): in-text links (WL-140), hub content on 10 hubs (WL-142), no home breadcrumb (WL-143), menu/footer/feed/embed fixes (WL-144), metas (WL-145), E5 range (WL-146 [ENGINEER]), D9 headings (WL-147), rough market prices and runtimes (WL-150), N7 source labels (WL-151), net billing wording (WL-152), answer length and E1 depth (WL-153); plugin v0.8.21 | done: tests green, local WP check | PR #37 |
 | 2026-10-15 | SERP ideas (owner: "4ron idea cover krny hain"): Bill Index units table 50 to 1,000 with lifeline line, engine numbers in four titles, Inverex Nitrox error codes; idea 3 already live as F2-F12; plugin v0.8.11 | done: tests green, Engineer Reviewer fixes applied (caption kW, lifeline line, F16/F28/F32 safety), local WP checked | PR (this thread) |
 | 2026-10-15 | Growth phase (owner: "next phase new thread"): IndexNow now announces changed pages in one batch after each sync (all live pages on the first run), owner growth plan with outreach and forum drafts in a Claude Doc; plugin v0.8.10 | done: tests green, local WP checked (stubbed IndexNow), no formula or page change | #25 |
 | 2026-10-15 | Net billing group B (owner: "baqi fixes pe kaam kro"): Home Power Planner saving on the whole bill (fixed charge, FC surcharge, GST; export credit set against the bill after GST), energy-charge saving shown under it; plugin v0.8.9 | done: tests green, Engineer Reviewer, local WP checked | PR (this thread) |

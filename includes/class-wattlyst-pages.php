@@ -68,8 +68,9 @@ final class Wattlyst_Pages {
 		$path = wp_parse_url( $_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
 		echo '<div class="main-nav"><ul class="menu sf-menu">';
 		foreach ( $items as [ $label, $url ] ) {
+			// The hub stays highlighted on its pages; aria-current="page" only on the hub itself (WL-144).
 			$current = is_string( $path ) && str_starts_with( $path, $url ) ? ' current-menu-item' : '';
-			printf( '<li class="menu-item%s"><a href="%s"%s>%s</a></li>', esc_attr( $current ), esc_url( Wattlyst_Tools::link( $url ) ), $current ? ' aria-current="page"' : '', esc_html( $label ) );
+			printf( '<li class="menu-item%s"><a href="%s"%s>%s</a></li>', esc_attr( $current ), esc_url( Wattlyst_Tools::link( $url ) ), is_string( $path ) && $path === $url ? ' aria-current="page"' : '', esc_html( $label ) );
 		}
 		echo '</ul></div>';
 	}
@@ -325,6 +326,11 @@ final class Wattlyst_Pages {
 			if ( $row && ! empty( $row['live'] ) ) {
 				$hubs[] = sprintf( '<li><a href="%s">%s</a></li>', esc_url( Wattlyst_Tools::link( $n['url'] ) ), esc_html( $n['label'] ) );
 			}
+		}
+		// The appliance list is a hub outside the header menu; the footer links it so it is one click from every page (WL-144).
+		$appliances = $this->plugin->row_by_url( '/appliances/' );
+		if ( $hubs && $appliances && ! empty( $appliances['live'] ) ) {
+			$hubs[] = sprintf( '<li><a href="%s">%s</a></li>', esc_url( Wattlyst_Tools::link( '/appliances/' ) ), esc_html( 'Appliance watts' ) );
 		}
 		$site  = $this->plugin->site();
 		$brand = $site['brand'] ?? 'Wattlyst';

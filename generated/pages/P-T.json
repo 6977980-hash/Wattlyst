@@ -8,10 +8,12 @@
  "meta": "Troubleshooting tools for home power systems: look up solar inverter error codes and plan battery series and parallel wiring safely, step by step.",
  "primary_keyword": "",
  "wave": 0,
- "status": "auto",
+ "status": "publish",
  "nav_label": "Troubleshoot",
  "nav_order": 9,
  "author": "ali-ahmad",
+ "related": [],
+ "next": null,
  "parent": null,
  "children": [
   "N2",
@@ -29,7 +31,88 @@
    "url": "/troubleshoot/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "Inverter error codes",
+    "p": [
+     "The inverter error codes lookup lists the codes from manufacturer manuals by brand. Most codes mean the grid, the battery or the solar string is outside the range the inverter accepts; each row gives the likely cause, what you can check yourself and when to call the installer. If the problem is short backup rather than a code, check the UPS backup time for your battery and load."
+    ],
+    "l": [
+     [
+      {
+       "t": "inverter error codes lookup",
+       "u": "/troubleshoot/inverter-error-codes/"
+      },
+      {
+       "t": "UPS backup time",
+       "u": "/battery/ups-backup-time-calculator/"
+      }
+     ]
+    ]
+   },
+   {
+    "h2": "Battery series and parallel",
+    "p": [
+     "The battery series and parallel calculator shows how many batteries go in each string and how many strings in parallel for the bank voltage and amp hours you want, and draws the wiring. Use only identical batteries in one bank, put a fuse or DC breaker in each string, and have a licensed electrician check the bank before connecting it."
+    ],
+    "l": [
+     [
+      {
+       "t": "battery series and parallel calculator",
+       "u": "/troubleshoot/battery-series-parallel-calculator/"
+      }
+     ]
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "What does an inverter error code mean?",
+    "a": "It is the inverter's own protection reporting which input is out of range, usually the grid, the battery or the solar string, rather than a broken inverter. Look up your brand and code in the error codes table.",
+    "l": [
+     {
+      "t": "error codes table",
+      "u": "/troubleshoot/inverter-error-codes/"
+     }
+    ]
+   },
+   {
+    "q": "When should I call the installer?",
+    "a": "When the fix means opening DC connectors, replacing a fan or a fuse, or changing settings inside the inverter, or when a code keeps coming back after the cause is fixed. Solar strings carry dangerous DC voltage whenever the sun is up."
+   },
+   {
+    "q": "What happens when batteries are connected in series or in parallel?",
+    "a": "In series the voltages add and the amp hours stay those of one battery; in parallel the amp hours add and the voltage stays the same. The stored energy is the same either way."
+   },
+   {
+    "q": "Can I mix old and new batteries?",
+    "a": "No. A weak battery in a string is overcharged and over-discharged by the others and drags the bank down, so use batteries of the same chemistry, model, capacity and age. The series and parallel calculator explains why.",
+    "l": [
+     {
+      "t": "series and parallel calculator",
+      "u": "/troubleshoot/battery-series-parallel-calculator/"
+     }
+    ]
+   }
+  ],
+  "key_facts": [
+   "An inverter error code is a message from the inverter's own protection: most codes mean the grid, the battery or the PV string is outside the range the inverter accepts, not that the inverter is broken.",
+   "Anything that requires opening DC connectors, replacing a fan or a fuse, or changing settings inside the inverter is an installer job; PV strings carry lethal DC voltage whenever the sun is up, even with the AC switched off.",
+   "Batteries in series add their voltage and keep the amp hours of one battery; batteries in parallel keep the voltage and add the amp hours; the stored energy in kWh = bank volts × bank amp hours ÷ 1000 either way."
+  ],
+  "mistakes": [],
+  "sources": [
+   {
+    "label": "How Wattlyst calculates: formulas, default values and data sources",
+    "url": "/methodology/"
+   }
+  ],
+  "answer": "Troubleshooting tools help when the inverter or battery bank is already in the house: look up what an inverter's error code means and whether to call the installer, or plan how to wire batteries in series and parallel for the voltage and amp hours you need, with a diagram. Switch off and isolate before touching any terminal.",
+  "formula": null,
+  "safety": ""
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -80,6 +163,44 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/troubleshoot/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "What does an inverter error code mean?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "It is the inverter's own protection reporting which input is out of range, usually the grid, the battery or the solar string, rather than a broken inverter. Look up your brand and code in the error codes table."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "When should I call the installer?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "When the fix means opening DC connectors, replacing a fan or a fuse, or changing settings inside the inverter, or when a code keeps coming back after the cause is fixed. Solar strings carry dangerous DC voltage whenever the sun is up."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "What happens when batteries are connected in series or in parallel?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "In series the voltages add and the amp hours stay those of one battery; in parallel the amp hours add and the voltage stays the same. The stored energy is the same either way."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Can I mix old and new batteries?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "No. A weak battery in a string is overcharged and over-discharged by the others and drags the bank down, so use batteries of the same chemistry, model, capacity and age. The series and parallel calculator explains why."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",
