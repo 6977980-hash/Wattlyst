@@ -4,7 +4,7 @@ import { calculator, CalcError, has, pos, frac, nonneg, num, dflt } from './core
 /**
  * N6: solar output for one day. Typical day = kWp × city yield (Global Solar Atlas). With an hourly
  * plane-of-array forecast (W/m², hourly means, e.g. Open-Meteo global_tilted_irradiance):
- * peak sun hours = Σ GTI / 1000; units = kWp × peak sun hours × PR. pct_of_typical = units ÷ typical units;
+ * peak sun hours = Σ GTI / 1000; units = kWp × peak sun hours × PR. pct_of_typical = peak sun hours ÷ the city's typical PSH;
  * sky = the first band in data/defaults.json forecast_sky_bands whose min_pct the day reaches.
  */
 export const solar_forecast = calculator((i, d) => {
@@ -24,7 +24,7 @@ export const solar_forecast = calculator((i, d) => {
     if (day_whm2 > dflt(d, 'forecast_max_day_whm2')) throw new CalcError('forecast_invalid', 'gti_wm2');
     const psh = day_whm2 / 1000;
     const units = kwp * psh * pr;
-    const pct = (units / typical_units) * 100;
+    const pct = (psh / c.psh) * 100; // sun against typical sun, so the PR typed in cannot change the sky label (WL-130)
     const band = dflt(d, 'forecast_sky_bands').find((b) => pct >= b.min_pct);
     const date = typeof i.forecast_date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(i.forecast_date) ? i.forecast_date : null;
     Object.assign(out, { source: 'forecast', psh, units, kwh_per_kwp: psh * pr, pct_of_typical: pct, sky: band ? band.label : 'Overcast or rain', day_label: date ? `Forecast for ${date}` : 'Forecast' }, date ? { forecast_date: date } : {});

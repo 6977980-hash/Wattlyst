@@ -42,14 +42,14 @@
    {
     "h2": "How long will a 12 V battery run a 100 W load?",
     "p": [
-     "A 100 Ah, 12 V lead-acid battery runs a 100 W AC load for about 5 h 6 min through an inverter. The same load wired as DC, with no inverter, runs about one sixth longer because the inverter loss of about 85% efficiency disappears. A 100 Ah lithium battery at 12.8 V stores about 979 Wh usable, so it runs the same 100 W load for roughly twice as long.",
+     "A 100 Ah, 12 V lead-acid battery runs a 100 W AC load for about 4 h 3 min through an inverter. The same load wired as DC, with no inverter, runs longer, because there is no inverter loss (about 85% efficiency) and no idle draw of the inverter itself. A 100 Ah lithium battery at 12.8 V stores about 1,152 Wh usable, so it runs the same 100 W load for roughly twice as long.",
      "The result does not depend on your mains voltage. Whether the inverter puts out 230 V as in Pakistan, the UK and Europe, or 120 V as in the US and Canada, the battery side is the same 12 V and the watts drawn are the same."
     ]
    },
    {
     "h2": "100 Ah battery runtime calculator: lead-acid against lithium",
     "p": [
-     "The label Ah is not the usable Ah. A 100 Ah lead-acid, AGM or gel battery should only be taken to about 50% of its rating, so only half the energy counts. A 100 Ah lithium (LiFePO4) battery can safely use about 90%, and sits at 12.8 V instead of 12 V, which is why the lithium example below gives about 3 h 15 min at 300 W while a lead-acid battery of the same Ah gives much less.",
+     "The label Ah is not the usable Ah. A 100 Ah lead-acid, AGM or gel battery should only be taken to about 50% of its rating, so only half the energy counts. A 100 Ah lithium (LiFePO4) battery can safely use about 90%, and sits at 12.8 V instead of 12 V, which is why the lithium example below gives about 3 h at 300 W while a lead-acid battery of the same Ah gives much less.",
      "Lead-acid batteries also lose capacity when they are drained fast. The label Ah is measured over about twenty hours; at a load that empties the battery in an hour the real capacity can be a quarter lower. The calculator does not apply this drop, so treat results under about two hours as optimistic."
     ]
    }
@@ -57,15 +57,15 @@
   "faq": [
    {
     "q": "How long will a 12 V battery last?",
-    "a": "Divide the usable watt-hours by the load watts. A 100 Ah lead-acid battery has about 510 Wh usable through an inverter, so it lasts about 5 h 6 min at 100 W, about 2 h 2 min at 500 W if it is a 200 Ah battery, and about 30 min at 1,000 W."
+    "a": "Divide the usable watt-hours by what the inverter takes from the battery: the load watts ÷ its efficiency, plus its own idle draw. A 100 Ah lead-acid battery has about 600 Wh usable, so it lasts about 4 h 3 min at 100 W, about 1 h 56 min at 500 W if it is a 200 Ah battery, and about 29 min at 1,000 W."
    },
    {
     "q": "A 100 Ah battery gives how many hours?",
-    "a": "About 5 h 6 min at 100 W through an inverter, or about 3 h 15 min at 300 W if it is a 12.8 V lithium battery. The hours fall in proportion as the load rises."
+    "a": "About 4 h 3 min at 100 W through an inverter, or about 3 h at 300 W if it is a 12.8 V lithium battery. The hours fall almost in proportion as the load rises."
    },
    {
     "q": "Can a 12 V 100 Ah battery run a 1,000 W load?",
-    "a": "Only briefly: about 30 min on paper, and less in practice because a lead-acid battery drained that fast delivers less than its label Ah. You also need an inverter rated for the load and a thick, fused battery cable for the high current."
+    "a": "Only briefly: about 29 min on paper, and less in practice because a lead-acid battery drained that fast delivers less than its label Ah. You also need an inverter rated for the load and a thick, fused battery cable for the high current."
    },
    {
     "q": "Is this a 12 V battery life calculator?",
@@ -77,18 +77,18 @@
    },
    {
     "q": "What is the runtime of a 12 V deep cycle battery?",
-    "a": "The same formula applies; deep cycle batteries are simply built to be taken to about 50% repeatedly. A 200 Ah deep cycle battery runs a 500 W load for about 2 h 2 min through an inverter."
+    "a": "The same formula applies; deep cycle batteries are simply built to be taken to about 50% repeatedly. A 200 Ah deep cycle battery runs a 500 W load for about 1 h 56 min through an inverter."
    },
    {
     "q": "How do I work out the discharge time of a 12 V battery?",
-    "a": "Discharge time in hours = Ah × 12 V × usable depth of discharge × inverter efficiency ÷ load watts. For a DC load drop the inverter efficiency; for a quick check, usable Wh ÷ watts gives the hours and Ah × depth of discharge ÷ amps gives the same answer."
+    "a": "Discharge time in hours = Ah × 12 V × usable depth of discharge ÷ (load watts ÷ inverter efficiency + the inverter's idle draw). For a DC load drop the inverter efficiency and the idle draw; then usable Wh ÷ watts gives the hours and Ah × depth of discharge ÷ amps gives the same answer."
    }
   ],
   "key_facts": [
-   "Runtime of a 12 V battery in hours = Ah × 12 V × usable depth of discharge × inverter efficiency ÷ load in watts.",
-   "A 100 Ah, 12 V lead-acid battery stores about 510 Wh of usable energy through an inverter, which runs a 100 W load for about 5 h 6 min or a 1,000 W load for about 30 min.",
+   "Runtime of a 12 V battery in hours = Ah × 12 V × usable depth of discharge ÷ (load watts ÷ inverter efficiency + the inverter's idle draw).",
+   "A 100 Ah, 12 V lead-acid battery stores about 600 Wh of usable energy, which through an inverter runs a 100 W load for about 4 h 3 min or a 1,000 W load for about 29 min.",
    "Lead-acid, AGM and gel batteries should be used to about 50% of their rating; lithium (LiFePO4) batteries to about 90%, so a lithium battery of the same Ah runs almost twice as long.",
-   "An inverter running at about 85% efficiency turns the rest of the battery energy into heat; a DC load wired straight to the battery has no inverter loss."
+   "An inverter running at about 85% efficiency turns the rest of the battery energy into heat; the inverter also draws about 30 W itself while it is on. A DC load wired straight to the battery has neither loss."
   ],
   "mistakes": [
    "Using the full Ah. A lead-acid battery taken below about 50% loses cycles quickly, so only that part counts as usable.",
@@ -107,7 +107,15 @@
    "calc": "battery_runtime",
    "module": "battery.js",
    "data_keys": [],
-   "appliances": {},
+   "appliances": {
+    "ups-idle": {
+     "name": "UPS / home inverter idle draw (no load)",
+     "running_w": 30,
+     "starting_w": 30,
+     "typical_hours_per_day": 24,
+     "load_type": "electronic"
+    }
+   },
    "fields": [
     {
      "name": "ah",
@@ -177,6 +185,14 @@
      "hint": "As a decimal. Enter 1 for a DC load wired straight to the battery."
     },
     {
+     "name": "idle_w",
+     "label": "Inverter idle draw",
+     "unit": "W",
+     "default": 30,
+     "advanced": true,
+     "hint": "What the UPS or inverter uses itself, even with nothing plugged in (no-load current × battery volts on its label). Not counted when inverter efficiency is one (a DC load)."
+    },
+    {
      "name": "dod",
      "label": "Usable depth of discharge",
      "unit": "0 to 1",
@@ -192,20 +208,20 @@
      "label": "Runtime",
      "spec": "hm",
      "label_ur": "Chalne ka waqt",
-     "value": "5 h 6 min"
+     "value": "4 h 3 min"
     },
     {
-     "key": "usable_wh",
+     "key": "stored_wh",
      "label": "Usable energy",
      "spec": "int",
      "unit": "Wh",
      "label_ur": "Qabil-e-istemal energy",
-     "value": "510"
+     "value": "600"
     }
    ],
    "how": {
-    "tpl": "{{in.ah}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable × {{out.inverter_eff|pct}} inverter efficiency = {{out.usable_wh|int}} Wh usable. {{out.usable_wh|int}} Wh ÷ {{in.load_w}} W = {{out.hours|2}} hours, about {{out.hours|hm}}.",
-    "text": "100 Ah × 12 V × 50% usable × 85% inverter efficiency = 510 Wh usable. 510 Wh ÷ 100 W = 5.1 hours, about 5 h 6 min."
+    "tpl": "{{in.ah}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable = {{out.stored_wh|int}} Wh in the battery. The battery gives {{in.load_w}} W ÷ {{out.inverter_eff|pct}} inverter efficiency + {{out.idle_w}} W the inverter draws itself = {{out.battery_w|1}} W. {{out.stored_wh|int}} Wh ÷ {{out.battery_w|1}} W = {{out.hours|2}} hours, about {{out.hours|hm}}.",
+    "text": "100 Ah × 12 V × 50% usable = 600 Wh in the battery. The battery gives 100 W ÷ 85% inverter efficiency + 30 W the inverter draws itself = 147.6 W. 600 Wh ÷ 147.6 W = 4.06 hours, about 4 h 3 min."
    },
    "submit": "Calculate",
    "notice": "",
@@ -214,27 +230,27 @@
   "examples": [
    {
     "title": "100 Ah battery with a 100 W load through an inverter",
-    "text": "100 Ah × 12 V × 50% × 85% = 510 Wh usable. 510 Wh ÷ 100 W = about 5 h 6 min."
+    "text": "100 Ah × 12 V × 50% = 600 Wh usable. 600 Wh ÷ 148 W from the battery = about 4 h 3 min."
    },
    {
     "title": "100 Ah battery with a 1,000 W load (microwave or kettle)",
-    "text": "The same 510 Wh ÷ 1,000 W = about 30 min. At this rate the inverter pulls well over eighty amps from the battery, and a lead-acid battery drained this fast gives less than its label Ah, so expect even less in practice."
+    "text": "The same 600 Wh ÷ 1,206 W from the battery = about 29 min. At this rate the inverter pulls well over eighty amps from the battery, and a lead-acid battery drained this fast gives less than its label Ah, so expect even less in practice."
    },
    {
     "title": "100 Ah lithium battery with a 300 W load",
-    "text": "100 Ah × 12.8 V × 90% × 85% = 979 Wh usable, which runs 300 W (a TV with a few fans, or a small compressor fridge at full duty) for about 3 h 15 min."
+    "text": "100 Ah × 12.8 V × 90% = 1,152 Wh usable, which runs 300 W (a TV with a few fans, or a small compressor fridge at full duty) for about 3 h."
    },
    {
     "title": "12 V compressor fridge, 60 W average, wired as DC",
-    "text": "A 12 V camping or car fridge draws more when the compressor runs and nothing when it rests; its average over a day is about 60 W. With inverter efficiency set to one: 100 Ah × 12 V × 50% = 600 Wh, ÷ 60 W = about 10 h."
+    "text": "A 12 V camping or car fridge draws more when the compressor runs and nothing when it rests; its average over a day is about 60 W. With inverter efficiency set to one: 100 Ah × 12 V × 50% = 600 Wh, ÷ 60 W from the battery = about 10 h."
    },
    {
     "title": "200 Ah deep cycle battery with a 500 W load",
-    "text": "200 Ah × 12 V × 50% × 85% = 1,020 Wh usable. 1,020 Wh ÷ 500 W = about 2 h 2 min."
+    "text": "200 Ah × 12 V × 50% = 1,200 Wh usable. 1,200 Wh ÷ 618 W from the battery = about 1 h 56 min."
    }
   ],
   "table": {
-   "caption": "Runtime of a 12 V lead-acid battery through an inverter (50% usable, 85% inverter efficiency)",
+   "caption": "Runtime of a 12 V lead-acid battery through an inverter (50% usable, 85% inverter efficiency, 30 W idle draw)",
    "head": [
     "Battery",
     "Load",
@@ -245,62 +261,63 @@
     [
      "100 Ah",
      "50 W",
-     "510 Wh",
-     "10 h 12 min"
+     "600 Wh",
+     "6 h 45 min"
     ],
     [
      "100 Ah",
      "100 W",
-     "510 Wh",
-     "5 h 6 min"
+     "600 Wh",
+     "4 h 3 min"
     ],
     [
      "100 Ah",
      "300 W",
-     "510 Wh",
-     "1 h 42 min"
+     "600 Wh",
+     "1 h 34 min"
     ],
     [
      "100 Ah",
      "1,000 W",
-     "510 Wh",
-     "30 min"
+     "600 Wh",
+     "29 min"
     ],
     [
      "150 Ah",
      "300 W",
-     "765 Wh",
-     "2 h 33 min"
+     "900 Wh",
+     "2 h 21 min"
     ],
     [
      "150 Ah",
      "500 W",
-     "765 Wh",
-     "1 h 31 min"
+     "900 Wh",
+     "1 h 27 min"
     ],
     [
      "200 Ah",
      "500 W",
-     "1,020 Wh",
-     "2 h 2 min"
+     "1,200 Wh",
+     "1 h 56 min"
     ],
     [
      "200 Ah",
      "1,000 W",
-     "1,020 Wh",
-     "1 h 1 min"
+     "1,200 Wh",
+     "59 min"
     ]
    ]
   },
-  "answer": "A 100 Ah, 12 V lead-acid battery runs a 100 W load through an inverter for about 5 h 6 min, using only the 50% of its capacity that is safe to use. Runtime in hours equals Ah × volts × usable depth of discharge × inverter efficiency ÷ load watts; for a DC load set the efficiency to one.",
+  "answer": "A 100 Ah, 12 V lead-acid battery runs a 100 W load through an inverter for about 4 h 3 min, using only the 50% of its capacity that is safe to use. Runtime in hours equals Ah × volts × usable depth of discharge ÷ (load watts ÷ inverter efficiency + the inverter's idle draw); for a DC load set the efficiency to one.",
   "formula": {
-   "text": "t = (Ah × V × DoD × η) ÷ P",
+   "text": "t = (Ah × V × DoD) ÷ (P ÷ η + P_idle)",
    "lines": [
     "t = runtime in hours",
     "Ah = battery capacity in amp hours",
     "V = battery voltage (nominal)",
     "DoD = usable depth of discharge",
     "η = inverter efficiency (1 for a DC load)",
+    "P_idle = the inverter's own draw with no load (from its label; none for a DC load)",
     "P = load in watts"
    ]
   },
@@ -392,7 +409,7 @@
       "name": "How long will a 12 V battery last?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Divide the usable watt-hours by the load watts. A 100 Ah lead-acid battery has about 510 Wh usable through an inverter, so it lasts about 5 h 6 min at 100 W, about 2 h 2 min at 500 W if it is a 200 Ah battery, and about 30 min at 1,000 W."
+       "text": "Divide the usable watt-hours by what the inverter takes from the battery: the load watts ÷ its efficiency, plus its own idle draw. A 100 Ah lead-acid battery has about 600 Wh usable, so it lasts about 4 h 3 min at 100 W, about 1 h 56 min at 500 W if it is a 200 Ah battery, and about 29 min at 1,000 W."
       }
      },
      {
@@ -400,7 +417,7 @@
       "name": "A 100 Ah battery gives how many hours?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "About 5 h 6 min at 100 W through an inverter, or about 3 h 15 min at 300 W if it is a 12.8 V lithium battery. The hours fall in proportion as the load rises."
+       "text": "About 4 h 3 min at 100 W through an inverter, or about 3 h at 300 W if it is a 12.8 V lithium battery. The hours fall almost in proportion as the load rises."
       }
      },
      {
@@ -408,7 +425,7 @@
       "name": "Can a 12 V 100 Ah battery run a 1,000 W load?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Only briefly: about 30 min on paper, and less in practice because a lead-acid battery drained that fast delivers less than its label Ah. You also need an inverter rated for the load and a thick, fused battery cable for the high current."
+       "text": "Only briefly: about 29 min on paper, and less in practice because a lead-acid battery drained that fast delivers less than its label Ah. You also need an inverter rated for the load and a thick, fused battery cable for the high current."
       }
      },
      {
@@ -432,7 +449,7 @@
       "name": "What is the runtime of a 12 V deep cycle battery?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "The same formula applies; deep cycle batteries are simply built to be taken to about 50% repeatedly. A 200 Ah deep cycle battery runs a 500 W load for about 2 h 2 min through an inverter."
+       "text": "The same formula applies; deep cycle batteries are simply built to be taken to about 50% repeatedly. A 200 Ah deep cycle battery runs a 500 W load for about 1 h 56 min through an inverter."
       }
      },
      {
@@ -440,7 +457,7 @@
       "name": "How do I work out the discharge time of a 12 V battery?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Discharge time in hours = Ah × 12 V × usable depth of discharge × inverter efficiency ÷ load watts. For a DC load drop the inverter efficiency; for a quick check, usable Wh ÷ watts gives the hours and Ah × depth of discharge ÷ amps gives the same answer."
+       "text": "Discharge time in hours = Ah × 12 V × usable depth of discharge ÷ (load watts ÷ inverter efficiency + the inverter's idle draw). For a DC load drop the inverter efficiency and the idle draw; then usable Wh ÷ watts gives the hours and Ah × depth of discharge ÷ amps gives the same answer."
       }
      }
     ]

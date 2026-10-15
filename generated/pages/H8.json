@@ -100,7 +100,7 @@
    },
    {
     "q": "Does a lithium battery give more backup than a tubular battery of the same Ah?",
-    "a": "Nearly twice as much, because it can be used to about 90% of its capacity instead of about 50%. Backup hours = Ah × volts × usable depth × inverter efficiency ÷ load watts; the battery backup time calculator works it out for both types."
+    "a": "Nearly twice as much, because it can be used to about 90% of its capacity instead of about 50%. Backup hours = Ah × volts × usable depth ÷ (load watts ÷ inverter efficiency + the inverter's idle draw); the battery backup time calculator works it out for both types."
    },
    {
     "q": "Can I use a lithium battery with my existing UPS?",
@@ -123,7 +123,7 @@
    "A tubular battery should be discharged to about 50% of its rated capacity for a reasonable life; a LiFePO4 lithium battery can be discharged to about 90%, so the same Ah and volts give nearly double the usable backup.",
    "A tubular battery charger returns about 85% of the energy put in; lithium charges at about 95%, so a lithium UPS draws fewer grid units for the same backup and recharges faster between cuts.",
    "A good tubular battery is rated for roughly a thousand to fifteen hundred cycles at half discharge, about two to three years of daily loadshedding; LiFePO4 cells are rated for several thousand cycles, which is why lithium warranties run to several years longer.",
-   "Usable backup in hours = Ah × volts × usable depth of discharge × inverter efficiency ÷ load watts, for either chemistry; the battery backup time calculator applies the right depth of discharge for the type you pick.",
+   "Usable backup in hours = Ah × volts × usable depth of discharge ÷ (load watts ÷ inverter efficiency + the inverter's idle draw), for either chemistry; the battery backup time calculator applies the right depth of discharge for the type you pick.",
    "Lithium must be used with a charger or hybrid inverter that has a lithium setting and talks to the battery's management system; a tubular battery works with any ordinary home UPS."
   ],
   "mistakes": [
@@ -242,7 +242,7 @@
       "name": "Does a lithium battery give more backup than a tubular battery of the same Ah?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Nearly twice as much, because it can be used to about 90% of its capacity instead of about 50%. Backup hours = Ah × volts × usable depth × inverter efficiency ÷ load watts; the battery backup time calculator works it out for both types."
+       "text": "Nearly twice as much, because it can be used to about 90% of its capacity instead of about 50%. Backup hours = Ah × volts × usable depth ÷ (load watts ÷ inverter efficiency + the inverter's idle draw); the battery backup time calculator works it out for both types."
       }
      },
      {

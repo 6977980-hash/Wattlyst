@@ -88,6 +88,14 @@
    "hint": "As a decimal: 0.85 means 85%. Enter 1 for a DC load wired straight to the battery."
   },
   {
+   "name": "idle_w",
+   "label": "Inverter idle draw",
+   "unit": "W",
+   "default": "@data.appliances.ups-idle.running_w",
+   "advanced": true,
+   "hint": "What the UPS or inverter uses itself, even with nothing plugged in (no-load current × battery volts on its label). Not counted when inverter efficiency is one (a DC load)."
+  },
+  {
    "name": "dod",
    "label": "Usable depth of discharge",
    "unit": "0 to 1",
@@ -103,28 +111,29 @@
    "spec": "hm"
   },
   {
-   "key": "usable_wh",
+   "key": "stored_wh",
    "label": "Usable energy",
    "spec": "int",
    "unit": "Wh"
   }
  ],
- "answer": "A {{in.ah|int}} Ah, {{in.volts|1}} V tubular battery runs a {{in.load_w|int}} W load for about {{out.hours|hm}} through a UPS while using only the recommended {{out.dod|pct}} of its capacity. Backup time equals battery Ah × volts × usable depth of discharge × inverter efficiency ÷ load watts.",
- "how": "{{in.ah}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable × {{out.inverter_eff|pct}} inverter efficiency = {{out.usable_wh|int}} Wh usable. {{out.usable_wh|int}} Wh ÷ {{in.load_w}} W = {{out.hours|2}} hours, about {{out.hours|hm}}.",
+ "answer": "A {{in.ah|int}} Ah, {{in.volts|1}} V tubular battery runs a {{in.load_w|int}} W load for about {{out.hours|hm}} through a UPS while using only the recommended {{out.dod|pct}} of its capacity. Backup time equals battery Ah × volts × usable depth of discharge ÷ (load watts ÷ inverter efficiency + the inverter's idle draw).",
+ "how": "{{in.ah}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable = {{out.stored_wh|int}} Wh in the battery. The battery gives {{in.load_w}} W ÷ {{out.inverter_eff|pct}} inverter efficiency + {{out.idle_w}} W the inverter draws itself = {{out.battery_w|1}} W. {{out.stored_wh|int}} Wh ÷ {{out.battery_w|1}} W = {{out.hours|2}} hours, about {{out.hours|hm}}.",
  "key_facts": [
-  "Backup time (hours) = battery Ah × battery volts × usable depth of discharge × inverter efficiency ÷ load in watts.",
+  "Backup time (hours) = battery Ah × battery volts × usable depth of discharge ÷ (load watts ÷ inverter efficiency + the inverter's idle draw).",
   "Tubular and lead-acid batteries should be used to about {{d.dod_lead_acid|pct}} of their capacity; lithium (LiFePO4) batteries to about {{d.dod_lifepo4|pct}}.",
-  "A typical home UPS converts battery power to AC at about {{d.inverter_eff_ups|pct}} efficiency, so part of the stored energy is lost as heat.",
-  "A {{in.ah|int}} Ah, {{in.volts|1}} V tubular battery holds about {{out.usable_wh|int}} Wh of usable energy for a UPS, which gives about {{out.hours|hm}} at {{in.load_w|int}} W or about {{ex.3.out.hours|hm}} at {{ex.3.in.load_w|int}} W on a {{ex.3.in.ah|int}} Ah battery."
+  "A typical home UPS converts battery power to AC at about {{d.inverter_eff_ups|pct}} efficiency, so part of the stored energy is lost as heat, and the UPS draws about {{data.appliances.ups-idle.running_w|int}} W itself while it runs.",
+  "A {{in.ah|int}} Ah, {{in.volts|1}} V tubular battery holds about {{out.stored_wh|int}} Wh of usable energy for a UPS, which gives about {{out.hours|hm}} at {{in.load_w|int}} W or about {{ex.3.out.hours|hm}} at {{ex.3.in.load_w|int}} W on a {{ex.3.in.ah|int}} Ah battery."
  ],
  "formula": {
-  "text": "t = (Ah × V × DoD × η) ÷ P",
+  "text": "t = (Ah × V × DoD) ÷ (P ÷ η + P_idle)",
   "lines": [
    "t = backup time in hours",
    "Ah = battery capacity in amp hours",
    "V = battery bank voltage",
    "DoD = usable depth of discharge",
    "η = inverter efficiency",
+   "P_idle = the inverter's own draw with no load (from its label; none for a DC load)",
    "P = load in watts"
   ]
  },
@@ -139,7 +148,7 @@
   {
    "h2": "Loadshedding UPS calculator: backup hours during loadshedding",
    "p": [
-    "To plan for loadshedding, compare the backup hours with the length of your longest outage. With the default {{in.ah|int}} Ah battery and a {{in.load_w|int}} W load you get about {{out.hours|hm}}, enough for a typical outage of one to two hours but not for a long evening cut. If the backup is short, the cheapest fix is a smaller load: switch the TV off and keep only fans and lights, and the backup roughly doubles for every halving of the watts.",
+    "To plan for loadshedding, compare the backup hours with the length of your longest outage. With the default {{in.ah|int}} Ah battery and a {{in.load_w|int}} W load you get about {{out.hours|hm}}, enough for a typical outage of one to two hours but not for a long evening cut. If the backup is short, the cheapest fix is a smaller load: switch the TV off and keep only fans and lights, and the backup almost doubles for every halving of the watts (not quite, because the UPS itself keeps drawing about {{data.appliances.ups-idle.running_w|int}} W).",
     "Backup is only half the story. The battery must also recharge before the next cut. A tubular battery that has given a full backup needs several hours of grid power to refill, so on days with several outages the second and third backups are shorter than the first. Lithium batteries recharge faster and can use more of their capacity, which is why they suit frequent loadshedding better."
    ]
   }
@@ -152,7 +161,7 @@
     "load_w": 200
    },
    "title": "{{in.ah|int}} Ah battery with fans and lights",
-   "text": "{{in.ah|int}} Ah × {{in.volts|1}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}} = {{out.usable_wh|int}} Wh. At {{in.load_w|int}} W the backup is {{out.hours|hm}}."
+   "text": "{{in.ah|int}} Ah × {{in.volts|1}} V × {{out.dod|pct}} = {{out.stored_wh|int}} Wh. At {{in.load_w|int}} W the backup is {{out.hours|hm}}."
   },
   {
    "inputs": {
@@ -161,7 +170,7 @@
     "load_w": 600
    },
    "title": "Two {{in.ah|int}} Ah batteries on a {{in.volts|1}} V UPS",
-   "text": "{{in.ah|int}} Ah × {{in.volts|1}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}} = {{out.usable_wh|int}} Wh. At {{in.load_w|int}} W the backup is {{out.hours|hm}}."
+   "text": "{{in.ah|int}} Ah × {{in.volts|1}} V × {{out.dod|pct}} = {{out.stored_wh|int}} Wh. At {{in.load_w|int}} W the backup is {{out.hours|hm}}."
   },
   {
    "inputs": {
@@ -171,7 +180,7 @@
     "load_w": 300
    },
    "title": "{{in.ah|int}} Ah lithium battery",
-   "text": "{{in.ah|int}} Ah × {{in.volts|1}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}} = {{out.usable_wh|int}} Wh. At {{in.load_w|int}} W the backup is {{out.hours|hm}}."
+   "text": "{{in.ah|int}} Ah × {{in.volts|1}} V × {{out.dod|pct}} = {{out.stored_wh|int}} Wh. At {{in.load_w|int}} W the backup is {{out.hours|hm}}."
   },
   {
    "inputs": {
@@ -180,7 +189,7 @@
     "load_w": 100
    },
    "title": "One fan and a few LED lights on a {{in.ah|int}} Ah battery",
-   "text": "A ceiling fan with a few LED bulbs is about {{in.load_w|int}} W. {{in.ah|int}} Ah × {{in.volts|1}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}} = {{out.usable_wh|int}} Wh, so the backup is about {{out.hours|hm}}."
+   "text": "A ceiling fan with a few LED bulbs is about {{in.load_w|int}} W. {{in.ah|int}} Ah × {{in.volts|1}} V × {{out.dod|pct}} = {{out.stored_wh|int}} Wh, so the backup is about {{out.hours|hm}}."
   }
  ],
  "table": {
@@ -236,11 +245,11 @@
  "faq": [
   {
    "q": "How long will my UPS battery last?",
-   "a": "On a {{in.ah|int}} Ah, {{in.volts|1}} V tubular battery with a {{in.load_w|int}} W load, about {{out.hours|hm}}. Halve the load and the backup roughly doubles; an old or hot battery gives less."
+   "a": "On a {{in.ah|int}} Ah, {{in.volts|1}} V tubular battery with a {{in.load_w|int}} W load, about {{out.hours|hm}}. Halve the load and the backup almost doubles (the UPS's own idle draw stays); an old or hot battery gives less."
   },
   {
    "q": "What is the backup time of a {{ex.0.in.ah|int}} Ah battery?",
-   "a": "A {{ex.0.in.ah|int}} Ah, {{ex.0.in.volts|1}} V tubular battery holds about {{ex.0.out.usable_wh|int}} Wh of usable energy through a UPS. That is about {{ex.0.out.hours|hm}} at {{ex.0.in.load_w|int}} W (fans and lights) or about {{ex.3.out.hours|hm}} at {{ex.3.in.load_w|int}} W."
+   "a": "A {{ex.0.in.ah|int}} Ah, {{ex.0.in.volts|1}} V tubular battery holds about {{ex.0.out.stored_wh|int}} Wh of usable energy through a UPS. That is about {{ex.0.out.hours|hm}} at {{ex.0.in.load_w|int}} W (fans and lights) or about {{ex.3.out.hours|hm}} at {{ex.3.in.load_w|int}} W."
   },
   {
    "q": "How many hours of backup does a tubular battery give?",
@@ -256,7 +265,7 @@
   },
   {
    "q": "What is the battery backup formula in hours?",
-   "a": "Backup hours = battery Ah × battery volts × usable depth of discharge × inverter efficiency ÷ load in watts. For a tubular battery use about {{d.dod_lead_acid|pct}} usable and about {{d.inverter_eff_ups|pct}} inverter efficiency; for lithium use about {{d.dod_lifepo4|pct}} usable."
+   "a": "Backup hours = battery Ah × battery volts × usable depth of discharge ÷ (load watts ÷ inverter efficiency + the inverter's idle draw). For a tubular battery use about {{d.dod_lead_acid|pct}} usable and about {{d.inverter_eff_ups|pct}} inverter efficiency; for lithium use about {{d.dod_lifepo4|pct}} usable."
   },
   {
    "q": "Why is my real backup different from the calculator?",
@@ -264,7 +273,7 @@
   },
   {
    "q": "Is backup time the same for AC and DC loads?",
-   "a": "No. DC loads run straight from the battery without inverter loss. Set inverter efficiency to one for a DC load."
+   "a": "No. DC loads run straight from the battery without inverter loss or idle draw. Set inverter efficiency to one for a DC load."
   }
  ],
  "related": [

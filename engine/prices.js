@@ -5,7 +5,7 @@ import { calculator, CalcError, has, pos, num, pick, dflt } from './core.js';
  * Typical installed price range (Rs per W) for a system type and size from data/solar-prices.json:
  * the listed size's low/high ÷ (kW × 1000); between two listed sizes the total price (low and high) is
  * interpolated linearly by kW and divided by the watts, so the price never falls as the size rises when the
- * listed sizes do not (audit WL-11); below the smallest or above the largest listed size the nearest end's Rs/W.
+ * listed sizes do not (audit WL-11); below the smallest or above the largest listed size the nearest end's Rs/W, flagged low_confidence.
  */
 export function priceRange(d, type, kwp) {
   const rows = (d?.solar_prices?.systems || []).filter((r) => r.type === type && r.kw > 0).sort((a, b) => a.kw - b.kw);
@@ -15,9 +15,10 @@ export function priceRange(d, type, kwp) {
   const weak = (...rs) => ({ low_confidence: rs.some((r) => (r.n_sources ?? 0) < 2) });
   const exact = rows.find((r) => Math.abs(r.kw - kwp) < 1e-9);
   if (exact) return { ...perW(exact), range_kw_used: exact.kw, ...weak(exact) };
-  if (kwp <= rows[0].kw) return { ...perW(rows[0]), range_kw_used: rows[0].kw, ...weak(rows[0]) };
+  // Outside the listed sizes the nearest end's Rs/W is reused: flagged too, few prices stand behind it (WL-132).
+  if (kwp <= rows[0].kw) return { ...perW(rows[0]), range_kw_used: rows[0].kw, low_confidence: true };
   const last = rows[rows.length - 1];
-  if (kwp >= last.kw) return { ...perW(last), range_kw_used: last.kw, ...weak(last) };
+  if (kwp >= last.kw) return { ...perW(last), range_kw_used: last.kw, low_confidence: true };
   const a = rows.filter((r) => r.kw < kwp).pop();
   const b = rows.find((r) => r.kw > kwp);
   const t = (kwp - a.kw) / (b.kw - a.kw);

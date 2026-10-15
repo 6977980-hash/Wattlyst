@@ -1,8 +1,9 @@
 // N17: solar size from the twelve monthly units on the bill (season-aware). Own module so the other solar pages do not ship it.
 import { calculator, CalcError, has, pos, nonneg, num, frac, ceilSafe, dflt } from './core.js';
 
-export const MONTH_KEYS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
-const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+import { MONTH_KEYS, MONTH_NAMES } from './months.js';
+
+export { MONTH_KEYS };
 
 /**
  * Units of each month from the bill history, and the city's PV output per kWp for each month (data/cities-pk.json pvout_month).

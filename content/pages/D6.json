@@ -75,15 +75,20 @@
  ],
  "outputs": [
   {
-   "key": "standard_panel_w",
-   "label": "Panel to buy",
+   "key": "fitted_panel_w",
+   "label": "Total panel watts",
    "spec": "int",
    "unit": "W"
   },
   {
+   "key": "panels_fitted",
+   "label": "Panels",
+   "spec": "int"
+  },
+  {
    "key": "panel_w",
    "label": "Minimum panel watts",
-   "spec": "int",
+   "spec": "up",
    "unit": "W"
   },
   {
@@ -99,10 +104,10 @@
    "unit": "A"
   }
  ],
- "answer": "A {{in.ah|int}} Ah {{in.volts|int}} V lead-acid battery needs at least a {{out.panel_w|int}} W solar panel to put back half its charge in {{in.psh|int}} peak sun hours, so buy a {{out.standard_panel_w|int}} W panel with a {{out.standard_controller_a|int}} A MPPT charge controller. That panel refills the battery in about {{out.charge_hours|1}} hours of peak sun. Panel watts = Ah × V × depth of discharge ÷ charging efficiency ÷ (sun hours × performance ratio).",
- "how": "Energy to put back: {{in.ah}} Ah × {{in.volts}} V × {{out.dod|pct}} depth of discharge ÷ {{out.charge_eff|pct}} charging efficiency = the watt-hours the panel must deliver. Divided by {{in.psh}} peak sun hours × {{out.pr|2}} performance ratio = {{out.panel_w|int}} W minimum, rounded up to the next panel size sold, {{out.standard_panel_w|int}} W. That panel refills the battery in {{out.charge_hours|1}} hours of peak sun, about {{out.charge_days|1}} sunny days. Controller: {{out.standard_panel_w|int}} W ÷ {{in.volts}} V × {{out.margin|2}} margin = {{out.controller_a|1}} A, so a {{out.standard_controller_a|int}} A MPPT controller.",
+ "answer": "A {{in.ah|int}} Ah {{in.volts|int}} V lead-acid battery needs at least a {{out.panel_w|up}} W solar panel to put back half its charge in {{in.psh|int}} peak sun hours, so buy a {{out.standard_panel_w|int}} W panel with a {{out.standard_controller_a|int}} A MPPT charge controller. That panel refills the battery in about {{out.charge_hours|1}} hours of peak sun. Panel watts = Ah × V × depth of discharge ÷ charging efficiency ÷ (sun hours × performance ratio).",
+ "how": "Energy to put back: {{in.ah}} Ah × {{in.volts}} V × {{out.dod|pct}} depth of discharge ÷ {{out.charge_eff|pct}} charging efficiency = the watt-hours the panel must deliver. Divided by {{in.psh}} peak sun hours × {{out.pr|2}} performance ratio = {{out.panel_w|up}} W minimum, rounded up to the panel sizes sold: {{out.fitted_panel_w|int}} W in all, as {{out.panels_fitted|int}} panel(s) (one when a standard size covers it, else several of the largest). That panel power refills the battery in {{out.charge_hours|1}} hours of peak sun, about {{out.charge_days|1}} sunny days. Controller: {{out.fitted_panel_w|int}} W ÷ {{in.volts}} V × {{out.margin|2}} margin = {{out.controller_a|1}} A, so a {{out.standard_controller_a|int}} A MPPT controller.",
  "key_facts": [
-  "A {{in.ah|int}} Ah {{in.volts|int}} V lead-acid battery used to {{d.dod_lead_acid|pct}} needs a {{out.standard_panel_w|int}} W solar panel ({{out.panel_w|int}} W minimum) to recharge in {{in.psh|int}} peak sun hours.",
+  "A {{in.ah|int}} Ah {{in.volts|int}} V lead-acid battery used to {{d.dod_lead_acid|pct}} needs a {{out.standard_panel_w|int}} W solar panel ({{out.panel_w|up}} W minimum) to recharge in {{in.psh|int}} peak sun hours.",
   "A {{ex.1.in.ah|int}} Ah {{ex.1.in.volts|int}} V battery needs a {{ex.1.out.standard_panel_w|int}} W panel and a {{ex.1.out.standard_controller_a|int}} A MPPT controller under the same sun; doubling the Ah doubles the panel watts.",
   "Solar panel watts to charge a battery = Ah × V × depth of discharge ÷ charging efficiency ÷ (peak sun hours × performance ratio); a panel rarely gives its label watts, so the {{d.pr|2}} ratio matters.",
   "Lead-acid batteries store about {{d.charge_eff_lead_acid|pct}} of the energy sent in and should be refilled from about {{d.dod_lead_acid|pct}}; lithium stores about {{d.charge_eff_lifepo4|pct}} and can be used to {{d.dod_lifepo4|pct}}, so a {{ex.3.in.ah|int}} Ah lithium battery needs a {{ex.3.out.standard_panel_w|int}} W panel."
@@ -123,14 +128,14 @@
   {
    "h2": "What size solar panel do I need to charge a {{in.volts|int}} V battery?",
    "p": [
-    "Work out the energy to put back, then divide by what a panel really delivers. A {{in.ah|int}} Ah {{in.volts|int}} V lead-acid battery used to {{out.dod|pct}} needs {{in.ah|int}} × {{in.volts|int}} × {{out.dod|pct}} watt-hours, plus the charging loss ({{out.charge_eff|pct}} efficiency). Over {{in.psh|int}} peak sun hours at a performance ratio of {{out.pr|2}}, that comes to {{out.panel_w|int}} W, so the panel to buy is {{out.standard_panel_w|int}} W.",
+    "Work out the energy to put back, then divide by what a panel really delivers. A {{in.ah|int}} Ah {{in.volts|int}} V lead-acid battery used to {{out.dod|pct}} needs {{in.ah|int}} × {{in.volts|int}} × {{out.dod|pct}} watt-hours, plus the charging loss ({{out.charge_eff|pct}} efficiency). Over {{in.psh|int}} peak sun hours at a performance ratio of {{out.pr|2}}, that comes to {{out.panel_w|up}} W, so the panel to buy is {{out.standard_panel_w|int}} W.",
     "The calculator rounds up to the next panel size sold. If the rounding gives you a much bigger panel than the minimum, the charge simply finishes sooner: the time to a full charge is shown for the panel you buy, not for the minimum watts."
    ]
   },
   {
    "h2": "Solar panel for a {{ex.0.in.ah|int}} Ah battery and a {{ex.1.in.ah|int}} Ah battery",
    "p": [
-    "For a {{ex.0.in.ah|int}} Ah {{ex.0.in.volts|int}} V lead-acid battery with {{ex.0.in.psh|int}} peak sun hours the minimum is {{ex.0.out.panel_w|int}} W, so a {{ex.0.out.standard_panel_w|int}} W panel with a {{ex.0.out.standard_controller_a|int}} A MPPT controller. For a {{ex.1.in.ah|int}} Ah battery the minimum is {{ex.1.out.panel_w|int}} W, so a {{ex.1.out.standard_panel_w|int}} W panel and a {{ex.1.out.standard_controller_a|int}} A controller.",
+    "For a {{ex.0.in.ah|int}} Ah {{ex.0.in.volts|int}} V lead-acid battery with {{ex.0.in.psh|int}} peak sun hours the minimum is {{ex.0.out.panel_w|up}} W, so a {{ex.0.out.standard_panel_w|int}} W panel with a {{ex.0.out.standard_controller_a|int}} A MPPT controller. For a {{ex.1.in.ah|int}} Ah battery the minimum is {{ex.1.out.panel_w|up}} W, so a {{ex.1.out.standard_panel_w|int}} W panel and a {{ex.1.out.standard_controller_a|int}} A controller.",
     "These sizes refill a battery used to half each day. If you only use a quarter of the battery, lower the depth of discharge in the advanced options and the panel halves; if you want a day's charge back from a deeper discharge, raise it."
    ]
   },
@@ -157,7 +162,7 @@
     "psh": 5
    },
    "title": "{{in.ah|int}} Ah {{in.volts|int}} V lead-acid battery",
-   "text": "{{in.ah|int}} Ah × {{in.volts|int}} V × {{out.dod|pct}} ÷ {{out.charge_eff|pct}} ÷ ({{in.psh|int}} h × {{out.pr|2}}) = {{out.panel_w|int}} W minimum, so a {{out.standard_panel_w|int}} W panel. It refills the battery in {{out.charge_hours|1}} h of peak sun with a {{out.standard_controller_a|int}} A MPPT controller."
+   "text": "{{in.ah|int}} Ah × {{in.volts|int}} V × {{out.dod|pct}} ÷ {{out.charge_eff|pct}} ÷ ({{in.psh|int}} h × {{out.pr|2}}) = {{out.panel_w|up}} W minimum, so a {{out.standard_panel_w|int}} W panel. It refills the battery in {{out.charge_hours|1}} h of peak sun with a {{out.standard_controller_a|int}} A MPPT controller."
   },
   {
    "inputs": {
@@ -166,7 +171,7 @@
     "psh": 5
    },
    "title": "{{in.ah|int}} Ah {{in.volts|int}} V lead-acid battery",
-   "text": "Twice the capacity needs twice the watts: {{out.panel_w|int}} W minimum, so a {{out.standard_panel_w|int}} W panel. Full charge in {{out.charge_hours|1}} h of peak sun; the controller current is {{out.controller_a|1}} A, so a {{out.standard_controller_a|int}} A MPPT controller."
+   "text": "Twice the capacity needs twice the watts: {{out.panel_w|up}} W minimum, so a {{out.standard_panel_w|int}} W panel. Full charge in {{out.charge_hours|1}} h of peak sun; the controller current is {{out.controller_a|1}} A, so a {{out.standard_controller_a|int}} A MPPT controller."
   },
   {
    "inputs": {
@@ -175,7 +180,7 @@
     "psh": 5
    },
    "title": "{{in.ah|int}} Ah battery bank at {{in.volts|int}} V",
-   "text": "Two batteries in series double the volts, so the energy to put back doubles: {{out.panel_w|int}} W minimum, a {{out.standard_panel_w|int}} W panel. At {{in.volts|int}} V the controller current stays modest, {{out.controller_a|1}} A, so a {{out.standard_controller_a|int}} A MPPT controller; full charge in {{out.charge_hours|1}} h of peak sun."
+   "text": "Two batteries in series double the volts, so the energy to put back doubles: {{out.panel_w|up}} W minimum, a {{out.standard_panel_w|int}} W panel. At {{in.volts|int}} V the controller current stays modest, {{out.controller_a|1}} A, so a {{out.standard_controller_a|int}} A MPPT controller; full charge in {{out.charge_hours|1}} h of peak sun."
   },
   {
    "inputs": {
@@ -186,7 +191,7 @@
     "charge_eff": 0.95
    },
    "title": "{{in.ah|int}} Ah lithium (LiFePO4) battery used to {{out.dod|pct}}",
-   "text": "Lithium stores {{out.charge_eff|pct}} of what goes in but is used much deeper, {{out.dod|pct}}, so there is more to put back: {{out.panel_w|int}} W minimum, a {{out.standard_panel_w|int}} W panel, with a {{out.standard_controller_a|int}} A MPPT controller. Full charge in {{out.charge_hours|1}} h of peak sun."
+   "text": "Lithium stores {{out.charge_eff|pct}} of what goes in but is used much deeper, {{out.dod|pct}}, so there is more to put back: {{out.panel_w|up}} W minimum, a {{out.standard_panel_w|int}} W panel, with a {{out.standard_controller_a|int}} A MPPT controller. Full charge in {{out.charge_hours|1}} h of peak sun."
   }
  ],
  "table": {
@@ -224,7 +229,7 @@
    },
    {
     "label": "Minimum panel",
-    "tpl": "{{out.panel_w|int}} W"
+    "tpl": "{{out.panel_w|up}} W"
    },
    {
     "label": "Panel to buy",
@@ -251,15 +256,15 @@
  "faq": [
   {
    "q": "What size solar panel do I need for a {{ex.0.in.ah|int}} Ah battery?",
-   "a": "A {{ex.0.in.ah|int}} Ah {{ex.0.in.volts|int}} V lead-acid battery used to half needs a {{ex.0.out.standard_panel_w|int}} W panel ({{ex.0.out.panel_w|int}} W minimum) with {{ex.0.in.psh|int}} peak sun hours a day, and refills in about {{ex.0.out.charge_hours|1}} hours of peak sun."
+   "a": "A {{ex.0.in.ah|int}} Ah {{ex.0.in.volts|int}} V lead-acid battery used to half needs a {{ex.0.out.standard_panel_w|int}} W panel ({{ex.0.out.panel_w|up}} W minimum) with {{ex.0.in.psh|int}} peak sun hours a day, and refills in about {{ex.0.out.charge_hours|1}} hours of peak sun."
   },
   {
    "q": "What size solar panel for a {{ex.1.in.ah|int}} Ah battery?",
-   "a": "A {{ex.1.in.ah|int}} Ah {{ex.1.in.volts|int}} V lead-acid battery needs a {{ex.1.out.standard_panel_w|int}} W panel ({{ex.1.out.panel_w|int}} W minimum) and a {{ex.1.out.standard_controller_a|int}} A MPPT charge controller to put back half its charge in {{ex.1.in.psh|int}} peak sun hours."
+   "a": "A {{ex.1.in.ah|int}} Ah {{ex.1.in.volts|int}} V lead-acid battery needs a {{ex.1.out.standard_panel_w|int}} W panel ({{ex.1.out.panel_w|up}} W minimum) and a {{ex.1.out.standard_controller_a|int}} A MPPT charge controller to put back half its charge in {{ex.1.in.psh|int}} peak sun hours."
   },
   {
    "q": "How many watts does it take to charge a {{in.ah|int}} Ah battery?",
-   "a": "The energy is {{in.ah|int}} Ah × {{in.volts|int}} V × the share you used; at {{out.dod|pct}} with charging losses the panel must deliver about {{out.panel_w|int}} W over {{in.psh|int}} peak sun hours. Any panel from {{out.standard_panel_w|int}} W up does it; a bigger panel only charges faster, as long as the controller is rated for it."
+   "a": "The energy is {{in.ah|int}} Ah × {{in.volts|int}} V × the share you used; at {{out.dod|pct}} with charging losses the panel must deliver about {{out.panel_w|up}} W over {{in.psh|int}} peak sun hours. Any panel from {{out.standard_panel_w|int}} W up does it; a bigger panel only charges faster, as long as the controller is rated for it."
   },
   {
    "q": "Which charge controller do I need for a {{in.volts|int}} V battery?",

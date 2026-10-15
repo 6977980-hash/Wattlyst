@@ -4,7 +4,7 @@
   "checked": "2026-10-14",
   "method": "Fuel use in litres per hour = intercept x rated kW + slope x load kW (the straight-line fuel curve used by HOMER microgrid software: no-load fuel per rated kW plus marginal fuel per kWh). Rated kW = generator kVA x the generator power factor (data/defaults.json pf_generator). Petrol: each source point is litres per hour at quarter load and at rated load from tank size / run time; both generators were normalised per rated kW and averaged, then the line through the two averaged points gives the coefficients. Diesel: the line through the quarter-load and full-load points of the chart (the same coefficients fit every size row of the chart within a few percent). Small generators sold in Pakistan vary; a worn or open-frame generator burns more. Engineer to confirm.",
   "status": "Planning estimates, not a measured figure for any one generator. Fuel prices change every few days in Pakistan (short-period pricing since 2026); refresh monthly and let the user enter today's price.",
-  "engineer_confirm": ["fuels"]
+  "engineer_confirm": ["fuels", "fuels.petrol.open_frame_datasheets"]
  },
  "fuels": {
   "petrol": {
@@ -13,7 +13,20 @@
    "points": [
     {"model": "Honda EU2200i (EU22i), 1.8 kW rated, 0.95 gal (3.6 L) tank", "quarter_load_hours": 8.1, "rated_load_hours": 3.2, "tank_l": 3.6, "rated_kw": 1.8, "source": "Honda EU2200i dealer specification (run time per tankful)", "source_url": "https://www.sloans.adpearance.com/catalog/products-for-mowing/honda-mowing-equipment/honda-generators/eu2200i"},
     {"model": "Honda EU7000iS, 5.5 kW rated, 5.1 gal (19.3 L) tank", "quarter_load_hours": 18, "rated_load_hours": 6.5, "tank_l": 19.3, "rated_kw": 5.5, "source": "Honda EU7000iS dealer specification (run time per tankful)", "source_url": "https://www.sloans.adpearance.com/catalog/products-for-mowing/honda-mowing-equipment/honda-generators/eu7000is"}
-   ]
+   ],
+   "open_frame_datasheets": {
+    "_note": "Full audit 2026-10-15 WL-148 [ENGINEER]: maker datasheets of open-frame (conventional) petrol sets, L/h = tank ÷ stated run time. They burn more than the curve above (fitted to two inverter generators): for a 5 kVA set the curve gives about 2.3 L/h at rated load against 2.5 to 3.0 L/h here, and about 1.4 L/h at half load against about 2.2 L/h. The curve is not changed until the PEC engineer decides; no maker datasheet was found for the Pakistani brands (Jasco, Kipor, Kama, Genpower, Lutian, Sumo).",
+    "checked": "2026-10-15",
+    "points": [
+     {"model": "Honda EG6500CX, 5.0 kVA rated, 5.5 kVA max", "rated_kva": 5.0, "tank_l": 24, "hours": 8.1, "load": "continuous operating hours (load not named, taken as rated)", "l_per_h": 2.96, "source_url": "https://tza.honda.co.za/power/eg6500cx", "opened": "2026-10-15"},
+     {"model": "Honda EZ6500CXS, 5.0 kVA rated, 5.5 kVA max", "rated_kva": 5.0, "tank_l": 15.5, "hours": 5.8, "load": "continuous operating hours (load not named, taken as rated)", "l_per_h": 2.67, "source_url": "https://tza.honda.co.za/power/ez6500cxs", "opened": "2026-10-15"},
+     {"model": "Honda EZ3000, 2.3 kVA rated, 2.5 kVA max", "rated_kva": 2.3, "tank_l": 13, "hours": 8.3, "load": "continuous operating hours (load not named, taken as rated)", "l_per_h": 1.57, "source_url": "https://tza.honda.co.za/power/ez3000", "opened": "2026-10-15"},
+     {"model": "Yamaha EF7200E (230 V 50 Hz), 5.0 kVA rated, 6.0 kVA max", "rated_kva": 5.0, "tank_l": 28, "hours": 11, "load": "rated load", "l_per_h": 2.55, "source_url": "https://global.yamaha-motor.com/business/pp/generator/lineup/230v-50hz/6-/ef7200e/", "opened": "2026-10-15"},
+     {"model": "Yamaha EF5500FW (230 V 50 Hz), 3.8 kVA rated, 4.6 kVA max", "rated_kva": 3.8, "tank_l": 28, "hours": 12, "load": "rated load", "l_per_h": 2.33, "source_url": "https://global.yamaha-motor.com/business/pp/generator/lineup/230v-50hz/3-6/ef5500fw/", "opened": "2026-10-15"},
+     {"model": "Yamaha EF5500FW (230 V 50 Hz), half load", "rated_kva": 3.8, "tank_l": 28, "hours": 17.5, "load": "half load", "l_per_h": 1.6, "source_url": "https://global.yamaha-motor.com/business/pp/generator/lineup/230v-50hz/3-6/ef5500fw/", "opened": "2026-10-15"},
+     {"model": "Firman P05702, 5.7 kW rated (30.3 L tank)", "rated_kva": 7.125, "tank_l": 30.3, "hours": 13, "load": "half load", "l_per_h": 2.33, "source_url": "https://firmanpowerequipment.com/products/p05702", "opened": "2026-10-15"}
+    ]
+   }
   },
   "diesel": {
    "intercept_l_per_h_per_kw_rated": 0.05,
@@ -21,7 +34,14 @@
    "points": [
     {"model": "20 kW diesel generator, approximate chart", "quarter_load_l_per_h": 2.3, "full_load_l_per_h": 6.1, "rated_kw": 20, "source": "Approximate diesel fuel consumption chart (metric version)", "source_url": "https://oer.enviraj.com/general/diesel-generator-fuel-consumption-chart/"},
     {"model": "20 kW diesel generator, approximate chart (US gallons: 0.6 at 1/4 load, 1.6 at full load)", "quarter_load_l_per_h": 2.27, "full_load_l_per_h": 6.06, "rated_kw": 20, "source": "Approximate diesel fuel consumption chart", "source_url": "https://www.bigrentz.com/blog/diesel-generator-fuel-consumption-chart"}
-   ]
+   ],
+   "primary_datasheets": {
+    "_note": "Full audit 2026-10-15 WL-148 [ENGINEER]: the chart rows above name no original publisher. A maker datasheet for a small set: Cummins C22 D5 (data sheet DS340-CPGK, copy hosted by a distributor). At prime rating it uses more than the curve at quarter load (2.5 against about 1.8 L/h) and close to it at full load (5.2 against 4.8 L/h). Curve unchanged until the engineer decides.",
+    "checked": "2026-10-15",
+    "points": [
+     {"model": "Cummins C22 D5, 16 kW prime / 18 kW standby, 50 Hz", "prime_l_per_h": {"quarter": 2.5, "half": 3.2, "three_quarter": 4.1, "full": 5.2}, "standby_l_per_h": {"quarter": 2.5, "half": 3.4, "three_quarter": 4.4, "full": 5.6}, "source_url": "https://yorpower.com/wp-content/uploads/2025/07/C22D5.pdf", "opened": "2026-10-15"}
+    ]
+   }
   }
  },
  "prices": {

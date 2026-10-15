@@ -1250,7 +1250,7 @@
     }
    ],
    "how": {
-    "tpl": "Running watts: {{out.running_w|int}} W. Starting watts (running watts plus the largest start jump): {{out.peak_w|int}} W. Running watts × {{out.margin|2}} margin is compared with the starting watts; the larger, {{out.sized_w|int}} W, is what a generator must deliver (an inverter is checked on two ratings instead: its continuous rating against the running watts × margin, its surge rating against the starting watts). {{out.sized_w|int}} W ÷ {{out.pf|2}} ÷ 1,000 = {{out.recommended_kva|2}} kVA, so a {{out.standard_kva|1}} kVA generator.",
+    "tpl": "Running watts: {{out.running_w|int}} W. Starting watts (running watts plus the largest start jump): {{out.peak_w|int}} W. Running watts × {{out.margin|2}} margin is compared with the starting watts; the larger, {{out.sized_w|int}} W, is what a generator must deliver (an inverter is checked on two ratings instead: its continuous rating against the running watts × margin, its surge rating against the starting watts). {{out.sized_w|int}} W ÷ {{out.pf|2}} ÷ 1,000 = {{out.recommended_kva|up2}} kVA, so a {{out.standard_kva|1}} kVA generator.",
     "text": "Running watts: 200 W. Starting watts (running watts plus the largest start jump): 1,200 W. Running watts × 1.25 margin is compared with the starting watts; the larger, 1,200 W, is what a generator must deliver (an inverter is checked on two ratings instead: its continuous rating against the running watts × margin, its surge rating against the starting watts). 1,200 W ÷ 0.8 ÷ 1,000 = 1.5 kVA, so a 2.5 kVA generator."
    },
    "submit": "Compare the watts",
@@ -1266,7 +1266,7 @@
   "examples": [
    {
     "title": "Electric iron: running and starting watts are equal",
-    "text": "Running 1,000 W, starting 1,000 W. With no start surge the running watts × 1.25 = 1,250 W decide the generator: 1.56 kVA, so the smallest common size, 2.5 kVA."
+    "text": "Running 1,000 W, starting 1,000 W. With no start surge the running watts × 1.25 = 1,250 W decide the generator: 1.57 kVA, so the smallest common size, 2.5 kVA."
    },
    {
     "title": "Inverter fridge: a small start",

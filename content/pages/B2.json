@@ -76,6 +76,14 @@
    "hint": "As a decimal. Enter 1 for a DC load wired straight to the battery."
   },
   {
+   "name": "idle_w",
+   "label": "Inverter idle draw",
+   "unit": "W",
+   "default": "@data.appliances.ups-idle.running_w",
+   "advanced": true,
+   "hint": "What the UPS or inverter uses itself, even with nothing plugged in (no-load current × battery volts on its label). Not counted when inverter efficiency is one (a DC load)."
+  },
+  {
    "name": "dod",
    "label": "Usable depth of discharge",
    "unit": "0 to 1",
@@ -91,28 +99,29 @@
    "spec": "hm"
   },
   {
-   "key": "usable_wh",
+   "key": "stored_wh",
    "label": "Usable energy",
    "spec": "int",
    "unit": "Wh"
   }
  ],
- "answer": "A {{in.ah|int}} Ah, {{in.volts|int}} V lead-acid battery runs a {{in.load_w|int}} W load through an inverter for about {{out.hours|hm}}, using only the {{out.dod|pct}} of its capacity that is safe to use. Runtime in hours equals Ah × volts × usable depth of discharge × inverter efficiency ÷ load watts; for a DC load set the efficiency to one.",
- "how": "{{in.ah}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable × {{out.inverter_eff|pct}} inverter efficiency = {{out.usable_wh|int}} Wh usable. {{out.usable_wh|int}} Wh ÷ {{in.load_w}} W = {{out.hours|2}} hours, about {{out.hours|hm}}.",
+ "answer": "A {{in.ah|int}} Ah, {{in.volts|int}} V lead-acid battery runs a {{in.load_w|int}} W load through an inverter for about {{out.hours|hm}}, using only the {{out.dod|pct}} of its capacity that is safe to use. Runtime in hours equals Ah × volts × usable depth of discharge ÷ (load watts ÷ inverter efficiency + the inverter's idle draw); for a DC load set the efficiency to one.",
+ "how": "{{in.ah}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable = {{out.stored_wh|int}} Wh in the battery. The battery gives {{in.load_w}} W ÷ {{out.inverter_eff|pct}} inverter efficiency + {{out.idle_w}} W the inverter draws itself = {{out.battery_w|1}} W. {{out.stored_wh|int}} Wh ÷ {{out.battery_w|1}} W = {{out.hours|2}} hours, about {{out.hours|hm}}.",
  "key_facts": [
-  "Runtime of a {{in.volts|int}} V battery in hours = Ah × {{in.volts|int}} V × usable depth of discharge × inverter efficiency ÷ load in watts.",
-  "A {{in.ah|int}} Ah, {{in.volts|int}} V lead-acid battery stores about {{out.usable_wh|int}} Wh of usable energy through an inverter, which runs a {{in.load_w|int}} W load for about {{out.hours|hm}} or a {{ex.1.in.load_w|int}} W load for about {{ex.1.out.hours|hm}}.",
+  "Runtime of a {{in.volts|int}} V battery in hours = Ah × {{in.volts|int}} V × usable depth of discharge ÷ (load watts ÷ inverter efficiency + the inverter's idle draw).",
+  "A {{in.ah|int}} Ah, {{in.volts|int}} V lead-acid battery stores about {{out.stored_wh|int}} Wh of usable energy, which through an inverter runs a {{in.load_w|int}} W load for about {{out.hours|hm}} or a {{ex.1.in.load_w|int}} W load for about {{ex.1.out.hours|hm}}.",
   "Lead-acid, AGM and gel batteries should be used to about {{d.dod_lead_acid|pct}} of their rating; lithium (LiFePO4) batteries to about {{d.dod_lifepo4|pct}}, so a lithium battery of the same Ah runs almost twice as long.",
-  "An inverter running at about {{d.inverter_eff_ups|pct}} efficiency turns the rest of the battery energy into heat; a DC load wired straight to the battery has no inverter loss."
+  "An inverter running at about {{d.inverter_eff_ups|pct}} efficiency turns the rest of the battery energy into heat; the inverter also draws about {{data.appliances.ups-idle.running_w|int}} W itself while it is on. A DC load wired straight to the battery has neither loss."
  ],
  "formula": {
-  "text": "t = (Ah × V × DoD × η) ÷ P",
+  "text": "t = (Ah × V × DoD) ÷ (P ÷ η + P_idle)",
   "lines": [
    "t = runtime in hours",
    "Ah = battery capacity in amp hours",
    "V = battery voltage (nominal)",
    "DoD = usable depth of discharge",
    "η = inverter efficiency (1 for a DC load)",
+   "P_idle = the inverter's own draw with no load (from its label; none for a DC load)",
    "P = load in watts"
   ]
  },
@@ -120,7 +129,7 @@
   {
    "h2": "How long will a {{in.volts|int}} V battery run a {{in.load_w|int}} W load?",
    "p": [
-    "A {{in.ah|int}} Ah, {{in.volts|int}} V lead-acid battery runs a {{in.load_w|int}} W AC load for about {{out.hours|hm}} through an inverter. The same load wired as DC, with no inverter, runs about one sixth longer because the inverter loss of about {{d.inverter_eff_ups|pct}} efficiency disappears. A {{ex.2.in.ah|int}} Ah lithium battery at {{ex.2.in.volts|1}} V stores about {{ex.2.out.usable_wh|int}} Wh usable, so it runs the same {{in.load_w|int}} W load for roughly twice as long.",
+    "A {{in.ah|int}} Ah, {{in.volts|int}} V lead-acid battery runs a {{in.load_w|int}} W AC load for about {{out.hours|hm}} through an inverter. The same load wired as DC, with no inverter, runs longer, because there is no inverter loss (about {{d.inverter_eff_ups|pct}} efficiency) and no idle draw of the inverter itself. A {{ex.2.in.ah|int}} Ah lithium battery at {{ex.2.in.volts|1}} V stores about {{ex.2.out.stored_wh|int}} Wh usable, so it runs the same {{in.load_w|int}} W load for roughly twice as long.",
     "The result does not depend on your mains voltage. Whether the inverter puts out {{d.v_1ph|int}} V as in Pakistan, the UK and Europe, or {{d.v_1ph_us|int}} V as in the US and Canada, the battery side is the same {{in.volts|int}} V and the watts drawn are the same."
    ]
   },
@@ -140,7 +149,7 @@
     "load_w": 100
    },
    "title": "{{in.ah|int}} Ah battery with a {{in.load_w|int}} W load through an inverter",
-   "text": "{{in.ah|int}} Ah × {{in.volts|int}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}} = {{out.usable_wh|int}} Wh usable. {{out.usable_wh|int}} Wh ÷ {{in.load_w|int}} W = about {{out.hours|hm}}."
+   "text": "{{in.ah|int}} Ah × {{in.volts|int}} V × {{out.dod|pct}} = {{out.stored_wh|int}} Wh usable. {{out.stored_wh|int}} Wh ÷ {{out.battery_w|int}} W from the battery = about {{out.hours|hm}}."
   },
   {
    "inputs": {
@@ -149,7 +158,7 @@
     "load_w": 1000
    },
    "title": "{{in.ah|int}} Ah battery with a {{in.load_w|int}} W load (microwave or kettle)",
-   "text": "The same {{out.usable_wh|int}} Wh ÷ {{in.load_w|int}} W = about {{out.hours|hm}}. At this rate the inverter pulls well over eighty amps from the battery, and a lead-acid battery drained this fast gives less than its label Ah, so expect even less in practice."
+   "text": "The same {{out.stored_wh|int}} Wh ÷ {{out.battery_w|int}} W from the battery = about {{out.hours|hm}}. At this rate the inverter pulls well over eighty amps from the battery, and a lead-acid battery drained this fast gives less than its label Ah, so expect even less in practice."
   },
   {
    "inputs": {
@@ -159,7 +168,7 @@
     "load_w": 300
    },
    "title": "{{in.ah|int}} Ah lithium battery with a {{in.load_w|int}} W load",
-   "text": "{{in.ah|int}} Ah × {{in.volts|1}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}} = {{out.usable_wh|int}} Wh usable, which runs {{in.load_w|int}} W (a TV with a few fans, or a small compressor fridge at full duty) for about {{out.hours|hm}}."
+   "text": "{{in.ah|int}} Ah × {{in.volts|1}} V × {{out.dod|pct}} = {{out.stored_wh|int}} Wh usable, which runs {{in.load_w|int}} W (a TV with a few fans, or a small compressor fridge at full duty) for about {{out.hours|hm}}."
   },
   {
    "inputs": {
@@ -169,7 +178,7 @@
     "inverter_eff": 1
    },
    "title": "{{in.volts|int}} V compressor fridge, {{in.load_w|int}} W average, wired as DC",
-   "text": "A {{in.volts|int}} V camping or car fridge draws more when the compressor runs and nothing when it rests; its average over a day is about {{in.load_w|int}} W. With inverter efficiency set to one: {{in.ah|int}} Ah × {{in.volts|int}} V × {{out.dod|pct}} = {{out.usable_wh|int}} Wh, ÷ {{in.load_w|int}} W = about {{out.hours|hm}}."
+   "text": "A {{in.volts|int}} V camping or car fridge draws more when the compressor runs and nothing when it rests; its average over a day is about {{in.load_w|int}} W. With inverter efficiency set to one: {{in.ah|int}} Ah × {{in.volts|int}} V × {{out.dod|pct}} = {{out.stored_wh|int}} Wh, ÷ {{out.battery_w|int}} W from the battery = about {{out.hours|hm}}."
   },
   {
    "inputs": {
@@ -178,11 +187,11 @@
     "load_w": 500
    },
    "title": "{{in.ah|int}} Ah deep cycle battery with a {{in.load_w|int}} W load",
-   "text": "{{in.ah|int}} Ah × {{in.volts|int}} V × {{out.dod|pct}} × {{out.inverter_eff|pct}} = {{out.usable_wh|int}} Wh usable. {{out.usable_wh|int}} Wh ÷ {{in.load_w|int}} W = about {{out.hours|hm}}."
+   "text": "{{in.ah|int}} Ah × {{in.volts|int}} V × {{out.dod|pct}} = {{out.stored_wh|int}} Wh usable. {{out.stored_wh|int}} Wh ÷ {{out.battery_w|int}} W from the battery = about {{out.hours|hm}}."
   }
  ],
  "table": {
-  "caption": "Runtime of a {{in.volts|int}} V lead-acid battery through an inverter ({{d.dod_lead_acid|pct}} usable, {{d.inverter_eff_ups|pct}} inverter efficiency)",
+  "caption": "Runtime of a {{in.volts|int}} V lead-acid battery through an inverter ({{d.dod_lead_acid|pct}} usable, {{d.inverter_eff_ups|pct}} inverter efficiency, {{data.appliances.ups-idle.running_w|int}} W idle draw)",
   "rows": [
    {
     "ah": 100,
@@ -228,7 +237,7 @@
    },
    {
     "label": "Usable energy",
-    "tpl": "{{out.usable_wh|int}} Wh"
+    "tpl": "{{out.stored_wh|int}} Wh"
    },
    {
     "label": "Runtime",
@@ -247,11 +256,11 @@
  "faq": [
   {
    "q": "How long will a {{in.volts|int}} V battery last?",
-   "a": "Divide the usable watt-hours by the load watts. A {{in.ah|int}} Ah lead-acid battery has about {{out.usable_wh|int}} Wh usable through an inverter, so it lasts about {{out.hours|hm}} at {{in.load_w|int}} W, about {{ex.4.out.hours|hm}} at {{ex.4.in.load_w|int}} W if it is a {{ex.4.in.ah|int}} Ah battery, and about {{ex.1.out.hours|hm}} at {{ex.1.in.load_w|int}} W."
+   "a": "Divide the usable watt-hours by what the inverter takes from the battery: the load watts ÷ its efficiency, plus its own idle draw. A {{in.ah|int}} Ah lead-acid battery has about {{out.stored_wh|int}} Wh usable, so it lasts about {{out.hours|hm}} at {{in.load_w|int}} W, about {{ex.4.out.hours|hm}} at {{ex.4.in.load_w|int}} W if it is a {{ex.4.in.ah|int}} Ah battery, and about {{ex.1.out.hours|hm}} at {{ex.1.in.load_w|int}} W."
   },
   {
    "q": "A {{in.ah|int}} Ah battery gives how many hours?",
-   "a": "About {{out.hours|hm}} at {{in.load_w|int}} W through an inverter, or about {{ex.2.out.hours|hm}} at {{ex.2.in.load_w|int}} W if it is a {{ex.2.in.volts|1}} V lithium battery. The hours fall in proportion as the load rises."
+   "a": "About {{out.hours|hm}} at {{in.load_w|int}} W through an inverter, or about {{ex.2.out.hours|hm}} at {{ex.2.in.load_w|int}} W if it is a {{ex.2.in.volts|1}} V lithium battery. The hours fall almost in proportion as the load rises."
   },
   {
    "q": "Can a {{in.volts|int}} V {{in.ah|int}} Ah battery run a {{ex.1.in.load_w|int}} W load?",
@@ -271,7 +280,7 @@
   },
   {
    "q": "How do I work out the discharge time of a {{in.volts|int}} V battery?",
-   "a": "Discharge time in hours = Ah × {{in.volts|int}} V × usable depth of discharge × inverter efficiency ÷ load watts. For a DC load drop the inverter efficiency; for a quick check, usable Wh ÷ watts gives the hours and Ah × depth of discharge ÷ amps gives the same answer."
+   "a": "Discharge time in hours = Ah × {{in.volts|int}} V × usable depth of discharge ÷ (load watts ÷ inverter efficiency + the inverter's idle draw). For a DC load drop the inverter efficiency and the idle draw; then usable Wh ÷ watts gives the hours and Ah × depth of discharge ÷ amps gives the same answer."
   }
  ],
  "related": [

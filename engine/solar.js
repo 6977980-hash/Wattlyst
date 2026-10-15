@@ -1,5 +1,5 @@
 // D. Solar (specs/formulas.md section D) and solar tools from section G.
-import { calculator, CalcError, has, pos, frac, nonneg, ceilSafe, dflt, num, appliance, bool } from './core.js';
+import { calculator, CalcError, has, pos, frac, ceilSafe, dflt, num, appliance, bool } from './core.js';
 import { sumLoads, loadRows } from './sizing.js';
 
 /** Specific yield (kWh/kWp/day): explicit input > city from data/cities-pk.json > PSH × PR. */
@@ -54,7 +54,7 @@ export const panel_for_12v = calculator((i, d) => {
   const ah = pos(i, 'ah');
   const volts = pos(i, 'volts');
   const dod = frac(i, 'dod', dflt(d, 'dod_lead_acid'));
-  const psh = pos(i, 'psh');
+  const psh = num(i, 'psh', { gt: 0, max: dflt(d, 'psh_max') }); // a day has at most about twelve sun hours (WL-129)
   const charge_eff = frac(i, 'charge_eff', dflt(d, 'charge_eff_lead_acid'));
   const pr = frac(i, 'pr', dflt(d, 'pr'));
   const panel_w = (ah * volts * dod) / charge_eff / (psh * pr);
@@ -67,10 +67,12 @@ export const panel_for_12v = calculator((i, d) => {
     fitted_w = standard_panel_w;
   } else {
     out.panels_of_largest = ceilSafe(panel_w / sizes[sizes.length - 1]);
+    out.panel_above_standard_sizes = true; // the notice says the sizes shown are minimums (WL-131)
     fitted_w = out.panels_of_largest * sizes[sizes.length - 1];
   }
   // Charging time with the fitted panel on a sunny day, and the MPPT controller it needs (formulas.md D).
   out.fitted_panel_w = fitted_w;
+  out.panels_fitted = out.panels_of_largest ?? 1;
   out.charge_hours = (ah * volts * dod) / charge_eff / (fitted_w * pr);
   out.charge_days = out.charge_hours / psh;
   const margin = num(i, 'margin', { def: dflt(d, 'margin'), min: 1 });
@@ -93,7 +95,7 @@ function solarSystem(daily_kwh, running_w, surge_w, i, d, power = true) {
   const panel_w = pos(i, 'panel_w', dflt(d, 'panel_w'));
   const pr = frac(i, 'pr', dflt(d, 'pr'));
   const margin = num(i, 'margin', { def: dflt(d, 'margin'), min: 1 });
-  const night_hours = nonneg(i, 'night_hours', 0);
+  const night_hours = num(i, 'night_hours', { def: 0, min: 0, max: 24 });
   let bat = null;
   let night_kwh = 0;
   if (night_hours > 0) {
@@ -147,7 +149,7 @@ function solarSystem(daily_kwh, running_w, surge_w, i, d, power = true) {
  */
 export const solar_for_ac = calculator((i, d) => {
   const ac = appliance(d, i.ac, 'ac');
-  const hours = nonneg(i, 'hours', ac.typical_hours_per_day ?? 0);
+  const hours = num(i, 'hours', { def: ac.typical_hours_per_day ?? 0, min: 0, max: 24 });
   const avg_w = ac.avg_w ?? ac.running_w;
   const daily_kwh = (avg_w * hours) / 1000;
   return { ac: i.ac.trim(), ac_name: ac.name, ac_run_w: ac.running_w, ac_start_w: ac.starting_w, ac_avg_w: avg_w, hours, ...solarSystem(daily_kwh, ac.running_w, ac.starting_w, i, d) };
@@ -174,7 +176,7 @@ export const solar_from_loads = calculator((i, d) => {
 export const solar_for_pump = calculator((i, d) => {
   const hp = pos(i, 'hp');
   const motor_eff = frac(i, 'motor_eff', dflt(d, 'motor_eff'));
-  const hours = pos(i, 'hours');
+  const hours = num(i, 'hours', { gt: 0, max: 24 });
   const pump_w = (hp * dflt(d, 'w_per_hp')) / motor_eff;
   const sys = solarSystem((pump_w * hours) / 1000, pump_w, pump_w, i, d);
   // motor_kw = rated shaft output; the drive is chosen at or above it (and the nameplate current), never below the input × margin floor.

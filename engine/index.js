@@ -19,8 +19,9 @@ import * as seasonal from './seasonal.js';
 import * as circuits from './circuits.js';
 import * as backup from './backup.js';
 import * as decision from './decision.js';
+import * as offgrid from './offgrid.js';
 
-const modules = { conversions, battery, sizing, solar, bill, load, wiring, planner, prices, forecast, fuel, solartools, acbill, sanction, seasonal, circuits, backup, decision };
+const modules = { conversions, battery, sizing, solar, bill, load, wiring, planner, prices, forecast, fuel, solartools, acbill, sanction, seasonal, circuits, backup, decision, offgrid };
 
 export const calculators = {};
 for (const mod of Object.values(modules)) {

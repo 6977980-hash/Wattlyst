@@ -57,7 +57,7 @@
     "h2": "Generator for a submersible pump or tubewell",
     "p": [
      "The same formula applies, but submersible and tubewell motors are larger. A 1.5 hp submersible with 300 W of lights running needs a 6.5 kVA generator, and a 3 hp tubewell pump needs 12.5 kVA on its own because its starting surge is about 8,389 W.",
-     "Pumps larger than those listed here need a generator above 30 kVA. For such a pump the calculator reports the kVA but no standard size, and a three-phase generator with a soft starter is the usual answer; have an engineer size it."
+     "A pump whose start needs more than the largest set listed here, 30 kVA, gets no standard size. For such a pump the calculator reports the kVA but no standard size, and a three-phase generator with a soft starter is the usual answer; have an engineer size it."
     ]
    },
    {
@@ -71,7 +71,7 @@
   "faq": [
    {
     "q": "What size generator do I need for a 1 hp water pump?",
-    "a": "A 1 hp pump draws about 932 W running and 2,796 W starting, so it needs a 3.5 kVA generator. That size also carries a few lights and fans."
+    "a": "A 1 hp pump draws about 932 W running and 2,796 W starting, so it needs a 3.5 kVA generator. With 100 W of lights and a fan on as well it needs 5 kVA, so enter what else runs with the pump."
    },
    {
     "q": "What size generator runs a 2 hp pump?",
@@ -87,7 +87,7 @@
    },
    {
     "q": "Can a small generator run a well pump if I start it with nothing else on?",
-    "a": "Only if it can supply the starting surge. Switching off the lights lowers the running load a little, but the surge of the pump itself does not change, and that is what decides the generator size. A generator below the calculated kVA will stall or trip when the pump starts."
+    "a": "Only if it can supply the starting surge on top of whatever else is running. Switching the lights and fans off before you start the pump lowers that peak, and on a set sized close to the pump that can decide whether it starts. A generator below the calculated kVA will stall or trip when the pump starts."
    },
    {
     "q": "Is the generator size different at 120 V or 230 V?",
@@ -102,7 +102,7 @@
    "A 1 hp water pump needs about 932 W of electrical input while running (1 hp × 745.7 W ÷ 80% motor efficiency) and about 2,796 W while starting.",
    "Generator size in kVA = the larger of (running watts × 1.25) or (starting watts) ÷ 0.8 power factor ÷ 1,000, rounded up to the next standard generator size.",
    "A pump motor draws about 3 times its running watts for a second or two when it starts, and that starting surge, not the running watts, usually decides the generator size.",
-   "A 1 hp pump alone needs a 3.5 kVA generator; adding lights and fans raises the running load but rarely changes the size, because the starting surge still dominates."
+   "A 1 hp pump alone needs a 3.5 kVA generator; that size has almost nothing to spare, so with 100 W of lights and a fan running as well it moves up to 5 kVA, because the pump's start comes on top of everything already on."
   ],
   "mistakes": [
    "Sizing for the running watts only. The pump starts at about 3 times its running watts, and a generator that cannot supply that surge stalls or trips every time the pump starts.",
@@ -266,8 +266,8 @@
     "text": "A 3 hp motor runs at 2,796 W and starts at about 8,389 W. That surge sets the size: 10.49 kVA calculated, 12.5 kVA to buy."
    },
    {
-    "title": "0.5 hp small pump",
-    "text": "466 W running and 1,398 W starting give 1.75 kVA, so the smallest common generator, 2.5 kVA, is enough with room for lights and fans."
+    "title": "1 hp pump with a fan and a few lights on",
+    "text": "932 W pump + 100 W of lights and a fan = 1,032 W running; the pump's start comes on top of that load, so the set needs 3.63 kVA and the next size is 5 kVA. The pump alone fits on a smaller set with almost nothing to spare."
    },
    {
     "title": "2 hp pump on its own",
@@ -436,7 +436,7 @@
       "name": "What size generator do I need for a 1 hp water pump?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "A 1 hp pump draws about 932 W running and 2,796 W starting, so it needs a 3.5 kVA generator. That size also carries a few lights and fans."
+       "text": "A 1 hp pump draws about 932 W running and 2,796 W starting, so it needs a 3.5 kVA generator. With 100 W of lights and a fan on as well it needs 5 kVA, so enter what else runs with the pump."
       }
      },
      {
@@ -468,7 +468,7 @@
       "name": "Can a small generator run a well pump if I start it with nothing else on?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Only if it can supply the starting surge. Switching off the lights lowers the running load a little, but the surge of the pump itself does not change, and that is what decides the generator size. A generator below the calculated kVA will stall or trip when the pump starts."
+       "text": "Only if it can supply the starting surge on top of whatever else is running. Switching the lights and fans off before you start the pump lowers that peak, and on a set sized close to the pump that can decide whether it starts. A generator below the calculated kVA will stall or trip when the pump starts."
       }
      },
      {

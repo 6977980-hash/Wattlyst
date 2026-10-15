@@ -1249,7 +1249,7 @@
     {
      "key": "recommended_kva",
      "label": "Calculated minimum",
-     "spec": "2",
+     "spec": "up2",
      "unit": "kVA",
      "label_ur": "Hisab se kam az kam",
      "value": "6.11"
@@ -1272,7 +1272,7 @@
     }
    ],
    "how": {
-    "tpl": "Your list runs at {{out.running_w|int}} W in total. When its largest motor starts, the peak is {{out.peak_w|int}} W. The generator is sized on the larger of {{out.running_w|int}} W × {{out.margin|2}} margin and {{out.peak_w|int}} W, which is {{out.sized_w|int}} W; ÷ {{out.pf|2}} power factor ÷ 1,000 = {{out.recommended_kva|2}} kVA, so the next standard size is {{out.standard_kva|1}} kVA.",
+    "tpl": "Your list runs at {{out.running_w|int}} W in total. When its largest motor starts, the peak is {{out.peak_w|int}} W. The generator is sized on the larger of {{out.running_w|int}} W × {{out.margin|2}} margin and {{out.peak_w|int}} W, which is {{out.sized_w|int}} W; ÷ {{out.pf|2}} power factor ÷ 1,000 = {{out.recommended_kva|up2}} kVA, so the next standard size is {{out.standard_kva|1}} kVA.",
     "text": "Your list runs at 3,085 W in total. When its largest motor starts, the peak is 4,885 W. The generator is sized on the larger of 3,085 W × 1.25 margin and 4,885 W, which is 4,885 W; ÷ 0.8 power factor ÷ 1,000 = 6.11 kVA, so the next standard size is 6.5 kVA."
    },
    "submit": "Size my generator",
@@ -1288,7 +1288,7 @@
   "examples": [
    {
     "title": "Loadshedding basics: four fans, ten bulbs, a TV and a non-inverter fridge",
-    "text": "Running load 715 W. The fridge compressor's start lifts the peak to 1,715 W, which is larger than 715 W × 1.25. 1,715 W ÷ 0.8 ÷ 1,000 = 2.14 kVA, so a 2.5 kVA generator."
+    "text": "Running load 715 W. The fridge compressor's start lifts the peak to 1,715 W, which is larger than 715 W × 1.25. 1,715 W ÷ 0.8 ÷ 1,000 = 2.15 kVA, so a 2.5 kVA generator."
    },
    {
     "title": "The example home with the water motor kept off",
@@ -1300,11 +1300,11 @@
    },
    {
     "title": "Home with a non-inverter fridge and a 1.5 ton non-inverter AC",
-    "text": "The running load is 2,515 W, but the AC compressor's start takes the peak to 6,115 W. That needs 7.64 kVA, so the generator to buy is 10 kVA, much larger than the running watts suggest."
+    "text": "The running load is 2,515 W, but the AC compressor's start takes the peak to 6,115 W. That needs 7.65 kVA, so the generator to buy is 10 kVA, much larger than the running watts suggest."
    },
    {
     "title": "Larger house: three inverter ACs, a pump and an iron",
-    "text": "Eight fans, sixteen bulbs, an inverter fridge, two TVs, three 1.5 ton inverter ACs, a 1 hp pump and an iron run at 7,452 W. Here the running load × 1.25 (9,315 W) is larger than the 9,252 W peak, so it sets the size: 11.64 kVA, buy 12.5 kVA."
+    "text": "Eight fans, sixteen bulbs, an inverter fridge, two TVs, three 1.5 ton inverter ACs, a 1 hp pump and an iron run at 7,452 W. Here the running load × 1.25 (9,315 W) is larger than the 9,252 W peak, so it sets the size: 11.65 kVA, buy 12.5 kVA."
    }
   ],
   "table": {
@@ -1319,7 +1319,7 @@
     [
      "715 W",
      "1,715 W",
-     "2.14 kVA",
+     "2.15 kVA",
      "2.5 kVA"
     ],
     [
@@ -1349,7 +1349,7 @@
     [
      "7,452 W",
      "9,252 W",
-     "11.64 kVA",
+     "11.65 kVA",
      "12.5 kVA"
     ]
    ]

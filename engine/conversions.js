@@ -103,7 +103,7 @@ export const units = calculator((i, d) => {
     const volts = pos(i, 'volts');
     return withCost(i, { input, ah, volts, units: (ah * volts) / 1000 });
   }
-  const hours = nonneg(i, 'hours');
+  const hours = nonneg(i, 'hours', undefined, has(i, 'hours') ? undefined : 'hours_per_day_required'); // not the list message (WL-124)
   const days = nonneg(i, 'days', 1);
   let watts;
   const out = { input, hours, days };

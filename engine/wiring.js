@@ -21,13 +21,15 @@ export const voltage_drop = calculator((i, d) => {
   const rho = pos(i, 'rho', dflt(d, conductor === 'aluminium' ? 'rho_aluminium' : 'rho_copper'));
   const circuit = pick(i, 'circuit', ['lighting', 'other'], 'other');
   const k = mode === 'ac3' ? Math.sqrt(3) : 1;
-  const amps = has(i, 'amps') ? pos(i, 'amps') : pos(i, 'watts') / (k * volts * pf);
+  // DC watts are an inverter's output: the battery also supplies its loss, as in designCurrent (WL-121).
+  const eff = mode === 'dc' ? frac(i, 'inverter_eff', dflt(d, 'inverter_eff_hybrid')) : 1;
+  const amps = has(i, 'amps') || !('watts' in i) ? pos(i, 'amps') : pos(i, 'watts') / (k * volts * pf * eff);
   const kv = mode === 'ac3' ? Math.sqrt(3) : 2;
   const drop_v = (kv * length_m * amps * rho) / area_mm2;
   if (drop_v >= volts) throw new CalcError('cable_far_too_small_for_load', 'area_mm2');
   const drop_pct = (drop_v / volts) * 100;
   const limit_pct = circuit === 'lighting' ? dflt(d, 'vdrop_limit_lighting_pct') : dflt(d, 'vdrop_limit_other_pct');
-  const out = { mode, volts, pf, k, kv, length_m, area_mm2, conductor, rho, amps, drop_v, drop_pct, limit_pct, within_limit: drop_pct <= limit_pct, voltage_at_load: volts - drop_v };
+  const out = { mode, volts, pf, k, kv, inverter_eff: eff, length_m, area_mm2, conductor, rho, amps, drop_v, drop_pct, limit_pct, within_limit: drop_pct <= limit_pct, voltage_at_load: volts - drop_v };
   if (conductor === 'aluminium') return { ...out, ampacity_checked: false };
   const t = cableTable(d);
   const method = pick(i, 'method', Object.keys(t.methods), 'B1');
@@ -82,7 +84,9 @@ function derating(i, t) {
  * (starting_w = full-speed draw), other appliances at their running watts. A blank PF on an appliance takes
  * the PF of its load type (data/defaults.json pf_by_load_type), as does a load type picked by hand, so W1, W3 and E4
  * print the same breaker for the same AC.
- * DC has no standard voltage: a blank voltage is an error, never a silent 230 V.
+ * DC has no standard voltage: a blank voltage is an error, never a silent 230 V. DC watts are what an inverter on the
+ * battery delivers, so the battery current is W ÷ (η_inv × V), η_inv default inverter_eff_hybrid; 1 for a DC load
+ * wired straight to the battery (full audit WL-121, [ENGINEER]).
  */
 function designCurrent(i, d, t) {
   const mode = pick(i, 'mode', ['ac1', 'ac3', 'dc'], 'ac1');
@@ -93,7 +97,8 @@ function designCurrent(i, d, t) {
   const load_type = pick(i, 'load_type', Object.keys(t.curve_by_load), a?.load_type ?? 'sockets');
   const pf = mode === 'dc' ? 1 : frac(i, 'pf', d?.defaults?.pf_by_load_type?.[load_type] || dflt(d, 'pf_mixed'));
   const k = mode === 'ac3' ? Math.sqrt(3) : 1;
-  const out = { mode, volts, pf, k };
+  const eff = mode === 'dc' ? frac(i, 'inverter_eff', dflt(d, 'inverter_eff_hybrid')) : 1;
+  const out = { mode, volts, pf, k, inverter_eff: eff };
   let watts;
   let ib;
   if (a) {
@@ -105,7 +110,7 @@ function designCurrent(i, d, t) {
     watts = ib * k * volts * pf;
   } else {
     watts = pos(i, 'watts');
-    ib = watts / (k * volts * pf);
+    ib = watts / (k * volts * pf * eff);
   }
   return { ...out, watts, ib_a: ib, load_type };
 }
@@ -118,7 +123,9 @@ function breakerFor(dc, i, d, t) {
   const margin = num(i, 'margin', { def: dflt(d, 'margin'), min: 1 });
   const motor = (t.breaker_margin_load_types || []).includes(dc.load_type);
   const breaker_design_a = motor ? dc.ib_a * margin : dc.ib_a;
-  const breaker = dflt(d, 'standard_breaker_a').find((s) => s >= breaker_design_a - 1e-9);
+  // DC battery feeds above the largest MCB take a DC fuse (data/defaults.json standard_dc_fuse_a, WL-121).
+  const sizes = dc.mode === 'dc' ? [...dflt(d, 'standard_breaker_a'), ...dflt(d, 'standard_dc_fuse_a')] : dflt(d, 'standard_breaker_a');
+  const breaker = sizes.find((s) => s >= breaker_design_a - 1e-9);
   if (breaker === undefined) throw new CalcError('load_above_standard_breakers', 'watts');
   return { margin, breaker_design_a, breaker_a: breaker, min_cable_a: Math.max(dc.ib_a * margin, breaker) };
 }
@@ -139,10 +146,11 @@ const pkSizeFor = (t, mm2) => pkFor(t, mm2)?.name ?? 'none';
 export const wire_size = calculator((i, d) => {
   const t = cableTable(d);
   const method = pick(i, 'method', Object.keys(t.methods), 'B1');
-  const circuit = pick(i, 'circuit', ['lighting', 'other'], 'other');
   const length_m = pos(i, 'length_m');
   const rho = pos(i, 'rho', dflt(d, 'rho_copper'));
   const dc = designCurrent(i, d, t);
+  // A lighting load is a lighting circuit (its minimum size and drop limit), as on W3, unless the circuit is entered (WL-125).
+  const circuit = pick(i, 'circuit', ['lighting', 'other'], dc.load_type === 'lighting' ? 'lighting' : 'other');
   const br = breakerFor(dc, i, d, t);
   const der = derating(i, t);
   const iz = (c) => ratingAt30(c, method, dc.mode) * der.derate;
@@ -197,7 +205,10 @@ export const cable_rating = calculator((i, d) => {
   const volts = pos(i, 'volts', dflt(d, 'v_1ph'));
   const pf = frac(i, 'pf', dflt(d, 'pf_mixed'));
   const pk = t.pk_sizes.find((p) => p.rated_as_mm2 === c.area_mm2);
-  const out = { area_mm2: c.area_mm2, ampacity_b1_a: c.ampacity_a.B1, ampacity_c_a: c.ampacity_a.C, volts, pf, max_w_b1: c.ampacity_a.B1 * volts * pf, max_w_c: c.ampacity_a.C * volts * pf };
+  const der = derating(i, t); // formulas.md W: derated everywhere (WL-126)
+  const b1 = c.ampacity_a.B1 * der.derate;
+  const cm = c.ampacity_a.C * der.derate;
+  const out = { area_mm2: c.area_mm2, ...der, ampacity_30c_b1_a: c.ampacity_a.B1, ampacity_30c_c_a: c.ampacity_a.C, ampacity_b1_a: b1, ampacity_c_a: cm, volts, pf, max_w_b1: b1 * volts * pf, max_w_c: cm * volts * pf };
   if (pk) Object.assign(out, { pk_size: pk.name, pk_area_mm2: pk.area_mm2, pk_strands: pk.strands, pk_strand_mm: pk.strand_in * 25.4 });
   return out;
 });

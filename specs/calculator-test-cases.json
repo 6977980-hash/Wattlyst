@@ -240,10 +240,10 @@
       "load_w": 300
     },
     "expected": {
-      "hours": 3.4
+      "hours": 3.1336
     },
     "tolerance": 0.01,
-    "note": ""
+    "note": "battery draw = load ÷ η + idle 30 W (full audit WL-120)"
   },
   {
     "calc": "battery_runtime",
@@ -257,10 +257,10 @@
       "load_w": 100
     },
     "expected": {
-      "hours": 5.1
+      "hours": 4.0637
     },
     "tolerance": 0.01,
-    "note": ""
+    "note": "battery draw = load ÷ η + idle 30 W (full audit WL-120)"
   },
   {
     "calc": "battery_runtime",
@@ -277,7 +277,7 @@
       "hours": 11.52
     },
     "tolerance": 0.01,
-    "note": "DC load: no inverter loss"
+    "note": "DC load: no inverter loss; battery draw = load ÷ η + idle 0 W (full audit WL-120)"
   },
   {
     "calc": "battery_runtime",
@@ -290,10 +290,10 @@
       "load_w": 500
     },
     "expected": {
-      "hours": 3.06
+      "hours": 2.9115
     },
     "tolerance": 0.01,
-    "note": "two 12V in series = 24V, same Ah"
+    "note": "two 12V in series = 24V, same Ah; battery draw = load ÷ η + idle 30 W (full audit WL-120)"
   },
   {
     "calc": "battery_runtime",
@@ -324,13 +324,13 @@
       "battery_v": 12
     },
     "expected": {
-      "ah_required": 196.0784,
-      "batteries": 2,
-      "strings": 1,
+      "ah_required": 206.0784,
+      "batteries": 4,
+      "strings": 2,
       "series": 2
     },
     "tolerance": 0.1,
-    "note": "24V bank of 12V 200Ah batteries: 2 in series, ceil(196.1/200)=1 string"
+    "note": "24V bank of 12V 200Ah batteries: 2 in series, ceil(196.1/200)=1 string; battery draw = load ÷ η + idle 30 W (full audit WL-120)"
   },
   {
     "calc": "battery_bank",
@@ -343,10 +343,10 @@
       "inverter_eff": 0.9
     },
     "expected": {
-      "ah_required": 144.6759
+      "ah_required": 146.6291
     },
     "tolerance": 0.1,
-    "note": ""
+    "note": "battery draw = load ÷ η + idle 30 W (full audit WL-120)"
   },
   {
     "calc": "loadshedding",
@@ -1453,10 +1453,10 @@
     },
     "expected": {
       "dod": 0.9,
-      "hours": 5.184
+      "hours": 4.5674
     },
     "tolerance": 0.001,
-    "note": "edge case"
+    "note": "edge case; battery draw = load ÷ η + idle 30 W (full audit WL-120)"
   },
   {
     "calc": "battery_runtime",
@@ -1545,13 +1545,13 @@
       "battery_v": 12
     },
     "expected": {
-      "ah_required": 367.6471,
+      "ah_required": 373.8971,
       "strings": 3,
       "series": 4,
       "batteries": 12
     },
     "tolerance": 0.01,
-    "note": "edge case"
+    "note": "edge case; battery draw = load ÷ η + idle 30 W (full audit WL-120)"
   },
   {
     "calc": "loadshedding",
@@ -2847,11 +2847,11 @@
       "max_w": 600,
       "load_pct": 50,
       "can_run": true,
-      "usable_wh": 765,
-      "hours": 2.55
+      "hours": 2.3502,
+      "stored_wh": 900.0
     },
     "tolerance": 0.001,
-    "note": "PF 0.6 line-interactive default; 150x12x0.5x0.85/300"
+    "note": "PF 0.6 line-interactive default; 150x12x0.5x0.85/300; battery draw = load ÷ η + idle 30 W (full audit WL-120)"
   },
   {
     "calc": "ups_backup",
@@ -2899,11 +2899,11 @@
       "inverter_eff": 1
     },
     "expected": {
-      "usable_wh": 1152,
-      "hours": 5.76
+      "hours": 5.76,
+      "stored_wh": 1152.0
     },
     "tolerance": 0.001,
-    "note": "Phase 3"
+    "note": "Phase 3; battery draw = load ÷ η + idle 0 W (full audit WL-120)"
   },
   {
     "calc": "solar_for_ac",
@@ -3345,15 +3345,15 @@
       "ambient_c": 30
     },
     "expected": {
-      "ib_a": 41.6667,
+      "ib_a": 46.2963,
       "breaker_a": 50,
-      "min_cable_a": 52.0833,
-      "area_mm2": 10,
-      "drop_pct": 3.9063,
-      "pk_size": "7/64"
+      "min_cable_a": 57.8704,
+      "area_mm2": 16,
+      "drop_pct": 2.7127,
+      "pk_size": "19/44"
     },
     "tolerance": 0.01,
-    "note": "PF forced to 1 for DC; Audit 2026-10-14 (WL-09): a PK size is used only when its real area is at least the IEC size. 7/52 is 9.59 mm2, below 10."
+    "note": "PF forced to 1 for DC; Audit 2026-10-14 (WL-09): a PK size is used only when its real area is at least the IEC size. 7/52 is 9.59 mm2, below 10.; full audit 2026-10-15 WL-121: DC watts ÷ (η_inv 0.9 × V)"
   },
   {
     "calc": "wire_size",
@@ -3459,7 +3459,8 @@
     "calc": "cable_rating",
     "name": "2.5 mm2 = 7/29",
     "inputs": {
-      "area_mm2": 2.5
+      "area_mm2": 2.5,
+      "ambient_c": 30
     },
     "expected": {
       "ampacity_b1_a": 24,
@@ -3469,7 +3470,7 @@
       "pk_area_mm2": 2.98
     },
     "tolerance": 0.01,
-    "note": "Phase 3"
+    "note": "Phase 3; ratings at 30 °C (table values), ambient entered (WL-126)"
   },
   {
     "calc": "cable_rating",
@@ -3631,10 +3632,10 @@
       "max_w": 600,
       "load_pct": 100,
       "can_run": true,
-      "hours": 1.275
+      "hours": 1.223
     },
     "tolerance": 0.001,
-    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): boundary; 765 Wh / 600 W"
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): boundary; 765 Wh / 600 W; battery draw = load ÷ η + idle 30 W (full audit WL-120)"
   },
   {
     "calc": "ups_backup",
@@ -3649,11 +3650,11 @@
     "expected": {
       "max_w": 4000,
       "load_pct": 75,
-      "usable_wh": 4080,
-      "hours": 1.36
+      "hours": 1.3485,
+      "stored_wh": 4800.0
     },
     "tolerance": 0.001,
-    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): large; 200 x 48 x 0.5 x 0.85 = 4080 Wh"
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): large; 200 x 48 x 0.5 x 0.85 = 4080 Wh; battery draw = load ÷ η + idle 30 W (full audit WL-120)"
   },
   {
     "calc": "ups_backup",
@@ -4229,15 +4230,15 @@
       "ambient_c": 30
     },
     "expected": {
-      "ib_a": 50,
-      "breaker_a": 50,
-      "min_cable_a": 62.5,
+      "ib_a": 55.5556,
+      "breaker_a": 63,
+      "min_cable_a": 69.4444,
       "area_mm2": 16,
       "ampacity_a": 76,
       "pk_size": "19/44"
     },
     "tolerance": 0.01,
-    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): PF forced to 1; 10 mm2 (57 A) is below 62.5 A; Audit 2026-10-14 (WL-09): a PK size is used only when its real area is at least the IEC size."
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): PF forced to 1; 10 mm2 (57 A) is below 62.5 A; Audit 2026-10-14 (WL-09): a PK size is used only when its real area is at least the IEC size.; full audit 2026-10-15 WL-121: battery current = 2,400 W ÷ (0.9 × 48 V)"
   },
   {
     "calc": "breaker_size",
@@ -4294,7 +4295,8 @@
     "calc": "cable_rating",
     "name": "1 mm2 = 3/29",
     "inputs": {
-      "area_mm2": 1
+      "area_mm2": 1,
+      "ambient_c": 30
     },
     "expected": {
       "ampacity_b1_a": 13.5,
@@ -4306,7 +4308,7 @@
       "pk_strand_mm": 0.7366
     },
     "tolerance": 0.01,
-    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): 13.5 x 230 x 0.8"
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): 13.5 x 230 x 0.8; ratings at 30 °C (table values), ambient entered (WL-126)"
   },
   {
     "calc": "cable_rating",
@@ -4314,7 +4316,8 @@
     "inputs": {
       "area_mm2": 16,
       "volts": 400,
-      "pf": 1
+      "pf": 1,
+      "ambient_c": 30
     },
     "expected": {
       "max_w_b1": 30400,
@@ -4323,13 +4326,14 @@
       "pk_area_mm2": 18.64
     },
     "tolerance": 0.01,
-    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): unit switch; Audit 2026-10-14 (WL-09): a PK size is used only when its real area is at least the IEC size."
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): unit switch; Audit 2026-10-14 (WL-09): a PK size is used only when its real area is at least the IEC size.; ratings at 30 °C (table values), ambient entered (WL-126)"
   },
   {
     "calc": "cable_rating",
     "name": "35 mm2 = 19/64",
     "inputs": {
-      "area_mm2": 35
+      "area_mm2": 35,
+      "ambient_c": 30
     },
     "expected": {
       "ampacity_b1_a": 125,
@@ -4339,7 +4343,7 @@
       "pk_strands": 19
     },
     "tolerance": 0.01,
-    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): 19 x pi x (0.064 x 25.4 / 2)^2"
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): 19 x pi x (0.064 x 25.4 / 2)^2; ratings at 30 °C (table values), ambient entered (WL-126)"
   },
   {
     "calc": "load_check",
@@ -5260,7 +5264,7 @@
     "expected": {
       "psh": 6.58,
       "units": 25.662,
-      "pct_of_typical": 128.471,
+      "pct_of_typical": 129.0196,
       "sky": "Sunny",
       "source": "forecast",
       "rs_value": 1283.1,
@@ -5269,7 +5273,7 @@
       "day_label": "Forecast for 2026-10-15"
     },
     "tolerance": 0.001,
-    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/.; WL-130: % of typical = PSH ÷ city PSH"
   },
   {
     "calc": "solar_forecast",
@@ -5306,11 +5310,11 @@
     },
     "expected": {
       "units": 12.831,
-      "pct_of_typical": 64.235,
+      "pct_of_typical": 64.5098,
       "sky": "Partly cloudy"
     },
     "tolerance": 0.001,
-    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/.; WL-130: % of typical = PSH ÷ city PSH"
   },
   {
     "calc": "solar_forecast",
@@ -8771,5 +8775,655 @@
     },
     "tolerance": 0.01,
     "note": "audit 2026-10-15 (full audit fix Phase 3), WL-118"
+  },
+  {
+    "calc": "ups_backup",
+    "name": "WL-120: 10 W router on 1000 VA UPS, 150 Ah 12 V, idle draw counted",
+    "inputs": {
+      "va": 1000,
+      "ah": 150,
+      "volts": 12,
+      "load_w": 10
+    },
+    "expected": {
+      "idle_w": 30,
+      "battery_w": 41.7647,
+      "hours": 21.5493
+    },
+    "tolerance": 0.001,
+    "note": "full audit MA-02: 900 Wh ÷ (11.76 + 30) W = 21.55 h, not 76.5 h"
+  },
+  {
+    "calc": "battery_runtime",
+    "name": "WL-120: idle draw entered as 0 gives the old Ah × V × DoD × η ÷ P",
+    "inputs": {
+      "ah": 200,
+      "volts": 12,
+      "dod": 0.5,
+      "inverter_eff": 0.85,
+      "load_w": 300,
+      "idle_w": 0
+    },
+    "expected": {
+      "hours": 3.4
+    },
+    "tolerance": 0.001,
+    "note": ""
+  },
+  {
+    "calc": "battery_runtime",
+    "name": "WL-120: DC load (η = 1) has no idle draw even if one is entered",
+    "inputs": {
+      "ah": 100,
+      "volts": 12,
+      "dod": 0.5,
+      "inverter_eff": 1,
+      "load_w": 60,
+      "idle_w": 30
+    },
+    "expected": {
+      "idle_w": 0,
+      "hours": 10
+    },
+    "tolerance": 0.001,
+    "note": ""
+  },
+  {
+    "calc": "battery_bank",
+    "name": "WL-120: bank for 500 W × 4 h at 24 V with a 50 W inverter idle draw",
+    "inputs": {
+      "load_w": 500,
+      "hours": 4,
+      "volts": 24,
+      "dod": 0.5,
+      "inverter_eff": 0.85,
+      "idle_w": 50
+    },
+    "expected": {
+      "ah_required": 212.7451,
+      "battery_kwh_draw": 2.5529
+    },
+    "tolerance": 0.001,
+    "note": ""
+  },
+  {
+    "calc": "battery_runtime",
+    "name": "WL-120: negative idle draw rejected",
+    "inputs": {
+      "ah": 100,
+      "volts": 12,
+      "load_w": 100,
+      "idle_w": -5
+    },
+    "expected": {
+      "error": "idle_w_too_small"
+    },
+    "tolerance": 0,
+    "note": ""
+  },
+  {
+    "calc": "cable_rating",
+    "name": "WL-126: 2.5 mm2 at the default 45 °C air is derated",
+    "inputs": {
+      "area_mm2": 2.5
+    },
+    "expected": {
+      "ambient_c": 45,
+      "ampacity_30c_b1_a": 24,
+      "ampacity_b1_a": 18.96,
+      "max_w_b1": 3488.64
+    },
+    "tolerance": 0.01,
+    "note": "full audit MA-15"
+  },
+  {
+    "calc": "wire_size",
+    "name": "WL-121: 3 kW inverter on 48 V, 3 m (W2 example): battery current with inverter efficiency",
+    "inputs": {
+      "mode": "dc",
+      "volts": 48,
+      "watts": 3000,
+      "length_m": 3
+    },
+    "expected": {
+      "ib_a": 69.4444,
+      "breaker_a": 80,
+      "min_cable_a": 86.8056
+    },
+    "tolerance": 0.01,
+    "note": "full audit MA-03: 69.4 A is above a 63 A device, so the DC fuse list continues above 63 A"
+  },
+  {
+    "calc": "wire_size",
+    "name": "WL-121: DC load wired straight to a 12 V battery (inverter_eff 1)",
+    "inputs": {
+      "mode": "dc",
+      "volts": 12,
+      "watts": 120,
+      "length_m": 2,
+      "inverter_eff": 1
+    },
+    "expected": {
+      "ib_a": 10,
+      "breaker_a": 10
+    },
+    "tolerance": 0.001,
+    "note": ""
+  },
+  {
+    "calc": "wire_size",
+    "name": "WL-125: a lighting load is a lighting circuit when none is entered (same size as W3)",
+    "inputs": {
+      "watts": 400,
+      "load_type": "lighting",
+      "length_m": 5
+    },
+    "expected": {
+      "circuit": "lighting",
+      "area_mm2": 1
+    },
+    "tolerance": 0,
+    "note": "full audit MA-14"
+  },
+  {
+    "calc": "voltage_drop",
+    "name": "WL-124: an amps-only page with a blank current asks for the current",
+    "inputs": {
+      "mode": "dc",
+      "amps": "",
+      "volts": 420,
+      "length_m": 25,
+      "area_mm2": 4
+    },
+    "expected": {
+      "error": "amps_required"
+    },
+    "tolerance": 0,
+    "note": "W4 has no watts field"
+  },
+  {
+    "calc": "solar_offgrid",
+    "name": "WL-128: D3 default house in Lahore, weakest month",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ceiling-fan-ac",
+          "qty": 3,
+          "hours": 12
+        },
+        {
+          "id": "led-bulb",
+          "qty": 8,
+          "hours": 6
+        },
+        {
+          "id": "refrigerator-inverter",
+          "qty": 1,
+          "hours": 10
+        },
+        {
+          "id": "led-tv-43",
+          "qty": 1,
+          "hours": 5
+        },
+        {
+          "id": "water-motor-0-5hp",
+          "qty": 1,
+          "hours": 1
+        },
+        {
+          "id": "wifi-router",
+          "qty": 1,
+          "hours": 24
+        }
+      ],
+      "night_hours": 4,
+      "battery_v": 48,
+      "dod": 0.9,
+      "city": "lahore"
+    },
+    "expected": {
+      "installed_kw": 1.755,
+      "array_kwh": 6.645,
+      "worst_month": "January",
+      "worst_month_kwh": 5.214,
+      "worst_short_kwh": 1.431,
+      "worst_short_pct": 21.5344,
+      "months_short": 4
+    },
+    "tolerance": 0.001,
+    "note": "full audit MD-04: installed kW × pvout_month ÷ days of that month; sizing stays on the yearly yield [ENGINEER]"
+  },
+  {
+    "calc": "solar_offgrid",
+    "name": "WL-128: D3 default house in Karachi, weakest month",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ceiling-fan-ac",
+          "qty": 3,
+          "hours": 12
+        },
+        {
+          "id": "led-bulb",
+          "qty": 8,
+          "hours": 6
+        },
+        {
+          "id": "refrigerator-inverter",
+          "qty": 1,
+          "hours": 10
+        },
+        {
+          "id": "led-tv-43",
+          "qty": 1,
+          "hours": 5
+        },
+        {
+          "id": "water-motor-0-5hp",
+          "qty": 1,
+          "hours": 1
+        },
+        {
+          "id": "wifi-router",
+          "qty": 1,
+          "hours": 24
+        }
+      ],
+      "night_hours": 4,
+      "battery_v": 48,
+      "dod": 0.9,
+      "city": "karachi"
+    },
+    "expected": {
+      "installed_kw": 1.755,
+      "array_kwh": 6.645,
+      "worst_month": "August",
+      "worst_month_kwh": 5.9953,
+      "worst_short_kwh": 0.6497,
+      "worst_short_pct": 9.7773,
+      "months_short": 2
+    },
+    "tolerance": 0.001,
+    "note": "full audit MD-04: installed kW × pvout_month ÷ days of that month; sizing stays on the yearly yield [ENGINEER]"
+  },
+  {
+    "calc": "solar_offgrid",
+    "name": "WL-128: D3 default house in Quetta, weakest month",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ceiling-fan-ac",
+          "qty": 3,
+          "hours": 12
+        },
+        {
+          "id": "led-bulb",
+          "qty": 8,
+          "hours": 6
+        },
+        {
+          "id": "refrigerator-inverter",
+          "qty": 1,
+          "hours": 10
+        },
+        {
+          "id": "led-tv-43",
+          "qty": 1,
+          "hours": 5
+        },
+        {
+          "id": "water-motor-0-5hp",
+          "qty": 1,
+          "hours": 1
+        },
+        {
+          "id": "wifi-router",
+          "qty": 1,
+          "hours": 24
+        }
+      ],
+      "night_hours": 4,
+      "battery_v": 48,
+      "dod": 0.9,
+      "city": "quetta"
+    },
+    "expected": {
+      "installed_kw": 1.755,
+      "array_kwh": 6.645,
+      "worst_month": "January",
+      "worst_month_kwh": 8.3051,
+      "worst_short_kwh": 0,
+      "worst_short_pct": 0.0,
+      "months_short": 0
+    },
+    "tolerance": 0.001,
+    "note": "full audit MD-04: installed kW × pvout_month ÷ days of that month; sizing stays on the yearly yield [ENGINEER]"
+  },
+  {
+    "calc": "solar_offgrid",
+    "name": "WL-128: off-grid without a city (PSH) has no month check",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ceiling-fan-ac",
+          "qty": 3,
+          "hours": 12
+        },
+        {
+          "id": "led-bulb",
+          "qty": 8,
+          "hours": 6
+        },
+        {
+          "id": "refrigerator-inverter",
+          "qty": 1,
+          "hours": 10
+        },
+        {
+          "id": "led-tv-43",
+          "qty": 1,
+          "hours": 5
+        },
+        {
+          "id": "water-motor-0-5hp",
+          "qty": 1,
+          "hours": 1
+        },
+        {
+          "id": "wifi-router",
+          "qty": 1,
+          "hours": 24
+        }
+      ],
+      "night_hours": 4,
+      "battery_v": 48,
+      "dod": 0.9,
+      "psh": 5.1
+    },
+    "expected": {
+      "off_grid": true
+    },
+    "tolerance": 0,
+    "note": ""
+  },
+  {
+    "calc": "solar_for_ac",
+    "name": "WL-129: more than 24 AC hours a day rejected",
+    "inputs": {
+      "ac": "ac-split-1-5ton-inverter",
+      "hours": 25,
+      "city": "lahore"
+    },
+    "expected": {
+      "error": "hours_too_large"
+    },
+    "tolerance": 0,
+    "note": "full audit MD-05"
+  },
+  {
+    "calc": "solar_for_ac",
+    "name": "WL-129: more than 24 night hours rejected",
+    "inputs": {
+      "ac": "ac-split-1-5ton-inverter",
+      "hours": 8,
+      "night_hours": 25,
+      "city": "lahore"
+    },
+    "expected": {
+      "error": "night_hours_too_large"
+    },
+    "tolerance": 0,
+    "note": ""
+  },
+  {
+    "calc": "solar_for_pump",
+    "name": "WL-129: more than 24 pumping hours rejected",
+    "inputs": {
+      "hp": 10,
+      "hours": 25,
+      "city": "multan"
+    },
+    "expected": {
+      "error": "hours_too_large"
+    },
+    "tolerance": 0,
+    "note": ""
+  },
+  {
+    "calc": "solar_for_pump",
+    "name": "WL-129: 24 pumping hours accepted",
+    "inputs": {
+      "hp": 1,
+      "hours": 24,
+      "city": "multan"
+    },
+    "expected": {
+      "hours": 24
+    },
+    "tolerance": 0,
+    "note": "boundary"
+  },
+  {
+    "calc": "panel_for_12v",
+    "name": "WL-129: peak sun hours above 12 rejected",
+    "inputs": {
+      "ah": 100,
+      "volts": 12,
+      "psh": 13
+    },
+    "expected": {
+      "error": "psh_too_large"
+    },
+    "tolerance": 0,
+    "note": "data/defaults.json psh_max"
+  },
+  {
+    "calc": "panel_for_12v",
+    "name": "WL-131: 200 Ah 24 V needs more than the largest panel: two of them, with the notice flag",
+    "inputs": {
+      "ah": 200,
+      "volts": 24,
+      "psh": 5
+    },
+    "expected": {
+      "panel_w": 723.9819,
+      "panels_of_largest": 2,
+      "panels_fitted": 2,
+      "fitted_panel_w": 1170,
+      "panel_above_standard_sizes": true
+    },
+    "tolerance": 0.001,
+    "note": "full audit MD-07"
+  },
+  {
+    "calc": "panel_for_12v",
+    "name": "WL-131: a standard panel fits: one panel",
+    "inputs": {
+      "ah": 100,
+      "volts": 12,
+      "psh": 5
+    },
+    "expected": {
+      "panels_fitted": 1
+    },
+    "tolerance": 0,
+    "note": ""
+  },
+  {
+    "calc": "solar_forecast",
+    "name": "WL-130: typical sun at PR 0.5 is still 100% of a typical day",
+    "inputs": {
+      "kwp": 5,
+      "city": "lahore",
+      "pr": 0.5,
+      "gti_wm2": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        100,
+        300,
+        500,
+        650,
+        750,
+        800,
+        750,
+        600,
+        400,
+        200,
+        50,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "expected": {
+      "psh": 5.1,
+      "pct_of_typical": 100,
+      "sky": "Sunny",
+      "units": 12.75
+    },
+    "tolerance": 0.001,
+    "note": "full audit MD-06"
+  },
+  {
+    "calc": "solar_price_estimate",
+    "name": "WL-132: 1 kW on-grid is below the listed sizes: nearest size's Rs/W, flagged",
+    "inputs": {
+      "kwp": 1,
+      "type": "on-grid"
+    },
+    "expected": {
+      "range_kw_used": 3,
+      "low_confidence": true
+    },
+    "tolerance": 0,
+    "note": "full audit WL-132"
+  },
+  {
+    "calc": "generator_size",
+    "name": "WL-124: too-large custom watts names its row",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ceiling-fan-ac"
+        },
+        {
+          "id": "custom",
+          "watts": 10000000000000.0
+        }
+      ]
+    },
+    "expected": {
+      "error": "load_1_watts_invalid"
+    },
+    "tolerance": 0,
+    "note": "full audit MA-12; message 'Appliance 2: ...'"
+  },
+  {
+    "calc": "circuit_schedule",
+    "name": "WL-124: too-large watts in an N18 row keeps its row code",
+    "inputs": {
+      "loads": [
+        {
+          "id": "custom",
+          "watts": 10000000000000.0,
+          "length": 10
+        }
+      ]
+    },
+    "expected": {
+      "error": "load_0_watts_too_large"
+    },
+    "tolerance": 0,
+    "note": "message 'Appliance 1: Watts is too large...'"
+  },
+  {
+    "calc": "units",
+    "name": "WL-124: blank hours on the units converter",
+    "inputs": {
+      "watts": 100
+    },
+    "expected": {
+      "error": "hours_per_day_required"
+    },
+    "tolerance": 0,
+    "note": "full audit MA-16: not the appliance-list message"
+  },
+  {
+    "calc": "battery_bank",
+    "name": "WL-126: a tiny positive load still needs one string",
+    "inputs": {
+      "load_w": 0.001,
+      "hours": 0.001,
+      "volts": 24,
+      "battery_ah": 200,
+      "battery_v": 12,
+      "idle_w": 0
+    },
+    "expected": {
+      "strings": 1,
+      "batteries": 2
+    },
+    "tolerance": 0,
+    "note": "full audit MA-13: ceilSafe is relative below 1"
+  },
+  {
+    "calc": "voltage_drop",
+    "name": "WL-121: DC watts on a battery cable include the inverter loss (as W2)",
+    "inputs": {
+      "watts": 1000,
+      "mode": "dc",
+      "volts": 24,
+      "length_m": 2,
+      "area_mm2": 16
+    },
+    "expected": {
+      "amps": 46.2963,
+      "drop_v": 0.2604
+    },
+    "tolerance": 0.001,
+    "note": "Engineer Reviewer 2026-10-15: W5 = W2 for the same DC load"
+  },
+  {
+    "calc": "voltage_drop",
+    "name": "WL-121: DC load wired straight to the battery (inverter_eff 1)",
+    "inputs": {
+      "watts": 1000,
+      "mode": "dc",
+      "volts": 24,
+      "length_m": 2,
+      "area_mm2": 16,
+      "inverter_eff": 1
+    },
+    "expected": {
+      "amps": 41.6667
+    },
+    "tolerance": 0.001,
+    "note": ""
+  },
+  {
+    "calc": "voltage_drop",
+    "name": "WL-121: DC amps entered are used as they are",
+    "inputs": {
+      "amps": 20,
+      "mode": "dc",
+      "volts": 12,
+      "length_m": 5,
+      "area_mm2": 6
+    },
+    "expected": {
+      "amps": 20,
+      "drop_pct": 6.25
+    },
+    "tolerance": 0.001,
+    "note": ""
   }
 ]

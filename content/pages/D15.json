@@ -117,7 +117,7 @@
   {
    "key": "drive_kw",
    "label": "Solar pump drive (VFD), at least",
-   "spec": "2",
+   "spec": "up2",
    "unit": "kW"
   },
   {
@@ -139,12 +139,12 @@
    "unit": "square metres"
   }
  ],
- "answer": "A {{in.hp|1}} hp tubewell pumping {{in.hours|int}} hours a day near Multan needs a solar array of about {{out.installed_kw|2}} kW ({{out.panels|int}} panels of {{out.panel_w|int}} W) and a solar pump drive of about {{out.drive_kw|2}} kW, with no battery. Pump watts = hp × {{d.w_per_hp|1}} ÷ motor efficiency; the array is the larger of daily units ÷ sun yield and pump watts ÷ performance ratio.",
- "how": "{{in.hp|1}} hp × {{d.w_per_hp|1}} W per hp ÷ {{out.motor_eff|pct}} motor efficiency = {{out.pump_w|int}} W of electrical input. Energy: {{out.pump_w|int}} W × {{in.hours}} hours = {{out.daily_kwh|1}} units a day; ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW of panels a day for your city = {{out.kw_energy|2}} kW. Power: {{out.pump_w|int}} W ÷ {{out.pr|2}} performance ratio = {{out.kw_power|2}} kW so the array can run the pump at full speed around midday. The larger of the two, {{out.kw|2}} kW, needs {{out.panels|int}} panels of {{out.panel_w}} W = {{out.installed_kw|2}} kW on about {{out.roof_m2|int}} square metres of ground. Drive: the larger of {{out.pump_w|int}} W × {{out.margin|2}} = {{out.inverter_kw_load|2}} kW and {{out.installed_kw|2}} kW of panels ÷ {{out.dc_ac_ratio_max|1}} = {{out.inverter_kw_array|2}} kW, so {{out.drive_kw|2}} kW; the drive soft-starts the motor, so no starting surge is added.",
+ "answer": "A {{in.hp|1}} hp tubewell pumping {{in.hours|int}} hours a day near Multan needs a solar array of about {{out.installed_kw|2}} kW ({{out.panels|int}} panels of {{out.panel_w|int}} W) and a solar pump drive of about {{out.drive_kw|up2}} kW, with no battery. Pump watts = hp × {{d.w_per_hp|1}} ÷ motor efficiency; the array is the larger of daily units ÷ sun yield and pump watts ÷ performance ratio.",
+ "how": "{{in.hp|1}} hp × {{d.w_per_hp|1}} W per hp ÷ {{out.motor_eff|pct}} motor efficiency = {{out.pump_w|int}} W of electrical input. Energy: {{out.pump_w|int}} W × {{in.hours}} hours = {{out.daily_kwh|1}} units a day; ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW of panels a day for your city = {{out.kw_energy|2}} kW. Power: {{out.pump_w|int}} W ÷ {{out.pr|2}} performance ratio = {{out.kw_power|2}} kW so the array can run the pump at full speed around midday. The larger of the two, {{out.kw|2}} kW, needs {{out.panels|int}} panels of {{out.panel_w}} W = {{out.installed_kw|2}} kW on about {{out.roof_m2|int}} square metres of ground. Drive: the larger of {{out.pump_w|int}} W × {{out.margin|2}} = {{out.inverter_kw_load|2}} kW and {{out.installed_kw|2}} kW of panels ÷ {{out.dc_ac_ratio_max|1}} = {{out.inverter_kw_array|2}} kW, so {{out.drive_kw|up2}} kW; the drive soft-starts the motor, so no starting surge is added.",
  "key_facts": [
   "A {{in.hp|1}} hp tubewell motor draws about {{out.pump_w|int}} W of electrical input ({{in.hp|1}} hp × {{d.w_per_hp|1}} W ÷ {{d.motor_eff|pct}} typical motor efficiency) and uses about {{out.daily_kwh|1}} units in {{in.hours|int}} hours of full-speed pumping.",
-  "A {{in.hp|1}} hp solar tubewell near Multan needs an array of about {{out.installed_kw|2}} kW ({{out.panels|int}} panels) and a solar pump drive of about {{out.drive_kw|2}} kW; the array is sized larger than the motor because the panels deliver only about {{d.pr|pct}} of their rated watts in the field and must also cover the day's energy.",
-  "A {{ex.2.in.hp|1}} hp tubewell pumping {{ex.2.in.hours|int}} hours a day needs about {{ex.2.out.installed_kw|2}} kW of panels ({{ex.2.out.panels|int}} panels) and a drive of about {{ex.2.out.drive_kw|2}} kW; a {{ex.1.in.hp|1}} hp pump in Lahore sun needs about {{ex.1.out.installed_kw|2}} kW.",
+  "A {{in.hp|1}} hp solar tubewell near Multan needs an array of about {{out.installed_kw|2}} kW ({{out.panels|int}} panels) and a solar pump drive of about {{out.drive_kw|up2}} kW; the array is sized larger than the motor because the panels deliver only about {{d.pr|pct}} of their rated watts in the field and must also cover the day's energy.",
+  "A {{ex.2.in.hp|1}} hp tubewell pumping {{ex.2.in.hours|int}} hours a day needs about {{ex.2.out.installed_kw|2}} kW of panels ({{ex.2.out.panels|int}} panels) and a drive of about {{ex.2.out.drive_kw|up2}} kW; a {{ex.1.in.hp|1}} hp pump in Lahore sun needs about {{ex.1.out.installed_kw|2}} kW.",
   "A solar tubewell has no battery: the drive runs the motor at whatever speed the sunlight allows, and the water is stored in a tank, pond or the field itself instead of storing electricity.",
   "The solar pump drive (VFD) ramps the motor up slowly, so the starting surge that sets the generator size for the same pump does not apply; the drive is sized at the pump input watts times a {{d.margin|2}} margin, and at least the panel kW ÷ {{d.dc_ac_ratio_max|1}}."
  ],
@@ -177,7 +177,7 @@
   {
    "h2": "VFD solar pump drive: why no battery and no starting surge",
    "p": [
-    "A solar tubewell uses a solar pump drive, a variable-frequency drive (VFD) built for DC input from the panels. It converts the array DC into three-phase AC at a frequency that follows the available sunlight, tracking the array's maximum power point, and it ramps the motor up over several seconds. Because of that soft start, the starting surge that forces a generator for the same pump to be several times the running watts does not apply; choose a drive rated for the motor's {{out.motor_kw|2}} kW and its nameplate full-load current, and not below the larger of {{out.pump_w|int}} W × {{out.margin|2}} and the panel kW ÷ {{out.dc_ac_ratio_max|1}}, {{out.drive_kw|2}} kW; the array's cold open-circuit voltage must also stay inside the drive's maximum DC input.",
+    "A solar tubewell uses a solar pump drive, a variable-frequency drive (VFD) built for DC input from the panels. It converts the array DC into three-phase AC at a frequency that follows the available sunlight, tracking the array's maximum power point, and it ramps the motor up over several seconds. Because of that soft start, the starting surge that forces a generator for the same pump to be several times the running watts does not apply; choose a drive rated for the motor's {{out.motor_kw|2}} kW and its nameplate full-load current, and not below the larger of {{out.pump_w|int}} W × {{out.margin|2}} and the panel kW ÷ {{out.dc_ac_ratio_max|1}}, {{out.drive_kw|up2}} kW; the array's cold open-circuit voltage must also stay inside the drive's maximum DC input.",
     "The drive also makes a battery unnecessary. Storing water is far cheaper than storing electricity: a pond, an overhead tank or simply irrigating in daylight does the job of the battery at a fraction of the cost. A battery is worth considering only where the pump must run at night, for example for livestock drinking water, and then it is sized for the night hours only."
    ]
   },
@@ -198,7 +198,7 @@
   {
    "h2": "Solar tubewell price: how to compare quotes",
    "p": [
-    "We do not print a solar tubewell or solar water pump price here because panel, drive and structure prices in Pakistan change with the exchange rate from month to month. Ask suppliers for a complete quote for a {{out.installed_kw|2}} kW array with a {{out.drive_kw|2}} kW drive for your {{in.hp|1}} hp pump, and compare quotes in Rs per watt of panels plus the drive as a separate line.",
+    "We do not print a solar tubewell or solar water pump price here because panel, drive and structure prices in Pakistan change with the exchange rate from month to month. Ask suppliers for a complete quote for a {{out.installed_kw|2}} kW array with a {{out.drive_kw|up2}} kW drive for your {{in.hp|1}} hp pump, and compare quotes in Rs per watt of panels plus the drive as a separate line.",
     "A complete quote includes the panels, the solar pump drive, the galvanised structure with foundations, DC cables and combiner box, DC isolator and surge protection, earthing, the motor cable to the bore, installation and commissioning. Ask whether the drive has a grid input, a dry-run (low water) protection and a sun-tracking (MPPT) function, and what the warranty years are on panels and drive. Before buying, check with your provincial agriculture department whether a solar tubewell scheme is open for your district."
    ]
   }
@@ -207,7 +207,7 @@
   {
    "inputs": {},
    "title": "{{in.hp|1}} hp tubewell, {{in.hours|int}} hours a day near Multan",
-   "text": "{{in.hp|1}} hp × {{d.w_per_hp|1}} W ÷ {{out.motor_eff|pct}} = {{out.pump_w|int}} W input; × {{in.hours|int}} hours = {{out.daily_kwh|1}} units a day. Energy rule {{out.kw_energy|2}} kW, power rule {{out.kw_power|2}} kW, so the array is {{out.installed_kw|2}} kW ({{out.panels|int}} panels of {{out.panel_w|int}} W) and the drive {{out.drive_kw|2}} kW. The energy rule wins here because six hours of pumping is more than the midday rule alone can give."
+   "text": "{{in.hp|1}} hp × {{d.w_per_hp|1}} W ÷ {{out.motor_eff|pct}} = {{out.pump_w|int}} W input; × {{in.hours|int}} hours = {{out.daily_kwh|1}} units a day. Energy rule {{out.kw_energy|2}} kW, power rule {{out.kw_power|2}} kW, so the array is {{out.installed_kw|2}} kW ({{out.panels|int}} panels of {{out.panel_w|int}} W) and the drive {{out.drive_kw|up2}} kW. The energy rule wins here because six hours of pumping is more than the midday rule alone can give."
   },
   {
    "inputs": {
@@ -216,7 +216,7 @@
     "city": "lahore"
    },
    "title": "{{in.hp|1}} hp pump, {{in.hours|int}} hours a day in Lahore sun",
-   "text": "A {{in.hp|1}} hp pump draws {{out.pump_w|int}} W and uses {{out.daily_kwh|1}} units in {{in.hours|int}} hours. With {{out.yield_kwh_per_kwp_day|1}} units per kW a day in Lahore the energy rule gives {{out.kw_energy|2}} kW against {{out.kw_power|2}} kW for the power rule, so the array is {{out.installed_kw|2}} kW ({{out.panels|int}} panels) with a {{out.drive_kw|2}} kW drive."
+   "text": "A {{in.hp|1}} hp pump draws {{out.pump_w|int}} W and uses {{out.daily_kwh|1}} units in {{in.hours|int}} hours. With {{out.yield_kwh_per_kwp_day|1}} units per kW a day in Lahore the energy rule gives {{out.kw_energy|2}} kW against {{out.kw_power|2}} kW for the power rule, so the array is {{out.installed_kw|2}} kW ({{out.panels|int}} panels) with a {{out.drive_kw|up2}} kW drive."
   },
   {
    "inputs": {
@@ -224,7 +224,7 @@
     "hours": 7
    },
    "title": "{{in.hp|1}} hp tubewell, {{in.hours|int}} hours a day near Multan",
-   "text": "A {{in.hp|1}} hp motor draws {{out.pump_w|int}} W and uses {{out.daily_kwh|1}} units in {{in.hours|int}} hours. The array is {{out.installed_kw|2}} kW ({{out.panels|int}} panels on about {{out.roof_m2|int}} square metres of ground) and the drive {{out.drive_kw|2}} kW. At this size the array is split into several strings and the drive is a three-phase unit with a grid input for cloudy days."
+   "text": "A {{in.hp|1}} hp motor draws {{out.pump_w|int}} W and uses {{out.daily_kwh|1}} units in {{in.hours|int}} hours. The array is {{out.installed_kw|2}} kW ({{out.panels|int}} panels on about {{out.roof_m2|int}} square metres of ground) and the drive {{out.drive_kw|up2}} kW. At this size the array is split into several strings and the drive is a three-phase unit with a grid input for cloudy days."
   },
   {
    "inputs": {
@@ -281,7 +281,7 @@
    },
    {
     "label": "Pump drive",
-    "tpl": "{{out.drive_kw|2}} kW"
+    "tpl": "{{out.drive_kw|up2}} kW"
    },
    {
     "label": "Ground area",
@@ -300,11 +300,11 @@
  "faq": [
   {
    "q": "How many solar panels does a 10 hp tubewell need?",
-   "a": "A {{in.hp|1}} hp tubewell pumping {{in.hours|int}} hours a day near Multan needs about {{out.installed_kw|2}} kW of panels, which is {{out.panels|int}} panels of {{out.panel_w|int}} W on about {{out.roof_m2|int}} square metres of ground, with a solar pump drive of about {{out.drive_kw|2}} kW."
+   "a": "A {{in.hp|1}} hp tubewell pumping {{in.hours|int}} hours a day near Multan needs about {{out.installed_kw|2}} kW of panels, which is {{out.panels|int}} panels of {{out.panel_w|int}} W on about {{out.roof_m2|int}} square metres of ground, with a solar pump drive of about {{out.drive_kw|up2}} kW."
   },
   {
    "q": "How many kW of solar does a 20 hp tubewell need?",
-   "a": "A {{ex.2.in.hp|1}} hp tubewell pumping {{ex.2.in.hours|int}} hours a day near Multan draws about {{ex.2.out.pump_w|int}} W and needs about {{ex.2.out.installed_kw|2}} kW of panels ({{ex.2.out.panels|int}} panels) with a drive of about {{ex.2.out.drive_kw|2}} kW. Pick the pump size at the top of the page for other motors."
+   "a": "A {{ex.2.in.hp|1}} hp tubewell pumping {{ex.2.in.hours|int}} hours a day near Multan draws about {{ex.2.out.pump_w|int}} W and needs about {{ex.2.out.installed_kw|2}} kW of panels ({{ex.2.out.panels|int}} panels) with a drive of about {{ex.2.out.drive_kw|up2}} kW. Pick the pump size at the top of the page for other motors."
   },
   {
    "q": "How many watts is a 1 hp pump motor?",
@@ -316,7 +316,7 @@
   },
   {
    "q": "What is a VFD solar pump drive and why is it used?",
-   "a": "It is a variable-frequency drive that takes DC from the panels, tracks their maximum power point and outputs three-phase AC at a frequency that follows the sun. It soft-starts the motor, so no starting surge is added, and it is chosen by the motor's rated kW and nameplate current ({{out.motor_kw|2}} kW for the default {{in.hp|1}} hp pump), not below the pump input watts times the {{d.margin|2}} margin, {{out.drive_kw|2}} kW. Its maximum DC input voltage must be above the array string's cold open-circuit voltage."
+   "a": "It is a variable-frequency drive that takes DC from the panels, tracks their maximum power point and outputs three-phase AC at a frequency that follows the sun. It soft-starts the motor, so no starting surge is added, and it is chosen by the motor's rated kW and nameplate current ({{out.motor_kw|2}} kW for the default {{in.hp|1}} hp pump), not below the pump input watts times the {{d.margin|2}} margin, {{out.drive_kw|up2}} kW. Its maximum DC input voltage must be above the array string's cold open-circuit voltage."
   },
   {
    "q": "Can I use my existing three-phase tubewell motor with solar?",
@@ -324,7 +324,7 @@
   },
   {
    "q": "What is the price of a 10 hp solar tubewell?",
-   "a": "Prices change with the exchange rate, so we do not print one. Ask for a complete quote for a {{out.installed_kw|2}} kW array with a {{out.drive_kw|2}} kW drive, including structure, DC cables, protection, earthing and installation, and compare quotes in Rs per watt of panels plus the drive as a separate line."
+   "a": "Prices change with the exchange rate, so we do not print one. Ask for a complete quote for a {{out.installed_kw|2}} kW array with a {{out.drive_kw|up2}} kW drive, including structure, DC cables, protection, earthing and installation, and compare quotes in Rs per watt of panels plus the drive as a separate line."
   },
   {
    "q": "How much water will the solar tubewell give?",

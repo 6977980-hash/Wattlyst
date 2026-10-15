@@ -83,7 +83,7 @@
   }
  ],
  "answer": "Three fans, six LED bulbs, a TV, a non-inverter fridge and a router run at {{out.running_w|int}} W and peak at {{out.peak_w|int}} W when the fridge starts, so the generator must deliver {{out.sized_w|int}} W, a {{out.standard_kva|1}} kVA set. Generator watts = the larger of total running watts × {{d.margin|2}} or running watts plus the biggest starting surge.",
- "how": "Running watts of each appliance × how many, added up: {{out.running_w|int}} W. Adding the surge of the one appliance with the biggest jump at start gives {{out.peak_w|int}} W. {{out.running_w|int}} W × {{out.margin|2}} margin is compared with {{out.peak_w|int}} W, and the larger, {{out.sized_w|int}} W, is the wattage the generator must deliver. In kVA: {{out.sized_w|int}} W ÷ {{out.pf|2}} ÷ 1,000 = {{out.recommended_kva|2}} kVA, so {{out.standard_kva|1}} kVA.",
+ "how": "Running watts of each appliance × how many, added up: {{out.running_w|int}} W. Adding the surge of the one appliance with the biggest jump at start gives {{out.peak_w|int}} W. {{out.running_w|int}} W × {{out.margin|2}} margin is compared with {{out.peak_w|int}} W, and the larger, {{out.sized_w|int}} W, is the wattage the generator must deliver. In kVA: {{out.sized_w|int}} W ÷ {{out.pf|2}} ÷ 1,000 = {{out.recommended_kva|up2}} kVA, so {{out.standard_kva|1}} kVA.",
  "key_facts": [
   "Generator watts needed = the larger of (the running watts of every appliance on at once × {{d.margin|2}}) or (those running watts plus the starting surge of the one appliance with the biggest jump).",
   "A TV, a non-inverter fridge and one ceiling fan run at only {{ex.0.out.running_w|int}} W, but the fridge compressor's start means the generator must supply {{ex.0.out.peak_w|int}} W for a moment.",
@@ -105,7 +105,7 @@
    "h2": "How many watts generator do I need?",
    "p": [
     "Add the running watts of every appliance you will switch on together, then check which one jumps the most when it starts. For the default list that is the fridge, so the generator must cover {{out.running_w|int}} W of running load plus the fridge's jump, {{out.peak_w|int}} W in all. The calculator also checks the running load × {{out.margin|2}} and keeps the larger: {{out.sized_w|int}} W.",
-    "Generators are sold by kVA, and {{out.sized_w|int}} W works out to {{out.recommended_kva|2}} kVA at the usual power factor, so the smallest standard size, {{out.standard_kva|1}} kVA, is enough here. If your generator's nameplate gives watts instead, compare it with the {{out.sized_w|int}} W directly."
+    "Generators are sold by kVA, and {{out.sized_w|int}} W works out to {{out.recommended_kva|up2}} kVA at the usual power factor, so the smallest standard size, {{out.standard_kva|1}} kVA, is enough here. If your generator's nameplate gives watts instead, compare it with the {{out.sized_w|int}} W directly."
    ]
   },
   {
@@ -153,7 +153,7 @@
     ]
    },
    "title": "A TV, a fridge and a fan",
-   "text": "Fan, LED TV and non-inverter fridge: {{out.running_w|int}} W running. The fridge's start lifts it to {{out.peak_w|int}} W, larger than {{out.running_w|int}} W × {{out.margin|2}}, so the generator must deliver {{out.sized_w|int}} W ({{out.recommended_kva|2}} kVA); a {{out.standard_kva|1}} kVA set covers it."
+   "text": "Fan, LED TV and non-inverter fridge: {{out.running_w|int}} W running. The fridge's start lifts it to {{out.peak_w|int}} W, larger than {{out.running_w|int}} W × {{out.margin|2}}, so the generator must deliver {{out.sized_w|int}} W ({{out.recommended_kva|up2}} kVA); a {{out.standard_kva|1}} kVA set covers it."
   },
   {
    "inputs": {
@@ -181,7 +181,7 @@
     ]
    },
    "title": "The default list with an iron switched on",
-   "text": "The iron adds {{a.electric-iron.running_w|int}} W of running load and no start surge. Running load {{out.running_w|int}} W, peak {{out.peak_w|int}} W when the fridge starts, so the generator must deliver {{out.sized_w|int}} W: {{out.recommended_kva|2}} kVA, a {{out.standard_kva|1}} kVA set."
+   "text": "The iron adds {{a.electric-iron.running_w|int}} W of running load and no start surge. Running load {{out.running_w|int}} W, peak {{out.peak_w|int}} W when the fridge starts, so the generator must deliver {{out.sized_w|int}} W: {{out.recommended_kva|up2}} kVA, a {{out.standard_kva|1}} kVA set."
   },
   {
    "inputs": {
@@ -203,7 +203,7 @@
     ]
    },
    "title": "Kitchen loads: an inverter fridge and a microwave with two fans and four LED bulbs",
-   "text": "{{out.running_w|int}} W running and only {{out.peak_w|int}} W at peak, because nothing here has a hard start. Here the running load × {{out.margin|2}}, {{out.sized_w|int}} W, sets the size: {{out.recommended_kva|2}} kVA, so {{out.standard_kva|1}} kVA."
+   "text": "{{out.running_w|int}} W running and only {{out.peak_w|int}} W at peak, because nothing here has a hard start. Here the running load × {{out.margin|2}}, {{out.sized_w|int}} W, sets the size: {{out.recommended_kva|up2}} kVA, so {{out.standard_kva|1}} kVA."
   },
   {
    "inputs": {
@@ -233,7 +233,7 @@
     ]
    },
    "title": "Small office: two computers, a laser printer, tube lights and fans",
-   "text": "{{out.running_w|int}} W running. The laser printer's warm-up jump is the largest, so the peak is {{out.peak_w|int}} W and the generator must deliver {{out.sized_w|int}} W, {{out.recommended_kva|2}} kVA: a {{out.standard_kva|1}} kVA set."
+   "text": "{{out.running_w|int}} W running. The laser printer's warm-up jump is the largest, so the peak is {{out.peak_w|int}} W and the generator must deliver {{out.sized_w|int}} W, {{out.recommended_kva|up2}} kVA: a {{out.standard_kva|1}} kVA set."
   }
  ],
  "table": {
