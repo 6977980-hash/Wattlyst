@@ -1,4 +1,4 @@
-import{calculator,CalcError,bool,has,num,pos,nonneg,dflt}from './core.js?ver=8339faab16';function tariffOf(d){const t=d?.tariff;if(!t?.unprotected?.length||!t?.protected?.length)throw new CalcError('tariff_data_missing','tariff');return t;}
+import{calculator,CalcError,bool,has,num,pos,nonneg,dflt}from './core.js?ver=492c214702';function tariffOf(d){const t=d?.tariff;if(!t?.unprotected?.length||!t?.protected?.length)throw new CalcError('tariff_data_missing','tariff');return t;}
 function bandIndex(bands,units){const idx=bands.findIndex((b)=>b.upto===null||units<=b.upto);return idx===-1?bands.length-1:idx;}
 export function energyCharge(t,units,category,sanctioned_kw){const bands=t[category];if(category==='lifeline'||category==='protected'){const max=bands[bands.length-1].upto;if(units>max)throw new CalcError(`${category}_max_${max}_units`,'units');}
 const idx=bandIndex(bands,units);const band=bands[idx];let energy_rs;if(category==='protected'){energy_rs=0;let prev=0;for(let k=0;k<=idx;k++){const top=bands[k].upto===null?units:Math.min(units,bands[k].upto);energy_rs+=Math.max(0,top-prev)*bands[k].rate;prev=top;}}else{energy_rs=units*band.rate;}

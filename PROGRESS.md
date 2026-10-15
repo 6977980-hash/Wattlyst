@@ -1,6 +1,31 @@
 # Progress
 
-## Handoff for next phase (after the homepage compact layout) — written by the decision engine thread, 2026-10-15
+## Handoff for next phase (after full-audit fix Phase 1: homepage and phone bugs) — written by the audit Phase 1 thread, 2026-10-15
+
+Owner: every audit fix phase runs in its own thread and ends with this note. Phase plan, IDs and report lines per phase: `/mnt/project-files/electricity-tool-hub/audit/fix-phases-2026-10-15.md` (Phase 1 ticked). Next is **Phase 2a** (decision engine sizing and pricing, P0): read only its section there plus its report lines. Plugin v0.8.16, PR #32. No formula, data, engine or page text changed.
+
+**What is where**
+- WL-89 share link: `Wattlyst_Site::keep_share_link` (`includes/class-wattlyst-site.php`, `redirect_canonical` filter, front page with `load` only). JS reader unchanged (`init()` in `assets/js/wattlyst-tool.js`).
+- WL-90 desktop columns: `.wl-tool-split>.wl-in` / `>.wl-out` grid pins in the `min-width:1200px` block of `assets/css/wattlyst-home.css`.
+- WL-133 phone list headings: `#wl-h1 .wl-loads thead th` colour in the phone block of `wattlyst-home.css`.
+- WL-134 focus ring, WL-135 result table cards (now every `.wl-rtable` below 769 px, uses the `data-l` labels), WL-137 steps toggle (`.wl-how-steps:has(>ol[hidden])>.wl-tg`), remove button `padding:0`: all in `assets/css/wattlyst.css`.
+- WL-137 Escape closes the phone menu: `Wattlyst_Site::menu_escape` (inline script on the theme's `generate-menu` handle; theme untouched). "Rs" no-break space in redrawn tables: `drawTable` in `assets/js/wattlyst-extra.js`. N18 new row cable length and "circuit" wording: `loads_field`/`loads_row` in `includes/class-wattlyst-render.php` (template row takes the last default row's length from the page content).
+- Tests: `tests/wordpress.test.js` (share filter, Escape), `tests/design.test.js` "full audit Phase 1". Browser: `tools/browser-check.js` `homeChecks` (share round trip, 1366/1920 error layout) and result table overflow on every page; both were run against the old code and failed as they should.
+
+**Do not touch / watch**
+- `wattlyst-home.css` has about 500 bytes left in its 20 KB budget; the home JS budget is unchanged (no tool/loads script grew). Shared rules go in `wattlyst.css`.
+- The audit test folder on branch `claude/project-thread-1qfruz` (PR #31, "DO NOT MERGE") stays out of main; copy only your phase's DEFECT tests into `tests/`. Phase 1 had none there (browser items), so nothing was copied.
+- A LiteSpeed/browser-cached old 301 for a `?load=` URL can live up to 7 days; the sync purge clears LiteSpeed on deploy.
+
+**Open to-dos**
+- WL-139 (Calculate button below the fold on phones) is not fixed: a sticky phone button was tried and dropped because it covers inputs, which fails Lighthouse `target-size` (accessibility 97). Needs an owner/design call (results already update on every change).
+- With JavaScript off, Calculate submits a GET and the Menu button does nothing (GeneratePress); noscript note is present.
+- No Roman Urdu toggle on N7, N16, N18 (needs `label_ur` in `content/labels-ur.json`): fits Phase 5.
+- N11 accepts 100 × 100 batteries with no warning: engine item, fits Phase 4.
+- Remove buttons have no row number in their name (would cost bytes in the home JS budget).
+- Everything open from the earlier handoffs below still stands.
+
+## Earlier handoff (after the homepage compact layout) — written by the decision engine thread, 2026-10-15
 
 Owner asked for a compact homepage, arrangement only ("han" to the audit in `/mnt/project-files/electricity-tool-hub/audit/homepage-compact-2026-10-15.md`). Plugin v0.8.14; follow-up v0.8.15 (owner screenshots): planner fields in two aligned columns, task cards equal height (`grid-auto-rows:1fr`, two tools shown via `HOME_CARD_LINKS`, descriptions and tool names clamped). No formula, data, engine or page text changed.
 
@@ -346,6 +371,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | 2026-10-15 | Decision Engine fourth setup (owner: "bna do"): on-grid solar + UPS or generator, UPS recharge on the net-billed bill; plugin v0.8.13 | done: tests green, Engineer Reviewer, local WP checked | PR #28 |
 | 2026-10-15 | Homepage compact layout (owner: "han"): folds for how/key facts/sections, setups table marks and phone cards, tighter planner; plugin v0.8.14 | done: tests green, local WP checked | PR #29 |
 | 2026-10-15 | Homepage follow-up (owner screenshots): aligned planner fields, equal-height task cards; plugin v0.8.15 | done: tests green, local WP checked | PR #30 |
+| 2026-10-15 | Full audit fix Phase 1 (owner: phases in own threads): homepage share link (WL-89), desktop error layout (WL-90), phone headings, focus ring, result table cards, small UI items (WL-133..137; WL-139 left open, see handoff); plugin v0.8.16 | done: tests green, local WP + browser checks, axe 0 on / | PR #32 |
 | 2026-10-15 | SERP ideas (owner: "4ron idea cover krny hain"): Bill Index units table 50 to 1,000 with lifeline line, engine numbers in four titles, Inverex Nitrox error codes; idea 3 already live as F2-F12; plugin v0.8.11 | done: tests green, Engineer Reviewer fixes applied (caption kW, lifeline line, F16/F28/F32 safety), local WP checked | PR (this thread) |
 | 2026-10-15 | Growth phase (owner: "next phase new thread"): IndexNow now announces changed pages in one batch after each sync (all live pages on the first run), owner growth plan with outreach and forum drafts in a Claude Doc; plugin v0.8.10 | done: tests green, local WP checked (stubbed IndexNow), no formula or page change | #25 |
 | 2026-10-15 | Net billing group B (owner: "baqi fixes pe kaam kro"): Home Power Planner saving on the whole bill (fixed charge, FC surcharge, GST; export credit set against the bill after GST), energy-charge saving shown under it; plugin v0.8.9 | done: tests green, Engineer Reviewer, local WP checked | PR (this thread) |

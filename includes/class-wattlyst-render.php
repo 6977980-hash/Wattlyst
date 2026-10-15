@@ -456,10 +456,13 @@ final class Wattlyst_Render {
 			$rows .= $this->loads_row( $fid, $f, (int) $n, $row );
 		}
 		$head  = '<tr><th scope="col">Appliance</th><th scope="col">Watts</th>' . ( empty( $f['start'] ) ? '' : '<th scope="col">Starting watts</th>' ) . '<th scope="col">Qty</th><th scope="col">' . ( empty( $f['length'] ) ? 'Hours a day' : 'Cable length (m)' ) . '</th><th scope="col"><span class="screen-reader-text">Remove</span></th></tr>';
-		$tmpl  = '<template class="wl-loads-template">' . $this->loads_row( $fid, $f, -1, array() ) . '</template>';
+		// N18: a new circuit starts with the last default row's cable length, so the first edit is not an error (WL-137).
+		$defs  = $f['default'] ?? array();
+		$last  = end( $defs ) ?: array();
+		$tmpl  = '<template class="wl-loads-template">' . $this->loads_row( $fid, $f, -1, empty( $f['length'] ) || ! isset( $last['length'] ) ? array() : array( 'length' => $last['length'] ) ) . '</template>';
 		return '<div class="wl-field wl-field-loads" data-wl-loads="' . esc_attr( $f['name'] ) . '"><span class="wl-label" id="' . esc_attr( $fid ) . '-label">' . esc_html( $f['label'] ?? 'Appliances' ) . '</span>' .
 			'<div class="wl-table-wrap"><table class="wl-table wl-loads" aria-labelledby="' . esc_attr( $fid ) . '-label"><thead>' . $head . '</thead><tbody>' . $rows . '</tbody></table></div>' .
-			'<button type="button" class="wl-btn-secondary wl-add-row">+ Add appliance</button>' . $hint . $tmpl . '</div>';
+			'<button type="button" class="wl-btn-secondary wl-add-row">+ Add ' . ( empty( $f['length'] ) ? 'appliance' : 'circuit' ) . '</button>' . $hint . $tmpl . '</div>';
 	}
 
 	private function loads_row( string $fid, array $f, int $n, array $row ): string {
@@ -478,7 +481,7 @@ final class Wattlyst_Render {
 		return '<tr class="wl-load-row">' .
 			'<td><label class="screen-reader-text" for="' . esc_attr( "$fid-$r-id" ) . '">Appliance</label><select id="' . esc_attr( "$fid-$r-id" ) . '" data-k="id">' . $opts . '</select></td>' .
 			$cell( 'watts', $watts, 'Watts' ) . ( empty( $f['start'] ) ? '' : $cell( 'start', isset( $row['start'] ) ? (string) $row['start'] : '', 'Starting watts (blank = automatic)', ' placeholder="auto"' ) ) . $cell( 'qty', $qty, 'Quantity', ' size="3"' ) . ( empty( $f['length'] ) ? $cell( 'hours', $hours, 'Hours a day', ' size="4"' ) : $cell( 'length', isset( $row['length'] ) ? (string) $row['length'] : '', 'Cable length in metres', ' size="4"' ) ) .
-			'<td><button type="button" class="wl-remove-row" aria-label="Remove this appliance">&times;</button></td></tr>';
+			'<td><button type="button" class="wl-remove-row" aria-label="Remove this ' . ( empty( $f['length'] ) ? 'appliance' : 'circuit' ) . '">&times;</button></td></tr>';
 	}
 
 	private function field( string $prefix, array $f ): string {

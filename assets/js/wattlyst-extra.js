@@ -41,7 +41,8 @@ export function drawTable(box, out, t, fmt, render) {
     const tr = body.insertRow();
     for (const c of t.columns) {
       const td = tr.insertCell();
-      td.textContent = `${fmt(item[c.key], c.spec)}${c.suffix || ''}`;
+      // "Rs 1,000" keeps its no-break space, as the build prints it (WL-137).
+      td.textContent = `${fmt(item[c.key], c.spec)}${c.suffix || ''}`.replace(/Rs /g, 'Rs\u00a0');
       td.dataset.l = c.label;
       // Same marks as the build (class-wattlyst-render.php rtable): net saved or cost, and the recommended row.
       td.className = / saved$/.test(td.textContent) ? 'wl-good' : / cost$/.test(td.textContent) ? 'wl-bad' : '';

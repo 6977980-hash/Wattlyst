@@ -29,6 +29,21 @@ final class Wattlyst_Site {
 		add_filter( 'style_loader_src', array( $this, 'hide_core_version' ) );
 		add_filter( 'script_loader_src', array( $this, 'hide_core_version' ) );
 		add_action( '_core_updated_successfully', array( __CLASS__, 'remove_version_files' ) );
+		add_filter( 'redirect_canonical', array( $this, 'keep_share_link' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'menu_escape' ), 20 );
+	}
+
+	/** Escape closes the GeneratePress phone menu and gives focus back to its button (audit WL-137); the theme is not edited. */
+	public function menu_escape(): void {
+		wp_add_inline_script( 'generate-menu', "document.addEventListener('keydown',function(e){var b=e.key==='Escape'&&document.querySelector('.menu-toggle[aria-expanded=\"true\"]');if(b){b.click();b.focus()}});" );
+	}
+
+	/**
+	 * Core redirect_canonical 301s the front page's /?load=a:1,b:2 to a copy with ":" and "," percent-encoded, which the
+	 * tool script cannot split, so a shared homepage plan opened as the defaults (audit WL-89). The page is the same.
+	 */
+	public function keep_share_link( $redirect ) {
+		return is_front_page() && isset( $_GET['load'] ) ? false : $redirect; // phpcs:ignore WordPress.Security.NonceVerification
 	}
 
 	public function head_cleanup(): void {
