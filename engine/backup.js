@@ -1,6 +1,7 @@
 // N7: UPS vs generator vs hybrid solar for the same loadshedding backup: total cost over the years and cost per backup hour.
 // Own module so no other page ships it. Every price, life and upkeep figure comes from data/ (equipment only, middle of each range).
 import { calculator, CalcError, pos, nonneg, num, pick, ceilSafe, dflt } from './core.js';
+import { fmt } from './format.js';
 
 const mid = (r) => (r.low + r.high) / 2;
 const sizeKw = (s) => parseFloat(String(s));
@@ -23,6 +24,8 @@ export const backup_compare = calculator((i, d) => {
   const panel = d?.solar_prices?.panel_rs_per_w;
   if (!bp?.ups?.length || !bp?.generators?.length || !Array.isArray(cp) || !(panel?.low > 0)) throw new CalcError('price_data_missing', 'load_w');
   const load_w = pos(i, 'load_w', undefined, 'load_must_be_positive');
+  // Starting peak (optional, blank = the running load): the generator must start it, as C1 sizes one (WL-96).
+  const surge_w = num(i, 'surge_w', { def: load_w, min: load_w });
   const hours = num(i, 'hours', { gt: 0, max: 24 });
   const days = num(i, 'days', { def: dflt(d, 'days_per_month'), gt: 0, max: 31 });
   const years = num(i, 'years', { gt: 0, max: 30 });
@@ -64,7 +67,7 @@ export const backup_compare = calculator((i, d) => {
 
   // Petrol generator
   const pf = dflt(d, 'pf_generator');
-  const gen = [...bp.generators].sort((a, b) => a.kva - b.kva).find((g) => g.kva * pf * 1000 >= need_w - 1e-9);
+  const gen = [...bp.generators].sort((a, b) => a.kva - b.kva).find((g) => g.kva * pf * 1000 >= Math.max(need_w, surge_w) - 1e-9);
   if (!gen) throw new CalcError('load_w_too_large', 'load_w');
   const curve = d.generator_fuel.fuels[fuel];
   const l_per_h = curve.intercept_l_per_h_per_kw_rated * gen.kva * pf + curve.slope_l_per_kwh * (load_w / 1000);
@@ -77,10 +80,11 @@ export const backup_compare = calculator((i, d) => {
   const gen_total = gen_buy + years * gen_run_year;
 
   // Hybrid solar with LiFePO4
-  const invs = cp.filter((x) => x.category === 'hybrid_inverter').map((x) => ({ kw: sizeKw(x.size), rs: mid(x) })).sort((a, b) => a.kw - b.kw);
+  const pack = bp.lithium_pack;
+  // Only inverters built for the pack's battery voltage can be paired with it (WL-98).
+  const invs = cp.filter((x) => x.category === 'hybrid_inverter' && x.bank_v === pack.bank_v).map((x) => ({ kw: sizeKw(x.size), rs: mid(x) })).sort((a, b) => a.kw - b.kw);
   const inv = invs.find((x) => x.kw * 1000 >= need_w - 1e-9);
   if (!inv) throw new CalcError('load_w_too_large', 'load_w');
-  const pack = bp.lithium_pack;
   const liItem = cp.find((x) => x.category === 'lithium_battery' && x.size === pack.size);
   const eta_h = dflt(d, 'inverter_eff_hybrid');
   const li_need_kwh = day_kwh / (dflt(d, 'dod_lifepo4') * eta_h);
@@ -100,17 +104,20 @@ export const backup_compare = calculator((i, d) => {
     { key: 'gen', name: 'petrol generator', option: `Petrol generator ${gen.kva} kVA`, buy: gen_buy, run_year: gen_run_year, replacements: 0, repl_rs: 0, total: gen_total, per_hour: gen_total / backup_hours },
     { key: 'solar', name: 'hybrid solar', option: `Hybrid solar ${inv.kw} kW + ${li_packs} lithium pack${li_packs > 1 ? 's' : ''}`, buy: solar_buy, run_year: 0, replacements: solar_repl, repl_rs: solar_repl_rs, total: solar_total, per_hour: solar_total / backup_hours },
   ].filter(Boolean);
-  const best = options.filter((o) => o.ok !== false).reduce((b, o) => (o.total < b.total ? o : b));
+  const counted = options.filter((o) => o.ok !== false);
+  const best = counted.reduce((b, o) => (o.total < b.total ? o : b));
+  // For the page text (WL-104): the cheapest to buy, and the dearest after one year (purchase + one year of running).
+  const one = (o) => o.buy + o.run_year;
   return {
     ups_ok, ups_status, refill_need_kwh, refill_max_kwh, refill_hours: 24 - hours, charger_a: ups.charger_a,
-    load_w, hours, days, years, tariff, fuel, fuel_price, city, margin, day_kwh, backup_hours,
+    load_w, surge_w, hours, days, years, tariff, fuel, fuel_price, city, margin, day_kwh, backup_hours,
     ups_kva: ups.kva, ups_rated_w: ups.rated_w, bank_v: ups.battery_v, battery_ah: tub.ah, battery_v: tub.v, bank_wh, batteries, recharge_kwh_year, tubular_life_years: life_t,
     gen_kva: gen.kva, gen_rated_kw: gen.kva * pf, l_per_h, run_h_year, fuel_year, oil_year, oil_change_hours: up.oil_change_hours,
     inverter_kw: inv.kw, lithium_need_kwh: li_need_kwh, lithium_packs: li_packs, lithium_kwh: li_kwh, panels, panel_w, solar_kw: (panels * panel_w) / 1000, lifepo4_life_years: life_l,
     ...(ups_fits ? { ups_buy, ups_run_year, ups_repl, ups_repl_rs, ups_total, ups_per_hour: ups_total / backup_hours } : {}),
     gen_buy, gen_run_year, gen_total, gen_per_hour: gen_total / backup_hours,
     solar_buy, solar_repl, solar_repl_rs, solar_total, solar_per_hour: solar_total / backup_hours,
-    cheapest: best.name, cheapest_key: best.key, cheapest_total: best.total, cheapest_per_hour: best.per_hour,
+    cheapest: best.name, cheapest_key: best.key, cheapest_buy: counted.reduce((b, o) => (o.buy < b.buy ? o : b)).name, first_year_dearest: counted.reduce((b, o) => (one(o) > one(b) ? o : b)).name, cheapest_total: best.total, cheapest_per_hour: best.per_hour,
     options,
   };
 });
@@ -126,16 +133,34 @@ export function backupAtEnd(d, e) {
 
 /**
  * Home decision engine: N7's UPS (only when its charger refills the bank) or petrol generator for a backup load, whichever
- * costs less over the years with the UPS grid recharge at upsMonth(extra units a month: the recharge less the backup energy the home already uses) rupees a month; the buy price
- * of the same option with every equipment range at its low and high end. Null when the load is above the price lists.
+ * costs less over the years on the same bill baseline: the UPS grid recharge costs upsMonth(extra units a month: the recharge
+ * less the backup energy the home already uses) rupees a month, and the generator takes `credit` rupees a month of grid
+ * units off the bill (the backup energy it supplies, WL-95); the buy price of the same option with every equipment range at
+ * its low and high end. Null when the load is above the price lists.
  */
-export function standbyFor(bin, d, upsMonth) {
+export function standbyFor(bin, d, upsMonth, credit) {
   const n = backup_compare(bin, d);
   if (!n.ok) return null;
   // The backup load is already in the home's monthly units; the grid only adds the charge and UPS losses on top.
   const r = Math.max(0, n.recharge_kwh_year / 12 - n.day_kwh * n.days);
   const run = upsMonth(r);
-  const u = n.ups_ok && n.ups_buy + n.ups_repl_rs + bin.years * 12 * run <= n.gen_total;
+  const u = n.ups_ok && n.ups_buy + n.ups_repl_rs + bin.years * 12 * run <= n.gen_total - bin.years * 12 * credit;
   const [lo, hi] = ['low', 'high'].map((e) => backup_compare(bin, backupAtEnd(d, e))[u ? 'ups_buy' : 'gen_buy']);
-  return { u, r, lo, hi, key: u ? 'ups' : 'gen', option: u ? `UPS ${n.ups_kva} kVA + ${n.batteries} tubular batter${n.batteries > 1 ? 'ies' : 'y'}` : `Petrol generator ${n.gen_kva} kVA`, repl: u ? n.ups_repl_rs : 0, run: u ? run : n.gen_run_year / 12 };
+  return { u, r, lo, hi, key: u ? 'ups' : 'gen', option: u ? `UPS ${n.ups_kva} kVA + ${n.batteries} tubular batter${n.batteries > 1 ? 'ies' : 'y'}` : `Petrol generator ${n.gen_kva} kVA`, repl: u ? n.ups_repl_rs : 0, run: u ? run : n.gen_run_year / 12, save: u ? 0 : credit };
+}
+
+/**
+ * Home decision engine hybrid bank: the planner's backup energy as a bank of the hybrid inverter's voltage bought whole
+ * (LiFePO4 51.2 V packs, or 12 V tubular units in strings of that voltage). Returns [units, priced item, name].
+ */
+export function hybridBank(p, d) {
+  const bp = d.backup_prices;
+  const li = p.chemistry === 'lifepo4';
+  const t = bp.tubular_unit;
+  const v = dflt(d, 'hybrid_bank_v');
+  const n = li ? ceilSafe(p.battery_kwh / bp.lithium_pack.kwh) : ceilSafe((p.battery_kwh * 1000) / (v * t.ah)) * ceilSafe(v / t.v);
+  const item = d.component_prices.items.find((x) => (li ? x.category === 'lithium_battery' && x.size === bp.lithium_pack.size : x.category === 'tubular_battery'));
+  if (!item) throw new CalcError('price_data_missing', 'chemistry');
+  const s = n > 1;
+  return [n, item, li ? `${n} lithium pack${s ? 's' : ''} of ${fmt(bp.lithium_pack.kwh, '2')} kWh (51.2 V)` : `${n} tubular batter${s ? 'ies' : 'y'} of ${t.v} V ${t.ah} Ah (${v} V bank)`];
 }

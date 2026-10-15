@@ -206,7 +206,7 @@
     }
    ],
    "how": {
-    "tpl": "{{out.units}} units × {{d.days_per_month|int}} ÷ {{out.days}} days = {{out.units_30|int}} units in a normal month. Energy and fixed charge as billed, at the slab for {{out.units}} units: {{out.billed_rs|rs}}. The same {{out.units}} units at the slab {{out.units_30|int}} units would reach: {{out.fair_rs|rs}}. Possible extra from the long reading cycle: {{out.extra_rs|rs}} before surcharges and GST.",
+    "tpl": "{{out.units}} units × {{d.bill_month_days|int}} ÷ {{out.days}} days = {{out.units_30|int}} units in a normal month. Energy and fixed charge as billed, at the slab for {{out.units}} units: {{out.billed_rs|rs}}. The same {{out.units}} units at the slab {{out.units_30|int}} units would reach: {{out.fair_rs|rs}}. Possible extra from the long reading cycle: {{out.extra_rs|rs}} before surcharges and GST.",
     "text": "320 units × 30 ÷ 36 days = 267 units in a normal month. Energy and fixed charge as billed, at the slab for 320 units: Rs 12,067. The same 320 units at the slab 267 units would reach: Rs 10,942. Possible extra from the long reading cycle: Rs 1,125 before surcharges and GST."
    },
    "submit": "Check the bill",

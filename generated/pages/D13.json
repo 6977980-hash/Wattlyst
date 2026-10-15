@@ -43,8 +43,8 @@
    {
     "h2": "What is the load of a 1 kanal house?",
     "p": [
-     "A 1 kanal house usually has four or five bedrooms, a drawing room, a lounge, a large kitchen, servant quarters and a lawn with its own water pump, and most rooms have an AC. The default list is a summer afternoon in such a house: eight ceiling fans, twenty-four LED bulbs, an inverter fridge, a deep freezer, two large TVs, three 1.5 ton inverter ACs in the bedrooms, a 2 ton inverter AC in the lounge, a 1.5 hp water pump, an iron, an automatic washing machine, a microwave, a WiFi router and a CCTV recorder. Together they come to 11,888 W running, 52.2 units a day and about 1,615 units a month.",
-     "Four ACs are most of the running load and most of the summer units, so they decide both the panels (from the daily units, 13.06 kW) and the inverter (from the running load). Panels big enough to carry all four ACs at once at midday would need 15.24 kW and make more units than the house uses; that rule is for off-grid systems. If some ACs run only a few hours, enter those hours; if they never run together, the inverter can be smaller."
+     "A 1 kanal house usually has four or five bedrooms, a drawing room, a lounge, a large kitchen, servant quarters and a lawn with its own water pump, and most rooms have an AC. The default list is a summer afternoon in such a house: eight ceiling fans, twenty-four LED bulbs, an inverter fridge, a deep freezer, two large TVs, three 1.5 ton inverter ACs in the bedrooms, a 2 ton inverter AC in the lounge, a 1.5 hp water pump, an iron, an automatic washing machine, a microwave, a WiFi router and a CCTV recorder. Together they come to 11,888 W running, 52.2 units a day and about 1,635 units a month.",
+     "Four ACs are most of the running load and most of the summer units, so they decide both the panels (from the daily units, 13.08 kW) and the inverter (from the running load). Panels big enough to carry all four ACs at once at midday would need 15.24 kW and make more units than the house uses; that rule is for off-grid systems. If some ACs run only a few hours, enter those hours; if they never run together, the inverter can be smaller."
     ]
    },
    {
@@ -90,7 +90,7 @@
    },
    {
     "q": "What size solar system does a 1 kanal house with 4 ACs need?",
-    "a": "With three 1.5 ton and one 2 ton inverter ACs plus fans, lights, fridge, freezer, pump and kitchen loads, the house needs 13.46 kW of panels and a three-phase inverter of 14.86 kW, which makes about 1,615 units a month in Lahore."
+    "a": "With three 1.5 ton and one 2 ton inverter ACs plus fans, lights, fridge, freezer, pump and kitchen loads, the house needs 13.46 kW of panels and a three-phase inverter of 14.86 kW, which makes about 1,635 units a month in Lahore."
    },
    {
     "q": "Is a 15 kW solar system enough for a 1 kanal house?",
@@ -102,7 +102,7 @@
    },
    {
     "q": "How many units does a 1 kanal solar system make a month?",
-    "a": "About 1,615 units a month for the 13.46 kW system in Lahore as a yearly average, against about 52.2 units a day used in summer. Summer months make more, winter months less; pick your city for its own sun yield."
+    "a": "About 1,635 units a month for the 13.46 kW system in Lahore as a yearly average, against about 52.2 units a day used in summer. Summer months make more, winter months less; pick your city for its own sun yield."
    },
    {
     "q": "Can the solar system run the ACs at night?",
@@ -116,7 +116,7 @@
   "key_facts": [
    "A typical 1 kanal house with four inverter ACs (three 1.5 ton and one 2 ton) has a running load of about 11,888 W and uses about 52.2 units a day, so it needs a solar system of about 13.46 kW with an inverter of 14.86 kW.",
    "A fifth AC (four 1.5 ton and one 2 ton inverter ACs) raises the same house to about 15.21 kW of panels (26 panels) and an inverter of 16.68 kW.",
-   "The 13.46 kW array needs about 60 square metres of unshaded roof at 585 W per panel and makes about 1,615 units a month in Lahore as a yearly average.",
+   "The 13.46 kW array needs about 60 square metres of unshaded roof at 585 W per panel and makes about 1,635 units a month in Lahore as a yearly average.",
    "A load of this size is normally on a three-phase 400 V connection with a sanctioned load well above 5 kW, so the inverter is three-phase, the house is on a time-of-use meter, and the net-metering cap equals the sanctioned load.",
    "Running two 1.5 ton inverter ACs with fans, lights, fridge, freezer and CCTV for 6 hours after sunset needs a lithium battery of about 667 Ah at 48 V (32 units); without the ACs the same night needs about 219 Ah."
   ],
@@ -1403,12 +1403,12 @@
      "label": "Units the system makes a month",
      "spec": "int",
      "label_ur": "System ke mahana units",
-     "value": "1,615"
+     "value": "1,635"
     }
    ],
    "how": {
     "tpl": "Energy: watts × quantity × hours a day for each appliance (inverter ACs count at their average draw, not their rated watts), added up = {{out.daily_kwh|1}} units a day; ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW of panels a day in your city = {{out.kw_energy|2}} kW. A grid-tied or hybrid system is sized by energy: when the {{out.running_w|int}} W running load is more than the panels give at that moment, the grid supplies the rest. {{out.kw|2}} kW needs {{out.panels|int}} panels of {{out.panel_w}} W = {{out.installed_kw|2}} kW installed on about {{out.roof_m2|int}} square metres of roof, making about {{out.monthly_kwh_estimate|int}} units a month. Inverter: the larger of {{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_kw_load|2}} kW for the load and {{out.installed_kw|2}} kW of panels ÷ {{out.dc_ac_ratio_max|1}} = {{out.inverter_kw_array|2}} kW, so the panels are never more than {{out.dc_ac_ratio_max|1}} times the inverter: {{out.inverter_kw|up2}} kW continuous, with a surge rating of at least {{out.inverter_surge_w|int}} W for the water pump.",
-    "text": "Energy: watts × quantity × hours a day for each appliance (inverter ACs count at their average draw, not their rated watts), added up = 52.2 units a day; ÷ 4 units per kW of panels a day in your city = 13.06 kW. A grid-tied or hybrid system is sized by energy: when the 11,888 W running load is more than the panels give at that moment, the grid supplies the rest. 13.06 kW needs 23 panels of 585 W = 13.46 kW installed on about 60 square metres of roof, making about 1,615 units a month. Inverter: the larger of 11,888 W × 1.25 = 14.86 kW for the load and 13.46 kW of panels ÷ 1.3 = 10.35 kW, so the panels are never more than 1.3 times the inverter: 14.86 kW continuous, with a surge rating of at least 14,888 W for the water pump."
+    "text": "Energy: watts × quantity × hours a day for each appliance (inverter ACs count at their average draw, not their rated watts), added up = 52.2 units a day; ÷ 4 units per kW of panels a day in your city = 13.08 kW. A grid-tied or hybrid system is sized by energy: when the 11,888 W running load is more than the panels give at that moment, the grid supplies the rest. 13.08 kW needs 23 panels of 585 W = 13.46 kW installed on about 60 square metres of roof, making about 1,635 units a month. Inverter: the larger of 11,888 W × 1.25 = 14.86 kW for the load and 13.46 kW of panels ÷ 1.3 = 10.35 kW, so the panels are never more than 1.3 times the inverter: 14.86 kW continuous, with a surge rating of at least 14,888 W for the water pump."
    },
    "submit": "Calculate",
    "notice": "",
@@ -1428,11 +1428,11 @@
   "examples": [
    {
     "title": "Typical 1 kanal house with four inverter ACs",
-    "text": "Eight fans, twenty-four bulbs, inverter fridge, deep freezer, two large TVs, three 1.5 ton and one 2 ton inverter ACs, 1.5 hp pump, iron, washing machine, microwave, router and CCTV: 11,888 W running and 52.2 units a day. Solar system 13.46 kW (23 panels, about 60 square metres), inverter 14.86 kW, about 1,615 units a month."
+    "text": "Eight fans, twenty-four bulbs, inverter fridge, deep freezer, two large TVs, three 1.5 ton and one 2 ton inverter ACs, 1.5 hp pump, iron, washing machine, microwave, router and CCTV: 11,888 W running and 52.2 units a day. Solar system 13.46 kW (23 panels, about 60 square metres), inverter 14.86 kW, about 1,635 units a month."
    },
    {
     "title": "1 kanal house with five inverter ACs",
-    "text": "The same house with a fourth 1.5 ton inverter AC in the guest room: 13,338 W running and 60.2 units a day. Solar system 15.21 kW (26 panels), inverter 16.68 kW, about 1,825 units a month. One more AC adds about three panels of 585 W."
+    "text": "The same house with a fourth 1.5 ton inverter AC in the guest room: 13,338 W running and 60.2 units a day. Solar system 15.21 kW (26 panels), inverter 16.68 kW, about 1,848 units a month. One more AC adds about three panels of 585 W."
    },
    {
     "title": "Night loads with two bedroom ACs: battery for 6 hours",
@@ -1458,49 +1458,49 @@
      "4.68 kW",
      "8 × 585 W, 21 m²",
      "7.05 kW, surge 8,638 W",
-     "562"
+     "569"
     ],
     [
      "8,538 W running, 33.8 units a day",
      "8.78 kW",
      "15 × 585 W, 39 m²",
      "10.68 kW, surge 11,538 W",
-     "1,053"
+     "1,066"
     ],
     [
      "9,988 W running, 41.8 units a day",
      "10.53 kW",
      "18 × 585 W, 47 m²",
      "12.49 kW, surge 12,988 W",
-     "1,264"
+     "1,280"
     ],
     [
      "11,888 W running, 52.2 units a day",
      "13.46 kW",
      "23 × 585 W, 60 m²",
      "14.86 kW, surge 14,888 W",
-     "1,615"
+     "1,635"
     ],
     [
      "13,338 W running, 60.2 units a day",
      "15.21 kW",
      "26 × 585 W, 68 m²",
      "16.68 kW, surge 16,338 W",
-     "1,825"
+     "1,848"
     ],
     [
      "14,888 W running, 58.2 units a day",
      "14.63 kW",
      "25 × 585 W, 65 m²",
      "18.61 kW, surge 17,888 W",
-     "1,755"
+     "1,777"
     ],
     [
      "13,438 W running, 67.8 units a day",
      "16.97 kW",
      "29 × 585 W, 75 m²",
      "16.8 kW, surge 18,238 W",
-     "2,036"
+     "2,062"
     ]
    ]
   },
@@ -1613,7 +1613,7 @@
       "name": "What size solar system does a 1 kanal house with 4 ACs need?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "With three 1.5 ton and one 2 ton inverter ACs plus fans, lights, fridge, freezer, pump and kitchen loads, the house needs 13.46 kW of panels and a three-phase inverter of 14.86 kW, which makes about 1,615 units a month in Lahore."
+       "text": "With three 1.5 ton and one 2 ton inverter ACs plus fans, lights, fridge, freezer, pump and kitchen loads, the house needs 13.46 kW of panels and a three-phase inverter of 14.86 kW, which makes about 1,635 units a month in Lahore."
       }
      },
      {
@@ -1637,7 +1637,7 @@
       "name": "How many units does a 1 kanal solar system make a month?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "About 1,615 units a month for the 13.46 kW system in Lahore as a yearly average, against about 52.2 units a day used in summer. Summer months make more, winter months less; pick your city for its own sun yield."
+       "text": "About 1,635 units a month for the 13.46 kW system in Lahore as a yearly average, against about 52.2 units a day used in summer. Summer months make more, winter months less; pick your city for its own sun yield."
       }
      },
      {

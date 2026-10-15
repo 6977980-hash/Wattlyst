@@ -51,13 +51,13 @@
     "h2": "DC inverter fan consumption: how many units does a DC fan use per hour?",
     "p": [
      "A DC inverter fan, also sold as a BLDC or solar fan, draws about 35 W at full speed, which is 0.035 units per hour. Real models range from about 28 W to 50 W, so an advertised figure at the very bottom of that range usually refers to a low speed setting rather than full speed.",
-     "Over a day of 12 hours that is 0.42 units against 0.96 units for an AC fan, and over a month 12.6 units against 28.8. The saving per fan is modest in rupees; the real case for DC fans is a house with many fans, or fans that run on a UPS or solar system."
+     "Over a day of 12 hours that is 0.42 units against 0.96 units for an AC fan, and over a month 12.8 units against 29.2. The saving per fan is modest in rupees; the real case for DC fans is a house with many fans, or fans that run on a UPS or solar system."
     ]
    },
    {
     "h2": "Fan electricity cost per month in Pakistan",
     "p": [
-     "One AC ceiling fan on 12 hours a day uses about 28.8 units a month, which is about Rs 1,050 at Rs 36.46 per unit. Four fans on the same schedule, a normal summer load for a small house, use about 115.2 units, about Rs 4,200. A fan left on all day and night uses about 57.6 units a month.",
+     "One AC ceiling fan on 12 hours a day uses about 29.2 units a month, which is about Rs 1,065 at Rs 36.46 per unit. Four fans on the same schedule, a normal summer load for a small house, use about 116.8 units, about Rs 4,259. A fan left on all day and night uses about 58.4 units a month.",
      "These are energy charges only. Your bill adds a fixed charge per sanctioned kW, surcharges, quarterly adjustments and tax, and the rate per unit depends on the slab your total units reach, so the fans cost more in a month where they push you into a higher slab. The bill calculator linked below turns units into a full bill."
     ]
    },
@@ -71,7 +71,7 @@
    {
     "h2": "AC fan vs DC inverter fan: which should you buy?",
     "p": [
-     "For one or two fans on grid power the difference per fan is a few hundred rupees a month: Rs 1,050 against Rs 459 on the default schedule. For a house with four or more fans, long summers and loadshedding, DC fans pay back faster: four DC fans use about 50.4 units a month against 115.2 for four AC fans, and on a UPS or solar system the lower draw also means a smaller battery and inverter.",
+     "For one or two fans on grid power the difference per fan is a few hundred rupees a month: Rs 1,065 against Rs 466 on the default schedule. For a house with four or more fans, long summers and loadshedding, DC fans pay back faster: four DC fans use about 51.1 units a month against 116.8 for four AC fans, and on a UPS or solar system the lower draw also means a smaller battery and inverter.",
      "Check the label for the full-speed watts before buying; a DC fan is only a saving if its full-speed draw is well below your old fan's."
     ]
    }
@@ -83,11 +83,11 @@
    },
    {
     "q": "How many units does a DC inverter fan use per hour?",
-    "a": "About 0.035 units per hour at full speed, since a typical DC fan draws about 35 W. Over 12 hours a day that is 0.42 units a day and about 12.6 units a month."
+    "a": "About 0.035 units per hour at full speed, since a typical DC fan draws about 35 W. Over 12 hours a day that is 0.42 units a day and about 12.8 units a month."
    },
    {
     "q": "How much does a fan cost per month?",
-    "a": "One AC ceiling fan on 12 hours a day costs about Rs 1,050 a month in energy charge at Rs 36.46 per unit; a DC fan about Rs 459. Four AC fans cost about Rs 4,200. Your slab rate, fixed charges and tax change the final figure."
+    "a": "One AC ceiling fan on 12 hours a day costs about Rs 1,065 a month in energy charge at Rs 36.46 per unit; a DC fan about Rs 466. Four AC fans cost about Rs 4,259. Your slab rate, fixed charges and tax change the final figure."
    },
    {
     "q": "How long will a fan run on a UPS battery?",
@@ -109,14 +109,14 @@
   "key_facts": [
    "A normal AC ceiling fan draws about 80 W at full speed (65 to 120 W depending on make and age), which is 0.08 units per hour; units per hour = watts ÷ one thousand.",
    "A DC inverter (BLDC) ceiling fan draws about 35 W at full speed (28 to 50 W), less than half of an AC fan, so it uses about 0.035 units per hour.",
-   "One AC ceiling fan running 12 hours a day uses about 28.8 units in a 30-day month, about Rs 1,050 of energy charge at the Pakistan unprotected rate of Rs 36.46 per unit; a DC fan on the same schedule uses about 12.6 units, about Rs 459.",
-   "Four AC ceiling fans for 12 hours a day add about 115.2 units a month to the bill; four DC inverter fans add about 50.4 units.",
+   "One AC ceiling fan running 12 hours a day uses about 29.2 units in a 30-day month, about Rs 1,065 of energy charge at the Pakistan unprotected rate of Rs 36.46 per unit; a DC fan on the same schedule uses about 12.8 units, about Rs 466.",
+   "Four AC ceiling fans for 12 hours a day add about 116.8 units a month to the bill; four DC inverter fans add about 51.1 units.",
    "On a UPS the fan's watts set the backup time: a DC fan at 35 W runs more than twice as long as an AC fan at 80 W on the same battery."
   ],
   "mistakes": [
    "Trusting an advertised 'thirty watt' DC fan figure. The low number is often the draw at a low speed; at full speed DC fans range from about 28 W to 50 W, so use the full-speed watts on the label.",
    "Counting the fans by rooms instead of by hours. A fan in an empty room uses the same 0.08 units per hour as one in use; enter the hours each fan really runs.",
-   "Treating the monthly cost as the whole bill. Rs 1,050 is the energy charge at one slab rate; fixed charges, surcharges, tax and a slab change come on top.",
+   "Treating the monthly cost as the whole bill. Rs 1,065 is the energy charge at one slab rate; fixed charges, surcharges, tax and a slab change come on top.",
    "Sizing a UPS on the fan's running watts alone. A ceiling fan motor starts at about 120 W for a moment, and the UPS must also run the lights and TV with it."
   ],
   "sources": [
@@ -251,7 +251,7 @@
      "name": "days",
      "label": "Days in the month",
      "unit": "days",
-     "default": 30,
+     "default": 30.42,
      "advanced": true,
      "hint": "Billing days; most bills cover 29 to 31 days."
     },
@@ -306,14 +306,14 @@
      "spec": "1",
      "unit": "kWh",
      "label_ur": "Mahana units",
-     "value": "28.8"
+     "value": "29.2"
     },
     {
      "key": "monthly_rs",
      "label": "Monthly cost (energy charge only)",
      "spec": "rs",
      "label_ur": "Mahana kharcha (sirf energy charge)",
-     "value": "Rs 1,050"
+     "value": "Rs 1,065"
     },
     {
      "key": "running_w",
@@ -326,7 +326,7 @@
    ],
    "how": {
     "tpl": "{{out.items|int}} fan(s) × {{out.largest_w|int}} W = {{out.running_w|int}} W running. {{out.running_w|int}} W ÷ one thousand = {{out.running_kw|3}} kWh per hour, and one kWh is one unit on the bill. Units per hour × the hours a day you entered = {{out.daily_kwh|2}} units a day; × {{out.days}} days = {{out.monthly_units|1}} units a month; × {{out.tariff|rs2}} per unit = {{out.monthly_rs|rs}} a month for the energy charge, before fixed charges, surcharges and tax.",
-    "text": "1 fan(s) × 80 W = 80 W running. 80 W ÷ one thousand = 0.08 kWh per hour, and one kWh is one unit on the bill. Units per hour × the hours a day you entered = 0.96 units a day; × 30 days = 28.8 units a month; × Rs 36.46 per unit = Rs 1,050 a month for the energy charge, before fixed charges, surcharges and tax."
+    "text": "1 fan(s) × 80 W = 80 W running. 80 W ÷ one thousand = 0.08 kWh per hour, and one kWh is one unit on the bill. Units per hour × the hours a day you entered = 0.96 units a day; × 30.42 days = 29.2 units a month; × Rs 36.46 per unit = Rs 1,065 a month for the energy charge, before fixed charges, surcharges and tax."
    },
    "submit": "Calculate",
    "notice": "",
@@ -351,19 +351,19 @@
   "examples": [
    {
     "title": "One DC inverter fan, twelve hours a day",
-    "text": "35 W ÷ one thousand = 0.035 units per hour. Over twelve hours that is 0.42 units a day and 12.6 units in 30 days, about Rs 459 at Rs 36.46 per unit."
+    "text": "35 W ÷ one thousand = 0.035 units per hour. Over twelve hours that is 0.42 units a day and 12.8 units in 30 days, about Rs 466 at Rs 36.46 per unit."
    },
    {
     "title": "Four AC ceiling fans, twelve hours a day",
-    "text": "4 fans × 80 W = 320 W, or 0.32 units per hour. Over twelve hours that is 3.84 units a day and 115.2 units a month, about Rs 4,200 of energy charge."
+    "text": "4 fans × 80 W = 320 W, or 0.32 units per hour. Over twelve hours that is 3.84 units a day and 116.8 units a month, about Rs 4,259 of energy charge."
    },
    {
     "title": "Four DC inverter fans, twelve hours a day",
-    "text": "4 fans × 35 W = 140 W, or 0.14 units per hour. That is 1.68 units a day and 50.4 units a month, about Rs 1,838: the whole house of fans uses less than two AC fans."
+    "text": "4 fans × 35 W = 140 W, or 0.14 units per hour. That is 1.68 units a day and 51.1 units a month, about Rs 1,863: the whole house of fans uses less than two AC fans."
    },
    {
     "title": "One AC fan left on all day and night",
-    "text": "80 W × twenty-four hours = 1.92 units a day, 57.6 units a month, about Rs 2,100 at Rs 36.46 per unit."
+    "text": "80 W × twenty-four hours = 1.92 units a day, 58.4 units a month, about Rs 2,129 at Rs 36.46 per unit."
    },
    {
     "title": "Cost of one hour of one AC fan",
@@ -386,52 +386,52 @@
      "1",
      "80 W",
      "0.96",
-     "28.8",
-     "Rs 1,050"
+     "29.2",
+     "Rs 1,065"
     ],
     [
      "80 W",
      "2",
      "160 W",
      "1.92",
-     "57.6",
-     "Rs 2,100"
+     "58.4",
+     "Rs 2,129"
     ],
     [
      "80 W",
      "4",
      "320 W",
      "3.84",
-     "115.2",
-     "Rs 4,200"
+     "116.8",
+     "Rs 4,259"
     ],
     [
      "35 W",
      "1",
      "35 W",
      "0.42",
-     "12.6",
-     "Rs 459"
+     "12.8",
+     "Rs 466"
     ],
     [
      "35 W",
      "2",
      "70 W",
      "0.84",
-     "25.2",
-     "Rs 919"
+     "25.6",
+     "Rs 932"
     ],
     [
      "35 W",
      "4",
      "140 W",
      "1.68",
-     "50.4",
-     "Rs 1,838"
+     "51.1",
+     "Rs 1,863"
     ]
    ]
   },
-  "answer": "A normal AC ceiling fan in Pakistan uses about 0.08 units per hour (80 W); a DC inverter fan uses about 0.035 units per hour (35 W). Units per hour equal the fan's watts divided by one thousand. At 12 hours a day one AC fan uses about 28.8 units a month, about Rs 1,050 at Rs 36.46 per unit.",
+  "answer": "A normal AC ceiling fan in Pakistan uses about 0.08 units per hour (80 W); a DC inverter fan uses about 0.035 units per hour (35 W). Units per hour equal the fan's watts divided by one thousand. At 12 hours a day one AC fan uses about 29.2 units a month, about Rs 1,065 at Rs 36.46 per unit.",
   "formula": {
    "text": "units/h = W ÷ 1000; units/day = units/h × hours; units/month = units/day × days; cost = units/month × rate",
    "lines": [
@@ -537,7 +537,7 @@
       "name": "How many units does a DC inverter fan use per hour?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "About 0.035 units per hour at full speed, since a typical DC fan draws about 35 W. Over 12 hours a day that is 0.42 units a day and about 12.6 units a month."
+       "text": "About 0.035 units per hour at full speed, since a typical DC fan draws about 35 W. Over 12 hours a day that is 0.42 units a day and about 12.8 units a month."
       }
      },
      {
@@ -545,7 +545,7 @@
       "name": "How much does a fan cost per month?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "One AC ceiling fan on 12 hours a day costs about Rs 1,050 a month in energy charge at Rs 36.46 per unit; a DC fan about Rs 459. Four AC fans cost about Rs 4,200. Your slab rate, fixed charges and tax change the final figure."
+       "text": "One AC ceiling fan on 12 hours a day costs about Rs 1,065 a month in energy charge at Rs 36.46 per unit; a DC fan about Rs 466. Four AC fans cost about Rs 4,259. Your slab rate, fixed charges and tax change the final figure."
       }
      },
      {

@@ -72,10 +72,10 @@
   }
  ],
  "answer": "This electricity bill overbilling check converts the units on your bill to a normal thirty-day month (units × thirty ÷ days between readings) and recomputes the slab. A bill of {{in.units|int}} units read after {{in.days|int}} days is {{out.units_30|int}} units a month; billed at the higher slab it carries about {{out.extra_rs|rs}} more in energy and fixed charge than the normal-month slab would. An estimate, not an official finding.",
- "how": "{{out.units}} units × {{d.days_per_month|int}} ÷ {{out.days}} days = {{out.units_30|int}} units in a normal month. Energy and fixed charge as billed, at the slab for {{out.units}} units: {{out.billed_rs|rs}}. The same {{out.units}} units at the slab {{out.units_30|int}} units would reach: {{out.fair_rs|rs}}. Possible extra from the long reading cycle: {{out.extra_rs|rs}} before surcharges and GST.",
+ "how": "{{out.units}} units × {{d.bill_month_days|int}} ÷ {{out.days}} days = {{out.units_30|int}} units in a normal month. Energy and fixed charge as billed, at the slab for {{out.units}} units: {{out.billed_rs|rs}}. The same {{out.units}} units at the slab {{out.units_30|int}} units would reach: {{out.fair_rs|rs}}. Possible extra from the long reading cycle: {{out.extra_rs|rs}} before surcharges and GST.",
  "key_facts": [
   "A reading cycle longer than {{d.max_normal_cycle_days|int}} days can push a bill into a higher unprotected slab, and because every unit is then charged at the higher rate, the extra is not just the extra days: {{in.units|int}} units over {{in.days|int}} days carries about {{out.extra_rs|rs}} more than the same units billed at the normal-month slab.",
-  "The check scales the units to a {{d.days_per_month|int}}-day month, {{out.units_30|int}} here, and compares the slab reached with the slab the bill used; a short cycle never produces an overcharge, only a long one.",
+  "The check scales the units to a {{d.bill_month_days|int}}-day month, {{out.units_30|int}} here, and compares the slab reached with the slab the bill used; a short cycle never produces an overcharge, only a long one.",
   "A home loses protected status when a bill exceeds {{d.protected_max_units|int}} units even if the thirty-day equivalent is under the limit; that bill, and the next {{d.protected_months|int}} at unprotected rates, are the costliest form of cycle stretch.",
   "A detection bill is a DISCO's charge for units it says were consumed but not metered; the consumer is entitled to ask for the detection proforma that shows how the units were assessed and to contest it.",
   "The complaint path is the DISCO first (the sub-divisional officer, then the executive engineer), and NEPRA's consumer affairs complaint system if the DISCO does not resolve it; NEPRA asks whether the DISCO was approached before it takes a case."
@@ -93,7 +93,7 @@
   {
    "h2": "How does the overbilling check work?",
    "p": [
-    "Under the unprotected domestic tariff every unit in the month is charged at the rate of the slab the month's total reaches. That makes the number of days between readings matter: a bill that covers {{in.days|int}} days instead of {{d.days_per_month|int}} collects more units, and if those extra units cross a slab boundary, the whole month is charged at the higher rate. The check scales your units to a thirty-day month, {{out.units_30|int}} units for the default bill, and works out what the same units would cost at the slab a normal month would reach.",
+    "Under the unprotected domestic tariff every unit in the month is charged at the rate of the slab the month's total reaches. That makes the number of days between readings matter: a bill that covers {{in.days|int}} days instead of {{d.bill_month_days|int}} collects more units, and if those extra units cross a slab boundary, the whole month is charged at the higher rate. The check scales your units to a thirty-day month, {{out.units_30|int}} units for the default bill, and works out what the same units would cost at the slab a normal month would reach.",
     "The difference, {{out.extra_rs|rs}} on the default bill, is the amount a long cycle may have added in energy and fixed charge. GST and the per-unit surcharges would add to it. If the result is zero, the cycle did not change your slab and the bill is at least slab-correct."
    ]
   },

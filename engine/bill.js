@@ -157,7 +157,7 @@ export const bill_audit = calculator((i, d) => {
   const t = tariffOf(d);
   const units = nonneg(i, 'units');
   const days = pos(i, 'days');
-  const cycle = dflt(d, 'days_per_month');
+  const cycle = dflt(d, 'bill_month_days');
   const units_30 = (units * cycle) / days;
   const bands = t.unprotected;
   const limit = dflt(d, 'protected_max_units');

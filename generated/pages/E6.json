@@ -173,7 +173,7 @@
      "name": "days",
      "label": "Days",
      "unit": "days",
-     "default": 30,
+     "default": 30.42,
      "hint": "Enter 1 for units a day, 30 for a month."
     },
     {
@@ -231,7 +231,7 @@
      "spec": "2",
      "unit": "units",
      "label_ur": "Bijli ke units (kWh)",
-     "value": "30"
+     "value": "30.42"
     },
     {
      "key": "watts",
@@ -246,12 +246,12 @@
      "label": "Cost",
      "spec": "rs",
      "label_ur": "Kharcha",
-     "value": "Rs 1,094"
+     "value": "Rs 1,109"
     }
    ],
    "how": {
     "tpl": "{{out.watts}} W × {{out.hours|2}} h a day × {{out.days}} days ÷ 1,000 = {{out.units|2}} units (kWh). In Amps mode the watts come first from volts × amps × power factor (× the square root of three for three phase), then the same step.",
-    "text": "1,000 W × 1 h a day × 30 days ÷ 1,000 = 30 units (kWh). In Amps mode the watts come first from volts × amps × power factor (× the square root of three for three phase), then the same step."
+    "text": "1,000 W × 1 h a day × 30.42 days ÷ 1,000 = 30.42 units (kWh). In Amps mode the watts come first from volts × amps × power factor (× the square root of three for three phase), then the same step."
    },
    "submit": "Calculate",
    "notice": "",
@@ -295,41 +295,41 @@
     [
      "80 W",
      "12 h",
-     "28.8"
+     "29.2"
     ],
     [
      "150 W",
      "8 h",
-     "36"
+     "36.5"
     ],
     [
      "500 W",
      "2 h",
-     "30"
+     "30.4"
     ],
     [
      "1,000 W",
      "1 h",
-     "30"
+     "30.4"
     ],
     [
      "1,000 W",
      "8 h",
-     "240"
+     "243.4"
     ],
     [
      "2,000 W",
      "2 h",
-     "120"
+     "121.7"
     ],
     [
      "3,000 W",
      "1 h",
-     "90"
+     "91.3"
     ]
    ]
   },
-  "answer": "One electricity unit is one kilowatt hour (kWh): a 1,000 W appliance running for one hour uses exactly one unit, so 1 hour a day for 30 days is 30 units. Units = watts × hours ÷ 1,000, or from amps: volts × amps × power factor × hours ÷ 1,000. Enter your appliance's watts or amps and hours to get its units.",
+  "answer": "One electricity unit is one kilowatt hour (kWh): a 1,000 W appliance running for one hour uses exactly one unit, so 1 hour a day for 30 days is 30.42 units. Units = watts × hours ÷ 1,000, or from amps: volts × amps × power factor × hours ÷ 1,000. Enter your appliance's watts or amps and hours to get its units.",
   "formula": {
    "text": "units (kWh) = W × h × days ÷ 1000; W = V × A × PF (DC: PF = 1; three phase: × √3)",
    "lines": [

@@ -56,6 +56,7 @@ const EXACT = {
   hours_year_invalid: 'Hours a year must be above 0 and at most 8,760.',
   duty_invalid: 'Compressor on-time must be a share from 0 to 1, e.g. 0.8.',
   soiling_rate_invalid: 'Dust loss per day is a share: 0.003 means 0.3% a day. Maximum 0.05.',
+  backup_above_home: 'Backup cannot be more than your list\'s running watts or daily units.',
   internal_non_finite: 'These numbers are outside a realistic range. Please check your inputs.',
 };
 

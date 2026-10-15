@@ -80,7 +80,7 @@
   }
  ],
  "answer": "For a bill of {{in.monthly_units|int}} units a month in Lahore you need about {{out.kw|2}} kW of solar panel wattage, which is {{out.panels|int}} panels of {{out.panel_w|int}} W ({{out.installed_kw|2}} kW installed) on about {{out.roof_m2|1}} m² of roof. Panel watts = daily units ÷ the units one kW of panels makes a day in your city, rounded up to whole panels.",
- "how": "Monthly units ÷ {{d.days_per_month|int}} days = {{out.daily_kwh|1}} units a day. Each kW of panels in your city makes about {{out.yield_kwh_per_kwp_day|1}} units a day over the year (sun hours with heat, dust and wiring losses already taken off). {{out.daily_kwh|1}} ÷ {{out.yield_kwh_per_kwp_day|1}} = {{out.kw|2}} kW of panels. At {{out.panel_w}} W a panel that is {{out.panels|int}} panels after rounding up, {{out.installed_kw|2}} kW installed, which should make about {{out.monthly_kwh_estimate|int}} units a month on about {{out.roof_m2|1}} m² of roof.",
+ "how": "Monthly units ÷ {{d.days_per_month|2}} days = {{out.daily_kwh|1}} units a day. Each kW of panels in your city makes about {{out.yield_kwh_per_kwp_day|1}} units a day over the year (sun hours with heat, dust and wiring losses already taken off). {{out.daily_kwh|1}} ÷ {{out.yield_kwh_per_kwp_day|1}} = {{out.kw|2}} kW of panels. At {{out.panel_w}} W a panel that is {{out.panels|int}} panels after rounding up, {{out.installed_kw|2}} kW installed, which should make about {{out.monthly_kwh_estimate|int}} units a month on about {{out.roof_m2|1}} m² of roof.",
  "key_facts": [
   "Solar panel wattage for a home = daily units ÷ the units each kW of panels makes a day in the city: {{in.monthly_units|int}} units a month in Lahore is {{out.daily_kwh|1}} units a day and needs {{out.kw|2}} kW of panels, or {{out.panels|int}} panels of {{out.panel_w|int}} W.",
   "One kW of panels makes about {{out.yield_kwh_per_kwp_day|1}} units a day in Lahore and {{ex.2.out.yield_kwh_per_kwp_day|1}} in Karachi over the year (Global Solar Atlas), so the same bill needs {{out.panels|int}} panels in Lahore but {{ex.2.out.panels|int}} in Karachi.",
@@ -122,7 +122,7 @@
   {
    "h2": "How many solar panels for {{out.daily_kwh|1}} units a day?",
    "p": [
-    "{{out.daily_kwh|1}} units a day is {{in.monthly_units|int}} units a month, the default above: {{out.panels|int}} panels of {{out.panel_w|int}} W in Lahore, {{out.installed_kw|2}} kW. The same {{ex.2.out.daily_kwh|1}} units a day in Karachi need {{ex.2.out.panels|int}} panels ({{ex.2.out.installed_kw|2}} kW) because each kW makes {{ex.2.out.yield_kwh_per_kwp_day|1}} units a day there. For any other daily figure, multiply by {{d.days_per_month|int}} and enter it as monthly units, or use the solar system size calculator, which takes daily kWh directly."
+    "{{out.daily_kwh|1}} units a day is {{in.monthly_units|int}} units a month, the default above: {{out.panels|int}} panels of {{out.panel_w|int}} W in Lahore, {{out.installed_kw|2}} kW. The same {{ex.2.out.daily_kwh|1}} units a day in Karachi need {{ex.2.out.panels|int}} panels ({{ex.2.out.installed_kw|2}} kW) because each kW makes {{ex.2.out.yield_kwh_per_kwp_day|1}} units a day there. For any other daily figure, multiply by {{d.days_per_month|2}} and enter it as monthly units, or use the solar system size calculator, which takes daily kWh directly."
    ]
   },
   {
@@ -234,7 +234,7 @@
   },
   {
    "q": "How many solar panels for {{out.daily_kwh|1}} kWh a day?",
-   "a": "{{out.daily_kwh|1}} kWh a day is {{in.monthly_units|int}} units a month, so {{out.panels|int}} panels of {{out.panel_w|int}} W in Lahore or {{ex.2.out.panels|int}} in Karachi. Multiply any daily figure by {{d.days_per_month|int}} to enter it as monthly units."
+   "a": "{{out.daily_kwh|1}} kWh a day is {{in.monthly_units|int}} units a month, so {{out.panels|int}} panels of {{out.panel_w|int}} W in Lahore or {{ex.2.out.panels|int}} in Karachi. Multiply any daily figure by {{d.days_per_month|2}} to enter it as monthly units."
   },
   {
    "q": "How much power does a {{ex.3.out.panel_w|int}} W solar panel produce per day?",

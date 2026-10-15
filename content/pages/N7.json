@@ -16,6 +16,14 @@
    "hint": "What runs together on backup: for example four fans, lights, a router and a TV. Add up the watts on the labels or use the home load calculator. Very large loads (a whole house with ACs) are beyond the UPS and generator sizes in our price list."
   },
   {
+   "name": "surge_w",
+   "label": "Starting watts",
+   "unit": "W",
+   "placeholder": "Same as the load",
+   "advanced": true,
+   "hint": "Only if the backup runs a motor (water pump, fridge, AC): the load plus the biggest motor's extra starting watts. The generator must start it, so it is sized for the larger of the load × margin and this. Leave blank for fans, lights and electronics."
+  },
+  {
    "name": "hours",
    "label": "Power cut hours a day",
    "unit": "h",
@@ -157,9 +165,9 @@
  "how": "Backup a day: {{out.load_w}} W × {{out.hours}} h = {{out.day_kwh|2}} kWh; backup hours: {{out.hours}} h × {{out.days}} days × twelve months × {{out.years}} years = {{out.backup_hours|int}} h. UPS: {{out.ups_kva}} kVA, tubular batteries: {{out.batteries|int}} ({{out.bank_wh|int}} Wh needed), {{out.ups_buy|rs}}; recharge {{out.recharge_kwh_year|int}} units a year × {{out.tariff|rs2}} = {{out.ups_run_year|rs}}; battery replacements: {{out.ups_repl|int}}, {{out.ups_repl_rs|rs}}; charger check: {{out.refill_need_kwh|2}} kWh to put back in {{out.refill_hours|int}} grid hours, {{out.charger_a|int}} A at {{out.bank_v}} V gives up to {{out.refill_max_kwh|2}} kWh; total {{out.ups_total|rs}} ÷ {{out.backup_hours|int}} h = {{out.ups_per_hour|rs}}. Generator: {{out.gen_kva}} kVA, {{out.gen_buy|rs}}; {{out.l_per_h|2}} litres an hour × {{out.run_h_year|int}} h × {{out.fuel_price|rs2}} = {{out.fuel_year|rs}} fuel plus {{out.oil_year|rs}} oil a year; total {{out.gen_total|rs}} ÷ {{out.backup_hours|int}} h = {{out.gen_per_hour|rs}}. Hybrid solar: {{out.inverter_kw}} kW inverter, {{out.lithium_packs|int}} lithium pack(s), {{out.panels|int}} panels, {{out.solar_buy|rs}}; battery replacements: {{out.solar_repl|int}}, {{out.solar_repl_rs|rs}}; total {{out.solar_total|rs}} ÷ {{out.backup_hours|int}} h = {{out.solar_per_hour|rs}}.",
  "key_facts": [
   "Cost per backup hour = (equipment + running cost a year × years + battery replacements) ÷ hours of backup over the same years; it puts a cheap-to-buy generator and a dear-to-buy solar system on one scale.",
-  "For {{in.load_w|int}} W through {{in.hours|int}} hours a day a petrol generator burns about {{out.l_per_h|2}} litres an hour, {{out.fuel_year|rs}} of petrol a year, so it is the dearest option within the first year even though it is the cheapest to buy.",
+  "For {{in.load_w|int}} W through {{in.hours|int}} hours a day a petrol generator burns about {{out.l_per_h|2}} litres an hour, {{out.fuel_year|rs}} of petrol a year. Cheapest to buy here: {{out.cheapest_buy|raw}}; dearest after the first year (purchase plus one year of running): {{out.first_year_dearest|raw}}.",
   "A UPS takes more units from the grid than it delivers: {{out.recharge_kwh_year|int}} units a year here, {{out.ups_run_year|rs}} at {{out.tariff|rs2}} a unit, and its tubular batteries are replaced every {{out.tubular_life_years|int}} years.",
-  "For a small load and short cuts the cheapest changes: {{ex.1.in.load_w|int}} W for {{ex.1.in.hours|int}} hours a day costs {{ex.1.out.ups_per_hour|rs}} per backup hour on a UPS against {{ex.1.out.solar_per_hour|rs}} on hybrid solar, because even a small solar backup buys a whole lithium pack and a hybrid inverter."
+  "For a small load and short cuts: {{ex.1.in.load_w|int}} W for {{ex.1.in.hours|int}} hours a day costs {{ex.1.out.ups_per_hour|rs}} per backup hour on a UPS against {{ex.1.out.solar_per_hour|rs}} on hybrid solar, and the cheapest is {{ex.1.out.cheapest|raw}}; even a small solar backup buys a whole lithium pack and a hybrid inverter built for it."
  ],
  "formula": {
   "text": "Cost per backup hour = (B + Y × R + N × P) ÷ (h × days × twelve × Y)",
@@ -176,7 +184,7 @@
    "h2": "Which is the cheapest backup for loadshedding?",
    "p": [
     "With the defaults, {{in.load_w|int}} W for {{in.hours|int}} hours a day over {{in.years|int}} years, the answer is {{out.cheapest|raw}} at {{out.cheapest_total|rs}} in total. The UPS comes to {{out.ups_total|rs}}, hybrid solar to {{out.solar_total|rs}} and the generator to {{out.gen_total|rs}}; solar has no running cost once bought, the generator pays for petrol every hour.",
-    "The answer changes with the load and the hours. For {{ex.1.in.load_w|int}} W over {{ex.1.in.hours|int}} hours a day the cheapest is {{ex.1.out.cheapest|raw}} ({{ex.1.out.cheapest_total|rs}} over {{ex.1.out.years|int}} years), because hybrid solar still has to buy a whole lithium pack and an inverter. Enter your own load and hours above."
+    "The answer can change with the load and the hours. For {{ex.1.in.load_w|int}} W over {{ex.1.in.hours|int}} hours a day the cheapest is {{ex.1.out.cheapest|raw}} ({{ex.1.out.cheapest_total|rs}} over {{ex.1.out.years|int}} years); hybrid solar still has to buy a whole lithium pack and an inverter however small the load. Enter your own load and hours above."
    ]
   },
   {
@@ -189,8 +197,8 @@
   {
    "h2": "What the hybrid solar figure includes",
    "p": [
-    "The smallest hybrid inverter in our price data that carries the load, lithium batteries in whole packs for one night's backup, and enough panels to refill the battery on an average day in your city. It assumes the sun recharges the battery, so a run of cloudy days would still need the grid.",
-    "It does not count the bill savings solar makes during the day, which usually decide the choice in its favour. It also leaves out mounting, cabling and installation (they add to every option, most to solar), the inverter's own standby draw and grid charging on cloudy days."
+    "The smallest hybrid inverter in our price data that carries the load and is built for the lithium pack's battery voltage, lithium batteries in whole packs for one night's backup, and enough panels to refill the battery on an average day in your city. It assumes the sun recharges the battery, so a run of cloudy days would still need the grid.",
+    "It does not count the bill savings solar makes during the day. The Home Power Planner on our home page does: it prices the same backup with on-grid or hybrid solar for your whole appliance list and its bill, so its pick can differ from the one here. It also leaves out mounting, cabling and installation (they add to every option, most to solar), the inverter's own standby draw and grid charging on cloudy days."
    ]
   },
   {
@@ -221,7 +229,7 @@
     "hours": 8
    },
    "title": "Bigger load through long cuts",
-   "text": "{{in.load_w|int}} W for {{in.hours|int}} hours a day needs {{out.batteries|int}} tubular batteries on a {{out.ups_kva}} kVA UPS, and its charger cannot refill them between cuts ({{out.ups_status|raw}}), so the UPS is left out. Hybrid solar with {{out.lithium_packs|int}} lithium packs costs {{out.solar_per_hour|rs}} per backup hour, the generator {{out.gen_per_hour|rs}}."
+   "text": "{{in.load_w|int}} W for {{in.hours|int}} hours a day needs {{out.batteries|int}} tubular batteries on a {{out.ups_kva}} kVA UPS; charger check: {{out.ups_status|raw}}. Hybrid solar with {{out.lithium_packs|int}} lithium packs costs {{out.solar_per_hour|rs}} per backup hour, the generator {{out.gen_per_hour|rs}}. Cheapest: {{out.cheapest|raw}}."
   },
   {
    "inputs": {
@@ -309,7 +317,7 @@
   },
   {
    "q": "Is solar worth it only for backup?",
-   "a": "For a small load and short cuts, usually not: a whole lithium pack and a hybrid inverter cost more than a UPS. For bigger loads and long cuts it is the cheapest per backup hour even before counting its daytime bill savings."
+   "a": "It depends on the load and the hours. For {{ex.1.in.load_w|int}} W through {{ex.1.in.hours|int}} hours a day the cheapest backup is {{ex.1.out.cheapest|raw}}, because even a small solar backup buys a whole lithium pack and a hybrid inverter; for {{in.load_w|int}} W through {{in.hours|int}} hours over {{in.years|int}} years it is {{out.cheapest|raw}}. This comparison leaves out the bill savings solar makes during the day; the Home Power Planner on our home page counts them for your whole appliance list."
   },
   {
    "q": "Does the comparison include installation?",
@@ -319,7 +327,7 @@
  "related": [
   "H8",
   "H9",
-  "D15",
+  "H1",
   "C6",
   "D10",
   "C8"

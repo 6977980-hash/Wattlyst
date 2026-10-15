@@ -1,8 +1,8 @@
 // Home Power Planner (specs/formulas.md "Phase 4 tools"): one appliance list carried through the chain
 // load -> inverter -> battery -> solar -> net billing -> generator. Every step calls the calculator that
 // owns its formula; this file only passes numbers along and adds the monthly solar split.
-import { calculator, CalcError, frac, nonneg, pos, dflt, has } from './core.js';
-import { inverter_size, generator_size } from './sizing.js';
+import { calculator, CalcError, frac, nonneg, num, pos, dflt, has } from './core.js';
+import { inverter_size, generator_size, loadRows } from './sizing.js';
 import { solar_from_loads, solar_battery } from './solar.js';
 import { bill_energy, bill_total, net_billing } from './bill.js';
 
@@ -22,8 +22,11 @@ export const home_plan = calculator((i, d) => {
   // than dc_ac_ratio_max times it (section D, D5/D8 rule): continuous = max(P_run × margin, kWp × 1000 / ratio).
   const inverter_w = Math.max(inv.continuous_w, sun.inverter_kw_array * 1000);
 
-  const backup_w = pos(i, 'backup_w');
-  const backup_hours = nonneg(i, 'backup_hours');
+  const backup_hours = num(i, 'backup_hours', { min: 0, max: 24 });
+  // Backup watts are needed only with backup hours (WL-105). The backup load is part of the list, so it can be no more
+  // than the list's running load and its energy no more than the day's use (WL-103).
+  const backup_w = backup_hours > 0 ? pos(i, 'backup_w') : nonneg(i, 'backup_w', 0);
+  if (backup_w > inv.running_w + 1e-9 || (backup_w * backup_hours) / 1000 > sun.daily_kwh + 1e-9) throw new CalcError('backup_above_home', 'backup_w');
   const battery_v = pos(i, 'battery_v', dflt(d, 'battery_v_default'));
   const lithium = (i.chemistry ?? 'lifepo4') === 'lifepo4';
   if (!['lifepo4', 'tubular'].includes(i.chemistry ?? 'lifepo4')) throw new CalcError('chemistry_invalid', 'chemistry');
@@ -32,7 +35,9 @@ export const home_plan = calculator((i, d) => {
     margin: inv.margin, dc_ac_ratio_max: sun.dc_ac_ratio_max,
     inverter_kw_load: inv.continuous_w / 1000, inverter_kw_array: sun.inverter_kw_array,
     inverter_w, inverter_kw: inverter_w / 1000, inverter_kva: inverter_w / inv.pf / 1000, inverter_surge_w: inv.surge_w,
-    backup_w, backup_hours, battery_v, chemistry: lithium ? 'lifepo4' : 'tubular',
+    // Starting peak of the backup load: any motor whose running watts fit in it may start on it (C1 rule, WL-96).
+    backup_w, backup_surge_w: backup_w + loadRows(i.loads, d).reduce((m, r) => (r.qty > 0 && r.run <= backup_w + 1e-9 ? Math.max(m, r.start - r.run) : m), 0),
+    backup_hours, battery_v, chemistry: lithium ? 'lifepo4' : 'tubular',
     city_yield: sun.yield_kwh_per_kwp_day, panel_w: sun.panel_w, solar_kw: sun.kw, panels: sun.panels, installed_kw: sun.installed_kw,
     roof_m2: sun.roof_m2, solar_kw_energy: sun.kw_energy, solar_kw_power: sun.kw_power, pr: sun.pr, solar_limited_by: sun.limited_by,
     monthly_solar_kwh: sun.monthly_kwh_estimate,
@@ -82,3 +87,15 @@ export const home_plan = calculator((i, d) => {
   Object.assign(out, { generator_kva: gen.recommended_kva, generator_pick_kva: gen.standard_kva ?? gen.recommended_kva, generator_above_standard_sizes: gen.above_standard_sizes });
   return out;
 });
+
+/**
+ * Whole-bill saving a month of the planner's net-billed array (formulas.md H1 decision engine): only `sun` of the solar
+ * is made and used (an on-grid inverter stops in a cut), only `exp` of the export reaches the grid (a hybrid cannot export
+ * in a cut), and `extra` units are added to the import (a UPS recharge) or taken off it (units a generator supplies).
+ */
+export function netSaving(p, d, sun, exp, extra) {
+  const s = p.net_billing_solar_kwh * sun;
+  const self = Math.min(s, p.monthly_units * p.day_share);
+  const units = Math.max(0, p.monthly_units - self + extra);
+  return p.full_before_rs - Math.max(0, bill_total.raw({ sanctioned_kw: p.sanctioned_kw, protected: false, units }, d).total_rs - (s - self) * exp * p.buyback_rs);
+}

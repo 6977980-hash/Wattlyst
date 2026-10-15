@@ -310,7 +310,7 @@ function browserFuel(f) {
 
 /** Browser copy of data/backup-prices.json: every number engine/backup.js reads, no sources or notes. */
 function browserBackup(b) {
-  const strip = (o) => Object.fromEntries(Object.entries(o).filter(([k]) => !['label', 'sources', 'note', 'rated_w_note', 'kva_note'].includes(k)));
+  const strip = (o) => Object.fromEntries(Object.entries(o).filter(([k]) => !['label', 'sources', 'note', 'rated_w_note', 'kva_note', 'bank_v_note', 'charger_a_note', 'charger_sources'].includes(k)));
   return { ups: b.ups.map(strip), generators: b.generators.map(strip), generator_upkeep: strip(b.generator_upkeep), tubular_unit: strip(b.tubular_unit), lithium_pack: strip(b.lithium_pack), battery_life_years: strip(b.battery_life_years) };
 }
 
@@ -686,7 +686,7 @@ export async function build() {
       // C8 fuel curve and fuel prices, numbers only (the generator test points stay in data/, the page lists them).
       generator_fuel: browserFuel(inp.data.generator_fuel),
       // N7 backup comparison: equipment price ranges and upkeep, numbers only (sources stay in data/ and on the page).
-      component_prices: { items: inp.data.component_prices.items.map(({ category, size, low, high, n_sources, export_capable }) => ({ category, size, low, high, n_sources, ...(export_capable === false ? { export_capable } : {}) })) },
+      component_prices: { items: inp.data.component_prices.items.map(({ category, size, low, high, n_sources, export_capable, bank_v }) => ({ category, size, low, high, n_sources, ...(export_capable === false ? { export_capable } : {}), ...(bank_v ? { bank_v } : {}) })) },
       backup_prices: browserBackup(inp.data.backup_prices) },
     // lastmod: the same date as the page's schema dateModified, used for the sitemap <lastmod> (WL-84).
     pages: rows.map(({ id, type, url, h1, title, meta, status, live, parent, children, related, next, wave, reviewed, modified }) => ({ id, type, url, h1, title, meta, status, live, parent, children, related, next, wave, lastmod: reviewed || modified })),

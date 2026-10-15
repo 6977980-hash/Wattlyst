@@ -49,7 +49,7 @@
    {
     "h2": "Electric geyser bill per month",
     "p": [
-     "A 3,000 W storage geyser heating 3 hours a day uses about 9 units a day and 270 units in a 30-day month, about Rs 9,844 at Rs 36.46 per unit. A geyser used only for morning showers, about an hour of heating, uses about 90 units, about Rs 3,281.",
+     "A 3,000 W storage geyser heating 3 hours a day uses about 9 units a day and 274 units in a 30-day month, about Rs 9,982 at Rs 36.46 per unit. A geyser used only for morning showers, about an hour of heating, uses about 91 units, about Rs 3,327.",
      "That is the energy charge at one slab rate. Units from a geyser come on top of everything else in a winter month, so they can move the whole bill into a higher slab, where every unit costs more; the bill calculator shows the full bill for your total units."
     ]
    },
@@ -81,7 +81,7 @@
    },
    {
     "q": "What is the electric geyser bill per month?",
-    "a": "About Rs 9,844 of energy charge for 270 units at 3 heating hours a day with a 3,000 W geyser, at Rs 36.46 per unit. With a timer and one heating hour a day, about Rs 3,281."
+    "a": "About Rs 9,982 of energy charge for 274 units at 3 heating hours a day with a 3,000 W geyser, at Rs 36.46 per unit. With a timer and one heating hour a day, about Rs 3,327."
    },
    {
     "q": "How many watts does a geyser use?",
@@ -89,7 +89,7 @@
    },
    {
     "q": "How many units does an instant geyser use?",
-    "a": "About 3.5 units per hour of hot water, so an hour a day is about 105 units a month, about Rs 3,828."
+    "a": "About 3.5 units per hour of hot water, so an hour a day is about 106 units a month, about Rs 3,882."
    },
    {
     "q": "Is a gas geyser cheaper than an electric geyser?",
@@ -107,14 +107,14 @@
   "key_facts": [
    "Electric geysers sold for homes are rated from about 1,500 W to 5,500 W; a 3,000 W geyser uses 3 units (kWh) per hour while its element heats, since units per hour = watts ÷ one thousand.",
    "A storage geyser's thermostat switches the element off once the tank is hot, so the hours that count are heating hours, not the hours it is switched on; about 3 heating hours a day is the typical figure we use for a family in winter.",
-   "At 3 heating hours a day a 3,000 W geyser uses about 270 units in a 30-day month, about Rs 9,844 of energy charge at Rs 36.46 per unit, enough on its own to push a bill into a higher slab.",
+   "At 3 heating hours a day a 3,000 W geyser uses about 274 units in a 30-day month, about Rs 9,982 of energy charge at Rs 36.46 per unit, enough on its own to push a bill into a higher slab.",
    "A 3,000 W geyser draws 13 A at 230 V and a 3,500 W instant water heater 15.2 A, so each needs its own circuit and breaker, not a socket shared with other loads.",
-   "An instant electric water heater draws more power than a storage geyser but only while water flows: about 3.5 units per hour, 105 units a month at 1 hour a day of use."
+   "An instant electric water heater draws more power than a storage geyser but only while water flows: about 3.5 units per hour, 106 units a month at 1 hour a day of use."
   ],
   "mistakes": [
    "Counting the hours the geyser is switched on. Only heating hours use units; a timer and good insulation cut them.",
    "Plugging a geyser into a normal socket or sharing its circuit. At 13 A it needs its own cable and breaker.",
-   "Forgetting the slab. A geyser's 270 units a month can push a winter bill into a higher slab, so every unit in the house costs more.",
+   "Forgetting the slab. A geyser's 274 units a month can push a winter bill into a higher slab, so every unit in the house costs more.",
    "Running a geyser on a UPS. Its 3,000 W continuous draw empties a home battery quickly; run it on grid or daytime solar only."
   ],
   "sources": [
@@ -189,7 +189,7 @@
      "name": "days",
      "label": "Days in the month",
      "unit": "days",
-     "default": 30,
+     "default": 30.42,
      "advanced": true,
      "hint": "Billing days; most bills cover 29 to 31 days."
     },
@@ -252,14 +252,14 @@
      "spec": "int",
      "unit": "kWh",
      "label_ur": "Mahana units",
-     "value": "270"
+     "value": "274"
     },
     {
      "key": "monthly_rs",
      "label": "Monthly cost (energy charge only)",
      "spec": "rs",
      "label_ur": "Mahana kharcha (sirf energy charge)",
-     "value": "Rs 9,844"
+     "value": "Rs 9,982"
     },
     {
      "key": "running_w",
@@ -272,7 +272,7 @@
    ],
    "how": {
     "tpl": "{{out.running_w|int}} W ÷ one thousand = {{out.running_kw|2}} units per hour while the element heats. × the heating hours a day you entered = {{out.daily_kwh|1}} units a day; × {{out.days}} days = {{out.monthly_units|int}} units a month; × {{out.tariff|rs2}} per unit = {{out.monthly_rs|rs}} for the energy charge, before fixed charges, surcharges and tax. Current = {{out.running_w|int}} W ÷ ({{out.volts}} V × {{out.pf|1}}) = {{out.amps|1}} A, with no starting surge.",
-    "text": "3,000 W ÷ one thousand = 3 units per hour while the element heats. × the heating hours a day you entered = 9 units a day; × 30 days = 270 units a month; × Rs 36.46 per unit = Rs 9,844 for the energy charge, before fixed charges, surcharges and tax. Current = 3,000 W ÷ (230 V × 1) = 13 A, with no starting surge."
+    "text": "3,000 W ÷ one thousand = 3 units per hour while the element heats. × the heating hours a day you entered = 9 units a day; × 30.42 days = 274 units a month; × Rs 36.46 per unit = Rs 9,982 for the energy charge, before fixed charges, surcharges and tax. Current = 3,000 W ÷ (230 V × 1) = 13 A, with no starting surge."
    },
    "submit": "Calculate",
    "notice": "",
@@ -297,19 +297,19 @@
   "examples": [
    {
     "title": "1,500 W storage geyser, 3 heating hours a day",
-    "text": "1,500 W ÷ one thousand = 1.5 units per hour, 6.5 A. 4.5 units a day, 135 units a month, about Rs 4,922."
+    "text": "1,500 W ÷ one thousand = 1.5 units per hour, 6.5 A. 4.5 units a day, 137 units a month, about Rs 4,991."
    },
    {
     "title": "3,000 W geyser on a timer, one heating hour a day",
-    "text": "3 units a day, 90 units a month, about Rs 3,281 at Rs 36.46 per unit."
+    "text": "3 units a day, 91 units a month, about Rs 3,327 at Rs 36.46 per unit."
    },
    {
     "title": "Instant electric water heater, one hour of hot water a day",
-    "text": "3,500 W = 3.5 units per hour at 15.2 A. 105 units a month, about Rs 3,828."
+    "text": "3,500 W = 3.5 units per hour at 15.2 A. 106 units a month, about Rs 3,882."
    },
    {
     "title": "3,000 W geyser left on, six heating hours a day",
-    "text": "18 units a day and 540 units a month, about Rs 19,688: an untimed geyser can cost more than the rest of a small home's bill."
+    "text": "18 units a day and 548 units a month, about Rs 19,964: an untimed geyser can cost more than the rest of a small home's bill."
    }
   ],
   "table": {
@@ -326,47 +326,47 @@
      "1,500 W",
      "6.5 A",
      "1.5",
-     "135",
-     "Rs 4,922"
+     "137",
+     "Rs 4,991"
     ],
     [
      "2,000 W",
      "8.7 A",
      "2",
-     "180",
-     "Rs 6,563"
+     "183",
+     "Rs 6,655"
     ],
     [
      "2,500 W",
      "10.9 A",
      "2.5",
-     "225",
-     "Rs 8,204"
+     "228",
+     "Rs 8,318"
     ],
     [
      "3,000 W",
      "13 A",
      "3",
-     "270",
-     "Rs 9,844"
+     "274",
+     "Rs 9,982"
     ],
     [
      "4,000 W",
      "17.4 A",
      "4",
-     "360",
-     "Rs 13,126"
+     "365",
+     "Rs 13,309"
     ],
     [
      "5,500 W",
      "23.9 A",
      "5.5",
-     "495",
-     "Rs 18,048"
+     "502",
+     "Rs 18,300"
     ]
    ]
   },
-  "answer": "An electric geyser uses its kilowatt rating in units every hour the element heats: units per hour = watts ÷ one thousand, so a 3,000 W geyser uses 3 units per hour and a 1,500 W one 1.5. At 3 heating hours a day a 3,000 W geyser uses about 270 units a month, about Rs 9,844 at Rs 36.46 per unit.",
+  "answer": "An electric geyser uses its kilowatt rating in units every hour the element heats: units per hour = watts ÷ one thousand, so a 3,000 W geyser uses 3 units per hour and a 1,500 W one 1.5. At 3 heating hours a day a 3,000 W geyser uses about 274 units a month, about Rs 9,982 at Rs 36.46 per unit.",
   "formula": {
    "text": "units/h = W ÷ 1000; units/day = units/h × heating hours; units/month = units/day × days; cost = units/month × rate; I = W ÷ (V × PF), PF = 1",
    "lines": [
@@ -472,7 +472,7 @@
       "name": "What is the electric geyser bill per month?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "About Rs 9,844 of energy charge for 270 units at 3 heating hours a day with a 3,000 W geyser, at Rs 36.46 per unit. With a timer and one heating hour a day, about Rs 3,281."
+       "text": "About Rs 9,982 of energy charge for 274 units at 3 heating hours a day with a 3,000 W geyser, at Rs 36.46 per unit. With a timer and one heating hour a day, about Rs 3,327."
       }
      },
      {
@@ -488,7 +488,7 @@
       "name": "How many units does an instant geyser use?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "About 3.5 units per hour of hot water, so an hour a day is about 105 units a month, about Rs 3,828."
+       "text": "About 3.5 units per hour of hot water, so an hour a day is about 106 units a month, about Rs 3,882."
       }
      },
      {

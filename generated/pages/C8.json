@@ -56,13 +56,13 @@
     "h2": "Diesel generator fuel calculator: petrol vs diesel",
     "p": [
      "Diesel engines burn less fuel per unit of output. At the same 5 kVA size and 2,000 W load, our diesel curve gives 0.7 litres an hour, about Rs 277 at Rs 396.24 a litre, against Rs 542 for petrol at Rs 398.30 a litre. The difference comes from both the litres burned and the price of each fuel.",
-     "Diesel sets cost more to buy and are heavier and louder, so they pay off with long daily running. A 10 kVA diesel generator carrying 5,000 W for 6 hours a day uses about 297 litres a month, Rs 117,683."
+     "Diesel sets cost more to buy and are heavier and louder, so they pay off with long daily running. A 10 kVA diesel generator carrying 5,000 W for 6 hours a day uses about 301 litres a month, Rs 119,331."
     ]
    },
    {
     "h2": "Generator cost per hour in Pakistan",
     "p": [
-     "Cost per hour is litres an hour × the price per litre. With the latest prices in our data, petrol at Rs 398.30 and diesel at Rs 396.24 a litre, the default 5 kVA petrol generator costs Rs 542 an hour and Rs 65,003 a month at 4 hours a day. Fuel prices are now revised every few days, so type today's price for an exact figure.",
+     "Cost per hour is litres an hour × the price per litre. With the latest prices in our data, petrol at Rs 398.30 and diesel at Rs 396.24 a litre, the default 5 kVA petrol generator costs Rs 542 an hour and Rs 65,913 a month at 4 hours a day. Fuel prices are now revised every few days, so type today's price for an exact figure.",
      "Per unit of electricity, that is Rs 271 for fuel alone, several times the grid energy rate of Rs 36.46 in the unprotected 301 to 400 unit slab, before oil changes, servicing and engine wear."
     ]
    },
@@ -110,7 +110,7 @@
   "key_facts": [
    "Generator fuel use per hour = (idle fuel per rated kW × rated kW) + (fuel per kWh × load kW); in our petrol data that is 0.1 L per rated kW plus 0.48 L per kWh, and in our diesel data 0.05 L plus 0.25 L.",
    "A 5 kVA petrol generator at 2,000 W uses about 1.36 litres an hour, about Rs 542 an hour at a petrol price of Rs 398.30 a litre (2026-10-10 to 2026-10-12).",
-   "Running 4 hours a day for 30 days, the same generator burns about 163 litres a month, Rs 65,003 in petrol, or Rs 271 per unit of electricity, against a grid energy rate of Rs 36.46 per unit in the unprotected 301 to 400 unit slab.",
+   "Running 4 hours a day for 30 days, the same generator burns about 165 litres a month, Rs 65,913 in petrol, or Rs 271 per unit of electricity, against a grid energy rate of Rs 36.46 per unit in the unprotected 301 to 400 unit slab.",
    "A generator burns fuel even with nothing connected: about 0.4 litres an hour for a 5 kVA petrol set, which is why an oversized generator costs more to run at the same load.",
    "These are planning estimates from manufacturer run-time data and a published diesel fuel chart, not a measurement of any one generator; an old or poorly tuned engine burns more."
   ],
@@ -238,7 +238,7 @@
      "name": "days",
      "label": "Days a month",
      "unit": "days",
-     "default": 30,
+     "default": 30.42,
      "advanced": true,
      "hint": "Days in the month the generator runs."
     },
@@ -274,14 +274,14 @@
      "spec": "int",
      "unit": "litres",
      "label_ur": "Mahana fuel",
-     "value": "163"
+     "value": "165"
     },
     {
      "key": "rs_per_month",
      "label": "Cost a month",
      "spec": "rs",
      "label_ur": "Mahana kharcha",
-     "value": "Rs 65,003"
+     "value": "Rs 65,913"
     },
     {
      "key": "rs_per_unit",
@@ -301,7 +301,7 @@
    ],
    "how": {
     "tpl": "Rated output: {{out.kva|1}} kVA × {{out.pf|2}} = {{out.rated_kw|1}} kW. Your load: {{out.load_kw|2}} kW, {{out.load_pct|int}}% of rated. Fuel = {{out.intercept|2}} L × {{out.rated_kw|1}} rated kW (idle burn, {{out.idle_l_per_h|2}} L/h) + {{out.slope|2}} L × {{out.load_kw|2}} kW of load = {{out.l_per_h|2}} litres an hour. × {{out.hours|1}} h = {{out.l_per_day|1}} L a day, × {{out.days}} days = {{out.l_per_month|int}} L a month. Cost: {{out.l_per_h|2}} L × {{out.price|rs2}} = {{out.rs_per_h|rs}} an hour, {{out.rs_per_month|rs}} a month, or {{out.rs_per_unit|rs}} per unit (kWh) delivered.",
-    "text": "Rated output: 5 kVA × 0.8 = 4 kW. Your load: 2 kW, 50% of rated. Fuel = 0.1 L × 4 rated kW (idle burn, 0.4 L/h) + 0.48 L × 2 kW of load = 1.36 litres an hour. × 4 h = 5.4 L a day, × 30 days = 163 L a month. Cost: 1.36 L × Rs 398.30 = Rs 542 an hour, Rs 65,003 a month, or Rs 271 per unit (kWh) delivered."
+    "text": "Rated output: 5 kVA × 0.8 = 4 kW. Your load: 2 kW, 50% of rated. Fuel = 0.1 L × 4 rated kW (idle burn, 0.4 L/h) + 0.48 L × 2 kW of load = 1.36 litres an hour. × 4 h = 5.4 L a day, × 30.42 days = 165 L a month. Cost: 1.36 L × Rs 398.30 = Rs 542 an hour, Rs 65,913 a month, or Rs 271 per unit (kWh) delivered."
    },
    "submit": "Work out the fuel cost",
    "notice": "",
@@ -321,11 +321,11 @@
   "examples": [
    {
     "title": "5 kVA diesel at 2,000 W for 4 hours a day",
-    "text": "0.05 × 4 kW + 0.25 × 2 kW = 0.7 L an hour; × Rs 396.24 = Rs 277 an hour, 84 L and Rs 33,284 a month, Rs 139 per unit."
+    "text": "0.05 × 4 kW + 0.25 × 2 kW = 0.7 L an hour; × Rs 396.24 = Rs 277 an hour, 85 L and Rs 33,750 a month, Rs 139 per unit."
    },
    {
     "title": "5 kVA petrol at full load, 4,000 W",
-    "text": "0.1 × 4 kW + 0.48 × 4 kW = 2.32 L an hour, Rs 924 an hour. Each unit costs Rs 231 in fuel; a month at 4 hours a day is Rs 110,887."
+    "text": "0.1 × 4 kW + 0.48 × 4 kW = 2.32 L an hour, Rs 924 an hour. Each unit costs Rs 231 in fuel; a month at 4 hours a day is Rs 112,439."
    },
    {
     "title": "An oversized 10 kVA petrol set carrying 2,000 W",
@@ -333,11 +333,11 @@
    },
    {
     "title": "Small 2.5 kVA petrol set at 1,000 W",
-    "text": "0.1 × 2 kW + 0.48 × 1 kW = 0.68 L an hour, Rs 271 an hour; 82 L and Rs 32,501 a month at 4 hours a day."
+    "text": "0.1 × 2 kW + 0.48 × 1 kW = 0.68 L an hour, Rs 271 an hour; 83 L and Rs 32,956 a month at 4 hours a day."
    },
    {
     "title": "10 kVA diesel at 5,000 W for 6 hours a day",
-    "text": "0.05 × 8 kW + 0.25 × 5 kW = 1.65 L an hour, Rs 654 an hour; 9.9 L a day and Rs 117,683 a month."
+    "text": "0.05 × 8 kW + 0.25 × 5 kW = 1.65 L an hour, Rs 654 an hour; 9.9 L a day and Rs 119,331 a month."
    }
   ],
   "table": {
@@ -356,56 +356,56 @@
      "1,000 W",
      "0.68 L",
      "Rs 271",
-     "Rs 32,501",
-     "82 L"
+     "Rs 32,956",
+     "83 L"
     ],
     [
      "3.5 kVA petrol",
      "1,400 W",
      "0.95 L",
      "Rs 379",
-     "Rs 45,502",
-     "114 L"
+     "Rs 46,139",
+     "116 L"
     ],
     [
      "5 kVA petrol",
      "2,000 W",
      "1.36 L",
      "Rs 542",
-     "Rs 65,003",
-     "163 L"
+     "Rs 65,913",
+     "165 L"
     ],
     [
      "5 kVA diesel",
      "2,000 W",
      "0.7 L",
      "Rs 277",
-     "Rs 33,284",
-     "84 L"
+     "Rs 33,750",
+     "85 L"
     ],
     [
      "7.5 kVA petrol",
      "3,000 W",
      "2.04 L",
      "Rs 813",
-     "Rs 97,504",
-     "245 L"
+     "Rs 98,869",
+     "248 L"
     ],
     [
      "10 kVA petrol",
      "4,000 W",
      "2.72 L",
      "Rs 1,083",
-     "Rs 130,005",
-     "326 L"
+     "Rs 131,825",
+     "331 L"
     ],
     [
      "10 kVA diesel",
      "4,000 W",
      "1.4 L",
      "Rs 555",
-     "Rs 66,568",
-     "168 L"
+     "Rs 67,500",
+     "170 L"
     ]
    ]
   },

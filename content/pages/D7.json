@@ -13,7 +13,7 @@
    "label": "Units you use a day",
    "unit": "kWh",
    "default": 16,
-   "hint": "Read the meter at the same time on two days and subtract, or divide a monthly bill by thirty. Clear this box to size from monthly units instead."
+   "hint": "Read the meter at the same time on two days and subtract, or divide a monthly bill by the days it covers. Clear this box to size from monthly units instead."
   },
   {
    "name": "monthly_units",
@@ -64,7 +64,7 @@
   }
  ],
  "answer": "A home that uses {{out.daily_kwh|1}} units a day in Lahore needs a solar system of about {{out.kw|2}} kW, installed as {{out.panels|int}} panels of {{out.panel_w|int}} W ({{out.installed_kw|2}} kW) on about {{out.roof_m2|1}} m² of roof, making about {{out.monthly_kwh_estimate|int}} units a month. Solar system kW = daily kWh ÷ the units one kW makes a day in your city.",
- "how": "Daily usage = {{out.daily_kwh|1}} units (from the daily box, or monthly units ÷ {{d.days_per_month|int}}). In your city one kW of solar makes about {{out.yield_kwh_per_kwp_day|1}} units a day averaged over the year, with heat, dust, wiring and inverter losses already removed. System size = {{out.daily_kwh|1}} ÷ {{out.yield_kwh_per_kwp_day|1}} = {{out.kw|2}} kW. With {{out.panel_w}} W panels that is {{out.panels|int}} panels, {{out.installed_kw|2}} kW installed on about {{out.roof_m2|1}} m², which should make about {{out.monthly_kwh_estimate|int}} units a month.",
+ "how": "Daily usage = {{out.daily_kwh|1}} units (from the daily box, or monthly units ÷ {{d.days_per_month|2}}). In your city one kW of solar makes about {{out.yield_kwh_per_kwp_day|1}} units a day averaged over the year, with heat, dust, wiring and inverter losses already removed. System size = {{out.daily_kwh|1}} ÷ {{out.yield_kwh_per_kwp_day|1}} = {{out.kw|2}} kW. With {{out.panel_w}} W panels that is {{out.panels|int}} panels, {{out.installed_kw|2}} kW installed on about {{out.roof_m2|1}} m², which should make about {{out.monthly_kwh_estimate|int}} units a month.",
  "key_facts": [
   "Solar system size in kW = units used a day ÷ the units one kW of solar makes a day in the city; {{out.daily_kwh|1}} units a day in Lahore needs {{out.kw|2}} kW, installed as {{out.panels|int}} panels of {{out.panel_w|int}} W.",
   "In Lahore one kW of solar makes about {{out.yield_kwh_per_kwp_day|1}} units a day over the year, in Quetta about {{ex.3.out.yield_kwh_per_kwp_day|1}}, so the same {{ex.3.out.daily_kwh|1}} units a day needs {{out.installed_kw|2}} kW in Lahore but {{ex.3.out.installed_kw|2}} kW in Quetta (Global Solar Atlas).",
@@ -130,7 +130,7 @@
     "monthly_units": 500
    },
    "title": "Solar system for five hundred units a month",
-   "text": "Five hundred units ÷ {{d.days_per_month|int}} days = {{out.daily_kwh|1}} units a day. ÷ {{out.yield_kwh_per_kwp_day|1}} = {{out.kw|2}} kW, installed as {{out.panels|int}} panels of {{out.panel_w|int}} W, {{out.installed_kw|2}} kW, making about {{out.monthly_kwh_estimate|int}} units a month in Lahore."
+   "text": "Five hundred units ÷ {{d.days_per_month|2}} days = {{out.daily_kwh|1}} units a day. ÷ {{out.yield_kwh_per_kwp_day|1}} = {{out.kw|2}} kW, installed as {{out.panels|int}} panels of {{out.panel_w|int}} W, {{out.installed_kw|2}} kW, making about {{out.monthly_kwh_estimate|int}} units a month in Lahore."
   },
   {
    "inputs": {
@@ -138,7 +138,7 @@
     "monthly_units": 300
    },
    "title": "Solar system for three hundred units a month",
-   "text": "Three hundred units ÷ {{d.days_per_month|int}} days = {{out.daily_kwh|1}} units a day. ÷ {{out.yield_kwh_per_kwp_day|1}} = {{out.kw|2}} kW: {{out.panels|int}} panels, {{out.installed_kw|2}} kW installed, about {{out.monthly_kwh_estimate|int}} units a month in Lahore."
+   "text": "Three hundred units ÷ {{d.days_per_month|2}} days = {{out.daily_kwh|1}} units a day. ÷ {{out.yield_kwh_per_kwp_day|1}} = {{out.kw|2}} kW: {{out.panels|int}} panels, {{out.installed_kw|2}} kW installed, about {{out.monthly_kwh_estimate|int}} units a month in Lahore."
   },
   {
    "inputs": {
