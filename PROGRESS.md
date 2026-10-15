@@ -1,6 +1,26 @@
 # Progress
 
-## Handoff for next phase (after N16, the AC bill calculator) — written by the cross-check thread, 2026-10-15
+## Handoff for next phase (after N17, N18 and the N7 upgrade: SERP ideas 2 to 4) — written by the cross-check thread, 2026-10-15
+
+Owner said "bna do" (15 Oct 2026) to the three remaining SERP ideas. Built in plugin v0.8.7: idea 2 as N17 (`/solar/solar-size-from-electricity-bill/`), idea 4 as N18 (`/wiring/home-wiring-load-schedule/`), idea 3 as an upgrade of the existing N7 page (same URL `/load/ups-vs-solar-vs-generator-cost/`). Formulas and numbers are never repeated here: `specs/formulas.md` "Owner-approved tools" holds N17, N18 and N7; cases at the end of `specs/calculator-test-cases.json`.
+
+**What is where**
+- Engines, each its own module so no other page ships it (registered in `engine/index.js`, `ENGINE_MODULES` and `MODULE_DATA` in `tools/build.js`): `engine/seasonal.js` `solar_seasonal` (N17, monthly city PV output `pvout_month` in `data/cities-pk.json`; the month split uses the H1 daylight share), `engine/circuits.js` `circuit_schedule` (N18, runs section W `wire_size` per row; row errors are `load_<row>_<code>`), `engine/backup.js` `backup_compare` (N7; the old `tco` engine and its cases stay in `engine/load.js`).
+- Data: `data/backup-prices.json` (new: UPS and petrol generator price ranges, oil upkeep, tubular unit, lithium pack, battery lives, each with sources). N7 also reads `data/component-prices.json` (handed to the browser as `manifest.data.component_prices`), `data/solar-prices.json`, `data/generator-fuel.json`. `data/defaults.json` `pf_by_load_type` gained `resistive` (changes W1/W3/E4/N18 for heaters; case "Storage geyser"). `data/cable-ampacity.json` `min_area_mm2` source corrected (BS 7671 for the lighting minimum; new PEC question (11) in formulas.md).
+- Result table (generic, new): content key `result_table` {key, caption, columns}; `tools/build.js` `resultTable()` → `tool.rtable` (rows rendered at build, `cap` = live caption template); PHP `Wattlyst_Render::rtable()`; browser `drawTable()` in `assets/js/wattlyst-extra.js` (caption re-rendered each calculation). The tool script loads extra.js when `cfg.rtable` is set and shares the `diagram` element lookup.
+- Appliance list `length` flag (N18): the "Hours a day" column becomes "Cable length (m)" in `loads_field` (PHP), config and `assets/js/wattlyst-loads.js`; share links now encode fixed positions per row.
+- Messages: row prefix lookup in `errorMessage` (`load_<n>_<plain code>` reuses the plain message); `monthly_units_all_zero`, `length_invalid`.
+- Pages: `content/pages/N17.json`, `N18.json`, `N7.json` (rewritten for `backup_compare`). Keyword rows N17, N18 in `specs/keyword-map.csv` (CRLF). Links: D7, D8, D11 → N17; W2, W3, W5 → N18.
+
+**Do not touch / watch**
+- JS budget test (`tests/site.test.js`) leaves E1 with under 100 bytes of headroom; any byte added to `wattlyst-tool.js`, `format.js`, `messages.js` or `core.js` may fail it. The test does not count nested engine imports, so real totals on N16, E1 and N18 are already above the 30 KB line: a better budget test (whole import chain) is an open to-do.
+- N7 prices are middle of retailer ranges (equipment only); refresh `data/backup-prices.json` monthly with `component-prices.json`. Battery lives and oil interval are [ENGINEER].
+
+**Open to-dos**
+- Engineer Reviewer nice-to-haves left: N18 design-watts column for inverter ACs, microwave curve, N17 `kw` upper cap.
+- Owner hPanel items from the re-audit are still open.
+
+## Earlier handoff (after N16, the AC bill calculator) — written by the cross-check thread, 2026-10-15
 
 Owner approved SERP idea 1 on 15 Oct 2026 ("Haan, banao"). Built as page N16 at `/bill/ac-bill-calculator/` (plugin v0.8.6). Formulas and numbers are never repeated here.
 
@@ -8,7 +28,7 @@ Owner approved SERP idea 1 on 15 Oct 2026 ("Haan, banao"). Built as page N16 at 
 - Engine: `engine/acbill.js` `ac_bill_impact` (own module so the appliance-list pages on `load.js` do not ship `bill.js`; registered in `engine/index.js`, `ENGINE_MODULES` and `MODULE_DATA.acbill = ['tariff']` in `tools/build.js`). It reuses `ac_units` (E5) and `bill_total` (F) and adds the protected-loss penalty. Formula: `specs/formulas.md` "Owner-approved tools (added 2026-10-15)"; 7 spec cases at the end of `specs/calculator-test-cases.json`.
 - Notice: `ac_protected_lost` in `engine/messages.js` (`noticeCode` returns it when `protected_lost`), amber on the default result.
 - Page: `content/pages/N16.json` (silo F, bill hub). Keyword row N16 in `specs/keyword-map.csv` (id N15 was skipped on purpose: the owner removed an earlier N15). "ac bill calculator" and "ac bill calculator pakistan" moved from E5 to N16; E5's H2 no longer says "AC bill calculator" and its Next step is N16. N16 is also linked from F1 and N10.
-- SERP ideas 2 to 4 (season-aware solar from the 12-month bill history, cost per backup hour, printable circuit sheet) are still only proposals: build none without the owner's yes.
+- SERP ideas 2 to 4 were approved and built later the same day (see the handoff above).
 
 **Do not touch**: keep N16 off `load.js` (JS budget on the list pages). The design cross-check notes below still hold.
 
@@ -216,6 +236,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | 2026-10-13 | Phase 3: Wave 1, 24 pages live (table below) + 7 pillar hubs; new engine tools (generator for AC/pump, home load, add-an-AC check, AC units, solar for AC / from loads / for 12 V battery, UPS backup, wire/breaker/cable sizing with data/cable-ampacity.json), 245 spec cases, browser field types (appliance, loads, checkbox), plugin v0.4.0 | done: 436 tests green, zero orphan pages (link test), Engineer Reviewer PASS after fixes, Lighthouse mobile >= 95 on every live page (most 99-100), calculators checked in a headless browser on local WP | PR phase-3 |
 | 2026-10-14 | Phase 4: Wave 2, 39 pages live (table below) incl. N1 N2 N3 N4 N5 N7, D14 solar price, Home Power Planner on the homepage (load -> inverter -> battery -> solar -> net billing -> generator), Save as PDF / WhatsApp / copy link, Roman Urdu result toggle, stripped dist/ JS, data/solar-prices.json + data/inverter-codes.json, plugin v0.5.0 | done: tests green, Engineer Reviewer pass, Lighthouse mobile 98-100 on sampled templates, every calculator checked in a headless browser on local WP | PR phase-4 |
 | 2026-10-15 | N16 AC bill calculator (owner approved the SERP idea): what one AC adds to the whole bill, slab jump, protected-status loss and the penalty on the next bills; engine/acbill.js, 7 spec cases; E5 hands the "ac bill calculator" keywords to N16; plugin v0.8.6 | done: tests green, Engineer Reviewer pass after fixes (tariff checked date on the page, AC hours ≤ 24 and days ≤ 31 for E5 too, rate wording), Lighthouse mobile 98/100/100/100 on local WP | #21 |
+| 2026-10-15 | SERP ideas 2 to 4 (owner: "bna do"): N17 solar size from the twelve-month bill (monthly PV output per city, net-billing month split), N18 home wiring load schedule (circuit sheet, wire + MCB per circuit), N7 upgraded to cost per backup hour (UPS vs petrol generator vs hybrid solar, dated price data); generic result table; resistive PF 1.0; plugin v0.8.7 | done: tests green, Engineer Reviewer fixes applied, checked on local WP | #22 |
 | 2026-10-15 | Design cross-check (owner request): subgrid checkbox row, sticky header offset token, shorter phone appliance cards; SERP ideas proposed, none built; plugin v0.8.5 | done: tests green, every live page measured before/after on local WP | PR (this phase) |
 | 2026-10-15 | Homepage redesign (owner request): dark hero with every hub as a chip, planner inputs left and sticky plan right, colour task cards with tool counts, info cards, FAQ beside Key facts; field labels aligned on every calculator (subgrid), phone appliance captions fixed; plugin v0.8.4 | done: tests green, 107 pages checked on local WP | PR (this phase) |
 | 2026-10-15 | Re-audit fix Phase C, SEO and speed hygiene (WL-82 feeds 404 without redirect, WL-83 one robots value, WL-84 sitemap lastmod from the review date, WL-85 block CSS dropped, WL-87 versioned brand image URLs); plugin v0.8.3 | done: tests green, checked on local WP | PR (this phase) |
@@ -313,7 +334,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | N3 | /solar/solar-quote-checker/ | live | phase-4 | 2026-10-14 |
 | N4 | /bill/sanctioned-load-calculator/ | live | phase-4 | 2026-10-14 |
 | N5 | /load/winter-heating-cost-calculator/ | live | phase-4 | 2026-10-14 |
-| N7 | /load/ups-vs-solar-vs-generator-cost/ | live | phase-4 | 2026-10-14 |
+| N7 | /load/ups-vs-solar-vs-generator-cost/ | live | #22 (cost per backup hour) | 2026-10-15 |
 | P-A P-T | pillar hubs (converters, troubleshoot) | live (auto, with first child) | phase-4 | 2026-10-14 |
 | A1 | /converters/watts-to-amps-calculator/ | live | #6 | 2026-10-14 |
 | A2 | /converters/amps-to-watts-calculator/ | live | #6 | 2026-10-14 |
@@ -340,6 +361,8 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | N13 | /solar/solar-for-mosque-and-shop/ | live | #6 | 2026-10-14 |
 | N14 | /solar/solar-autonomy-calculator/ | live | #6 | 2026-10-14 |
 | N16 | /bill/ac-bill-calculator/ | live | #21 | 2026-10-15 |
+| N17 | /solar/solar-size-from-electricity-bill/ | live | #22 | 2026-10-15 |
+| N18 | /wiring/home-wiring-load-schedule/ | live | #22 | 2026-10-15 |
 | P-X | /data/ | live | #6 | 2026-10-14 |
 | bill-index | /data/pakistan-electricity-bill-index/ | live | #6 | 2026-10-14 |
 | solar-price-tracker | /data/pakistan-solar-price-tracker/ | live | #6 | 2026-10-14 |

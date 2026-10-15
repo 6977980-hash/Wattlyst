@@ -32,12 +32,13 @@ export async function forecastFor(c, tilt) {
   return forecasts[key];
 }
 
-/** N17/N18 result table: one row per item of the engine's list, formatted like the result cards (Wattlyst_Render::rtable). */
-export function drawTable(box, list, columns, fmt) {
+/** N7/N17/N18 result table: caption and one row per item of the engine's list, formatted like the result cards (Wattlyst_Render::rtable). */
+export function drawTable(box, out, t, fmt, render) {
+  box.querySelector('.wl-rtable-title').textContent = render(t.cap, { in: out, out });
   const body = box.querySelector('tbody');
   body.textContent = '';
-  for (const item of list || []) {
+  for (const item of out[t.key] || []) {
     const tr = body.insertRow();
-    for (const c of columns) tr.insertCell().textContent = `${fmt(item[c.key], c.spec)}${c.suffix || ''}`;
+    for (const c of t.columns) tr.insertCell().textContent = `${fmt(item[c.key], c.spec)}${c.suffix || ''}`;
   }
 }

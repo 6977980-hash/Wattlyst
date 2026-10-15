@@ -19,9 +19,9 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => readFileSync(join(root, p), 'utf8');
 const readJson = (p) => JSON.parse(read(p));
 
-const ENGINE_MODULES = ['conversions', 'battery', 'sizing', 'solar', 'bill', 'load', 'wiring', 'planner', 'prices', 'forecast', 'fuel', 'solartools', 'acbill', 'seasonal', 'circuits'];
+const ENGINE_MODULES = ['conversions', 'battery', 'sizing', 'solar', 'bill', 'load', 'wiring', 'planner', 'prices', 'forecast', 'fuel', 'solartools', 'acbill', 'seasonal', 'circuits', 'backup'];
 /** Data each engine module needs in the browser (keeps page weight down). Appliances are added per page, only the ones its fields use. */
-const MODULE_DATA = { bill: ['tariff'], solar: ['cities'], wiring: ['cables'], load: ['cables'], planner: ['tariff', 'cities'], prices: ['solar_prices'], forecast: ['cities'], acbill: ['tariff'], seasonal: ['cities'], circuits: ['cables'] };
+const MODULE_DATA = { bill: ['tariff'], solar: ['cities'], wiring: ['cables'], load: ['cables'], planner: ['tariff', 'cities'], prices: ['solar_prices'], forecast: ['cities'], acbill: ['tariff'], seasonal: ['cities'], circuits: ['cables'], backup: ['cities', 'solar_prices', 'generator_fuel', 'component_prices', 'backup_prices'] };
 /** Extra data a single calculator needs (shipped only on its page). */
 const CALC_DATA = { generator_fuel: ['generator_fuel'] };
 /** Appliance fields the browser engine and the loads picker need. */
@@ -35,7 +35,7 @@ export async function loadInputs() {
   const solarPrices = readJson('data/solar-prices.json');
   const inverterCodes = readJson('data/inverter-codes.json');
   const data = { defaults: readJson('data/defaults.json'), tariff: readJson('data/tariff-pk-2026.json'), cities, appliances: Object.fromEntries(appliances.items.map((a) => [a.id, a])), cables, solar_prices: solarPrices, generator_fuel: readJson('data/generator-fuel.json'), load_profiles: readJson('data/load-profiles.json').profiles,
-    bill_index: readJson('data/bill-index.json'), component_prices: readJson('data/component-prices.json'), solar_price_history: readJson('data/solar-price-history.json') };
+    bill_index: readJson('data/bill-index.json'), component_prices: readJson('data/component-prices.json'), backup_prices: readJson('data/backup-prices.json'), solar_price_history: readJson('data/solar-price-history.json') };
   // One source for the FPA (audit WL-13): the newest NEPRA-verified month of the Bill Index. Pages that pre-fill
   // an FPA read data.fpa_latest; data/tariff-pk-2026.json keeps no copy.
   data.fpa_latest = data.bill_index.months.find((m) => m.fpa_verified === true) || null;
@@ -227,6 +227,7 @@ function buildContent(c, ctx) {
   if (c.calc === 'quote_checker' || c.calc === 'solar_price_estimate') out.sources = [...out.sources, ...priceSources(ctx)];
   if (c.calc === 'panel_price') out.sources = [...out.sources, ...priceSources(ctx, { panelsOnly: true })];
   if (c.calc === 'generator_fuel') out.sources = [...out.sources, ...fuelSources(ctx)];
+  if (c.calc === 'backup_compare') out.sources = [...out.sources, ...backupSources(ctx)];
   out.answer = text(ctx, c.answer, scope, 'answer');
   out.intro = text(ctx, c.intro, scope, 'intro');
   out.key_facts = (c.key_facts || []).map((k, n) => text(ctx, k, scope, `key fact ${n + 1}`));
@@ -254,7 +255,7 @@ function resultTable(ctx, c, result, scope) {
     if (!(col.key in list[0])) fail(`${c.id}: result_table column ${col.key} missing from ${c.calc} rows`);
   }
   const columns = t.columns.map((col) => ({ key: col.key, label: col.label, spec: col.spec || '2', ...(col.suffix ? { suffix: col.suffix } : {}) }));
-  return { key: t.key, caption: text(ctx, t.caption, scope, 'result table caption'), columns, rows: list.map((r) => columns.map((col) => `${fmt(r[col.key], col.spec)}${col.suffix || ''}`)) };
+  return { key: t.key, caption: text(ctx, t.caption, scope, 'result table caption'), cap: t.caption, columns, rows: list.map((r) => columns.map((col) => `${fmt(r[col.key], col.spec)}${col.suffix || ''}`)) };
 }
 
 /** H2: one table per category of data/appliances.json, units per hour and per typical day from the engine (conversions.units). */
@@ -306,6 +307,22 @@ function browserFuel(f) {
   };
 }
 
+/** Browser copy of data/backup-prices.json: every number engine/backup.js reads, no sources or notes. */
+function browserBackup(b) {
+  const strip = (o) => Object.fromEntries(Object.entries(o).filter(([k]) => !['label', 'sources', 'note', 'rated_w_note', 'kva_note'].includes(k)));
+  return { ups: b.ups.map(strip), generators: b.generators.map(strip), generator_upkeep: strip(b.generator_upkeep), tubular_unit: strip(b.tubular_unit), lithium_pack: strip(b.lithium_pack), battery_life_years: strip(b.battery_life_years) };
+}
+
+/** N7: the retailer pages and manuals behind the UPS, generator and battery figures, once per URL. */
+function backupSources(ctx) {
+  const b = ctx.data.backup_prices;
+  const seen = new Map();
+  const add = (s) => { if (s.url && !seen.has(s.url)) seen.set(s.url, { label: `${s.publisher} (price or upkeep data)`, url: s.url }); };
+  for (const it of [...b.ups, ...b.generators, b.generator_upkeep, b.battery_life_years]) for (const s of it.sources || []) add(s);
+  for (const it of ctx.data.component_prices.items.filter((x) => ['tubular_battery', 'lithium_battery', 'hybrid_inverter'].includes(x.category))) for (const s of it.sources || []) add(s);
+  return [...seen.values()];
+}
+
 /** C8: the generator data behind the fuel curve and the fuel price, once per URL. */
 function fuelSources(ctx) {
   const f = ctx.data.generator_fuel;
@@ -326,6 +343,13 @@ function dataChecked(module, ctx) {
     const g = ctx.data.tariff.gas_domestic;
     out.push({ label: `Domestic gas slab prices (${g.source}; not yet matched to the OGRA notification)`, url: g.source_url, checked: g.checked });
   } else if (module === 'wiring' || module === 'load' || module === 'circuits') out.push({ label: 'Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)', url: 'https://webstore.iec.ch/publication/1878', checked: ctx.cables._meta.checked });
+  if (module === 'backup') {
+    const f = ctx.data.generator_fuel;
+    out.push({ label: 'UPS, generator and battery prices in Pakistan (retailer listings, each listed under Sources on this page)', url: null, checked: ctx.data.backup_prices._meta.checked });
+    out.push({ label: 'Hybrid inverter, battery and panel prices (Wattlyst solar price tracker)', url: null, checked: ctx.data.component_prices._meta.checked });
+    out.push({ label: `Petrol price (${f.prices.source})`, url: f.prices.source_url, checked: f.prices.checked });
+    out.push({ label: 'Pakistan electricity tariff (NEPRA notification)', url: ctx.data.tariff._meta.source_url || null, checked: ctx.data.tariff._meta.checked });
+  }
   if (ctx.calc === 'generator_fuel') {
     const f = ctx.data.generator_fuel;
     out.push({ label: 'Generator fuel curve (fitted from manufacturer run-time data, listed under Sources)', url: null, checked: f._meta.checked });
@@ -645,7 +669,10 @@ export async function build() {
       // Browser copy of the price ranges: numbers only (sources and quotes stay on the quote-checker page).
       solar_prices: { checked: inp.solarPrices._meta.checked, panel_rs_per_w: { low: inp.solarPrices.panel_rs_per_w.low, high: inp.solarPrices.panel_rs_per_w.high }, systems: inp.solarPrices.systems.map(({ type, kw, low_rs, high_rs }) => ({ type, kw, low_rs, high_rs })) },
       // C8 fuel curve and fuel prices, numbers only (the generator test points stay in data/, the page lists them).
-      generator_fuel: browserFuel(inp.data.generator_fuel) },
+      generator_fuel: browserFuel(inp.data.generator_fuel),
+      // N7 backup comparison: equipment price ranges and upkeep, numbers only (sources stay in data/ and on the page).
+      component_prices: { items: inp.data.component_prices.items.map(({ category, size, low, high }) => ({ category, size, low, high })) },
+      backup_prices: browserBackup(inp.data.backup_prices) },
     // lastmod: the same date as the page's schema dateModified, used for the sitemap <lastmod> (WL-84).
     pages: rows.map(({ id, type, url, h1, title, meta, status, live, parent, children, related, next, wave, reviewed, modified }) => ({ id, type, url, h1, title, meta, status, live, parent, children, related, next, wave, lastmod: reviewed || modified })),
     nav: rows.filter((r) => r.nav_label).sort((a, b) => a.nav_order - b.nav_order).map((r) => ({ id: r.id, label: r.nav_label, url: r.url })),

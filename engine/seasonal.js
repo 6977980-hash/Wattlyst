@@ -1,5 +1,5 @@
 // N17: solar size from the twelve monthly units on the bill (season-aware). Own module so the other solar pages do not ship it.
-import { calculator, CalcError, has, pos, nonneg, num, ceilSafe, dflt } from './core.js';
+import { calculator, CalcError, has, pos, nonneg, num, frac, ceilSafe, dflt } from './core.js';
 
 export const MONTH_KEYS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -8,8 +8,9 @@ const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'Ju
  * Units of each month from the bill history, and the city's PV output per kWp for each month (data/cities-pk.json pvout_month).
  * kW to cover the year = Σ units ÷ Σ pvout; kW to cover the hardest month = max(units_m ÷ pvout_m);
  * kW a single bill suggests (D7 method) = units_m ÷ days_per_month ÷ yearly yield, shown for the lowest and highest bill.
- * For the system size used (the yearly size, or a kW entered): solar_m = installed kW × pvout_m, from grid = max(0, units − solar),
- * exported = max(0, solar − units), month by month (a monthly balance: night use still comes from the grid).
+ * For the system size used (the yearly size, or a kW entered): solar_m = installed kW × pvout_m. Net billing split as on the
+ * Home Power Planner (H1): self-used = min(solar, units × day_share), bought from the grid = units − self-used,
+ * exported = solar − self-used; short = max(0, units − solar) is the month's net shortfall (more bought than sold).
  */
 export const solar_seasonal = calculator((i, d) => {
   const city = String(i.city ?? '').trim().toLowerCase();
@@ -32,22 +33,26 @@ export const solar_seasonal = calculator((i, d) => {
   const panels = ceilSafe((kw * 1000) / panel_w);
   const installed_kw = (panels * panel_w) / 1000;
   const buyback_rs = nonneg(i, 'buyback_rs', d?.tariff?.net_billing?.buyback_rs_per_unit_default);
+  const day_share = frac(i, 'day_share', dflt(d, 'planner_day_share'));
   const months = units.map((u, m) => {
     const solar = installed_kw * pv[m];
-    return { month: MONTH_NAMES[m], units: u, solar, grid: Math.max(0, u - solar), exported: Math.max(0, solar - u) };
+    const self = Math.min(solar, u * day_share);
+    return { month: MONTH_NAMES[m], units: u, solar, self_used: self, grid: u - self, exported: solar - self, short: Math.max(0, u - solar) };
   });
   const sum = (k) => months.reduce((a, r) => a + r[k], 0);
   const grid_units_year = sum('grid');
   const export_units_year = sum('exported');
-  const worst = months.reduce((w, r, m) => (r.grid > months[w].grid ? m : w), 0);
+  const self_used_year = sum('self_used');
+  const worst = months.reduce((w, r, m) => (r.short > months[w].short ? m : w), 0);
   return {
     city, city_name: city.charAt(0).toUpperCase() + city.slice(1), yield_kwh_per_kwp_day: c.yield, pvout_year, annual_units, avg_month_units: annual_units / 12, days,
     kw_annual, kw_peak: need[peak], peak_month: MONTH_NAMES[peak], peak_units: units[peak], peak_pvout: pv[peak],
     high_month: MONTH_NAMES[hi], high_units: units[hi], kw_from_high_bill: units[hi] / days / c.yield,
     low_month: MONTH_NAMES[lo], low_units: units[lo], kw_from_low_bill: units[lo] / days / c.yield,
     kw, kw_source: has(i, 'kw') ? 'input' : 'annual', panel_w, panels, installed_kw,
-    solar_year: installed_kw * pvout_year, grid_units_year, export_units_year, buyback_rs, export_credit_rs: export_units_year * buyback_rs,
-    months_short: months.filter((r) => r.grid >= 1).length, worst_month: MONTH_NAMES[worst], worst_grid_units: months[worst].grid,
-    covered_pct: ((annual_units - grid_units_year) / annual_units) * 100, months,
+    solar_year: installed_kw * pvout_year, solar_pct: ((installed_kw * pvout_year) / annual_units) * 100, day_share,
+    self_used_year, self_used_pct: (self_used_year / annual_units) * 100, grid_units_year, export_units_year, buyback_rs, export_credit_rs: export_units_year * buyback_rs,
+    months_short: months.filter((r) => r.short >= 1).length, worst_month: MONTH_NAMES[worst], worst_short_units: months[worst].short,
+    best_month: MONTH_NAMES[pv.indexOf(Math.max(...pv))], months,
   };
 });

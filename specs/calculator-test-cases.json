@@ -6391,12 +6391,15 @@
       "peak_month": "July",
       "panels": 7,
       "installed_kw": 4.095,
-      "grid_units_year": 643.7045,
-      "export_units_year": 1295.0335,
-      "export_credit_rs": 14245.3685,
+      "grid_units_year": 2660,
+      "export_units_year": 3311.329,
+      "export_credit_rs": 36424.619,
       "months_short": 4,
       "kw_from_high_bill": 6,
-      "kw_from_low_bill": 1.91667
+      "kw_from_low_bill": 1.91667,
+      "self_used_year": 2660,
+      "worst_month": "July",
+      "worst_short_units": 250.713
     },
     "tolerance": 0.001,
     "note": "N17; pvout_month Lahore from data/cities-pk.json, buyback default Rs 11"
@@ -6424,8 +6427,8 @@
       "kw_peak": 6.73527,
       "panels": 6,
       "installed_kw": 3.51,
-      "grid_units_year": 1025.534,
-      "export_units_year": 1665.514,
+      "grid_units_year": 2660,
+      "export_units_year": 3299.98,
       "months_short": 5
     },
     "tolerance": 0.001,
@@ -6433,7 +6436,7 @@
   },
   {
     "calc": "solar_seasonal",
-    "name": "Sized for the hardest month: no shortfall, large export",
+    "name": "Sized for the hardest month: no net shortfall, large export",
     "inputs": {
       "city": "lahore",
       "kw": 6.3,
@@ -6453,9 +6456,9 @@
     "expected": {
       "panels": 11,
       "installed_kw": 6.435,
-      "grid_units_year": 0,
-      "export_units_year": 4063.517,
-      "export_credit_rs": 44698.687,
+      "grid_units_year": 2660,
+      "export_units_year": 6723.517,
+      "export_credit_rs": 73958.687,
       "months_short": 0,
       "kw_source": "input"
     },
@@ -6485,7 +6488,7 @@
       "kw_peak": 2.12766,
       "kw_from_high_bill": 1.88679,
       "panels": 4,
-      "grid_units_year": 0
+      "months_short": 0
     },
     "tolerance": 0.001,
     "note": "N17"
@@ -6751,5 +6754,180 @@
     },
     "tolerance": 0,
     "note": "N18"
+  },
+  {
+    "calc": "solar_seasonal",
+    "name": "Day share 1 (all use in daylight) gives the plain monthly balance",
+    "inputs": {
+      "city": "lahore",
+      "jan": 250,
+      "feb": 230,
+      "mar": 280,
+      "apr": 400,
+      "may": 600,
+      "jun": 700,
+      "jul": 720,
+      "aug": 680,
+      "sep": 560,
+      "oct": 380,
+      "nov": 260,
+      "dec": 260,
+      "day_share": 1
+    },
+    "expected": {
+      "grid_units_year": 643.7045,
+      "export_units_year": 1295.0335,
+      "months_short": 4
+    },
+    "tolerance": 0.001,
+    "note": "N17; self-used = min(solar, units × day_share)"
+  },
+  {
+    "calc": "backup_compare",
+    "name": "600 W through 4 h a day for 5 years: hybrid solar cheapest",
+    "inputs": {
+      "load_w": 600,
+      "hours": 4,
+      "years": 5,
+      "tariff": 36.46
+    },
+    "expected": {
+      "day_kwh": 2.4,
+      "backup_hours": 7200,
+      "ups_kva": 1,
+      "batteries": 3,
+      "ups_total": 601612.045,
+      "gen_kva": 2.5,
+      "l_per_h": 0.488,
+      "gen_total": 1659364.88,
+      "inverter_kw": 4,
+      "lithium_packs": 1,
+      "panels": 2,
+      "solar_total": 416517.5,
+      "cheapest": "Hybrid solar"
+    },
+    "tolerance": 0.001,
+    "note": "N7; prices mid of data/backup-prices.json, component-prices.json, solar-prices.json; recomputed by hand from data/"
+  },
+  {
+    "calc": "backup_compare",
+    "name": "300 W through 2 h a day: UPS cheapest",
+    "inputs": {
+      "load_w": 300,
+      "hours": 2,
+      "years": 5,
+      "tariff": 36.46
+    },
+    "expected": {
+      "batteries": 1,
+      "ups_total": 211869.761,
+      "gen_total": 691178.72,
+      "solar_total": 391508.75,
+      "cheapest": "UPS"
+    },
+    "tolerance": 0.001,
+    "note": "N7"
+  },
+  {
+    "calc": "backup_compare",
+    "name": "1200 W through 8 h: 2 kVA UPS with 10 batteries, 3 lithium packs",
+    "inputs": {
+      "load_w": 1200,
+      "hours": 8,
+      "years": 5,
+      "tariff": 36.46
+    },
+    "expected": {
+      "ups_kva": 2,
+      "batteries": 10,
+      "lithium_packs": 3,
+      "panels": 5,
+      "ups_total": 2064162.18,
+      "gen_total": 4834609.52,
+      "solar_total": 1016543.75,
+      "cheapest": "Hybrid solar"
+    },
+    "tolerance": 0.001,
+    "note": "N7"
+  },
+  {
+    "calc": "backup_compare",
+    "name": "Ten years: three tubular replacements, one lithium replacement",
+    "inputs": {
+      "load_w": 600,
+      "hours": 4,
+      "years": 10,
+      "tariff": 36.46
+    },
+    "expected": {
+      "ups_repl": 3,
+      "solar_repl": 1,
+      "ups_total": 1158975.09,
+      "gen_total": 3182779.76,
+      "solar_total": 679017.5
+    },
+    "tolerance": 0.001,
+    "note": "N7"
+  },
+  {
+    "calc": "backup_compare",
+    "name": "Load above the largest UPS in the price data",
+    "inputs": {
+      "load_w": 5000,
+      "hours": 4,
+      "years": 5,
+      "tariff": 36.46
+    },
+    "expected": {
+      "error": "load_w_too_large"
+    },
+    "tolerance": 0,
+    "note": "N7"
+  },
+  {
+    "calc": "backup_compare",
+    "name": "Years are required",
+    "inputs": {
+      "load_w": 600,
+      "hours": 4,
+      "tariff": 36.46
+    },
+    "expected": {
+      "error": "years_required"
+    },
+    "tolerance": 0,
+    "note": "N7"
+  },
+  {
+    "calc": "backup_compare",
+    "name": "More than 24 hours a day",
+    "inputs": {
+      "load_w": 600,
+      "hours": 25,
+      "years": 5,
+      "tariff": 36.46
+    },
+    "expected": {
+      "error": "hours_too_large"
+    },
+    "tolerance": 0,
+    "note": "N7"
+  },
+  {
+    "calc": "wire_size",
+    "name": "Storage geyser: resistive load at PF 1",
+    "inputs": {
+      "appliance": "electric-geyser-storage",
+      "length_m": 10
+    },
+    "expected": {
+      "pf": 1,
+      "watts": 3000,
+      "ib_a": 13.0435,
+      "breaker_a": 16,
+      "area_mm2": 2.5
+    },
+    "tolerance": 0.001,
+    "note": "pf_by_load_type resistive 1.0 (Engineer Reviewer 2026-10-15): I_b = 3000 / 230"
   }
 ]

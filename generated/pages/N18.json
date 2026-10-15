@@ -42,7 +42,7 @@
    {
     "h2": "What a home wiring load schedule is and why your electrician needs one",
     "p": [
-     "A load schedule, or circuit sheet, is the list an electrician wires the distribution board from: one line per circuit with what it feeds, its current, the MCB and the cable. In many Pakistani homes the whole house is wired on habit, the same 7/29 everywhere, which leaves the AC and geyser circuits too thin and the lights oversized.",
+     "A load schedule, or circuit sheet, is the list an electrician wires the distribution board from: one line per circuit with what it feeds, its current, the MCB and the cable. In many Pakistani homes the whole house is wired on habit, the same 7/29 everywhere, which can leave the biggest AC circuit too thin and the lights oversized.",
      "Fill in your circuits above, press Calculate and use Save as PDF to print the sheet. Each row uses the same rules as the wire size and MCB calculators on this site."
     ]
    },
@@ -79,7 +79,7 @@
    },
    {
     "q": "Which wire and MCB for an electric geyser?",
-    "a": "The Electric geyser (storage, 40-gallon class) draws 16.3 A, so it takes a 20 A B curve MCB on 4 mm² cable."
+    "a": "The Electric geyser (storage, 40-gallon class) draws 13 A, so it takes a 16 A B curve MCB on 2.5 mm² cable."
    },
    {
     "q": "Why does a long run need a thicker cable?",
@@ -526,7 +526,8 @@
    "submit": "Calculate",
    "rtable": {
     "key": "rows",
-    "caption": "Circuit sheet for the electrician: copper cable, 45 °C, 1 circuit per conduit",
+    "caption": "Circuit sheet for the electrician: copper cable, 45 °C, circuits per conduit: 1",
+    "cap": "Circuit sheet for the electrician: copper cable, {{out.ambient_c|int}} °C, circuits per conduit: {{out.group_circuits|int}}",
     "columns": [
      {
       "key": "n",
@@ -628,12 +629,12 @@
       "5",
       "Electric geyser (storage, 40-gallon class)",
       "3,000 W",
-      "16.3 A",
-      "20 A",
+      "13 A",
+      "16 A",
       "B",
-      "4 mm²",
-      "7/36",
-      "0.8%"
+      "2.5 mm²",
+      "7/29",
+      "1%"
      ],
      [
       "6",
@@ -669,11 +670,11 @@
    },
    {
     "title": "Same house with cables clipped on the surface",
-    "text": "Surface cable cools better than cable in a wall conduit, so it carries more current: the Electric geyser (storage, 40-gallon class) circuit takes 2.5 mm² on a 20 A MCB."
+    "text": "Surface cable cools better than cable in a wall conduit, so it carries more current: the Electric geyser (storage, 40-gallon class) circuit takes 2.5 mm² on a 16 A MCB."
    },
    {
     "title": "Three circuits sharing one hot conduit",
-    "text": "Grouping lowers every cable's rating (factor 0.55 with the air temperature), so the Electric geyser (storage, 40-gallon class) now needs 6 mm² (7/44)."
+    "text": "Grouping lowers every cable's rating (factor 0.55 with the air temperature), so the Electric geyser (storage, 40-gallon class) now needs 4 mm² (7/36)."
    },
    {
     "title": "Water motor on a long run to the roof tank",
@@ -720,10 +721,10 @@
     ],
     [
      "Electric geyser (storage, 40-gallon class) × 1, 10 m",
-     "16.3 A",
-     "20 A, curve B",
-     "4 mm² (7/36)",
-     "0.8%"
+     "13 A",
+     "16 A, curve B",
+     "2.5 mm² (7/29)",
+     "1%"
     ],
     [
      "Water pump / donkey motor 1 hp × 1, 25 m",
@@ -734,10 +735,10 @@
     ],
     [
      "Electric kettle × 1, 10 m",
-     "10.9 A",
-     "16 A, curve B",
+     "8.7 A",
+     "10 A, curve B",
      "2.5 mm² (7/29)",
-     "0.9%"
+     "0.7%"
     ]
    ]
   },
@@ -855,7 +856,7 @@
       "name": "Which wire and MCB for an electric geyser?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "The Electric geyser (storage, 40-gallon class) draws 16.3 A, so it takes a 20 A B curve MCB on 4 mm² cable."
+       "text": "The Electric geyser (storage, 40-gallon class) draws 13 A, so it takes a 16 A B curve MCB on 2.5 mm² cable."
       }
      },
      {

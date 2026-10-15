@@ -110,6 +110,7 @@ test('every rendered string is free of NaN, Infinity, undefined and negative res
   for (const p of pages) {
     const c = structuredClone(p.content || {});
     if (c.tool?.how) { delete c.tool.how.tpl; delete c.tool.how.tpl_ur; } // the live templates keep their {{placeholders}}
+    if (c.tool?.rtable) delete c.tool.rtable.cap; // live caption template, rendered in the browser after each calculation
     const s = JSON.stringify(c);
     assert.ok(!/NaN|Infinity|undefined|null h|\{\{/.test(s), `${p.id}: bad value in content`);
   }

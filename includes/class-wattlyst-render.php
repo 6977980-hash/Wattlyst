@@ -322,7 +322,7 @@ final class Wattlyst_Render {
 			'h1'      => $this->page['h1'],
 			'live'    => $t['live'] ?? '',
 			'diagram' => $t['diagram'] ?? '',
-			'rtable'  => isset( $t['rtable'] ) ? array( 'key' => $t['rtable']['key'], 'columns' => $t['rtable']['columns'] ) : '',
+			'rtable'  => isset( $t['rtable'] ) ? array( 'key' => $t['rtable']['key'], 'cap' => $t['rtable']['cap'], 'columns' => $t['rtable']['columns'] ) : '',
 			'data'    => $this->tool_data( $t['data_keys'] ?? array(), $t['appliances'] ?? array() ),
 		);
 		$form  = '<form class="wl-tool' . ( $split ? ' wl-tool-split' : '' ) . '" id="' . esc_attr( $id ) . '" data-wl-tool novalidate onsubmit="return false">';
