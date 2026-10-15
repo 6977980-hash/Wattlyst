@@ -51,7 +51,25 @@ export function billIndex(ctx, fail) {
   for (const l of levels) {
     scope[l.key] = { units: l.units, total_rs: l.cur.total_rs, prev_rs: l.prev.total_rs, change: changeText(l.diff, l.pct), per_unit_rs: l.cur.total_rs / l.units, energy_rs: l.cur.energy_rs, fixed_rs: l.cur.fixed_rs, fpa_rs: l.cur.fpa_rs, gst_rs: l.cur.gst_rs, rate: l.cur.rate };
   }
+  // Units ladder (owner, 2026-10-15): the current month's bill at every step of data/bill-index.json ladder.
+  const lad = ix.ladder;
+  const limit = ctx.data.defaults.protected_max_units;
+  if (!lad || !(lad.step > 0) || !(lad.from > 0) || !(lad.to >= lad.from)) fail('bill-index: data/bill-index.json ladder needs from > 0, step > 0 and to >= from');
+  const ladUnits = [];
+  for (let u = lad.from; u <= lad.to; u += lad.step) ladUnits.push(u);
+  const ladder = ladUnits.map((units) => ({
+    units,
+    u: run(cur, { units, category: 'unprotected' }),
+    p: units <= limit ? run(cur, { units, category: 'protected' }) : null,
+  }));
+  const top = ladder[ladder.length - 1];
+  scope.ladder = { from: lad.from, to: lad.to, step: lad.step, count: ladder.length, limit, top_units: top.units, top_rs: top.u.total_rs, top_per_unit_rs: top.u.total_rs / top.units };
   const tables = [
+    {
+      caption: `Electricity bill for every ${fmt(lad.step, 'int')} units, ${fmt(lad.from, 'int')} to ${fmt(lad.to, 'int')}, ${cur.label}`,
+      head: ['Units a month', 'Unprotected bill', 'Per unit (unprotected)', 'Protected bill'],
+      rows: ladder.map((r) => [fmt(r.units, 'int'), fmt(r.u.total_rs, 'rs'), fmt(r.u.total_rs / r.units, 'rs2'), r.p ? fmt(r.p.total_rs, 'rs') : `Not protected above ${fmt(limit, 'int')} units`]),
+    },
     {
       caption: `Electricity bill by units, ${cur.label} vs ${prev.label} (${fmt(ix.sanctioned_kw, 'int')} kW sanctioned load)`,
       head: ['Units a month', 'Consumer', `${cur.label} bill`, `${prev.label} bill`, 'Change', 'Per unit'],
@@ -73,8 +91,15 @@ export function billIndex(ctx, fail) {
     { name: cur.label, value: l.cur.total_rs, text: fmt(l.cur.total_rs, 'rs') },
   ] })), 'Rs');
   const csvRows = [];
+  const csvLevels = [...ix.levels];
+  for (const units of ladUnits) {
+    for (const category of units <= limit ? ['protected', 'unprotected'] : ['unprotected']) {
+      if (!csvLevels.some((l) => l.units === units && l.category === category)) csvLevels.push({ units, category });
+    }
+  }
+  csvLevels.sort((a, b) => a.units - b.units || (a.category < b.category ? -1 : 1));
   for (const m of ix.months) {
-    for (const l of ix.levels) {
+    for (const l of csvLevels) {
       const r = run(m, l);
       csvRows.push([m.month, l.units, l.category, ix.sanctioned_kw, round(r.rate), round(r.energy_rs), round(r.fixed_rs), round(r.fc_rs), round(r.qta_rs), round(r.fpa_rs), round(r.gst_rs), round(r.total_rs), m.fpa_per_unit, m.fpa_for, m.fpa_verified ? 'notified (NEPRA)' : 'news report']);
     }
