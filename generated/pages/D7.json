@@ -318,9 +318,9 @@
   },
   "answer": "A home that uses 16 units a day in Lahore needs a solar system of about 4.01 kW, installed as 7 panels of 585 W (4.1 kW) on about 18.2 m² of roof, making about 498 units a month. Solar system kW = daily kWh ÷ the units one kW makes a day in your city.",
   "formula": {
-   "text": "kW = E_day ÷ yield; panels = ceil(kW × 1000 ÷ W_panel); kW_installed = panels × W_panel ÷ 1000; units_month = kW_installed × yield × 30",
+   "text": "kW = E_day ÷ yield; panels = ceil(kW × 1000 ÷ W_panel); kW_installed = panels × W_panel ÷ 1000; units_month = kW_installed × yield × 30.42",
    "lines": [
-    "E_day = units used a day (or monthly units ÷ 30)",
+    "E_day = units used a day (or monthly units ÷ the days in an average month)",
     "yield = units one kW of solar makes a day in your city, losses included",
     "W_panel = watts of one panel; panels are rounded up",
     "units_month = what the installed system should make in an average month"

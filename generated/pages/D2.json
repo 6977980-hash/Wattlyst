@@ -341,7 +341,7 @@
   },
   "answer": "For a bill of 300 units a month in Lahore you need about 2.47 kW of solar panel wattage, which is 5 panels of 585 W (2.93 kW installed) on about 13 m² of roof. Panel watts = daily units ÷ the units one kW of panels makes a day in your city, rounded up to whole panels.",
   "formula": {
-   "text": "E = units_month ÷ 30; kW = E ÷ yield; panels = ceil(kW × 1000 ÷ W_panel); kW_installed = panels × W_panel ÷ 1000",
+   "text": "E = units_month ÷ 30.42; kW = E ÷ yield; panels = ceil(kW × 1000 ÷ W_panel); kW_installed = panels × W_panel ÷ 1000",
    "lines": [
     "E = units used a day",
     "yield = units one kW of panels makes a day in your city (losses included)",

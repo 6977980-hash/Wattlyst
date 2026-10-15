@@ -5,7 +5,7 @@ import { calculator, CalcError, num, has, dflt } from './core.js';
 import { fmt } from './format.js';
 import { home_plan, netSaving } from './planner.js';
 import { standbyFor, hybridBank } from './backup.js';
-import { priceRange, hybridPremium } from './prices.js';
+import { priceRange, hybridPremium, rank } from './prices.js';
 
 const mid = (r) => (r.low + r.high) / 2;
 const rs = (v) => fmt(v, 'rs');
@@ -59,7 +59,7 @@ export const home_decision = calculator((i, d) => {
   if (need) {
     // Hybrid: the bank, and the grid-tie hybrid inverter's premium over an on-grid one; it also carries the backup load.
     const [units, item, battery] = hybridBank(p, d);
-    const [premium, known, hw, above, hkw] = hybridPremium(cp, p.net_billing_inverter_kw, (p.backup_w * p.margin) / 1000, dflt(d, 'hybrid_bank_v'));
+    const [premium, known, hw, above, hkw] = hybridPremium(cp, p.net_billing_inverter_kw, Math.max(p.backup_w * p.margin, p.backup_surge_w) / 1000, dflt(d, 'hybrid_bank_v'));
     const repl = Math.max(0, Math.floor((years - 1e-9) / bp.battery_life_years[p.chemistry]));
     const bat = units * mid(item);
     const y = add('hybrid', `Hybrid solar${K} + ${battery}`, og[0] + premium + units * item.low, og[1] + premium + units * item.high, repl * bat, Math.max(0, netSaving(p, d, 1, g, 0)), 0, kw ? `${hours} from the battery` : NOSUN, kw > 0);
@@ -94,12 +94,8 @@ export const home_decision = calculator((i, d) => {
   const pool = need ? setups.filter((x) => x.ok && x !== o) : kw ? [o, grid] : [grid];
   const fits = pool.filter((x) => !budget || x.low <= budget + 1e-9);
   const over = pool.length > 0 && !fits.length;
-  const best = (a, b) => (b.net_rs < a.net_rs - 1e-9 || (Math.abs(b.net_rs - a.net_rs) <= 1e-9 && b.buy < a.buy) ? b : a);
-  const pick = fits.length ? fits.reduce(best) : pool.length ? pool.reduce((a, b) => (b.low < a.low ? b : a)) : { ...grid, key: 'none', option: 'No setup in our price lists fits this backup load' };
-  const rest = fits.filter((x) => x !== pick);
-  const ru = rest.length ? rest.reduce(best) : null;
-  // A close call: the runner-up's net range (low to high price) overlaps the pick's (WL-94).
-  const close = Boolean(ru && ru.lo <= pick.hi + 1e-9 && pick.lo <= ru.hi + 1e-9);
+  const [top, ru, close] = rank(fits);
+  const pick = top || (pool.length ? pool.reduce((a, b) => (b.low < a.low ? b : a)) : { ...grid, key: 'none', option: 'No setup in our price lists fits this backup load' });
   const tight = budget > 0 && !over && pick.buy > budget + 1e-9;
   const gap = over ? pick.low - budget : 0;
   return Object.assign(out, {
@@ -107,7 +103,7 @@ export const home_decision = calculator((i, d) => {
     decision_key: pick.key, decision: over ? `${pick.option} (over your budget by ${rs(gap)})` : pick.option,
     decision_text: [...lines, pick.key === 'none' ? `${pick.option}.` : over ? `Nothing with your backup fits your budget; cheapest: ${pick.option}, ${rs(gap)} over it.`
       : `Recommended, the lowest net ${need ? 'that gives your backup' : 'of on-grid solar and staying on the grid'}${budget ? ' within your budget' : ''}: ${pick.option}${tight ? ' (within it only at the low end of its price range)' : ''}.${close ? ` Close call: ${ru.option} is within the price ranges, so get quotes for both.` : ''}`].join(' '),
-    decision_rs: pick.buy, decision_price: pick.price, close_call: close, ...(close ? { runner_up: ru.option } : {}), budget_low_end: tight,
+    decision_rs: pick.buy, decision_price: pick.price, close_call: !!close, ...(close ? { runner_up: ru.option } : {}), budget_low_end: tight,
     decision_saving_rs: pick.saving, decision_running_rs: pick.running, decision_backup: pick.backup, decision_net: pick.net, over_budget: over, budget_gap_rs: gap,
   });
 });

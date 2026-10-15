@@ -43,8 +43,10 @@ export const backup_compare = calculator((i, d) => {
 
   // UPS with tubular batteries
   const upsList = [...bp.ups].sort((a, b) => a.rated_w - b.rated_w);
-  const ups = upsList.find((u) => u.rated_w >= need_w - 1e-9) || upsList[upsList.length - 1];
-  const ups_fits = ups.rated_w >= need_w - 1e-9;
+  // A UPS or hybrid inverter must carry the load × margin and also start it (the starting watts), as the generator (WL-96).
+  const fit_w = Math.max(need_w, surge_w);
+  const ups = upsList.find((u) => u.rated_w >= fit_w - 1e-9) || upsList[upsList.length - 1];
+  const ups_fits = ups.rated_w >= fit_w - 1e-9;
   const tub = bp.tubular_unit;
   const tubItem = cp.find((x) => x.category === 'tubular_battery');
   const dod_t = dflt(d, 'dod_lead_acid');
@@ -63,11 +65,11 @@ export const backup_compare = calculator((i, d) => {
   const refill_need_kwh = day_kwh / (dflt(d, 'charge_eff_lead_acid') * eta_ups);
   const refill_max_kwh = ((24 - hours) * ups.charger_a * ups.battery_v) / 1000;
   const ups_ok = ups_fits && refill_max_kwh >= refill_need_kwh;
-  const ups_status = !ups_fits ? `No UPS in our price list carries more than ${Math.floor(ups.rated_w / margin)} W` : ups_ok ? 'Charger can refill the batteries between cuts' : 'Charger too small to refill the batteries between cuts';
+  const ups_status = !ups_fits ? `No UPS in our price list carries more than ${Math.floor(ups.rated_w / margin)} W or starts more than ${ups.rated_w} W` : ups_ok ? 'Charger can refill the batteries between cuts' : 'Charger too small to refill the batteries between cuts';
 
   // Petrol generator
   const pf = dflt(d, 'pf_generator');
-  const gen = [...bp.generators].sort((a, b) => a.kva - b.kva).find((g) => g.kva * pf * 1000 >= Math.max(need_w, surge_w) - 1e-9);
+  const gen = [...bp.generators].sort((a, b) => a.kva - b.kva).find((g) => g.kva * pf * 1000 >= fit_w - 1e-9);
   if (!gen) throw new CalcError('load_w_too_large', 'load_w');
   const curve = d.generator_fuel.fuels[fuel];
   const l_per_h = curve.intercept_l_per_h_per_kw_rated * gen.kva * pf + curve.slope_l_per_kwh * (load_w / 1000);
@@ -83,7 +85,7 @@ export const backup_compare = calculator((i, d) => {
   const pack = bp.lithium_pack;
   // Only inverters built for the pack's battery voltage can be paired with it (WL-98).
   const invs = cp.filter((x) => x.category === 'hybrid_inverter' && x.bank_v === pack.bank_v).map((x) => ({ kw: sizeKw(x.size), rs: mid(x) })).sort((a, b) => a.kw - b.kw);
-  const inv = invs.find((x) => x.kw * 1000 >= need_w - 1e-9);
+  const inv = invs.find((x) => x.kw * 1000 >= fit_w - 1e-9);
   if (!inv) throw new CalcError('load_w_too_large', 'load_w');
   const liItem = cp.find((x) => x.category === 'lithium_battery' && x.size === pack.size);
   const eta_h = dflt(d, 'inverter_eff_hybrid');

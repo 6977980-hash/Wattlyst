@@ -458,7 +458,7 @@
   },
   {
     "calc": "solar_size",
-    "name": "500 units/month Lahore, specific yield 3.995 kWh/kWp/day (Global Solar Atlas)",
+    "name": "500 units/month Lahore, specific yield 4.0 kWh/kWp/day entered",
     "inputs": {
       "monthly_units": 500,
       "city": "lahore",
@@ -471,7 +471,7 @@
       "panels": 8
     },
     "tolerance": 0.01,
-    "note": "yield comes from data/cities.json; equivalent to PSH 5.1 x PR 0.78 Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
   },
   {
     "calc": "solar_size",
@@ -1713,7 +1713,7 @@
       "panels": 8
     },
     "tolerance": 0.01,
-    "note": "edge case Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
   },
   {
     "calc": "solar_size",
@@ -2610,7 +2610,7 @@
       "yield_kwh_per_kwp_day": 3.995
     },
     "tolerance": 0.001,
-    "note": "reviewer fix 13 Oct Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
   },
   {
     "calc": "charge_controller",
@@ -2961,7 +2961,7 @@
       "inverter_surge_w": 7200
     },
     "tolerance": 0.01,
-    "note": "Phase 3 Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
   },
   {
     "calc": "solar_for_ac",
@@ -3076,7 +3076,7 @@
       "largest_w": 1450
     },
     "tolerance": 0.01,
-    "note": "peak adds the largest start step (AC 1900-1450 = 450); fridge typical 10 h; AC energy at avg_w 1000 (8 units/day), not rated 1450 Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
   },
   {
     "calc": "home_load",
@@ -3240,7 +3240,7 @@
       "monthly_rs": 8872.906
     },
     "tolerance": 0.001,
-    "note": "avg_w 1000 from appliances.json (formulas.md E) Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
   },
   {
     "calc": "ac_units",
@@ -3744,7 +3744,7 @@
       "inverter_surge_w": 13500
     },
     "tolerance": 0.01,
-    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): very large; 3600 x 12 / 1000 / 4.6; 9391/585 = 16.05 -> 17. Inverter raised 2026-10-14 to keep the array within dc_ac_ratio_max (formulas.md D5/D8); inverter_kw_load is the old P_run x margin figure. Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
   },
   {
     "calc": "solar_for_ac",
@@ -3864,7 +3864,7 @@
       "installed_kw": 38.61
     },
     "tolerance": 0.01,
-    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): energy at avg 1920 W x 8 h x 10; only one compressor starts at once Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
   },
   {
     "calc": "solar_from_loads",
@@ -3921,7 +3921,7 @@
       "monthly_units": 73.008
     },
     "tolerance": 0.001,
-    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): unit switch Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
   },
   {
     "calc": "home_load",
@@ -3968,7 +3968,7 @@
       "load_pct": 240
     },
     "tolerance": 0.01,
-    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): very large Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
   },
   {
     "calc": "home_load",
@@ -4524,7 +4524,7 @@
       "limited_by": "energy"
     },
     "tolerance": 0.001,
-    "note": "10 x 745.7 / 0.8 = 9321.25 W; 55.93 kWh / 4.4 = 12.71 kWp; 12.71 kW / 585 W -> 22 panels; drive = 9321.25 x 1.25 Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
   },
   {
     "calc": "solar_for_pump",
@@ -4542,7 +4542,7 @@
       "limited_by": "power"
     },
     "tolerance": 0.001,
-    "note": "4660.6 / 1000 / 0.78 = 5.98 kWp > 18.64 kWh / 4.0 = 4.66 kWp Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
   },
   {
     "calc": "solar_for_pump",
@@ -4607,7 +4607,7 @@
       "generator_pick_kva": 3
     },
     "tolerance": 0.01,
-    "note": "391.2 units x 36.46 (301-400 band); import 195.6 x 28.91 - export 225.6 x 8.13 = 3820.67. Whole bill: before (14263.152 + 1600 fixed + 391.2 x 3.23 FC) x 1.18 = 20209.54; import (5654.796 + 1200 + 195.6 x 3.23) x 1.18 = 8834.17; after 8834.17 - 1834.13 = 7000.04; battery 2 kWh / (24 x 0.9 x 0.9); generator max(2362.5, 2340)/0.8 -> 3 kVA. Inverter raised 2026-10-14 to keep the array within dc_ac_ratio_max (formulas.md D5/D8); inverter_kw_load is the old P_run x margin figure. Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
   },
   {
     "calc": "home_plan",
@@ -4641,7 +4641,7 @@
       "bill_after_rs": 0
     },
     "tolerance": 0.01,
-    "note": "Edited buyback 60 (not a real rate, it only forces the case): 225.6 x 60 = 13536 > 8834.17 import bill, so full_after = 0 and 13536 - 8834.17 = 4701.83 carries forward; saving = the whole bill before. Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
   },
   {
     "calc": "home_plan",
@@ -4675,7 +4675,7 @@
       "fixed_before_rs": 200
     },
     "tolerance": 0.01,
-    "note": "(14263.152 + 400 x 0.5 fixed + 391.2 x 3.23 FC) x 1.18 = 18557.54, the same before and after. Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
   },
   {
     "calc": "home_plan",
@@ -4706,7 +4706,7 @@
       "full_saving_rs": 11528.017
     },
     "tolerance": 0.01,
-    "note": "20209.539 - 8834.169 = 11375.37. Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
   },
   {
     "calc": "home_plan",
@@ -4751,7 +4751,7 @@
       "solar_kw_power": 2.423
     },
     "tolerance": 0.01,
-    "note": "floor(3000 / 585) = 5 panels = 2.925 kW x 4.0 x 30 = 351 units; export 351 - 195.6 = 155.4; energy rule 13.04 / 4.0 = 3.26 kW, power rule 1890 / 0.78 = 2.42 kW Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
   },
   {
     "calc": "home_plan",
@@ -5265,7 +5265,7 @@
       "day_label": "Forecast for 2026-10-15"
     },
     "tolerance": 0.001,
-    "note": "5 x 6.58 x 0.78 Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
   },
   {
     "calc": "solar_forecast",
@@ -6324,7 +6324,7 @@
       "lock_extra_rs": 0
     },
     "tolerance": 0.01,
-    "note": "before (250x33.1 + 350 + 807.5) x 1.18; after 490 units (490x38.95 + 500 + 490x3.23) x 1.18 Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
   },
   {
     "calc": "ac_bill_impact",
@@ -6515,7 +6515,7 @@
       "worst_short_units": 250.713
     },
     "tolerance": 0.001,
-    "note": "N17; pvout_month Lahore from data/cities-pk.json, buyback default = data NAEPP (Rs 8.13 for CY 2026) Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
   },
   {
     "calc": "solar_seasonal",
@@ -6604,7 +6604,7 @@
       "months_short": 0
     },
     "tolerance": 0.001,
-    "note": "N17 Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
   },
   {
     "calc": "solar_seasonal",
@@ -6920,7 +6920,7 @@
       "cheapest": "hybrid solar"
     },
     "tolerance": 0.001,
-    "note": "N7; prices mid of data/backup-prices.json, component-prices.json, solar-prices.json; recomputed by hand from data/ Full audit 2026-10-15 Phase 2b: UPS rows labelled by their real VA (WL-97), the hybrid inverter must take the 51.2 V pack, so the 6 kW 48 V row (WL-98), 30.42-day months (WL-106); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b: UPS rows labelled by their real VA (WL-97), the hybrid inverter must take the 51.2 V pack, so the 6 kW 48 V row (WL-98), 30.42-day months (WL-106); recomputed from data/."
   },
   {
     "calc": "backup_compare",
@@ -6939,7 +6939,7 @@
       "cheapest": "UPS"
     },
     "tolerance": 0.001,
-    "note": "N7 Full audit 2026-10-15 Phase 2b: UPS rows labelled by their real VA (WL-97), the hybrid inverter must take the 51.2 V pack, so the 6 kW 48 V row (WL-98), 30.42-day months (WL-106); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b: UPS rows labelled by their real VA (WL-97), the hybrid inverter must take the 51.2 V pack, so the 6 kW 48 V row (WL-98), 30.42-day months (WL-106); recomputed from data/."
   },
   {
     "calc": "backup_compare",
@@ -6961,7 +6961,7 @@
       "cheapest": "hybrid solar"
     },
     "tolerance": 0.001,
-    "note": "N7 Full audit 2026-10-15 Phase 2b: UPS rows labelled by their real VA (WL-97), the hybrid inverter must take the 51.2 V pack, so the 6 kW 48 V row (WL-98), 30.42-day months (WL-106); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b: UPS rows labelled by their real VA (WL-97), the hybrid inverter must take the 51.2 V pack, so the 6 kW 48 V row (WL-98), 30.42-day months (WL-106); recomputed from data/."
   },
   {
     "calc": "backup_compare",
@@ -6980,7 +6980,7 @@
       "solar_total": 822267.5
     },
     "tolerance": 0.001,
-    "note": "N7 Full audit 2026-10-15 Phase 2b: UPS rows labelled by their real VA (WL-97), the hybrid inverter must take the 51.2 V pack, so the 6 kW 48 V row (WL-98), 30.42-day months (WL-106); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b: UPS rows labelled by their real VA (WL-97), the hybrid inverter must take the 51.2 V pack, so the 6 kW 48 V row (WL-98), 30.42-day months (WL-106); recomputed from data/."
   },
   {
     "calc": "backup_compare",
@@ -6993,7 +6993,7 @@
     },
     "expected": {
       "ups_ok": false,
-      "ups_status": "No UPS in our price list carries more than 1280 W",
+      "ups_status": "No UPS in our price list carries more than 1280 W or starts more than 1600 W",
       "gen_kva": 10,
       "inverter_kw": 8,
       "lithium_packs": 5,
@@ -7001,7 +7001,7 @@
       "cheapest": "hybrid solar"
     },
     "tolerance": 0,
-    "note": "N7 Full audit 2026-10-15 Phase 2b: UPS rows labelled by their real VA (WL-97), the hybrid inverter must take the 51.2 V pack, so the 6 kW 48 V row (WL-98), 30.42-day months (WL-106); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b: UPS rows labelled by their real VA (WL-97), the hybrid inverter must take the 51.2 V pack, so the 6 kW 48 V row (WL-98), 30.42-day months (WL-106); recomputed from data/."
   },
   {
     "calc": "backup_compare",
@@ -7146,7 +7146,7 @@
       "years": 10
     },
     "tolerance": 0.01,
-    "note": "H1 decision step (formulas.md Home Power Decision Engine). Hand check: on-grid 3.51 kW between the 3 and 5 kW rows: 300,000 + 250,000 x 0.255 = 363,750 and 500,000 + 400,000 x 0.255 = 602,000; hybrid adds one 5.12 kWh pack (215,000 to 310,000), premium 0 (export-capable hybrid rows start at 6 kW: 247,250 / 6 x 2.7 = 111,262.5 < on-grid 235,000 / 5 x 2.7 = 126,900); one pack replacement at 8 years 262,500; net = 745,375 + 262,500 - 120 x full saving. UPS 1 kVA + 2 tubular: 44,249 + 2 x 56,560 = 157,369 (low 33,999 + 81,240, high 54,499 + 145,000); recharge 2 / 0.7225 x 30 = 83.0 units a month, of which the 2 x 30 = 60 backup units are already in the 396.3, so 23.0 extra units on the whole bill: bill_total(396.3 + 23.0) - bill_total(396.3), the 401-500 slab; 3 tubular replacements 339,360. Combo: 363,750 + 115,239 = 478,989 and 602,000 + 199,499 = 801,499, same replacements; the 23.0 extra units are added to the net-billed import units. Full audit 2026-10-15 Phase 2b: cuts spread over the day (WL-93), generator credited with the grid units it supplies (WL-95), UPS labelled 1.2 kVA (WL-97), 30.42-day months (WL-106); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b: cuts spread over the day (WL-93), generator credited with the grid units it supplies (WL-95), UPS labelled 1.2 kVA (WL-97), 30.42-day months (WL-106); recomputed from data/."
   },
   {
     "calc": "home_decision",
@@ -7189,7 +7189,7 @@
       "hybrid_rs": 745375
     },
     "tolerance": 0.01,
-    "note": "H1 decision step (formulas.md Home Power Decision Engine). Small UPS load: one tubular battery; combo net (on-grid + UPS, recharge on the net-billed import) below the hybrid net with its lithium pack. Full audit 2026-10-15 Phase 2b: cuts spread over the day (WL-93), generator credited with the grid units it supplies (WL-95), UPS labelled 1.2 kVA (WL-97), 30.42-day months (WL-106); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b: cuts spread over the day (WL-93), generator credited with the grid units it supplies (WL-95), UPS labelled 1.2 kVA (WL-97), 30.42-day months (WL-106); recomputed from data/."
   },
   {
     "calc": "home_decision",
@@ -7233,7 +7233,7 @@
       "budget_rs": 300000
     },
     "tolerance": 0.01,
-    "note": "H1 decision step (formulas.md Home Power Decision Engine). Hybrid middle 745,375 > 300,000; UPS middle 157,369 fits. Full audit 2026-10-15 Phase 2b: cuts spread over the day (WL-93), generator credited with the grid units it supplies (WL-95), UPS labelled 1.2 kVA (WL-97), 30.42-day months (WL-106); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b: cuts spread over the day (WL-93), generator credited with the grid units it supplies (WL-95), UPS labelled 1.2 kVA (WL-97), 30.42-day months (WL-106); recomputed from data/."
   },
   {
     "calc": "home_decision",
@@ -7400,7 +7400,7 @@
       "ongrid_net": "Rs 1,188,713 saved"
     },
     "tolerance": 0.01,
-    "note": "H1 decision step (formulas.md Home Power Decision Engine). Net 482,875 - 120 x full saving < 0, so on-grid solar. Full audit 2026-10-15 Phase 2b: cuts spread over the day (WL-93), generator credited with the grid units it supplies (WL-95), UPS labelled 1.2 kVA (WL-97), 30.42-day months (WL-106); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b: cuts spread over the day (WL-93), generator credited with the grid units it supplies (WL-95), UPS labelled 1.2 kVA (WL-97), 30.42-day months (WL-106); recomputed from data/."
   },
   {
     "calc": "home_decision",
@@ -7442,7 +7442,7 @@
       "ongrid_net": "Rs 315,716 cost"
     },
     "tolerance": 0.01,
-    "note": "H1 decision step (formulas.md Home Power Decision Engine). 482,875 - 12 x full saving > 0. Full audit 2026-10-15 Phase 2b: cuts spread over the day (WL-93), generator credited with the grid units it supplies (WL-95), UPS labelled 1.2 kVA (WL-97), 30.42-day months (WL-106); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b: cuts spread over the day (WL-93), generator credited with the grid units it supplies (WL-95), UPS labelled 1.2 kVA (WL-97), 30.42-day months (WL-106); recomputed from data/."
   },
   {
     "calc": "home_decision",
@@ -7611,7 +7611,7 @@
       "combo_low_rs": 616250
     },
     "tolerance": 0.01,
-    "note": "H1 decision step (formulas.md Home Power Decision Engine). 3,000 x 1.25 = 3,750 W > 2.5 kVA x 0.8; 12 kWh / (0.9 x 0.9) = 14.8 kWh -> 3 packs; hybrid 3.75 kW below the 6 kW row: 247,250 / 6 x 3.75 = 154,531.25 - 126,900 = 27,631.25. Combo with the generator: on-grid low 363,750 + generator low; saving = full saving, running = generator petrol and oil. Full audit 2026-10-15 Phase 2b: the backup load must fit in the list (WL-103), so a three-AC home. 3,000 x 1.25 = 3,750 W > 2.5 kVA x 0.8; 12 kWh / (0.9 x 0.9) = 14.8 kWh -> 3 packs; recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b: the backup load must fit in the list (WL-103), so a three-AC home. 3,000 x 1.25 = 3,750 W > 2.5 kVA x 0.8; 12 kWh / (0.9 x 0.9) = 14.8 kWh -> 3 packs; recomputed from data/."
   },
   {
     "calc": "home_decision",
@@ -7653,7 +7653,7 @@
       "hybrid_premium_rs": 215964.062
     },
     "tolerance": 0.01,
-    "note": "H1 decision step (formulas.md Home Power Decision Engine). 7,000 x 1.25 = 8,750 W > 10 kVA x 0.8; hybrid between 8 kW (302,000) and 10 kW (462,500): 302,000 + 160,500 x 0.375 = 362,187.5 - 126,900 = 235,287.5. Full audit 2026-10-15 Phase 2b: the backup load must fit in the list (WL-103), so a five-AC home. 7,000 x 1.25 = 8,750 W > 10 kVA x 0.8; recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b: the backup load must fit in the list (WL-103), so a five-AC home. 7,000 x 1.25 = 8,750 W > 10 kVA x 0.8; recomputed from data/."
   },
   {
     "calc": "home_decision",
@@ -7694,7 +7694,7 @@
       "hybrid_premium_rs": 283521.875
     },
     "tolerance": 0.01,
-    "note": "H1 decision step (formulas.md Home Power Decision Engine). Hybrid kW = 9 x 1.25 = 11.25 above the 10 kW row: 462,500 / 10 x 11.25 = 520,312.5; on-grid 2.7 kW below 5 kW: 126,900; premium 393,412.5. Full audit 2026-10-15 Phase 2b: the backup load must fit in the list (WL-103). Hybrid kW = the larger of the load inverter and 9 x 1.25 = 11.25, above the 10 kW row; recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b: the backup load must fit in the list (WL-103). Hybrid kW = the larger of the load inverter and 9 x 1.25 = 11.25, above the 10 kW row; recomputed from data/."
   },
   {
     "calc": "home_decision",
@@ -7919,7 +7919,7 @@
       "inverter_w": 5512.5
     },
     "tolerance": 0.001,
-    "note": "Full audit 2026-10-15 WL-92: grid-tied lists sized by energy (formulas.md D5/D8), the same size as D7. Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
   },
   {
     "calc": "solar_from_loads",
@@ -8040,7 +8040,7 @@
       "decision": "UPS 1.2 kVA + 2 tubular batteries"
     },
     "tolerance": 0.01,
-    "note": "WL-91: a setup with no panel net billing accepts is not a candidate. Full audit 2026-10-15 Phase 2b: cuts spread over the day (WL-93), generator credited with the grid units it supplies (WL-95), UPS labelled 1.2 kVA (WL-97), 30.42-day months (WL-106); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b: cuts spread over the day (WL-93), generator credited with the grid units it supplies (WL-95), UPS labelled 1.2 kVA (WL-97), 30.42-day months (WL-106); recomputed from data/."
   },
   {
     "calc": "home_decision",
@@ -8202,7 +8202,7 @@
     },
     "expected": {
       "grid_share": 0.833,
-      "ongrid_saving_rs": 13351.905,
+      "ongrid_saving_rs": 12188.574,
       "hybrid_saving_rs": 13624.157,
       "full_saving_rs": 13929.897,
       "close_call": true,
@@ -8255,7 +8255,7 @@
   },
   {
     "calc": "home_decision",
-    "name": "Backup start: a 1 HP pump that fits in the backup load sizes the generator by its start",
+    "name": "Backup start: a 1 HP pump in the backup load: no listed UPS starts it, the generator is sized by its start",
     "inputs": {
       "loads": [
         {
@@ -8278,10 +8278,10 @@
     },
     "expected": {
       "backup_surge_w": 2960,
-      "standby_option": "UPS 2.4 kVA + 2 tubular batteries"
+      "standby_option": "Petrol generator 5 kVA"
     },
     "tolerance": 0.01,
-    "note": "Full audit 2026-10-15 WL-96: backup start = 1,160 W + the pump's start step (the C1 rule); generator kVA x 0.8 x 1000 >= max(1,160 x 1.25, start)."
+    "note": "Full audit 2026-10-15 WL-96: backup start = 1,160 W + the pump's start step = 2,960 W (the C1 rule); a UPS must carry and start it (rated W ≥ max(load × margin, start)), the 2.4 kVA row is 1,600 W, so the generator: kVA x 0.8 x 1000 >= 2,960 W gives 5 kVA."
   },
   {
     "calc": "home_decision",

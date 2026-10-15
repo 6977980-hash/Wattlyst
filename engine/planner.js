@@ -95,7 +95,8 @@ export const home_plan = calculator((i, d) => {
  */
 export function netSaving(p, d, sun, exp, extra) {
   const s = p.net_billing_solar_kwh * sun;
-  const self = Math.min(s, p.monthly_units * p.day_share);
+  // In a cut the on-grid inverter is off, so only the daytime use while the grid is on can take its solar.
+  const self = Math.min(s, p.monthly_units * p.day_share * sun);
   const units = Math.max(0, p.monthly_units - self + extra);
   return p.full_before_rs - Math.max(0, bill_total.raw({ sanctioned_kw: p.sanctioned_kw, protected: false, units }, d).total_rs - (s - self) * exp * p.buyback_rs);
 }

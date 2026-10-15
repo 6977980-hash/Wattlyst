@@ -72,9 +72,9 @@
   "Each {{out.panel_w|int}} W panel needs about {{d.panel_area_m2|1}} m² of roof, so a {{out.installed_kw|2}} kW system takes about {{out.roof_m2|1}} m² and a {{ex.4.out.installed_kw|2}} kW system about {{ex.4.out.roof_m2|1}} m²."
  ],
  "formula": {
-  "text": "kW = E_day ÷ yield; panels = ceil(kW × 1000 ÷ W_panel); kW_installed = panels × W_panel ÷ 1000; units_month = kW_installed × yield × 30",
+  "text": "kW = E_day ÷ yield; panels = ceil(kW × 1000 ÷ W_panel); kW_installed = panels × W_panel ÷ 1000; units_month = kW_installed × yield × {{d.days_per_month|2}}",
   "lines": [
-   "E_day = units used a day (or monthly units ÷ 30)",
+   "E_day = units used a day (or monthly units ÷ the days in an average month)",
    "yield = units one kW of solar makes a day in your city, losses included",
    "W_panel = watts of one panel; panels are rounded up",
    "units_month = what the installed system should make in an average month"

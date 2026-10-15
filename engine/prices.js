@@ -52,6 +52,20 @@ export function hybridPremium(items, kw, backup_kw, v) {
 }
 
 /**
+ * Decision engine ranking (formulas.md H1): the setup with the lowest net (ties: the lower middle price), the runner-up,
+ * and a close call when the runner-up's net range (at its low and high price) overlaps the pick's and neither is staying
+ * on the grid (WL-94). Returns [pick, runner-up, close] ([] for no setups).
+ */
+export function rank(xs) {
+  if (!xs.length) return [];
+  const best = (a, b) => (b.net_rs < a.net_rs - 1e-9 || (Math.abs(b.net_rs - a.net_rs) <= 1e-9 && b.buy < a.buy) ? b : a);
+  const pick = xs.reduce(best);
+  const rest = xs.filter((x) => x !== pick);
+  const ru = rest.length ? rest.reduce(best) : null;
+  return [pick, ru, Boolean(ru && ru.key !== 'grid' && pick.key !== 'grid' && ru.lo <= pick.hi + 1e-9 && pick.lo <= ru.hi + 1e-9)];
+}
+
+/**
  * N3: Rs/W = price / (kWp × 1000), compared with the typical range for the type (priceRange) or an
  * explicit range_low/range_high in Rs per W. Verdict: below / within / above. Never names an installer as cheating.
  */

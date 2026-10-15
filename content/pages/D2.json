@@ -88,7 +88,7 @@
   "Panel size does not change the total watts: {{out.kw|2}} kW is {{out.panels|int}} panels of {{out.panel_w|int}} W or {{ex.1.out.panels|int}} panels of {{ex.1.out.panel_w|int}} W, but the smaller panels take {{ex.1.out.roof_m2|1}} m² of roof instead of {{out.roof_m2|1}} m²."
  ],
  "formula": {
-  "text": "E = units_month ÷ 30; kW = E ÷ yield; panels = ceil(kW × 1000 ÷ W_panel); kW_installed = panels × W_panel ÷ 1000",
+  "text": "E = units_month ÷ {{d.days_per_month|2}}; kW = E ÷ yield; panels = ceil(kW × 1000 ÷ W_panel); kW_installed = panels × W_panel ÷ 1000",
   "lines": [
    "E = units used a day",
    "yield = units one kW of panels makes a day in your city (losses included)",

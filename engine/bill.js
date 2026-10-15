@@ -149,7 +149,7 @@ export const net_billing = calculator((i, d) => {
 });
 
 /**
- * N1 bill audit: units_30 = units × 30 / days; slab_jump if the 30-day-equivalent falls in a lower band;
+ * N1 bill audit: units_30 = units × bill_month_days / days; slab_jump if the 30-day-equivalent falls in a lower band;
  * if 'protected' history was all ≤ 200 but this bill > 200 only because of a long cycle, flag it.
  * Estimate only, never an official finding.
  */
