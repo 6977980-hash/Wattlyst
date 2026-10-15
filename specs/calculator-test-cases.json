@@ -6154,5 +6154,216 @@
     },
     "tolerance": 0.01,
     "note": "8 kW Rs 1,390,000-1,800,000, 10 kW Rs 1,400,000-1,800,000 (10 kW high raised to the 8 kW high by the data rule); t = (9.9 - 8) / 2 = 0.95: low 1,390,000 + 10,000 x 0.95 = 1,399,500; high stays 1,800,000. The old Rs/W interpolation gave 1,804,275 at 9.9 kW and 1,800,000 at 10 kW."
+  },
+  {
+    "calc": "ac_bill_impact",
+    "name": "Protected home at 180 units loses protection with a 1.5 ton inverter AC 8 h",
+    "inputs": {
+      "fc_surcharge_per_unit": 3.23,
+      "qta_per_unit": 0,
+      "fpa_per_unit": 0,
+      "gst_pct": 18,
+      "sanctioned_kw": 1,
+      "ac": "ac-split-1-5ton-inverter",
+      "hours": 8,
+      "days": 30,
+      "other_units": 180,
+      "protected": true
+    },
+    "expected": {
+      "ac_units": 240,
+      "total_units": 420,
+      "before_rs": 3511.916,
+      "after_rs": 21494.408,
+      "extra_rs": 17982.492,
+      "rs_per_ac_unit": 74.92705,
+      "after_category": "unprotected",
+      "protected_lost": true,
+      "slab_jump": true,
+      "lock_months": 6,
+      "lock_extra_rs": 22011.72
+    },
+    "tolerance": 0.01,
+    "note": "before: (100x10.54 + 80x13.01 + 300 fixed + 180x3.23) x 1.18 = 3511.916; after 420 unprotected: (420x38.95 + 500 + 420x3.23) x 1.18 = 21494.408; lock: 6 x ((180x28.91 + 300 + 581.4) x 1.18 - 3511.916) = 22011.72"
+  },
+  {
+    "calc": "ac_bill_impact",
+    "name": "Unprotected 250 units + AC 240 units jumps two slabs",
+    "inputs": {
+      "fc_surcharge_per_unit": 3.23,
+      "qta_per_unit": 0,
+      "fpa_per_unit": 0,
+      "gst_pct": 18,
+      "sanctioned_kw": 1,
+      "ac": "ac-split-1-5ton-inverter",
+      "hours": 8,
+      "other_units": 250,
+      "protected": false
+    },
+    "expected": {
+      "before_rs": 11130.35,
+      "after_rs": 24978.476,
+      "extra_rs": 13848.126,
+      "before_rate": 33.1,
+      "after_rate": 38.95,
+      "slab_jump": true,
+      "protected_lost": false,
+      "lock_extra_rs": 0
+    },
+    "tolerance": 0.01,
+    "note": "before (250x33.1 + 350 + 807.5) x 1.18; after 490 units (490x38.95 + 500 + 490x3.23) x 1.18"
+  },
+  {
+    "calc": "ac_bill_impact",
+    "name": "Protected home stays protected with a short-run custom AC",
+    "inputs": {
+      "fc_surcharge_per_unit": 3.23,
+      "qta_per_unit": 0,
+      "fpa_per_unit": 0,
+      "gst_pct": 18,
+      "sanctioned_kw": 1,
+      "ac": "custom",
+      "avg_kw": 0.5,
+      "hours": 2,
+      "days": 30,
+      "other_units": 100,
+      "protected": true
+    },
+    "expected": {
+      "ac_units": 30,
+      "before_rs": 1860.86,
+      "after_rs": 2553.756,
+      "extra_rs": 692.896,
+      "after_category": "protected",
+      "protected_lost": false,
+      "slab_jump": true,
+      "lock_months": 0
+    },
+    "tolerance": 0.01,
+    "note": "130 protected units: (100x10.54 + 30x13.01 + 300 + 130x3.23) x 1.18; band 0 -> 1 counts as a slab jump"
+  },
+  {
+    "calc": "ac_bill_impact",
+    "name": "Zero AC hours adds nothing",
+    "inputs": {
+      "fc_surcharge_per_unit": 3.23,
+      "qta_per_unit": 0,
+      "fpa_per_unit": 0,
+      "gst_pct": 18,
+      "sanctioned_kw": 1,
+      "ac": "ac-split-1ton-inverter",
+      "hours": 0,
+      "other_units": 300
+    },
+    "expected": {
+      "ac_units": 0,
+      "extra_rs": 0,
+      "rs_per_ac_unit": 0,
+      "slab_jump": false
+    },
+    "tolerance": 0.0001,
+    "note": "edge case: zero"
+  },
+  {
+    "calc": "ac_bill_impact",
+    "name": "Protected box ticked above the protected limit is rejected",
+    "inputs": {
+      "fc_surcharge_per_unit": 3.23,
+      "qta_per_unit": 0,
+      "fpa_per_unit": 0,
+      "gst_pct": 18,
+      "sanctioned_kw": 1,
+      "ac": "ac-split-1ton-inverter",
+      "hours": 8,
+      "other_units": 250,
+      "protected": true
+    },
+    "expected": {
+      "error": "protected_max_200_units"
+    },
+    "tolerance": 0,
+    "note": "protected applies only up to 200 units"
+  },
+  {
+    "calc": "ac_bill_impact",
+    "name": "5 kW sanctioned load needs the ToU bill",
+    "inputs": {
+      "fc_surcharge_per_unit": 3.23,
+      "qta_per_unit": 0,
+      "fpa_per_unit": 0,
+      "gst_pct": 18,
+      "sanctioned_kw": 5,
+      "ac": "ac-split-1ton-inverter",
+      "hours": 8,
+      "other_units": 300
+    },
+    "expected": {
+      "error": "tou_required_at_5kw"
+    },
+    "tolerance": 0,
+    "note": "flat A-1 bill refuses 5 kW and above (section F)"
+  },
+  {
+    "calc": "ac_bill_impact",
+    "name": "Very large use stays finite on the top slab",
+    "inputs": {
+      "fc_surcharge_per_unit": 3.23,
+      "qta_per_unit": 0,
+      "fpa_per_unit": 0,
+      "gst_pct": 18,
+      "sanctioned_kw": 1,
+      "ac": "ac-split-2ton-non-inverter",
+      "hours": 24,
+      "days": 31,
+      "other_units": 100000
+    },
+    "expected": {
+      "after_rate": 47.2,
+      "before_rate": 47.2,
+      "slab_jump": false
+    },
+    "tolerance": 0,
+    "note": "edge case: very large; both on the open-ended band"
+  },
+  {
+    "calc": "ac_units",
+    "name": "More than 24 AC hours a day is rejected",
+    "inputs": {
+      "ac": "ac-split-1-5ton-inverter",
+      "hours": 30
+    },
+    "expected": {
+      "error": "hours_too_large"
+    },
+    "tolerance": 0,
+    "note": "a day has 24 hours (Engineer Reviewer, N16)"
+  },
+  {
+    "calc": "ac_units",
+    "name": "More than 31 days in a billing month is rejected",
+    "inputs": {
+      "ac": "ac-split-1-5ton-inverter",
+      "hours": 8,
+      "days": 400
+    },
+    "expected": {
+      "error": "days_too_large"
+    },
+    "tolerance": 0,
+    "note": "a billing month has at most 31 days"
+  },
+  {
+    "calc": "ac_bill_impact",
+    "name": "AC hours above 24 are rejected on the bill page too",
+    "inputs": {
+      "ac": "ac-split-1-5ton-inverter",
+      "hours": 25,
+      "other_units": 150
+    },
+    "expected": {
+      "error": "hours_too_large"
+    },
+    "tolerance": 0,
+    "note": "input range from ac_units"
   }
 ]

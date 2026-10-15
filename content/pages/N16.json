@@ -1,0 +1,327 @@
+{
+ "id": "N16",
+ "status": "publish",
+ "template": "tool",
+ "h1": "AC Bill Calculator Pakistan: What an AC Adds to Your Bill",
+ "author": "ali-ahmad",
+ "published": "2026-10-15",
+ "reviewed": "2026-10-15",
+ "calc": "ac_bill_impact",
+ "fields": [
+  {
+   "name": "ac",
+   "label": "Air conditioner",
+   "type": "appliance",
+   "default": "ac-split-1-5ton-inverter",
+   "custom": "Custom (enter average kW)",
+   "options": [
+    "ac-split-1ton-inverter",
+    "ac-split-1-5ton-inverter",
+    "ac-split-2ton-inverter",
+    "ac-split-1ton-non-inverter",
+    "ac-split-1-5ton-non-inverter",
+    "ac-split-2ton-non-inverter"
+   ],
+   "hint": "Pick your AC size and type. Each preset uses a planning average draw, below the rated input."
+  },
+  {
+   "name": "avg_kw",
+   "label": "Average draw",
+   "unit": "kW",
+   "placeholder": "Only for Custom",
+   "hint": "Used only with Custom: the average kW your AC draws over an hour, for example from an energy meter."
+  },
+  {
+   "name": "hours",
+   "label": "AC hours a day",
+   "unit": "h",
+   "default": 8,
+   "hint": "How many hours the AC runs on a typical day."
+  },
+  {
+   "name": "other_units",
+   "label": "Units a month without the AC",
+   "unit": "units",
+   "default": 180,
+   "hint": "Your usual bill before the AC season, for example a spring month on the bill's twelve-month history."
+  },
+  {
+   "name": "protected",
+   "label": "Protected consumer",
+   "type": "checkbox",
+   "default": true,
+   "hint": "Tick if every one of your last six bills was within the protected unit limit; the bill usually prints the category."
+  },
+  {
+   "name": "sanctioned_kw",
+   "label": "Sanctioned load",
+   "unit": "kW",
+   "default": "@default_sanctioned_kw",
+   "hint": "The kW printed on the bill; most homes are one to five. It sets the fixed charge."
+  },
+  {
+   "name": "days",
+   "label": "AC days in the billing month",
+   "unit": "days",
+   "default": "@days_per_month",
+   "advanced": true,
+   "hint": "Days the AC runs in the billing month."
+  },
+  {
+   "name": "period",
+   "label": "Billing quarter for QTA",
+   "type": "select",
+   "options_from": "qta_periods",
+   "default": "2026-09..2026-11",
+   "advanced": true,
+   "hint": "The quarterly tariff adjustment depends on the quarter the bill falls in."
+  },
+  {
+   "name": "fc_surcharge_per_unit",
+   "label": "FC surcharge",
+   "unit": "Rs per unit",
+   "default": "@data.tariff.addons_secondary.fc_surcharge_per_unit.value",
+   "advanced": true,
+   "hint": "Financing cost surcharge per unit, from your bill. Secondary-source default; change it if your bill differs."
+  },
+  {
+   "name": "fpa_per_unit",
+   "label": "FPA / FCA",
+   "unit": "Rs per unit",
+   "placeholder": "From your bill (FPA / FCA)",
+   "advanced": true,
+   "hint": "Monthly fuel price adjustment, positive or negative, from the bill. Leave blank if you do not know it. Protected consumers do not pay it."
+  },
+  {
+   "name": "gst_pct",
+   "label": "GST",
+   "unit": "%",
+   "default": "@data.tariff.addons_secondary.gst_pct.value",
+   "advanced": true,
+   "hint": "Sales tax applied to the bill subtotal."
+  }
+ ],
+ "outputs": [
+  {
+   "key": "extra_rs",
+   "label": "Extra on your bill a month",
+   "spec": "rs"
+  },
+  {
+   "key": "after_rs",
+   "label": "Bill with the AC",
+   "spec": "rs"
+  },
+  {
+   "key": "before_rs",
+   "label": "Bill without the AC",
+   "spec": "rs"
+  },
+  {
+   "key": "ac_units",
+   "label": "AC units a month",
+   "spec": "int"
+  },
+  {
+   "key": "rs_per_ac_unit",
+   "label": "Real cost of each AC unit",
+   "spec": "rs2"
+  },
+  {
+   "key": "protected_lost",
+   "label": "Protected status lost",
+   "spec": "yesno"
+  },
+  {
+   "key": "lock_extra_rs",
+   "label": "Penalty on the next bills without the AC",
+   "spec": "rs"
+  }
+ ],
+ "answer": "A {{out.ac_name|raw}} running {{in.hours|int}} hours a day adds about {{out.ac_units|int}} units a month. For a protected home on {{in.other_units|int}} units that raises the bill from {{out.before_rs|rs}} to {{out.after_rs|rs}}, {{out.extra_rs|rs}} more, because every unit moves to the unprotected {{out.after_rate|rs2}} rate. Losing protection then costs at least {{out.lock_extra_rs|rs}} over the next {{out.lock_months|int}} bills.",
+ "how": "AC: {{out.avg_kw|2}} kW × {{out.hours}} hours = {{out.daily_units|1}} units a day; {{out.daily_units|1}} units × {{out.days}} days = {{out.ac_units|int}} units a month. Without the AC: {{out.other_units}} units on the {{out.before_category|raw}} tariff = {{out.before_rs|rs}}. With the AC: {{out.total_units|int}} units on the {{out.after_category|raw}} tariff (top slab rate {{out.after_rate|rs2}} per unit) = {{out.after_rs|rs}}, including fixed charge, surcharges and GST; an FPA counts only if you enter it. Extra: {{out.after_rs|rs}} − {{out.before_rs|rs}} = {{out.extra_rs|rs}}; {{out.extra_rs|rs}} ÷ {{out.ac_units|int}} AC units = {{out.rs_per_ac_unit|rs2}} for each unit the AC uses. Protection penalty: {{out.lock_months|int}} bills × {{out.lock_per_month|rs}} = {{out.lock_extra_rs|rs}}.",
+ "key_facts": [
+  "What an AC adds to a Pakistani electricity bill is the bill with the AC minus the bill without it, not the AC's units × one slab rate, because the slab the whole home reaches sets the rate of every unit.",
+  "A {{out.ac_name|raw}} running {{in.hours|int}} hours a day for {{out.days|int}} days uses about {{out.ac_units|int}} units a month.",
+  "A protected home on {{in.other_units|int}} units pays about {{out.before_rs|rs}}; adding that AC takes it to {{out.total_units|int}} units at the unprotected {{out.after_rate|rs2}} rate, about {{out.after_rs|rs}}, so each AC unit really costs {{out.rs_per_ac_unit|rs2}}.",
+  "One month above {{out.protected_limit|int}} units ends protected status: the next {{out.lock_months|int}} bills are charged at unprotected rates even without the AC, at least {{out.lock_extra_rs|rs}} more in this example.",
+  "An unprotected home on {{ex.1.in.other_units|int}} units pays about {{ex.1.out.extra_rs|rs}} more a month for the same AC, {{ex.1.out.rs_per_ac_unit|rs2}} for each AC unit, because the total moves from the {{ex.1.out.before_rate|rs2}} slab to the {{ex.1.out.after_rate|rs2}} slab."
+ ],
+ "formula": {
+  "text": "Extra = Bill(other units + AC units) − Bill(other units); AC units = kW_avg × h × days",
+  "lines": [
+   "Bill(units) = energy charge of the slab reached + fixed charge per sanctioned kW + FC surcharge + QTA + FPA, then GST (the electricity bill calculator's method)",
+   "kW_avg = the AC's average draw over an hour; h = AC hours a day; days = AC days in the month",
+   "A protected home whose total goes over the protected limit is billed at unprotected rates",
+   "Penalty = protected months × (Bill of the other units at unprotected rates − Bill of the other units at protected rates)"
+  ]
+ },
+ "sections": [
+  {
+   "h2": "How much will an AC increase my electricity bill?",
+   "p": [
+    "Take the bill without the AC and the bill with it, and subtract. With the defaults, a {{out.ac_name|raw}} running {{in.hours|int}} hours a day adds {{out.ac_units|int}} units to a home that used {{in.other_units|int}}. The bill goes from {{out.before_rs|rs}} to {{out.after_rs|rs}}, which is {{out.extra_rs|rs}} more a month, or {{out.rs_per_ac_unit|rs2}} for each unit the AC uses.",
+    "That is far above the {{out.after_rate|rs2}} slab rate, because the AC does not only add its own units: it re-prices the units the home was already using. An estimate that multiplies the AC's units by one rate misses this, so it reads too low exactly when it matters."
+   ]
+  },
+  {
+   "h2": "Why the AC pushes you into a higher slab",
+   "p": [
+    "On the unprotected domestic tariff every unit is charged at the rate of the slab the monthly total reaches. An unprotected home on {{ex.1.in.other_units|int}} units pays {{ex.1.out.before_rate|rs2}} per unit; with the AC it reaches {{ex.1.out.total_units|int}} units and pays {{ex.1.out.after_rate|rs2}} on all of them. The bill rises by {{ex.1.out.extra_rs|rs}}, {{ex.1.out.rs_per_ac_unit|rs2}} for each AC unit.",
+    "The fixed charge per sanctioned kW also rises with the slab, and the per-unit surcharges and GST grow with the units, so the calculator prices the whole bill twice rather than adding one line."
+   ]
+  },
+  {
+   "h2": "Protected consumers: the six-month cost of one hot month",
+   "p": [
+    "A home is protected only while each of its last {{out.lock_months|int}} bills stayed within {{out.protected_limit|int}} units. A single AC month above that limit moves the home to unprotected rates, and it stays there for the next {{out.lock_months|int}} bills even after the AC is switched off.",
+    "With the defaults the penalty on those later bills is {{out.lock_per_month|rs}} a month, {{out.lock_extra_rs|rs}} in all, on top of the {{out.extra_rs|rs}} extra in the AC month itself. It is a floor: summer bills with the AC running cost more. If your usage sits just under the limit, fewer AC hours can keep protection, as the third worked example shows."
+   ]
+  },
+  {
+   "h2": "How to bring the AC's cost down",
+   "p": [
+    "Fewer units in the peak months is what counts: a higher set point, closed doors and curtains, and switching off when the room is empty. An inverter AC uses fewer units than a non-inverter AC of the same tonnage; the inverter AC payback calculator shows how long the price gap takes to recover, and the temperature saving calculator shows what a higher set point saves."
+   ]
+  }
+ ],
+ "examples": [
+  {
+   "inputs": {},
+   "title": "Protected home on {{in.other_units|int}} units adds a {{out.ac_name|raw}}",
+   "text": "{{out.avg_kw|2}} kW × {{in.hours|int}} h × {{out.days|int}} days = {{out.ac_units|int}} AC units, {{out.total_units|int}} in all. The bill goes from {{out.before_rs|rs}} (protected) to {{out.after_rs|rs}} (unprotected), {{out.extra_rs|rs}} more, and the next {{out.lock_months|int}} bills cost at least {{out.lock_extra_rs|rs}} more in all."
+  },
+  {
+   "inputs": {
+    "other_units": 250,
+    "protected": false
+   },
+   "title": "Unprotected home on {{in.other_units|int}} units",
+   "text": "The same {{out.ac_units|int}} AC units take the home to {{out.total_units|int}} units, from the {{out.before_rate|rs2}} slab to the {{out.after_rate|rs2}} slab. The bill goes from {{out.before_rs|rs}} to {{out.after_rs|rs}}, {{out.extra_rs|rs}} more, {{out.rs_per_ac_unit|rs2}} for each AC unit."
+  },
+  {
+   "inputs": {
+    "other_units": 120,
+    "hours": 2,
+    "ac": "ac-split-1ton-inverter"
+   },
+   "title": "Short evenings with a {{out.ac_name|raw}} keep protection",
+   "text": "{{in.hours|int}} hours a day add {{out.ac_units|int}} units, so the home stays at {{out.total_units|int}} units, within the protected limit. The bill goes from {{out.before_rs|rs}} to {{out.after_rs|rs}}, only {{out.extra_rs|rs}} more, and there is no penalty on later bills."
+  },
+  {
+   "inputs": {
+    "other_units": 300,
+    "protected": false,
+    "ac": "ac-split-1-5ton-non-inverter"
+   },
+   "title": "{{out.ac_name|raw}} in a home on {{in.other_units|int}} units",
+   "text": "A non-inverter AC averages {{out.avg_kw|2}} kW, so {{in.hours|int}} hours a day add {{out.ac_units|int}} units and the home reaches {{out.total_units|int}}. The bill goes from {{out.before_rs|rs}} to {{out.after_rs|rs}}, {{out.extra_rs|rs}} more a month."
+  }
+ ],
+ "table": {
+  "caption": "What a {{out.ac_name|raw}} running {{in.hours|int}} hours a day adds to the monthly bill, by usage without the AC ({{in.sanctioned_kw|int}} kW, default FC surcharge, QTA and GST, FPA not included)",
+  "rows": [
+   {
+    "other_units": 100
+   },
+   {},
+   {
+    "other_units": 200
+   },
+   {
+    "other_units": 200,
+    "protected": false
+   },
+   {
+    "other_units": 300,
+    "protected": false
+   },
+   {
+    "other_units": 400,
+    "protected": false
+   }
+  ],
+  "columns": [
+   {
+    "label": "Units without the AC",
+    "tpl": "{{out.other_units|int}} ({{out.before_category|raw}})"
+   },
+   {
+    "label": "Bill without the AC",
+    "tpl": "{{out.before_rs|rs}}"
+   },
+   {
+    "label": "Bill with the AC",
+    "tpl": "{{out.after_rs|rs}}"
+   },
+   {
+    "label": "Extra a month",
+    "tpl": "{{out.extra_rs|rs}}"
+   },
+   {
+    "label": "Penalty on later bills",
+    "tpl": "{{out.lock_extra_rs|rs}}"
+   }
+  ]
+ },
+ "mistakes": [
+  "Multiplying the AC's units by your current slab rate. The AC moves the whole bill to a higher slab, so the real extra is the difference of two full bills.",
+  "Forgetting the protected limit. One month over it costs the protected rates for the following bills too, not just that month.",
+  "Using a summer bill as the usage without the AC. Take a month when the AC was off, or the AC is counted twice.",
+  "Taking the AC's rated input as its average draw. An inverter AC averages well below its label once the room is cool."
+ ],
+ "safety": "A new AC needs its own circuit with the right cable and MCB, and the home may need a higher sanctioned load. Have a licensed electrician check the wiring before installing it.",
+ "faq": [
+  {
+   "q": "How much does a 1.5 ton inverter AC add to the electricity bill?",
+   "a": "Running {{in.hours|int}} hours a day it adds about {{out.ac_units|int}} units a month. For a protected home on {{in.other_units|int}} units that is {{out.extra_rs|rs}} more a month; for an unprotected home on {{ex.1.in.other_units|int}} units, {{ex.1.out.extra_rs|rs}} more."
+  },
+  {
+   "q": "Why is my bill so high after I started using the AC?",
+   "a": "Because the AC pushes the whole month into a higher slab or off the protected tariff, and every unit is then charged at the higher rate. In the default example each AC unit really costs {{out.rs_per_ac_unit|rs2}}."
+  },
+  {
+   "q": "Will using an AC make me lose protected status?",
+   "a": "Yes, if the month's total goes over {{out.protected_limit|int}} units. Then the next {{out.lock_months|int}} bills are charged at unprotected rates even without the AC; in the default example that costs at least {{out.lock_extra_rs|rs}} more."
+  },
+  {
+   "q": "How many hours can I run an AC and stay protected?",
+   "a": "Enter your usual units and lower the AC hours until the Protected status lost result shows No. A home on {{ex.2.in.other_units|int}} units stays protected with a {{ex.2.out.ac_name|raw}} for {{ex.2.in.hours|int}} hours a day."
+  },
+  {
+   "q": "Is this the same as the AC running cost per month?",
+   "a": "No. The running cost is the AC's units × one rate. This calculator compares your whole bill with and without the AC, so it includes the slab jump, the fixed charge, surcharges and GST."
+  },
+  {
+   "q": "Does it work for LESCO, IESCO, MEPCO and other DISCOs?",
+   "a": "Yes. Every DISCO uses the same national domestic tariff; only the FPA differs, and you can enter it from your own bill under Advanced settings."
+  }
+ ],
+ "related": [
+  "E5",
+  "F1",
+  "N10",
+  "N9",
+  "E4",
+  "N4"
+ ],
+ "next": "N10",
+ "literal_numbers": [
+  "1.5 ton",
+  "1 ton"
+ ],
+ "sources": [
+  {
+   "label": "NEPRA tariff decision and SRO for A-1 domestic consumers (tariff PDF)",
+   "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf"
+  },
+  {
+   "label": "Daily Pakistan: protected and non-protected rates and the six-month rule (2026)",
+   "url": "https://en.dailypakistan.com.pk/03-Aug-2026/protected-vs-non-protected-electricity-rates-in-pakistan-for-200-units-2026-update"
+  },
+  {
+   "label": "Wattlyst methodology and default values",
+   "url": "/methodology/"
+  }
+ ]
+}

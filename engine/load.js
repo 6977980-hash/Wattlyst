@@ -22,8 +22,9 @@ export const ac_units = calculator((i, d) => {
   } else {
     avg_kw = pos(i, 'avg_kw');
   }
-  const hours = nonneg(i, 'hours');
-  const days = nonneg(i, 'days', dflt(d, 'days_per_month'));
+  // A day has 24 hours and a billing month at most 31 days (Engineer Reviewer, N16).
+  const hours = num(i, 'hours', { min: 0, max: 24 });
+  const days = num(i, 'days', { def: dflt(d, 'days_per_month'), min: 0, max: 31 });
   const daily_units = avg_kw * hours;
   Object.assign(out, { avg_kw, hours, days, daily_units, monthly_units: daily_units * days });
   if (has(i, 'tariff')) {
