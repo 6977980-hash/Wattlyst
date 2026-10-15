@@ -114,3 +114,12 @@ export const backup_compare = calculator((i, d) => {
     options,
   };
 });
+
+/** Data with every N7 equipment range at one end (low or high), for the uncertainty range of the UPS or generator. */
+export function backupAtEnd(d, e) {
+  const one = (o) => ({ ...o, low: o[e], high: o[e] });
+  const bp = d.backup_prices;
+  const up = bp.generator_upkeep;
+  return { ...d, component_prices: { items: d.component_prices.items.map(one) },
+    backup_prices: { ...bp, ups: bp.ups.map(one), generators: bp.generators.map(one), generator_upkeep: { ...up, oil_rs_per_l_low: up[`oil_rs_per_l_${e}`], oil_rs_per_l_high: up[`oil_rs_per_l_${e}`] } } };
+}

@@ -1,6 +1,27 @@
 # Progress
 
-## Handoff for next phase (after SERP ideas 1, 2 and 4) — written by the growth thread, 2026-10-15
+## Handoff for next phase (after the Home Power Decision Engine) — written by the decision engine thread, 2026-10-15
+
+Owner approved idea 7 of their pasted suggestions ("han", 15 Oct 2026): the homepage planner now also picks a setup. Plugin v0.8.12, PR #27. Formula and numbers live only in `specs/formulas.md` ("Home Power Decision Engine" bullet in "Owner-approved tools") and the `home_decision` cases at the end of `specs/calculator-test-cases.json`.
+
+**What is where**
+- Engine: `engine/decision.js` `home_decision` (H1's calc now; runs `home_plan` unchanged, then prices on-grid solar, hybrid and UPS/generator). Helpers it uses live with their data: `priceRange` and `inverterAt` in `engine/prices.js`, `backupAtEnd` in `engine/backup.js`, `bill_total` in `engine/bill.js`. Registered in `engine/index.js`, `ENGINE_MODULES` and `MODULE_DATA.decision` in `tools/build.js`.
+- Data: `data/defaults.json` `decision_years`, `hybrid_bank_v` (engineer_confirm); `data/component-prices.json` 4 kW hybrid row `export_capable: false` (off-grid units, skipped); browser copy of `component_prices` and `solar_prices` now carries `n_sources` (and `export_capable`).
+- Page: `content/pages/H1.json` (fields `budget_rs`, `years`; first six outputs; `result_table` key `setups`; answer, key fact, step-seven paragraph, FAQ "Which is better..."; `how`/`how_ur` end with the engine sentences `ongrid_line`, `hybrid_line`, `standby_line`, `decision_line`).
+- Render: in the split (home) form the result table sits after `.wl-out`, under the inputs (`.wl-tool-split>.wl-rtable` in `assets/css/wattlyst-home.css`); `Wattlyst_Render::data_used()` prints "Data and prices used" with dates from `data_checked` (`dataChecked` branch `decision` in `tools/build.js`).
+- Tests: `tests/calc-text.test.js` "every tool page gives the same default result with the browser copy of the data" (it caught the `n_sources` bug: every live D14/N3 result showed the low-confidence notice).
+
+**Do not touch / watch**
+- JS budget: H1 now has under 200 bytes headroom in the 30 KB test (tool script + base + `decision.js` + loads list). The test still ignores nested imports; the real homepage chain grew by about 20 KB uncompressed (decision, backup, prices, extra). Put new decision code in `prices.js`/`backup.js` helpers or shrink first.
+- The `*_line` sentences are English even in Roman Urdu mode (engine-built so edge states read right).
+- When refreshing `component-prices.json`, mark any hybrid row whose models cannot export with `export_capable: false`.
+
+**Open to-dos**
+- [ENGINEER] hybrid inverter premium and export-capable rows, `hybrid_bank_v` 48 V, battery lives.
+- Not counted (page says so): installation of UPS/generator, leftover battery value, price changes over the years.
+- Everything open from the earlier handoffs below still stands.
+
+## Earlier handoff (after SERP ideas 1, 2 and 4) — written by the growth thread, 2026-10-15
 
 Owner approved all four SERP ideas from the growth plan ("4ron idea cover krny hain"). Idea 3 (DISCO option) needed nothing: the eleven DISCO bill calculators F2 to F12 have been live since Phase 3. Plugin v0.8.11. No formula changed.
 
@@ -303,6 +324,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | 2026-10-13 | Phase 3: Wave 1, 24 pages live (table below) + 7 pillar hubs; new engine tools (generator for AC/pump, home load, add-an-AC check, AC units, solar for AC / from loads / for 12 V battery, UPS backup, wire/breaker/cable sizing with data/cable-ampacity.json), 245 spec cases, browser field types (appliance, loads, checkbox), plugin v0.4.0 | done: 436 tests green, zero orphan pages (link test), Engineer Reviewer PASS after fixes, Lighthouse mobile >= 95 on every live page (most 99-100), calculators checked in a headless browser on local WP | PR phase-3 |
 | 2026-10-14 | Phase 4: Wave 2, 39 pages live (table below) incl. N1 N2 N3 N4 N5 N7, D14 solar price, Home Power Planner on the homepage (load -> inverter -> battery -> solar -> net billing -> generator), Save as PDF / WhatsApp / copy link, Roman Urdu result toggle, stripped dist/ JS, data/solar-prices.json + data/inverter-codes.json, plugin v0.5.0 | done: tests green, Engineer Reviewer pass, Lighthouse mobile 98-100 on sampled templates, every calculator checked in a headless browser on local WP | PR phase-4 |
 | 2026-10-15 | N16 AC bill calculator (owner approved the SERP idea): what one AC adds to the whole bill, slab jump, protected-status loss and the penalty on the next bills; engine/acbill.js, 7 spec cases; E5 hands the "ac bill calculator" keywords to N16; plugin v0.8.6 | done: tests green, Engineer Reviewer pass after fixes (tariff checked date on the page, AC hours ≤ 24 and days ≤ 31 for E5 too, rate wording), Lighthouse mobile 98/100/100/100 on local WP | #21 |
+| 2026-10-15 | Home Power Decision Engine on H1 (owner: "han"): on-grid vs hybrid vs UPS/generator, budget, net over years, data dates; D14/N3 live price-notice fix; plugin v0.8.12 | done: tests green, Engineer Reviewer fixes applied, local WP checked | PR #27 |
 | 2026-10-15 | SERP ideas (owner: "4ron idea cover krny hain"): Bill Index units table 50 to 1,000 with lifeline line, engine numbers in four titles, Inverex Nitrox error codes; idea 3 already live as F2-F12; plugin v0.8.11 | done: tests green, Engineer Reviewer fixes applied (caption kW, lifeline line, F16/F28/F32 safety), local WP checked | PR (this thread) |
 | 2026-10-15 | Growth phase (owner: "next phase new thread"): IndexNow now announces changed pages in one batch after each sync (all live pages on the first run), owner growth plan with outreach and forum drafts in a Claude Doc; plugin v0.8.10 | done: tests green, local WP checked (stubbed IndexNow), no formula or page change | #25 |
 | 2026-10-15 | Net billing group B (owner: "baqi fixes pe kaam kro"): Home Power Planner saving on the whole bill (fixed charge, FC surcharge, GST; export credit set against the bill after GST), energy-charge saving shown under it; plugin v0.8.9 | done: tests green, Engineer Reviewer, local WP checked | PR (this thread) |

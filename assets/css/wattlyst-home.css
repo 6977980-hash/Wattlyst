@@ -40,6 +40,9 @@
 /* Planner: heading with the three steps, then inputs and the plan side by side on wide screens. */
 .wl-planner-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.5rem 1.5rem;margin:0 0 1rem}
 .wl-page .wl-planner-head h2{margin:0;font-size:1.6rem}
+.wl-data-used{margin:1rem 0 0;font-size:.9rem;color:var(--wl-muted)}
+.wl-page .wl-data-used h2{margin:0 0 .4rem;font-size:1rem}
+.wl-data-used ul{margin:0;padding-left:1.1rem}
 .wl-page .wl-steps{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.4rem 1rem;counter-reset:wl-s}
 .wl-steps li{counter-increment:wl-s;display:flex;align-items:center;gap:.45rem;font-size:.9rem;font-weight:600;color:var(--wl-muted)}
 .wl-steps li::before{content:counter(wl-s);display:inline-grid;place-items:center;width:1.6rem;height:1.6rem;border-radius:50%;background:var(--wl-accent);color:#fff;font-size:.8rem;font-weight:800}
@@ -49,6 +52,8 @@
 .wl-tool-split{display:grid;grid-template-columns:minmax(0,1fr) 21rem;gap:0 1.75rem;align-items:start}
 .wl-out{position:sticky;top:var(--wl-stick);padding:1.1rem;border-radius:16px;background:var(--wl-bg-soft);border:1px solid var(--wl-line)}
 .wl-out .wl-error{margin-top:.6rem}
+.wl-tool-split>.wl-rtable{grid-column:1;margin-top:1.5rem}
+.wl-tool-split .wl-rtable td{white-space:normal}
 .wl-out .wl-results{grid-template-columns:repeat(2,minmax(0,1fr));gap:.55rem;margin-top:.65rem}
 .wl-out .wl-result{padding:.65rem .75rem}
 .wl-out .wl-result:not(:first-child){background:#fff}

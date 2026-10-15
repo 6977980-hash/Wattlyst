@@ -7,7 +7,7 @@ import { calculator, CalcError, has, pos, num, pick, dflt } from './core.js';
  * interpolated linearly by kW and divided by the watts, so the price never falls as the size rises when the
  * listed sizes do not (audit WL-11); below the smallest or above the largest listed size the nearest end's Rs/W.
  */
-function priceRange(d, type, kwp) {
+export function priceRange(d, type, kwp) {
   const rows = (d?.solar_prices?.systems || []).filter((r) => r.type === type && r.kw > 0).sort((a, b) => a.kw - b.kw);
   if (!rows.length) throw new CalcError('price_data_missing', 'type');
   const perW = (r) => ({ lo: r.low_rs / (r.kw * 1000), hi: r.high_rs / (r.kw * 1000) });
@@ -23,6 +23,18 @@ function priceRange(d, type, kwp) {
   const t = (kwp - a.kw) / (b.kw - a.kw);
   const w = kwp * 1000;
   return { lo: (a.low_rs + (b.low_rs - a.low_rs) * t) / w, hi: (a.high_rs + (b.high_rs - a.high_rs) * t) / w, range_between_kw: [a.kw, b.kw], ...weak(a, b) };
+}
+
+/**
+ * Middle price of an inverter type at kW from the export-capable rows: exact size, linear between listed sizes,
+ * nearest end's Rs per kW outside. Returns [price, a row used rests on one source, kW above the list].
+ */
+export function inverterAt(items, category, kw) {
+  const rows = items.filter((x) => x.category === category && x.export_capable !== false).map((x) => ({ kw: parseFloat(x.size), rs: (x.low + x.high) / 2, w: (x.n_sources ?? 0) < 2 })).sort((a, b) => a.kw - b.kw);
+  const a = rows.filter((r) => r.kw <= kw).pop() || rows[0];
+  const b = rows.find((r) => r.kw > kw);
+  const v = !b || kw <= a.kw ? (a.rs / a.kw) * kw : a.rs + ((b.rs - a.rs) * (kw - a.kw)) / (b.kw - a.kw);
+  return [v, a.w || Boolean(b?.w && kw > a.kw), kw > rows[rows.length - 1].kw];
 }
 
 /**

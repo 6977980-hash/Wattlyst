@@ -9,7 +9,7 @@
  "primary_keyword": "home power planner (brand)",
  "wave": 1,
  "status": "publish",
- "reviewed": "2026-10-13",
+ "reviewed": "2026-10-15",
  "published": "2026-10-13",
  "author": "ali-ahmad",
  "related": [
@@ -587,6 +587,7 @@
     "h2": "What the planner does, step by step",
     "p": [
      "Step one adds up the appliances you tick: the watts that run at once and the units they use in a day. Step two sizes the inverter for that running load with a safety margin, and step four can raise it so the inverter accepts the solar array. Step three sizes the battery for only the load you want to keep on during loadshedding, for the hours you choose. Step four sizes the solar array for your daily units and your city's sun. Step five splits a month's solar between what you use while the sun is up and what you export, and compares the bill with and without net billing: the energy charge alone, and the whole bill with fixed charge, surcharges and GST. Step six sizes a generator for the whole list, in case you want one for long outages.",
+     "Step seven is the decision. It prices three setups with the dated price data behind the solar price and backup cost calculators: on-grid solar (the array above, installed), hybrid solar (the same array with the battery bank and a hybrid inverter) and a UPS or petrol generator for the backup load only. Each gets a price range, the backup it gives, the monthly bill saving or running cost, and the net cost over the years you pick: price plus battery replacements plus running cost minus bill saving. The cheapest net setup that gives your backup hours and fits your budget is recommended; leave the budget blank for no limit.",
      "Every step is a calculator on this site. Open any of them from the task cards below to change its assumptions, see worked examples and read the formula."
     ]
    },
@@ -611,6 +612,10 @@
     "a": "Yes. Press the plan button, then use Save as PDF to print or keep the page, WhatsApp to send the sizes and a link to your installer, or copy the link: it carries your appliance list, so whoever opens it sees the same plan."
    },
    {
+    "q": "Which is better for my home: solar, hybrid solar or a UPS?",
+    "a": "It depends on the backup you need, your bill and your budget, so the planner compares all three for your own list. For the example home, on-grid solar costs Rs 363,750 to Rs 602,000 and saves Rs 13,331 a month but gives no backup, because an on-grid inverter switches off in a power cut. Hybrid solar adds 1 lithium pack of 5.12 kWh (51.2 V) and a grid-tie hybrid inverter that can still export, and costs Rs 578,750 to Rs 912,000. A UPS 1 kVA + 2 tubular batteries costs Rs 115,239 to Rs 199,499 and costs about Rs 5,770 a month to run (a UPS through the bill, a generator in petrol and oil). Over 10 years the recommended setup is Hybrid solar 3.51 kW + 1 lithium pack of 5.12 kWh (51.2 V). Prices are ranges from dated data and the middle price decides; solar prices include installation, UPS and generator prices are equipment only, and a battery replaced near the end of the period is counted in full."
+   },
+   {
     "q": "How does the planner work out the saving on the whole bill?",
     "a": "It prices 396 units the way the bill calculator does: energy charge, fixed charge for your sanctioned load, FC surcharge and GST, for Rs 20,448. With solar you import 198 units, billed the same way at Rs 8,931, and the 223 exported units earn Rs 1,813, set against that bill, leaving Rs 7,117. The whole-bill saving is Rs 13,331, of which Rs 10,534 is energy charge; the rest is the lower fixed charge band, surcharge and GST. QTA and FPA change month to month and are left at zero here, and the planner assumes GST is charged on the imported units before the export credit, the cautious reading. The buyback rate is NEPRA's national average energy purchase price for CY 2026; it stays editable because NEPRA sets it again each year. Agreements signed before 9 February 2026 stay on the old net-metering terms until they expire, unless the system is enlarged, which moves it to net billing."
    },
@@ -633,6 +638,7 @@
   ],
   "key_facts": [
    "The planner carries one appliance list through the whole chain: running load, inverter, battery, solar, net billing and generator, each with the formula of its own calculator, so the sizes never contradict each other.",
+   "The decision step compares on-grid solar, hybrid solar with a battery and a UPS or petrol generator for the same home: price range, backup time, bill saving and running cost a month, and the net cost over the years you choose. It recommends the setup with the lowest net cost that gives the backup you asked for and fits your budget.",
    "Inverter size = running watts × 1.25, raised if needed so the solar array is at most 1.3 times it; battery Ah = backup watts × hours ÷ (bank volts × usable depth of discharge × inverter efficiency); solar kW = the larger of daily units ÷ city yield and running watts ÷ performance ratio, with net billing counting the array only up to the sanctioned load; generator kVA = the larger of running × 1.25 and the starting peak, ÷ 0.8.",
    "Default values (inverter efficiency 85% UPS and 90% hybrid, usable battery capacity 50% tubular and 90% lithium, power factor 0.8) are listed on the methodology page and editable in each calculator.",
    "Pakistan tariff slabs, peak sun hours by city and appliance wattages live in dated data files; the net-billing buyback rate is NEPRA's national average energy purchase price for CY 2026 under the NEPRA (Prosumer) Regulations 2026, notified 9 Feb 2026, and stays editable.",
@@ -658,11 +664,15 @@
    }
   ],
   "tool": {
-   "calc": "home_plan",
-   "module": "planner.js",
+   "calc": "home_decision",
+   "module": "decision.js",
    "data_keys": [
     "tariff",
-    "cities"
+    "cities",
+    "solar_prices",
+    "generator_fuel",
+    "component_prices",
+    "backup_prices"
    ],
    "appliances": {
     "ceiling-fan-ac": {
@@ -1823,6 +1833,21 @@
      ]
     },
     {
+     "name": "budget_rs",
+     "label": "Budget",
+     "unit": "Rs",
+     "placeholder": "No limit",
+     "hint": "The most you want to spend now. Leave it blank to compare without a limit."
+    },
+    {
+     "name": "years",
+     "label": "Years to compare",
+     "unit": "years",
+     "default": 10,
+     "advanced": true,
+     "hint": "The net cost adds the price, battery replacements, running cost and bill saving over this many years."
+    },
+    {
      "name": "battery_v",
      "label": "Battery bank voltage",
      "unit": "V",
@@ -1871,6 +1896,48 @@
    ],
    "fixed_inputs": {},
    "outputs": [
+    {
+     "key": "decision",
+     "label": "Recommended setup",
+     "label_ur": "Tajweez kardah setup",
+     "spec": "raw",
+     "value": "Hybrid solar 3.51 kW + 1 lithium pack of 5.12 kWh (51.2 V)"
+    },
+    {
+     "key": "decision_price",
+     "label": "Price range",
+     "label_ur": "Qeemat ki range",
+     "spec": "raw",
+     "value": "Rs 578,750 to Rs 912,000"
+    },
+    {
+     "key": "decision_backup",
+     "label": "Backup",
+     "label_ur": "Backup",
+     "spec": "raw",
+     "value": "4 h of 500 W from the battery"
+    },
+    {
+     "key": "decision_saving_rs",
+     "label": "Bill saving a month",
+     "label_ur": "Mahana bill ki bachat",
+     "spec": "rs",
+     "value": "Rs 13,331"
+    },
+    {
+     "key": "decision_running_rs",
+     "label": "Running cost a month",
+     "label_ur": "Mahana chalane ka kharcha",
+     "spec": "rs",
+     "value": "Rs 0"
+    },
+    {
+     "key": "decision_net",
+     "label": "Net over the years compared",
+     "label_ur": "Muqarrar saalon mein kul hisab",
+     "spec": "raw",
+     "value": "Rs 591,834 saved"
+    },
     {
      "key": "running_w",
      "label": "Running load",
@@ -1958,14 +2025,107 @@
     }
    ],
    "how": {
-    "tpl": "Your list runs {{out.running_w|int}} W at once ({{out.peak_w|int}} W when the biggest motor starts) and uses {{out.daily_kwh|1}} units a day, {{out.monthly_units|int}} a month. Battery: {{in.backup_w}} W × {{in.backup_hours|1}} h = {{out.backup_kwh|2}} kWh ÷ ({{out.battery_v}} V × {{out.battery_dod|pct}} usable × {{d.inverter_eff_hybrid|pct}} inverter) = {{out.battery_ah|up}} Ah. Solar: energy {{out.daily_kwh|1}} kWh ÷ {{out.city_yield|1}} kWh per kW per day = {{out.solar_kw_energy|2}} kW; midday power {{out.running_w|int}} W ÷ {{out.pr|2}} performance ratio = {{out.solar_kw_power|2}} kW; the larger, {{out.solar_kw|2}} kW, needs {{out.panels|int}} panels of {{out.panel_w|int}} W = {{out.installed_kw|2}} kW making about {{out.monthly_solar_kwh|int}} units a month. Inverter: the larger of {{out.running_w|int}} W × {{in.margin|2}} = {{out.inverter_kw_load|2}} kW and the {{out.installed_kw|2}} kW solar array ÷ {{out.dc_ac_ratio_max|1}} = {{out.inverter_kw_array|2}} kW (an inverter takes panels up to about {{out.dc_ac_ratio_max|1}} times its rating, so it must be at least the array divided by that), so {{out.inverter_kw|up1}} kW. Net billing counts an array up to your {{out.sanctioned_kw|1}} kW sanctioned load: {{out.net_billing_panels|int}} panels, {{out.net_billing_kw|2}} kW, about {{out.net_billing_solar_kwh|int}} units a month. You use {{out.self_used_units|int}} of those units yourself, export {{out.export_units|int}} at {{out.buyback_rs|rs2}} and import {{out.import_units|int}}; energy charge {{out.bill_before_rs|rs}} before solar, {{out.bill_after_rs|rs}} after, saving {{out.saving_rs|rs}} a month on the energy charge alone. Whole bill (fixed charge, FC surcharge, GST {{out.gst_pct|int}}%): {{out.full_before_rs|rs}} before, {{out.full_import_rs|rs}} for the imported units, less {{out.export_credit_rs|rs}} export credit, leaves {{out.full_after_rs|rs}} to pay ({{out.full_carry_forward_rs|rs}} credit carried to next month), saving {{out.full_saving_rs|rs}} a month. Generator for the whole list: {{out.generator_kva|1}} kVA, next standard size {{out.generator_pick_kva|1}} kVA.",
-    "text": "Your list runs 2,085 W at once (2,535 W when the biggest motor starts) and uses 13.2 units a day, 396 a month. Battery: 500 W × 4 h = 2 kWh ÷ (24 V × 90% usable × 90% inverter) = 103 Ah. Solar: energy 13.2 kWh ÷ 4 kWh per kW per day = 3.3 kW; midday power 2,085 W ÷ 0.78 performance ratio = 2.67 kW; the larger, 3.3 kW, needs 6 panels of 585 W = 3.51 kW making about 421 units a month. Inverter: the larger of 2,085 W × 1.25 = 2.61 kW and the 3.51 kW solar array ÷ 1.3 = 2.7 kW (an inverter takes panels up to about 1.3 times its rating, so it must be at least the array divided by that), so 2.7 kW. Net billing counts an array up to your 4 kW sanctioned load: 6 panels, 3.51 kW, about 421 units a month. You use 198 of those units yourself, export 223 at Rs 8.13 and import 198; energy charge Rs 14,449 before solar, Rs 3,915 after, saving Rs 10,534 a month on the energy charge alone. Whole bill (fixed charge, FC surcharge, GST 18%): Rs 20,448 before, Rs 8,931 for the imported units, less Rs 1,813 export credit, leaves Rs 7,117 to pay (Rs 0 credit carried to next month), saving Rs 13,331 a month. Generator for the whole list: 3.3 kVA, next standard size 3.5 kVA.",
-    "tpl_ur": "Aap ki list ek waqt mein {{out.running_w|int}} W chalti hai (sab se bara motor start hone par {{out.peak_w|int}} W) aur roz {{out.daily_kwh|1}} units, mahine ke {{out.monthly_units|int}} units lagti hai. Battery: {{in.backup_w}} W × {{in.backup_hours|1}} h = {{out.backup_kwh|2}} kWh ÷ ({{out.battery_v}} V × {{out.battery_dod|pct}} qabil-e-istemal × {{d.inverter_eff_hybrid|pct}} inverter) = {{out.battery_ah|up}} Ah. Solar: energy {{out.daily_kwh|1}} kWh ÷ {{out.city_yield|1}} kWh fi kW roz = {{out.solar_kw_energy|2}} kW; dopahar ki power {{out.running_w|int}} W ÷ {{out.pr|2}} performance ratio = {{out.solar_kw_power|2}} kW; in mein bara, {{out.solar_kw|2}} kW, yani {{out.panel_w|int}} W ke {{out.panels|int}} panels = {{out.installed_kw|2}} kW, mahine ke taqreeban {{out.monthly_solar_kwh|int}} units. Inverter: {{out.running_w|int}} W × {{in.margin|2}} = {{out.inverter_kw_load|2}} kW aur {{out.installed_kw|2}} kW solar array ÷ {{out.dc_ac_ratio_max|1}} = {{out.inverter_kw_array|2}} kW mein jo bara ho (inverter apni rating se taqreeban {{out.dc_ac_ratio_max|1}} guna tak panels le sakta hai, is liye array ko is se taqseem kar ke kam az kam itna inverter chahiye), yani {{out.inverter_kw|up1}} kW. Net billing mein array aap ke {{out.sanctioned_kw|1}} kW sanctioned load tak gina jata hai: {{out.net_billing_panels|int}} panels, {{out.net_billing_kw|2}} kW, mahine ke taqreeban {{out.net_billing_solar_kwh|int}} units. In mein se {{out.self_used_units|int}} units khud istemal, {{out.export_units|int}} export {{out.buyback_rs|rs2}} par, {{out.import_units|int}} import; solar se pehle energy charge {{out.bill_before_rs|rs}}, baad mein {{out.bill_after_rs|rs}}, sirf energy charge par bachat {{out.saving_rs|rs}} mahana. Poora bill (fixed charge, FC surcharge, GST {{out.gst_pct|int}}%): pehle {{out.full_before_rs|rs}}, import units ka bill {{out.full_import_rs|rs}}, export credit {{out.export_credit_rs|rs}} minha kar ke baad mein {{out.full_after_rs|rs}} dena hai ({{out.full_carry_forward_rs|rs}} credit agle mahine), mahana bachat {{out.full_saving_rs|rs}}. Poori list ke liye generator: {{out.generator_kva|1}} kVA, agla standard size {{out.generator_pick_kva|1}} kVA.",
-    "text_ur": "Aap ki list ek waqt mein 2,085 W chalti hai (sab se bara motor start hone par 2,535 W) aur roz 13.2 units, mahine ke 396 units lagti hai. Battery: 500 W × 4 h = 2 kWh ÷ (24 V × 90% qabil-e-istemal × 90% inverter) = 103 Ah. Solar: energy 13.2 kWh ÷ 4 kWh fi kW roz = 3.3 kW; dopahar ki power 2,085 W ÷ 0.78 performance ratio = 2.67 kW; in mein bara, 3.3 kW, yani 585 W ke 6 panels = 3.51 kW, mahine ke taqreeban 421 units. Inverter: 2,085 W × 1.25 = 2.61 kW aur 3.51 kW solar array ÷ 1.3 = 2.7 kW mein jo bara ho (inverter apni rating se taqreeban 1.3 guna tak panels le sakta hai, is liye array ko is se taqseem kar ke kam az kam itna inverter chahiye), yani 2.7 kW. Net billing mein array aap ke 4 kW sanctioned load tak gina jata hai: 6 panels, 3.51 kW, mahine ke taqreeban 421 units. In mein se 198 units khud istemal, 223 export Rs 8.13 par, 198 import; solar se pehle energy charge Rs 14,449, baad mein Rs 3,915, sirf energy charge par bachat Rs 10,534 mahana. Poora bill (fixed charge, FC surcharge, GST 18%): pehle Rs 20,448, import units ka bill Rs 8,931, export credit Rs 1,813 minha kar ke baad mein Rs 7,117 dena hai (Rs 0 credit agle mahine), mahana bachat Rs 13,331. Poori list ke liye generator: 3.3 kVA, agla standard size 3.5 kVA."
+    "tpl": "Your list runs {{out.running_w|int}} W at once ({{out.peak_w|int}} W when the biggest motor starts) and uses {{out.daily_kwh|1}} units a day, {{out.monthly_units|int}} a month. Battery: {{in.backup_w}} W × {{in.backup_hours|1}} h = {{out.backup_kwh|2}} kWh ÷ ({{out.battery_v}} V × {{out.battery_dod|pct}} usable × {{d.inverter_eff_hybrid|pct}} inverter) = {{out.battery_ah|up}} Ah. Solar: energy {{out.daily_kwh|1}} kWh ÷ {{out.city_yield|1}} kWh per kW per day = {{out.solar_kw_energy|2}} kW; midday power {{out.running_w|int}} W ÷ {{out.pr|2}} performance ratio = {{out.solar_kw_power|2}} kW; the larger, {{out.solar_kw|2}} kW, needs {{out.panels|int}} panels of {{out.panel_w|int}} W = {{out.installed_kw|2}} kW making about {{out.monthly_solar_kwh|int}} units a month. Inverter: the larger of {{out.running_w|int}} W × {{in.margin|2}} = {{out.inverter_kw_load|2}} kW and the {{out.installed_kw|2}} kW solar array ÷ {{out.dc_ac_ratio_max|1}} = {{out.inverter_kw_array|2}} kW (an inverter takes panels up to about {{out.dc_ac_ratio_max|1}} times its rating, so it must be at least the array divided by that), so {{out.inverter_kw|up1}} kW. Net billing counts an array up to your {{out.sanctioned_kw|1}} kW sanctioned load: {{out.net_billing_panels|int}} panels, {{out.net_billing_kw|2}} kW, about {{out.net_billing_solar_kwh|int}} units a month. You use {{out.self_used_units|int}} of those units yourself, export {{out.export_units|int}} at {{out.buyback_rs|rs2}} and import {{out.import_units|int}}; energy charge {{out.bill_before_rs|rs}} before solar, {{out.bill_after_rs|rs}} after, saving {{out.saving_rs|rs}} a month on the energy charge alone. Whole bill (fixed charge, FC surcharge, GST {{out.gst_pct|int}}%): {{out.full_before_rs|rs}} before, {{out.full_import_rs|rs}} for the imported units, less {{out.export_credit_rs|rs}} export credit, leaves {{out.full_after_rs|rs}} to pay ({{out.full_carry_forward_rs|rs}} credit carried to next month), saving {{out.full_saving_rs|rs}} a month. Generator for the whole list: {{out.generator_kva|1}} kVA, next standard size {{out.generator_pick_kva|1}} kVA. Decision over {{out.years}} years, net = price + battery replacements + every month of those years × (running cost − bill saving), in today's rupees. {{out.ongrid_line}} {{out.hybrid_line}} {{out.standby_line}} {{out.decision_line}}",
+    "text": "Your list runs 2,085 W at once (2,535 W when the biggest motor starts) and uses 13.2 units a day, 396 a month. Battery: 500 W × 4 h = 2 kWh ÷ (24 V × 90% usable × 90% inverter) = 103 Ah. Solar: energy 13.2 kWh ÷ 4 kWh per kW per day = 3.3 kW; midday power 2,085 W ÷ 0.78 performance ratio = 2.67 kW; the larger, 3.3 kW, needs 6 panels of 585 W = 3.51 kW making about 421 units a month. Inverter: the larger of 2,085 W × 1.25 = 2.61 kW and the 3.51 kW solar array ÷ 1.3 = 2.7 kW (an inverter takes panels up to about 1.3 times its rating, so it must be at least the array divided by that), so 2.7 kW. Net billing counts an array up to your 4 kW sanctioned load: 6 panels, 3.51 kW, about 421 units a month. You use 198 of those units yourself, export 223 at Rs 8.13 and import 198; energy charge Rs 14,449 before solar, Rs 3,915 after, saving Rs 10,534 a month on the energy charge alone. Whole bill (fixed charge, FC surcharge, GST 18%): Rs 20,448 before, Rs 8,931 for the imported units, less Rs 1,813 export credit, leaves Rs 7,117 to pay (Rs 0 credit carried to next month), saving Rs 13,331 a month. Generator for the whole list: 3.3 kVA, next standard size 3.5 kVA. Decision over 10 years, net = price + battery replacements + every month of those years × (running cost − bill saving), in today's rupees. On-grid solar 3.51 kW, installed: Rs 363,750 to Rs 602,000, saves Rs 13,331 a month, no backup in a cut, net Rs 1,116,834 saved. Hybrid solar 3.51 kW + 1 lithium pack of 5.12 kWh (51.2 V): Rs 578,750 to Rs 912,000 (the on-grid price plus Rs 262,500 of battery and Rs 0 extra for a 2.7 kW grid-tie hybrid inverter), battery replacements Rs 262,500, net Rs 591,834 saved. UPS 1 kVA + 2 tubular batteries for 500 W: Rs 115,239 to Rs 199,499, grid recharge adds Rs 5,770 a month to the bill, net Rs 1,189,100 cost. Recommended, the lowest net that gives your backup: Hybrid solar 3.51 kW + 1 lithium pack of 5.12 kWh (51.2 V).",
+    "tpl_ur": "Aap ki list ek waqt mein {{out.running_w|int}} W chalti hai (sab se bara motor start hone par {{out.peak_w|int}} W) aur roz {{out.daily_kwh|1}} units, mahine ke {{out.monthly_units|int}} units lagti hai. Battery: {{in.backup_w}} W × {{in.backup_hours|1}} h = {{out.backup_kwh|2}} kWh ÷ ({{out.battery_v}} V × {{out.battery_dod|pct}} qabil-e-istemal × {{d.inverter_eff_hybrid|pct}} inverter) = {{out.battery_ah|up}} Ah. Solar: energy {{out.daily_kwh|1}} kWh ÷ {{out.city_yield|1}} kWh fi kW roz = {{out.solar_kw_energy|2}} kW; dopahar ki power {{out.running_w|int}} W ÷ {{out.pr|2}} performance ratio = {{out.solar_kw_power|2}} kW; in mein bara, {{out.solar_kw|2}} kW, yani {{out.panel_w|int}} W ke {{out.panels|int}} panels = {{out.installed_kw|2}} kW, mahine ke taqreeban {{out.monthly_solar_kwh|int}} units. Inverter: {{out.running_w|int}} W × {{in.margin|2}} = {{out.inverter_kw_load|2}} kW aur {{out.installed_kw|2}} kW solar array ÷ {{out.dc_ac_ratio_max|1}} = {{out.inverter_kw_array|2}} kW mein jo bara ho (inverter apni rating se taqreeban {{out.dc_ac_ratio_max|1}} guna tak panels le sakta hai, is liye array ko is se taqseem kar ke kam az kam itna inverter chahiye), yani {{out.inverter_kw|up1}} kW. Net billing mein array aap ke {{out.sanctioned_kw|1}} kW sanctioned load tak gina jata hai: {{out.net_billing_panels|int}} panels, {{out.net_billing_kw|2}} kW, mahine ke taqreeban {{out.net_billing_solar_kwh|int}} units. In mein se {{out.self_used_units|int}} units khud istemal, {{out.export_units|int}} export {{out.buyback_rs|rs2}} par, {{out.import_units|int}} import; solar se pehle energy charge {{out.bill_before_rs|rs}}, baad mein {{out.bill_after_rs|rs}}, sirf energy charge par bachat {{out.saving_rs|rs}} mahana. Poora bill (fixed charge, FC surcharge, GST {{out.gst_pct|int}}%): pehle {{out.full_before_rs|rs}}, import units ka bill {{out.full_import_rs|rs}}, export credit {{out.export_credit_rs|rs}} minha kar ke baad mein {{out.full_after_rs|rs}} dena hai ({{out.full_carry_forward_rs|rs}} credit agle mahine), mahana bachat {{out.full_saving_rs|rs}}. Poori list ke liye generator: {{out.generator_kva|1}} kVA, agla standard size {{out.generator_pick_kva|1}} kVA. {{out.years}} saal ka faisla, kul = qeemat + battery badalna + un saalon ka har mahina × (kharcha − bill ki bachat), aaj ke rupay mein. {{out.ongrid_line}} {{out.hybrid_line}} {{out.standby_line}} {{out.decision_line}}",
+    "text_ur": "Aap ki list ek waqt mein 2,085 W chalti hai (sab se bara motor start hone par 2,535 W) aur roz 13.2 units, mahine ke 396 units lagti hai. Battery: 500 W × 4 h = 2 kWh ÷ (24 V × 90% qabil-e-istemal × 90% inverter) = 103 Ah. Solar: energy 13.2 kWh ÷ 4 kWh fi kW roz = 3.3 kW; dopahar ki power 2,085 W ÷ 0.78 performance ratio = 2.67 kW; in mein bara, 3.3 kW, yani 585 W ke 6 panels = 3.51 kW, mahine ke taqreeban 421 units. Inverter: 2,085 W × 1.25 = 2.61 kW aur 3.51 kW solar array ÷ 1.3 = 2.7 kW mein jo bara ho (inverter apni rating se taqreeban 1.3 guna tak panels le sakta hai, is liye array ko is se taqseem kar ke kam az kam itna inverter chahiye), yani 2.7 kW. Net billing mein array aap ke 4 kW sanctioned load tak gina jata hai: 6 panels, 3.51 kW, mahine ke taqreeban 421 units. In mein se 198 units khud istemal, 223 export Rs 8.13 par, 198 import; solar se pehle energy charge Rs 14,449, baad mein Rs 3,915, sirf energy charge par bachat Rs 10,534 mahana. Poora bill (fixed charge, FC surcharge, GST 18%): pehle Rs 20,448, import units ka bill Rs 8,931, export credit Rs 1,813 minha kar ke baad mein Rs 7,117 dena hai (Rs 0 credit agle mahine), mahana bachat Rs 13,331. Poori list ke liye generator: 3.3 kVA, agla standard size 3.5 kVA. 10 saal ka faisla, kul = qeemat + battery badalna + un saalon ka har mahina × (kharcha − bill ki bachat), aaj ke rupay mein. On-grid solar 3.51 kW, installed: Rs 363,750 to Rs 602,000, saves Rs 13,331 a month, no backup in a cut, net Rs 1,116,834 saved. Hybrid solar 3.51 kW + 1 lithium pack of 5.12 kWh (51.2 V): Rs 578,750 to Rs 912,000 (the on-grid price plus Rs 262,500 of battery and Rs 0 extra for a 2.7 kW grid-tie hybrid inverter), battery replacements Rs 262,500, net Rs 591,834 saved. UPS 1 kVA + 2 tubular batteries for 500 W: Rs 115,239 to Rs 199,499, grid recharge adds Rs 5,770 a month to the bill, net Rs 1,189,100 cost. Recommended, the lowest net that gives your backup: Hybrid solar 3.51 kW + 1 lithium pack of 5.12 kWh (51.2 V)."
    },
    "submit": "Plan my home power",
+   "rtable": {
+    "key": "setups",
+    "caption": "Three setups for this home over 10 years (middle of dated price ranges; solar installed, UPS and generator equipment only)",
+    "cap": "Three setups for this home over {{out.years}} years (middle of dated price ranges; solar installed, UPS and generator equipment only)",
+    "columns": [
+     {
+      "key": "option",
+      "label": "Setup",
+      "spec": "raw"
+     },
+     {
+      "key": "price",
+      "label": "Price range",
+      "spec": "raw"
+     },
+     {
+      "key": "backup",
+      "label": "Backup in a cut",
+      "spec": "raw"
+     },
+     {
+      "key": "saving_month",
+      "label": "Bill saving a month",
+      "spec": "rs"
+     },
+     {
+      "key": "running_month",
+      "label": "Running cost a month",
+      "spec": "rs"
+     },
+     {
+      "key": "net",
+      "label": "Net over the years",
+      "spec": "raw"
+     }
+    ],
+    "rows": [
+     [
+      "On-grid solar 3.51 kW",
+      "Rs 363,750 to Rs 602,000",
+      "None: switches off in a power cut",
+      "Rs 13,331",
+      "Rs 0",
+      "Rs 1,116,834 saved"
+     ],
+     [
+      "Hybrid solar 3.51 kW + 1 lithium pack of 5.12 kWh (51.2 V) (recommended)",
+      "Rs 578,750 to Rs 912,000",
+      "4 h of 500 W from the battery",
+      "Rs 13,331",
+      "Rs 0",
+      "Rs 591,834 saved"
+     ],
+     [
+      "UPS 1 kVA + 2 tubular batteries",
+      "Rs 115,239 to Rs 199,499",
+      "4 h of 500 W",
+      "Rs 0",
+      "Rs 5,770",
+      "Rs 1,189,100 cost"
+     ]
+    ]
+   },
    "notice": "",
    "data_checked": [
+    {
+     "label": "Pakistan electricity tariff (NEPRA notification)",
+     "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf",
+     "checked": "2026-10-13"
+    },
+    {
+     "label": "Peak sun hours by city (Global Solar Atlas)",
+     "url": "https://globalsolaratlas.info/",
+     "checked": "2026-10-13"
+    },
+    {
+     "label": "Installed solar system prices (Pakistan solar price tracker)",
+     "url": "https://wattlyst.com/data/pakistan-solar-price-tracker/",
+     "checked": "2026-10-14"
+    },
+    {
+     "label": "Battery and inverter prices (Pakistan solar price tracker)",
+     "url": "https://wattlyst.com/data/pakistan-solar-price-tracker/",
+     "checked": "2026-10-14"
+    },
+    {
+     "label": "UPS and generator prices and upkeep (sources on the UPS vs solar vs generator cost page)",
+     "url": "https://wattlyst.com/load/ups-vs-solar-vs-generator-cost/",
+     "checked": "2026-10-15"
+    },
+    {
+     "label": "Petrol price (Gari.pk report of the Petroleum Division notification (petrol and high-speed diesel, 10 to 12 October 2026))",
+     "url": "https://www.gari.pk/news/petrol-price-update-new-rates-effective-from-october-10-5641/",
+     "checked": "2026-10-14"
+    },
     {
      "label": "Appliance running and starting watts (Wattlyst appliance data, sources listed on the appliance list page)",
      "url": "https://wattlyst.com/appliances/",
@@ -1974,7 +2134,7 @@
    ]
   },
   "examples": [],
-  "answer": "The Home Power Planner sizes everything from one appliance list: a typical home running 2,085 W needs about a 2.7 kW inverter, a 103 Ah battery bank at 24 V for 4 hours of backup, a 3.51 kW solar system of 6 panels that cuts the whole bill by about Rs 13,331 a month under net billing, and a 3.5 kVA generator. Edit the list and every size updates.",
+  "answer": "The Home Power Planner sizes everything from one appliance list, then picks a setup. A home running 2,085 W needs a 2.7 kW inverter, a 103 Ah battery at 24 V for 4 hours of backup and a 3.51 kW solar system saving about Rs 13,331 a month. Compared with on-grid solar and a UPS, the best fit is Hybrid solar 3.51 kW + 1 lithium pack of 5.12 kWh (51.2 V).",
   "formula": null,
   "safety": ""
  },
@@ -2007,8 +2167,8 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/#breadcrumb"
     },
-    "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13",
+    "dateModified": "2026-10-15",
+    "lastReviewed": "2026-10-15",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }
@@ -2046,6 +2206,14 @@
       "acceptedAnswer": {
        "@type": "Answer",
        "text": "Yes. Press the plan button, then use Save as PDF to print or keep the page, WhatsApp to send the sizes and a link to your installer, or copy the link: it carries your appliance list, so whoever opens it sees the same plan."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Which is better for my home: solar, hybrid solar or a UPS?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "It depends on the backup you need, your bill and your budget, so the planner compares all three for your own list. For the example home, on-grid solar costs Rs 363,750 to Rs 602,000 and saves Rs 13,331 a month but gives no backup, because an on-grid inverter switches off in a power cut. Hybrid solar adds 1 lithium pack of 5.12 kWh (51.2 V) and a grid-tie hybrid inverter that can still export, and costs Rs 578,750 to Rs 912,000. A UPS 1 kVA + 2 tubular batteries costs Rs 115,239 to Rs 199,499 and costs about Rs 5,770 a month to run (a UPS through the bill, a generator in petrol and oil). Over 10 years the recommended setup is Hybrid solar 3.51 kW + 1 lithium pack of 5.12 kWh (51.2 V). Prices are ranges from dated data and the middle price decides; solar prices include installation, UPS and generator prices are equipment only, and a battery replaced near the end of the period is counted in full."
       }
      },
      {

@@ -34,8 +34,8 @@ final class Wattlyst_Render {
 		} elseif ( 'home' === $type ) {
 			if ( ! empty( $this->c['tool'] ) ) { // Home Power Planner (Phase 4): inputs left, sticky plan right on desktop
 				$out .= '<section class="wl-planner" aria-labelledby="wl-plan-title"><div class="wl-planner-head"><h2 id="wl-plan-title">Plan your home power</h2>' .
-					'<ol class="wl-steps"><li>List your appliances</li><li>Set your city and backup</li><li>Read every size</li></ol></div>' .
-					$this->tool( true ) . $this->how() . '</section>';
+					'<ol class="wl-steps"><li>List your appliances</li><li>Set your city and backup</li><li>Get every size and the best setup</li></ol></div>' .
+					$this->tool( true ) . $this->how() . $this->data_used() . '</section>';
 			}
 			$out .= $this->cards();
 			$out .= $this->lead();
@@ -339,7 +339,8 @@ final class Wattlyst_Render {
 		$form  .= '' === $notice
 			? '<p class="wl-error" id="' . esc_attr( $id ) . '-error" role="alert" hidden></p>'
 			: '<p class="wl-error wl-notice" id="' . esc_attr( $id ) . '-error" role="status">' . esc_html( $notice ) . '</p>';
-		$form .= '<div class="wl-results" aria-live="polite">' . $results . '</div>' . $this->rtable( $id, $t ) . $this->diagram( $t ) . $share . ( $split ? '</div>' : '' );
+		// Split (home planner): the result table goes under the inputs, the plan column is too narrow for it.
+		$form .= '<div class="wl-results" aria-live="polite">' . $results . '</div>' . ( $split ? '' : $this->rtable( $id, $t ) ) . $this->diagram( $t ) . $share . ( $split ? '</div>' . $this->rtable( $id, $t ) : '' );
 		$form .= '<script type="application/json" class="wl-config">' . wp_json_encode( $config, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ) . '</script>';
 		$form .= '</form>';
 		return $form;
@@ -500,6 +501,15 @@ final class Wattlyst_Render {
 			return '';
 		}
 		return '<section class="wl-how"><h2>How this result was calculated</h2><p data-wl-how>' . esc_html( $how['text'] ) . '</p></section>';
+	}
+
+	/** Home: the dated data behind the plan and the setup prices (the home page has no Sources list). */
+	private function data_used(): string {
+		$items = '';
+		foreach ( $this->c['tool']['data_checked'] ?? array() as $d ) {
+			$items .= '<li>' . ( $d['url'] ? '<a href="' . esc_url( $d['url'] ) . '" rel="noopener">' . esc_html( $d['label'] ) . '</a>' : esc_html( $d['label'] ) ) . ', checked <time datetime="' . esc_attr( $d['checked'] ) . '">' . esc_html( self::date( $d['checked'] ) ) . '</time></li>';
+		}
+		return $items ? '<section class="wl-data-used"><h2>Data and prices used</h2><ul>' . $items . '</ul></section>' : '';
 	}
 
 	private function key_facts(): string {

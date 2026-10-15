@@ -19,9 +19,9 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => readFileSync(join(root, p), 'utf8');
 const readJson = (p) => JSON.parse(read(p));
 
-const ENGINE_MODULES = ['conversions', 'battery', 'sizing', 'solar', 'bill', 'load', 'wiring', 'planner', 'prices', 'forecast', 'fuel', 'solartools', 'acbill', 'seasonal', 'circuits', 'backup'];
+const ENGINE_MODULES = ['conversions', 'battery', 'sizing', 'solar', 'bill', 'load', 'wiring', 'planner', 'prices', 'forecast', 'fuel', 'solartools', 'acbill', 'seasonal', 'circuits', 'backup', 'decision'];
 /** Data each engine module needs in the browser (keeps page weight down). Appliances are added per page, only the ones its fields use. */
-const MODULE_DATA = { bill: ['tariff'], solar: ['cities'], wiring: ['cables'], load: ['cables'], planner: ['tariff', 'cities'], prices: ['solar_prices'], forecast: ['cities'], acbill: ['tariff'], seasonal: ['cities'], circuits: ['cables'], backup: ['cities', 'solar_prices', 'generator_fuel', 'component_prices', 'backup_prices'] };
+const MODULE_DATA = { bill: ['tariff'], solar: ['cities'], wiring: ['cables'], load: ['cables'], planner: ['tariff', 'cities'], prices: ['solar_prices'], forecast: ['cities'], acbill: ['tariff'], seasonal: ['cities'], circuits: ['cables'], backup: ['cities', 'solar_prices', 'generator_fuel', 'component_prices', 'backup_prices'], decision: ['tariff', 'cities', 'solar_prices', 'generator_fuel', 'component_prices', 'backup_prices'] };
 /** Extra data a single calculator needs (shipped only on its page). */
 const CALC_DATA = { generator_fuel: ['generator_fuel'] };
 /** Appliance fields the browser engine and the loads picker need. */
@@ -344,6 +344,17 @@ function dataChecked(module, ctx) {
     const g = ctx.data.tariff.gas_domestic;
     out.push({ label: `Domestic gas slab prices (${g.source}; not yet matched to the OGRA notification)`, url: g.source_url, checked: g.checked });
   } else if (module === 'wiring' || module === 'load' || module === 'circuits') out.push({ label: 'Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)', url: 'https://webstore.iec.ch/publication/1878', checked: ctx.cables._meta.checked });
+  if (module === 'decision') {
+    // The home page has no Sources list: each price set links to the page that lists its sources.
+    const at = (id) => `${ctx.site.url.replace(/\/$/, '')}${ctx.allRows.find((r) => r.id === id).url}`;
+    const f = ctx.data.generator_fuel;
+    out.push({ label: 'Pakistan electricity tariff (NEPRA notification)', url: ctx.data.tariff._meta.source_url || null, checked: ctx.data.tariff._meta.checked });
+    out.push({ label: 'Peak sun hours by city (Global Solar Atlas)', url: 'https://globalsolaratlas.info/', checked: ctx.citiesMeta.checked });
+    out.push({ label: 'Installed solar system prices (Pakistan solar price tracker)', url: at('solar-price-tracker'), checked: ctx.solarPrices._meta.checked });
+    out.push({ label: 'Battery and inverter prices (Pakistan solar price tracker)', url: at('solar-price-tracker'), checked: ctx.data.component_prices._meta.checked });
+    out.push({ label: 'UPS and generator prices and upkeep (sources on the UPS vs solar vs generator cost page)', url: at('N7'), checked: ctx.data.backup_prices._meta.checked });
+    out.push({ label: `Petrol price (${f.prices.source})`, url: f.prices.source_url, checked: f.prices.checked });
+  }
   if (module === 'backup') {
     const f = ctx.data.generator_fuel;
     out.push({ label: 'UPS, generator and battery prices in Pakistan (retailer listings, each listed under Sources on this page)', url: null, checked: ctx.data.backup_prices._meta.checked });
@@ -671,11 +682,11 @@ export async function build() {
       : { status: site.reviewer.status } },
     data: { defaults: inp.data.defaults, tariff: inp.data.tariff, cities: inp.data.cities, cables: inp.cables,
       // Browser copy of the price ranges: numbers only (sources and quotes stay on the quote-checker page).
-      solar_prices: { checked: inp.solarPrices._meta.checked, panel_rs_per_w: { low: inp.solarPrices.panel_rs_per_w.low, high: inp.solarPrices.panel_rs_per_w.high }, systems: inp.solarPrices.systems.map(({ type, kw, low_rs, high_rs }) => ({ type, kw, low_rs, high_rs })) },
+      solar_prices: { checked: inp.solarPrices._meta.checked, panel_rs_per_w: { low: inp.solarPrices.panel_rs_per_w.low, high: inp.solarPrices.panel_rs_per_w.high }, systems: inp.solarPrices.systems.map(({ type, kw, low_rs, high_rs, n_sources }) => ({ type, kw, low_rs, high_rs, n_sources })) },
       // C8 fuel curve and fuel prices, numbers only (the generator test points stay in data/, the page lists them).
       generator_fuel: browserFuel(inp.data.generator_fuel),
       // N7 backup comparison: equipment price ranges and upkeep, numbers only (sources stay in data/ and on the page).
-      component_prices: { items: inp.data.component_prices.items.map(({ category, size, low, high }) => ({ category, size, low, high })) },
+      component_prices: { items: inp.data.component_prices.items.map(({ category, size, low, high, n_sources, export_capable }) => ({ category, size, low, high, n_sources, ...(export_capable === false ? { export_capable } : {}) })) },
       backup_prices: browserBackup(inp.data.backup_prices) },
     // lastmod: the same date as the page's schema dateModified, used for the sitemap <lastmod> (WL-84).
     pages: rows.map(({ id, type, url, h1, title, meta, status, live, parent, children, related, next, wave, reviewed, modified }) => ({ id, type, url, h1, title, meta, status, live, parent, children, related, next, wave, lastmod: reviewed || modified })),
