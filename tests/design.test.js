@@ -68,3 +68,20 @@ test('home redesign (15 Oct 2026): own stylesheet on the home page only, hubs in
   // GeneratePress sets .screen-reader-text to position:absolute!important; the phone list captions must override it.
   assert.match(css, /\.wl-loads tr\.wl-load-row td \.screen-reader-text\{position:static!important/);
 });
+
+test('design cross-check fixes (15 Oct 2026)', () => {
+  const css = read('assets/css/wattlyst.css');
+  const home = read('assets/css/wattlyst-home.css');
+  // A checkbox field beside subgrid fields spans the same three rows; on one row it stretched the label row
+  // and pushed every input of the bill calculators down.
+  assert.match(css, /@supports \(grid-template-rows:subgrid\)\{[^@]*\.wl-fields>\.wl-check\{grid-row:span 3/);
+  // The sticky header is 101 px tall on the live site; anchor jumps and the home plan column clear it.
+  const stick = css.match(/--wl-stick:calc\(var\(--wp-admin--admin-bar--height,0px\) \+ (\d+)px\)/);
+  assert.ok(stick && Number(stick[1]) > 101, 'sticky offset clears the header');
+  assert.match(css, /scroll-padding-top:var\(--wl-stick\)/);
+  assert.match(home, /\.wl-out\{position:sticky;top:var\(--wl-stick\)/);
+  assert.ok(!/scroll-padding-top:\d|sticky;top:\d/.test(css + home), 'no fixed offsets left');
+  // Phone appliance cards: the remove button shares the picker row (one row less per appliance).
+  assert.match(css, /\.wl-loads tr\.wl-load-row td:last-child\{position:absolute/);
+  assert.match(css, /tr\.wl-load-row:not\(:has\(\[data-k=start\]\)\)\{grid-template-columns:repeat\(3,/);
+});
