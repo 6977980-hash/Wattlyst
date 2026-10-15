@@ -70,6 +70,8 @@ final class Wattlyst_Site {
 		$wp_query->set_404();
 		status_header( 404 );
 		nocache_headers();
+		// Otherwise redirect_canonical (priority 10) turns /<page>/feed/ into /<page>/feed/feed/ before the 404 (WL-82).
+		remove_action( 'template_redirect', 'redirect_canonical' );
 	}
 
 	/** Date archives are thin lists of posts: keep them out of the index (search is noindex in core). */

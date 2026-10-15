@@ -21,6 +21,7 @@ final class Wattlyst_Endpoints {
 		add_action( 'init', array( $this, 'serve_root_files' ), 1 );
 		add_filter( 'robots_txt', array( $this, 'robots' ), 99, 2 );
 		add_filter( 'wp_sitemaps_add_provider', array( $this, 'sitemap_providers' ), 10, 2 );
+		add_filter( 'wp_sitemaps_posts_entry', array( $this, 'sitemap_lastmod' ), 10, 2 );
 		add_action( 'transition_post_status', array( $this, 'indexnow_on_publish' ), 10, 3 );
 	}
 
@@ -143,7 +144,20 @@ final class Wattlyst_Endpoints {
 		return 'users' === $name ? false : $provider;
 	}
 
-	public function indexnow_key(): string {
+	/**
+	 * A managed page's content lives in generated/, so the WordPress post date does not move when the page does.
+	 * The sitemap <lastmod> uses the page's own date instead, the same as its schema dateModified (WL-84).
+	 */
+	public function sitemap_lastmod( $entry, $post ) {
+		$id  = $post instanceof WP_Post ? get_post_meta( $post->ID, Wattlyst_Pages::META_ID, true ) : '';
+		$row = is_string( $id ) && '' !== $id ? $this->plugin->row( $id ) : null;
+		if ( $row && ! empty( $row['lastmod'] ) ) {
+			$entry['lastmod'] = $row['lastmod'];
+		}
+		return $entry;
+	}
+
+		public function indexnow_key(): string {
 		$key = get_option( self::OPT_INDEXNOW );
 		if ( ! is_string( $key ) || ! preg_match( '/^[a-f0-9]{32}$/', $key ) ) {
 			$key = bin2hex( random_bytes( 16 ) );
