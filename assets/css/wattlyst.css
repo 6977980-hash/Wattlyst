@@ -1,6 +1,6 @@
 /* Wattlyst page styles (design Phase 7). Inlined on Wattlyst pages and the /embed/ document. Colours meet WCAG AA contrast. No web fonts, images or scripts: the look is CSS only. */
 .wl-page [hidden]{display:none!important}
-:root{--wl-ink:#13221c;--wl-muted:#46534d;--wl-accent:#0b3d2e;--wl-accent-2:#0f6b4f;--wl-accent-3:#16855f;--wl-spark:#ffbf47;--wl-bg-soft:#f2f7f4;--wl-bg-tint:#e7f2ec;--wl-line:#d5e2db;--wl-field:#7d8c85;--wl-warn:#8a3b00;--wl-focus:#ffbf47;--wl-r:14px;--wl-shadow:0 1px 2px rgba(19,34,28,.05),0 10px 30px -14px rgba(19,34,28,.22);--wl-shadow-lg:0 2px 4px rgba(19,34,28,.06),0 22px 44px -18px rgba(11,61,46,.35)}
+:root{--wl-ink:#13221c;--wl-muted:#46534d;--wl-accent:#0b3d2e;--wl-accent-2:#0f6b4f;--wl-accent-3:#16855f;--wl-spark:#ffbf47;--wl-bg-soft:#f2f7f4;--wl-bg-tint:#e7f2ec;--wl-line:#d5e2db;--wl-field:#7d8c85;--wl-warn:#8a3b00;--wl-focus:#ffbf47;--wl-r:14px;--wl-stick:calc(var(--wp-admin--admin-bar--height,0px) + 112px);--wl-shadow:0 1px 2px rgba(19,34,28,.05),0 10px 30px -14px rgba(19,34,28,.22);--wl-shadow-lg:0 2px 4px rgba(19,34,28,.06),0 22px 44px -18px rgba(11,61,46,.35)}
 /* Theme (GeneratePress) colours = brand, so menu, links and page background match (audit WL-53). html:root beats the theme's later :root. */
 html:root{--accent:#0f6b4f;--contrast:#13221c;--contrast-2:#46534d;--base-2:#f1f5f3}
 body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
@@ -8,7 +8,8 @@ body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 body .site-header{border-bottom:1px solid var(--wl-line);box-shadow:0 1px 0 rgba(19,34,28,.03)}
 body .main-navigation .main-nav ul li a{font-weight:500;letter-spacing:-.005em}
 body .main-navigation .main-nav ul li[class*=current-menu-]>a{color:var(--wl-accent);font-weight:600}
-@media (min-width:1024px){body .site-header{position:sticky;top:var(--wp-admin--admin-bar--height,0);z-index:50}html{scroll-padding-top:96px}}
+/* --wl-stick: sticky header height (101 px on the live site) plus a gap, for anchor jumps and the home plan column. */
+@media (min-width:1024px){body .site-header{position:sticky;top:var(--wp-admin--admin-bar--height,0);z-index:50}html{scroll-padding-top:var(--wl-stick)}}
 @media (min-width:769px){body .main-navigation .main-nav ul li[class*=current-menu-]>a{box-shadow:inset 0 -3px 0 var(--wl-spark)}body .main-navigation .main-nav ul li:not([class*=current-menu-]):hover>a{box-shadow:inset 0 -3px 0 var(--wl-line)}}
 /* Content container: white card on the soft page background. */
 body.separate-containers .inside-article{border-radius:18px;box-shadow:var(--wl-shadow);border:1px solid #e3ebe7}
@@ -261,7 +262,12 @@ body .wl-404-links a:hover{border-color:var(--wl-accent-2);background:var(--wl-b
 .wl-field-loads .wl-table-wrap{overflow:visible;border:0;background:none}
 .wl-loads tr.wl-load-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(4.25rem,1fr));gap:.45rem;align-items:end;padding:.7rem;margin:0 0 .6rem;border:1px solid var(--wl-line);border-radius:12px;background:#fff}
 .wl-loads tr.wl-load-row td{display:block;padding:0;border:0}
-.wl-loads tr.wl-load-row td:first-child{grid-column:1/-1}
+/* The remove button sits at the right end of the picker's row, so each card is one row shorter. */
+.wl-loads tr.wl-load-row{position:relative}
+.wl-loads tr.wl-load-row td:first-child{grid-column:1/-1;padding-right:3.25rem}
+.wl-loads tr.wl-load-row td:last-child{position:absolute;top:.7rem;right:.7rem}
+/* Without the starting-watts column the three inputs share the row (the picker spans every track, so auto-fit keeps an empty fourth one). */
+.wl-loads tr.wl-load-row:not(:has([data-k=start])){grid-template-columns:repeat(3,minmax(0,1fr))}
 .wl-loads tr.wl-load-row td .screen-reader-text{position:static!important;width:auto;height:auto;margin:0 0 .15rem;clip:auto;clip-path:none;overflow:visible;display:block;font-size:.8rem;font-weight:500;line-height:1.25;color:var(--wl-muted)}
 .wl-loads tr.wl-load-row td:first-child .screen-reader-text{border:0;clip:rect(1px,1px,1px,1px);clip-path:inset(50%);height:1px;width:1px;margin:-1px;overflow:hidden;position:absolute}
 .wl-loads select,.wl-loads input[data-k]{width:100%;min-width:0}
@@ -269,4 +275,4 @@ body .wl-404-links a:hover{border-color:var(--wl-accent-2);background:var(--wl-b
 }
 /* Fields in one row line up: labels sit at the bottom of a shared label row, so the inputs share one line
    even when one label wraps, and the hints start under them (subgrid; older browsers keep the plain grid). */
-@supports (grid-template-rows:subgrid){.wl-fields{row-gap:0}.wl-fields>.wl-field{padding-bottom:1rem}.wl-fields>.wl-field:not(.wl-check):not(.wl-field-loads){grid-row:span 3;display:grid;grid-template-rows:subgrid;row-gap:0}.wl-fields>.wl-field>label{align-self:end}.wl-fields>.wl-field>.wl-hint{align-self:start}}
+@supports (grid-template-rows:subgrid){.wl-fields{row-gap:0}.wl-fields>.wl-field{padding-bottom:1rem}.wl-fields>.wl-check{grid-row:span 3;align-self:start}.wl-fields>.wl-field:not(.wl-check):not(.wl-field-loads){grid-row:span 3;display:grid;grid-template-rows:subgrid;row-gap:0}.wl-fields>.wl-field>label{align-self:end}.wl-fields>.wl-field>.wl-hint{align-self:start}}

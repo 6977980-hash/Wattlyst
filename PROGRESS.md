@@ -1,6 +1,26 @@
 # Progress
 
-## Handoff for next phase (after the homepage redesign) — written by the homepage thread, 2026-10-15
+## Handoff for next phase (after the design cross-check) — written by the cross-check thread, 2026-10-15
+
+Owner (15 Oct 2026): cross-check the new design against all earlier work and fix anything it broke; look at the SERP for an idea nobody does (ideas need the owner's yes before any build). Fixed in plugin v0.8.5, CSS only. No formula, number, data or JavaScript changed. Formulas and numbers are never repeated here.
+
+**What was checked** (local WP + GeneratePress, every live page at 390 and 1280 px, measured before (v0.8.3) and after (v0.8.4)): tests, build check, CI browser check and Lighthouse (green on PR #19), label/hint/input overlap, inputs aligned per row, sideways scroll, Calculate and result positions, home card link hit-test (tool links and "Show N more" win over the stretched hub link), anchor jumps under the sticky header, sticky plan column, heading/landmark/FAQ schema on home.
+
+**Regressions found and fixed (v0.8.5)**
+- Subgrid label alignment (`assets/css/wattlyst.css`, `@supports (grid-template-rows:subgrid)` block): a checkbox field (`.wl-check`) took one row only, so its height stretched the shared label row and pushed every input down (all bill calculators, FPA guide, home planner on desktop). `.wl-check` now spans the same three rows.
+- Sticky header offset: the header is 101 px on the live site, but `scroll-padding-top` and the home plan column used 96 px, so "Start planning", "Browse all calculators" and every anchor jump hid the heading top. Both now read the token `--wl-stick` on `:root` (header + gap + admin bar). If the header height changes, change only that token.
+- Phone appliance cards (max-width 600px block): the caption fix in v0.8.4 made captions visible (correct) but each card grew a row. The remove button now sits at the right of the picker row (`td:last-child` absolute, picker `padding-right`), and lists without a starting-watts column use three equal columns (`:has([data-k=start])`). Cards are shorter than v0.8.4; longer than v0.8.3 only by the now visible captions.
+- Tests: `tests/design.test.js` "design cross-check fixes".
+
+**Not a regression, left as is**
+- Home planner on phones starts about 130 px lower than v0.8.3 (hub chip row + "Plan your home power" heading, both owner-requested); the first field is still above the fold on a 360x640 phone.
+- Home content JSON (`content/pages/H1.json`) has formula, examples, mistakes, safety and sources that the home template has never rendered (since Phase 4). Owner decision whether the homepage should show Sources.
+
+**SERP ideas (proposed to the owner, NOT built; wait for a yes)**: (1) "What will this AC add to my bill": marginal slab cost, slab jump, protected-status loss over the six-month rule, inverter vs non-inverter payback, chaining existing engines; (2) season-aware solar sizing from the 12-month unit history on the bill (needs monthly city yield data); (3) cost per backup hour, generator vs UPS vs hybrid; (4) printable circuit sheet for the electrician (needs Engineer Reviewer). Evidence summary: Toolsfluent is the only real Pakistan calculator competitor; generic calculator SERPs are full of parasite pages; "5 marla solar" and "LESCO bill calculator" have no real informational result.
+
+**Do not touch**: everything in the homepage handoff below still holds. Keep `--wl-stick` as the one sticky offset.
+
+## Earlier handoff (after the homepage redesign) — written by the homepage thread, 2026-10-15
 
 Owner (15 Oct 2026, with a screenshot): the homepage still looked plain after design Phase 7: full-width long cards and text blocks, no side blocks, categories not visible, planner fields misaligned, "What do you want to do?" not eye-catching. Fixed in plugin v0.8.4. No formula, number, data or JavaScript changed. Formulas and numbers are never repeated here.
 
@@ -19,7 +39,7 @@ Owner (15 Oct 2026, with a screenshot): the homepage still looked plain after de
 **Open to-dos**
 - None from this phase. Owner hPanel items from the re-audit (below) are still open.
 
-## Handoff for next phase (after re-audit fix Phases A, B and C: cache warm-up, design follow-ups, SEO/speed hygiene) — written by the re-audit thread, 2026-10-15
+## Earlier handoff (after re-audit fix Phases A, B and C: cache warm-up, design follow-ups, SEO/speed hygiene) — written by the re-audit thread, 2026-10-15
 
 Re-audit report: `/mnt/project-files/electricity-tool-hub/audit/wattlyst-audit-2026-10-15.md` (old WL-01 to 74 re-checked, new WL-75 to 88). Owner approved the fixes on 15 Oct 2026. Phase A covered WL-75, Phase B the design follow-ups WL-77 to 81, Phase C the SEO/speed hygiene WL-82 to 85 and WL-87, each in its own PR. WL-86 (long error-code tables) was left as is on purpose: folding them would hide rows from the lookup filter. WL-76 and WL-88 are owner items. Formulas and numbers are never repeated here.
 
@@ -183,6 +203,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | 2026-10-13 | Phase 2: page build step (tools/build.js -> generated/), tool/pillar/appliance/guide/trust templates, server-rendered default result, ?load= state with clean canonical, JSON-LD (WebApplication, BreadcrumbList, Article+Person, Organization+WebSite, FAQPage), robots.txt (AI crawlers), core sitemap, /llms.txt, IndexNow, ads.txt (when pub id set), ad slots (off), 7 trust pages, data/appliances.json (87), brand images, header menu by task, plugin v0.3.0 | done: tests green, Lighthouse mobile 100/100/100/100 (tool template + trust pages, local WP + GeneratePress), Engineer Reviewer PASS after fixes | PR phase-2 |
 | 2026-10-13 | Phase 3: Wave 1, 24 pages live (table below) + 7 pillar hubs; new engine tools (generator for AC/pump, home load, add-an-AC check, AC units, solar for AC / from loads / for 12 V battery, UPS backup, wire/breaker/cable sizing with data/cable-ampacity.json), 245 spec cases, browser field types (appliance, loads, checkbox), plugin v0.4.0 | done: 436 tests green, zero orphan pages (link test), Engineer Reviewer PASS after fixes, Lighthouse mobile >= 95 on every live page (most 99-100), calculators checked in a headless browser on local WP | PR phase-3 |
 | 2026-10-14 | Phase 4: Wave 2, 39 pages live (table below) incl. N1 N2 N3 N4 N5 N7, D14 solar price, Home Power Planner on the homepage (load -> inverter -> battery -> solar -> net billing -> generator), Save as PDF / WhatsApp / copy link, Roman Urdu result toggle, stripped dist/ JS, data/solar-prices.json + data/inverter-codes.json, plugin v0.5.0 | done: tests green, Engineer Reviewer pass, Lighthouse mobile 98-100 on sampled templates, every calculator checked in a headless browser on local WP | PR phase-4 |
+| 2026-10-15 | Design cross-check (owner request): subgrid checkbox row, sticky header offset token, shorter phone appliance cards; SERP ideas proposed, none built; plugin v0.8.5 | done: tests green, every live page measured before/after on local WP | PR (this phase) |
 | 2026-10-15 | Homepage redesign (owner request): dark hero with every hub as a chip, planner inputs left and sticky plan right, colour task cards with tool counts, info cards, FAQ beside Key facts; field labels aligned on every calculator (subgrid), phone appliance captions fixed; plugin v0.8.4 | done: tests green, 107 pages checked on local WP | PR (this phase) |
 | 2026-10-15 | Re-audit fix Phase C, SEO and speed hygiene (WL-82 feeds 404 without redirect, WL-83 one robots value, WL-84 sitemap lastmod from the review date, WL-85 block CSS dropped, WL-87 versioned brand image URLs); plugin v0.8.3 | done: tests green, checked on local WP | PR (this phase) |
 | 2026-10-15 | Re-audit fix Phase B, design follow-ups (WL-77 branded 404 + styles on WordPress pages, WL-78 shorter home task cards, WL-79 appliance rows as cards on phones, WL-80 print colours, WL-81 polish); plugin v0.8.2 | done: tests green, 109 pages checked on local WP | PR (this phase) |
