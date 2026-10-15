@@ -22,7 +22,8 @@ final class Wattlyst_Head {
 		add_action( 'wp_head', array( $this, 'head' ), 1 );
 		add_action( 'wp_head', array( $this, 'icons' ), 2 );
 		add_filter( 'rank_math/json_ld', array( $this, 'rank_math_front_schema' ), 99 );
-		add_filter( 'wp_robots', array( $this, 'robots' ) );
+		add_filter( 'wp_robots', array( $this, 'robots' ), 99 );
+		add_action( 'wp_enqueue_scripts', array( $this, 'drop_block_styles' ), 100 );
 		add_filter( 'generate_logo', array( $this, 'logo' ) );
 		add_filter( 'generate_logo_attributes', array( $this, 'logo_attributes' ) );
 		add_filter( 'generate_site_title_output', array( $this, 'site_title' ) );
@@ -47,15 +48,32 @@ final class Wattlyst_Head {
 		return get_theme_mod( 'custom_logo' ) ? $html : '';
 	}
 
-	/** Wattlyst pages are always indexable with full snippets (core prints the one robots meta tag). */
+	/**
+	 * Wattlyst pages are indexable with full snippets (core prints the one robots meta tag). Runs last and never adds
+	 * "index" next to a "noindex" core set for a variant such as ?replytocom= or the oEmbed /embed/ view (WL-83).
+	 */
 	public function robots( $robots ) {
-		if ( $this->current() && get_option( 'blog_public' ) ) {
+		if ( $this->current() && get_option( 'blog_public' ) && empty( $robots['noindex'] ) ) {
 			$robots['index']             = true;
 			$robots['follow']            = true;
 			$robots['max-snippet']       = '-1';
 			$robots['max-image-preview'] = 'large';
 		}
 		return $robots;
+	}
+
+	/**
+	 * Wattlyst pages are a shortcode, not blocks, so WordPress's block library and global-styles CSS (about 16 KB
+	 * inlined in every page) style nothing there (audit WL-85). Pages the owner writes with blocks keep them.
+	 */
+	public function drop_block_styles(): void {
+		if ( ! $this->current() ) {
+			return;
+		}
+		foreach ( array( 'wp-block-library', 'wp-block-library-theme', 'classic-theme-styles', 'global-styles' ) as $handle ) {
+			wp_dequeue_style( $handle );
+		}
+		remove_action( 'wp_footer', 'wp_enqueue_global_styles', 1 );
 	}
 
 	private function current(): ?array {

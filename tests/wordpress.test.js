@@ -107,3 +107,18 @@ test('uninstall removes options, tasks and quote requests; pages go to draft (WL
   for (const k of ['wattlyst_sync_hash', 'wattlyst_indexnow_key', 'wattlyst_lead_cleanup', 'wattlyst_sync', "'wattlyst_lead'", "'draft'"]) assert.ok(u.includes(k), k);
   assert.match(php('includes/class-wattlyst-pages.php'), /trashed or drafted in WordPress is published again/);
 });
+
+test('re-audit SEO hygiene: feed 404 without a redirect, robots respects noindex, sitemap lastmod, lean CSS, versioned brand images (WL-82 to WL-87)', () => {
+  assert.match(wpsite, /function not_found\(\)[\s\S]*?remove_action\( 'template_redirect', 'redirect_canonical' \)/, '/<page>/feed/ is a plain 404 (WL-82)');
+  const head = php('includes/class-wattlyst-head.php');
+  assert.match(head, /add_filter\( 'wp_robots', array\( \$this, 'robots' \), 99 \)/);
+  assert.match(head, /empty\( \$robots\['noindex'\] \)/, 'never "index" next to "noindex" (WL-83)');
+  for (const p of manifest.pages.filter((x) => x.live)) {
+    assert.match(p.lastmod || '', /^\d{4}-\d{2}-\d{2}$/, `${p.id} has a lastmod`);
+    const node = page(p.id).schema['@graph'].find((n) => n.dateModified && !/Dataset|Person|Organization/.test([].concat(n['@type']).join()));
+    if (node) assert.equal(node.dateModified, p.lastmod, `${p.id}: sitemap lastmod = schema dateModified (WL-84)`);
+  }
+  assert.match(php('includes/class-wattlyst-endpoints.php'), /add_filter\( 'wp_sitemaps_posts_entry', array\( \$this, 'sitemap_lastmod' \), 10, 2 \)/);
+  assert.match(head, /function drop_block_styles\(\)[\s\S]*?'wp-block-library'[\s\S]*?'global-styles'/, 'no block CSS on Wattlyst pages (WL-85)');
+  assert.match(php('includes/class-wattlyst-tools.php'), /'assets\/brand\/'[\s\S]*?filemtime/, 'brand image URLs carry the file time (WL-87)');
+});

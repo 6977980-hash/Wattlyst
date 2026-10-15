@@ -8,7 +8,7 @@ defined( 'ABSPATH' ) || exit;
 
 final class Wattlyst_Pages {
 
-	private const META_ID   = '_wattlyst_id';
+	public const META_ID    = '_wattlyst_id';
 	private const OPT_HASH  = 'wattlyst_sync_hash';
 	private const OPT_LOCK  = 'wattlyst_sync_lock';
 	private const SHORTCODE = 'wattlyst_page';

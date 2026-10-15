@@ -628,7 +628,8 @@ export async function build() {
       solar_prices: { checked: inp.solarPrices._meta.checked, panel_rs_per_w: { low: inp.solarPrices.panel_rs_per_w.low, high: inp.solarPrices.panel_rs_per_w.high }, systems: inp.solarPrices.systems.map(({ type, kw, low_rs, high_rs }) => ({ type, kw, low_rs, high_rs })) },
       // C8 fuel curve and fuel prices, numbers only (the generator test points stay in data/, the page lists them).
       generator_fuel: browserFuel(inp.data.generator_fuel) },
-    pages: rows.map(({ id, type, url, h1, title, meta, status, live, parent, children, related, next, wave }) => ({ id, type, url, h1, title, meta, status, live, parent, children, related, next, wave })),
+    // lastmod: the same date as the page's schema dateModified, used for the sitemap <lastmod> (WL-84).
+    pages: rows.map(({ id, type, url, h1, title, meta, status, live, parent, children, related, next, wave, reviewed, modified }) => ({ id, type, url, h1, title, meta, status, live, parent, children, related, next, wave, lastmod: reviewed || modified })),
     nav: rows.filter((r) => r.nav_label).sort((a, b) => a.nav_order - b.nav_order).map((r) => ({ id: r.id, label: r.nav_label, url: r.url })),
     website_schema: websiteSchema(site, pluginUrl),
   };
