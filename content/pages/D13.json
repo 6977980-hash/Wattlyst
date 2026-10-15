@@ -5,7 +5,7 @@
  "h1": "1 Kanal Solar System: Size for a House with 3 to 4 ACs",
  "author": "ali-ahmad",
  "published": "2026-10-13",
- "reviewed": "2026-10-13",
+ "reviewed": "2026-10-15",
  "calc": "solar_from_loads",
  "fields": [
   {
@@ -181,7 +181,7 @@
   "Running two 1.5 ton inverter ACs with fans, lights, fridge, freezer and CCTV for {{ex.2.out.night_hours|int}} hours after sunset needs a lithium battery of about {{ex.2.out.battery_ah|up}} Ah at {{ex.2.out.battery_v|int}} V ({{ex.2.out.battery_kwh|1}} units); without the ACs the same night needs about {{ex.3.out.battery_ah|up}} Ah."
  ],
  "formula": {
-  "text": "kW = max(E_day ÷ yield, P_run ÷ 1000 ÷ PR); panels = ceil(kW × 1000 ÷ W_panel)",
+  "text": "kW = E_day ÷ yield (grid-tied or hybrid; P_run ÷ 1000 ÷ PR is the off-grid rule, shown for comparison); panels = ceil(kW × 1000 ÷ W_panel)",
   "lines": [
    "E_day = Σ (watts × qty × hours) ÷ 1000, units used a day",
    "yield = units one kW of panels makes a day in your city",

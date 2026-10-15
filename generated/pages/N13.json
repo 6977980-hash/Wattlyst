@@ -9,7 +9,7 @@
  "primary_keyword": "solar system for mosque",
  "wave": 3,
  "status": "publish",
- "reviewed": "2026-10-14",
+ "reviewed": "2026-10-15",
  "published": "2026-10-14",
  "author": "ali-ahmad",
  "related": [
@@ -1449,7 +1449,7 @@
   },
   "answer": "A small one-hall mosque with ceiling fans, tube lights, 1.5 ton inverter ACs, a water pump, a dispenser and a sound system needs about 4.1 kW of solar (7 panels of 585 W) with a 6.93 kW inverter in Lahore. The panels are sized from the daily units ÷ the city's sun yield; the grid covers the moments when everything runs at once.",
   "formula": {
-   "text": "kW = max(E_day ÷ yield, P_run ÷ 1000 ÷ PR); panels = ceil(kW × 1000 ÷ W_panel)",
+   "text": "kW = E_day ÷ yield (grid-tied or hybrid; P_run ÷ 1000 ÷ PR is the off-grid rule, shown for comparison); panels = ceil(kW × 1000 ÷ W_panel)",
    "lines": [
     "E_day = Σ (watts × qty × hours) ÷ 1000, units used a day",
     "yield = units one kW of panels makes a day in your city",
@@ -1502,8 +1502,8 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/solar/solar-for-mosque-and-shop/#breadcrumb"
     },
-    "dateModified": "2026-10-14",
-    "lastReviewed": "2026-10-14",
+    "dateModified": "2026-10-15",
+    "lastReviewed": "2026-10-15",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }

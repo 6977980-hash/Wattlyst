@@ -9,7 +9,7 @@
  "primary_keyword": "10 marla solar system",
  "wave": 2,
  "status": "publish",
- "reviewed": "2026-10-13",
+ "reviewed": "2026-10-15",
  "published": "2026-10-13",
  "author": "ali-ahmad",
  "related": [
@@ -115,7 +115,7 @@
   ],
   "key_facts": [
    "A typical 10 marla house with three inverter ACs (two 1.5 ton, one 1 ton) has a running load of about 7,452 W and uses about 33 units a day, so it needs a solar system of about 8.78 kW with a 9.32 kW inverter.",
-   "With two 1.5 ton inverter ACs and no third AC the same house needs about 7.61 kW of panels (13 panels) and an inverter of 8.19 kW; each extra inverter AC adds roughly its running watts ÷ performance ratio to the array.",
+   "With two 1.5 ton inverter ACs and no third AC the same house needs about 7.61 kW of panels (13 panels) and an inverter of 8.19 kW; each extra inverter AC adds roughly its daily units (average watts × hours) ÷ the city's yield to the array.",
    "In Lahore one kW of panels makes about 4 units a day over the year, so the 8.78 kW system makes about 1,053 units a month, which covers the house's 33 units a day with spare units for export.",
    "Running one 1.5 ton inverter AC with fans, lights, fridge and freezer for 6 hours after sunset needs a lithium battery of about 390 Ah at 48 V (18.7 units); the same night without the AC needs about 167 Ah.",
    "A system of this size usually needs a sanctioned load above 5 kW, which puts the house on a time-of-use meter; the net-metering application is approved only up to the sanctioned load."
@@ -1498,7 +1498,7 @@
   },
   "answer": "A typical 10 marla house with six fans, lights, an inverter fridge, a deep freezer, two TVs, three inverter ACs, a water pump, an iron and a washing machine needs a solar system of about 8.78 kW (15 panels) with a 9.32 kW inverter. Panels = daily units ÷ sun yield; the grid covers the moments when everything runs at once.",
   "formula": {
-   "text": "kW = max(E_day ÷ yield, P_run ÷ 1000 ÷ PR); panels = ceil(kW × 1000 ÷ W_panel)",
+   "text": "kW = E_day ÷ yield (grid-tied or hybrid; P_run ÷ 1000 ÷ PR is the off-grid rule, shown for comparison); panels = ceil(kW × 1000 ÷ W_panel)",
    "lines": [
     "E_day = Σ (watts × qty × hours) ÷ 1000, units used a day",
     "yield = units one kW of panels makes a day in your city",
@@ -1551,8 +1551,8 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/solar/solar-system-for-10-marla-house/#breadcrumb"
     },
-    "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13",
+    "dateModified": "2026-10-15",
+    "lastReviewed": "2026-10-15",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }

@@ -9,7 +9,7 @@
  "primary_keyword": "1 kanal solar system",
  "wave": 2,
  "status": "publish",
- "reviewed": "2026-10-13",
+ "reviewed": "2026-10-15",
  "published": "2026-10-13",
  "author": "ali-ahmad",
  "related": [
@@ -1506,7 +1506,7 @@
   },
   "answer": "A typical 1 kanal house with four inverter ACs, eight fans, lights, an inverter fridge, a deep freezer, two large TVs, a 1.5 hp water pump and kitchen appliances needs a solar system of about 13.46 kW (23 panels) with a three-phase inverter of 14.86 kW. Panels = daily units ÷ sun yield; the grid covers the moments when everything runs at once.",
   "formula": {
-   "text": "kW = max(E_day ÷ yield, P_run ÷ 1000 ÷ PR); panels = ceil(kW × 1000 ÷ W_panel)",
+   "text": "kW = E_day ÷ yield (grid-tied or hybrid; P_run ÷ 1000 ÷ PR is the off-grid rule, shown for comparison); panels = ceil(kW × 1000 ÷ W_panel)",
    "lines": [
     "E_day = Σ (watts × qty × hours) ÷ 1000, units used a day",
     "yield = units one kW of panels makes a day in your city",
@@ -1559,8 +1559,8 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/solar/solar-system-for-1-kanal-house/#breadcrumb"
     },
-    "dateModified": "2026-10-13",
-    "lastReviewed": "2026-10-13",
+    "dateModified": "2026-10-15",
+    "lastReviewed": "2026-10-15",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }

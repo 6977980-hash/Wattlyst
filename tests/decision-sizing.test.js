@@ -40,6 +40,7 @@ test('DEFECT DE-01 (WL-91): an array above the sanctioned load is priced and nam
   // Below one panel of sanctioned load no solar setup is offered.
   const tiny = home_decision({ ...H, sanctioned_kw: 0.5 }, data);
   for (const k of ['ongrid', 'hybrid', 'combo']) assert.equal(tiny[`${k}_available`], false, k);
+  assert.equal(tiny.combo_running_rs, 0, 'a setup not offered has no running cost');
   assert.ok(!['ongrid', 'hybrid', 'combo'].includes(tiny.decision_key), tiny.decision);
   const tiny0 = home_decision({ ...H, sanctioned_kw: 0.5, backup_hours: 0 }, data);
   assert.equal(tiny0.decision_key, 'grid');

@@ -84,7 +84,7 @@ export const home_decision = calculator((i, d) => {
       lines.push(`${b.option} for ${W} W: ${b.price}, ${u ? `grid recharge adds ${rs(b.running)} a month to the bill` : `petrol and oil cost ${rs(b.running)} a month`}, net ${b.net}.`);
       // On-grid solar + the same UPS or generator: a UPS recharges through the net-billed bill, as extra imported units.
       const cs = u ? p.full_before_rs - Math.max(0, bt(p.import_units + sb.r) - p.export_credit_rs) : p.full_saving_rs;
-      const c = add('combo', 'combo', `${o.option} + ${b.option}`, og[0] + sb.lo, og[1] + sb.hi, sb.repl, Math.max(0, cs), (u ? 0 : sb.run) + Math.max(0, -cs), kw ? b.backup : NOSUN, kw > 0);
+      const c = add('combo', 'combo', `${o.option} + ${b.option}`, og[0] + sb.lo, og[1] + sb.hi, sb.repl, Math.max(0, cs), kw ? (u ? 0 : sb.run) + Math.max(0, -cs) : 0, kw ? b.backup : NOSUN, kw > 0);
       if (kw) lines.push(`${c.option}: ${c.price}, saves ${rs(c.saving)} a month${u ? (c.running ? `, the recharge adds ${rs(c.running)} a month` : ' with the recharge on the bill') : ` and burns ${rs(c.running)} of petrol and oil`}, net ${c.net}.`);
     } else {
       for (const [id, name] of SB) add(id, id, name, 0, 0, 0, 0, 0, 'Not available for this backup load', false);
