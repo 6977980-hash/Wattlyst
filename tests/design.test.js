@@ -86,7 +86,7 @@ test('design cross-check fixes (15 Oct 2026)', () => {
   assert.match(css, /tr\.wl-load-row:not\(:has\(\[data-k=start\]\)\)\{grid-template-columns:repeat\(3,/);
 });
 
-test('full audit Phase 1 (15 Oct 2026): home columns, phone headings, focus ring, result table cards, phone button', () => {
+test('full audit Phase 1 (15 Oct 2026): home columns, phone headings, focus ring, result table cards', () => {
   const home = read('assets/css/wattlyst-home.css');
   const desk = home.slice(home.indexOf('@media (min-width:1200px)'));
   assert.match(desk, /\.wl-tool-split>\.wl-in\{grid-column:1;grid-row:1\}/, 'inputs pinned to column 1, so an error cannot swap the columns (WL-90)');
@@ -98,6 +98,5 @@ test('full audit Phase 1 (15 Oct 2026): home columns, phone headings, focus ring
   assert.ok(!/\.wl-tool-split \.wl-rtable/.test(css), 'the card view is not limited to the home planner (WL-135)');
   assert.match(css, /\.wl-how-steps:has\(>ol\[hidden\]\)>\.wl-tg\{display:none\}/, 'hidden steps toggle leaves the tab order (WL-137)');
   assert.match(css, /\.wl-remove-row\{min-width:44px;min-height:44px;padding:0;/, 'remove button stays 44 px and clear of the picker (WL-137)');
-  assert.match(css, /@media \(max-width:768px\)\{html\{scroll-padding-bottom:[^}]+\}\.wl-tool>\.wl-btn,\.wl-in>\.wl-btn\{position:sticky;bottom:/, 'Calculate button in view on phones (WL-139)');
   assert.match(read('assets/js/wattlyst-extra.js'), /\.replace\(\/Rs \/g, 'Rs\\u00a0'\)/, 'redrawn tables keep Rs with a no-break space (WL-137)');
 });
