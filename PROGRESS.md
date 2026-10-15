@@ -1,6 +1,24 @@
 # Progress
 
-## Handoff for next phase (after N17, N18 and the N7 upgrade: SERP ideas 2 to 4) — written by the cross-check thread, 2026-10-15
+## Handoff for next phase (after the net billing buyback fix) — written by the net billing review thread, 2026-10-15
+
+Owner asked to check an outside review of the net billing / solar saving figures and approved fix groups A (buyback rate from NEPRA), C (planner inverter wording) and D (NEPRA basis line). Group B (planner saving on the whole bill: fixed charge, surcharges, GST) is not built; it waits for the owner and for the open GST-on-export-credit question. Review verdict and sources: `/mnt/project-files/electricity-tool-hub/audit/net-billing-review-2026-10-15.md`. Plugin v0.8.8.
+
+**What is where**
+- Buyback value, basis, primary NEPRA links, the cutoff date for old agreements and the calendar year it applies to: `data/tariff-pk-2026.json` `net_billing` (only place; pages read it through `{{data.tariff.net_billing.*}}` and `@data.tariff.net_billing.buyback_rs_per_unit_default`). Rule text: `specs/formulas.md` section F net billing line and the H1 planner paragraph.
+- Engines reading the default: `engine/bill.js` `net_billing`, `engine/planner.js` (via net_billing), `engine/seasonal.js` (N17). Pages with buyback wording: D10, D11 (sources now NEPRA documents), H1 (FAQ, intro line, hint), N8, N12, N17.
+- H1 "how" text (English and Roman Urdu): solar sentence now comes before the inverter sentence and names the installed array kW.
+- Google Search Console verification (owner asked in the same session): code in `data/site.json` `verification.google`, shipped in manifest `site.verification`, printed by `Wattlyst_Head::verification()` on the front page only. Removing it unverifies the property.
+
+**Do not touch / watch**
+- The buyback is set per calendar year by NEPRA's power purchase price decision: re-check every January (and on any NEPRA revision notice); change only `data/tariff-pk-2026.json` and the dependent spec case values.
+- The spec case "Import 400, export 300 units, buyback 11" uses an explicit 11 on purpose (editable field), keep it.
+
+**Open to-dos**
+- Group B (whole-bill saving in the planner) if the owner approves; confirm how GST treats the export credit under net billing first.
+- Everything open from the earlier handoffs below still stands.
+
+## Earlier handoff (after N17, N18 and the N7 upgrade: SERP ideas 2 to 4) — written by the cross-check thread, 2026-10-15
 
 Owner said "bna do" (15 Oct 2026) to the three remaining SERP ideas. Built in plugin v0.8.7: idea 2 as N17 (`/solar/solar-size-from-electricity-bill/`), idea 4 as N18 (`/wiring/home-wiring-load-schedule/`), idea 3 as an upgrade of the existing N7 page (same URL `/load/ups-vs-solar-vs-generator-cost/`). Formulas and numbers are never repeated here: `specs/formulas.md` "Owner-approved tools" holds N17, N18 and N7; cases at the end of `specs/calculator-test-cases.json`.
 
@@ -236,6 +254,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | 2026-10-13 | Phase 3: Wave 1, 24 pages live (table below) + 7 pillar hubs; new engine tools (generator for AC/pump, home load, add-an-AC check, AC units, solar for AC / from loads / for 12 V battery, UPS backup, wire/breaker/cable sizing with data/cable-ampacity.json), 245 spec cases, browser field types (appliance, loads, checkbox), plugin v0.4.0 | done: 436 tests green, zero orphan pages (link test), Engineer Reviewer PASS after fixes, Lighthouse mobile >= 95 on every live page (most 99-100), calculators checked in a headless browser on local WP | PR phase-3 |
 | 2026-10-14 | Phase 4: Wave 2, 39 pages live (table below) incl. N1 N2 N3 N4 N5 N7, D14 solar price, Home Power Planner on the homepage (load -> inverter -> battery -> solar -> net billing -> generator), Save as PDF / WhatsApp / copy link, Roman Urdu result toggle, stripped dist/ JS, data/solar-prices.json + data/inverter-codes.json, plugin v0.5.0 | done: tests green, Engineer Reviewer pass, Lighthouse mobile 98-100 on sampled templates, every calculator checked in a headless browser on local WP | PR phase-4 |
 | 2026-10-15 | N16 AC bill calculator (owner approved the SERP idea): what one AC adds to the whole bill, slab jump, protected-status loss and the penalty on the next bills; engine/acbill.js, 7 spec cases; E5 hands the "ac bill calculator" keywords to N16; plugin v0.8.6 | done: tests green, Engineer Reviewer pass after fixes (tariff checked date on the page, AC hours ≤ 24 and days ≤ 31 for E5 too, rate wording), Lighthouse mobile 98/100/100/100 on local WP | #21 |
+| 2026-10-15 | Net billing review (owner: "ok fix kro"): buyback default now NEPRA's national average energy purchase price with primary sources (was a news figure), wording on D10 D11 H1 N8 N12 N17, old-agreement rule from NEPRA amendment, H1 inverter line names the array; Search Console verification meta tag on the home page; plugin v0.8.8 | done: tests green, Engineer Reviewer, local WP checked | PR (this thread) |
 | 2026-10-15 | SERP ideas 2 to 4 (owner: "bna do"): N17 solar size from the twelve-month bill (monthly PV output per city, net-billing month split), N18 home wiring load schedule (circuit sheet, wire + MCB per circuit), N7 upgraded to cost per backup hour (UPS vs petrol generator vs hybrid solar, dated price data); generic result table; resistive PF 1.0; plugin v0.8.7 | done: tests green, Engineer Reviewer fixes applied, checked on local WP | #22 |
 | 2026-10-15 | Design cross-check (owner request): subgrid checkbox row, sticky header offset token, shorter phone appliance cards; SERP ideas proposed, none built; plugin v0.8.5 | done: tests green, every live page measured before/after on local WP | PR (this phase) |
 | 2026-10-15 | Homepage redesign (owner request): dark hero with every hub as a chip, planner inputs left and sticky plan right, colour task cards with tool counts, info cards, FAQ beside Key facts; field labels aligned on every calculator (subgrid), phone appliance captions fixed; plugin v0.8.4 | done: tests green, 107 pages checked on local WP | PR (this phase) |
@@ -258,7 +277,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 - Phase 5: request indexing for the 24 wave-3 URLs, /data/, the two data pages and /embed-calculators/; create brand profiles (YouTube, Facebook, X, LinkedIn) and add them to data/site.json organization_same_as; start outreach per specs/offpage-plan.md; buy an Open-Meteo API plan for commercial use (or ask to drop the live forecast); refresh the Bill Index, fuel and solar prices monthly.
 - Phase 4: request indexing for the 39 wave-2 URLs; apply for AdSense; refresh `data/solar-prices.json` and the FPA entry monthly (source + checked date).
 - Phase 3: request indexing in Google Search Console and Bing for the 24 wave-1 URLs (sitemap already lists them). Fill `data/site.json` reviewer once a PEC engineer signs off on `specs/formulas.md` (open questions are listed at its end) and the `engineer_confirm` lists in `data/cable-ampacity.json` and `data/appliances.json`.
-- Net-billing buyback rate (`data/tariff-pk-2026.json` net_billing): no NEPRA notification found on 2026-10-13, only news reports; the D10 page says so. Replace with the NEPRA page and set `buyback_verified` when it exists (re-check monthly).
+- ~~Net-billing buyback rate: no NEPRA notification found on 2026-10-13.~~ Closed 15 Oct 2026: NEPRA sources in `data/tariff-pk-2026.json` net_billing.
 - WordPress: Settings > Reading keep "Discourage search engines" OFF on live; Customizer > Site Identity: optional (plugin already shows logo + favicon).
 - LiteSpeed Cache + Cloudflare (speed stack in build-plan Phase 2); Google Search Console + Bing Webmaster Tools: submit https://wattlyst.com/wp-sitemap.xml (or the Rank Math sitemap).
 - Brand profiles (YouTube, Facebook, X, LinkedIn page) -> data/site.json organization_same_as.

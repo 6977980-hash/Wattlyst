@@ -123,7 +123,7 @@ export const protected_check = calculator((i, d) => {
 
 /**
  * Net billing: import billed at the slab tariff (energy only), export credited at the buyback rate.
- * Buyback is an editable input (not yet confirmed on a NEPRA page). A credit larger than the import
+ * Buyback is an editable input; its default is NEPRA's national average energy purchase price. A credit larger than the import
  * bill is shown as carry_forward_rs, never as a negative bill.
  */
 export const net_billing = calculator((i, d) => {

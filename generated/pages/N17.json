@@ -56,7 +56,7 @@
    {
     "h2": "Should you size solar for summer or for the whole year?",
     "p": [
-     "Sizing for the hardest month (6.28 kW here) leaves large surpluses in the months with more sun and less use. Under net billing each exported unit earns the buyback rate, Rs 11.00 in our default, while a unit bought from the grid costs your slab rate, so oversizing for summer pays back slowly.",
+     "Sizing for the hardest month (6.28 kW here) leaves large surpluses in the months with more sun and less use. Under net billing each exported unit earns the buyback rate, Rs 8.13 in our default, while a unit bought from the grid costs your slab rate, so oversizing for summer pays back slowly.",
      "Sizing for the year is the usual compromise. If your sanctioned load allows it and the summer bill is the problem, test a size between the two in Advanced settings and look at the months short and the units exported."
     ]
    },
@@ -98,7 +98,7 @@
    "One kW of solar in Lahore makes about 1,458 units a year, but far more in spring than in the foggy winter or the monsoon, so the same system gives a surplus in some months and a shortfall in others.",
    "Sizing from one bill misleads: the default home's lowest bill (February) suggests 1.92 kW and its highest (July) suggests 6 kW.",
    "Sized for the whole year, 4.1 kW makes 112% of the year's units, but under net billing you still buy 2,660 units at night and export 3,311 by day; in 4 months it makes fewer units than you use.",
-   "Covering the hardest month (July) would need 6.28 kW; under net billing the extra winter surplus earns only the buyback rate of Rs 11.00 a unit."
+   "Covering the hardest month (July) would need 6.28 kW; under net billing the extra winter surplus earns only the buyback rate of Rs 8.13 a unit."
   ],
   "mistakes": [
    "Sizing from the summer bill alone. It gives the biggest system and the largest winter surplus, sold back at the low buyback rate.",
@@ -251,9 +251,9 @@
      "name": "buyback_rs",
      "label": "Buyback rate",
      "unit": "Rs per unit",
-     "default": 11,
+     "default": 8.13,
      "advanced": true,
-     "hint": "Rs per exported unit under net billing; not yet confirmed on a NEPRA page, change it when your DISCO tells you the rate."
+     "hint": "Rs per exported unit: NEPRA's national average energy purchase price for CY 2026. Change it only if your DISCO bills a revised rate."
     },
     {
      "name": "day_share",
@@ -309,7 +309,7 @@
      "key": "export_credit_rs",
      "label": "Credit for exported units a year",
      "spec": "rs",
-     "value": "Rs 36,425"
+     "value": "Rs 26,921"
     },
     {
      "key": "self_used_pct",
@@ -321,7 +321,7 @@
    ],
    "how": {
     "tpl": "Year: {{out.annual_units|int}} units ÷ {{out.pvout_year|int}} units per kW a year in {{out.city_name|raw}} = {{out.kw_annual|2}} kW. System tested: {{out.kw|2}} kW, rounded up to {{out.panels|int}} panels × {{out.panel_w}} W = {{out.installed_kw|2}} kW, making {{out.solar_year|int}} units a year. Hardest month: {{out.peak_month|raw}}, {{out.peak_units|int}} units ÷ {{out.peak_pvout|1}} units per kW = {{out.kw_peak|2}} kW. Each month, solar = system kW × that month's units per kW; used straight from the panels = the smaller of solar and {{out.day_share|pct}} of the month's units ({{out.self_used_year|int}} units a year); the rest of your use is bought from the grid ({{out.grid_units_year|int}} units) and the rest of the solar is exported: {{out.export_units_year|int}} units × {{out.buyback_rs|rs2}} = {{out.export_credit_rs|rs}}.",
-    "text": "Year: 5,320 units ÷ 1,458 units per kW a year in Lahore = 3.65 kW. System tested: 3.65 kW, rounded up to 7 panels × 585 W = 4.1 kW, making 5,971 units a year. Hardest month: July, 720 units ÷ 114.6 units per kW = 6.28 kW. Each month, solar = system kW × that month's units per kW; used straight from the panels = the smaller of solar and 50% of the month's units (2,660 units a year); the rest of your use is bought from the grid (2,660 units) and the rest of the solar is exported: 3,311 units × Rs 11.00 = Rs 36,425."
+    "text": "Year: 5,320 units ÷ 1,458 units per kW a year in Lahore = 3.65 kW. System tested: 3.65 kW, rounded up to 7 panels × 585 W = 4.1 kW, making 5,971 units a year. Hardest month: July, 720 units ÷ 114.6 units per kW = 6.28 kW. Each month, solar = system kW × that month's units per kW; used straight from the panels = the smaller of solar and 50% of the month's units (2,660 units a year); the rest of your use is bought from the grid (2,660 units) and the rest of the solar is exported: 3,311 units × Rs 8.13 = Rs 26,921."
    },
    "submit": "Calculate",
    "rtable": {
@@ -479,7 +479,7 @@
    },
    {
     "title": "A quote close to the hardest-month size",
-    "text": "A 6.44 kW system makes 176% of the year's units, so no month is short, but it exports 6,724 units a year, worth only Rs 73,959 at Rs 11.00 a unit, and still buys 2,660 units at night."
+    "text": "A 6.44 kW system makes 176% of the year's units, so no month is short, but it exports 6,724 units a year, worth only Rs 54,662 at Rs 8.13 a unit, and still buys 2,660 units at night."
    },
    {
     "title": "Islamabad home with an electric heater in winter",

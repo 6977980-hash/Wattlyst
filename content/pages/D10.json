@@ -27,7 +27,7 @@
    "label": "Buyback rate",
    "unit": "Rs per unit",
    "default": "@data.tariff.net_billing.buyback_rs_per_unit_default",
-   "hint": "Rs per exported unit under net billing; not yet confirmed on a NEPRA page, change it when your DISCO tells you the rate."
+   "hint": "Rs per exported unit: NEPRA's national average energy purchase price for {{data.tariff.net_billing.buyback_period}}. Change it only if your DISCO bills a revised rate."
   },
   {
    "name": "sanctioned_kw",
@@ -69,7 +69,7 @@
  "answer": "A home that imports {{in.import_units|int}} units and exports {{in.export_units|int}} units pays about {{out.net_energy_rs|rs}} in energy charges under net billing, against {{out.net_metering_rs|rs}} under old net metering, so net billing costs {{out.extra_vs_net_metering_rs|rs}} more that month. Net bill = imported units × slab rate − exported units × buyback rate of {{out.buyback_rs|rs2}}.",
  "how": "Import: {{out.import_units}} units at the slab rate of {{out.import_rate|rs2}} = {{out.import_energy_rs|rs}}. Export credit: {{out.export_units}} units × {{out.buyback_rs|rs2}} = {{out.export_credit_rs|rs}}. Net billing energy charge = {{out.import_energy_rs|rs}} − {{out.export_credit_rs|rs}} = {{out.net_energy_rs|rs}}; any credit above the import bill carries forward ({{out.carry_forward_rs|rs}} here). Old net metering: {{out.import_units}} − {{out.export_units}} = {{out.net_metering_units|int}} net units billed at {{out.net_metering_rate|rs2}} = {{out.net_metering_rs|rs}}. Difference = {{out.extra_vs_net_metering_rs|rs}}. Fixed charges, FC surcharge, QTA, FPA and GST are added on top; use the bill calculator for the full bill.",
  "key_facts": [
-  "Under net billing the imported units are billed at the normal slab rate ({{out.import_rate|rs2}} per unit for {{out.import_units|int}} units) and exported units are bought back at a flat rate, {{out.buyback_rs|rs2}} per unit by default, which is not yet confirmed on a NEPRA page.",
+  "Under net billing the imported units are billed at the normal slab rate ({{out.import_rate|rs2}} per unit for {{out.import_units|int}} units) and exported units are bought back at a flat rate, {{out.buyback_rs|rs2}} per unit, NEPRA's national average energy purchase price for {{data.tariff.net_billing.buyback_period}}.",
   "Under old net metering exported units cancelled imported units one for one, so a home importing {{out.import_units|int}} and exporting {{out.export_units|int}} units paid for only {{out.net_metering_units|int}} units, at the lower slab those units reach ({{out.net_metering_rate|rs2}}).",
   "For the same {{out.import_units|int}} imported and {{out.export_units|int}} exported units, net billing charges {{out.net_energy_rs|rs}} and old net metering {{out.net_metering_rs|rs}}: a difference of {{out.extra_vs_net_metering_rs|rs}} a month in energy charges alone.",
   "The net billing figure is energy charges only; the fixed charge per sanctioned kW, FC surcharge, QTA, FPA and GST are added on the real bill."
@@ -91,7 +91,7 @@
    "p": [
     "Under the old net metering rules a bidirectional meter counted units in and units out, and the DISCO billed only the difference. Every exported unit cancelled an imported unit at the same slab rate, and if you exported more than you imported the spare units carried forward to the next month.",
     "Under the NEPRA Prosumer Regulations notified in 2026, new solar connections are on net billing. Imports are billed at the normal slab rate of the band your imported units reach, and exports are bought at a flat buyback rate that is far below the slab rate. The two numbers are worked out separately and then set against each other, which is why the same month costs more under net billing.",
-    "Existing net-metering contracts are reported to stay on the old rules until they expire, but this is not yet confirmed on a NEPRA page. Ask your DISCO which regime your connection is on."
+    "Agreements signed before {{data.tariff.net_billing.existing_cutoff}} keep the rate and rules of the old net-metering regulations until they expire, unless the system is enlarged, which moves it to net billing; renewals move to net billing. Ask your DISCO when your agreement ends."
    ]
   },
   {
@@ -104,7 +104,7 @@
   {
    "h2": "What is the net billing rate for solar exports in Pakistan?",
    "p": [
-    "The calculator uses {{out.buyback_rs|rs2}} per exported unit, the figure most reported for the new rules. NEPRA has said the rate will be set from the national average power purchase price and revised over time, and the exact number has not been confirmed on a NEPRA page at the time of writing. Change the buyback field to the rate on your own bill or DISCO notice and the result updates.",
+    "The calculator uses {{out.buyback_rs|rs2}} per exported unit. The {{data.tariff.net_billing.regulation}}, credit exported units at the national average energy purchase price, and NEPRA's power purchase price decision for {{data.tariff.net_billing.buyback_period}} puts that price at {{out.buyback_rs|rs2}}. NEPRA sets it again for each year and may revise it by notification, so change the buyback field if your bill shows a different rate.",
     "Compare that with the import rate of {{out.import_rate|rs2}} per unit for {{out.import_units|int}} units: a unit you export is worth a fraction of a unit you import. Using your own solar power in the day, running the water pump, washing machine and AC while the sun is up, is worth more than exporting it."
    ]
   },
@@ -224,7 +224,7 @@
   },
   {
    "q": "What is the solar export rate in Pakistan?",
-   "a": "Reports put the net billing buyback rate at about {{out.buyback_rs|rs2}} per unit, but it is not yet confirmed on a NEPRA page. Under old net metering there was no export rate: each exported unit simply cancelled an imported one."
+   "a": "{{out.buyback_rs|rs2}} per unit for {{data.tariff.net_billing.buyback_period}}: the national average energy purchase price in NEPRA's power purchase price decision, which the {{data.tariff.net_billing.regulation}}, use for exported units. Under old net metering exported units first cancelled imported ones unit for unit."
   },
   {
    "q": "How much does a solar home save under net metering compared with net billing?",
@@ -236,7 +236,7 @@
   },
   {
    "q": "Does the buyback rate for solar change?",
-   "a": "Yes. NEPRA has said the rate will track the national average power purchase price and can be revised. Enter the rate shown on your own bill in the buyback field; the default is only the figure most reported so far."
+   "a": "Yes. It is the national average energy purchase price, which NEPRA sets for each year and may revise by notification. If your bill shows a different rate, enter it in the buyback field."
   },
   {
    "q": "How are net metering units calculated on the bill?",
@@ -244,7 +244,7 @@
   },
   {
    "q": "Can I still apply for net metering in 2026?",
-   "a": "New connections under the Prosumer Regulations are on net billing. Whether existing net-metering agreements stay on the old rules until they expire is widely reported but not yet confirmed on a NEPRA page; check with your DISCO."
+   "a": "New connections under the Prosumer Regulations are on net billing. Agreements signed before {{data.tariff.net_billing.existing_cutoff}} keep the rate and rules of the old net-metering regulations until they expire, unless the system is enlarged, which moves it to net billing; renewals move to net billing."
   }
  ],
  "related": [
@@ -263,6 +263,14 @@
   "5 kW"
  ],
  "sources": [
+  {
+   "label": "NEPRA (Prosumer) Regulations 2026, SRO 251(I)/2026: regulation 14, billing of exported units",
+   "url": "https://nepra.org.pk/Legislation/3-Reg/3.35%20NEPRA%20%20Prosumer%20Regulations%202026/NEPRA%20Prosumer%20Regulations%20(SRO%20251(I)2026)%2009-02-26.PDF"
+  },
+  {
+   "label": "NEPRA decision on the power purchase price forecast for CY 2026 (national average energy purchase price)",
+   "url": "https://nepra.org.pk/tariff/Tariff/DISCOs/Rebasing%20Decisions/TRF-100%20CPPAG%20FOR%20APPROVAL%20OF%20POWER%20PURCHASE%20PRICE%20FORECAST%2007-01-2026%20437-76.PDF"
+  },
   {
    "label": "NEPRA tariff decision and SRO for A-1 domestic consumers (tariff PDF)",
    "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf"
