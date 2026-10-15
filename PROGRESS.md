@@ -1,6 +1,22 @@
 # Progress
 
-## Handoff for next phase (after the growth phase: indexing + off-page plan) — written by the growth thread, 2026-10-15
+## Handoff for next phase (after SERP ideas 1, 2 and 4) — written by the growth thread, 2026-10-15
+
+Owner approved all four SERP ideas from the growth plan ("4ron idea cover krny hain"). Idea 3 (DISCO option) needed nothing: the eleven DISCO bill calculators F2 to F12 have been live since Phase 3. Plugin v0.8.11. No formula changed.
+
+**What is where**
+- Idea 1, units ladder: steps in `data/bill-index.json` `ladder`; table, CSV rows and `ds.ladder.*` scope (incl. the lifeline line) in `tools/lib/datasets.js` `billIndex`; text in `content/pages/bill-index.json` (key fact 3, FAQ 3). Test: `tests/calc-text.test.js` "units ladder".
+- Idea 4, engine numbers in titles: a `{{placeholder}}` in a `title`/`meta_description` cell of `specs/keyword-map.csv` or `specs/site-pages.csv` is rendered by `tools/build.js` with the page's own scope (`ctx.scope` set at the end of `buildContent`). Used on E5, D9, bill-index, solar-price-tracker. Rule: `specs/seo-rules.md` section 2. The SEO lint tests (`tests/keyword-map.test.js`, `tests/site.test.js`) check the rendered title; `title_len` of a templated row is informative only.
+- Idea 2, Inverex Nitrox codes: brand `inverex-nitrox` in `data/inverter-codes.json` (F01 to F64, Inverex NITROX-12KW manual on ManualsLib), N2 text in `content/pages/N2.json`.
+
+**Do not touch / watch**
+- Inverex Veyron/Aerox stay out until a manual carrying Inverex's name is found (the ManualsLib "APT Veyron" manuals do not name Inverex).
+- A templated title must stay 30 to 60 characters for any realistic data value; the lint fails the build if a refresh pushes it out.
+
+**Open to-dos**
+- Owner items from the growth handoff below (indexing, Bing import, brand profiles, outreach) still stand.
+
+## Earlier handoff (after the growth phase: indexing + off-page plan) — written by the growth thread, 2026-10-15
 
 Owner said "next phase new thread"; no build phase was left, so this was the off-page/growth phase from `specs/offpage-plan.md`. Plugin v0.8.10. No formula, number, data or page text changed.
 
@@ -287,6 +303,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | 2026-10-13 | Phase 3: Wave 1, 24 pages live (table below) + 7 pillar hubs; new engine tools (generator for AC/pump, home load, add-an-AC check, AC units, solar for AC / from loads / for 12 V battery, UPS backup, wire/breaker/cable sizing with data/cable-ampacity.json), 245 spec cases, browser field types (appliance, loads, checkbox), plugin v0.4.0 | done: 436 tests green, zero orphan pages (link test), Engineer Reviewer PASS after fixes, Lighthouse mobile >= 95 on every live page (most 99-100), calculators checked in a headless browser on local WP | PR phase-3 |
 | 2026-10-14 | Phase 4: Wave 2, 39 pages live (table below) incl. N1 N2 N3 N4 N5 N7, D14 solar price, Home Power Planner on the homepage (load -> inverter -> battery -> solar -> net billing -> generator), Save as PDF / WhatsApp / copy link, Roman Urdu result toggle, stripped dist/ JS, data/solar-prices.json + data/inverter-codes.json, plugin v0.5.0 | done: tests green, Engineer Reviewer pass, Lighthouse mobile 98-100 on sampled templates, every calculator checked in a headless browser on local WP | PR phase-4 |
 | 2026-10-15 | N16 AC bill calculator (owner approved the SERP idea): what one AC adds to the whole bill, slab jump, protected-status loss and the penalty on the next bills; engine/acbill.js, 7 spec cases; E5 hands the "ac bill calculator" keywords to N16; plugin v0.8.6 | done: tests green, Engineer Reviewer pass after fixes (tariff checked date on the page, AC hours ≤ 24 and days ≤ 31 for E5 too, rate wording), Lighthouse mobile 98/100/100/100 on local WP | #21 |
+| 2026-10-15 | SERP ideas (owner: "4ron idea cover krny hain"): Bill Index units table 50 to 1,000 with lifeline line, engine numbers in four titles, Inverex Nitrox error codes; idea 3 already live as F2-F12; plugin v0.8.11 | done: tests green, Engineer Reviewer fixes applied (caption kW, lifeline line, F16/F28/F32 safety), local WP checked | PR (this thread) |
 | 2026-10-15 | Growth phase (owner: "next phase new thread"): IndexNow now announces changed pages in one batch after each sync (all live pages on the first run), owner growth plan with outreach and forum drafts in a Claude Doc; plugin v0.8.10 | done: tests green, local WP checked (stubbed IndexNow), no formula or page change | #25 |
 | 2026-10-15 | Net billing group B (owner: "baqi fixes pe kaam kro"): Home Power Planner saving on the whole bill (fixed charge, FC surcharge, GST; export credit set against the bill after GST), energy-charge saving shown under it; plugin v0.8.9 | done: tests green, Engineer Reviewer, local WP checked | PR (this thread) |
 | 2026-10-15 | Net billing review (owner: "ok fix kro"): buyback default now NEPRA's national average energy purchase price with primary sources (was a news figure), wording on D10 D11 H1 N8 N12 N17, old-agreement rule from NEPRA amendment, H1 inverter line names the array; Search Console verification meta tag on the home page; plugin v0.8.8 | done: tests green, Engineer Reviewer, local WP checked | PR (this thread) |

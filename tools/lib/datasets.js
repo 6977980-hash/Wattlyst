@@ -63,10 +63,13 @@ export function billIndex(ctx, fail) {
     p: units <= limit ? run(cur, { units, category: 'protected' }) : null,
   }));
   const top = ladder[ladder.length - 1];
-  scope.ladder = { from: lad.from, to: lad.to, step: lad.step, count: ladder.length, limit, top_units: top.units, top_rs: top.u.total_rs, top_per_unit_rs: top.u.total_rs / top.units };
+  // A lifeline home at the first step pays lifeline rates with no fixed charge (Engineer Reviewer): one line next to the table.
+  const life = bill({ units: lad.from, sanctioned_kw: ix.sanctioned_kw, lifeline: true, period: cur.qta_period }, ctx.data);
+  if (!life.ok) fail(`bill-index: lifeline bill at ${lad.from} units gives ${life.error}`);
+  scope.ladder = { from: lad.from, to: lad.to, step: lad.step, count: ladder.length, limit, top_units: top.units, top_rs: top.u.total_rs, top_per_unit_rs: top.u.total_rs / top.units, lifeline_rs: life.total_rs, lifeline_rate: life.rate };
   const tables = [
     {
-      caption: `Electricity bill for every ${fmt(lad.step, 'int')} units, ${fmt(lad.from, 'int')} to ${fmt(lad.to, 'int')}, ${cur.label}`,
+      caption: `Electricity bill for every ${fmt(lad.step, 'int')} units, ${fmt(lad.from, 'int')} to ${fmt(lad.to, 'int')}, ${cur.label} (${fmt(ix.sanctioned_kw, 'int')} kW sanctioned load)`,
       head: ['Units a month', 'Unprotected bill', 'Per unit (unprotected)', 'Protected bill'],
       rows: ladder.map((r) => [fmt(r.units, 'int'), fmt(r.u.total_rs, 'rs'), fmt(r.u.total_rs / r.units, 'rs2'), r.p ? fmt(r.p.total_rs, 'rs') : `Not protected above ${fmt(limit, 'int')} units`]),
     },
