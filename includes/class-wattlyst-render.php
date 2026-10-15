@@ -10,7 +10,7 @@ defined( 'ABSPATH' ) || exit;
 final class Wattlyst_Render {
 
 	/** Tools listed openly per hub card on the home page; the rest sit in a "Show N more" fold. */
-	private const HOME_CARD_LINKS = 3;
+	private const HOME_CARD_LINKS = 2;
 
 	private Wattlyst_Tools $plugin;
 	private array $page;
@@ -680,7 +680,7 @@ final class Wattlyst_Render {
 		foreach ( $this->page['cards'] ?? array() as $card ) {
 			$items = array();
 			foreach ( $card['children'] as $ch ) {
-				$items[] = '<li><a href="' . esc_url( Wattlyst_Tools::link( $ch['url'] ) ) . '">' . esc_html( $ch['h1'] ) . '</a></li>';
+				$items[] = '<li><a href="' . esc_url( Wattlyst_Tools::link( $ch['url'] ) ) . '"><span>' . esc_html( $ch['h1'] ) . '</span></a></li>';
 			}
 			// Every tool link stays in the HTML (internal links), but on a phone a hub shows its first few tools and
 			// folds the rest, so the home page is not a wall of links (audit WL-78).
