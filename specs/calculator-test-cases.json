@@ -4597,10 +4597,92 @@
       "bill_before_rs": 14263.152,
       "bill_after_rs": 3820.668,
       "saving_rs": 10442.484,
+      "full_before_rs": 20209.539,
+      "full_import_rs": 8834.169,
+      "export_credit_rs": 1834.128,
+      "full_after_rs": 7000.041,
+      "full_saving_rs": 13209.498,
+      "fixed_before_rs": 1600,
+      "fixed_after_rs": 1200,
       "generator_pick_kva": 3
     },
     "tolerance": 0.01,
-    "note": "391.2 units x 36.46 (301-400 band); import 195.6 x 28.91 - export 225.6 x 8.13 = 3820.67; battery 2 kWh / (24 x 0.9 x 0.9); generator max(2362.5, 2340)/0.8 -> 3 kVA. Inverter raised 2026-10-14 to keep the array within dc_ac_ratio_max (formulas.md D5/D8); inverter_kw_load is the old P_run x margin figure."
+    "note": "391.2 units x 36.46 (301-400 band); import 195.6 x 28.91 - export 225.6 x 8.13 = 3820.67. Whole bill: before (14263.152 + 1600 fixed + 391.2 x 3.23 FC) x 1.18 = 20209.54; import (5654.796 + 1200 + 195.6 x 3.23) x 1.18 = 8834.17; after 8834.17 - 1834.13 = 7000.04; battery 2 kWh / (24 x 0.9 x 0.9); generator max(2362.5, 2340)/0.8 -> 3 kVA. Inverter raised 2026-10-14 to keep the array within dc_ac_ratio_max (formulas.md D5/D8); inverter_kw_load is the old P_run x margin figure."
+  },
+  {
+    "calc": "home_plan",
+    "name": "Whole bill: export credit larger than the import bill carries forward, never a negative bill",
+    "inputs": {
+      "loads": [
+        {"id": "ceiling-fan-ac", "qty": 4},
+        {"id": "ac-split-1-5ton-inverter", "hours": 8},
+        {"id": "refrigerator-inverter"}
+      ],
+      "backup_w": 500,
+      "backup_hours": 4,
+      "city": "lahore",
+      "sanctioned_kw": 4,
+      "buyback_rs": 60
+    },
+    "expected": {
+      "export_credit_rs": 13536,
+      "full_import_rs": 8834.169,
+      "full_after_rs": 0,
+      "full_carry_forward_rs": 4701.831,
+      "full_saving_rs": 20209.539,
+      "bill_after_rs": 0
+    },
+    "tolerance": 0.01,
+    "note": "Edited buyback 60 (not a real rate, it only forces the case): 225.6 x 60 = 13536 > 8834.17 import bill, so full_after = 0 and 13536 - 8834.17 = 4701.83 carries forward; saving = the whole bill before."
+  },
+  {
+    "calc": "home_plan",
+    "name": "Whole bill: no panel fits a 0.5 kW sanctioned load, so nothing is exported and the saving is zero",
+    "inputs": {
+      "loads": [
+        {"id": "ceiling-fan-ac", "qty": 4},
+        {"id": "ac-split-1-5ton-inverter", "hours": 8},
+        {"id": "refrigerator-inverter"}
+      ],
+      "backup_w": 500,
+      "backup_hours": 4,
+      "city": "lahore",
+      "sanctioned_kw": 0.5
+    },
+    "expected": {
+      "net_billing_panels": 0,
+      "export_units": 0,
+      "full_before_rs": 18557.539,
+      "full_import_rs": 18557.539,
+      "full_after_rs": 18557.539,
+      "full_saving_rs": 0,
+      "fixed_before_rs": 200
+    },
+    "tolerance": 0.01,
+    "note": "(14263.152 + 400 x 0.5 fixed + 391.2 x 3.23 FC) x 1.18 = 18557.54, the same before and after."
+  },
+  {
+    "calc": "home_plan",
+    "name": "Whole bill: buyback 0 still saves the self-used units, the lower fixed band and their GST",
+    "inputs": {
+      "loads": [
+        {"id": "ceiling-fan-ac", "qty": 4},
+        {"id": "ac-split-1-5ton-inverter", "hours": 8},
+        {"id": "refrigerator-inverter"}
+      ],
+      "backup_w": 500,
+      "backup_hours": 4,
+      "city": "lahore",
+      "sanctioned_kw": 4,
+      "buyback_rs": 0
+    },
+    "expected": {
+      "export_credit_rs": 0,
+      "full_after_rs": 8834.169,
+      "full_saving_rs": 11375.37
+    },
+    "tolerance": 0.01,
+    "note": "20209.539 - 8834.169 = 11375.37."
   },
   {
     "calc": "home_plan",
@@ -4625,6 +4707,13 @@
       "sanctioned_kw": 3
     },
     "expected": {
+      "full_before_rs": 19737.539,
+      "full_import_rs": 8480.169,
+      "export_credit_rs": 1263.402,
+      "full_after_rs": 7216.767,
+      "full_saving_rs": 12520.772,
+      "fixed_before_rs": 1200,
+      "fixed_after_rs": 900,
       "panels": 6,
       "installed_kw": 3.51,
       "solar_above_sanctioned": true,
