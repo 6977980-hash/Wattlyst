@@ -108,7 +108,7 @@
    },
    {
     "q": "Which wire between the battery and the inverter?",
-    "a": "DC current is high because the voltage is low: 3,000 W at 48 V is 62.5 A, needing 25 mm² (19/52) over a 3 m run with a DC-rated breaker or fuse. Keep battery cables as short as possible."
+    "a": "DC current is high because the voltage is low: 3,000 W at 48 V is 69.4 A, needing 35 mm² (19/64) over a 3 m run with a DC-rated breaker or fuse. Keep battery cables as short as possible."
    },
    {
     "q": "What do 3/29, 7/29 and 7/36 mean?",
@@ -188,6 +188,14 @@
      "hint": "Required for DC: enter the battery or system voltage. On AC leave it blank for the standard single or three-phase voltage."
     },
     {
+     "name": "inverter_eff",
+     "label": "Inverter efficiency (DC)",
+     "unit": "0 to 1",
+     "default": 0.9,
+     "advanced": true,
+     "hint": "DC only: for a battery-to-inverter cable the watts are what the inverter delivers, and the battery also supplies its loss, so current = watts ÷ (efficiency × volts). Enter 1 for a DC load wired straight to the battery. For the worst case enter the battery's lowest working voltage above."
+    },
+    {
      "name": "load_type",
      "label": "Type of load",
      "type": "select",
@@ -219,22 +227,6 @@
       ]
      ],
      "hint": "Motors, compressors and ACs get a breaker with a margin because they run near full current for long periods."
-    },
-    {
-     "name": "circuit",
-     "label": "Circuit",
-     "type": "select",
-     "default": "other",
-     "options": [
-      [
-       "other",
-       "Power / sockets / AC"
-      ],
-      [
-       "lighting",
-       "Lighting (3% drop limit)"
-      ]
-     ]
     },
     {
      "name": "method",
@@ -311,10 +303,9 @@
     },
     {
      "key": "breaker_a",
-     "label": "MCB",
+     "label": "MCB or DC fuse",
      "spec": "int",
      "unit": "A",
-     "label_ur": "MCB",
      "value": "16"
     },
     {
@@ -335,8 +326,8 @@
     }
    ],
    "how": {
-    "tpl": "Design current = {{out.watts}} W ÷ ({{out.k|2}} × {{out.volts}} V × {{out.pf|2}} power factor) = {{out.ib_a|1}} A (the first factor is one for single phase and DC, root three for three phase). MCB = next standard size above {{out.breaker_design_a|1}} A = {{out.breaker_a|int}} A. The cable must be rated at least {{out.min_cable_a|1}} A, the larger of {{out.ib_a|1}} A × {{out.margin|2}} and the MCB, and be at least {{out.min_mm2|1}} mm² for this circuit type: {{out.area_mm2|1}} mm² ({{out.pk_size|raw}}) is rated {{out.ampacity_a|int}} A. Voltage drop over the {{in.length_m}} m run = {{out.drop_v|1}} V, which is {{out.drop_pct|1}}% of {{out.volts}} V, within the {{out.limit_pct|int}}% limit.",
-    "text": "Design current = 2,000 W ÷ (1 × 230 V × 0.8 power factor) = 10.9 A (the first factor is one for single phase and DC, root three for three phase). MCB = next standard size above 10.9 A = 16 A. The cable must be rated at least 16 A, the larger of 10.9 A × 1.25 and the MCB, and be at least 2.5 mm² for this circuit type: 2.5 mm² (7/29) is rated 19 A. Voltage drop over the 20 m run = 3.9 V, which is 1.7% of 230 V, within the 5% limit."
+    "tpl": "Design current = {{out.watts}} W ÷ ({{out.k|2}} × {{out.volts}} V × {{out.pf|2}} power factor × {{out.inverter_eff|2}}) = {{out.ib_a|1}} A (the first factor is one for single phase and DC, root three for three phase; the last is the inverter efficiency on a DC battery feed, one on AC). MCB (or DC fuse above the largest MCB) = next standard size above {{out.breaker_design_a|1}} A = {{out.breaker_a|int}} A. The cable must be rated at least {{out.min_cable_a|1}} A, the larger of {{out.ib_a|1}} A × {{out.margin|2}} and the MCB, and be at least {{out.min_mm2|1}} mm² for this circuit type: {{out.area_mm2|1}} mm² ({{out.pk_size|raw}}) is rated {{out.ampacity_a|int}} A. Voltage drop over the {{in.length_m}} m run = {{out.drop_v|1}} V, which is {{out.drop_pct|1}}% of {{out.volts}} V, within the {{out.limit_pct|int}}% limit.",
+    "text": "Design current = 2,000 W ÷ (1 × 230 V × 0.8 power factor × 1) = 10.9 A (the first factor is one for single phase and DC, root three for three phase; the last is the inverter efficiency on a DC battery feed, one on AC). MCB (or DC fuse above the largest MCB) = next standard size above 10.9 A = 16 A. The cable must be rated at least 16 A, the larger of 10.9 A × 1.25 and the MCB, and be at least 2.5 mm² for this circuit type: 2.5 mm² (7/29) is rated 19 A. Voltage drop over the 20 m run = 3.9 V, which is 1.7% of 230 V, within the 5% limit."
    },
    "submit": "Calculate",
    "notice": "",
@@ -363,7 +354,7 @@
    },
    {
     "title": "48 V battery to inverter cable, 3,000 W, 3 m",
-    "text": "DC has no power factor: 3,000 W ÷ 48 V = 62.5 A. The cable must be rated 78.1 A, so 25 mm² (19/52) at 80 A, protected by a 63 A DC-rated breaker or fuse. Even at 3 m the drop is 0.7%, which is why battery cables are kept short and thick."
+    "text": "DC has no power factor, but the battery also supplies the inverter's loss: 3,000 W ÷ (90% × 48 V) = 69.4 A. The cable must be rated 86.8 A, so 35 mm² (19/64) at 99 A, protected by a DC-rated breaker or fuse of 80 A. Even at 3 m the drop is 0.6%, which is why battery cables are kept short and thick."
    },
    {
     "title": "3,000 W socket circuit, 10 m",
@@ -586,7 +577,7 @@
       "name": "Which wire between the battery and the inverter?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "DC current is high because the voltage is low: 3,000 W at 48 V is 62.5 A, needing 25 mm² (19/52) over a 3 m run with a DC-rated breaker or fuse. Keep battery cables as short as possible."
+       "text": "DC current is high because the voltage is low: 3,000 W at 48 V is 69.4 A, needing 35 mm² (19/64) over a 3 m run with a DC-rated breaker or fuse. Keep battery cables as short as possible."
       }
      },
      {

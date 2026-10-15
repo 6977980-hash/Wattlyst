@@ -126,7 +126,7 @@
   "A {{in.hp|2}} hp water pump needs about {{out.pump_run_w|int}} W of electrical input while running ({{in.hp|2}} hp × {{d.w_per_hp|1}} W ÷ {{d.motor_eff|pct}} motor efficiency) and about {{out.pump_start_w|int}} W while starting.",
   "Generator size in kVA = the larger of (running watts × {{d.margin|2}}) or (starting watts) ÷ {{d.pf_generator|2}} power factor ÷ 1,000, rounded up to the next standard generator size.",
   "A pump motor draws about {{d.start_factors.motor|int}} times its running watts for a second or two when it starts, and that starting surge, not the running watts, usually decides the generator size.",
-  "A {{in.hp|2}} hp pump alone needs a {{out.standard_kva|1}} kVA generator; adding lights and fans raises the running load but rarely changes the size, because the starting surge still dominates."
+  "A {{in.hp|2}} hp pump alone needs a {{out.standard_kva|1}} kVA generator; that size has almost nothing to spare, so with {{ex.3.in.other_w|int}} W of lights and a fan running as well it moves up to {{ex.3.out.standard_kva|1}} kVA, because the pump's start comes on top of everything already on."
  ],
  "formula": {
   "text": "P_run = hp × 745.7 ÷ η; P_start = P_run × k; kVA = max(P_run × m, P_start) ÷ PF ÷ 1000",
@@ -159,7 +159,7 @@
    "h2": "Generator for a submersible pump or tubewell",
    "p": [
     "The same formula applies, but submersible and tubewell motors are larger. A {{ex.1.in.hp|2}} hp submersible with {{ex.1.in.other_w|int}} W of lights running needs a {{ex.1.out.standard_kva|1}} kVA generator, and a {{ex.2.in.hp|2}} hp tubewell pump needs {{ex.2.out.standard_kva|1}} kVA on its own because its starting surge is about {{ex.2.out.pump_start_w|int}} W.",
-    "Pumps larger than those listed here need a generator above {{d.standard_generator_kva.11|int}} kVA. For such a pump the calculator reports the kVA but no standard size, and a three-phase generator with a soft starter is the usual answer; have an engineer size it."
+    "A pump whose start needs more than the largest set listed here, {{d.standard_generator_kva.11|int}} kVA, gets no standard size. For such a pump the calculator reports the kVA but no standard size, and a three-phase generator with a soft starter is the usual answer; have an engineer size it."
    ]
   },
   {
@@ -195,10 +195,11 @@
   },
   {
    "inputs": {
-    "hp": 0.5
+    "hp": 1,
+    "other_w": 100
    },
-   "title": "{{in.hp|2}} hp small pump",
-   "text": "{{out.pump_run_w|int}} W running and {{out.pump_start_w|int}} W starting give {{out.recommended_kva|up2}} kVA, so the smallest common generator, {{out.standard_kva|1}} kVA, is enough with room for lights and fans."
+   "title": "{{in.hp|2}} hp pump with a fan and a few lights on",
+   "text": "{{out.pump_run_w|int}} W pump + {{in.other_w|int}} W of lights and a fan = {{out.running_w|int}} W running; the pump's start comes on top of that load, so the set needs {{out.recommended_kva|up2}} kVA and the next size is {{out.standard_kva|1}} kVA. The pump alone fits on a smaller set with almost nothing to spare."
   },
   {
    "inputs": {
@@ -267,7 +268,7 @@
  "faq": [
   {
    "q": "What size generator do I need for a {{ex.0.in.hp|2}} hp water pump?",
-   "a": "A {{ex.0.in.hp|2}} hp pump draws about {{ex.0.out.pump_run_w|int}} W running and {{ex.0.out.pump_start_w|int}} W starting, so it needs a {{ex.0.out.standard_kva|1}} kVA generator. That size also carries a few lights and fans."
+   "a": "A {{ex.0.in.hp|2}} hp pump draws about {{ex.0.out.pump_run_w|int}} W running and {{ex.0.out.pump_start_w|int}} W starting, so it needs a {{ex.0.out.standard_kva|1}} kVA generator. With {{ex.3.in.other_w|int}} W of lights and a fan on as well it needs {{ex.3.out.standard_kva|1}} kVA, so enter what else runs with the pump."
   },
   {
    "q": "What size generator runs a {{ex.4.in.hp|2}} hp pump?",
@@ -283,7 +284,7 @@
   },
   {
    "q": "Can a small generator run a well pump if I start it with nothing else on?",
-   "a": "Only if it can supply the starting surge. Switching off the lights lowers the running load a little, but the surge of the pump itself does not change, and that is what decides the generator size. A generator below the calculated kVA will stall or trip when the pump starts."
+   "a": "Only if it can supply the starting surge on top of whatever else is running. Switching the lights and fans off before you start the pump lowers that peak, and on a set sized close to the pump that can decide whether it starts. A generator below the calculated kVA will stall or trip when the pump starts."
   },
   {
    "q": "Is the generator size different at {{d.v_1ph_us|int}} V or {{d.v_1ph|int}} V?",

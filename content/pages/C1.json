@@ -70,7 +70,7 @@
   {
    "key": "recommended_kva",
    "label": "Calculated minimum",
-   "spec": "2",
+   "spec": "up2",
    "unit": "kVA"
   },
   {
@@ -87,7 +87,7 @@
   }
  ],
  "answer": "A home running four fans, ten LED bulbs, an inverter fridge, a TV, a 1.5 ton inverter AC and a 1 hp water motor needs a {{out.standard_kva|1}} kVA generator: {{out.running_w|int}} W running and {{out.peak_w|int}} W when the pump starts. Generator kVA = the larger of running watts × {{d.margin|2}} or peak watts, ÷ {{d.pf_generator|2}} power factor ÷ 1,000, rounded up to a size sold.",
- "how": "Your list runs at {{out.running_w|int}} W in total. When its largest motor starts, the peak is {{out.peak_w|int}} W. The generator is sized on the larger of {{out.running_w|int}} W × {{out.margin|2}} margin and {{out.peak_w|int}} W, which is {{out.sized_w|int}} W; ÷ {{out.pf|2}} power factor ÷ 1,000 = {{out.recommended_kva|2}} kVA, so the next standard size is {{out.standard_kva|1}} kVA.",
+ "how": "Your list runs at {{out.running_w|int}} W in total. When its largest motor starts, the peak is {{out.peak_w|int}} W. The generator is sized on the larger of {{out.running_w|int}} W × {{out.margin|2}} margin and {{out.peak_w|int}} W, which is {{out.sized_w|int}} W; ÷ {{out.pf|2}} power factor ÷ 1,000 = {{out.recommended_kva|up2}} kVA, so the next standard size is {{out.standard_kva|1}} kVA.",
  "key_facts": [
   "A typical Pakistani home with four fans, ten LED bulbs, an inverter fridge, a TV, one 1.5 ton inverter AC and a 1 hp water motor runs at about {{out.running_w|int}} W and needs a {{out.standard_kva|1}} kVA generator, because the pump's start lifts the peak to {{out.peak_w|int}} W.",
   "Keep the water motor off while the generator runs and the same home needs only {{ex.1.out.standard_kva|1}} kVA: the pump adds {{a.water-motor-1hp.running_w|int}} W of running load but about {{a.water-motor-1hp.starting_w|int}} W at the moment it starts.",
@@ -123,7 +123,7 @@
   {
    "h2": "What size generator for a 3 bedroom house?",
    "p": [
-    "A three-bedroom home that wants two bedrooms cooled during a cut, with six fans, twelve bulbs, an inverter fridge, a TV, two 1.5 ton inverter ACs and the water motor, runs at {{ex.2.out.running_w|int}} W and peaks at {{ex.2.out.peak_w|int}} W. The calculated size is {{ex.2.out.recommended_kva|2}} kVA, so the generator to buy is {{ex.2.out.standard_kva|1}} kVA.",
+    "A three-bedroom home that wants two bedrooms cooled during a cut, with six fans, twelve bulbs, an inverter fridge, a TV, two 1.5 ton inverter ACs and the water motor, runs at {{ex.2.out.running_w|int}} W and peaks at {{ex.2.out.peak_w|int}} W. The calculated size is {{ex.2.out.recommended_kva|up2}} kVA, so the generator to buy is {{ex.2.out.standard_kva|1}} kVA.",
     "Each extra inverter AC adds about {{a.ac-split-1-5ton-inverter.running_w|int}} W of running load. With three such ACs, more fans and lights and an iron, the home in the last example reaches {{ex.4.out.standard_kva|1}} kVA. At that size a diesel set and a changeover switch on the main board are the usual choice."
    ]
   },
@@ -163,7 +163,7 @@
     ]
    },
    "title": "Loadshedding basics: four fans, ten bulbs, a TV and a non-inverter fridge",
-   "text": "Running load {{out.running_w|int}} W. The fridge compressor's start lifts the peak to {{out.peak_w|int}} W, which is larger than {{out.running_w|int}} W × {{out.margin|2}}. {{out.sized_w|int}} W ÷ {{out.pf|2}} ÷ 1,000 = {{out.recommended_kva|2}} kVA, so a {{out.standard_kva|1}} kVA generator."
+   "text": "Running load {{out.running_w|int}} W. The fridge compressor's start lifts the peak to {{out.peak_w|int}} W, which is larger than {{out.running_w|int}} W × {{out.margin|2}}. {{out.sized_w|int}} W ÷ {{out.pf|2}} ÷ 1,000 = {{out.recommended_kva|up2}} kVA, so a {{out.standard_kva|1}} kVA generator."
   },
   {
    "inputs": {
@@ -188,7 +188,7 @@
     ]
    },
    "title": "The example home with the water motor kept off",
-   "text": "Fans, bulbs, an inverter fridge, a TV and a 1.5 ton inverter AC run at {{out.running_w|int}} W and peak at {{out.peak_w|int}} W. The larger of {{out.running_w|int}} W × {{out.margin|2}} and the peak is {{out.sized_w|int}} W, or {{out.recommended_kva|2}} kVA, so {{out.standard_kva|1}} kVA is enough."
+   "text": "Fans, bulbs, an inverter fridge, a TV and a 1.5 ton inverter AC run at {{out.running_w|int}} W and peak at {{out.peak_w|int}} W. The larger of {{out.running_w|int}} W × {{out.margin|2}} and the peak is {{out.sized_w|int}} W, or {{out.recommended_kva|up2}} kVA, so {{out.standard_kva|1}} kVA is enough."
   },
   {
    "inputs": {
@@ -217,7 +217,7 @@
     ]
    },
    "title": "Three-bedroom house with two inverter ACs and a water motor",
-   "text": "Six fans, twelve bulbs, an inverter fridge, a TV, two 1.5 ton inverter ACs and a 1 hp pump: {{out.running_w|int}} W running, {{out.peak_w|int}} W when the pump starts, {{out.recommended_kva|2}} kVA calculated. Buy a {{out.standard_kva|1}} kVA generator."
+   "text": "Six fans, twelve bulbs, an inverter fridge, a TV, two 1.5 ton inverter ACs and a 1 hp pump: {{out.running_w|int}} W running, {{out.peak_w|int}} W when the pump starts, {{out.recommended_kva|up2}} kVA calculated. Buy a {{out.standard_kva|1}} kVA generator."
   },
   {
    "inputs": {
@@ -242,7 +242,7 @@
     ]
    },
    "title": "Home with a non-inverter fridge and a 1.5 ton non-inverter AC",
-   "text": "The running load is {{out.running_w|int}} W, but the AC compressor's start takes the peak to {{out.peak_w|int}} W. That needs {{out.recommended_kva|2}} kVA, so the generator to buy is {{out.standard_kva|1}} kVA, much larger than the running watts suggest."
+   "text": "The running load is {{out.running_w|int}} W, but the AC compressor's start takes the peak to {{out.peak_w|int}} W. That needs {{out.recommended_kva|up2}} kVA, so the generator to buy is {{out.standard_kva|1}} kVA, much larger than the running watts suggest."
   },
   {
    "inputs": {
@@ -275,7 +275,7 @@
     ]
    },
    "title": "Larger house: three inverter ACs, a pump and an iron",
-   "text": "Eight fans, sixteen bulbs, an inverter fridge, two TVs, three 1.5 ton inverter ACs, a 1 hp pump and an iron run at {{out.running_w|int}} W. Here the running load × {{out.margin|2}} ({{out.sized_w|int}} W) is larger than the {{out.peak_w|int}} W peak, so it sets the size: {{out.recommended_kva|2}} kVA, buy {{out.standard_kva|1}} kVA."
+   "text": "Eight fans, sixteen bulbs, an inverter fridge, two TVs, three 1.5 ton inverter ACs, a 1 hp pump and an iron run at {{out.running_w|int}} W. Here the running load × {{out.margin|2}} ({{out.sized_w|int}} W) is larger than the {{out.peak_w|int}} W peak, so it sets the size: {{out.recommended_kva|up2}} kVA, buy {{out.standard_kva|1}} kVA."
   }
  ],
  "table": {
@@ -431,7 +431,7 @@
    },
    {
     "label": "Calculated kVA",
-    "tpl": "{{out.recommended_kva|2}} kVA"
+    "tpl": "{{out.recommended_kva|up2}} kVA"
    },
    {
     "label": "Generator to buy",

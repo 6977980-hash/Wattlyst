@@ -198,17 +198,23 @@
    "fixed_inputs": {},
    "outputs": [
     {
-     "key": "standard_panel_w",
-     "label": "Panel to buy",
+     "key": "fitted_panel_w",
+     "label": "Total panel watts",
      "spec": "int",
      "unit": "W",
-     "label_ur": "Kaunsa panel lein",
      "value": "200"
+    },
+    {
+     "key": "panels_fitted",
+     "label": "Panels",
+     "spec": "int",
+     "label_ur": "Panels",
+     "value": "1"
     },
     {
      "key": "panel_w",
      "label": "Minimum panel watts",
-     "spec": "int",
+     "spec": "up",
      "unit": "W",
      "label_ur": "Kam az kam panel watts",
      "value": "181"
@@ -231,8 +237,8 @@
     }
    ],
    "how": {
-    "tpl": "Energy to put back: {{in.ah}} Ah × {{in.volts}} V × {{out.dod|pct}} depth of discharge ÷ {{out.charge_eff|pct}} charging efficiency = the watt-hours the panel must deliver. Divided by {{in.psh}} peak sun hours × {{out.pr|2}} performance ratio = {{out.panel_w|int}} W minimum, rounded up to the next panel size sold, {{out.standard_panel_w|int}} W. That panel refills the battery in {{out.charge_hours|1}} hours of peak sun, about {{out.charge_days|1}} sunny days. Controller: {{out.standard_panel_w|int}} W ÷ {{in.volts}} V × {{out.margin|2}} margin = {{out.controller_a|1}} A, so a {{out.standard_controller_a|int}} A MPPT controller.",
-    "text": "Energy to put back: 100 Ah × 12 V × 50% depth of discharge ÷ 85% charging efficiency = the watt-hours the panel must deliver. Divided by 5 peak sun hours × 0.78 performance ratio = 181 W minimum, rounded up to the next panel size sold, 200 W. That panel refills the battery in 4.5 hours of peak sun, about 0.9 sunny days. Controller: 200 W ÷ 12 V × 1.25 margin = 20.8 A, so a 30 A MPPT controller."
+    "tpl": "Energy to put back: {{in.ah}} Ah × {{in.volts}} V × {{out.dod|pct}} depth of discharge ÷ {{out.charge_eff|pct}} charging efficiency = the watt-hours the panel must deliver. Divided by {{in.psh}} peak sun hours × {{out.pr|2}} performance ratio = {{out.panel_w|up}} W minimum, rounded up to the panel sizes sold: {{out.fitted_panel_w|int}} W in all, as {{out.panels_fitted|int}} panel(s) (one when a standard size covers it, else several of the largest). That panel power refills the battery in {{out.charge_hours|1}} hours of peak sun, about {{out.charge_days|1}} sunny days. Controller: {{out.fitted_panel_w|int}} W ÷ {{in.volts}} V × {{out.margin|2}} margin = {{out.controller_a|1}} A, so a {{out.standard_controller_a|int}} A MPPT controller.",
+    "text": "Energy to put back: 100 Ah × 12 V × 50% depth of discharge ÷ 85% charging efficiency = the watt-hours the panel must deliver. Divided by 5 peak sun hours × 0.78 performance ratio = 181 W minimum, rounded up to the panel sizes sold: 200 W in all, as 1 panel(s) (one when a standard size covers it, else several of the largest). That panel power refills the battery in 4.5 hours of peak sun, about 0.9 sunny days. Controller: 200 W ÷ 12 V × 1.25 margin = 20.8 A, so a 30 A MPPT controller."
    },
    "submit": "Calculate",
    "notice": "",
@@ -259,7 +265,7 @@
    },
    {
     "title": "100 Ah lithium (LiFePO4) battery used to 90%",
-    "text": "Lithium stores 95% of what goes in but is used much deeper, 90%, so there is more to put back: 291 W minimum, a 300 W panel, with a 40 A MPPT controller. Full charge in 4.9 h of peak sun."
+    "text": "Lithium stores 95% of what goes in but is used much deeper, 90%, so there is more to put back: 292 W minimum, a 300 W panel, with a 40 A MPPT controller. Full charge in 4.9 h of peak sun."
    }
   ],
   "table": {
@@ -274,7 +280,7 @@
    "rows": [
     [
      "50 Ah 12 V",
-     "90 W",
+     "91 W",
      "100 W",
      "4.5 h of peak sun",
      "20 A"
@@ -288,7 +294,7 @@
     ],
     [
      "150 Ah 12 V",
-     "271 W",
+     "272 W",
      "300 W",
      "4.5 h of peak sun",
      "40 A"

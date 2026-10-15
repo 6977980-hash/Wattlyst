@@ -115,7 +115,7 @@
    },
    {
     "q": "How long will a UPS or inverter give backup?",
-    "a": "That depends on the battery and the load, not on the unit. Backup hours = battery Ah × volts × usable depth of discharge (about 50% for tubular, about 90% for lithium) × inverter efficiency ÷ load watts. The battery backup time calculator works it out for your numbers."
+    "a": "That depends on the battery and the load, not on the unit. Backup hours = battery Ah × volts × usable depth of discharge (about 50% for tubular, about 90% for lithium) ÷ (load watts ÷ inverter efficiency + the inverter's idle draw). The battery backup time calculator works it out for your numbers."
    }
   ],
   "key_facts": [
@@ -265,7 +265,7 @@
       "name": "How long will a UPS or inverter give backup?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "That depends on the battery and the load, not on the unit. Backup hours = battery Ah × volts × usable depth of discharge (about 50% for tubular, about 90% for lithium) × inverter efficiency ÷ load watts. The battery backup time calculator works it out for your numbers."
+       "text": "That depends on the battery and the load, not on the unit. Backup hours = battery Ah × volts × usable depth of discharge (about 50% for tubular, about 90% for lithium) ÷ (load watts ÷ inverter efficiency + the inverter's idle draw). The battery backup time calculator works it out for your numbers."
       }
      }
     ]

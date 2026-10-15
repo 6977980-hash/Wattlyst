@@ -154,7 +154,7 @@
   {
    "h2": "Solar wire size for a five kW inverter",
    "p": [
-    "A five kW hybrid inverter is usually fed by two strings. Each string on its own cable carries one panel's current and 4 mm² is normal. If the two strings are joined in a combiner before one cable runs to the inverter, that cable carries twice the current; the table includes a two-string case at {{in.volts|int}} V. Cables that carry combined strings must also be checked for current rating, which this page does not do: use the wire size calculator in DC mode for the current check, and never combine more strings than the cable and the inverter input allow.",
+    "A five kW hybrid inverter is usually fed by two strings. Each string on its own cable carries one panel's current and 4 mm² is normal. If the two strings are joined in a combiner before one cable runs to the inverter, that cable carries twice the current; the table includes a two-string case at {{in.volts|int}} V. Cables that carry combined strings must also be checked for current rating: this page warns when the current is above the cable's rating in conduit, but use the wire size calculator in DC mode for the current check, and never combine more strings than the cable and the inverter input allow.",
     "The AC output of the inverter to the distribution board is an ordinary single-phase circuit; size it with the wire size calculator and protect it with the MCB from the breaker size calculator."
    ]
   },
@@ -162,7 +162,7 @@
    "h2": "Battery cable size for an inverter",
    "p": [
     "The cable between the battery and the inverter is the opposite case: low voltage and very high current. A three kW inverter on a {{ex.4.in.volts|int}} V bank draws at least {{ex.4.in.amps|1}} A (more with the inverter's losses and a low battery), and even a {{ex.4.in.length_m|int}} m run in {{ex.4.in.area_mm2|int}} mm² loses {{ex.4.out.drop_pct|2}}%. The size here is set by current rating, not by drop: check it with the wire size calculator in DC mode, which picks the cable from the current table and gives the Pakistani size. Keep battery cables as short as possible and fit a DC-rated fuse or breaker at the battery.",
-    "A five kW inverter on 48 V draws over a hundred amps, beyond the single-phase breaker sizes in our table; the inverter maker's manual gives the cable and fuse for it, and a licensed electrician should fit them."
+    "A five kW inverter on 48 V draws over a hundred amps, more than the largest cable in our table carries; the inverter maker's manual gives the cable and fuse for it, and a licensed electrician should fit them."
    ]
   },
   {
@@ -297,7 +297,7 @@
   },
   {
    "q": "Does this calculator pick the cable size for me?",
-   "a": "It checks the size you pick, and the table shows the common sizes for common runs so you can choose the smallest that passes. It does not check the current rating; for combined strings or battery cables use the wire size calculator in DC mode."
+   "a": "It checks the size you pick, and the table shows the common sizes for common runs so you can choose the smallest that passes. It also warns when the current is above the cable's rating (in conduit, in hot air); to pick the size for combined strings or battery cables use the wire size calculator in DC mode."
   },
   {
    "q": "What cable size between the battery and the inverter?",

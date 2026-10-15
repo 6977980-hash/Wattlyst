@@ -19,9 +19,9 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => readFileSync(join(root, p), 'utf8');
 const readJson = (p) => JSON.parse(read(p));
 
-const ENGINE_MODULES = ['conversions', 'battery', 'sizing', 'solar', 'bill', 'load', 'wiring', 'planner', 'prices', 'forecast', 'fuel', 'solartools', 'acbill', 'sanction', 'seasonal', 'circuits', 'backup', 'decision'];
+const ENGINE_MODULES = ['conversions', 'battery', 'sizing', 'solar', 'bill', 'load', 'wiring', 'planner', 'prices', 'forecast', 'fuel', 'solartools', 'acbill', 'sanction', 'seasonal', 'circuits', 'backup', 'decision', 'offgrid'];
 /** Data each engine module needs in the browser (keeps page weight down). Appliances are added per page, only the ones its fields use. */
-const MODULE_DATA = { bill: ['tariff'], solar: ['cities'], wiring: ['cables'], planner: ['tariff', 'cities'], prices: ['solar_prices'], forecast: ['cities'], acbill: ['tariff'], sanction: ['cables'], seasonal: ['cities'], circuits: ['cables'], backup: ['cities', 'solar_prices', 'generator_fuel', 'component_prices', 'backup_prices'], decision: ['tariff', 'cities', 'solar_prices', 'generator_fuel', 'component_prices', 'backup_prices'] };
+const MODULE_DATA = { bill: ['tariff'], solar: ['cities'], wiring: ['cables'], planner: ['tariff', 'cities'], prices: ['solar_prices'], forecast: ['cities'], acbill: ['tariff'], sanction: ['cables'], seasonal: ['cities'], offgrid: ['cities'], circuits: ['cables'], backup: ['cities', 'solar_prices', 'generator_fuel', 'component_prices', 'backup_prices'], decision: ['tariff', 'cities', 'solar_prices', 'generator_fuel', 'component_prices', 'backup_prices'] };
 /** Extra data a single calculator needs (shipped only on its page). */
 const CALC_DATA = { generator_fuel: ['generator_fuel'] };
 /** Appliance fields the browser engine and the loads picker need. */
@@ -114,6 +114,7 @@ function pageAppliances(fields, ctx) {
   for (const f of fields) {
     if (f.type === 'appliance') for (const [v] of f.options) if (v !== 'custom') ids.add(v);
     if (f.type === 'loads') for (const a of f.catalog) ids.add(a.id);
+    if (f.name === 'idle_w') ids.add('ups-idle'); // battery_runtime/battery_bank default (formulas.md B, WL-120)
   }
   const out = {};
   for (const id of ids) out[id] = Object.fromEntries(APPLIANCE_KEYS.filter((k) => ctx.data.appliances[id][k] !== undefined).map((k) => [k, ctx.data.appliances[id][k]]));

@@ -1,5 +1,5 @@
 // B. Battery / UPS (specs/formulas.md section B) and battery tools from section G.
-import { calculator, CalcError, has, pos, frac, nonneg, pick, ceilSafe, dflt, num } from './core.js';
+import { calculator, CalcError, has, pos, frac, nonneg, pick, ceilSafe, dflt, num, appliance } from './core.js';
 
 const CHEMISTRIES = ['tubular', 'lead_acid', 'agm', 'gel', 'lifepo4'];
 
@@ -15,30 +15,39 @@ function chargeEffFor(chemistry, i, d) {
   return frac(i, 'charge_eff', def);
 }
 
-/** t_h = (Ah × V_bank × DoD × η_inv) / P_load. DC load: pass inverter_eff = 1. */
+/**
+ * Battery-side draw: P_bat = P_load / η_inv + P_idle (formulas.md B, full audit WL-120). P_idle = the inverter's own
+ * no-load draw, default data/appliances.json ups-idle; a DC load (η_inv = 1, no inverter) has none.
+ */
+function drawFor(i, d) {
+  const inverter_eff = frac(i, 'inverter_eff', dflt(d, 'inverter_eff_ups'));
+  const load_w = pos(i, 'load_w', undefined, 'load_must_be_positive');
+  const idle_w = inverter_eff < 1 ? (has(i, 'idle_w') ? nonneg(i, 'idle_w') : appliance(d, 'ups-idle').running_w) : 0;
+  return { inverter_eff, load_w, idle_w, battery_w: load_w / inverter_eff + idle_w };
+}
+
+/** t_h = (Ah × V_bank × DoD) / P_bat, P_bat = P_load / η_inv + P_idle. DC load: pass inverter_eff = 1. */
 export const battery_runtime = calculator((i, d) => {
   const ah = pos(i, 'ah');
   const volts = pos(i, 'volts');
   const { chemistry, dod } = dodFor(i, d);
-  const inverter_eff = frac(i, 'inverter_eff', dflt(d, 'inverter_eff_ups'));
-  const load_w = pos(i, 'load_w', undefined, 'load_must_be_positive');
-  const usable_wh = ah * volts * dod * inverter_eff;
-  const hours = usable_wh / load_w;
-  return { chemistry, ah, volts, dod, inverter_eff, load_w, usable_wh, hours, minutes: hours * 60 };
+  const w = drawFor(i, d);
+  const stored_wh = ah * volts * dod;
+  const hours = stored_wh / w.battery_w;
+  return { chemistry, ah, volts, dod, ...w, stored_wh, hours, minutes: hours * 60 };
 });
 
 /**
- * Ah = (P_load × t_h) / (V_bank × DoD × η_inv).
+ * Ah = (P_bat × t_h) / (V_bank × DoD), P_bat = P_load / η_inv + P_idle.
  * If battery_ah and battery_v are given: batteries = ceil(Ah / battery_ah) parallel strings × (V_bank / battery_v) in series.
  */
 export const battery_bank = calculator((i, d) => {
-  const load_w = pos(i, 'load_w', undefined, 'load_must_be_positive');
+  const w = drawFor(i, d);
   const hours = pos(i, 'hours');
   const volts = pos(i, 'volts');
   const { chemistry, dod } = dodFor(i, d);
-  const inverter_eff = frac(i, 'inverter_eff', dflt(d, 'inverter_eff_ups'));
-  const ah_required = (load_w * hours) / (volts * dod * inverter_eff);
-  const out = { chemistry, load_w, hours, volts, dod, inverter_eff, load_kwh: (load_w * hours) / 1000, ah_required, kwh_required: (ah_required * volts) / 1000 };
+  const ah_required = (w.battery_w * hours) / (volts * dod);
+  const out = { chemistry, ...w, hours, volts, dod, load_kwh: (w.load_w * hours) / 1000, battery_kwh_draw: (w.battery_w * hours) / 1000, ah_required, kwh_required: (ah_required * volts) / 1000 };
   if (has(i, 'battery_ah')) {
     const battery_ah = pos(i, 'battery_ah');
     const battery_v = pos(i, 'battery_v');

@@ -44,7 +44,7 @@ function rowOf(row, idx, d) {
     const qty = num(row, 'qty', { def: 1, min: 0, code: `load_${idx}_qty_invalid` });
     let run;
     if (has(row, 'run') && !has(row, 'watts')) run = num(row, 'run', { min: 0, code: `load_${idx}_run_invalid` });
-    else if (has(row, 'watts') || !item) run = num(row, 'watts', { min: 0, code: item ? `load_${idx}_watts_invalid` : `load_${idx}_watts_required` });
+    else if (has(row, 'watts') || !item) run = num(row, 'watts', { min: 0, code: item || has(row, 'watts') ? `load_${idx}_watts_invalid` : `load_${idx}_watts_required` });
     else run = item.running_w;
     let start = item ? (item.starting_w * run) / item.running_w : run;
     if (has(row, 'start')) start = num(row, 'start', { min: 0, code: `load_${idx}_start_invalid` });

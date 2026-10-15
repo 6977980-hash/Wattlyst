@@ -69,7 +69,7 @@
    {
     "h2": "Charge controller for 1,000 W of solar",
     "p": [
-     "On a 24 V bank 1,000 W needs 52.1 A, so a 60 A MPPT controller; on twice the voltage the same array needs half that. 1,500 W on 24 V needs 78.1 A and an 80 A controller. If you plan to add panels later, buy the controller for the final array, because the amps rise with every panel."
+     "On a 24 V bank 1,000 W needs 52.1 A, so a 60 A MPPT controller; on twice the voltage the same array needs half that. 1,500 W on 24 V needs 78.2 A and an 80 A controller. If you plan to add panels later, buy the controller for the final array, because the amps rise with every panel."
     ]
    }
   ],
@@ -214,14 +214,14 @@
     {
      "key": "amps",
      "label": "Calculated minimum",
-     "spec": "1",
+     "spec": "up1",
      "unit": "A",
      "label_ur": "Hisab se kam az kam",
      "value": "52.1"
     }
    ],
    "how": {
-    "tpl": "MPPT: total panel watts ÷ battery bank volts gives the charging current the controller must deliver; × the {{out.margin|2}} safety margin for cold bright days = {{out.amps|1}} A. Controllers are sold in fixed sizes, so the next size up is {{out.standard_a|int}} A. PWM: the controller passes the panel current through, so amps = Isc of one panel × panels in parallel × {{out.margin|2}}, rounded up to the next size.",
+    "tpl": "MPPT: total panel watts ÷ battery bank volts gives the charging current the controller must deliver; × the {{out.margin|2}} safety margin for cold bright days = {{out.amps|up1}} A. Controllers are sold in fixed sizes, so the next size up is {{out.standard_a|int}} A. PWM: the controller passes the panel current through, so amps = Isc of one panel × panels in parallel × {{out.margin|2}}, rounded up to the next size.",
     "text": "MPPT: total panel watts ÷ battery bank volts gives the charging current the controller must deliver; × the 1.25 safety margin for cold bright days = 52.1 A. Controllers are sold in fixed sizes, so the next size up is 60 A. PWM: the controller passes the panel current through, so amps = Isc of one panel × panels in parallel × 1.25, rounded up to the next size."
    },
    "submit": "Calculate",
@@ -241,7 +241,7 @@
    },
    {
     "title": "1,500 W on a 24 V bank, MPPT",
-    "text": "1,500 W ÷ 24 V × 1.25 = 78.1 A, so an 80 A MPPT. Moving the bank to twice the voltage would halve the amps."
+    "text": "1,500 W ÷ 24 V × 1.25 = 78.2 A, so an 80 A MPPT. Moving the bank to twice the voltage would halve the amps."
    },
    {
     "title": "2,000 W on a 48 V bank, MPPT",
@@ -264,11 +264,11 @@
    ],
    "rows": [
     [
-     "13 A",
+     "13.1 A",
      "20 A MPPT"
     ],
     [
-     "26 A",
+     "26.1 A",
      "30 A MPPT"
     ],
     [
@@ -280,11 +280,11 @@
      "60 A MPPT"
     ],
     [
-     "78.1 A",
+     "78.2 A",
      "80 A MPPT"
     ],
     [
-     "91.1 A",
+     "91.2 A",
      "100 A MPPT"
     ]
    ]

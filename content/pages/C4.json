@@ -67,7 +67,7 @@
   }
  ],
  "answer": "Running watts are the steady power an appliance draws while it works; starting watts are the short burst a motor or compressor needs for a second or two to get going. A non-inverter fridge runs at {{out.running_w|int}} W but starts at {{out.peak_w|int}} W, so a generator must deliver {{out.sized_w|int}} W. Size on the larger of running watts × {{d.margin|2}} or starting watts.",
- "how": "Running watts: {{out.running_w|int}} W. Starting watts (running watts plus the largest start jump): {{out.peak_w|int}} W. Running watts × {{out.margin|2}} margin is compared with the starting watts; the larger, {{out.sized_w|int}} W, is what a generator must deliver (an inverter is checked on two ratings instead: its continuous rating against the running watts × margin, its surge rating against the starting watts). {{out.sized_w|int}} W ÷ {{out.pf|2}} ÷ 1,000 = {{out.recommended_kva|2}} kVA, so a {{out.standard_kva|1}} kVA generator.",
+ "how": "Running watts: {{out.running_w|int}} W. Starting watts (running watts plus the largest start jump): {{out.peak_w|int}} W. Running watts × {{out.margin|2}} margin is compared with the starting watts; the larger, {{out.sized_w|int}} W, is what a generator must deliver (an inverter is checked on two ratings instead: its continuous rating against the running watts × margin, its surge rating against the starting watts). {{out.sized_w|int}} W ÷ {{out.pf|2}} ÷ 1,000 = {{out.recommended_kva|up2}} kVA, so a {{out.standard_kva|1}} kVA generator.",
  "key_facts": [
   "Running watts (also called rated or continuous watts) are what an appliance draws for as long as it is on; starting watts (surge or peak watts) are drawn for a second or two while a motor or compressor starts.",
   "For heaters, irons, kettles, bulbs and electronics the two are the same: an electric iron runs and starts at {{a.electric-iron.running_w|int}} W, so the running watts × {{d.margin|2}} ({{ex.0.out.sized_w|int}} W) decide the generator.",
@@ -131,7 +131,7 @@
     ]
    },
    "title": "Electric iron: running and starting watts are equal",
-   "text": "Running {{out.running_w|int}} W, starting {{out.peak_w|int}} W. With no start surge the running watts × {{out.margin|2}} = {{out.sized_w|int}} W decide the generator: {{out.recommended_kva|2}} kVA, so the smallest common size, {{out.standard_kva|1}} kVA."
+   "text": "Running {{out.running_w|int}} W, starting {{out.peak_w|int}} W. With no start surge the running watts × {{out.margin|2}} = {{out.sized_w|int}} W decide the generator: {{out.recommended_kva|up2}} kVA, so the smallest common size, {{out.standard_kva|1}} kVA."
   },
   {
    "inputs": {
@@ -153,7 +153,7 @@
     ]
    },
    "title": "1 ton non-inverter AC: the start decides",
-   "text": "Running {{out.running_w|int}} W, starting {{out.peak_w|int}} W. The start is far above {{out.running_w|int}} W × {{out.margin|2}}, so the generator must deliver {{out.sized_w|int}} W, {{out.recommended_kva|2}} kVA: a {{out.standard_kva|1}} kVA set."
+   "text": "Running {{out.running_w|int}} W, starting {{out.peak_w|int}} W. The start is far above {{out.running_w|int}} W × {{out.margin|2}}, so the generator must deliver {{out.sized_w|int}} W, {{out.recommended_kva|up2}} kVA: a {{out.standard_kva|1}} kVA set."
   },
   {
    "inputs": {
@@ -164,7 +164,7 @@
     ]
    },
    "title": "1 ton inverter AC: a small peak still decides",
-   "text": "Running {{out.running_w|int}} W, highest draw {{out.peak_w|int}} W. Running × {{out.margin|2}} = {{out.running_margin_w|int}} W is below that peak, so the peak of {{out.sized_w|int}} W sets the size: {{out.recommended_kva|2}} kVA and a {{out.standard_kva|1}} kVA set, against {{ex.2.out.standard_kva|1}} kVA for the non-inverter AC."
+   "text": "Running {{out.running_w|int}} W, highest draw {{out.peak_w|int}} W. Running × {{out.margin|2}} = {{out.running_margin_w|int}} W is below that peak, so the peak of {{out.sized_w|int}} W sets the size: {{out.recommended_kva|up2}} kVA and a {{out.standard_kva|1}} kVA set, against {{ex.2.out.standard_kva|1}} kVA for the non-inverter AC."
   },
   {
    "inputs": {

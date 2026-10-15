@@ -61,7 +61,7 @@ export function pick(inputs, key, allowed, def) {
 }
 
 /** ceil that ignores floating-point dust: 3.0000000000004 -> 3, not 4. */
-export const ceilSafe = (x) => Math.ceil(x - 1e-9);
+export const ceilSafe = (x) => Math.ceil(x - 1e-9 * Math.min(1, x)); // relative below 1, so a tiny positive need is never 0 (WL-126)
 
 /** Look up an appliance from data/appliances.json (data.appliances = { id: item }). */
 export function appliance(data, id, field = 'appliance') {

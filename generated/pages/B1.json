@@ -51,7 +51,7 @@
    {
     "h2": "Loadshedding UPS calculator: backup hours during loadshedding",
     "p": [
-     "To plan for loadshedding, compare the backup hours with the length of your longest outage. With the default 200 Ah battery and a 300 W load you get about 3 h 24 min, enough for a typical outage of one to two hours but not for a long evening cut. If the backup is short, the cheapest fix is a smaller load: switch the TV off and keep only fans and lights, and the backup roughly doubles for every halving of the watts.",
+     "To plan for loadshedding, compare the backup hours with the length of your longest outage. With the default 200 Ah battery and a 300 W load you get about 3 h 8 min, enough for a typical outage of one to two hours but not for a long evening cut. If the backup is short, the cheapest fix is a smaller load: switch the TV off and keep only fans and lights, and the backup almost doubles for every halving of the watts (not quite, because the UPS itself keeps drawing about 30 W).",
      "Backup is only half the story. The battery must also recharge before the next cut. A tubular battery that has given a full backup needs several hours of grid power to refill, so on days with several outages the second and third backups are shorter than the first. Lithium batteries recharge faster and can use more of their capacity, which is why they suit frequent loadshedding better."
     ]
    }
@@ -59,27 +59,27 @@
   "faq": [
    {
     "q": "How long will my UPS battery last?",
-    "a": "On a 200 Ah, 12 V tubular battery with a 300 W load, about 3 h 24 min. Halve the load and the backup roughly doubles; an old or hot battery gives less."
+    "a": "On a 200 Ah, 12 V tubular battery with a 300 W load, about 3 h 8 min. Halve the load and the backup almost doubles (the UPS's own idle draw stays); an old or hot battery gives less."
    },
    {
     "q": "What is the backup time of a 150 Ah battery?",
-    "a": "A 150 Ah, 12 V tubular battery holds about 765 Wh of usable energy through a UPS. That is about 3 h 49 min at 200 W (fans and lights) or about 7 h 39 min at 100 W."
+    "a": "A 150 Ah, 12 V tubular battery holds about 900 Wh of usable energy through a UPS. That is about 3 h 23 min at 200 W (fans and lights) or about 6 h 5 min at 100 W."
    },
    {
     "q": "How many hours of backup does a tubular battery give?",
-    "a": "It depends on the load. A tubular battery should only be used to about 50% of its rating, so a 200 Ah battery gives about 3 h 24 min at 300 W, and a 150 Ah battery about 3 h 49 min at 200 W."
+    "a": "It depends on the load. A tubular battery should only be used to about 50% of its rating, so a 200 Ah battery gives about 3 h 8 min at 300 W, and a 150 Ah battery about 3 h 23 min at 200 W."
    },
    {
     "q": "What is the backup time of a lithium battery?",
-    "a": "Longer than a tubular battery of the same Ah, because lithium (LiFePO4) can safely use about 90% of its capacity against about 50% for tubular. A 100 Ah, 12.8 V lithium battery gives about 3 h 15 min at 300 W."
+    "a": "Longer than a tubular battery of the same Ah, because lithium (LiFePO4) can safely use about 90% of its capacity against about 50% for tubular. A 100 Ah, 12.8 V lithium battery gives about 3 h at 300 W."
    },
    {
     "q": "How many hours of battery backup for a fan and lights?",
-    "a": "One ceiling fan with a few LED lights is about 100 W. On a 150 Ah tubular battery that is about 7 h 39 min; two fans with lights, about 200 W, give about 3 h 49 min."
+    "a": "One ceiling fan with a few LED lights is about 100 W. On a 150 Ah tubular battery that is about 6 h 5 min; two fans with lights, about 200 W, give about 3 h 23 min."
    },
    {
     "q": "What is the battery backup formula in hours?",
-    "a": "Backup hours = battery Ah × battery volts × usable depth of discharge × inverter efficiency ÷ load in watts. For a tubular battery use about 50% usable and about 85% inverter efficiency; for lithium use about 90% usable."
+    "a": "Backup hours = battery Ah × battery volts × usable depth of discharge ÷ (load watts ÷ inverter efficiency + the inverter's idle draw). For a tubular battery use about 50% usable and about 85% inverter efficiency; for lithium use about 90% usable."
    },
    {
     "q": "Why is my real backup different from the calculator?",
@@ -87,14 +87,14 @@
    },
    {
     "q": "Is backup time the same for AC and DC loads?",
-    "a": "No. DC loads run straight from the battery without inverter loss. Set inverter efficiency to one for a DC load."
+    "a": "No. DC loads run straight from the battery without inverter loss or idle draw. Set inverter efficiency to one for a DC load."
    }
   ],
   "key_facts": [
-   "Backup time (hours) = battery Ah × battery volts × usable depth of discharge × inverter efficiency ÷ load in watts.",
+   "Backup time (hours) = battery Ah × battery volts × usable depth of discharge ÷ (load watts ÷ inverter efficiency + the inverter's idle draw).",
    "Tubular and lead-acid batteries should be used to about 50% of their capacity; lithium (LiFePO4) batteries to about 90%.",
-   "A typical home UPS converts battery power to AC at about 85% efficiency, so part of the stored energy is lost as heat.",
-   "A 200 Ah, 12 V tubular battery holds about 1,020 Wh of usable energy for a UPS, which gives about 3 h 24 min at 300 W or about 7 h 39 min at 100 W on a 150 Ah battery."
+   "A typical home UPS converts battery power to AC at about 85% efficiency, so part of the stored energy is lost as heat, and the UPS draws about 30 W itself while it runs.",
+   "A 200 Ah, 12 V tubular battery holds about 1,200 Wh of usable energy for a UPS, which gives about 3 h 8 min at 300 W or about 6 h 5 min at 100 W on a 150 Ah battery."
   ],
   "mistakes": [
    "Using the full Ah rating. Draining a tubular battery below about 50% shortens its life, so only that part counts as usable.",
@@ -112,7 +112,15 @@
    "calc": "battery_runtime",
    "module": "battery.js",
    "data_keys": [],
-   "appliances": {},
+   "appliances": {
+    "ups-idle": {
+     "name": "UPS / home inverter idle draw (no load)",
+     "running_w": 30,
+     "starting_w": 30,
+     "typical_hours_per_day": 24,
+     "load_type": "electronic"
+    }
+   },
    "fields": [
     {
      "name": "ah",
@@ -194,6 +202,14 @@
      "hint": "As a decimal: 0.85 means 85%. Enter 1 for a DC load wired straight to the battery."
     },
     {
+     "name": "idle_w",
+     "label": "Inverter idle draw",
+     "unit": "W",
+     "default": 30,
+     "advanced": true,
+     "hint": "What the UPS or inverter uses itself, even with nothing plugged in (no-load current × battery volts on its label). Not counted when inverter efficiency is one (a DC load)."
+    },
+    {
      "name": "dod",
      "label": "Usable depth of discharge",
      "unit": "0 to 1",
@@ -209,20 +225,20 @@
      "label": "Backup time",
      "spec": "hm",
      "label_ur": "Backup ka waqt",
-     "value": "3 h 24 min"
+     "value": "3 h 8 min"
     },
     {
-     "key": "usable_wh",
+     "key": "stored_wh",
      "label": "Usable energy",
      "spec": "int",
      "unit": "Wh",
      "label_ur": "Qabil-e-istemal energy",
-     "value": "1,020"
+     "value": "1,200"
     }
    ],
    "how": {
-    "tpl": "{{in.ah}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable × {{out.inverter_eff|pct}} inverter efficiency = {{out.usable_wh|int}} Wh usable. {{out.usable_wh|int}} Wh ÷ {{in.load_w}} W = {{out.hours|2}} hours, about {{out.hours|hm}}.",
-    "text": "200 Ah × 12 V × 50% usable × 85% inverter efficiency = 1,020 Wh usable. 1,020 Wh ÷ 300 W = 3.4 hours, about 3 h 24 min."
+    "tpl": "{{in.ah}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable = {{out.stored_wh|int}} Wh in the battery. The battery gives {{in.load_w}} W ÷ {{out.inverter_eff|pct}} inverter efficiency + {{out.idle_w}} W the inverter draws itself = {{out.battery_w|1}} W. {{out.stored_wh|int}} Wh ÷ {{out.battery_w|1}} W = {{out.hours|2}} hours, about {{out.hours|hm}}.",
+    "text": "200 Ah × 12 V × 50% usable = 1,200 Wh in the battery. The battery gives 300 W ÷ 85% inverter efficiency + 30 W the inverter draws itself = 382.9 W. 1,200 Wh ÷ 382.9 W = 3.13 hours, about 3 h 8 min."
    },
    "submit": "Calculate",
    "notice": "",
@@ -231,19 +247,19 @@
   "examples": [
    {
     "title": "150 Ah battery with fans and lights",
-    "text": "150 Ah × 12 V × 50% × 85% = 765 Wh. At 200 W the backup is 3 h 49 min."
+    "text": "150 Ah × 12 V × 50% = 900 Wh. At 200 W the backup is 3 h 23 min."
    },
    {
     "title": "Two 200 Ah batteries on a 24 V UPS",
-    "text": "200 Ah × 24 V × 50% × 85% = 2,040 Wh. At 600 W the backup is 3 h 24 min."
+    "text": "200 Ah × 24 V × 50% = 2,400 Wh. At 600 W the backup is 3 h 15 min."
    },
    {
     "title": "100 Ah lithium battery",
-    "text": "100 Ah × 12.8 V × 90% × 85% = 979 Wh. At 300 W the backup is 3 h 15 min."
+    "text": "100 Ah × 12.8 V × 90% = 1,152 Wh. At 300 W the backup is 3 h."
    },
    {
     "title": "One fan and a few LED lights on a 150 Ah battery",
-    "text": "A ceiling fan with a few LED bulbs is about 100 W. 150 Ah × 12 V × 50% × 85% = 765 Wh, so the backup is about 7 h 39 min."
+    "text": "A ceiling fan with a few LED bulbs is about 100 W. 150 Ah × 12 V × 50% = 900 Wh, so the backup is about 6 h 5 min."
    }
   ],
   "table": {
@@ -257,44 +273,45 @@
     [
      "100 Ah",
      "100 W",
-     "5 h 6 min"
+     "4 h 3 min"
     ],
     [
      "100 Ah",
      "300 W",
-     "1 h 42 min"
+     "1 h 34 min"
     ],
     [
      "150 Ah",
      "200 W",
-     "3 h 49 min"
+     "3 h 23 min"
     ],
     [
      "150 Ah",
      "400 W",
-     "1 h 54 min"
+     "1 h 47 min"
     ],
     [
      "200 Ah",
      "300 W",
-     "3 h 24 min"
+     "3 h 8 min"
     ],
     [
      "200 Ah",
      "500 W",
-     "2 h 2 min"
+     "1 h 56 min"
     ]
    ]
   },
-  "answer": "A 200 Ah, 12 V tubular battery runs a 300 W load for about 3 h 24 min through a UPS while using only the recommended 50% of its capacity. Backup time equals battery Ah × volts × usable depth of discharge × inverter efficiency ÷ load watts.",
+  "answer": "A 200 Ah, 12 V tubular battery runs a 300 W load for about 3 h 8 min through a UPS while using only the recommended 50% of its capacity. Backup time equals battery Ah × volts × usable depth of discharge ÷ (load watts ÷ inverter efficiency + the inverter's idle draw).",
   "formula": {
-   "text": "t = (Ah × V × DoD × η) ÷ P",
+   "text": "t = (Ah × V × DoD) ÷ (P ÷ η + P_idle)",
    "lines": [
     "t = backup time in hours",
     "Ah = battery capacity in amp hours",
     "V = battery bank voltage",
     "DoD = usable depth of discharge",
     "η = inverter efficiency",
+    "P_idle = the inverter's own draw with no load (from its label; none for a DC load)",
     "P = load in watts"
    ]
   },
@@ -386,7 +403,7 @@
       "name": "How long will my UPS battery last?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "On a 200 Ah, 12 V tubular battery with a 300 W load, about 3 h 24 min. Halve the load and the backup roughly doubles; an old or hot battery gives less."
+       "text": "On a 200 Ah, 12 V tubular battery with a 300 W load, about 3 h 8 min. Halve the load and the backup almost doubles (the UPS's own idle draw stays); an old or hot battery gives less."
       }
      },
      {
@@ -394,7 +411,7 @@
       "name": "What is the backup time of a 150 Ah battery?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "A 150 Ah, 12 V tubular battery holds about 765 Wh of usable energy through a UPS. That is about 3 h 49 min at 200 W (fans and lights) or about 7 h 39 min at 100 W."
+       "text": "A 150 Ah, 12 V tubular battery holds about 900 Wh of usable energy through a UPS. That is about 3 h 23 min at 200 W (fans and lights) or about 6 h 5 min at 100 W."
       }
      },
      {
@@ -402,7 +419,7 @@
       "name": "How many hours of backup does a tubular battery give?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "It depends on the load. A tubular battery should only be used to about 50% of its rating, so a 200 Ah battery gives about 3 h 24 min at 300 W, and a 150 Ah battery about 3 h 49 min at 200 W."
+       "text": "It depends on the load. A tubular battery should only be used to about 50% of its rating, so a 200 Ah battery gives about 3 h 8 min at 300 W, and a 150 Ah battery about 3 h 23 min at 200 W."
       }
      },
      {
@@ -410,7 +427,7 @@
       "name": "What is the backup time of a lithium battery?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Longer than a tubular battery of the same Ah, because lithium (LiFePO4) can safely use about 90% of its capacity against about 50% for tubular. A 100 Ah, 12.8 V lithium battery gives about 3 h 15 min at 300 W."
+       "text": "Longer than a tubular battery of the same Ah, because lithium (LiFePO4) can safely use about 90% of its capacity against about 50% for tubular. A 100 Ah, 12.8 V lithium battery gives about 3 h at 300 W."
       }
      },
      {
@@ -418,7 +435,7 @@
       "name": "How many hours of battery backup for a fan and lights?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "One ceiling fan with a few LED lights is about 100 W. On a 150 Ah tubular battery that is about 7 h 39 min; two fans with lights, about 200 W, give about 3 h 49 min."
+       "text": "One ceiling fan with a few LED lights is about 100 W. On a 150 Ah tubular battery that is about 6 h 5 min; two fans with lights, about 200 W, give about 3 h 23 min."
       }
      },
      {
@@ -426,7 +443,7 @@
       "name": "What is the battery backup formula in hours?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Backup hours = battery Ah × battery volts × usable depth of discharge × inverter efficiency ÷ load in watts. For a tubular battery use about 50% usable and about 85% inverter efficiency; for lithium use about 90% usable."
+       "text": "Backup hours = battery Ah × battery volts × usable depth of discharge ÷ (load watts ÷ inverter efficiency + the inverter's idle draw). For a tubular battery use about 50% usable and about 85% inverter efficiency; for lithium use about 90% usable."
       }
      },
      {
@@ -442,7 +459,7 @@
       "name": "Is backup time the same for AC and DC loads?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "No. DC loads run straight from the battery without inverter loss. Set inverter efficiency to one for a DC load."
+       "text": "No. DC loads run straight from the battery without inverter loss or idle draw. Set inverter efficiency to one for a DC load."
       }
      }
     ]

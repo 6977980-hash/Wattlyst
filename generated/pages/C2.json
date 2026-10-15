@@ -1267,7 +1267,7 @@
     }
    ],
    "how": {
-    "tpl": "Running watts of each appliance × how many, added up: {{out.running_w|int}} W. Adding the surge of the one appliance with the biggest jump at start gives {{out.peak_w|int}} W. {{out.running_w|int}} W × {{out.margin|2}} margin is compared with {{out.peak_w|int}} W, and the larger, {{out.sized_w|int}} W, is the wattage the generator must deliver. In kVA: {{out.sized_w|int}} W ÷ {{out.pf|2}} ÷ 1,000 = {{out.recommended_kva|2}} kVA, so {{out.standard_kva|1}} kVA.",
+    "tpl": "Running watts of each appliance × how many, added up: {{out.running_w|int}} W. Adding the surge of the one appliance with the biggest jump at start gives {{out.peak_w|int}} W. {{out.running_w|int}} W × {{out.margin|2}} margin is compared with {{out.peak_w|int}} W, and the larger, {{out.sized_w|int}} W, is the wattage the generator must deliver. In kVA: {{out.sized_w|int}} W ÷ {{out.pf|2}} ÷ 1,000 = {{out.recommended_kva|up2}} kVA, so {{out.standard_kva|1}} kVA.",
     "text": "Running watts of each appliance × how many, added up: 597 W. Adding the surge of the one appliance with the biggest jump at start gives 1,597 W. 597 W × 1.25 margin is compared with 1,597 W, and the larger, 1,597 W, is the wattage the generator must deliver. In kVA: 1,597 W ÷ 0.8 ÷ 1,000 = 2 kVA, so 2.5 kVA."
    },
    "submit": "Add up the watts",
@@ -1283,7 +1283,7 @@
   "examples": [
    {
     "title": "A TV, a fridge and a fan",
-    "text": "Fan, LED TV and non-inverter fridge: 355 W running. The fridge's start lifts it to 1,355 W, larger than 355 W × 1.25, so the generator must deliver 1,355 W (1.69 kVA); a 2.5 kVA set covers it."
+    "text": "Fan, LED TV and non-inverter fridge: 355 W running. The fridge's start lifts it to 1,355 W, larger than 355 W × 1.25, so the generator must deliver 1,355 W (1.7 kVA); a 2.5 kVA set covers it."
    },
    {
     "title": "The default list with an iron switched on",
@@ -1291,7 +1291,7 @@
    },
    {
     "title": "Kitchen loads: an inverter fridge and a microwave with two fans and four LED bulbs",
-    "text": "1,428 W running and only 1,508 W at peak, because nothing here has a hard start. Here the running load × 1.25, 1,785 W, sets the size: 2.23 kVA, so 2.5 kVA."
+    "text": "1,428 W running and only 1,508 W at peak, because nothing here has a hard start. Here the running load × 1.25, 1,785 W, sets the size: 2.24 kVA, so 2.5 kVA."
    },
    {
     "title": "Small office: two computers, a laser printer, tube lights and fans",

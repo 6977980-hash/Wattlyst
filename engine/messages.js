@@ -42,7 +42,7 @@ const EXACT = {
   circuits_out_of_range: 'Enter how many circuits share the conduit or bundle, from 1 to 20.',
   run_too_long_for_table: 'This run is too long for the cables in our table: the voltage drop would exceed the limit. Shorten the run, split the load or consult a licensed electrician.',
   solar_above_sanctioned: 'Your solar array is larger than your sanctioned load. Net billing allows an array up to the sanctioned kW, so the bill and the setups count only the panels that fit. Apply for a higher sanctioned load or plan fewer panels.',
-  price_low_confidence: 'The typical price range for this size rests on a single published price list, so treat it as a rough guide and compare at least two more quotes.',
+  price_low_confidence: 'The typical price range for this size rests on few published prices, so treat it as a rough guide and compare at least two more quotes.',
   above_standard_sizes: 'This is above the largest standard size we list. Split the array or circuit into two, or ask a licensed electrician or engineer; the sizes shown are the calculated minimums.',
   generator_above_standard_sizes: 'This is above the largest generator size we list. Use two generators on separate circuits or a larger industrial set, and ask a licensed electrician; the size shown is the calculated minimum.',
   price_data_missing: 'Price data could not be loaded. Enter the typical price range yourself or refresh the page.',
@@ -70,6 +70,7 @@ const PATTERNS = [
   [/^load_(\d+)_start_invalid$/, (m) => `${row(m)}enter its starting watts as a number (0 or more).`],
   [/^load_(\d+)_qty_invalid$/, (m) => `${row(m)}enter how many as a whole number.`],
   [/^(?:load|appliance)_(\d+)_(?:\w+_)?invalid$/, (m) => `${row(m)}enter its watts as a number (0 or more).`],
+  [/^load_(\d+)_(?:length_(?=r))?(.+)$/, (m) => row(m) + errorMessage(m[2])], // any other row code: "Appliance 2: " + its plain message (WL-124)
   [/^(\w+)_required$/, (m, f) => `Enter ${f(m[1])}.`],
   [/^(\w+)_invalid$/, (m, f, pick) => (pick.includes(m[1]) ? `Choose ${f(m[1])} from the list.` : `${cap(f(m[1]))} must be a number, for example 12 or 1500.`)],
   [/^(\w+)_must_be_positive$/, (m, f) => `${cap(f(m[1]))} must be greater than 0.`],
@@ -96,8 +97,6 @@ export function noticeCode(out) {
 /** labels: { field: label } from the page; choices: names of the fields that are a list to pick from. */
 export function errorMessage(code, labels = {}, choices = []) {
   if (EXACT[code]) return EXACT[code];
-  const r = /^load_(\d+)_(?:length_(?=r))?(.+)$/.exec(code); // a row of the N18 circuit list: "Appliance 2: " + the plain message
-  if (r && EXACT[r[2]]) return row(r) + EXACT[r[2]];
   const f = (key) => labels[key] || key.replace(/_/g, ' ');
   for (const [re, make] of PATTERNS) {
     const m = code.match(re);

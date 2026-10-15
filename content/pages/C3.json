@@ -72,7 +72,7 @@
   {
    "key": "recommended_kva",
    "label": "Calculated minimum",
-   "spec": "2",
+   "spec": "up2",
    "unit": "kVA"
   },
   {
@@ -83,7 +83,7 @@
   }
  ],
  "answer": "With four fans, ten bulbs, a non-inverter fridge, a 1 hp water motor and a twin-tub washer on, the generator must supply {{out.peak_w|int}} W when the pump starts, against {{out.running_w|int}} W running, so {{out.standard_kva|1}} kVA. Starting watts = total running watts + the largest single starting jump (starting minus running watts of the biggest motor), not the sum of every surge.",
- "how": "Running watts of everything on: {{out.running_w|int}} W. Each motor's jump at start is its starting watts minus its running watts; only the largest jump is added, because one motor starts at a time: {{out.running_w|int}} W + the largest jump = {{out.peak_w|int}} W. The larger of that peak and {{out.running_w|int}} W × {{out.margin|2}} is {{out.sized_w|int}} W; ÷ {{out.pf|2}} ÷ 1,000 = {{out.recommended_kva|2}} kVA, so {{out.standard_kva|1}} kVA.",
+ "how": "Running watts of everything on: {{out.running_w|int}} W. Each motor's jump at start is its starting watts minus its running watts; only the largest jump is added, because one motor starts at a time: {{out.running_w|int}} W + the largest jump = {{out.peak_w|int}} W. The larger of that peak and {{out.running_w|int}} W × {{out.margin|2}} is {{out.sized_w|int}} W; ÷ {{out.pf|2}} ÷ 1,000 = {{out.recommended_kva|up2}} kVA, so {{out.standard_kva|1}} kVA.",
  "key_facts": [
   "Generator starting watts = the running watts of everything on + the largest single starting jump; a second motor's surge is not added because two motors almost never start in the same second.",
   "In this site's appliance data non-inverter AC compressors and pump motors start at about {{d.start_factors.motor|int}} times their running watts for a second or two; a non-inverter fridge jumps from {{a.refrigerator-non-inverter.running_w|int}} W to about {{a.refrigerator-non-inverter.starting_w|int}} W.",
@@ -111,7 +111,7 @@
   {
    "h2": "Starting watts of a refrigerator",
    "p": [
-    "A non-inverter fridge or chest freezer runs at about {{a.refrigerator-non-inverter.running_w|int}} W, but its compressor starts at about {{a.refrigerator-non-inverter.starting_w|int}} W in our appliance data, and it restarts many times a day as the thermostat cycles. On its own that needs a {{ex.0.out.recommended_kva|2}} kVA generator, so the smallest common size, {{ex.0.out.standard_kva|1}} kVA, is plenty.",
+    "A non-inverter fridge or chest freezer runs at about {{a.refrigerator-non-inverter.running_w|int}} W, but its compressor starts at about {{a.refrigerator-non-inverter.starting_w|int}} W in our appliance data, and it restarts many times a day as the thermostat cycles. On its own that needs a {{ex.0.out.recommended_kva|up2}} kVA generator, so the smallest common size, {{ex.0.out.standard_kva|1}} kVA, is plenty.",
     "An inverter fridge starts softly at about {{a.refrigerator-inverter.starting_w|int}} W and barely moves the peak. If a small generator stalls each time the fridge clicks on, the fridge's start, not its running load, is the cause."
    ]
   },
@@ -147,7 +147,7 @@
     ]
    },
    "title": "A non-inverter fridge on its own",
-   "text": "Running {{out.running_w|int}} W, starting {{out.peak_w|int}} W. The start is larger than {{out.running_w|int}} W × {{out.margin|2}}, so it sets the size: {{out.peak_w|int}} W ÷ {{out.pf|2}} ÷ 1,000 = {{out.recommended_kva|2}} kVA, the smallest common size of {{out.standard_kva|1}} kVA."
+   "text": "Running {{out.running_w|int}} W, starting {{out.peak_w|int}} W. The start is larger than {{out.running_w|int}} W × {{out.margin|2}}, so it sets the size: {{out.peak_w|int}} W ÷ {{out.pf|2}} ÷ 1,000 = {{out.recommended_kva|up2}} kVA, the smallest common size of {{out.standard_kva|1}} kVA."
   },
   {
    "inputs": {
@@ -158,7 +158,7 @@
     ]
    },
    "title": "A 1.5 ton non-inverter AC on its own",
-   "text": "Running {{out.running_w|int}} W, starting {{out.peak_w|int}} W. The compressor start needs {{out.recommended_kva|2}} kVA, so a {{out.standard_kva|1}} kVA generator just for the AC."
+   "text": "Running {{out.running_w|int}} W, starting {{out.peak_w|int}} W. The compressor start needs {{out.recommended_kva|up2}} kVA, so a {{out.standard_kva|1}} kVA generator just for the AC."
   },
   {
    "inputs": {
@@ -183,7 +183,7 @@
     ]
    },
    "title": "Fridge, pump and a 1.5 ton non-inverter AC with fans and lights",
-   "text": "Running {{out.running_w|int}} W. The fans, the fridge, the pump and the AC all have motors, but only the biggest jump, the AC compressor's, is added: peak {{out.peak_w|int}} W, {{out.recommended_kva|2}} kVA, so {{out.standard_kva|1}} kVA."
+   "text": "Running {{out.running_w|int}} W. The fans, the fridge, the pump and the AC all have motors, but only the biggest jump, the AC compressor's, is added: peak {{out.peak_w|int}} W, {{out.recommended_kva|up2}} kVA, so {{out.standard_kva|1}} kVA."
   },
   {
    "inputs": {
@@ -208,7 +208,7 @@
     ]
    },
    "title": "The same house with a 1.5 ton inverter AC",
-   "text": "Running {{out.running_w|int}} W. The inverter AC has almost no jump, so the pump's start is now the largest: peak {{out.peak_w|int}} W, {{out.recommended_kva|2}} kVA, so {{out.standard_kva|1}} kVA instead of {{ex.2.out.standard_kva|1}} kVA."
+   "text": "Running {{out.running_w|int}} W. The inverter AC has almost no jump, so the pump's start is now the largest: peak {{out.peak_w|int}} W, {{out.recommended_kva|up2}} kVA, so {{out.standard_kva|1}} kVA instead of {{ex.2.out.standard_kva|1}} kVA."
   }
  ],
  "table": {
@@ -282,7 +282,7 @@
    },
    {
     "label": "Calculated kVA",
-    "tpl": "{{out.recommended_kva|2}} kVA"
+    "tpl": "{{out.recommended_kva|up2}} kVA"
    },
    {
     "label": "Generator to buy",
