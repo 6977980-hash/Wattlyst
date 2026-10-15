@@ -84,6 +84,14 @@ test('DEFECT DE-05 the generator is not charged twice for the backup units (petr
   assert.ok(Math.abs(e.standby_rs + 120 * (n.gen_run_year / 12 - credit) - (e.standby_net.endsWith('cost') ? 1 : -1) * Number(e.standby_net.match(/[\d,]+/)[0].replace(/,/g, ''))) < 1);
 });
 
+test('WL-95 a generator supplies at most the home\'s use during the cut hours', () => {
+  const e = home_decision({ ...H, backup_w: 2085, backup_hours: 6 }, data);
+  assert.equal(e.ok, true, e.error);
+  const cap = e.full_before_rs - bt(e.monthly_units * (1 - 6 / 24));
+  if (e.standby_option.startsWith('Petrol generator')) assert.ok(Math.abs(e.standby_saving_rs - cap) < 1, `${e.standby_saving_rs} vs ${cap}`);
+  assert.ok(e.combo_saving_rs <= e.full_before_rs + 1e-6);
+});
+
 test('DEFECT DE-06 the N7/H1 generator can start the backup load (C1 rule: max(run × margin, peak) ÷ PF)', () => {
   const loads = [{ id: 'water-motor-1hp', qty: 1 }, { id: 'ceiling-fan-ac', qty: 2 }];
   const c1 = C.generator_size({ loads, margin: 1.25, pf: 0.8 }, data);

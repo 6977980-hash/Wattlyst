@@ -68,7 +68,8 @@ export const home_decision = calculator((i, d) => {
 
     // UPS or generator (N7) on one bill baseline: a UPS recharge adds units to the whole bill, a generator takes the
     // backup units it supplies off it (WL-95); the generator also starts the backup load's motors (WL-96).
-    const eb = -p.backup_kwh * dflt(d, 'days_per_month');
+    // The units a generator supplies: the backup energy, at most the home's use during the cut hours.
+    const eb = -Math.min(p.backup_kwh * dflt(d, 'days_per_month'), p.monthly_units * (1 - g));
     const bin = { load_w: p.backup_w, surge_w: p.backup_surge_w, hours: h, years, tariff: p.rate_before, city: i.city, panel_w: p.panel_w };
     const sb = standbyFor(bin, d, (r) => -netSaving(p, d, 0, 0, r), netSaving(p, d, 0, 0, eb));
     if (sb) {
