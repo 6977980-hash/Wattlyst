@@ -686,7 +686,7 @@ export async function build() {
       // C8 fuel curve and fuel prices, numbers only (the generator test points stay in data/, the page lists them).
       generator_fuel: browserFuel(inp.data.generator_fuel),
       // N7 backup comparison: equipment price ranges and upkeep, numbers only (sources stay in data/ and on the page).
-      component_prices: { items: inp.data.component_prices.items.map(({ category, size, low, high }) => ({ category, size, low, high })) },
+      component_prices: { items: inp.data.component_prices.items.map(({ category, size, low, high, n_sources, export_capable }) => ({ category, size, low, high, n_sources, ...(export_capable === false ? { export_capable } : {}) })) },
       backup_prices: browserBackup(inp.data.backup_prices) },
     // lastmod: the same date as the page's schema dateModified, used for the sitemap <lastmod> (WL-84).
     pages: rows.map(({ id, type, url, h1, title, meta, status, live, parent, children, related, next, wave, reviewed, modified }) => ({ id, type, url, h1, title, meta, status, live, parent, children, related, next, wave, lastmod: reviewed || modified })),

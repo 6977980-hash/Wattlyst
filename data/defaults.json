@@ -3,7 +3,7 @@
   "source": "specs/formulas.md 'Global defaults' table and section notes; NEPRA Performance Standards (400/230 V, 50 Hz); rho_copper and rho_aluminium from IEC 60364-5-52 Annex G (rho1 = 1.25 x rho20 at working temperature)",
   "checked": "2026-10-14",
   "status": "Engineering defaults, every one editable on the page. Items marked engineer_confirm need PEC engineer sign-off before launch.",
-  "engineer_confirm": ["diversity_home", "heat_pump_cop", "ac_saving_per_degree", "soiling_rate_per_day", "soiling_cap", "gas_heater_eff", "gas_cv_mj_m3", "start_factors", "standard_generator_kva", "planner_day_share", "forecast_sky_bands", "rho_aluminium", "dc_ac_ratio_max", "forecast_max_day_whm2", "soiling_rate_max_per_day", "pf_by_load_type", "ac_life_years"]
+  "engineer_confirm": ["diversity_home", "heat_pump_cop", "ac_saving_per_degree", "soiling_rate_per_day", "soiling_cap", "gas_heater_eff", "gas_cv_mj_m3", "start_factors", "standard_generator_kva", "planner_day_share", "hybrid_bank_v", "forecast_sky_bands", "rho_aluminium", "dc_ac_ratio_max", "forecast_max_day_whm2", "soiling_rate_max_per_day", "pf_by_load_type", "ac_life_years"]
  },
  "v_1ph": 230,
  "v_3ph": 400,
@@ -64,6 +64,8 @@
  "battery_v_default": 24,
  "planner_day_share": 0.5,
  "decision_years": 10,
+ "hybrid_bank_v": 48,
+ "hybrid_bank_v_source": "Battery bank voltage of a grid-tie hybrid inverter on the home decision engine: the export-capable hybrid inverters in data/component-prices.json (Inverex Nitrox 6 kW 48 V, Solis and Solax low-voltage hybrids) run a 48 V bank; LiFePO4 packs are 51.2 V; engineer to confirm",
  "decision_years_source": "Comparison period of the Home Power Decision Engine (H1): ten years covers one LiFePO4 battery life and three tubular lives (data/backup-prices.json battery_life_years); editable on the page",
  "forecast_tilt_deg": 25,
  "forecast_max_wm2": 1500,

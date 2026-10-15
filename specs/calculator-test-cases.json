@@ -7092,7 +7092,7 @@
     },
     "expected": {
       "decision_key": "hybrid",
-      "decision": "Hybrid solar 3.51 kW + 1 lithium pack of 5.12 kWh",
+      "decision": "Hybrid solar 3.51 kW + 1 lithium pack of 5.12 kWh (51.2 V)",
       "installed_kw": 3.51,
       "full_saving_rs": 13330.912,
       "ongrid_low_rs": 363750,
@@ -7108,7 +7108,7 @@
       "standby_low_rs": 115239,
       "standby_high_rs": 199499,
       "standby_rs": 157369,
-      "standby_running_rs": 3027.82,
+      "standby_running_rs": 5769.757,
       "standby_repl_rs": 339360,
       "decision_price": "Rs 578,750 to Rs 912,000",
       "decision_net": "Rs 591,834 saved",
@@ -7117,7 +7117,7 @@
       "years": 10
     },
     "tolerance": 0.01,
-    "note": "H1 decision step (formulas.md Home Power Decision Engine). Hand check: on-grid 3.51 kW between the 3 and 5 kW rows: 300,000 + 250,000 x 0.255 = 363,750 and 500,000 + 400,000 x 0.255 = 602,000; hybrid adds one 5.12 kWh pack (215,000 to 310,000), premium 0 (4 kW hybrid 26,000/kW x 2.7 = 70,200 < on-grid 47,000/kW x 2.7 = 126,900); one pack replacement at 8 years 262,500; net = 745,375 + 262,500 - 120 x full saving. UPS 1 kVA + 2 tubular: 44,249 + 2 x 56,560 = 157,369 (low 33,999 + 81,240, high 54,499 + 145,000); recharge 2 kWh / 0.7225 x 360 x 36.46 / 12 a month; 3 tubular replacements 339,360."
+    "note": "H1 decision step (formulas.md Home Power Decision Engine). Hand check: on-grid 3.51 kW between the 3 and 5 kW rows: 300,000 + 250,000 x 0.255 = 363,750 and 500,000 + 400,000 x 0.255 = 602,000; hybrid adds one 5.12 kWh pack (215,000 to 310,000), premium 0 (export-capable hybrid rows start at 6 kW: 247,250 / 6 x 2.7 = 111,262.5 < on-grid 235,000 / 5 x 2.7 = 126,900); one pack replacement at 8 years 262,500; net = 745,375 + 262,500 - 120 x full saving. UPS 1 kVA + 2 tubular: 44,249 + 2 x 56,560 = 157,369 (low 33,999 + 81,240, high 54,499 + 145,000); recharge 2 / 0.7225 x 30 = 83.0 units a month on the whole bill: bill_total(396.3 + 83.0) - bill_total(396.3), the 401-500 slab; 3 tubular replacements 339,360."
   },
   {
     "calc": "home_decision",
@@ -7162,6 +7162,87 @@
     },
     "tolerance": 0.01,
     "note": "H1 decision step (formulas.md Home Power Decision Engine). Hybrid middle 745,375 > 300,000; UPS middle 157,369 fits."
+  },
+  {
+    "calc": "home_decision",
+    "name": "Budget exactly the UPS middle price: it fits",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ceiling-fan-ac",
+          "qty": 4
+        },
+        {
+          "id": "led-bulb",
+          "qty": 10
+        },
+        {
+          "id": "ac-split-1-5ton-inverter",
+          "qty": 1,
+          "hours": 7
+        },
+        {
+          "id": "refrigerator-inverter",
+          "qty": 1
+        },
+        {
+          "id": "led-tv-43",
+          "qty": 1
+        }
+      ],
+      "city": "lahore",
+      "sanctioned_kw": 4,
+      "backup_w": 500,
+      "backup_hours": 4,
+      "budget_rs": 157369
+    },
+    "expected": {
+      "decision_key": "ups",
+      "over_budget": false
+    },
+    "tolerance": 0.01,
+    "note": "H1 decision step (formulas.md Home Power Decision Engine). Middle price <= budget counts."
+  },
+  {
+    "calc": "home_decision",
+    "name": "Budget Rs 1 below the UPS middle price: over budget by Rs 1",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ceiling-fan-ac",
+          "qty": 4
+        },
+        {
+          "id": "led-bulb",
+          "qty": 10
+        },
+        {
+          "id": "ac-split-1-5ton-inverter",
+          "qty": 1,
+          "hours": 7
+        },
+        {
+          "id": "refrigerator-inverter",
+          "qty": 1
+        },
+        {
+          "id": "led-tv-43",
+          "qty": 1
+        }
+      ],
+      "city": "lahore",
+      "sanctioned_kw": 4,
+      "backup_w": 500,
+      "backup_hours": 4,
+      "budget_rs": 157368
+    },
+    "expected": {
+      "decision_key": "ups",
+      "over_budget": true,
+      "budget_gap_rs": 1
+    },
+    "tolerance": 0.01,
+    "note": "H1 decision step (formulas.md Home Power Decision Engine). 157,369 - 157,368 = 1."
   },
   {
     "calc": "home_decision",
@@ -7292,7 +7373,7 @@
   },
   {
     "calc": "home_decision",
-    "name": "Tubular battery at 12 V: hybrid with 2 tubular units",
+    "name": "Tubular battery: hybrid bank at 48 V, one string of four 12 V units",
     "inputs": {
       "loads": [
         {
@@ -7325,18 +7406,18 @@
     },
     "expected": {
       "decision_key": "hybrid",
-      "hybrid_battery_units": 2,
-      "hybrid_battery": "2 tubular batteries of 12 V 200 Ah",
-      "hybrid_low_rs": 444990,
-      "hybrid_high_rs": 747000,
+      "hybrid_battery_units": 4,
+      "hybrid_battery": "4 tubular batteries of 12 V 200 Ah (48 V bank)",
+      "hybrid_low_rs": 526230,
+      "hybrid_high_rs": 892000,
       "hybrid_replacements": 3
     },
     "tolerance": 0.01,
-    "note": "H1 decision step (formulas.md Home Power Decision Engine). 2,000 Wh / (12 x 0.5 x 0.9) = 370.4 Ah -> 2 x 200 Ah strings x 1; 363,750 + 2 x 40,620 = 444,990; 602,000 + 2 x 72,500 = 747,000; tubular life 3 years -> 3 replacements."
+    "note": "H1 decision step (formulas.md Home Power Decision Engine). Planner bank 370.4 Ah x 12 V = 4.44 kWh; 4,444 / (48 x 200) -> 1 string x 4 units; 363,750 + 4 x 40,620 = 526,230; 602,000 + 4 x 72,500 = 892,000; tubular life 3 years -> 3 replacements."
   },
   {
     "calc": "home_decision",
-    "name": "Tubular battery at 24 V: one string of two 12 V units",
+    "name": "Tubular battery planned at 24 V: the hybrid bank is still 48 V, four units",
     "inputs": {
       "loads": [
         {
@@ -7369,10 +7450,50 @@
       "battery_v": 24
     },
     "expected": {
-      "hybrid_battery_units": 2
+      "hybrid_battery_units": 4
     },
     "tolerance": 0.01,
-    "note": "H1 decision step (formulas.md Home Power Decision Engine). 2,000 / (24 x 0.5 x 0.9) = 185.2 Ah -> 1 string x 2 in series."
+    "note": "H1 decision step (formulas.md Home Power Decision Engine). 185.2 Ah x 24 V = 4.44 kWh -> 1 string x 4."
+  },
+  {
+    "calc": "home_decision",
+    "name": "Lithium planned at 12 V: packs by energy, 51.2 V pack named",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ceiling-fan-ac",
+          "qty": 4
+        },
+        {
+          "id": "led-bulb",
+          "qty": 10
+        },
+        {
+          "id": "ac-split-1-5ton-inverter",
+          "qty": 1,
+          "hours": 7
+        },
+        {
+          "id": "refrigerator-inverter",
+          "qty": 1
+        },
+        {
+          "id": "led-tv-43",
+          "qty": 1
+        }
+      ],
+      "city": "lahore",
+      "sanctioned_kw": 4,
+      "backup_w": 500,
+      "backup_hours": 4,
+      "battery_v": 12
+    },
+    "expected": {
+      "hybrid_battery_units": 1,
+      "hybrid_battery": "1 lithium pack of 5.12 kWh (51.2 V)"
+    },
+    "tolerance": 0.01,
+    "note": "H1 decision step (formulas.md Home Power Decision Engine). 2.47 kWh / 5.12 -> 1 pack."
   },
   {
     "calc": "home_decision",
@@ -7411,14 +7532,55 @@
       "standby_option": "Petrol generator 5 kVA",
       "hybrid_battery_units": 3,
       "hybrid_inverter_kw": 3.75,
-      "hybrid_premium_rs": 0
+      "hybrid_premium_rs": 27631.25
     },
     "tolerance": 0.01,
-    "note": "H1 decision step (formulas.md Home Power Decision Engine). 3,000 x 1.25 = 3,750 W > 2.5 kVA x 0.8; 12 kWh / (0.9 x 0.9) = 14.8 kWh -> 3 packs; hybrid kW 3.75 below the 4 kW row -> 26,000 x 3.75 = 97,500 < on-grid 126,900, premium 0."
+    "note": "H1 decision step (formulas.md Home Power Decision Engine). 3,000 x 1.25 = 3,750 W > 2.5 kVA x 0.8; 12 kWh / (0.9 x 0.9) = 14.8 kWh -> 3 packs; hybrid 3.75 kW below the 6 kW row: 247,250 / 6 x 3.75 = 154,531.25 - 126,900 = 27,631.25."
   },
   {
     "calc": "home_decision",
-    "name": "9,000 W backup: above the N7 price lists, UPS or generator not available; hybrid inverter premium counted",
+    "name": "7,000 W backup: above the UPS and generator lists, hybrid 8.75 kW",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ceiling-fan-ac",
+          "qty": 4
+        },
+        {
+          "id": "led-bulb",
+          "qty": 10
+        },
+        {
+          "id": "ac-split-1-5ton-inverter",
+          "qty": 1,
+          "hours": 7
+        },
+        {
+          "id": "refrigerator-inverter",
+          "qty": 1
+        },
+        {
+          "id": "led-tv-43",
+          "qty": 1
+        }
+      ],
+      "city": "lahore",
+      "sanctioned_kw": 4,
+      "backup_w": 7000,
+      "backup_hours": 4
+    },
+    "expected": {
+      "decision_key": "hybrid",
+      "standby_available": false,
+      "hybrid_inverter_kw": 8.75,
+      "hybrid_premium_rs": 235287.5
+    },
+    "tolerance": 0.01,
+    "note": "H1 decision step (formulas.md Home Power Decision Engine). 7,000 x 1.25 = 8,750 W > 10 kVA x 0.8; hybrid between 8 kW (302,000) and 10 kW (462,500): 302,000 + 160,500 x 0.375 = 362,187.5 - 126,900 = 235,287.5."
+  },
+  {
+    "calc": "home_decision",
+    "name": "9,000 W backup: hybrid inverter above the largest listed size",
     "inputs": {
       "loads": [
         {
@@ -7455,7 +7617,45 @@
       "hybrid_premium_rs": 393412.5
     },
     "tolerance": 0.01,
-    "note": "H1 decision step (formulas.md Home Power Decision Engine). Hybrid kW = 9 x 1.25 = 11.25 above the 10 kW row: 462,500 / 10 x 11.25 = 520,312.5; on-grid 2.7 kW below 5 kW: 235,000 / 5 x 2.7 = 126,900; premium 393,412.5."
+    "note": "H1 decision step (formulas.md Home Power Decision Engine). Hybrid kW = 9 x 1.25 = 11.25 above the 10 kW row: 462,500 / 10 x 11.25 = 520,312.5; on-grid 2.7 kW below 5 kW: 126,900; premium 393,412.5."
+  },
+  {
+    "calc": "home_decision",
+    "name": "Backup hours above 24 is an error",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ceiling-fan-ac",
+          "qty": 4
+        },
+        {
+          "id": "led-bulb",
+          "qty": 10
+        },
+        {
+          "id": "ac-split-1-5ton-inverter",
+          "qty": 1,
+          "hours": 7
+        },
+        {
+          "id": "refrigerator-inverter",
+          "qty": 1
+        },
+        {
+          "id": "led-tv-43",
+          "qty": 1
+        }
+      ],
+      "city": "lahore",
+      "sanctioned_kw": 4,
+      "backup_w": 500,
+      "backup_hours": 30
+    },
+    "expected": {
+      "error": "backup_hours_too_large"
+    },
+    "tolerance": 0.01,
+    "note": "H1 decision step (formulas.md Home Power Decision Engine)."
   },
   {
     "calc": "home_decision",

@@ -26,6 +26,18 @@ export function priceRange(d, type, kwp) {
 }
 
 /**
+ * Middle price of an inverter type at kW from the export-capable rows: exact size, linear between listed sizes,
+ * nearest end's Rs per kW outside. Returns [price, a row used rests on one source, kW above the list].
+ */
+export function inverterAt(items, category, kw) {
+  const rows = items.filter((x) => x.category === category && x.export_capable !== false).map((x) => ({ kw: parseFloat(x.size), rs: (x.low + x.high) / 2, w: (x.n_sources ?? 0) < 2 })).sort((a, b) => a.kw - b.kw);
+  const a = rows.filter((r) => r.kw <= kw).pop() || rows[0];
+  const b = rows.find((r) => r.kw > kw);
+  const v = !b || kw <= a.kw ? (a.rs / a.kw) * kw : a.rs + ((b.rs - a.rs) * (kw - a.kw)) / (b.kw - a.kw);
+  return [v, a.w || Boolean(b?.w && kw > a.kw), kw > rows[rows.length - 1].kw];
+}
+
+/**
  * N3: Rs/W = price / (kWp × 1000), compared with the typical range for the type (priceRange) or an
  * explicit range_low/range_high in Rs per W. Verdict: below / within / above. Never names an installer as cheating.
  */
