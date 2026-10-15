@@ -182,7 +182,7 @@
    }
   ]
  },
- "answer": "A load schedule lists every circuit with its MCB and cable. For the example house the {{out.circuits_count|int}} circuits carry {{out.connected_kw|2}} kW in all; each one gets the smallest copper cable that carries its current in {{out.ambient_c|int}} °C air and keeps the voltage drop within the limit, the worst being {{out.max_drop_pct|1}}%. The largest MCB is {{out.biggest_breaker_a|int}} A, for the {{out.biggest_name|raw}}.",
+ "answer": "A load schedule lists every circuit with its MCB and cable. In the example house the {{out.circuits_count|int}} circuits carry {{out.connected_kw|2}} kW; each gets the smallest copper cable that carries its current in {{out.ambient_c|int}} °C air within the voltage drop limit, the worst drop being {{out.max_drop_pct|1}}%. The largest MCB is {{out.biggest_breaker_a|int}} A, for the {{out.biggest_name|raw}}.",
  "how": "Each row: current = design watts ÷ ({{out.volts}} V × power factor of the load type); an inverter AC is designed at its maximum input. MCB = next standard size at or above the current (× the margin for motors and compressors), curve by load type. Cable = smallest size whose rating in {{out.ambient_c}} °C air ({{out.method|raw}}, {{out.group_circuits}} per conduit, factor {{out.derate|2}}) covers the MCB and whose drop over the run stays within the limit (lighting or other). Connected load = {{out.connected_w|int}} W over {{out.circuits_count|int}} circuits.",
  "key_facts": [
   "A home wiring load schedule (circuit sheet) gives each circuit its own MCB rating, MCB curve and cable size, so the electrician wires every room to the same rules.",

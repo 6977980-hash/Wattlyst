@@ -78,6 +78,8 @@ final class Wattlyst_Render {
 			if ( ! empty( $this->c['sections'] ) || ! empty( $this->c['tables'] ) ) {
 				$out .= $this->author_box();
 				$out .= $this->sources();
+			} else {
+				$out .= $this->dates();
 			}
 		} else {
 			if ( ! empty( $this->c['tool'] ) ) {
@@ -560,11 +562,31 @@ final class Wattlyst_Render {
 		foreach ( $this->c['sections'] ?? array() as $s ) {
 			$out .= '<section><h2>' . esc_html( $s['h2'] ) . '</h2>';
 			foreach ( $s['p'] as $n => $p ) {
-				$out .= ( $fold && 1 === $n ? '<details class="wl-more"><summary>Read more</summary>' : '' ) . '<p>' . esc_html( $p ) . '</p>';
+				$out .= ( $fold && 1 === $n ? '<details class="wl-more"><summary>Read more</summary>' : '' ) . '<p>' . self::linked( $p, $s['l'][ $n ] ?? array() ) . '</p>';
 			}
 			$out .= ( $fold && count( $s['p'] ) > 1 ? '</details>' : '' ) . '</section>';
 		}
 		return $out;
+	}
+
+	/**
+	 * Escaped text with its in-text links (WL-140): the build lists each link as t (anchor, already in the text) and
+	 * u (a live page URL); the first match of each anchor after the previous link becomes <a href>. Only <a href> survives.
+	 */
+	public static function linked( string $text, array $links ): string {
+		$out = esc_html( $text );
+		$at  = 0;
+		foreach ( $links as $l ) {
+			$anchor = esc_html( (string) ( $l['t'] ?? '' ) );
+			$pos    = '' === $anchor ? false : strpos( $out, $anchor, $at );
+			if ( false === $pos ) {
+				continue;
+			}
+			$tag = '<a href="' . esc_url( Wattlyst_Tools::link( (string) $l['u'] ) ) . '">' . $anchor . '</a>';
+			$out = substr_replace( $out, $tag, $pos, strlen( $anchor ) );
+			$at  = $pos + strlen( $tag );
+		}
+		return wp_kses( $out, array( 'a' => array( 'href' => true ) ) );
 	}
 
 	private function examples(): string {
@@ -573,7 +595,7 @@ final class Wattlyst_Render {
 		}
 		$out = '<section class="wl-examples"><h2>Worked examples</h2>';
 		foreach ( $this->c['examples'] as $ex ) {
-			$out .= '<h3>' . esc_html( $ex['title'] ) . '</h3><p>' . esc_html( $ex['text'] ) . '</p>';
+			$out .= '<h3>' . esc_html( $ex['title'] ) . '</h3><p>' . self::linked( $ex['text'], $ex['l'] ?? array() ) . '</p>';
 		}
 		return $out . '</section>';
 	}
@@ -655,7 +677,7 @@ final class Wattlyst_Render {
 		foreach ( $this->c['embeds'] ?? array() as $e ) {
 			$id   = 'wl-embed-' . strtolower( $e['id'] );
 			$out .= '<details class="wl-embed"><summary>' . esc_html( $e['h1'] ) . '</summary>' .
-				'<p><a href="' . esc_url( Wattlyst_Tools::link( $e['url'] ) ) . '">Open the full page</a></p>' .
+				'<p><a href="' . esc_url( Wattlyst_Tools::link( $e['url'] ) ) . '">Open the full ' . esc_html( $e['h1'] ) . '</a></p>' .
 				'<label for="' . esc_attr( $id ) . '-iframe">Iframe code</label><textarea id="' . esc_attr( $id ) . '-iframe" readonly rows="4">' . esc_textarea( $e['iframe'] ) . '</textarea>' .
 				'<button type="button" class="wl-btn-secondary" data-wl-copy="' . esc_attr( $id ) . '-iframe">Copy iframe code</button>' .
 				'<label for="' . esc_attr( $id ) . '-script">Script code (resizes itself)</label><textarea id="' . esc_attr( $id ) . '-script" readonly rows="3">' . esc_textarea( $e['script'] ) . '</textarea>' .
@@ -725,8 +747,8 @@ final class Wattlyst_Render {
 		$out = '<section class="wl-faq' . ( $fold ? ' wl-faq-fold' : '' ) . '"><h2>Frequently asked questions</h2>';
 		foreach ( $this->c['faq'] as $i => $f ) {
 			$out .= $fold
-				? '<details class="wl-qa"' . ( 0 === $i ? ' open' : '' ) . '><summary><h3>' . esc_html( $f['q'] ) . '</h3></summary><p>' . esc_html( $f['a'] ) . '</p></details>'
-				: '<h3>' . esc_html( $f['q'] ) . '</h3><p>' . esc_html( $f['a'] ) . '</p>';
+				? '<details class="wl-qa"' . ( 0 === $i ? ' open' : '' ) . '><summary><h3>' . esc_html( $f['q'] ) . '</h3></summary><p>' . self::linked( $f['a'], $f['l'] ?? array() ) . '</p></details>'
+				: '<h3>' . esc_html( $f['q'] ) . '</h3><p>' . self::linked( $f['a'], $f['l'] ?? array() ) . '</p>';
 		}
 		return $out . '</section>';
 	}
@@ -746,7 +768,9 @@ final class Wattlyst_Render {
 		}
 		$parent = ! empty( $this->page['parent'] ) ? $this->plugin->row( $this->page['parent'] ) : null;
 		if ( $parent && ! empty( $parent['live'] ) ) {
-			$links[] = '<li><a href="' . esc_url( Wattlyst_Tools::link( $parent['url'] ) ) . '">All ' . esc_html( strtolower( $parent['h1'] ) ) . '</a></li>';
+			// "All battery and UPS calculators": lower-case the words, keep abbreviations such as UPS and DISCO.
+			$name    = preg_replace_callback( '/\b[A-Z][a-z]+\b/', static fn( $m ) => strtolower( $m[0] ), (string) $parent['h1'] );
+			$links[] = '<li><a href="' . esc_url( Wattlyst_Tools::link( $parent['url'] ) ) . '">All ' . esc_html( $name ) . '</a></li>';
 		}
 		return $links ? '<section class="wl-related"><h2>Related calculators</h2><ul>' . implode( '', $links ) . '</ul></section>' : '';
 	}
@@ -798,12 +822,14 @@ final class Wattlyst_Render {
 		return $out . $this->dates();
 	}
 
+	/** "Last reviewed" date; a hub with no review date of its own shows when its newest page was reviewed (WL-142). */
 	private function dates(): string {
-		if ( empty( $this->page['reviewed'] ) ) {
+		$date = ( $this->page['reviewed'] ?? '' ) ?: ( $this->page['modified'] ?? '' );
+		if ( '' === $date ) {
 			return '';
 		}
-		$label = 'trust' === $this->page['type'] ? 'Last updated' : 'Last reviewed';
-		return '<p class="wl-dates">' . $label . ': <time datetime="' . esc_attr( $this->page['reviewed'] ) . '">' . esc_html( self::date( $this->page['reviewed'] ) ) . '</time></p>';
+		$label = empty( $this->page['reviewed'] ) || 'trust' === $this->page['type'] ? 'Last updated' : 'Last reviewed';
+		return '<p class="wl-dates">' . $label . ': <time datetime="' . esc_attr( $date ) . '">' . esc_html( self::date( $date ) ) . '</time></p>';
 	}
 
 	private static function date( string $ymd ): string {

@@ -132,6 +132,29 @@
    "Peak = P + the largest (starting watts − running watts) of any motor"
   ]
  },
+ "sections": [
+  {
+   "h2": "Running load, peak load and monthly units: what each number is for",
+   "p": [
+    "The {{out.running_w|int}} W running load of the default home is what an inverter, UPS or generator must carry for as long as everything is on, and what the main breaker sees. The {{out.peak_w|int}} W peak is the moment the largest motor or compressor starts on top of that load: it sets the surge rating of an inverter and, more often than the running load, the size of a generator.",
+    "The {{out.monthly_units|int}} units a month are a different quantity: energy, not power. They are what the bill charges for and what a solar system has to produce. Take the running and peak watts to the [[D4|inverter size calculator]] or the [[C1|generator size calculator]], and the daily units to the [[D7|solar system size calculator]]."
+   ]
+  },
+  {
+   "h2": "Home load vs sanctioned load",
+   "p": [
+    "The sanctioned load printed on the bill is the kW the DISCO agreed to supply to the house. Enter it and this calculator compares the running load with it: the third worked example, with a non-inverter AC and a geyser, runs at {{ex.2.out.load_pct|int}}% of a {{ex.2.out.sanctioned_kw|int}} kW sanctioned load. A running load close to or above the sanctioned load is the usual reason a home is told to apply for a load extension before adding an AC or solar.",
+    "Not everything in a house runs at once, so the sanctioned load to apply for is worked out from the connected load with a diversity factor. The [[N4|sanctioned load calculator]] does that, and the [[E4|load check before adding an AC]] shows whether one more AC fits the connection you have."
+   ]
+  },
+  {
+   "h2": "Home load in amps and the wiring",
+   "p": [
+    "At {{out.volts|int}} V and a power factor of {{d.pf_mixed|2}}, the default running load of {{out.running_w|int}} W is {{out.amps|1}} A on a single-phase supply. That is the current the main cable and the main breaker carry when everything on the list is running.",
+    "Each circuit in the house carries only its own share, so wire and breaker sizes are chosen circuit by circuit. Use the [[N18|home wiring load schedule]] to size every circuit at once, or the [[W3|MCB size calculator]] for one circuit; have a licensed electrician confirm the main breaker and cable before changing them."
+   ]
+  }
+ ],
  "examples": [
   {
    "inputs": {
@@ -385,7 +408,7 @@
  "faq": [
   {
    "q": "How do I calculate the electrical load of my house?",
-   "a": "List every appliance that can run at the same time, take the running watts from its label or the appliance list, multiply by how many you have and add them up. Divide the total by volts × power factor ({{d.v_1ph|int}} V × {{d.pf_mixed|2}} in Pakistan) for amps."
+   "a": "List every appliance that can run at the same time, take the running watts from its label or the [[H2|appliance list]], multiply by how many you have and add them up. Divide the total by volts × power factor ({{d.v_1ph|int}} V × {{d.pf_mixed|2}} in Pakistan) for amps."
   },
   {
    "q": "What is the total load of a house in kW?",
@@ -423,6 +446,14 @@
   "1.5 ton"
  ],
  "sources": [
+  {
+   "label": "Virginia Tech Extension: appliance wattage table (running and starting watts)",
+   "url": "https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html"
+  },
+  {
+   "label": "NEPRA tariff notification for Ex-WAPDA DISCOs and K-Electric, 2026 (slab rates and sanctioned load)",
+   "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf"
+  },
   {
    "label": "Wattlyst methodology and default values",
    "url": "/methodology/"

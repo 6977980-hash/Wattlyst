@@ -1,0 +1,58 @@
+{
+ "id": "P-B",
+ "status": "publish",
+ "answer": "Battery and UPS calculators answer two questions: how long a battery will run your load, and how big a battery you need for the hours you want. Each one counts only the usable part of the battery, the UPS losses and its own standby draw, for tubular and lithium batteries on twelve, twenty-four and forty-eight volt systems.",
+ "key_facts": [
+  {
+   "from": "B1",
+   "n": 0
+  },
+  {
+   "from": "B3",
+   "n": 0
+  },
+  {
+   "from": "B4",
+   "n": 0
+  }
+ ],
+ "sections": [
+  {
+   "h2": "Which battery calculator do I need?",
+   "p": [
+    "To see how long the battery you have will last, use the [[B1|battery backup time calculator]], or the [[B5|UPS backup time calculator]] when the load must also fit the UPS's VA rating. For a single twelve-volt battery use the [[B2|battery runtime calculator]], and for the most common tubular battery the [[B3|{{pg.B3.out.ah|int}} Ah battery backup calculator]].",
+    "To choose a battery for the hours you want, start from your appliances with the [[B4|battery capacity calculator]]. Then pick the chemistry with the guide to [[H8|lithium vs tubular batteries]], and wire the bank with the [[N11|battery series and parallel calculator]]."
+   ]
+  },
+  {
+   "h2": "What the Ah on a battery does and does not tell you",
+   "p": [
+    "The amp hours on the label times the battery voltage is the energy the battery stores, but not all of it reaches your fans and lights. A tubular battery should only be used to about {{d.dod_lead_acid|pct}} of its rating and lithium to about {{d.dod_lifepo4|pct}}, a home UPS turns about {{d.inverter_eff_ups|pct}} of the battery energy into AC, and the UPS draws a little power of its own the whole time it runs. With a {{pg.B1.out.ah|int}} Ah battery and a {{pg.B1.out.load_w|int}} W load that leaves about {{pg.B1.out.hours|hm5}} of backup."
+   ]
+  }
+ ],
+ "faq": [
+  {
+   "q": "How long will my UPS battery last?",
+   "a": "It depends on the battery and the load: about {{pg.B1.out.hours|hm5}} for a {{pg.B1.out.ah|int}} Ah, {{pg.B1.out.volts|1}} V tubular battery with a {{pg.B1.out.load_w|int}} W load. Enter your own battery and load in the [[B1|battery backup time calculator]]."
+  },
+  {
+   "q": "Which is better for backup, lithium or tubular?",
+   "a": "Lithium gives more usable energy for the same Ah and lasts more charge cycles; tubular costs less to buy. The [[H8|lithium vs tubular guide]] compares backup, life and cost."
+  },
+  {
+   "q": "Can a UPS run an AC or a water motor?",
+   "a": "Only if its continuous rating covers the running watts and its surge rating covers the start. A normal home UPS bought for fans and lights cannot; check the load against the VA rating in the [[B5|UPS backup time calculator]] first."
+  },
+  {
+   "q": "How many batteries does a twenty-four or forty-eight volt system need?",
+   "a": "One twelve-volt battery for every twelve volts, connected in series: two for twenty-four volts and four for forty-eight volts, all of the same type, size and age. The [[N11|series and parallel calculator]] draws the wiring."
+  }
+ ],
+ "sources": [
+  {
+   "label": "How Wattlyst calculates: formulas, default values and data sources",
+   "url": "/methodology/"
+  }
+ ]
+}

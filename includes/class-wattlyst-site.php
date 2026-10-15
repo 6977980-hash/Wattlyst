@@ -83,8 +83,14 @@ final class Wattlyst_Site {
 	private static function not_found(): void {
 		global $wp_query;
 		$wp_query->set_404();
+		// set_404() keeps is_feed, so the template loader would still print the RSS body (WL-144): show the HTML 404.
+		$wp_query->is_feed = false;
 		status_header( 404 );
 		nocache_headers();
+		// WP::send_headers already sent the feed's RSS Content-Type; replace it.
+		if ( ! headers_sent() ) {
+			header( 'Content-Type: text/html; charset=' . get_option( 'blog_charset' ) );
+		}
 		// Otherwise redirect_canonical (priority 10) turns /<page>/feed/ into /<page>/feed/feed/ before the 404 (WL-82).
 		remove_action( 'template_redirect', 'redirect_canonical' );
 	}

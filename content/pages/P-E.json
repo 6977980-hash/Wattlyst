@@ -1,0 +1,62 @@
+{
+ "id": "P-E",
+ "status": "publish",
+ "answer": "Home load calculators add up what your appliances draw and use: running watts, the peak with a motor starting, amps, daily and monthly units and what they cost. Use them before adding an AC, before sizing solar, a UPS or a generator, or to check whether your connection's sanctioned load is enough.",
+ "key_facts": [
+  {
+   "from": "E6",
+   "n": 0
+  },
+  {
+   "from": "E1",
+   "n": 0
+  },
+  {
+   "from": "E2",
+   "n": 0
+  }
+ ],
+ "sections": [
+  {
+   "h2": "Which load calculator do I need?",
+   "p": [
+    "For the whole house, the [[E1|home electrical load calculator]]; for one appliance or a short list, the [[E2|appliance load calculator]]; for the current on a single-phase supply, the [[E3|single phase load calculator]]. Before buying an AC, the [[E4|load check before adding an AC]] shows whether the connection takes it.",
+    "To turn watts into units, use the [[E6|unit calculator]], or for an AC the [[E5|AC units calculator]]. For running costs and choices: [[N10|inverter vs non-inverter AC payback]], [[N9|AC temperature saving]], [[N5|winter heating cost]], [[N8|e-bike charging cost]] and the [[N7|UPS vs solar vs generator cost]] per backup hour."
+   ]
+  },
+  {
+   "h2": "Watts, units and the bill",
+   "p": [
+    "Watts are the rate of use at a moment; units (kWh) are watts × hours ÷ one thousand and are what the bill charges for. The default home on the home load calculator draws {{pg.E1.out.running_w|int}} W while everything on its list runs and uses about {{pg.E1.out.monthly_units|int}} units a month; the [[F1|electricity bill calculator]] turns units into rupees."
+   ]
+  }
+ ],
+ "faq": [
+  {
+   "q": "How do I calculate my home's electrical load?",
+   "a": "Add the running watts of everything that can be on at the same time, taken from each label or the [[H2|appliance list]], and divide by volts × power factor for the amps. The [[E1|home electrical load calculator]] does it from a list."
+  },
+  {
+   "q": "How many units does an AC use?",
+   "a": "It depends on its tonnage, whether it is an inverter model, the room and the hours. The [[E5|AC units calculator]] gives the units per hour and per month for your AC, and the [[N16|AC bill calculator]] what it adds to the whole bill."
+  },
+  {
+   "q": "What is the difference between connected load and sanctioned load?",
+   "a": "Connected load is everything installed; sanctioned load is the kW your DISCO agreed to supply, worked out from the connected load with a diversity factor because not everything runs at once. The [[N4|sanctioned load calculator]] does it."
+  },
+  {
+   "q": "Does an inverter AC save money?",
+   "a": "It uses fewer units than a non-inverter AC of the same size once the room is cool, and the saving grows with the hours it runs and the tariff. The [[N10|inverter AC payback calculator]] works out how soon its higher price pays back."
+  }
+ ],
+ "sources": [
+  {
+   "label": "Wattlyst appliance list: running and starting watts with sources",
+   "url": "/appliances/"
+  },
+  {
+   "label": "How Wattlyst calculates: formulas, default values and data sources",
+   "url": "/methodology/"
+  }
+ ]
+}

@@ -117,13 +117,13 @@
    "unit": "Wh"
   }
  ],
- "answer": "A {{in.ah|int}} Ah, {{in.volts|1}} V tubular battery runs a {{in.load_w|int}} W load for about {{out.hours|hm}} through a UPS while using only the recommended {{out.dod|pct}} of its capacity. Backup time equals battery Ah × volts × usable depth of discharge ÷ (load watts ÷ inverter efficiency + the inverter's idle draw).",
+ "answer": "A {{in.ah|int}} Ah, {{in.volts|1}} V tubular battery runs a {{in.load_w|int}} W load for about {{out.hours|hm5}} through a UPS while using only the recommended {{out.dod|pct}} of its capacity. Backup time equals battery Ah × volts × usable depth of discharge ÷ (load watts ÷ inverter efficiency + the inverter's idle draw).",
  "how": "{{in.ah}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable = {{out.stored_wh|int}} Wh in the battery. The battery gives {{in.load_w}} W ÷ {{out.inverter_eff|pct}} inverter efficiency + {{out.idle_w}} W the inverter draws itself = {{out.battery_w|1}} W. {{out.stored_wh|int}} Wh ÷ {{out.battery_w|1}} W = {{out.hours|2}} hours, about {{out.hours|hm}}.",
  "key_facts": [
   "Backup time (hours) = battery Ah × battery volts × usable depth of discharge ÷ (load watts ÷ inverter efficiency + the inverter's idle draw).",
   "Tubular and lead-acid batteries should be used to about {{d.dod_lead_acid|pct}} of their capacity; lithium (LiFePO4) batteries to about {{d.dod_lifepo4|pct}}.",
   "A typical home UPS converts battery power to AC at about {{d.inverter_eff_ups|pct}} efficiency, so part of the stored energy is lost as heat, and the UPS draws about {{data.appliances.ups-idle.running_w|int}} W itself while it runs.",
-  "A {{in.ah|int}} Ah, {{in.volts|1}} V tubular battery holds about {{out.stored_wh|int}} Wh of usable energy for a UPS, which gives about {{out.hours|hm}} at {{in.load_w|int}} W or about {{ex.3.out.hours|hm}} at {{ex.3.in.load_w|int}} W on a {{ex.3.in.ah|int}} Ah battery."
+  "A {{in.ah|int}} Ah, {{in.volts|1}} V tubular battery holds about {{out.stored_wh|int}} Wh of usable energy for a UPS, which gives about {{out.hours|hm5}} at {{in.load_w|int}} W or about {{ex.3.out.hours|hm5}} at {{ex.3.in.load_w|int}} W on a {{ex.3.in.ah|int}} Ah battery."
  ],
  "formula": {
   "text": "t = (Ah × V × DoD) ÷ (P ÷ η + P_idle)",
@@ -148,7 +148,7 @@
   {
    "h2": "Loadshedding UPS calculator: backup hours during loadshedding",
    "p": [
-    "To plan for loadshedding, compare the backup hours with the length of your longest outage. With the default {{in.ah|int}} Ah battery and a {{in.load_w|int}} W load you get about {{out.hours|hm}}, enough for a typical outage of one to two hours but not for a long evening cut. If the backup is short, the cheapest fix is a smaller load: switch the TV off and keep only fans and lights, and the backup almost doubles for every halving of the watts (not quite, because the UPS itself keeps drawing about {{data.appliances.ups-idle.running_w|int}} W).",
+    "To plan for loadshedding, compare the backup hours with the length of your longest outage. With the default {{in.ah|int}} Ah battery and a {{in.load_w|int}} W load you get about {{out.hours|hm5}}, enough for a typical outage of one to two hours but not for a long evening cut. If the backup is short, the cheapest fix is a smaller load: switch the TV off and keep only fans and lights, and the backup almost doubles for every halving of the watts (not quite, because the UPS itself keeps drawing about {{data.appliances.ups-idle.running_w|int}} W).",
     "Backup is only half the story. The battery must also recharge before the next cut. A tubular battery that has given a full backup needs several hours of grid power to refill, so on days with several outages the second and third backups are shorter than the first. Lithium batteries recharge faster and can use more of their capacity, which is why they suit frequent loadshedding better."
    ]
   }
@@ -245,23 +245,23 @@
  "faq": [
   {
    "q": "How long will my UPS battery last?",
-   "a": "On a {{in.ah|int}} Ah, {{in.volts|1}} V tubular battery with a {{in.load_w|int}} W load, about {{out.hours|hm}}. Halve the load and the backup almost doubles (the UPS's own idle draw stays); an old or hot battery gives less."
+   "a": "On a {{in.ah|int}} Ah, {{in.volts|1}} V tubular battery with a {{in.load_w|int}} W load, about {{out.hours|hm5}}. Halve the load and the backup almost doubles (the UPS's own idle draw stays); an old or hot battery gives less."
   },
   {
    "q": "What is the backup time of a {{ex.0.in.ah|int}} Ah battery?",
-   "a": "A {{ex.0.in.ah|int}} Ah, {{ex.0.in.volts|1}} V tubular battery holds about {{ex.0.out.stored_wh|int}} Wh of usable energy through a UPS. That is about {{ex.0.out.hours|hm}} at {{ex.0.in.load_w|int}} W (fans and lights) or about {{ex.3.out.hours|hm}} at {{ex.3.in.load_w|int}} W."
+   "a": "A {{ex.0.in.ah|int}} Ah, {{ex.0.in.volts|1}} V tubular battery holds about {{ex.0.out.stored_wh|int}} Wh of usable energy through a UPS. That is about {{ex.0.out.hours|hm5}} at {{ex.0.in.load_w|int}} W (fans and lights) or about {{ex.3.out.hours|hm5}} at {{ex.3.in.load_w|int}} W."
   },
   {
    "q": "How many hours of backup does a tubular battery give?",
-   "a": "It depends on the load. A tubular battery should only be used to about {{d.dod_lead_acid|pct}} of its rating, so a {{in.ah|int}} Ah battery gives about {{out.hours|hm}} at {{in.load_w|int}} W, and a {{ex.0.in.ah|int}} Ah battery about {{ex.0.out.hours|hm}} at {{ex.0.in.load_w|int}} W."
+   "a": "It depends on the load. A tubular battery should only be used to about {{d.dod_lead_acid|pct}} of its rating, so a {{in.ah|int}} Ah battery gives about {{out.hours|hm5}} at {{in.load_w|int}} W, and a {{ex.0.in.ah|int}} Ah battery about {{ex.0.out.hours|hm5}} at {{ex.0.in.load_w|int}} W."
   },
   {
    "q": "What is the backup time of a lithium battery?",
-   "a": "Longer than a tubular battery of the same Ah, because lithium (LiFePO4) can safely use about {{d.dod_lifepo4|pct}} of its capacity against about {{d.dod_lead_acid|pct}} for tubular. A {{ex.2.in.ah|int}} Ah, {{ex.2.in.volts|1}} V lithium battery gives about {{ex.2.out.hours|hm}} at {{ex.2.in.load_w|int}} W."
+   "a": "Longer than a tubular battery of the same Ah, because lithium (LiFePO4) can safely use about {{d.dod_lifepo4|pct}} of its capacity against about {{d.dod_lead_acid|pct}} for tubular. A {{ex.2.in.ah|int}} Ah, {{ex.2.in.volts|1}} V lithium battery gives about {{ex.2.out.hours|hm5}} at {{ex.2.in.load_w|int}} W. Which to buy, a [[H8|lithium or tubular battery]], depends on price and life as well as backup; the guide compares them."
   },
   {
    "q": "How many hours of battery backup for a fan and lights?",
-   "a": "One ceiling fan with a few LED lights is about {{ex.3.in.load_w|int}} W. On a {{ex.3.in.ah|int}} Ah tubular battery that is about {{ex.3.out.hours|hm}}; two fans with lights, about {{ex.0.in.load_w|int}} W, give about {{ex.0.out.hours|hm}}."
+   "a": "One ceiling fan with a few LED lights is about {{ex.3.in.load_w|int}} W. On a {{ex.3.in.ah|int}} Ah tubular battery that is about {{ex.3.out.hours|hm5}}; two fans with lights, about {{ex.0.in.load_w|int}} W, give about {{ex.0.out.hours|hm5}}."
   },
   {
    "q": "What is the battery backup formula in hours?",
@@ -287,9 +287,18 @@
  ],
  "next": "D4",
  "literal_numbers": [
+    "twenty hours",
   "LiFePO4"
  ],
  "sources": [
+  {
+   "label": "Victron Energy: LiFePO4 battery datasheet (usable depth of discharge and cycle life)",
+   "url": "https://www.victronenergy.de/upload/documents/Datasheet-12,8-Volt-lithium-iron-phosphate-batteries-Smart-EN.pdf"
+  },
+  {
+   "label": "Battery University: lead-acid and lithium battery depth of discharge",
+   "url": "https://batteryuniversity.com/"
+  },
   {
    "label": "Wattlyst methodology and default values",
    "url": "/methodology/"

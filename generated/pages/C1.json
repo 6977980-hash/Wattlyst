@@ -52,6 +52,19 @@
     "p": [
      "A fridge and an AC are the two loads that decide most home generator sizes. An inverter fridge and an inverter AC start softly, so a home with both plus fans and lights needs 3.5 kVA. Swap them for a non-inverter fridge and a 1.5 ton non-inverter AC and the AC compressor's start pushes the peak to 6,115 W, which needs 10 kVA.",
      "If you are about to buy both a generator and an AC, the inverter AC also lets you buy a smaller generator; whether its higher price pays back in units saved is what the inverter AC payback calculator works out. If the AC is already a non-inverter unit, the generator size for a 1.5 ton AC page shows each AC size on its own."
+    ],
+    "l": [
+     [],
+     [
+      {
+       "t": "inverter AC payback calculator",
+       "u": "/load/inverter-ac-payback-calculator/"
+      },
+      {
+       "t": "generator size for a 1.5 ton AC",
+       "u": "/generator/generator-for-1-5-ton-ac/"
+      }
+     ]
     ]
    },
    {
@@ -65,7 +78,25 @@
     "h2": "Generator for home in Pakistan: sizes sold and what fits",
     "p": [
      "Home generators in Pakistan are sold in steps such as 2.5, 5, 7.5 and 10 kVA, and the calculator always rounds up to the next step, never down. The kVA figure is not the usable watts: usable watts = kVA × 1,000 × 0.8 power factor, and the page on what a generator can run lists them for each size.",
-     "Petrol sets cover the small and middle sizes; diesel is more common in the larger sizes and uses less fuel per unit of electricity. Once you know the size, the fuel consumption calculator shows what it will cost to run for your loadshedding hours."
+     "Petrol sets cover the small and middle sizes; diesel is more common in the larger sizes and uses less fuel per unit of electricity. Once you know the size, the fuel consumption calculator shows what it will cost to run for your loadshedding hours, and the backup cost comparison shows whether a generator is cheaper than solar or a UPS for the same backup."
+    ],
+    "l": [
+     [
+      {
+       "t": "what a generator can run",
+       "u": "/generator/what-can-a-kva-generator-run/"
+      }
+     ],
+     [
+      {
+       "t": "fuel consumption calculator",
+       "u": "/generator/generator-fuel-consumption-calculator/"
+      },
+      {
+       "t": "backup cost comparison",
+       "u": "/load/ups-vs-solar-vs-generator-cost/"
+      }
+     ]
     ]
    },
    {
@@ -73,6 +104,15 @@
     "p": [
      "Sizing a generator for the whole house at once, geyser, iron, microwave, every AC and the pump together, gives a set far bigger than most homes need for a few hours a day. Heaters and irons draw a lot while they are on but are easy to time, and only one motor needs to start at a time if you switch them on one after another.",
      "A practical home list is what must stay on (fridge, fans, lights, router, one AC) plus the one motor you cannot schedule. Enter that list, then use the starting watts calculator if you are unsure which motor sets the peak."
+    ],
+    "l": [
+     [],
+     [
+      {
+       "t": "starting watts calculator",
+       "u": "/generator/generator-starting-watts-calculator/"
+      }
+     ]
     ]
    }
   ],
@@ -200,6 +240,10 @@
      "starting_w": 1900,
      "typical_hours_per_day": 8,
      "avg_w": 1000,
+     "avg_w_range": [
+      500,
+      1400
+     ],
      "load_type": "inverter_compressor"
     },
     "ac-split-1-5ton-non-inverter": {
@@ -1354,7 +1398,7 @@
     ]
    ]
   },
-  "answer": "A home running four fans, ten LED bulbs, an inverter fridge, a TV, a 1.5 ton inverter AC and a 1 hp water motor needs a 6.5 kVA generator: 3,085 W running and 4,885 W when the pump starts. Generator kVA = the larger of running watts × 1.25 or peak watts, ÷ 0.8 power factor ÷ 1,000, rounded up to a size sold.",
+  "answer": "A home with four fans, ten LED bulbs, an inverter fridge, a TV, a 1.5 ton inverter AC and a 1 hp water motor needs a 6.5 kVA generator: 3,085 W running, 4,885 W when the pump starts. kVA = the larger of running watts × 1.25 or peak watts, ÷ 0.8 power factor ÷ 1,000.",
   "formula": {
    "text": "P_run = Σ (W × qty); P_peak = P_run + max(W_start − W); kVA = max(P_run × m, P_peak) ÷ PF ÷ 1000",
    "lines": [

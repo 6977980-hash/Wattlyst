@@ -62,10 +62,19 @@
     ]
    },
    {
-    "h2": "Three-phase connection, sanctioned load and the net-metering cap",
+    "h2": "Three-phase connection, sanctioned load and the net billing cap",
     "p": [
      "A running load of 11,888 W is far above what a single-phase connection is meant to carry, so a 1 kanal house with four ACs is normally on a three-phase 400 V supply, and the solar inverter must be three-phase too so that the house load and the export are balanced across the phases. A single-phase inverter on a three-phase house can only feed one phase and leaves the other two on the grid.",
-     "Your DISCO approves net metering only up to the sanctioned load, so the sanctioned load must be at least the system size; apply for a load extension first if it is lower. Any sanctioned load of 5 kW or more is on a time-of-use meter, which bills peak-hour units at a higher rate. The net billing calculator shows what the export credit is worth against those rates."
+     "Your DISCO approves net billing only up to the sanctioned load, so the sanctioned load must be at least the system size; apply for a load extension first if it is lower. Any sanctioned load of 5 kW or more is on a time-of-use meter, which bills peak-hour units at a higher rate. The net billing calculator shows what the export credit is worth against those rates."
+    ],
+    "l": [
+     [],
+     [
+      {
+       "t": "net billing",
+       "u": "/guides/net-billing-pakistan/"
+      }
+     ]
     ]
    },
    {
@@ -79,7 +88,7 @@
     "h2": "What does a 1 kanal solar system cost?",
     "p": [
      "We do not print a price because panel, inverter and battery prices change with the exchange rate from month to month. Ask for complete quotes in Rs per watt of panels for a 13.46 kW system with a three-phase inverter of 14.86 kW, so that quotes compare like for like, and price the battery separately by its usable units.",
-     "A complete quote includes the panels, the three-phase inverter, the mounting structure, DC and AC cables, string breakers and surge protection, earthing, installation labour, the net-metering application and the three-phase bidirectional meter. Prices for a system this size are often quoted with and without the structure, so check that line."
+     "A complete quote includes the panels, the three-phase inverter, the mounting structure, DC and AC cables, string breakers and surge protection, earthing, installation labour, the net billing application and the three-phase bidirectional meter. Prices for a system this size are often quoted with and without the structure, so check that line."
     ]
    }
   ],
@@ -110,20 +119,20 @@
    },
    {
     "q": "What is the price of a 1 kanal solar system?",
-    "a": "Prices change with the exchange rate, so we do not print one. Compare quotes in Rs per watt for a complete 13.46 kW system with a three-phase inverter of 14.86 kW, including structure, cables, protection, installation and the net-metering application, and price the battery separately."
+    "a": "Prices change with the exchange rate, so we do not print one. Compare quotes in Rs per watt for a complete 13.46 kW system with a three-phase inverter of 14.86 kW, including structure, cables, protection, installation and the net billing application, and price the battery separately."
    }
   ],
   "key_facts": [
    "A typical 1 kanal house with four inverter ACs (three 1.5 ton and one 2 ton) has a running load of about 11,888 W and uses about 52.2 units a day, so it needs a solar system of about 13.46 kW with an inverter of 14.86 kW.",
    "A fifth AC (four 1.5 ton and one 2 ton inverter ACs) raises the same house to about 15.21 kW of panels (26 panels) and an inverter of 16.68 kW.",
    "The 13.46 kW array needs about 60 square metres of unshaded roof at 585 W per panel and makes about 1,635 units a month in Lahore as a yearly average.",
-   "A load of this size is normally on a three-phase 400 V connection with a sanctioned load well above 5 kW, so the inverter is three-phase, the house is on a time-of-use meter, and the net-metering cap equals the sanctioned load.",
+   "A load of this size is normally on a three-phase 400 V connection with a sanctioned load well above 5 kW, so the inverter is three-phase, the house is on a time-of-use meter, and the net billing cap equals the sanctioned load.",
    "Running two 1.5 ton inverter ACs with fans, lights, fridge, freezer and CCTV for 6 hours after sunset needs a lithium battery of about 667 Ah at 48 V (32 units); without the ACs the same night needs about 219 Ah."
   ],
   "mistakes": [
    "Fitting a single-phase inverter to a three-phase house. It feeds one phase only; the other two phases keep buying from the grid and the export is limited to that one phase.",
    "Entering every AC at full-day hours. The panels follow the daily units, so an AC used for a few hours should be entered with those hours; the ACs that run together set the inverter.",
-   "Applying for net metering before the load extension. The DISCO caps the system at the sanctioned load, so a 13.46 kW array on a small sanctioned load is refused or cut down.",
+   "Applying for net billing before the load extension. The DISCO caps the system at the sanctioned load, so a 13.46 kW array on a small sanctioned load is refused or cut down.",
    "Sizing the battery for the whole list. For four ACs that is a bank nobody fits at home; list the night loads only and decide which ACs, if any, run on the battery.",
    "Ignoring roof shade. Twenty-plus panels need about 60 square metres clear of the water tank, the stair tower and the parapet shadow; a shaded string drags down the whole MPPT input it is on."
   ],
@@ -219,6 +228,10 @@
      "starting_w": 1900,
      "typical_hours_per_day": 8,
      "avg_w": 1000,
+     "avg_w_range": [
+      500,
+      1400
+     ],
      "load_type": "inverter_compressor"
     },
     "ac-split-1-5ton-non-inverter": {
@@ -1516,7 +1529,7 @@
     "Battery Ah = P_run × night hours ÷ (V × DoD × η)"
    ]
   },
-  "safety": "A three-phase solar system connects to the grid and to the house wiring at 400 V, and its DC strings run at several hundred volts; have a licensed electrician and a DISCO-approved installer do the wiring, earthing, surge protection and the net-metering connection, and never work on the DC side with the strings connected."
+  "safety": "A three-phase solar system connects to the grid and to the house wiring at 400 V, and its DC strings run at several hundred volts; have a licensed electrician and a DISCO-approved installer do the wiring, earthing, surge protection and the net billing connection, and never work on the DC side with the strings connected."
  },
  "lead": true,
  "schema": {
@@ -1653,7 +1666,7 @@
       "name": "What is the price of a 1 kanal solar system?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Prices change with the exchange rate, so we do not print one. Compare quotes in Rs per watt for a complete 13.46 kW system with a three-phase inverter of 14.86 kW, including structure, cables, protection, installation and the net-metering application, and price the battery separately."
+       "text": "Prices change with the exchange rate, so we do not print one. Compare quotes in Rs per watt for a complete 13.46 kW system with a three-phase inverter of 14.86 kW, including structure, cables, protection, installation and the net billing application, and price the battery separately."
       }
      }
     ]

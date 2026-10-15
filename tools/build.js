@@ -14,6 +14,7 @@ import { billIndex, solarTracker, embedList } from './lib/datasets.js';
 import { adsConfig, leadsConfig, affiliatesByPage } from './lib/monetize.js';
 import { render, fmt, placeholders, isSpec, lookup } from '../engine/format.js';
 import { errorMessage, noticeCode } from '../engine/messages.js';
+import { marketRs, roughHours } from '../engine/approx.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => readFileSync(join(root, p), 'utf8');
@@ -25,7 +26,7 @@ const MODULE_DATA = { bill: ['tariff'], solar: ['cities'], wiring: ['cables'], p
 /** Extra data a single calculator needs (shipped only on its page). */
 const CALC_DATA = { generator_fuel: ['generator_fuel'] };
 /** Appliance fields the browser engine and the loads picker need. */
-const APPLIANCE_KEYS = ['name', 'running_w', 'starting_w', 'typical_hours_per_day', 'avg_w', 'load_type'];
+const APPLIANCE_KEYS = ['name', 'running_w', 'starting_w', 'typical_hours_per_day', 'avg_w', 'avg_w_range', 'load_type'];
 
 export async function loadInputs() {
   const site = readJson('data/site.json');
@@ -133,18 +134,57 @@ function runCalc(ctx, inputs, what) {
   return out;
 }
 
-function text(ctx, tpl, scope, what) {
+/** Build-only formats for page text (engine/approx.js, WL-150): market prices and rough runtimes. The browser never sees them. */
+const APPROX = { rsm: marketRs, hm5: roughHours };
+const APPROX_RE = /\{\{\s*([\w.-]+)\s*\|\s*(rsm|hm5)\s*\}\}/g;
+
+function text(ctx, tpl, scope, what, { links = false } = {}) {
   if (tpl === undefined || tpl === null || tpl === '') return '';
+  if (!links && /\[\[/.test(tpl)) fail(`${ctx.id}: ${what} cannot carry a [[ID|anchor]] link (only section paragraphs, worked examples and FAQ answers can)`);
+  tpl = String(tpl).replace(APPROX_RE, (_, path, spec) => {
+    const s = APPROX[spec](lookup(scope, path));
+    if (s === '') fail(`${ctx.id}: ${what} has no usable value for {{${path}|${spec}}}`);
+    return s;
+  });
   for (const p of placeholders(tpl)) if (!isSpec(p.spec)) fail(`${ctx.id}: ${what} uses unknown format "${p.spec}" in {{${p.path}|${p.spec}}}`);
   const s = render(tpl, scope);
   if (s === null) fail(`${ctx.id}: ${what} has a placeholder with no value: ${tpl}`);
   return s;
 }
 
+const LINK = /\[\[([\w-]+)\|([^\]|]+)\]\]/g;
+
+/**
+ * In-text links (WL-140): "[[D11|net billing guide]]" in a paragraph, worked example or FAQ answer. The build keeps
+ * the text the reader sees (the anchor alone, also used in FAQ schema) and lists each link as { t: anchor, u: URL };
+ * the PHP links the first unlinked match of each anchor in order (Wattlyst_Render::linked, wp_kses with <a href> only).
+ * The build fails on an unknown ID, a page that is not live, or a link to the page itself.
+ */
+function linked(ctx, s, what) {
+  const l = [];
+  const t = s.replace(LINK, (_, id, anchor) => {
+    const row = ctx.allRows.find((r) => r.id === id);
+    if (!row) fail(`${ctx.id}: ${what} links to unknown page ${id}`);
+    if (!row.live) fail(`${ctx.id}: ${what} links to ${id}, which is not live`);
+    if (id === ctx.id) fail(`${ctx.id}: ${what} links to itself`);
+    l.push({ t: anchor, u: row.url });
+    return anchor;
+  });
+  if (/\[\[|\]\]/.test(t)) fail(`${ctx.id}: ${what} has a broken [[ID|anchor]] link: ${s}`);
+  return { t, l };
+}
+
+/** Rendered text plus its links: { [key]: text, l: [...] } (no l when the text has no link). */
+function withLinks(ctx, tpl, scope, what, key) {
+  const { t, l } = linked(ctx, text(ctx, tpl, scope, what, { links: true }), what);
+  return { [key]: t, ...(l.length ? { l } : {}) };
+}
+
 /** Build the rendered content of one page. Every number comes from the engine or data/. */
 function buildContent(c, ctx) {
   const out = { intro: '', sections: [], faq: [], key_facts: [], mistakes: [], sources: c.sources || [] };
-  const scope = { d: ctx.data.defaults, a: ctx.data.appliances, site: ctx.site, appliance: ctx.appliance, data: ctx.data };
+  // pg.<ID>.out: another page's default result, for hub text (built before the hubs, WL-142).
+  const scope = { d: ctx.data.defaults, a: ctx.data.appliances, site: ctx.site, appliance: ctx.appliance, data: ctx.data, pg: ctx.results || {} };
   if (c.calc) {
     const module = findModule(ctx.modules, c.calc);
     if (!module) fail(`${c.id}: unknown calc ${c.calc}`);
@@ -165,6 +205,9 @@ function buildContent(c, ctx) {
       if (out.options && out.default !== undefined && !out.options.some(([v]) => String(v) === String(out.default))) fail(`${ctx.id}: field ${f.name} default ${out.default} is not one of its options`);
       return out;
     });
+    // The live templates are rendered again in the browser, which has no build-only format.
+    if (APPROX_RE.test([c.how, c.how_ur, c.result_table?.caption].join(' '))) fail(`${c.id}: the how text or result table caption uses a build-only format (rsm, hm5)`);
+    APPROX_RE.lastIndex = 0;
     const defaults = Object.fromEntries(fields.filter((f) => f.default !== undefined).map((f) => [f.name, f.default]));
     const fixed = c.fixed_inputs || {};
     const inputs = { ...fixed, ...defaults };
@@ -207,7 +250,7 @@ function buildContent(c, ctx) {
     };
     out.examples = (c.examples || []).map((ex, n) => ({
       title: text(ctx, ex.title, { ...scope, ...scope.ex[n] }, `example ${n + 1} title`),
-      text: text(ctx, ex.text, { ...scope, ...scope.ex[n] }, `example ${n + 1}`),
+      ...withLinks(ctx, ex.text, { ...scope, ...scope.ex[n] }, `example ${n + 1}`, 'text'),
     }));
     if (c.table) {
       const rows = scope.table.map((res, n) => c.table.columns.map((col) => text(ctx, col.tpl, { ...scope, ...res }, `table row ${n + 1}`)));
@@ -234,15 +277,22 @@ function buildContent(c, ctx) {
   if (c.calc === 'backup_compare') out.sources = [...out.sources, ...backupSources(ctx)];
   out.answer = text(ctx, c.answer, scope, 'answer');
   out.intro = text(ctx, c.intro, scope, 'intro');
-  out.key_facts = (c.key_facts || []).map((k, n) => text(ctx, k, scope, `key fact ${n + 1}`));
-  out.sections = (c.sections || []).map((s, n) => ({
-    h2: text(ctx, s.h2, scope, `section ${n + 1} heading`),
-    p: (s.p || []).map((p) => text(ctx, p, scope, `section ${n + 1}`)),
-  }));
+  // A hub may repeat a key fact of one of its pages ({ "from": "B1", "n": 0 }), so the number is that page's engine result (WL-142).
+  out.key_facts = (c.key_facts || []).map((k, n) => {
+    if (typeof k === 'string') return text(ctx, k, scope, `key fact ${n + 1}`);
+    const src = ctx.built?.[k.from]?.key_facts?.[k.n];
+    if (!src) fail(`${c.id}: key fact ${n + 1} takes key fact ${k.n} of ${k.from}, which has none (pages are built before hubs)`);
+    return src;
+  });
+  out.sections = (c.sections || []).map((s, n) => {
+    const ps = (s.p || []).map((p) => withLinks(ctx, p, scope, `section ${n + 1}`, 't'));
+    return { h2: text(ctx, s.h2, scope, `section ${n + 1} heading`), p: ps.map((x) => x.t), ...(ps.some((x) => x.l) ? { l: ps.map((x) => x.l || []) } : {}) };
+  });
   out.formula = c.formula ? { text: text(ctx, c.formula.text, scope, 'formula'), lines: c.formula.lines || [] } : null;
   out.mistakes = (c.mistakes || []).map((m, n) => text(ctx, m, scope, `mistake ${n + 1}`));
   out.safety = text(ctx, c.safety, scope, 'safety');
-  out.faq = (c.faq || []).map((f, n) => ({ q: text(ctx, f.q, scope, `faq ${n + 1} q`), a: text(ctx, f.a, scope, `faq ${n + 1} a`) }));
+  out.faq = (c.faq || []).map((f, n) => ({ q: text(ctx, f.q, scope, `faq ${n + 1} q`), ...withLinks(ctx, f.a, scope, `faq ${n + 1} a`, 'a') }));
+  if (scope.out && ctx.results) ctx.results[c.id] = { out: scope.out };
   ctx.scope = scope; // the page's title/meta may carry the same placeholders (SERP idea 4, seo-rules.md 2)
   return out;
 }
@@ -330,10 +380,21 @@ function browserBackup(b) {
 function backupSources(ctx) {
   const b = ctx.data.backup_prices;
   const seen = new Map();
-  const add = (s) => { if (s.url && !seen.has(s.url)) seen.set(s.url, { label: `${s.publisher} (price or upkeep data)`, url: s.url }); };
-  for (const it of [...b.ups, ...b.generators, b.generator_upkeep, b.battery_life_years]) for (const s of it.sources || []) add(s);
-  for (const it of ctx.data.component_prices.items.filter((x) => ['tubular_battery', 'lithium_battery', 'hybrid_inverter'].includes(x.category))) for (const s of it.sources || []) add(s);
-  return [...seen.values()];
+  // Each source names what it supports and its date, so two pages from one shop read differently (WL-151).
+  const add = (s, what) => {
+    if (!s.url) return;
+    if (!seen.has(s.url)) seen.set(s.url, { s, what: [] });
+    if (!seen.get(s.url).what.includes(what)) seen.get(s.url).what.push(what);
+  };
+  const name = (it) => it.label.replace(/ \([^()]*\)$/, '');
+  for (const it of [...b.ups, ...b.generators]) for (const s of it.sources || []) add(s, name(it));
+  for (const s of b.generator_upkeep.sources || []) add(s, 'generator oil and service interval');
+  for (const s of b.battery_life_years.sources || []) add(s, 'battery life');
+  for (const it of ctx.data.component_prices.items.filter((x) => ['tubular_battery', 'lithium_battery', 'hybrid_inverter'].includes(x.category))) for (const s of it.sources || []) add(s, name(it));
+  const when = (d) => String(d || 'undated').split(/;| \(/)[0];
+  // A product page quotes one model ("Knox Krypton 4kW PV5600: Rs. 97,000"): name the model, not the price row.
+  const product = (s, what) => (what.length === 1 && /^[^:]{3,60}:\s*Rs/.test(s.quote || '') ? s.quote.split(':')[0].trim() : what.join('; '));
+  return [...seen.values()].map(({ s, what }) => ({ label: `${s.publisher}: ${product(s, what)} (${when(s.date)})`, url: s.url }));
 }
 
 /** C8: the generator data behind the fuel curve and the fuel price, once per URL. */
@@ -412,11 +473,15 @@ function schemaFor(page, built, ctx) {
   const { site } = ctx;
   const abs = (u) => site.url.replace(/\/$/, '') + u;
   const graph = [];
-  graph.push({
-    '@type': 'BreadcrumbList',
-    '@id': `${abs(page.url)}#breadcrumb`,
-    itemListElement: page.breadcrumb.map((b, i) => ({ '@type': 'ListItem', position: i + 1, name: b.name, item: abs(b.url) })),
-  });
+  // The home page shows no breadcrumb (WL-81), so it has no BreadcrumbList either (WL-143).
+  const crumbs = page.type !== 'home';
+  if (crumbs) {
+    graph.push({
+      '@type': 'BreadcrumbList',
+      '@id': `${abs(page.url)}#breadcrumb`,
+      itemListElement: page.breadcrumb.map((b, i) => ({ '@type': 'ListItem', position: i + 1, name: b.name, item: abs(b.url) })),
+    });
+  }
   const webPage = {
     '@type': page.id === 'about' ? 'AboutPage' : page.id === 'contact' ? 'ContactPage' : page.type === 'pillar' ? 'CollectionPage' : 'WebPage',
     '@id': `${abs(page.url)}#webpage`,
@@ -425,7 +490,7 @@ function schemaFor(page, built, ctx) {
     description: page.meta,
     inLanguage: 'en',
     isPartOf: { '@id': `${site.url}#website` },
-    breadcrumb: { '@id': `${abs(page.url)}#breadcrumb` },
+    ...(crumbs ? { breadcrumb: { '@id': `${abs(page.url)}#breadcrumb` } } : {}),
     ...(page.reviewed ? { dateModified: page.reviewed, lastReviewed: page.reviewed } : page.modified ? { dateModified: page.modified } : {}),
     ...(site.reviewer.status === 'signed_off' && page.type !== 'trust' ? { reviewedBy: { '@id': `${site.url}#/person/reviewer` } } : {}),
     // The author box is visible on every content page, so the page names its author too (audit WL-50).
@@ -660,14 +725,18 @@ export async function build() {
   const leads = leadsConfig(site, inp.leadForm, rows, inp.data.cities, fail);
   const affiliates = affiliatesByPage(inp.affiliates, site, rows, fail);
   for (const r of rows) r.hasTool = Boolean(content[r.id]?.calc) && r.type !== 'home';
-  for (const r of rows) {
+  // Hubs last: their text can repeat a key fact or a default result of their pages (WL-142).
+  const builtById = {};
+  const results = {};
+  for (const r of [...rows.filter((x) => x.type !== 'pillar'), ...rows.filter((x) => x.type === 'pillar')]) {
     const c = content[r.id];
     let built = null;
     let pageCtx = ctxBase;
     if (c) {
       const appliance = c.appliance ? inp.appliances.items.find((a) => a.id === c.appliance) : null;
-      pageCtx = { ...ctxBase, id: r.id, appliance, allRows: rows };
+      pageCtx = { ...ctxBase, id: r.id, appliance, allRows: rows, built: builtById, results };
       built = buildContent(c, pageCtx);
+      builtById[r.id] = built;
       // Title or meta with an engine number (seo-rules.md 2): rendered from the page's own default result or dataset.
       if (/\{\{/.test(r.title)) r.title = text(pageCtx, r.title, pageCtx.scope, 'title');
       if (/\{\{/.test(r.meta)) r.meta = text(pageCtx, r.meta, pageCtx.scope, 'meta description');

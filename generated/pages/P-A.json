@@ -8,10 +8,12 @@
  "meta": "Free electrical converters for watts, amps, volts, kW, kVA, VA and amp hours. Each tool shows the formula with your numbers for DC, single and three phase.",
  "primary_keyword": "",
  "wave": 0,
- "status": "auto",
+ "status": "publish",
  "nav_label": "Converters",
  "nav_order": 7,
  "author": "ali-ahmad",
+ "related": [],
+ "next": null,
  "parent": null,
  "children": [
   "A1",
@@ -37,7 +39,115 @@
    "url": "/converters/"
   }
  ],
- "content": null,
+ "content": {
+  "intro": "",
+  "sections": [
+   {
+    "h2": "Which converter do I need?",
+    "p": [
+     "To find the current an appliance draws, use the watts to amps calculator; for a battery or solar circuit, the twelve-volt watts to amps calculator; for mains in Pakistan, the watts to amps calculator for a home supply. To go the other way, from the amps on a meter or clamp to power, use amps to watts, amps to kW or, with the voltage you measured, volts to watts.",
+     "Generators and UPS units are rated in kVA or VA, not watts: the kVA to kW calculator and the VA to watts calculator give the real power they can carry. Batteries are rated in amp hours; the Ah to Wh calculator turns that into the energy they store. For a three-phase connection use the three-phase amps calculator."
+    ],
+    "l": [
+     [
+      {
+       "t": "watts to amps calculator",
+       "u": "/converters/watts-to-amps-calculator/"
+      },
+      {
+       "t": "twelve-volt watts to amps calculator",
+       "u": "/converters/12v-watts-to-amps-calculator/"
+      },
+      {
+       "t": "watts to amps calculator for a home supply",
+       "u": "/converters/230v-watts-to-amps-calculator/"
+      },
+      {
+       "t": "amps to watts",
+       "u": "/converters/amps-to-watts-calculator/"
+      },
+      {
+       "t": "amps to kW",
+       "u": "/converters/amps-to-kw-calculator/"
+      },
+      {
+       "t": "volts to watts",
+       "u": "/converters/volts-to-watts-calculator/"
+      }
+     ],
+     [
+      {
+       "t": "kVA to kW calculator",
+       "u": "/converters/kva-to-kw-calculator/"
+      },
+      {
+       "t": "VA to watts calculator",
+       "u": "/converters/va-to-watts-calculator/"
+      },
+      {
+       "t": "Ah to Wh calculator",
+       "u": "/converters/ah-to-wh-calculator/"
+      },
+      {
+       "t": "three-phase amps calculator",
+       "u": "/converters/3-phase-current-calculator/"
+      }
+     ]
+    ]
+   },
+   {
+    "h2": "Why the power factor matters",
+    "p": [
+     "On AC mains, watts = volts × amps × power factor. A heater or kettle has a power factor of one, but motors, compressors and electronics draw some current that does no work, so a mixed home load is planned at 0.8 and a generator at 0.8. On a DC battery there is no power factor: the amps are simply the watts divided by the volts."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "How do I convert watts to amps?",
+    "a": "Divide the watts by the volts; on AC mains also divide by the power factor, and on three-phase by √3 × the line voltage instead. The watts to amps calculator does it for DC, single-phase and three-phase supplies and shows each step.",
+    "l": [
+     {
+      "t": "watts to amps calculator",
+      "u": "/converters/watts-to-amps-calculator/"
+     }
+    ]
+   },
+   {
+    "q": "Is kVA the same as kW?",
+    "a": "No. kVA is apparent power and kW is real power: kW = kVA × power factor. At the usual generator power factor a set delivers about 80% of its kVA rating as kW, which is why a generator or UPS label overstates the load it can carry."
+   },
+   {
+    "q": "Which voltage should I use for Pakistan?",
+    "a": "230 V for a single-phase home and 400 V between lines for a three-phase connection, at fifty hertz. Older labels may give a slightly lower nominal voltage; the difference in amps is small."
+   },
+   {
+    "q": "How do I find the watt hours of a battery?",
+    "a": "Multiply its amp hours by its voltage. Only part of that energy is usable: about 50% for a tubular battery and 90% for lithium, which the battery and UPS calculators apply for you.",
+    "l": [
+     {
+      "t": "battery and UPS calculators",
+      "u": "/battery/"
+     }
+    ]
+   }
+  ],
+  "key_facts": [
+   "Amps = watts ÷ (volts × power factor). On a 230 V single-phase supply, 1,500 W at a power factor of 0.8 draws 8.15 A.",
+   "kW = kVA × power factor, so at the usual generator power factor of 0.8 every kVA gives 0.8 kW of real power.",
+   "Watt hours = amp hours × volts, so a 200 Ah 12 V battery stores 2,400 Wh (2.4 kWh) and a 100 Ah 12 V battery stores 1,200 Wh (1.2 kWh)."
+  ],
+  "mistakes": [],
+  "sources": [
+   {
+    "label": "How Wattlyst calculates: formulas, default values and data sources",
+    "url": "/methodology/"
+   }
+  ],
+  "answer": "These converters turn one electrical unit into another: watts to amps, amps to watts, kW and kVA, VA to watts and amp hours to watt hours. Pick the supply first, a DC battery, single-phase or three-phase mains, because the same watts draw very different amps on each. Every result shows the formula with your numbers.",
+  "formula": null,
+  "safety": ""
+ },
  "schema": {
   "@context": "https://schema.org",
   "@graph": [
@@ -88,6 +198,44 @@
     "worksFor": {
      "@id": "https://wattlyst.com/#organization"
     }
+   },
+   {
+    "@type": "FAQPage",
+    "@id": "https://wattlyst.com/converters/#faq",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "How do I convert watts to amps?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Divide the watts by the volts; on AC mains also divide by the power factor, and on three-phase by √3 × the line voltage instead. The watts to amps calculator does it for DC, single-phase and three-phase supplies and shows each step."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Is kVA the same as kW?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "No. kVA is apparent power and kW is real power: kW = kVA × power factor. At the usual generator power factor a set delivers about 80% of its kVA rating as kW, which is why a generator or UPS label overstates the load it can carry."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Which voltage should I use for Pakistan?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "230 V for a single-phase home and 400 V between lines for a three-phase connection, at fifty hertz. Older labels may give a slightly lower nominal voltage; the difference in amps is small."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How do I find the watt hours of a battery?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Multiply its amp hours by its voltage. Only part of that energy is usable: about 50% for a tubular battery and 90% for lithium, which the battery and UPS calculators apply for you."
+      }
+     }
+    ]
    },
    {
     "@type": "Organization",

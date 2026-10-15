@@ -18,6 +18,8 @@ export const ac_units = calculator((i, d) => {
     if (!(ac.avg_w > 0)) throw new CalcError('appliance_unknown', 'ac');
     avg_kw = ac.avg_w / 1000;
     Object.assign(out, { ac: String(i.ac).trim(), ac_name: ac.name, ac_rated_w: ac.running_w });
+    // The planning range of the average draw, where the data gives one (formulas.md E, WL-146).
+    if (ac.avg_w_range) Object.assign(out, { avg_kw_low: ac.avg_w_range[0] / 1000, avg_kw_high: ac.avg_w_range[1] / 1000 });
   } else {
     avg_kw = pos(i, 'avg_kw');
   }

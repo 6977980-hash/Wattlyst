@@ -44,7 +44,16 @@
     "h2": "How does this breaker size calculator choose the MCB rating?",
     "p": [
      "It starts with the design current: the circuit's watts divided by volts × power factor (2,000 W ÷ (230 V × 0.8) = 10.9 A for the default). For a motor, compressor, AC or welder it multiplies by 1.25, because those loads run near full current for long periods and a breaker chosen right at the design current heats up and trips. Then it takes the next standard MCB size above that, 16 A here, and picks the curve from the type of load.",
-     "Finally it checks the cable. The MCB must never be rated above the cable it protects, so the result also shows the smallest copper size whose rating covers the design current × 1.25 and the MCB: 2.5 mm² (7/29). The wire size calculator linked below adds the voltage drop over your run."
+     "Finally it checks the cable. The MCB must never be rated above the cable it protects, so the result also shows the smallest copper size whose rating covers the design current × 1.25 and the MCB: 2.5 mm² (7/29). The wire size calculator adds the voltage drop over your run."
+    ],
+    "l": [
+     [],
+     [
+      {
+       "t": "wire size calculator",
+       "u": "/wiring/wire-size-calculator/"
+      }
+     ]
     ]
    },
    {

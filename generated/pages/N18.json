@@ -165,6 +165,10 @@
      "starting_w": 1900,
      "typical_hours_per_day": 8,
      "avg_w": 1000,
+     "avg_w_range": [
+      500,
+      1400
+     ],
      "load_type": "inverter_compressor"
     },
     "ac-split-2ton-inverter": {
@@ -742,7 +746,7 @@
     ]
    ]
   },
-  "answer": "A load schedule lists every circuit with its MCB and cable. For the example house the 6 circuits carry 10.05 kW in all; each one gets the smallest copper cable that carries its current in 45 °C air and keeps the voltage drop within the limit, the worst being 1.3%. The largest MCB is 20 A, for the Split AC 2 ton non-inverter.",
+  "answer": "A load schedule lists every circuit with its MCB and cable. In the example house the 6 circuits carry 10.05 kW; each gets the smallest copper cable that carries its current in 45 °C air within the voltage drop limit, the worst drop being 1.3%. The largest MCB is 20 A, for the Split AC 2 ton non-inverter.",
   "formula": {
    "text": "For each circuit: I = P ÷ (V × PF); MCB ≥ I; cable rating × derating ≥ max(I × margin, MCB); voltage drop = 2 × L × I × ρ ÷ A ≤ limit",
    "lines": [
