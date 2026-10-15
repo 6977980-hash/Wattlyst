@@ -9,7 +9,7 @@
 
 defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
 
-foreach ( array( 'wattlyst_sync_hash', 'wattlyst_sync_lock', 'wattlyst_warm_queue', 'wattlyst_indexnow_key' ) as $opt ) {
+foreach ( array( 'wattlyst_sync_hash', 'wattlyst_sync_lock', 'wattlyst_warm_queue', 'wattlyst_indexnow_key', 'wattlyst_indexnow_sent' ) as $opt ) {
 	delete_option( $opt );
 }
 wp_clear_scheduled_hook( 'wattlyst_lead_cleanup' );

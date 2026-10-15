@@ -10,6 +10,7 @@ defined( 'ABSPATH' ) || exit;
 final class Wattlyst_Endpoints {
 
 	private const OPT_INDEXNOW = 'wattlyst_indexnow_key';
+	private const OPT_SENT     = 'wattlyst_indexnow_sent';
 
 	/** Search and AI-search crawlers that are explicitly welcome (seo-rules.md 4). */
 	private const CRAWLERS = array( 'Googlebot', 'Bingbot', 'OAI-SearchBot', 'ChatGPT-User', 'GPTBot', 'ClaudeBot', 'Claude-SearchBot', 'Claude-User', 'PerplexityBot', 'Perplexity-User', 'Google-Extended', 'Applebot', 'Applebot-Extended', 'DuckDuckBot' );
@@ -23,6 +24,7 @@ final class Wattlyst_Endpoints {
 		add_filter( 'wp_sitemaps_add_provider', array( $this, 'sitemap_providers' ), 10, 2 );
 		add_filter( 'wp_sitemaps_posts_entry', array( $this, 'sitemap_lastmod' ), 10, 2 );
 		add_action( 'transition_post_status', array( $this, 'indexnow_on_publish' ), 10, 3 );
+		add_action( 'wattlyst_synced', array( $this, 'indexnow_changed' ) );
 	}
 
 	/** Answer /llms.txt, /ads.txt and /{indexnow-key}.txt before WordPress routes the request. */
@@ -157,7 +159,7 @@ final class Wattlyst_Endpoints {
 		return $entry;
 	}
 
-		public function indexnow_key(): string {
+	public function indexnow_key(): string {
 		$key = get_option( self::OPT_INDEXNOW );
 		if ( ! is_string( $key ) || ! preg_match( '/^[a-f0-9]{32}$/', $key ) ) {
 			$key = bin2hex( random_bytes( 16 ) );
@@ -166,35 +168,69 @@ final class Wattlyst_Endpoints {
 		return $key;
 	}
 
-	/** Tell Bing/IndexNow engines about a published or updated page or post (production host only). */
+	/**
+	 * Tell Bing/IndexNow engines about a page or post the owner published or updated in WordPress (production
+	 * host only). Managed pages are skipped: their text lives in generated/, so indexnow_changed() sends them.
+	 */
 	public function indexnow_on_publish( $new, $old, $post ): void {
 		if ( 'publish' !== $new || ! $post instanceof WP_Post || ! in_array( $post->post_type, array( 'page', 'post' ), true ) ) {
 			return;
 		}
-		if ( wp_is_post_revision( $post ) || wp_is_post_autosave( $post ) ) {
+		if ( wp_is_post_revision( $post ) || wp_is_post_autosave( $post ) || Wattlyst_Pages::$syncing || '' !== get_post_meta( $post->ID, Wattlyst_Pages::META_ID, true ) ) {
 			return;
 		}
+		$this->indexnow_send( array( get_permalink( $post ) ), false );
+	}
+
+	/**
+	 * After a sync: send every live page whose lastmod (the sitemap date) differs from the date last sent, in
+	 * one IndexNow request. A content or data change never edits the WordPress post (it only holds the
+	 * shortcode), so without this a refreshed page was never announced. The first run sends every live page.
+	 * The sent dates are saved only when the engine answers 200 or 202, so a failed send is retried next sync.
+	 */
+	public function indexnow_changed(): void {
+		$sent = get_option( self::OPT_SENT );
+		$sent = is_array( $sent ) ? $sent : array();
+		$next = array();
+		$urls = array();
+		foreach ( $this->plugin->manifest()['pages'] as $row ) {
+			if ( empty( $row['live'] ) || empty( $row['lastmod'] ) ) {
+				continue;
+			}
+			$next[ $row['id'] ] = $row['lastmod'];
+			if ( ( $sent[ $row['id'] ] ?? '' ) !== $row['lastmod'] ) {
+				$urls[] = 'home' === $row['type'] ? home_url( '/' ) : Wattlyst_Tools::link( $row['url'] );
+			}
+		}
+		if ( $urls && $this->indexnow_send( $urls, true ) ) {
+			update_option( self::OPT_SENT, $next, false );
+		}
+	}
+
+	/** One IndexNow request (up to 10,000 URLs). Returns true when the engine accepted it. */
+	private function indexnow_send( array $urls, bool $wait ): bool {
 		$home = wp_parse_url( home_url(), PHP_URL_HOST );
 		$prod = wp_parse_url( $this->plugin->site()['url'] ?? '', PHP_URL_HOST );
 		if ( ! $home || $home !== $prod || 'production' !== wp_get_environment_type() ) {
-			return;
+			return false;
 		}
-		$key = $this->indexnow_key();
-		wp_remote_post(
+		$key  = $this->indexnow_key();
+		$resp = wp_remote_post(
 			'https://api.indexnow.org/indexnow',
 			array(
-				'blocking' => false,
-				'timeout'  => 3,
+				'blocking' => $wait,
+				'timeout'  => $wait ? 15 : 3,
 				'headers'  => array( 'Content-Type' => 'application/json; charset=utf-8' ),
 				'body'     => wp_json_encode(
 					array(
 						'host'        => $home,
 						'key'         => $key,
 						'keyLocation' => home_url( '/' . $key . '.txt' ),
-						'urlList'     => array( get_permalink( $post ) ),
+						'urlList'     => array_values( array_slice( array_unique( $urls ), 0, 10000 ) ),
 					)
 				),
 			)
 		);
+		return $wait && in_array( (int) wp_remote_retrieve_response_code( $resp ), array( 200, 202 ), true );
 	}
 }
