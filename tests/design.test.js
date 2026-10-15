@@ -47,3 +47,24 @@ test('re-audit design follow-ups stay in place (WL-77 to WL-81)', () => {
   assert.match(css, /@media print\{[^@]*print-color-adjust:exact/, 'chart bars print (WL-80)');
   assert.match(render, /'Rs&nbsp;'/, 'money values do not break after Rs (WL-81)');
 });
+
+test('home redesign (15 Oct 2026): own stylesheet on the home page only, hubs in the hero, planner in two columns', () => {
+  const home = read('assets/css/wattlyst-home.css');
+  assert.ok(!home.includes('<'), 'home CSS is inlined through wp_strip_all_tags too');
+  assert.ok(Buffer.byteLength(home) < 20 * 1024, `home CSS is ${Buffer.byteLength(home)} bytes; keep it under 20 KB`);
+  assert.ok(!/@import|@font-face|url\((?!"data:)/.test(home), 'no web fonts, imports or external images');
+  for (const m of home.matchAll(/min-height:(\d+)px/g)) assert.ok(Number(m[1]) >= 44, `touch target ${m[0]}`);
+  assert.match(home, /prefers-reduced-motion/);
+  assert.ok(!/\.wl-card/.test(css.replace(/\.wl-cards/g, '')), 'task card styles live in the home stylesheet only');
+  const head = read('includes/class-wattlyst-head.php');
+  assert.match(head, /\$this->styles\( 'home' === \$page\['type'\] \)/, 'home stylesheet only on the home page');
+  assert.match(read('tools/build.js'), /shown\.update\(read\('assets\/css\/wattlyst-home\.css'\)\)/, 'a home CSS deploy purges the page cache');
+  const render = read('includes/class-wattlyst-render.php');
+  assert.match(render, /function home_hero\([\s\S]*?\$this->page\['cards'\]/, 'hero chips: the same live hubs as the task cards');
+  assert.match(render, /\$this->tool\( true \)/, 'planner: inputs and plan in two columns');
+  assert.match(render, /<details class="wl-qa"/, 'home FAQ folds; schema still matches the visible questions');
+  // Labels of different lengths no longer push their inputs up or down (owner screenshot, 15 Oct 2026).
+  assert.match(css, /@supports \(grid-template-rows:subgrid\)\{[^@]*grid-template-rows:subgrid/);
+  // GeneratePress sets .screen-reader-text to position:absolute!important; the phone list captions must override it.
+  assert.match(css, /\.wl-loads tr\.wl-load-row td \.screen-reader-text\{position:static!important/);
+});
