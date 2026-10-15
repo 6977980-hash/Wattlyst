@@ -140,21 +140,19 @@
  },
  "net_billing": {
   "regulation": "NEPRA (Prosumer) Regulations 2026, notified 9 Feb 2026",
-  "buyback_rs_per_unit_default": 11,
-  "buyback_verified": false,
-  "note": "news reports Rs10-11 (one report Rs8.13); keep editable. Size capped at sanctioned load. Existing net-metering contracts likely valid until expiry (unconfirmed on NEPRA page).",
-  "buyback_sources_secondary": [
-   {
-    "label": "Express Tribune, 10 Feb 2026: Rs 11/unit discussed with stakeholders, not yet notified",
-    "url": "https://tribune.com.pk/story/2591628/1"
-   },
-   {
-    "label": "Nukta: revised buyback rate yet to be formally notified",
-    "url": "https://nukta.com/pakistan-solar-ends-net-metering"
-   }
-  ],
-  "buyback_checked": "2026-10-13",
-  "buyback_status": "No NEPRA notification of the buyback rate found on 2026-10-13 (searched nepra.org.pk); re-check monthly and replace these links with the NEPRA page when it exists."
+  "regulation_sro": "SRO 251(I)/2026",
+  "existing_cutoff": "9 February 2026",
+  "regulation_url": "https://nepra.org.pk/Legislation/3-Reg/3.35%20NEPRA%20%20Prosumer%20Regulations%202026/NEPRA%20Prosumer%20Regulations%20(SRO%20251(I)2026)%2009-02-26.PDF",
+  "buyback_basis": "Regulation 14(1)(b): units a prosumer exports are billed at the national average energy purchase price (NAEPP). Regulation 14(3): NEPRA may revise the rate by notification.",
+  "buyback_rs_per_unit_default": 8.13,
+  "buyback_period": "CY 2026",
+  "buyback_verified": true,
+  "buyback_source": "NEPRA decision on the Power Purchase Price forecast for CY 2026 (7 Jan 2026), para 36: NAEPP Rs 8.13/kWh, NAPPP Rs 25.32/kWh",
+  "buyback_source_url": "https://nepra.org.pk/tariff/Tariff/DISCOs/Rebasing%20Decisions/TRF-100%20CPPAG%20FOR%20APPROVAL%20OF%20POWER%20PURCHASE%20PRICE%20FORECAST%2007-01-2026%20437-76.PDF",
+  "existing_prosumers": "Agreements signed before 9 Feb 2026 stay on the rate and mechanism of the repealed 2015 net-metering regulations until they expire (SRO 547(I)/2026, 2 Apr 2026, listed on the NEPRA Legal page; regulation 21(2) of SRO 251 had first set them at the national average power purchase price). Renewals move to net billing.",
+  "existing_prosumers_url": "https://nepra.org.pk/Legal.php",
+  "note": "Size capped at sanctioned load. NAEPP is set for each calendar year in NEPRA's power purchase price decision; re-check every January and when NEPRA notifies a revision. Kept editable for a DISCO that applies a revised rate.",
+  "buyback_checked": "2026-10-15"
  },
  "gas_domestic": {
   "_note": "Sui gas domestic sale prices (SNGPL/SSGC), Rs per MMBtu, used only as the N5 winter-heating default. Secondary source: no OGRA notification page could be fetched on 2026-10-14 (ogra.org.pk notification URLs returned 404). Reports say the July 2025 slab prices were kept unchanged into 2026. Replace with the OGRA notification and set verified when found.",

@@ -131,7 +131,7 @@
     "tariff": "@data.tariff.net_billing.buyback_rs_per_unit_default"
    },
    "title": "The same bike charged from rooftop solar under net billing",
-   "text": "Valued at the buyback rate of {{out.tariff|rs2}} per unit you give up by not exporting, a charge of {{out.kwh|2}} units costs {{out.rs_per_charge|rs}}, or {{out.rs_per_km|rs2}} per km. The buyback rate is an estimate until NEPRA notifies it."
+   "text": "Valued at the buyback rate of {{out.tariff|rs2}} per unit you give up by not exporting, a charge of {{out.kwh|2}} units costs {{out.rs_per_charge|rs}}, or {{out.rs_per_km|rs2}} per km. The buyback rate is NEPRA's national average energy purchase price for {{data.tariff.net_billing.buyback_period}}."
   },
   {
    "inputs": {
@@ -232,7 +232,7 @@
   },
   {
    "q": "What does it cost to charge an e-bike from solar panels?",
-   "a": "On net billing, value the units at the buyback rate you give up: about {{ex.2.out.rs_per_km|rs2}} per km for the default bike at an estimated {{data.tariff.net_billing.buyback_rs_per_unit_default|rs2}} per unit. Off-grid with spare daytime power, close to nothing."
+   "a": "On net billing, value the units at the buyback rate you give up: about {{ex.2.out.rs_per_km|rs2}} per km for the default bike at the net-billing buyback rate of {{data.tariff.net_billing.buyback_rs_per_unit_default|rs2}} per unit. Off-grid with spare daytime power, close to nothing."
   }
  ],
  "related": [

@@ -149,7 +149,7 @@
         "tariff": "@data.tariff.net_billing.buyback_rs_per_unit_default"
       },
       "title": "{{in.kwp|int}} kW system exporting most units under net billing",
-      "text": "Valued at the estimated buyback rate of {{out.tariff|rs2}}, the {{out.loss_kwh_day|1}} units lost a day after {{out.days|int}} days are worth {{out.rs_lost_day|rs}}. A cleaning at {{out.cleaning_cost|rs}} pays after about {{out.clean_after_days|int}} days."
+      "text": "Valued at the net-billing buyback rate of {{out.tariff|rs2}}, the {{out.loss_kwh_day|1}} units lost a day after {{out.days|int}} days are worth {{out.rs_lost_day|rs}}. A cleaning at {{out.cleaning_cost|rs}} pays after about {{out.clean_after_days|int}} days."
     },
     {
       "inputs": {
