@@ -1,0 +1,18 @@
+import { data, C } from './h.mjs';
+const r=(c,i)=>{const o=C[c](i,data); console.log(c, JSON.stringify(i), '=>', JSON.stringify(o)); return o;};
+r('watts_to_amps',{watts:100,volts:12,mode:'dc'});
+r('watts_to_amps',{watts:100,volts:12});
+r('watts_to_amps',{watts:1500});
+r('watts_to_amps',{watts:1500,mode:'ac3'});
+r('kw_to_amps',{kw:15,mode:'ac3'});
+r('amps_to_watts',{amps:16});
+r('amps_to_kw',{amps:32});
+r('amps_to_kw',{direction:'kw_to_amps',kw:5});
+r('amps_to_kw',{direction:'kw_to_amps',kw:5, amps:32});
+r('kva_to_kw',{kva:5});
+r('va_to_watts',{va:1000});
+r('ah_to_wh',{ah:200,volts:12});
+r('units',{watts:1000,hours:5});
+r('units',{amps:5,hours:2,mode:'ac3'});
+r('units',{amps:5,hours:2,mode:'dc', volts:12});
+r('hp_to_kw',{hp:1});

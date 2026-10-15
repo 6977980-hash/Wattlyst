@@ -1,0 +1,10 @@
+import { data } from './lib.mjs';
+import { calculators as C } from '../../../engine/index.js';
+const s = (r, ks) => r.ok ? Object.fromEntries(ks.map(k => [k, r[k]])) : r;
+console.log('D5 h25', s(C.solar_for_ac({ ac: 'ac-split-1-5ton-inverter', hours: 25, city: 'lahore' }, data), ['daily_kwh','panels']));
+console.log('D5 night25', s(C.solar_for_ac({ ac: 'ac-split-1-5ton-inverter', hours: 8, night_hours: 25, city: 'lahore' }, data), ['night_kwh','battery_ah']));
+console.log('D15 h25', s(C.solar_for_pump({ hp: 10, hours: 25, city: 'multan' }, data), ['daily_kwh','panels']));
+console.log('D3 night 30', s(C.solar_from_loads({ loads:[{id:'led-bulb',qty:2,hours:6}], night_hours: 30, off_grid:true, city: 'lahore' }, data), ['night_kwh','array_kwh','battery_ah']));
+console.log('D6 psh 25', s(C.panel_for_12v({ ah: 100, volts: 12, psh: 25 }, data), ['panel_w','standard_panel_w','charge_days']));
+console.log('E5 h25', C.ac_units({ ac: 'ac-split-1-5ton-inverter', hours: 25 }, data));
+console.log('D8 row h25', C.solar_from_loads({ loads:[{id:'led-bulb',hours:25}], city:'lahore'}, data));
