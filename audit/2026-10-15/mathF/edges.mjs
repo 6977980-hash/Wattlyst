@@ -1,0 +1,15 @@
+import { calculators as C } from '../../../engine/index.js';
+import { data } from '../../../tests/load-data.js';
+import { errorMessage } from '../../../engine/messages.js';
+const GEN='Something went wrong with this calculation. Please check your inputs.';
+const vals=[undefined,null,'',0,-1,'abc','1,500','18%','12.5',' 300 ','1e3','0x10',1e12,1e13,Infinity,NaN,-0,'1,5','15,00',true,[],{}];
+const show=(calc,base,key)=>{ for(const v of vals){ const inp={...base,[key]:v}; const r=C[calc](inp,data);
+  const bad = r.ok ? Object.entries(r).filter(([k,x])=>typeof x==='number'&&(!Number.isFinite(x))).length>0 : false;
+  const msg = r.ok? '' : errorMessage(r.error,{});
+  console.log(calc,key,JSON.stringify(v)??String(v),'->',r.ok?('ok total='+(r.total_rs??r.monthly_units??r.extra_rs??r.payback_months??r.saving_pct??'')):r.error, msg===GEN?'  <<GENERIC MSG':'', bad?'NONFINITE':''); } };
+show('bill_total',{units:300},'units');
+show('bill_total',{units:300},'sanctioned_kw');
+show('bill_total',{units:300},'gst_pct');
+show('bill_total',{units:300},'fpa_per_unit');
+show('bill_total',{units:300},'period');
+show('bill_total',{units:300},'fc_surcharge_per_unit');

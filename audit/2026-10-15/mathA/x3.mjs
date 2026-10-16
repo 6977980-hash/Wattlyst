@@ -1,0 +1,15 @@
+import { data, C, errorMessage } from './h.mjs';
+const show=(c,i)=>{const o=C[c](i,data); console.log(c, JSON.stringify(i).slice(0,150),'=>', o.ok? JSON.stringify(o).slice(0,200) : o.error+' | '+o.field+' | '+errorMessage(o.error));};
+show('generator_size',{loads:[{id:'custom',watts:1e13}]});
+show('generator_size',{loads:[{id:'custom',watts:'abc'}]});
+show('generator_size',{loads:[{id:'fan'},{id:'custom',watts:-5}]});
+show('circuit_schedule',{loads:[{id:'custom',watts:1e13,length:10}]});
+show('circuit_schedule',{loads:[{id:'custom',watts:2000,length:1e13}]});
+show('circuit_schedule',{loads:[{id:'custom',watts:2000,length:500}]});
+show('circuit_schedule',{loads:[{id:'custom',watts:2000,length:10, qty:1e13}]});
+show('battery_bank',{load_w:0.001,hours:0.001,volts:24,battery_ah:200,battery_v:12});
+show('generator_capacity',{kva:5,loads:[{id:'custom',watts:2561}]});
+show('generator_capacity',{kva:5,loads:[{id:'custom',watts:2559}]});
+show('wire_size',{watts:2000,length_m:20,circuits:1.5});
+show('generator_size',{loads:[{id:'ceiling-fan-ac',qty:0.5}]});
+show('units',{watts:100});

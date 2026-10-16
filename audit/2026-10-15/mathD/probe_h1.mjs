@@ -1,0 +1,12 @@
+import { data, pageInputs } from './lib.mjs';
+import { calculators } from '../../../engine/index.js';
+const { calc, inputs } = pageInputs('H1');
+console.log(calc, JSON.stringify(inputs).slice(0,600));
+const p = calculators.home_plan(inputs, data);
+const pick = (o, ks) => Object.fromEntries(ks.map(k => [k, o[k]]));
+console.log(pick(p, ['ok','error','running_w','daily_kwh','monthly_units','city_yield','solar_kw','solar_kw_energy','solar_kw_power','solar_limited_by','panels','installed_kw','monthly_solar_kwh','inverter_kw','net_billing_kw','export_units','import_units','self_used_units']));
+const d7 = calculators.solar_size({ monthly_units: p.monthly_units, city: inputs.city }, data);
+console.log('D7 same units', d7.kw, d7.panels, d7.installed_kw);
+const flat = Object.fromEntries(['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'].map(k => [k, p.monthly_units]));
+const n17 = calculators.solar_seasonal({ city: inputs.city, ...flat }, data);
+console.log('N17 flat', n17.kw_annual, n17.panels, n17.installed_kw, 'solar_pct', n17.solar_pct);
