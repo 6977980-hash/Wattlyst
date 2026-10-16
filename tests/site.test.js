@@ -5,6 +5,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { gzipSync } from 'node:zlib';
 import { root, readJson } from './load-data.js';
 import { parseCsv } from '../tools/lib/csv.js';
 import { build } from '../tools/build.js';
@@ -222,6 +223,23 @@ test('a tool page loads under 30 KB of JavaScript (seo-rules.md 4)', () => {
     const t = p.content.tool;
     const total = base + size(`engine/${t.module}`) + (t.fields.some((f) => f.type === 'loads') ? size('assets/js/wattlyst-loads.js') : 0) + (t.live || t.diagram ? size('assets/js/wattlyst-extra.js') : 0);
     assert.ok(total < 30 * 1024, `${p.id}: ${total} bytes`);
+  }
+});
+
+// Full audit 2026-10-15 WL-136: the test above counts each page's own module; the browser also fetches every nested
+// engine import (manifest assets.deps). The whole chain a page can load, deferred modules included, stays under
+// 30 KB compressed (seo-rules.md 4) and under a raw ceiling, so a growing import tree cannot hide behind its entry file.
+test('WL-136 a tool page loads under 30 KB of JavaScript over its whole import chain', () => {
+  const deps = manifest.assets.deps;
+  for (const p of pages.filter((x) => x.content?.tool)) {
+    const t = p.content.tool;
+    const chain = new Set(['assets/js/wattlyst-tool.js', 'engine/format.js', 'engine/messages.js', 'engine/core.js', `engine/${t.module}`]);
+    for (const d of deps[t.module]) chain.add(`engine/${d}`);
+    if (t.fields.some((f) => f.type === 'loads')) chain.add('assets/js/wattlyst-loads.js');
+    if (t.live || t.diagram || t.rtable) chain.add('assets/js/wattlyst-extra.js');
+    const code = Buffer.from([...chain].map((f) => files[`dist/${f}`]).join('\n'));
+    assert.ok(gzipSync(code, { level: 9 }).length < 30 * 1024, `${p.id}: ${gzipSync(code).length} bytes gzip`);
+    assert.ok(code.length < 72 * 1024, `${p.id}: ${code.length} bytes raw over ${chain.size} files`);
   }
 });
 

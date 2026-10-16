@@ -100,11 +100,12 @@ export function report({ today = new Date().toISOString().slice(0, 10), gscCsv =
   return out;
 }
 
-function markdown(r, cfg) {
+export function markdown(r, cfg) {
   const L = [`# Wattlyst upkeep report, ${r.today}`, ''];
   L.push(`## Data older than ${cfg.data_max_age_days} days`, '');
-  L.push(...(r.stale_data.length ? r.stale_data.map((d) => `- ${d.file} \`${d.path}\`: checked ${d.checked} (${d.days} days)`) : ['- none']));
-  L.push(...r.stale_points.map((p) => `- ${p.file}: ${p.old} of ${p.of} price points in use are older than the limit (oldest ${p.oldest}); look for fresher sources`), '');
+  // "- none" only when neither list has a line (full audit 2026-10-15 WL-155).
+  const stale = [...r.stale_data.map((d) => `- ${d.file} \`${d.path}\`: checked ${d.checked} (${d.days} days)`), ...r.stale_points.map((p) => `- ${p.file}: ${p.old} of ${p.of} price points in use are older than the limit (oldest ${p.oldest}); look for fresher sources`)];
+  L.push(...(stale.length ? stale : ['- none']), '');
   L.push('## Monthly releases', '');
   L.push(`- Bill Index newest month: ${r.bill_index.latest}${r.bill_index.due ? ' (DUE: add the new month at the top of data/bill-index.json)' : ' (up to date)'}`);
   L.push(`- Net-billing buyback: ${r.buyback.verified ? 'verified' : `not verified on a NEPRA page (last checked ${r.buyback.checked})`}`, '');

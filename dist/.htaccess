@@ -1,0 +1,8 @@
+# Built by tools/build.js (audit WL-138). Every file here is loaded with ?ver=<build hash>.
+<IfModule mod_headers.c>
+Header set Cache-Control "public, max-age=31536000, immutable"
+</IfModule>
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresDefault "access plus 1 year"
+</IfModule>

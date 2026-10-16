@@ -24,9 +24,14 @@ function variants(inputs) {
   return out;
 }
 
+// Results that are signed by meaning (full audit 2026-10-15 WL-155): an FPA or QTA can be a credit, and a quote can
+// sit below the typical low or high price. Every other number must be 0 or more (rule 7).
+const SIGNED = new Set(['fpa_per_unit', 'fpa_rs', 'qta_per_unit', 'qta_rs', 'vs_low_pct', 'vs_high_pct']);
+
 function checkClean(value, path) {
   if (typeof value === 'number') {
     assert.ok(Number.isFinite(value), `${path} is ${value}`);
+    assert.ok(value >= 0 || SIGNED.has(path.split('.').pop()), `${path} is negative (${value})`);
   } else if (value === undefined || value === '') {
     assert.fail(`${path} is blank`);
   } else if (value && typeof value === 'object') {

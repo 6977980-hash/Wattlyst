@@ -59,7 +59,8 @@ Rules marked [TEST] are enforced by `npm test`; the rest are checked in review b
   GPTBot, ClaudeBot, Claude-SearchBot, PerplexityBot, Google-Extended); block only admin, search
   results, cart/feeds that duplicate content. Reference the sitemap.
 - Core Web Vitals (mobile, field data): LCP < 2.5 s, INP < 200 ms, CLS < 0.1. Lighthouse mobile >= 95
-  in Performance, SEO, Accessibility, Best Practices. Each page loads only its own tool JS (< 30 KB).
+  in Performance, SEO, Accessibility, Best Practices. Each page loads only its own tool JS (< 30 KB): the page module under 30 KB raw, and its whole
+  import chain (nested engine modules and deferred modules included) under 30 KB gzip (audit WL-136).
 - Structured data (JSON-LD, validated in Rich Results Test, must match visible content):
   `WebApplication` (applicationCategory UtilitiesApplication, offers price 0) on tool pages,
   `BreadcrumbList` everywhere, `Article` + `Person` (author, reviewer) on guides, `Organization`

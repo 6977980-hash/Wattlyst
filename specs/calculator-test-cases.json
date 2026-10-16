@@ -9440,5 +9440,399 @@
     },
     "tolerance": 0.001,
     "note": "formulas.md E: range 0.5-1.4 for 1.5 ton"
+  },
+  {
+    "calc": "kva_to_kw",
+    "name": "7.5 kVA generator at PF 0.85",
+    "inputs": {
+      "kva": 7.5,
+      "pf": 0.85
+    },
+    "expected": {
+      "kw": 6.375
+    },
+    "tolerance": 0.001,
+    "note": "full audit 2026-10-15 WL-155: third spec case, worked by hand"
+  },
+  {
+    "calc": "kva_to_kw",
+    "name": "2.5 kVA at PF 0.9",
+    "inputs": {
+      "kva": 2.5,
+      "pf": 0.9
+    },
+    "expected": {
+      "kw": 2.25
+    },
+    "tolerance": 0.001,
+    "note": "full audit 2026-10-15 WL-155: third spec case, worked by hand"
+  },
+  {
+    "calc": "ah_to_wh",
+    "name": "100Ah 24V",
+    "inputs": {
+      "ah": 100,
+      "volts": 24
+    },
+    "expected": {
+      "wh": 2400,
+      "kwh": 2.4
+    },
+    "tolerance": 0.001,
+    "note": "full audit 2026-10-15 WL-155: third spec case, worked by hand"
+  },
+  {
+    "calc": "ah_to_wh",
+    "name": "150Ah LiFePO4 at 51.2V",
+    "inputs": {
+      "ah": 150,
+      "volts": 51.2
+    },
+    "expected": {
+      "wh": 7680,
+      "kwh": 7.68
+    },
+    "tolerance": 0.001,
+    "note": "full audit 2026-10-15 WL-155: third spec case, worked by hand"
+  },
+  {
+    "calc": "kwh_to_ah",
+    "name": "2.4 kWh at 12V",
+    "inputs": {
+      "kwh": 2.4,
+      "volts": 12
+    },
+    "expected": {
+      "ah": 200
+    },
+    "tolerance": 0.01,
+    "note": "full audit 2026-10-15 WL-155: third spec case, worked by hand"
+  },
+  {
+    "calc": "kwh_to_ah",
+    "name": "10 kWh at 48V",
+    "inputs": {
+      "kwh": 10,
+      "volts": 48
+    },
+    "expected": {
+      "ah": 208.3333
+    },
+    "tolerance": 0.01,
+    "note": "full audit 2026-10-15 WL-155: third spec case, worked by hand"
+  },
+  {
+    "calc": "kw_to_kva",
+    "name": "3 kW at PF 0.75",
+    "inputs": {
+      "kw": 3,
+      "pf": 0.75
+    },
+    "expected": {
+      "kva": 4
+    },
+    "tolerance": 0.001,
+    "note": "full audit 2026-10-15 WL-155: third spec case, worked by hand"
+  },
+  {
+    "calc": "kw_to_kva",
+    "name": "0.8 kW at PF 0.8",
+    "inputs": {
+      "kw": 0.8,
+      "pf": 0.8
+    },
+    "expected": {
+      "kva": 1
+    },
+    "tolerance": 0.001,
+    "note": "full audit 2026-10-15 WL-155: third spec case, worked by hand"
+  },
+  {
+    "calc": "va_to_watts",
+    "name": "1500VA at PF 0.8",
+    "inputs": {
+      "va": 1500,
+      "pf": 0.8
+    },
+    "expected": {
+      "watts": 1200
+    },
+    "tolerance": 0.001,
+    "note": "full audit 2026-10-15 WL-155: third spec case, worked by hand"
+  },
+  {
+    "calc": "va_to_watts",
+    "name": "3000VA at PF 0.9",
+    "inputs": {
+      "va": 3000,
+      "pf": 0.9
+    },
+    "expected": {
+      "watts": 2700
+    },
+    "tolerance": 0.001,
+    "note": "full audit 2026-10-15 WL-155: third spec case, worked by hand"
+  },
+  {
+    "calc": "watts_to_va",
+    "name": "1200 W at PF 0.8",
+    "inputs": {
+      "watts": 1200,
+      "pf": 0.8
+    },
+    "expected": {
+      "va": 1500
+    },
+    "tolerance": 0.001,
+    "note": "full audit 2026-10-15 WL-155: third spec case, worked by hand"
+  },
+  {
+    "calc": "watts_to_va",
+    "name": "900 W at PF 0.9",
+    "inputs": {
+      "watts": 900,
+      "pf": 0.9
+    },
+    "expected": {
+      "va": 1000
+    },
+    "tolerance": 0.001,
+    "note": "full audit 2026-10-15 WL-155: third spec case, worked by hand"
+  },
+  {
+    "calc": "wh_to_ah",
+    "name": "1200 Wh at 24V",
+    "inputs": {
+      "wh": 1200,
+      "volts": 24
+    },
+    "expected": {
+      "ah": 50
+    },
+    "tolerance": 0.001,
+    "note": "full audit 2026-10-15 WL-155: third spec case, worked by hand"
+  },
+  {
+    "calc": "wh_to_ah",
+    "name": "5120 Wh at 51.2V",
+    "inputs": {
+      "wh": 5120,
+      "volts": 51.2
+    },
+    "expected": {
+      "ah": 100
+    },
+    "tolerance": 0.001,
+    "note": "full audit 2026-10-15 WL-155: third spec case, worked by hand"
+  },
+  {
+    "calc": "hp_to_kw",
+    "name": "2 HP motor",
+    "inputs": {
+      "hp": 2
+    },
+    "expected": {
+      "kw": 1.4914
+    },
+    "tolerance": 0.0001,
+    "note": "full audit 2026-10-15 WL-155: third spec case, worked by hand"
+  },
+  {
+    "calc": "kw_to_amps",
+    "name": "3-phase 400V 10kW PF0.9",
+    "inputs": {
+      "mode": "ac3",
+      "kw": 10,
+      "volts": 400,
+      "pf": 0.9
+    },
+    "expected": {
+      "amps": 16.0375
+    },
+    "tolerance": 0.01,
+    "note": "full audit 2026-10-15 WL-155: third spec case, worked by hand"
+  },
+  {
+    "calc": "kw_to_amps",
+    "name": "DC 1.2 kW at 12V",
+    "inputs": {
+      "mode": "dc",
+      "kw": 1.2,
+      "volts": 12
+    },
+    "expected": {
+      "amps": 100
+    },
+    "tolerance": 0.01,
+    "note": "full audit 2026-10-15 WL-155: third spec case, worked by hand"
+  },
+  {
+    "calc": "ebike",
+    "name": "48V 20Ah, charger 0.8, tariff 50, range 40 km",
+    "inputs": {
+      "v": 48,
+      "ah": 20,
+      "eta": 0.8,
+      "tariff": 50,
+      "range_km": 40
+    },
+    "expected": {
+      "kwh": 1.2,
+      "rs_per_charge": 60,
+      "rs_per_km": 1.5
+    },
+    "tolerance": 0.01,
+    "note": "full audit 2026-10-15 WL-155: third spec case, worked by hand"
+  },
+  {
+    "calc": "loadshedding",
+    "name": "100Ah at 80% DoD, 10A charger at 0.8, 12h grid",
+    "inputs": {
+      "ah": 100,
+      "dod": 0.8,
+      "charge_a": 10,
+      "charge_eff": 0.8,
+      "grid_hours_between": 12
+    },
+    "expected": {
+      "recharge_hours": 10,
+      "fully_recharged": true
+    },
+    "tolerance": 0.01,
+    "note": "full audit 2026-10-15 WL-155: third spec case, worked by hand"
+  },
+  {
+    "calc": "series_parallel",
+    "name": "4 x 12V 150Ah as 4S1P",
+    "inputs": {
+      "n_series": 4,
+      "n_parallel": 1,
+      "v": 12,
+      "ah": 150
+    },
+    "expected": {
+      "v_total": 48,
+      "ah_total": 150,
+      "kwh": 7.2
+    },
+    "tolerance": 0.001,
+    "note": "full audit 2026-10-15 WL-155: third spec case, worked by hand"
+  },
+  {
+    "calc": "solar_battery",
+    "name": "Night load 2 kWh, 2 days, 24V lead-acid",
+    "inputs": {
+      "night_kwh": 2,
+      "days": 2,
+      "volts": 24,
+      "dod": 0.5,
+      "inverter_eff": 0.8
+    },
+    "expected": {
+      "ah": 416.6667
+    },
+    "tolerance": 0.1,
+    "note": "full audit 2026-10-15 WL-155: third spec case, worked by hand"
+  },
+  {
+    "calc": "ac_temp",
+    "name": "22 to 25 at 6%/degree, 500 units",
+    "inputs": {
+      "t_old": 22,
+      "t_new": 25,
+      "per_degree": 0.06,
+      "monthly_units": 500
+    },
+    "expected": {
+      "saving_pct": 0.18,
+      "units_saved": 90
+    },
+    "tolerance": 0.001,
+    "note": "full audit 2026-10-15 WL-155: third spec case, worked by hand"
+  },
+  {
+    "calc": "tco",
+    "name": "10 years, battery every 5 years (one replacement)",
+    "inputs": {
+      "capex": 100000,
+      "years": 10,
+      "energy_cost_per_year": 0,
+      "maintenance_per_year": 2000,
+      "life_years": 5,
+      "replacement_cost": 40000
+    },
+    "expected": {
+      "running_rs": 20000,
+      "replacements": 1,
+      "tco_rs": 160000
+    },
+    "tolerance": 0.01,
+    "note": "full audit 2026-10-15 WL-155: third spec case, worked by hand"
+  },
+  {
+    "calc": "tco",
+    "name": "3 years, part outlasts the period (no replacement)",
+    "inputs": {
+      "capex": 50000,
+      "years": 3,
+      "energy_cost_per_year": 10000,
+      "maintenance_per_year": 0,
+      "life_years": 5,
+      "replacement_cost": 40000
+    },
+    "expected": {
+      "running_rs": 30000,
+      "replacements": 0,
+      "tco_rs": 80000
+    },
+    "tolerance": 0.01,
+    "note": "full audit 2026-10-15 WL-155: third spec case, worked by hand"
+  },
+  {
+    "calc": "ups_recharge_energy",
+    "name": "1 kWh backup, 0.9 x 0.9",
+    "inputs": {
+      "backup_kwh": 1,
+      "charge_eff": 0.9,
+      "inverter_eff": 0.9
+    },
+    "expected": {
+      "grid_kwh": 1.2346
+    },
+    "tolerance": 0.001,
+    "note": "full audit 2026-10-15 WL-155: third spec case, worked by hand"
+  },
+  {
+    "calc": "ups_recharge_energy",
+    "name": "3 kWh backup, 0.8 x 0.9",
+    "inputs": {
+      "backup_kwh": 3,
+      "charge_eff": 0.8,
+      "inverter_eff": 0.9
+    },
+    "expected": {
+      "grid_kwh": 4.1667
+    },
+    "tolerance": 0.001,
+    "note": "full audit 2026-10-15 WL-155: third spec case, worked by hand"
+  },
+  {
+    "calc": "panel_price",
+    "name": "D9: four 400 W panels at the typical Rs per watt",
+    "inputs": {
+      "panel_w": 400,
+      "panels": 4
+    },
+    "expected": {
+      "kw": 1.6,
+      "rs_per_w_low": 40,
+      "rs_per_w_high": 45.5,
+      "panel_low_rs": 16000,
+      "panel_high_rs": 18200,
+      "total_low_rs": 64000,
+      "total_high_rs": 72800
+    },
+    "tolerance": 0.01,
+    "note": "full audit 2026-10-15 WL-155: third spec case, worked by hand"
   }
 ]
