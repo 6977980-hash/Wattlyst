@@ -18,6 +18,8 @@ cat > "$DIR/router.php" <<PHP
 <?php
 \$p = '$W' . parse_url(\$_SERVER['REQUEST_URI'], PHP_URL_PATH);
 if (substr(\$p, -1) !== '/' && file_exists(\$p) && !is_dir(\$p)) return false;
+// Compress HTML like the live LiteSpeed/CDN does (brotli/gzip), so Lighthouse measures what visitors get (WL-136).
+ini_set('zlib.output_compression', '1');
 \$_SERVER['SCRIPT_NAME'] = '/index.php';
 require '$W/index.php';
 PHP

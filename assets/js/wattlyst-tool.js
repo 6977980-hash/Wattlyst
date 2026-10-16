@@ -11,8 +11,11 @@ async function init(form) {
   const cfg = JSON.parse(cfgEl.textContent);
   const q = ver ? `?ver=${ver}` : '';
   const hasList = cfg.fields.some((f) => f.type === 'loads');
-  // The appliance list, the N6 live forecast and the N11 diagram live in their own modules, loaded only where used.
-  const [mod, list, extra] = await Promise.all([import(`../../engine/${cfg.module}${q}`), hasList && import(`./wattlyst-loads.js${q}`), (cfg.live || cfg.diagram || cfg.rtable) && import(`./wattlyst-extra.js${q}`)]);
+  // The appliance list, the N6 live forecast, the N11 diagram and the result tables live in their own modules, loaded
+  // only where used; the forecast/diagram/table module only when first needed, so it is off the start-up path (WL-136).
+  const [mod, list] = await Promise.all([import(`../../engine/${cfg.module}${q}`), hasList && import(`./wattlyst-loads.js${q}`)]);
+  let x;
+  const extra = () => (x ||= import(`./wattlyst-extra.js${q}`));
   const calc = mod[cfg.calc];
   if (typeof calc !== 'function') return;
   const labels = Object.fromEntries(cfg.fields.map((f) => [f.name, f.label.replace(/^[A-Z](?=[a-z])/, (c) => c.toLowerCase())]));
@@ -99,13 +102,13 @@ async function init(form) {
       node.textContent = fmt(out[o.key], o.spec);
       node.closest('.wl-result').hidden = !node.textContent;
     }
-    if (diagram && cfg.diagram === 'battery_grid') extra.drawGrid(diagram, Math.round(out.n_series), Math.round(out.n_parallel));
+    if (diagram && cfg.diagram === 'battery_grid') extra().then((e) => e.drawGrid(diagram, Math.round(out.n_series), Math.round(out.n_parallel)));
     if (howEl && cfg.how) {
       const text = render(form.dataset.lang === 'ur' && cfg.how_ur ? cfg.how_ur : cfg.how, { in: out, out, d: cfg.data.defaults, data: cfg.data });
       howEl.hidden = text === null;
       if (text !== null) howEl.textContent = text;
     }
-    if (cfg.rtable) extra.drawTable(diagram, out, cfg.rtable, fmt, render);
+    if (cfg.rtable) extra().then((e) => e.drawTable(diagram, out, cfg.rtable, fmt, render));
     if (pushState) history.replaceState(null, '', shareUrl(window.location.href));
   };
 
@@ -196,7 +199,7 @@ async function init(form) {
       const city = el('city')?.value;
       const c = cfg.data.cities?.[city];
       if (!c?.lat) return;
-      const f = await extra.forecastFor(c, cfg.data.defaults.forecast_tilt_deg);
+      const f = await (await extra()).forecastFor(c, cfg.data.defaults.forecast_tilt_deg);
       liveFailed = !f;
       if (el('city').value !== city) return;
       if (f) live = { ...f, city };

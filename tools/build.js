@@ -43,6 +43,10 @@ export async function loadInputs() {
   // The newest Bill Index month, when its FPA is only reported in the news, is named next to the verified rate (WL-115).
   const newest = data.bill_index.months[0];
   data.fpa_newest = { ...newest, note: newest === data.fpa_latest ? `${newest.label} bills use this rate.` : `${newest.label} bills carry ${fmt(newest.fpa_per_unit, "rs2")} per unit for ${newest.fpa_for}, reported in the news; this page keeps the latest NEPRA-verified rate until that decision is published.` };
+  // One source for the 1.5 ton AC figures (audit WL-107): the planning defaults N10 and the page text read are
+  // copied from the appliance records in data/appliances.json, not kept a second time in data/defaults.json.
+  data.defaults.ac_inverter_avg_kw_1_5_ton = data.appliances['ac-split-1-5ton-inverter'].avg_w / 1000;
+  data.defaults.ac_noninverter_kw_1_5_ton = data.appliances['ac-split-1-5ton-non-inverter'].running_w / 1000;
   const modules = {};
   for (const m of ENGINE_MODULES) modules[m] = await import(pathToFileURL(join(root, 'engine', `${m}.js`)).href);
   const keywordRows = parseCsv(read('specs/keyword-map.csv'));
@@ -789,6 +793,18 @@ export async function build() {
   return files;
 }
 
+// Every dist/ file is requested with ?ver=<hash>, so a new build means a new URL: browsers may keep each one a
+// year (audit WL-138). HTML and unversioned files (the embed script other sites load) keep the server default.
+const DIST_HTACCESS = `# Built by tools/build.js (audit WL-138). Every file here is loaded with ?ver=<build hash>.
+<IfModule mod_headers.c>
+Header set Cache-Control "public, max-age=31536000, immutable"
+</IfModule>
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresDefault "access plus 1 year"
+</IfModule>
+`;
+
 /**
  * The browser loads dist/: the same modules with comments and indentation removed (tools/lib/strip.js).
  * Every relative import carries ?ver=<hash of all shipped JS>, the same ver the PHP puts on the script tag
@@ -811,6 +827,7 @@ function distFiles() {
     deps[f] = [...seen].sort();
   }
   const files = Object.fromEntries(Object.entries(src).map(([p, code]) => [p, stampImports(code, ver)]));
+  files['dist/.htaccess'] = DIST_HTACCESS;
   return { files, assets: { ver, deps } };
 }
 

@@ -21,11 +21,8 @@ const EXACT = {
   yield_or_city_or_psh_required: 'Pick a city or enter peak sun hours.',
   ac_protected_lost: 'With the AC your monthly total goes over the protected limit, so this bill and the bills of the following six months are charged at unprotected rates. Fewer AC hours may keep you protected.',
   ac_above_sanctioned: 'This AC alone is above your sanctioned load: apply for a higher one before installing it.',
-  protected_max_200_units: 'Protected tariff applies only up to 200 units a month. Above that the unprotected rate applies.',
-  lifeline_max_100_units: 'Lifeline tariff applies only up to 100 units a month.',
   monthly_units_all_zero: 'Enter the units of at least one month.',
   length_invalid: 'enter a cable length in metres.',
-  history_needs_6_months: 'Enter units for each of the last 6 months.',
   period_unknown: 'We do not have the QTA rate for that quarter. Enter the QTA from your bill.',
   surge_w_required: 'Enter the starting (surge) watts of your load, or leave both surge fields blank.',
   surge_rating_w_required: 'Enter the UPS surge rating from its label, or leave both surge fields blank.',
@@ -63,6 +60,9 @@ const EXACT = {
 
 const row = (m) => `Appliance ${Number(m[1]) + 1}: `; // codes count rows from 0, people from 1
 const PATTERNS = [
+  // Codes that carry a limit from data/ print that number, so a changed limit keeps its message (WL-107).
+  [/^(protected|lifeline)_max_(\d+)_units$/, (m) => `${cap(m[1])} tariff applies only up to ${m[2]} units a month.${m[1] == 'protected' ? ' Above that the unprotected rate applies.' : ''}`],
+  [/^history_needs_(\d+)_months$/, (m) => `Enter units for each of the last ${m[1]} months.`],
   [/^history_(\d+)_invalid$/, (m) => `Month ${m[1]}: enter the units as a number (0 or more).`],
   [/^load_(\d+)_start_below_run$/, (m) => `${row(m)}starting watts cannot be lower than running watts.`],
   [/^load_(\d+)_watts_required$/, (m) => `${row(m)}enter its watts.`],
