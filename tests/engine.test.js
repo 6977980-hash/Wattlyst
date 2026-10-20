@@ -16,12 +16,30 @@ const tmp = mkdtempSync(join(tmpdir(), 'wl-dist-'));
 for (const f of readdirSync(join(root, 'engine')).filter((x) => x.endsWith('.js'))) writeFileSync(join(tmp, f), stampImports(stripJs(readFileSync(join(root, 'engine', f), 'utf8')), 'test'));
 const { calculators: shipped } = await import(pathToFileURL(join(tmp, 'index.js')).href);
 
+/**
+ * A case may pin data values it depends on ("data": {"generator_fuel.prices.petrol.rs_per_litre": 398.3}),
+ * so a monthly price refresh in data/ never changes what a formula case expects.
+ */
+function caseData(c) {
+  if (!c.data) return data;
+  const d = structuredClone(data);
+  for (const [path, v] of Object.entries(c.data)) {
+    const keys = path.split('.');
+    const last = keys.pop();
+    const obj = keys.reduce((o, k) => o?.[k], d);
+    assert.ok(obj && last in obj, `${c.name}: pinned data path ${path} does not exist`);
+    obj[last] = v;
+  }
+  return d;
+}
+
 for (const c of cases) {
   test(`${c.calc}: ${c.name}`, () => {
     const fn = calculators[c.calc];
     assert.ok(fn, `no engine function for calc "${c.calc}"`);
-    const r = fn(c.inputs, data);
-    assert.deepEqual(shipped[c.calc](structuredClone(c.inputs), data), r, 'stripped browser copy gives the same result');
+    const d = caseData(c);
+    const r = fn(c.inputs, d);
+    assert.deepEqual(shipped[c.calc](structuredClone(c.inputs), d), r, 'stripped browser copy gives the same result');
     for (const [key, want] of Object.entries(c.expected)) {
       if (key === 'error') {
         assert.equal(r.ok, false, `expected error ${want}, got ${JSON.stringify(r)}`);
