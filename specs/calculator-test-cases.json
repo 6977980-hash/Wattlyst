@@ -10773,5 +10773,20 @@
     },
     "tolerance": 0.01,
     "note": "21 Oct 2026 audit Phase 4, Engineer Reviewer: IEC 62548-1 1.25 × Isc; with amps entered current_v is the voltage entered."
+  },
+  {
+    "calc": "solar_for_pump",
+    "name": "Motor voltage outside the list is refused",
+    "inputs": {
+      "hp": 5,
+      "hours": 6,
+      "yield_kwh_per_kwp_day": 5,
+      "motor_v": 251
+    },
+    "expected": {
+      "error": "motor_v_invalid"
+    },
+    "tolerance": 0,
+    "note": "21 Oct 2026 audit Phase 4, Engineer Reviewer: the drive DC limit is known only for 220 V and 400 V motors."
   }
 ]

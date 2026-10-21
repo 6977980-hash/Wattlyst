@@ -105,3 +105,10 @@ test('WL-232: roof area per panel follows the panel size', () => {
   const big = C.solar_size({ daily_kwh: 10, yield_kwh_per_kwp_day: 5, panel_w: 585 }, data);
   assert.ok(small.panel_area_m2 < big.panel_area_m2);
 });
+
+test('Engineer Reviewer: a pump drive above the list gets its own notice, never "split"', async () => {
+  const { noticeCode } = await import('../engine/messages.js');
+  const r = C.solar_for_pump({ hp: 50, hours: 6, yield_kwh_per_kwp_day: 5 }, data);
+  assert.equal(noticeCode(r), 'drive_above_standard_sizes');
+  assert.doesNotMatch(EXACT.drive_above_standard_sizes, /[Ss]plit/);
+});

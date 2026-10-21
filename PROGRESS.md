@@ -1,6 +1,34 @@
 # Progress
 
-## Handoff for next phase (after 21 Oct audit fix Phase 3: input and error fixes) — written by the audit Phase 3 thread, 2026-10-21
+## Handoff for next phase (after 21 Oct audit fix Phase 4: solar, battery and wiring engine) — written by the audit Phase 4 thread, 2026-10-21
+
+Owner: every fix phase of the 21 Oct 2026 audit runs in its own new thread, only after the owner says to start it. Shared rules and phase notes: `/mnt/project-files/electricity-tool-hub/audit/2026-10-21/handoff/` (README, `phase-N-*.md`, `status.md`; Phases 1 to 4 ticked). Next is **Phase 5 (page text)**: read README, then only `phase-5-page-text.md` and its rows in `audit/fix-list-2026-10-21.md`. Plugin v0.8.26. Every rule of this phase lives only in `specs/formulas.md` (bullets "Inverter: on-grid or load-carrying", "Panel voltages", "Hybrid inverter starting string", "Solar pump string and drive", "Hybrid quote with its battery", "Solar PV cable", "Battery current and C-rate", W "Design current", E "Home load", C "Water motor 1 hp") and in the spec cases noted "21 Oct 2026 audit Phase 4". Phase 4 was done in one thread as two commits groups (4a solar, 4b battery/wiring).
+
+**What is where**
+- WL-171/169/174: `solarSystem` in `engine/solar.js` decides on-grid vs load-carrying (`grid_tied`), builds `inverter_text` (the "how" sentence; pages print `{{out.inverter_text}}`) and `inverter_buy` (`stdSize`/`buyKw`, list `standard_inverter_kw` in data/defaults.json). Battery cards are optional outputs on D5, D8, D12, D13, N13 (shown when backup hours > 0). H1 planner's `inverter_buy` in `engine/planner.js`.
+- WL-182: page key `price_of` (tools/build.js) gives text `{{px.out.*}}` and `{{px.checked}}`; used on D8, D12, D13, N13.
+- WL-230/175: `panelVolts`, `hybridString` (solar.js); used by `backup_compare` (backup.js, `string_min`, `panels_energy`) and `home_decision` (decision.js, hybrid counted only with enough panels). Panel and hybrid voltages in data/defaults.json (`panel_*`, `cell_temp_*`, `hybrid_pv_*`).
+- WL-172/179: `solar_for_pump` (solar.js): `motor_v` (only `pump_motor_v`), string capped by `vfd_max_dc_v`, `string_below_bus` notice, drive from `standard_vfd_kw`, `drive_above_standard_sizes` notice. D15 page text explains the string.
+- WL-173: `quote_checker` (prices.js) `battery_kwh`/`chemistry`, `battery_unknown` notice; N3 fields; N3 meta in keyword-map.
+- WL-232: `panel_area_m2_by_w` (defaults) via `panelArea`.
+- WL-170/180: data/cable-ampacity.json cables to 120 mm², n/d `sold_as_mm2`, `pv_cables` (EN 50618, `isc_factor`); `pvRating`, `pkLabel`, `aboveTable` in engine/wiring.js; W4 `fixed_inputs` `cable: pv`. DC fuse list in defaults `standard_dc_fuse_a`.
+- WL-177: `dc_cutoff_ratio`, `max_c_rate_*` in defaults; `currentFor` (battery.js), `current_v` (wiring.js). B1 to B5 cards `battery_a`, `cutoff_a`; W2/W5 how text print `current_v`.
+- WL-178: data/appliances.json `water-motor-1hp` equals the C5 rule (test). H5 locked-rotor wording. WL-231: `home_load` per-row PF (load.js; `load_type` on rows from `rowOf` in sizing.js); E1/E2 PF box blank.
+- WL-181/176: H1.json battery_v default and idle sentence.
+- Tests: `tests/solar-wiring-engine.test.js`. Engineer Reviewer: PASS after two rounds (fixed: pump string vs drive DC input, drive wording, 48 V bank on D8/N13, PV cable at 1.25 × Isc, current_v with amps; rejected with evidence: EN 50618 Table A.4 factors are as in data).
+
+**Do not touch / watch**
+- Never print an inverter size in page text by hand: use `inverter_text`/`inverter_buy` (the on-grid vs hybrid rule changes the figure).
+- Panel voltages are one 585 W datasheet for every `panel_w`; changing the panel size does not change string voltages (PEC note).
+- The `[ENGINEER]` items this phase added are listed in data `engineer_confirm` (defaults and cable file); bring them to the PEC brief.
+
+**Open to-dos (PEC engineer notes from the review)**
+- 220 V pump string at a 400 V drive input gives about 88% of the bus voltage on hot afternoons (notice shown); confirm drive limits.
+- Small pumps get large arrays from the whole-string rule; consider a notice when the array is far above the drive.
+- `standard_vfd_kw` stops at 37 kW; DC fuse has no continuous derating margin; DC drop % is against nominal volts; N3 hybrid premium priced at an inverter of kWp (decision engine uses kWp ÷ 1.3); hybrid start voltages from an off-grid unit; roof area below 330 W understated; three other water-motor rows (0.5, 1.5, 2 hp) still differ from the C5 rule (their measured ranges sit above it) and 3/29 has no shop size yet.
+- Everything open from the earlier handoffs below still stands.
+
+## Earlier handoff (after 21 Oct audit fix Phase 3: input and error fixes) — written by the audit Phase 3 thread, 2026-10-21
 
 Owner: every fix phase of the 21 Oct 2026 audit runs in its own new thread, only after the owner says to start it. Shared rules and phase notes: `/mnt/project-files/electricity-tool-hub/audit/2026-10-21/handoff/` (README, `phase-N-*.md`, `status.md`; Phases 1 to 3 ticked). Next is **Phase 4 (solar, battery, wiring)**: read README, then only `phase-4-solar-battery-wiring.md` and its rows in `audit/fix-list-2026-10-21.md`. Plugin v0.8.25, PR #42. Rules live only in `specs/formulas.md` (bullets "Input checks (audit 2026-10-21 Phase 3)", Appliance rows "Blank boxes", D "Daily energy", C8, D9, F "Bill total") and the spec cases at the end of `specs/calculator-test-cases.json`.
 
@@ -617,6 +645,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | 2026-10-21 | Audit 2026-10-21 fix Phase 1: correct data live and announced (WL-156 July FPA NEPRA-approved + K-Electric, WL-158 October FPA exact and F14 leads with newest month, WL-160 hijacked source removed, WL-159 fuel prices + upkeep age check, WL-228 HAZECO, WL-214 "Updated" byline, WL-206 lastmod from content changes, WL-207 short HTML cache), plugin v0.8.23 | done: tests green, CI + Lighthouse green, local WordPress checked | #40 |
 | 2026-10-21 | Audit 2026-10-21 fix Phase 2: bill engine and bill pages (WL-157 protected homes pay the FPA, exempt list in data, WL-229 FPA pre-filled on F1-F12, WL-161 lifeline example matches, WL-164 slab-by-slab how text + CSV avg rate, WL-163 N1 spike row, WL-162 full ToU bill on F13 + 5 kW link, WL-165 next slab cliff, WL-167/168/166 DISCO, F13 and Bill Index text), plugin v0.8.24 | done: tests green, Engineer Reviewer, local WordPress checked | #41 |
 | 2026-10-21 | Audit 2026-10-21 fix Phase 3: input and error fixes (WL-197 error under the field + red focus, WL-226 messages with unit/example/limit and per-page texts, WL-221 typical-values notice + D9 panels required, WL-222 D7 monthly default, WL-223 ignored boxes checked, WL-224 bounds in data + C8 per unit, WL-225 Roman Urdu labels, WL-227 whole counts, WL-241/242 FC/GST per category in data, partial), plugin v0.8.25 | done: tests green, Engineer Reviewer (2 C8 defects fixed), local WordPress checked at 375 px | #42 |
+| 2026-10-21 | Audit 2026-10-21 fix Phase 4: solar, battery and wiring engine (WL-169 to 182, 230 to 232: on-grid vs hybrid inverter, sizes to buy, battery cards, build-time prices, hybrid starting string, pump string and drive, hybrid quote battery, roof area, cables to 120 mm² + DC message, PV cable EN 50618, DC current at cut-off, C-rate notice, 1 hp motor, appliance PF), plugin v0.8.26 | done: tests green, Engineer Reviewer PASS (second round), local WordPress browser check on 19 pages | PR_LINK |
 
 ## Owner to do
 - Audit Phase 4: one Hostinger redirect so http and www go straight to https://wattlyst.com (WL-40); HTML browser cache time of a few hours in LiteSpeed/Hostinger (WL-36); after deploy, open wp-admin once so the new build syncs and the cache is purged; before switching on the quote form, ask Hostinger which header carries the visitor IP and put it in data/site.json leads.client_ip_header (WL-64); 2FA for wp-admin.

@@ -40,6 +40,7 @@ export const NOTICES = { solar_above_sanctioned: 1, low_confidence: 'price_low_c
 export function noticeCode(out) {
   const above = Object.keys(out).filter((k) => k.endsWith('above_standard_sizes') && out[k] === true);
   // A generator gets its own advice (two sets or an industrial set), not "split the array or circuit".
+  if (above.includes('drive_above_standard_sizes')) return 'drive_above_standard_sizes'; // one larger drive, never two
   if (above.length) return above.every((k) => k === 'generator_above_standard_sizes' || 'recommended_kva' in out) ? 'generator_above_standard_sizes' : 'above_standard_sizes';
   // Every flag warns when true, except ampacity_checked, which warns when false (aluminium cable).
   for (const k in NOTICES) if (out[k] === (k != 'ampacity_checked')) return NOTICES[k] === 1 ? k : NOTICES[k];

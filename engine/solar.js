@@ -233,6 +233,8 @@ export const solar_for_pump = calculator((i, d) => {
   const motor_eff = frac(i, 'motor_eff', dflt(d, 'motor_eff'));
   const hours = num(i, 'hours', { gt: 0, max: 24 });
   const motor_v = num(i, 'motor_v', { def: dflt(d, 'v_3ph'), min: 100, max: 1000 });
+  // Only the listed motor voltages: the drive's DC limit is known for those (data pump_motor_v, vfd_max_dc_v).
+  if (!dflt(d, 'pump_motor_v').includes(motor_v)) throw new CalcError('motor_v_invalid', 'motor_v');
   const pump_w = (hp * dflt(d, 'w_per_hp')) / motor_eff;
   const v = panelVolts(d);
   const bus_v = dflt(d, 'pump_dc_bus_factor') * motor_v;
