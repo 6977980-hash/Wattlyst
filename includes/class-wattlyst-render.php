@@ -387,7 +387,7 @@ final class Wattlyst_Render {
 			: '<p class="wl-error wl-notice" id="' . esc_attr( $id ) . '-error" role="status">' . esc_html( $notice ) . '</p>';
 		// Split: the result table goes under the inputs, the result column is too narrow for it. The compact Next step
 		// follows the share bar, so it sits right under the result on a phone (WL-198).
-		$out    .= '<div class="wl-results" aria-live="polite">' . $results . '</div>' . $this->credit( $t ) . ( $split ? '' : $this->rtable( $id, $t ) ) . $this->diagram( $t ) . $share . ( $home ? '' : $this->next_inline() );
+		$out    .= '<div class="wl-results" aria-live="polite">' . $results . '</div>' . $this->credit( $t ) . $this->legal( $t ) . ( $split ? '' : $this->rtable( $id, $t ) ) . $this->diagram( $t ) . $share . ( $home ? '' : $this->next_inline() );
 		$class   = $split ? ( $home ? ' wl-tool-split' : ' wl-tool-list' ) : '';
 		$form    = '<form class="wl-tool' . $class . '" id="' . esc_attr( $id ) . '" data-wl-tool novalidate onsubmit="return false">';
 		if ( $split ) {
@@ -839,6 +839,27 @@ final class Wattlyst_Render {
 			esc_url( $c['licence_url'] ),
 			esc_html( $c['licence'] )
 		);
+	}
+
+	/** Bill calculators: the result is an estimate, not an official bill or evidence, and where to complain (content/bill-note.json). */
+	private function legal( array $t ): string {
+		$n = $t['legal'] ?? null;
+		if ( ! $n ) {
+			return '';
+		}
+		$out = esc_html( (string) $n['t'] );
+		$at  = 0;
+		foreach ( $n['l'] ?? array() as $l ) {
+			$anchor = esc_html( (string) $l['t'] );
+			$pos    = strpos( $out, $anchor, $at );
+			if ( false === $pos ) {
+				continue;
+			}
+			$tag = '<a href="' . esc_url( (string) $l['u'] ) . '" rel="noopener" target="_blank">' . $anchor . '</a>';
+			$out = substr_replace( $out, $tag, $pos, strlen( $anchor ) );
+			$at  = $pos + strlen( $tag );
+		}
+		return '<p class="wl-hint wl-legal">' . wp_kses( $out, array( 'a' => array( 'href' => true, 'rel' => true, 'target' => true ) ) ) . '</p>';
 	}
 
 	/** A manifest row by id, only when its page is live, so a page never links to a URL that does not exist yet. */

@@ -1,6 +1,22 @@
 # Progress
 
-## Handoff for next phase (after 21 Oct audit fix Phase 8: trust and AdSense readiness) — written by the audit Phase 8 thread, 2026-10-21
+## Handoff for next phase (after the bill legal note, v0.8.31) — written by the "Bill result legal disclaimer" thread, 2026-10-21
+
+Owner asked (21 Oct 2026) for protection against people using bill results as proof in a court or forum. Not an audit phase; the Phase 8 handoff below still holds and row 9 of status.md (H1/D10 ToU path) is next, only with the owner's yes. The owner was told a Pakistani lawyer should review the final wording.
+
+**What is where**
+- Note under every bill result: text, links and the list of bill calcs in `content/bill-note.json` (`calcs`); `billNoteOf()` in `tools/build.js` checks it and puts `tool.legal` on each page whose calc is listed; `legal()` in `includes/class-wattlyst-render.php` prints it right after `credit()` under the result (also inside /embed/<id>/), style `.wl-legal` next to `.wl-credit` in `assets/css/wattlyst.css`. A new bill calculator gets the note by adding its calc to `calcs`, no page edit.
+- Terms: sections "No professional advice", "Not an official bill or evidence" (NEPRA complaint form + Wafaqi Mohtasib links), "Accuracy and changes", "No affiliation", "Limitation of liability" in `content/trust/terms.html`; the disclaimer's bill paragraph links the Terms (`content/trust/disclaimer.html`).
+- Tests: `tests/bill-note.test.js`.
+
+**Do not touch / watch**
+- Keep the note free of typed digits (DISCO complaint numbers differ; the note points to the number printed on the bill). Change the wording only with the owner (lawyer review pending).
+- Complaint URLs were opened on 21 Oct 2026 (`checked` in the JSON); the quarterly `maintenance.js --links` pass checks them with the other outbound links (it reads the built pages).
+
+**Open to-dos**
+- Owner: have a Pakistani lawyer read the note and the Terms sections.
+
+## Earlier handoff (after 21 Oct audit fix Phase 8: trust and AdSense readiness) — written by the audit Phase 8 thread, 2026-10-21
 
 Owner: every fix phase of the 21 Oct 2026 audit runs in its own new thread, only after the owner says to start it. Shared rules and phase notes: `/mnt/project-files/electricity-tool-hub/audit/2026-10-21/handoff/` (README, `phase-N-*.md`, `status.md`; Phases 1 to 8 ticked). All eight audit phases are done. Next is row 9 of status.md (**H1/D10 ToU path for 5 kW and above**, WL-162 c), only with the owner's yes; WL-199 (Calculators menu) still waits for the owner's decision on the mockups. Plugin v0.8.30. Phase 8 changed one bill rule (FPA units), bill data, appliance and error-code data, trust pages, the author bio and the ads gate.
 
