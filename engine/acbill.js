@@ -1,6 +1,7 @@
 // Load tools priced as a whole bill: N16 (what one AC adds) and E1's bill (home_load_bill). Their own module, so the
 // appliance pages on load.js do not ship the bill engine.
 import { calculator, CalcError, has, nonneg, dflt, bool } from './core.js';
+import { fmt } from './format.js';
 import { bill_total } from './bill.js';
 import { ac_units, home_load } from './load.js';
 
@@ -28,11 +29,17 @@ export const ac_bill_impact = calculator((i, d) => {
   const lock_months = protected_lost ? dflt(d, 'protected_months') : 0;
   const lock_per_month = protected_lost ? Math.max(0, bill(other_units, false).total_rs - before.total_rs) : 0;
   const lock_extra_rs = lock_months * lock_per_month;
+  // The tariff each bill is on, for the how text: the slab category, or ToU at 5 kW and above (WL-162 c).
+  const tou = after.category === 'tou', T = d.tariff.tou;
+  const name = (b) => (tou ? 'ToU' : b.category);
   return {
     ac_name: ac.ac_name ?? 'Custom AC', ...(ac.ac_rated_w ? { ac_rated_w: ac.ac_rated_w } : {}), avg_kw: ac.avg_kw, hours: ac.hours, days: ac.days, daily_units: ac.daily_units,
     ac_units: ac.monthly_units, other_units, total_units, sanctioned_kw: after.sanctioned_kw,
     before_rs: before.total_rs, after_rs: after.total_rs, extra_rs, rs_per_ac_unit: ac.monthly_units > 0 ? extra_rs / ac.monthly_units : 0,
     before_rate: before.rate, after_rate: after.rate, before_category: before.category, after_category: after.category,
+    before_tariff: `${name(before)} tariff`,
+    after_tariff: tou ? `ToU tariff (${fmt(dflt(d, 'tou_peak_share'), 'pct')} of the units in the peak hours at ${fmt(T.peak, 'rs2')}, the rest at ${fmt(T.offpeak, 'rs2')})` : `${after.category} tariff (top slab rate ${fmt(after.rate, 'rs2')} per unit)`,
+    tou, tou_share_estimate: tou,
     slab_jump: after.band_index > before.band_index || after.category !== before.category,
     protected_lost, protected_limit: limit, lock_months, lock_per_month, lock_extra_rs,
     // The AC alone above the sanctioned load: the page warns (a higher sanctioned load first, WL-118).
@@ -47,5 +54,5 @@ export const ac_bill_impact = calculator((i, d) => {
 export const home_load_bill = calculator((i, d) => {
   const out = home_load.raw(i, d);
   const b = bill_total.raw({ units: out.monthly_units, sanctioned_kw: i.sanctioned_kw, protected: false }, d);
-  return { ...out, bill_kw: b.sanctioned_kw, bill_rate: b.rate, bill_energy_rs: b.energy_rs, monthly_rs: b.total_rs };
+  return { ...out, bill_kw: b.sanctioned_kw, bill_rate: b.rate, bill_energy_rs: b.energy_rs, bill_calc: b.energy_calc, monthly_rs: b.total_rs, tou: b.category === 'tou', tou_share_estimate: b.category === 'tou' };
 });

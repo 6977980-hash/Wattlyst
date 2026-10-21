@@ -1,6 +1,27 @@
 # Progress
 
-## Handoff for next phase (after 21 Oct audit fix Phase 9: ToU bill path for 5 kW and above) — written by the audit Phase 9 thread, 2026-10-21
+## Handoff for next phase (after 21 Oct audit fix Phase 9b: ToU on the bill pages) — written by the audit Phase 9 thread, 2026-10-21
+
+Owner said yes (21 Oct 2026) to the same ToU path on the remaining bill pages. Plugin v0.8.32. No page stops at 5 kW any more. The Phase 9 note below still holds for H1, D10 and D11.
+
+**What is where**
+- `touTotal()` in `engine/bill.js`: `bill_total` hands a sanctioned load at or above the threshold to it (peak units, blank = default share from `data/defaults.json` `tou_peak_share`; optional MDI; then `bill_tou`). Output flag `tou_bill_estimate` (notice), `fixed_basis` (engine text for the fixed-charge line, flat and ToU). Rule: `specs/formulas.md` section F "ToU path" bullet, part "Bill pages"; spec cases tagged "Phase 9b".
+- Fields `peak_units` and `mdi_kw` (advanced) on F1-F12 and F14; their Sanctioned load hints point to the peak units and link F13. Every F how text prints `{{out.energy_calc}}` and `{{out.fixed_basis}}`.
+- E1 (`home_load_bill`) and N16 (`ac_bill_impact`) in `engine/acbill.js`: ToU with the default share (flag `tou_share_estimate`, no peak field), E1 how prints `bill_calc`, N16 how prints `before_tariff`/`after_tariff`.
+- Notice texts `tou_bill_estimate`, `tou_share_estimate` in `engine/message-text.js`; flags in `NOTICES`.
+- Tests: `tests/tou-path.test.js` (last test), `tests/bill-engine.test.js` WL-162 test now checks every page gives a ToU result at 5 kW.
+
+**Do not touch / watch**
+- `tou_required_at_5kw` now only lives in `bill_energy` (`flatSanctioned`); no page reaches it. Keep it as the guard for the flat energy charge.
+- N16 defaults to Protected ticked: at 5 kW the user gets `protected_at_tou` until they untick it (by design: a ToU connection is never protected).
+- The "Bill result legal disclaimer" thread was editing bill result areas and Terms at the same time; this phase changed only bill fields, hints and how text.
+
+**Open to-dos**
+- [ENGINEER] confirm `tou_peak_share` (same item as Phase 9).
+- A comparison "this month on a 5 kW ToU meter" for heavy flat users (bills expert F-6) is still not built.
+- Everything open from the earlier handoffs below still stands.
+
+## Earlier handoff (after 21 Oct audit fix Phase 9: ToU bill path for 5 kW and above) — written by the audit Phase 9 thread, 2026-10-21
 
 Owner: every fix phase runs in its own new thread, only after the owner says to start it. All rows of `/mnt/project-files/electricity-tool-hub/audit/2026-10-21/handoff/status.md` are now ticked (Phases 1 to 8 and row 9). Open owner decision: WL-199 (Calculators menu, mockups in `mockups/calculators-nav/`). Plugin v0.8.31. Phase 9 changed one engine area (ToU path in the planner and net billing), one data default, three pages' fields and text.
 
@@ -773,6 +794,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | 2026-10-21 | Audit 2026-10-21 fix Phase 7: technical SEO plumbing (WL-208 one-hop lowercase redirect, WL-209 Person url + Organization areaServed, WL-210 short error-code H2s, WL-211 varied Related anchors, WL-212 outbound-link check in the upkeep report + redirecting source links replaced, WL-213 warm-up cron cleared fully), plugin v0.8.29 | done: tests green | #46 |
 | 2026-10-21 | Audit 2026-10-21 fix Phase 8: trust and AdSense readiness (WL-243 protected FC surcharge 0, WL-244 FPA on the FPA month's units, WL-217 ads need a CMP, WL-240 N6 no ads + Open-Meteo credit, WL-215 author bio, WL-219 operator/governing law/short tax FAQ, WL-216 error codes in own words, WL-218 appliance sources), plugin v0.8.30 | done: tests green | #47 |
 | 2026-10-21 | Audit 2026-10-21 fix Phase 9: ToU bill path for 5 kW and above (WL-162 c): H1 planner + decision engine and net billing D10/D11 price the bill on ToU rates with a default peak share from data (estimate notice), plugin v0.8.31 | done: tests green | #48 |
+| 2026-10-21 | Audit 2026-10-21 fix Phase 9b (owner yes): ToU bill path on the bill pages F1-F12, F14, E1 and N16 for 5 kW and above (peak units + MDI fields, default share estimate notice), plugin v0.8.32 | done: tests green | #49 |
 
 ## Owner to do
 - Audit Phase 4: one Hostinger redirect so http and www go straight to https://wattlyst.com (WL-40); HTML browser cache time of a few hours in LiteSpeed/Hostinger (WL-36); after deploy, open wp-admin once so the new build syncs and the cache is purged; before switching on the quote form, ask Hostinger which header carries the visitor IP and put it in data/site.json leads.client_ip_header (WL-64); 2FA for wp-admin.

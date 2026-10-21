@@ -198,10 +198,10 @@
      "label": "Sanctioned load",
      "unit": "kW",
      "default": 2,
-     "hint": "The kW printed in the connection details of the FESCO bill. Every kW adds to the fixed charge. A connection of 5 kW or more is billed on peak and off-peak (ToU) rates instead: use the ToU bill calculator.",
+     "hint": "The kW printed in the connection details of the FESCO bill. Every kW adds to the fixed charge. A connection of 5 kW or more is billed on peak and off-peak (ToU) rates: enter its peak units under Advanced (ToU peak hours).",
      "l": [
       {
-       "t": "ToU bill calculator",
+       "t": "ToU peak hours",
        "u": "/guides/peak-hours-pakistan/"
       }
      ]
@@ -275,6 +275,22 @@
      "advanced": true,
      "hint": "Sales tax applied to the bill subtotal.",
      "placeholder": "Blank = 18% (none on lifeline)"
+    },
+    {
+     "name": "peak_units",
+     "label": "Units in peak hours (ToU)",
+     "unit": "units",
+     "placeholder": "Our estimate",
+     "advanced": true,
+     "hint": "Only for a sanctioned load of 5 kW or more: the peak units on your ToU bill. Blank uses our estimate of 25% of the units."
+    },
+    {
+     "name": "mdi_kw",
+     "label": "MDI (ToU)",
+     "unit": "kW",
+     "placeholder": "Optional, from your ToU bill",
+     "advanced": true,
+     "hint": "Only for 5 kW or more: the maximum demand printed on a ToU bill. The fixed charge is on the higher of half the sanctioned load and the MDI; blank uses half the sanctioned load."
     }
    ],
    "fixed_inputs": {},
@@ -346,7 +362,7 @@
     }
    ],
    "how": {
-    "tpl": "Energy ({{out.category}}): {{out.energy_calc}} = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
+    "tpl": "Energy ({{out.category}}): {{out.energy_calc}} = {{out.energy_rs|rs}}. Fixed charge {{out.fixed_basis}} = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
     "text": "Energy (unprotected): 350 × Rs 36.46 = Rs 12,761. Fixed charge for 2 kW = Rs 800. FC surcharge Rs 1,131 + QTA Rs 182 + FPA Rs 720. Subtotal Rs 15,594 + GST 18% (Rs 2,807) = Rs 18,401."
    },
    "submit": "Calculate",
@@ -359,6 +375,7 @@
     "period_unknown": "We do not have the QTA rate for that quarter. Enter the QTA from your bill.",
     "appliance_unknown": "Pick an appliance from the list, or choose Custom and enter its watts.",
     "tou_peak_estimate": "At 5 kW sanctioned load or more the import is billed on Time-of-Use rates, and the peak units are our estimate (a share of the import, see how it works). Enter the peak units from your ToU bill for your own figure.",
+    "tou_bill_estimate": "At 5 kW sanctioned load or more the bill is on Time-of-Use rates, and the peak units are our estimate (a share of all units, see how it works). Enter the peak units from your ToU bill under Advanced for your own figure.",
     "forecast_unavailable": "The live forecast is not available right now, so a typical day is shown. Try again later.",
     "typical_used": "Blank boxes in your list use the typical value for that appliance (its listed watts and hours a day, quantity 1). Type your own numbers for an exact result.",
     "internal_non_finite": "These numbers are outside a realistic range. Please check your inputs."

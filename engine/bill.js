@@ -140,7 +140,23 @@ function billLines(i, d) {
   return { ...base, ...addOns(base, i, d), avg_rate, energy_calc: parts.join(' + ') };
 }
 
+/**
+ * ToU bill from one month's units (WL-162 c, bill pages): peak units from the bill, blank = the default peak share of the
+ * units (an estimate, flag tou_bill_estimate); then bill_tou (MDI optional) with the same add-ons and GST.
+ */
+function touTotal(i, d, kw) {
+  if (bool(i.protected) || bool(i.lifeline)) throw new CalcError('protected_at_tou', 'protected');
+  const T = tariffOf(d).tou;
+  const units = nonneg(i, 'units');
+  const peak = num(i, 'peak_units', { def: units * dflt(d, 'tou_peak_share'), min: 0, max: units });
+  const b = bill_tou.raw({ ...i, sanctioned_kw: kw, peak_units: peak, offpeak_units: units - peak }, d);
+  const rate = b.energy_rs / units || T.offpeak;
+  return { ...b, rate, avg_rate: rate, fixed_basis: `on ${fmt(b.billable_kw)} kW, the higher of half the ${fmt(kw)} kW sanctioned load and the MDI`, tou_bill_estimate: !has(i, 'peak_units'), energy_calc: `${fmt(peak)} peak units × ${fmt(T.peak, 'rs2')} + ${fmt(units - peak)} off-peak × ${fmt(T.offpeak, 'rs2')}` };
+}
+
 export const bill_total = calculator((i, d) => {
+  const kw = pos(i, 'sanctioned_kw', dflt(d, 'default_sanctioned_kw'));
+  if (kw >= dflt(d, 'tou_threshold_kw')) return touTotal(i, d, kw);
   const out = billLines(i, d);
   const bands = tariffOf(d).unprotected;
   const flat = { ...i, protected: false, lifeline: false };
@@ -148,7 +164,7 @@ export const bill_total = calculator((i, d) => {
   // Top-slab cliff for page text (WL-117): one unit past the last closed unprotected band moves every unit to the
   // open-ended rate; same sanctioned load and add-ons as this bill.
   const edge = bands[bands.length - 2].upto;
-  const res = { ...out, cliff_units: edge, cliff_rs: at(edge + 1) - at(edge) };
+  const res = { ...out, fixed_basis: `for ${fmt(kw)} kW`, cliff_units: edge, cliff_rs: at(edge + 1) - at(edge) };
   // Next slab cliff (WL-165): the limit of the band this bill reached and what one unit past it adds. Unprotected: the
   // next band's rate on every unit; protected: the next protected slab, or past the protected limit an unprotected bill.
   // None at the top band or for lifeline.

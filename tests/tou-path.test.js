@@ -82,3 +82,23 @@ test('the D10 ToU worked example is built by the engine', () => {
   assert.ok(ex, 'ToU example on D10');
   assert.match(ex.text, /peak units ×/);
 });
+
+// Phase 9b (owner 21 Oct 2026): the same ToU path on the bill pages, E1 and N16.
+test('bill pages, E1 and N16 at 5 kW and above give a ToU bill with the estimate notice and a working how text', () => {
+  for (const [id, flag] of [['F1', 'tou_bill_estimate'], ['F5', 'tou_bill_estimate'], ['F14', 'tou_bill_estimate'], ['E1', 'tou_share_estimate'], ['N16', 'tou_share_estimate']]) {
+    const p = page(id);
+    const t = p.content.tool;
+    assert.ok(t.msg[flag], `${id} ships ${flag}`);
+    const inp = { ...t.fixed_inputs, ...Object.fromEntries(t.fields.filter((f) => f.default != null).map((f) => [f.name, f.default])), sanctioned_kw: kwT + 1, protected: false };
+    const r = C[t.calc](inp, data);
+    assert.equal(r.ok, true, `${id}: ${r.error}`);
+    assert.equal(noticeCode(r), flag, id);
+    const how = render(t.how.tpl, { in: r, out: r, d: data.defaults, data });
+    assert.ok(how && /peak/.test(how), `${id}: ${how}`);
+  }
+  // An entered peak share of the bill turns the estimate off; the ToU bill equals bill_tou for the same split.
+  const r = C.bill_total({ units: 700, sanctioned_kw: kwT + 1, peak_units: 100, mdi_kw: 4 }, data);
+  assert.equal(r.tou_bill_estimate, false);
+  assert.equal(r.total_rs, C.bill_tou({ peak_units: 100, offpeak_units: 600, sanctioned_kw: kwT + 1, mdi_kw: 4 }, data).total_rs);
+  assert.equal(C.bill_total({ units: 100, sanctioned_kw: kwT, lifeline: true }, data).error, 'protected_at_tou');
+});

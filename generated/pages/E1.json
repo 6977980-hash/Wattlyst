@@ -1292,11 +1292,11 @@
      "label": "Sanctioned load",
      "unit": "kW",
      "placeholder": "Optional, from your bill",
-     "hint": "The kW printed on your electricity bill; it sets the fixed charge in the bill estimate. Blank uses 1 kW. At 5 kW or more the bill is on a ToU meter: use the ToU bill calculator.",
+     "hint": "The kW printed on your electricity bill; it sets the fixed charge in the bill estimate. Blank uses 1 kW. At 5 kW or more the bill is on ToU rates with our estimate of the peak share; the electricity bill calculator takes your own peak units.",
      "l": [
       {
-       "t": "ToU bill calculator",
-       "u": "/guides/peak-hours-pakistan/"
+       "t": "electricity bill calculator",
+       "u": "/bill/electricity-bill-calculator-pakistan/"
       }
      ]
     },
@@ -1358,8 +1358,8 @@
     }
    ],
    "how": {
-    "tpl": "Running load = the watts of every appliance × its quantity, added up = {{out.running_w|int}} W. Peak load adds the starting surge of the largest motor = {{out.peak_w|int}} W. Current = {{out.running_w|int}} W ÷ ({{out.volts}} V × {{out.pf|2}} power factor) = {{out.amps|1}} A. Energy = each appliance's watts × hours a day (an inverter AC counts at its average draw, below its rated watts), added up = {{out.daily_kwh|1}} units a day, × {{out.days|2}} days = {{out.monthly_units|int}} units a month. Bill: {{out.monthly_units|int}} units reach the {{out.bill_rate|rs2}} slab, so every unit is charged at that rate = {{out.bill_energy_rs|rs}}, plus the fixed charge for {{out.bill_kw|int}} kW, FC surcharge, QTA and GST (no FPA, unprotected) = {{out.monthly_rs|rs}} a month, the same as the electricity bill calculator gives for these units.",
-    "text": "Running load = the watts of every appliance × its quantity, added up = 3,017 W. Peak load adds the starting surge of the largest motor = 4,881 W. Current = 3,017 W ÷ (230 V × 0.85 power factor) = 15.4 A. Energy = each appliance's watts × hours a day (an inverter AC counts at its average draw, below its rated watts), added up = 15.1 units a day, × 30.42 days = 458 units a month. Bill: 458 units reach the Rs 38.95 slab, so every unit is charged at that rate = Rs 17,852, plus the fixed charge for 1 kW, FC surcharge, QTA and GST (no FPA, unprotected) = Rs 23,402 a month, the same as the electricity bill calculator gives for these units."
+    "tpl": "Running load = the watts of every appliance × its quantity, added up = {{out.running_w|int}} W. Peak load adds the starting surge of the largest motor = {{out.peak_w|int}} W. Current = {{out.running_w|int}} W ÷ ({{out.volts}} V × {{out.pf|2}} power factor) = {{out.amps|1}} A. Energy = each appliance's watts × hours a day (an inverter AC counts at its average draw, below its rated watts), added up = {{out.daily_kwh|1}} units a day, × {{out.days|2}} days = {{out.monthly_units|int}} units a month. Bill: energy {{out.bill_calc}} = {{out.bill_energy_rs|rs}}, plus the fixed charge for {{out.bill_kw|int}} kW, FC surcharge, QTA and GST (no FPA, unprotected) = {{out.monthly_rs|rs}} a month, the same as the electricity bill calculator gives for these units.",
+    "text": "Running load = the watts of every appliance × its quantity, added up = 3,017 W. Peak load adds the starting surge of the largest motor = 4,881 W. Current = 3,017 W ÷ (230 V × 0.85 power factor) = 15.4 A. Energy = each appliance's watts × hours a day (an inverter AC counts at its average draw, below its rated watts), added up = 15.1 units a day, × 30.42 days = 458 units a month. Bill: energy 458.34 × Rs 38.95 = Rs 17,852, plus the fixed charge for 1 kW, FC surcharge, QTA and GST (no FPA, unprotected) = Rs 23,402 a month, the same as the electricity bill calculator gives for these units."
    },
    "submit": "Calculate",
    "notice": "",
@@ -1377,6 +1377,8 @@
     "appliance_unknown": "Pick an appliance from the list, or choose Custom and enter its watts.",
     "other_start_below_run": "Starting watts of the other loads cannot be lower than their running watts.",
     "tou_peak_estimate": "At 5 kW sanctioned load or more the import is billed on Time-of-Use rates, and the peak units are our estimate (a share of the import, see how it works). Enter the peak units from your ToU bill for your own figure.",
+    "tou_bill_estimate": "At 5 kW sanctioned load or more the bill is on Time-of-Use rates, and the peak units are our estimate (a share of all units, see how it works). Enter the peak units from your ToU bill under Advanced for your own figure.",
+    "tou_share_estimate": "At 5 kW sanctioned load or more the bill is on Time-of-Use rates, with our estimate of the share of units used in the peak hours (see how it works). For your own peak units, use the electricity bill calculator.",
     "above_standard_sizes": "This is above the largest standard size we list. Split the array or circuit into two, or ask a licensed electrician or engineer; the sizes shown are the calculated minimums.",
     "generator_above_standard_sizes": "This is above the largest generator size we list. Use two generators on separate circuits or a larger industrial set, and ask a licensed electrician; the size shown is the calculated minimum.",
     "forecast_unavailable": "The live forecast is not available right now, so a typical day is shown. Try again later.",

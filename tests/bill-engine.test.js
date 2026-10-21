@@ -87,9 +87,8 @@ test('WL-163: N1 shows the year-on-year spike when last year\'s units are entere
   assert.match(php, /'' === \(string\) \$o\['value'\] \? ' hidden' : ''/, 'an empty optional card starts hidden');
 });
 
-test('WL-162: the 5 kW message points to a working ToU bill linked under Sanctioned load on every page that shows it', () => {
-  const msg = errorMessage('tou_required_at_5kw');
-  assert.match(msg, /link under Sanctioned load/);
+test('WL-162: at 5 kW every page with a Sanctioned load field gives a ToU result, and the bill pages link the peak hours page', () => {
+  // Phase 9 (WL-162 c): the 5 kW error is gone from every page; the bill pages price the bill on ToU rates instead.
   const f13 = manifest.pages.find((p) => p.id === 'F13');
   const kw = data.defaults.tou_threshold_kw;
   let seen = 0;
@@ -97,13 +96,17 @@ test('WL-162: the 5 kW message points to a working ToU bill linked under Sanctio
     const c = page(p.id);
     const f = c.tool?.fields.find((x) => x.name === 'sanctioned_kw');
     if (!f) continue;
-    const r = C[c.tool.calc]({ ...dflt(c), ...c.tool.fixed_inputs, sanctioned_kw: kw }, { ...data, ...JSON.parse(readFileSync(join(root, 'generated/manifest.json'), 'utf8')).data });
-    if (r.error !== 'tou_required_at_5kw') continue;
+    const inp = { ...dflt(c), ...c.tool.fixed_inputs, sanctioned_kw: kw, protected: false, lifeline: false };
+    const r = C[c.tool.calc](inp, { ...data, ...JSON.parse(readFileSync(join(root, 'generated/manifest.json'), 'utf8')).data });
+    assert.notEqual(r.error, 'tou_required_at_5kw', `${p.id} still stops at ${kw} kW`);
+    if (c.tool.calc !== 'bill_total') continue;
     seen++;
-    assert.equal(f.label, 'Sanctioned load', p.id);
-    assert.ok((f.l || []).some((l) => l.u === f13.url), `${p.id}: Sanctioned load hint links the ToU bill`);
+    assert.equal(r.ok, true, `${p.id}: ${r.error}`);
+    assert.equal(r.category, 'tou', p.id);
+    assert.ok(c.tool.fields.some((x) => x.name === 'peak_units'), `${p.id}: peak units field`);
+    assert.ok((f.l || []).some((l) => l.u === f13.url), `${p.id}: Sanctioned load hint links the ToU peak hours page`);
   }
-  assert.ok(seen >= F.length, `${seen} pages show the 5 kW message`);
+  assert.ok(seen >= F.length, `${seen} bill pages give a ToU bill`);
   // The ToU bill is a full bill: add-on lines and GST, and they add up.
   const t = C.bill_tou({ peak_units: 100, offpeak_units: 600, sanctioned_kw: 6, mdi_kw: 4, period: '2026-09..2026-11', fpa_per_unit: 1 }, data);
   assert.equal(t.energy_rs + t.fixed_rs + t.fc_rs + t.qta_rs + t.fpa_rs + t.gst_rs, t.total_rs);
