@@ -86,7 +86,7 @@
    },
    {
     "q": "Where do these tables come from?",
-    "a": "From the manufacturers' own manuals and support pages, listed under Sources with a link for each brand and the date we last checked them. Rows quote the manual; the owner notes are our plain-English reading of that text."
+    "a": "From the manufacturers' own manuals and support pages, listed under Sources with a link for each brand and the date we last checked them. Each row is our own plain-English summary of the manual's entry, not a copy of it."
    }
   ],
   "key_facts": [
@@ -94,7 +94,7 @@
    "Many Pakistani hybrid inverters are built on the Voltronic Axpert design, so their fault numbers (fan locked, over temperature, battery voltage too high, output short circuit, overload) follow the Axpert table; check your manual, the numbering can differ by model.",
    "Grid-side codes on on-grid inverters (grid voltage or frequency out of range, no grid) clear on their own when the supply returns to normal; a code that returns every afternoon usually means high grid voltage on your street, which the DISCO must fix, not the inverter.",
    "Anything that requires opening DC connectors, replacing a fan or a fuse, or changing settings inside the inverter is an installer job; PV strings carry lethal DC voltage whenever the sun is up, even with the AC switched off.",
-   "Every row in the tables below quotes the manufacturer's manual and links to it; the plain-English owner note is Wattlyst's reading of that text, not an extra manufacturer statement."
+   "Every row in the tables below is Wattlyst's own plain-English summary of the manufacturer's troubleshooting entry, and each brand links to the manual it comes from; check the manual for your exact model before acting."
   ],
   "mistakes": [
    "Restarting again and again. A code that returns after one restart has a cause; repeated restarts can damage the inverter.",
@@ -161,232 +161,232 @@
      [
       "Fault 01",
       "Fan is locked / fan fault",
-      "Manual: 'Fan fault.'",
-      "Manual: '1.Check whether all fans are working properly. 2.Replace the fan.' Owner: check the fan is not blocked by dust; replacement is an installer job.",
+      "The cooling fan has stopped or is faulty.",
+      "See that every fan turns freely and is not choked with dust. If a fan is dead it has to be replaced, which is installer work.",
       "Yes"
      ],
      [
       "Fault 02",
       "Over temperature",
-      "Manual: 'Internal temperature of component is over 100C.'",
-      "Manual: '1. Check whether the air flow of the unit is blocked or whether the ambient temperature is too high. 2. Check whether the thermistor plug is loose.' Owner: clear vents, improve ventilation; if it repeats call installer.",
+      "A part inside the inverter has gone above its safe temperature (about 100 °C).",
+      "Make sure air can flow around the unit and the room is not too hot, and clear dust from the vents. A loose temperature-sensor plug can also cause it; if the code repeats, call the installer.",
       "Usually not"
      ],
      [
       "Fault 03",
       "Battery voltage is too high (battery over-charged)",
-      "Manual: 'Battery is over-charged.' / 'The battery voltage is too high.'",
-      "Manual: 'Restart the unit, if the error happens again, please return to repair center.' and 'Check if spec and quantity of batteries are meet requirements.'",
+      "The battery voltage has risen too high, meaning the battery is being over-charged.",
+      "Restart the unit. Have the installer check that the battery type, number of batteries and charge settings match the inverter; if it happens again the unit goes to the service centre.",
       "Yes"
      ],
      [
       "Warning 04",
       "Battery voltage / SOC is too low (low battery)",
-      "Manual: 'The battery voltage/SOC is too low.'",
-      "Manual: '1. Measure battery voltage in DC input. 2. Check battery SOC in LCD when use Li battery 3. Recharge the battery.'",
+      "The battery voltage, or the lithium battery's state of charge, has fallen too low.",
+      "Measure the battery voltage at the inverter's DC input (or read the SOC on the screen for lithium) and let the battery recharge from solar or grid.",
       "Usually not"
      ],
      [
       "Fault 05",
       "Output short circuited",
-      "Manual: 'Output short circuited.'",
-      "Manual: 'Check if wiring is connected well and remove abnormal load.' Owner: switch off loads, look for a faulty appliance; if the fault stays, call installer.",
+      "The AC output is short-circuited.",
+      "Switch off the loads and look for a faulty appliance or a wiring fault on the output side. If the fault stays with the loads off, call the installer.",
       "Yes"
      ],
      [
       "Fault 06 / 58",
       "Output voltage abnormal (too high / too low)",
-      "Manual: 'Output abnormal (Inverter voltage is higher than 280Vac or lower than 80Vac).'",
-      "Manual: '1. Reduce the connected load. 2. Restart the unit, if the error happens again, please return to repair center.'",
+      "The inverter's output voltage has gone outside its normal band (far above or below mains voltage).",
+      "Reduce the load and restart. If the code repeats, the unit needs the service centre.",
       "Yes"
      ],
      [
       "Fault 07",
       "Overload time out",
-      "Manual: 'The inverter is overload 110% and time is up.'",
-      "Manual: 'Reduce the connected load by switching off some equipment.'",
+      "The load has been above the inverter's rating (about 110%) for longer than it allows.",
+      "Switch some appliances off so the load is below the inverter's rated power.",
       "Usually not"
      ],
      [
       "Fault 08",
       "Bus voltage is too high",
-      "Manual: '1. If you connect to a lithum battery without communication, check whether the voltage points of the program 19 and 21 are too high for the lithum battery.'",
-      "Manual: '2. Restart the unit, if the error happens again, please return to repair center.'",
+      "The internal DC bus voltage is too high. With a lithium battery that has no communication cable, the charge voltage settings (programs 19 and 21) may be set too high for that battery.",
+      "Have the installer check the battery voltage settings, then restart. If the code repeats, the unit needs the service centre.",
       "Yes"
      ],
      [
       "Fault 09 / 53 / 57",
       "Bus soft start failed / inverter soft start failed / current sensor failed",
-      "Manual: 'Internal components failed.'",
-      "Manual: 'Restart the unit, if the error happens again, please return to repair center.'",
+      "An internal start-up stage or current sensor has failed.",
+      "Restart the inverter; if the code comes back, the unit needs the maker's service centre.",
       "Yes"
      ],
      [
       "Warning 15",
       "Parallel input utility grid different",
-      "Manual: 'The input status is different in parallel system.'",
-      "Manual: 'Check if AC input wires of all inverters are connected well.' (parallel systems only; installer task)",
+      "In a parallel system, the inverters do not all see the same grid input.",
+      "Parallel systems only: the installer should check that every inverter's AC input wiring is connected properly.",
       "Yes"
      ],
      [
       "Warning 16",
       "Parallel input phase error",
-      "Manual: 'Input phase is not correct.'",
-      "Manual: 'Change the input phase S and T wiring.' (installer task)",
+      "In a parallel system, the input phase order is wrong.",
+      "Installer work: the input phase wiring (S and T) has to be swapped.",
       "Yes"
      ],
      [
       "Warning 17",
       "Parallel output phase loss",
-      "Manual: 'The output phase not correct in parallel.'",
-      "Manual: '1.Make sure the parallel setting are the same system(sigle or paralle; 3P1,3P2,3P3). 2.Make sure all phases inverters are power on.'",
+      "In a parallel system, an output phase is missing or set up wrongly.",
+      "Installer work: all units must have the same parallel setting (single or three-phase, and phase position), and every unit must be switched on.",
       "Yes"
      ],
      [
       "Warning 20",
       "BMS communication error",
-      "Manual: 'Li battery can't communicate to the inverter.'",
-      "Manual: '1. Check whether communication line is correct connection between inverter and battery. 2. Check whether BMS protocol type is correct setting.'",
+      "The lithium battery is not talking to the inverter.",
+      "Check the communication cable between the battery and the inverter and that the battery (BMS) protocol chosen in the settings matches the battery.",
       "Usually not"
      ],
      [
       "Fault 51",
       "Over current or surge",
-      "Manual: 'Over current or surge.'",
-      "Manual: 'Restart the unit, if the error happens again, please return to repair center.'",
+      "An over-current or surge was detected.",
+      "Restart the inverter; if the code comes back, the unit needs the maker's service centre.",
       "Yes"
      ],
      [
       "Fault 52",
       "Bus voltage is too low",
-      "Manual: 'Bus voltage is too low.'",
-      "Manual: 'Restart the unit, if the error happens again, please return to repair center.'",
+      "The internal DC bus voltage is too low.",
+      "Restart the inverter; if the code comes back, the unit needs the maker's service centre.",
       "Yes"
      ],
      [
       "Fault 55",
       "Output voltage is unbalanced / over DC voltage in AC output",
-      "Manual (fault table): 'Over DC voltage in AC output'; (troubleshooting): 'Output voltage is unbalanced'",
-      "Manual: 'Restart the unit, if the error happens again, please return to repair center.'",
+      "The output voltage is unbalanced, or DC voltage has appeared on the AC output.",
+      "Restart the inverter; if the code comes back, the unit needs the maker's service centre.",
       "Yes"
      ],
      [
       "Fault 56",
       "Battery connection is open",
-      "Manual: 'Battery is not connected well or fuse is burnt.' and, for lithium without communication, 'check whether the voltage points of the program 19 and 21 are too high for the lithum battery.'",
-      "Manual: '2. If the battery is connected well, restart the unit. If the error happens again, please return to repair center.'",
+      "The battery connection is open: a loose cable or a blown fuse. With a lithium battery without communication, the voltage settings (programs 19 and 21) may be too high for that battery.",
+      "Check the battery cables and fuse (switch off first; a battery can deliver very high current). If the battery is connected properly, restart; if the code repeats, the unit needs the service centre.",
       "Yes"
      ],
      [
       "Fault 60",
       "Negative power fault",
-      "Manual: '1. Check whether the AC output connected to the grid input. 2. Check whether Program 8 settings are the same for all parallel inverters 3. Check whether the current sharing cables are connected well in the same parallel phases. 4. Check whether all neutral wires of all parallel units are connected together.'",
-      "Manual: '5. If problem still exists, contact repair center.' (wiring checks are installer work)",
+      "Power is flowing backwards into the output. Usual causes: the AC output is connected to the grid input, parallel units have different settings (program 8), current-sharing cables are loose, or the neutrals of parallel units are not joined.",
+      "These are wiring checks for the installer. If they are all correct and the code stays, contact the service centre.",
       "Yes"
      ],
      [
       "Fault 61",
       "PV voltage is too high",
-      "Fault table entry only: 'PV voltage is too high'. (Manual gives no cause text for this code.)",
-      "Not detailed in troubleshooting table. Installer must check PV string voltage against inverter limit.",
+      "The solar (PV) input voltage is above the inverter's limit. The manual lists the code without further detail.",
+      "The installer must check the panel string voltage against the inverter's maximum PV input.",
       "Yes"
      ],
      [
       "Fault 62",
       "Internal communication error",
-      "Fault table entry only: 'Internal communication error'.",
-      "Not detailed in troubleshooting table; treat like other internal faults (restart; if it repeats, repair center).",
+      "Internal communication between the inverter's boards has failed. The manual lists the code without further detail.",
+      "Treat it like other internal faults: Restart the inverter; if the code comes back, the unit needs the maker's service centre.",
       "Yes"
      ],
      [
       "Fault 80 / 81",
       "CAN fault / Host loss (parallel communication)",
-      "Manual: '1. Check whether the parallel communication cables are connected well. 2. Check whether Program 23 settings are right for the parallel system.'",
-      "Manual: '3. If problem still exists, contact repair center'",
+      "Parallel communication has been lost (CAN fault or host lost).",
+      "Installer work: check the parallel communication cables and that the parallel setting (program 23) is right. If it stays, contact the service centre.",
       "Yes"
      ],
      [
       "Warning 01",
       "Fan is locked when inverter is on",
-      "Warning table: 'Fan is locked when inverter is on.' (Beep 3 times every second)",
-      "Check the fan is free of dust/obstruction; if it stays locked, call installer.",
+      "The fan has stopped while the inverter is running (warning only).",
+      "Clean dust or anything blocking the fan; if it stays stopped, call the installer.",
       "Usually not"
      ],
      [
       "Warning 02",
       "Over temperature",
-      "Warning table: 'Over temperature'",
-      "Reduce load, improve ventilation; see Fault 02.",
+      "The inverter is running hot (warning only).",
+      "Reduce the load and improve ventilation; see Fault 02.",
       "Usually not"
      ],
      [
       "Warning 03",
       "Battery is over-charged",
-      "Warning table: 'Battery is over-charged'",
-      "Check battery settings with installer (see Fault 03).",
+      "The battery is being over-charged (warning only).",
+      "Have the installer check the battery charge settings (see Fault 03).",
       "Yes"
      ],
      [
       "Warning 07",
       "Overload",
-      "Warning table: 'Overload' (Beep once every 0.5 second)",
-      "Switch off some loads.",
+      "The load is above the inverter's rating (warning only).",
+      "Switch some appliances off.",
       "Usually not"
      ],
      [
       "Warning 10",
       "Output power derating",
-      "Warning table: 'Output power derating'",
-      "Reduce load; usually from high temperature or high PV voltage. No cause text in manual.",
+      "The inverter is cutting its output power to protect itself, usually because of heat or a high PV voltage.",
+      "Reduce the load and keep the unit cool. The manual gives no further detail.",
       "Usually not"
      ],
      [
       "Warning 12",
       "Solar charger stops due to low battery",
-      "Warning table: 'Solar charger stops due to low battery'",
-      "Recharge the battery / check battery (no further text in manual).",
+      "The solar charger has stopped because the battery is too low.",
+      "Let the battery recharge, from the grid if needed, and check its condition.",
       "Usually not"
      ],
      [
       "Warning 13",
       "Solar charger stops due to high PV voltage",
-      "Warning table: 'Solar charger stops due to high PV voltage'",
-      "Installer must check PV string configuration (no further text in manual).",
+      "The solar charger has stopped because the PV voltage is too high.",
+      "The installer must check the panel string configuration.",
       "Yes"
      ],
      [
       "Warning 14",
       "Solar charger stops due to overload",
-      "Warning table: 'Solar charger stops due to overload'",
-      "Reduce PV/charging load (no further text in manual).",
+      "The solar charger has stopped because it is overloaded.",
+      "Reduce the charging or load demand.",
       "Usually not"
      ],
      [
       "Warning 19",
       "Battery disconnect",
-      "Warning table: 'Battery disconnect' (No beep)",
-      "Check battery breaker/cables are connected; if unsure call installer.",
+      "The battery is disconnected.",
+      "Check that the battery breaker is on and the cables are tight; if unsure, call the installer.",
       "Usually not"
      ],
      [
       "Warning 21",
       "PV power insufficient",
-      "Warning table: 'PV power insufficient'",
-      "Normal at low sun; no action in manual.",
+      "There is not enough solar power for the demand.",
+      "Normal in low sun, early morning, evening or cloud; no action needed.",
       "Usually not"
      ],
      [
       "Warning 33",
       "BMS communication loss",
-      "Warning table: 'BMS communication loss'",
-      "Check BMS cable and protocol setting (see Warning 20).",
+      "The battery's management system (BMS) has stopped communicating.",
+      "Check the BMS cable and protocol setting (see Warning 20).",
       "Usually not"
      ],
      [
       "Warning 34-45",
       "Lithium battery BMS alarms: 34 Cell over voltage, 35 Cell under voltage, 36 Total over voltage, 37 Total under voltage, 38 Discharge over voltage, 39 Charge over voltage, 40 Discharge over temperature, 41 Charge over temperature, 42 Mosfet over temperature, 43 Battery over temperature, 44 Battery under temperature, 45 System shut down",
-      "Warning table lists only the event names (reported by the battery BMS).",
-      "Manual gives no owner action; these come from the battery - contact battery supplier/installer.",
+      "These alarms come from the lithium battery's own management system (cell or pack voltage, temperature, or a protective shutdown).",
+      "The fault is in the battery, not the inverter: contact the battery supplier or installer.",
       "Yes"
      ]
     ]
@@ -407,148 +407,148 @@
      [
       "Error: 200",
       "AFCI fault (DC arc detected)",
-      "Manual: 'AFCI fault'",
-      "Manual: '1.After shutdown,Check the PV panel terminal. 2.Restart inverter. 3.If error message still exists,contact Growatt.' Owner: do not open DC connectors yourself; call installer.",
+      "An electric arc has been detected on the DC (solar) side.",
+      "Switch the inverter off and have the installer check the panel connectors, then restart. If it stays, contact Growatt.",
       "Yes"
      ],
      [
       "Error: 201 (Residual I High)",
       "Leakage current too high",
-      "Manual: 'Leakage current too high'",
-      "Manual: '1.Restart the invert. 2. If error message still exists, contact Growatt.'",
+      "Leakage current to earth is too high.",
+      "Restart the inverter. If the code stays, contact Growatt or the installer.",
       "Yes"
      ],
      [
       "Warning 202",
       "DC SPD function abnormal",
-      "Manual: 'DC SPD function abnormal'",
-      "Manual: '1.After shutdown,Check the DC SPD. 2.If error message still exists,contact manufacturer.'",
+      "The DC surge protection device is not working.",
+      "After shutdown the installer should check the DC surge protector; if the code stays, contact Growatt.",
       "Yes"
      ],
      [
       "Warning 203",
       "PV1 or PV2 circuit short",
-      "Manual: 'PV1 or PV2 Circuit short'",
-      "Manual: 'Check the PV panel polarity. Restart the inverter. If the warning still exist, please contact Growatt customer service to replace the POWER board.'",
+      "A short circuit was found on PV input 1 or 2.",
+      "The installer should check the panel polarity and restart. If the warning stays, Growatt service replaces the power board.",
       "Yes"
      ],
      [
       "Warning 204",
       "Dry-contact function abnormal",
-      "Manual: 'Dryconnect function abnormal'",
-      "Manual: '1.After shutdown,Check the Dryconnect wiring. 2.If the error message still exists, contact manufacturer.'",
+      "The dry-contact (relay output) function is not working.",
+      "After shutdown the installer should check the dry-contact wiring; if the code stays, contact Growatt.",
       "Yes"
      ],
      [
       "Warning 205",
       "PV1 or PV2 boost broken",
-      "Manual: 'PV1 or PV2 boost broken'",
-      "Manual: 'Restart the inverter. If the warning still exist, please contact Growatt customer service to replace the power board.'",
+      "The boost circuit for PV input 1 or 2 is damaged.",
+      "Restart. If the warning stays, Growatt service replaces the power board.",
       "Yes"
      ],
      [
       "Warning 207",
       "USB over-current",
-      "Manual: 'USB over-current'",
-      "Manual: '1: Unplug the U disk or monitor. 2: Re-access U disk or monitor after shutdown. 3.If the error message still exists, contact manufacturer.'",
+      "Too much current is being drawn through the USB port.",
+      "Unplug the USB stick or monitoring dongle, shut the inverter down, then plug it back in. If the code stays, contact Growatt.",
       "Usually not"
      ],
      [
       "Warning 401",
       "Inverter communicates with meter abnormal",
-      "Manual: 'Inverter communicates with Meter abnormal'",
-      "Manual: '1: Check if the meter is on. 2: Check the inverter and the meter connection is normal .'",
+      "The inverter cannot talk to the energy meter.",
+      "Check that the meter is powered and that its cable to the inverter is connected properly.",
       "Usually not"
      ],
      [
       "Error: 402",
       "Output high DCI (DC injection in AC output)",
-      "Manual: 'Output High DCI'",
-      "Manual: 'Restart inverter, if problem still exist, Contact Growatt.'",
+      "Too much DC current is appearing in the AC output.",
+      "Restart the inverter; if it stays, contact Growatt.",
       "Yes"
      ],
      [
       "Error: 404",
       "Bus sample fault",
-      "Manual: 'Bus sample fault'",
-      "Manual: 'Restart inverter, if problem still exist, Contact Growatt.'",
+      "The internal DC bus voltage reading is faulty.",
+      "Restart the inverter; if it stays, contact Growatt.",
       "Yes"
      ],
      [
       "Warning 404",
       "EEPROM abnormal",
-      "Manual: 'EEPROM abnormal'",
-      "Manual: 'Restart the inverter. If the warning still exist, please contact Growatt customer service to replace the M3 board.'",
+      "The settings memory (EEPROM) is not working properly.",
+      "Restart. If the warning stays, Growatt service replaces the control (M3) board.",
       "Yes"
      ],
      [
       "Error: 405",
       "Relay fault",
-      "Manual: 'Relay fault'",
-      "Manual: 'Restart inverter, if problem still exist, Contact Growatt.'",
+      "A grid relay inside the inverter has failed its check.",
+      "Restart the inverter; if it stays, contact Growatt.",
       "Yes"
      ],
      [
       "Warning 405",
       "Firmware version is not consistent",
-      "Manual: 'Firmware version is not consistent'",
-      "Manual: 'Uptate the right version firmware' (installer/Growatt service)",
+      "The firmware versions on the inverter's boards do not match.",
+      "The firmware needs updating to the matching version by the installer or Growatt service.",
       "Yes"
      ],
      [
       "Error: 407",
       "Auto test failed",
-      "Manual: 'Auto test didn't pass.'",
-      "Manual: 'Restart inverter, repeat Auto Test, if problem still exist, contact Growatt.'",
+      "The inverter's automatic self-test did not pass.",
+      "Restart and run the self-test again; if it still fails, contact Growatt.",
       "Yes"
      ],
      [
       "Error: 408",
       "Over temperature",
-      "Manual: 'Over Temperature'",
-      "Manual: 'If the ambient temperature of inverter is lower than 60C, restart inverter, if error message still exists, contact Growatt.' Owner: improve ventilation/shade first.",
+      "The inverter is too hot.",
+      "Improve ventilation and shade first. If the surrounding air is below about 60 °C, restart; if the code stays, contact Growatt.",
       "Usually not"
      ],
      [
       "Error: 409",
       "Bus over voltage",
-      "Manual: 'Bus over voltage'",
-      "Manual: 'Restart inverter, if problem still exist, Contact Growatt.'",
+      "The internal DC bus voltage is too high.",
+      "Restart the inverter; if it stays, contact Growatt.",
       "Yes"
      ],
      [
       "Error: 411",
       "DSP communicates with M3 abnormal (internal communication)",
-      "Manual: 'DSP communicates with M3 abnormal'",
-      "Manual: 'Restart inverter, if problem still exist, contact Growatt.'",
+      "The two control processors inside the inverter cannot communicate.",
+      "Restart the inverter; if it stays, contact Growatt.",
       "Yes"
      ],
      [
       "Error: 414",
       "EEPROM fault",
-      "Manual: 'EEPROM fault.'",
-      "Manual: 'Restart inverter, if problem still exist, Contact Growatt.'",
+      "The settings memory (EEPROM) has failed.",
+      "Restart the inverter; if it stays, contact Growatt.",
       "Yes"
      ],
      [
       "Error: 417",
       "DSP / redundant M3 sample mismatch",
-      "Manual: 'The data sampled by the DSP and redundant M3 is not the same.'",
-      "Manual: 'Restart inverter, if problem still exist, Contact Growatt.'",
+      "The two processors that measure the same values disagree.",
+      "Restart the inverter; if it stays, contact Growatt.",
       "Yes"
      ],
      [
       "Error: 420",
       "GFCI fault",
-      "Manual: 'GFCI fault.'",
-      "Manual: 'Restart inverter, if problem still exist, or contact Growatt.'",
+      "The earth-leakage (GFCI) protection has tripped or failed.",
+      "Restart the inverter; if it stays, contact Growatt or the installer.",
       "Yes"
      ],
      [
       "Error: 425",
       "AFCI self-test fault",
-      "Manual: 'AFCI self-test fault'",
-      "Manual: 'Restart inverter, if problem still exist, or contact Growatt.'",
+      "The arc-fault detector failed its own self-test.",
+      "Restart the inverter; if it stays, contact Growatt or the installer.",
       "Yes"
      ]
     ]
@@ -569,176 +569,176 @@
      [
       "2001 High String Input Voltage",
       "PV string open-circuit voltage exceeds the inverter maximum (too many modules in series)",
-      "Manual: 'The PV array is not properly configured. Excessive PV modules are connected in series to the PV string, and therefore the open-circuit voltage exceeds the maximum SUN2000 operating voltage.' Cause ID 1 = PV1, 2 = PV2.",
-      "Manual: 'Check the serial connection configuration of the PV string and ensure that the PV string open-circuit voltage is not greater than the maximum operating voltage of the SUN2000.' Installer task.",
+      "Too many panels are connected in series, so the string's open-circuit voltage is above what the inverter can take. The cause ID shows which input (1 = PV1, 2 = PV2).",
+      "Installer work: re-check the string design so its open-circuit voltage stays below the inverter's maximum input voltage.",
       "Yes"
      ],
      [
       "2002 DC Arc Fault",
       "Electric arc on PV string cables",
-      "Manual: 'The PV string power cables arc or are in poor contact.'",
-      "Manual: 'Check whether the string cables arc or are in poor contact.' Owner: do not touch DC wiring; call installer.",
+      "The solar string cables are arcing or have a poor connection.",
+      "Do not touch the DC wiring; the installer has to check the string cables and connectors.",
       "Yes"
      ],
      [
       "2011 String Reversed",
       "PV string connected with reversed polarity",
-      "Manual: 'The PV string is reversely connected.'",
-      "Manual: 'wait until the PV string current decreases below 0.5 A, set DC switch to OFF, and adjust the PV string polarity.' Installer task.",
+      "A solar string is connected with its plus and minus reversed.",
+      "Installer work: wait until the string current falls to a very low value, switch the DC isolator off, then correct the polarity.",
       "Yes"
      ],
      [
       "2021 AFCI Check Failure",
       "Arc-fault detection self-check failed",
-      "Manual: '1: The AFCI check circuit is abnormal. 2: The AFCI circuit is faulty.'",
-      "Manual: 'Turn off the AC output switch and DC input switch, and then turn them on after 5 minutes. If the fault persists, contact your dealer or Huawei technical support.'",
+      "The arc-fault detection circuit failed its check or is faulty.",
+      "Switch off the AC output switch and the DC input switch, wait five minutes and switch them back on. If the fault stays, contact the dealer or Huawei support.",
       "Yes"
      ],
      [
       "2032 Grid Failure",
       "No grid (outage or AC breaker off)",
-      "Manual: 'The power grid experiences an outage. The AC circuit is disconnected or the AC circuit breaker is OFF.'",
-      "Manual: '1. Check the AC voltage. 2. Check whether the AC circuit is disconnected or the AC circuit breaker is OFF.' Owner: check for load-shedding and the AC breaker.",
+      "There is no grid: a power cut (load-shedding), or the AC circuit is disconnected or its breaker is off.",
+      "Check for load-shedding and that the inverter's AC breaker is on, and check the AC voltage.",
       "Usually not"
      ],
      [
       "2033 Grid Undervoltage",
       "Grid voltage below lower threshold",
-      "Manual: 'The grid voltage is below the lower threshold or the low voltage duration has lasted for more than the value specified by low voltage ride-through (LVRT).'",
-      "Manual: '1. If the alarm occurs occasionally, the power grid may be abnormal temporarily. The SUN2000 automatically recovers... 2. If the alarm occurs frequently, check whether the power grid voltage is within the allowed range. If no, contact the local power operator. If yes, modify the grid undervoltage protection threshold ... with the consent of the local power operator.'",
+      "The grid voltage is below the inverter's lower limit, or has stayed low longer than its low-voltage ride-through time.",
+      "If it happens now and then, the grid dipped and the inverter recovers on its own. If it is frequent, check the grid voltage; if the grid is out of range contact the DISCO. Protection limits may only be changed with the DISCO's consent.",
       "Yes"
      ],
      [
       "2034 Grid Overvoltage",
       "Grid voltage above upper threshold",
-      "Manual: 'The grid voltage exceeds the higher threshold or the high voltage has lasted for more than the value specified by high voltage ride-through (HVRT).'",
-      "Manual: same as 2033 (occasional = wait; frequent = check grid voltage, contact power operator; threshold change only with operator consent); '3. Check whether the peak voltage of the power grid is too high.'",
+      "The grid voltage is above the inverter's upper limit, or has stayed high longer than its high-voltage ride-through time.",
+      "Same as 2033: occasional means wait; frequent means check the grid voltage and its peaks and contact the DISCO. Limits change only with the DISCO's consent.",
       "Usually not"
      ],
      [
       "2036 Grid Overfrequency",
       "Grid frequency too high",
-      "Manual: 'Power grid exception: The actual power grid frequency is higher than the standard requirement for the local power grid.'",
-      "Manual: occasional = auto recovers; frequent = 'check whether the power grid frequency is within the allowed range. If no, contact the local power operator.'",
+      "The grid frequency is higher than the local grid standard allows.",
+      "Occasional: the inverter recovers by itself. Frequent: check the grid frequency and contact the DISCO if it is out of range.",
       "Usually not"
      ],
      [
       "2037 Grid Underfrequency",
       "Grid frequency too low",
-      "Manual: 'Power grid exception: The actual power grid frequency is lower than the standard requirement for the local power grid.'",
-      "Manual: occasional = auto recovers; frequent = check grid frequency / contact local power operator.",
+      "The grid frequency is lower than the local grid standard allows.",
+      "Occasional: the inverter recovers by itself. Frequent: check the grid frequency and contact the DISCO.",
       "Usually not"
      ],
      [
       "2038 Unstable Grid Frequency",
       "Grid frequency changing too fast",
-      "Manual: 'Power grid exception: The actual grid frequency change rate does not comply with the local power grid standard.'",
-      "Manual: occasional = auto recovers; frequent = check grid frequency / contact local power operator.",
+      "The grid frequency is changing faster than the local grid standard allows.",
+      "Occasional: the inverter recovers by itself. Frequent: check the grid frequency and contact the DISCO.",
       "Usually not"
      ],
      [
       "2039 Output Overcurrent",
       "Inverter output current exceeded limit",
-      "Manual: 'The power grid voltage drops dramatically or the power grid is short-circuited. As a result, the SUN2000 transient output current exceeds the upper threshold and therefore the SUN2000 protection is triggered.'",
-      "Manual: '1. ... After the fault is rectified, the SUN2000 automatically recovers. 2. If the alarm occurs frequently and affects the energy yield of the power plant, check whether the output is short-circuited. If the fault persists, contact your dealer or Huawei technical support.'",
+      "A sharp grid voltage drop or a short circuit on the grid made the output current jump past the inverter's limit, so its protection tripped.",
+      "The inverter recovers once the grid is normal. If it happens often and costs energy, have the output checked for a short circuit; if it stays, contact the dealer or Huawei support.",
       "Yes"
      ],
      [
       "2040 Output DC Component Overhigh",
       "Too much DC in AC output",
-      "Manual: 'The DC component of the SUN2000 output current exceeds the specified upper threshold.'",
-      "Manual: auto recovers; 'If the alarm occurs frequently, contact your dealer or Huawei technical support.'",
+      "The DC part of the inverter's output current is above its limit.",
+      "The inverter normally recovers on its own; if it is frequent, contact the dealer or Huawei support.",
       "Yes"
      ],
      [
       "2051 Abnormal Residual Current",
       "Leakage (residual) current too high",
-      "Manual: 'The insulation impedance of the input side to PE decreases when the SUN2000 is operating.'",
-      "Manual: '1. If the alarm occurs occasionally, the external circuit may be abnormal temporarily. The SUN2000 automatically recovers... 2. If the alarm occurs frequently or persists, check whether the impedance between the PV string and the ground is too low.' Installer task.",
+      "The insulation between the solar input side and earth has dropped while running, so residual current is too high.",
+      "Occasional: a passing external fault, the inverter recovers by itself. Frequent or constant: the installer should measure the string-to-earth resistance.",
       "Yes"
      ],
      [
       "2062 Low Insulation Resistance",
       "PV array insulation to ground too low",
-      "Manual: 'A short circuit occurs between the PV array and the ground.' / 'The ambient air of the PV array is damp and the insulation between the PV array and the ground is poor.'",
-      "Manual: '1. Check the output impedance of the PV array to ground... 2. Check that the PE cable of the SUN2000 is correctly connected. 3. If the impedance is lower than the specified protection threshold in rainy and cloudy days, set Insulation resistance protection using the mobile App...' Installer task; often appears after rain.",
+      "The solar array is shorted to earth, or damp weather has lowered its insulation to earth.",
+      "Installer work: measure the array's resistance to earth and check the inverter's earth (PE) cable. It often shows after rain; if the resistance is only low in wet weather, the installer can adjust the insulation protection setting in the app.",
       "Yes"
      ],
      [
       "2063 Overtemperature",
       "Inverter too hot (Minor)",
-      "Manual: 'The SUN2000 is installed in a place with poor ventilation.' / 'The ambient temperature is higher than the upper threshold.' / 'The SUN2000 is not working properly.'",
-      "Manual: 'Check the ventilation and ambient temperature... improve the ventilation and heat dissipation. If the ventilation and ambient temperature both meet requirements, contact your dealer or Huawei technical support.'",
+      "The inverter is too hot: poor ventilation, a hot room, or the unit itself not working properly.",
+      "Improve ventilation and cooling. If ventilation and temperature are fine and it stays, contact the dealer or Huawei support.",
       "Usually not"
      ],
      [
       "2064 Device Fault",
       "Unrecoverable internal fault (Cause ID 1-12: boost short/overcurrent, control circuit, inverter circuit, residual current sensor, temperature detection, EEPROM, auxiliary power, grid-tied relay, DC bus over/under-voltage/imbalance)",
-      "Manual: 'An unrecoverable fault has occurred on a circuit inside the SUN2000.'",
-      "Manual: 'Turn off the AC output switch and DC input switch, and then turn them on after 5 minutes. If the fault persists, contact your dealer or Huawei technical support.'",
+      "An internal circuit has a fault the inverter cannot clear by itself (the cause ID names the circuit).",
+      "Switch off the AC output switch and the DC input switch, wait five minutes and switch them back on. If the fault stays, contact the dealer or Huawei support.",
       "Yes"
      ],
      [
       "2065 Upgrade Failed or Version Mismatch",
       "Firmware upgrade failed",
-      "Manual: 'The upgrade does not complete normally.' Cause IDs 1-4, 7 (software/hardware mismatch, controller version mismatch, upgrade fails, optimizer upgrade fails).",
-      "Manual: '1. Perform an upgrade again. 2. If the upgrade fails for multiple times, contact your dealer or Huawei technical support.'",
+      "A firmware upgrade did not finish, or the software and hardware versions do not match.",
+      "Run the upgrade again; if it keeps failing, contact the dealer or Huawei support.",
       "Yes"
      ],
      [
       "61440 Monitoring Unit Faulty",
       "Monitoring (communication) unit fault",
-      "Manual: 'The flash memory is insufficient.' / 'The flash memory has bad sectors.'",
-      "Manual: 'Turn off the AC output switch and DC input switch, and then turn them on after 5 minutes. If the fault persists, replace the monitoring board or contact your dealer Huawei technical support.'",
+      "The monitoring unit's flash memory is full or damaged.",
+      "Switch off the AC and DC switches, wait five minutes and switch them on. If it stays, the monitoring board needs replacing by the dealer or Huawei support.",
       "Yes"
      ],
      [
       "2067 Faulty Power Collector",
       "Smart power sensor (meter) disconnected",
-      "Manual: 'The smart power sensor is disconnected.'",
-      "Manual: '1. Check that the configured power meter model is the same as the actual model. 2. Check that the communications parameters ... are the same as the SUN2000 RS485 configurations. 3. Check whether the smart power sensor is powered on and whether the RS485 communications cable is connected.'",
+      "The smart power sensor (meter) is not connected.",
+      "Check that the meter model set in the inverter matches the meter fitted, that the communication settings match, and that the meter is powered and its RS485 cable connected.",
       "Yes"
      ],
      [
       "2068 Battery Abnormal",
       "Battery fault, disconnected or breaker off (hybrid/LUNA systems)",
-      "Manual: 'The battery is faulty, disconnected, or the battery circuit breaker is OFF when the battery is running.' Cause IDs: communication abnormal, port overcurrent, enabling cable not connected, port voltage abnormal.",
-      "Manual: '1. If the battery fault indicator is steady on or blinking, contact the battery supplier. 2. Check that the battery enabling/power/communications cable is correctly installed... 3. Check that the auxiliary power switch on the battery is set to ON. 4. Send a shutdown command on the App... turn on the battery switch, AC output switch, and DC input switch in sequence after 5 minutes. 5. If the fault persists, contact your dealer or Huawei technical support.'",
+      "The battery is faulty or disconnected, or its breaker is off while the system is running.",
+      "If the battery's fault light is on or blinking, contact the battery supplier. Otherwise have the installer check the battery's power, enable and communication cables and that its auxiliary switch is on, then shut down from the app and switch on the battery, AC and DC switches in turn after five minutes. If it stays, contact the dealer or Huawei support.",
       "Yes"
      ],
      [
       "2070 Active Islanding",
       "Grid outage detected (anti-islanding)",
-      "Manual: 'When the power grid experiences an AC power outage, the SUN2000 detects islanding proactively.'",
-      "Manual: 'Check that the grid connection voltage of the SUN2000 is normal.' Owner: usually load-shedding; wait for grid.",
+      "The inverter has detected a grid outage and stopped exporting (anti-islanding protection).",
+      "Usually load-shedding: wait for the grid to return and check the grid voltage at the inverter.",
       "Usually not"
      ],
      [
       "2077 Off-grid output overload",
       "Backup output overloaded",
-      "Manual: 'The output is overloaded or short-circuited.'",
-      "Manual: '1. Check whether the device output is short-circuited. 2. Check whether the device load configuration exceeds the rated value.' Owner: switch off loads on backup circuit.",
+      "The backup (off-grid) output is overloaded or short-circuited.",
+      "Switch off loads on the backup circuit and check that the backup load is within the rated power and has no short circuit.",
       "Usually not"
      ],
      [
       "2080 Abnormal PV Module Configuration",
       "PV/optimizer string configuration wrong (Cause IDs 2,3,6,7,8,9)",
-      "Manual: 'PV module configuration does not meet requirements, or the PV module output is reversely connected or short-circuited.'",
-      "Manual: 'Check whether the total number of PV modules, number of PV modules in a string, and number of PV strings meet requirements and whether the PV module output is reversely connected.' Installer task.",
+      "The panel or optimizer layout does not meet the inverter's rules, or a module output is reversed or shorted.",
+      "Installer work: check the number of modules in total and per string, the number of strings, and the module polarity.",
       "Yes"
      ],
      [
       "2081 Optimizer Fault",
       "An optimizer is faulty (Warning)",
-      "Manual: 'An optimizer is faulty.'",
-      "Manual: 'Go to the optimizer information screen to view the fault details.'",
+      "One of the optimizers is faulty.",
+      "Open the optimizer screen in the app to see which one and why, and have the installer replace it.",
       "Yes"
      ],
      [
       "2082 Grid-tied/Off-grid Controller Abnormal",
       "Backup Box communication/internal fault",
-      "Manual: 'The inverter fails to communicate with the Smart Backup Box.' / 'An unrecoverable fault occurs on a circuit inside the Smart Backup Box.'",
-      "Manual: shutdown via App, turn off AC/DC/battery switches, check power and RS485 cables between Backup Box and inverter, restart after 5 minutes; '4. If the alarm persists, contact your dealer or Huawei technical support.'",
+      "The inverter cannot communicate with the Smart Backup Box, or the box has an internal fault.",
+      "Shut down from the app, switch off the AC, DC and battery switches, have the installer check the power and RS485 cables between the box and the inverter, and restart after five minutes. If it stays, contact the dealer or Huawei support.",
       "Yes"
      ]
     ]
@@ -759,197 +759,197 @@
      [
       "OV-G-V 01..05 (1010)",
       "Grid overvoltage",
-      "Article: 'Grid voltage is higher than standard code's 1st level overvoltage limit for the set period of time.' (02: 'transient value is over 1.35 times of rated voltage peak value'; 03: 10-min overvoltage; 04: 2nd level; 05: transient over 200ms)",
-      "Article: '1. If it happens accidentally, it may be a short-term abnormality of the grid. The inverter will resume normal operation after detecting that the grid is normal, without manual intervention. 2. Check if the standard is set correctly. 3. If it occurs frequently, please check the grid voltage and the grid frequency... check whether the AC side circuit breaker and the output cable are connected properly. 4. ...After obtaining the approval from the local power operator, please contact customer service to modify the inverter grid Over and under voltage/frequency protection points.'",
+      "The grid voltage has been above the first overvoltage limit of the selected grid standard for too long. The variants (01 to 05) cover a short spike, a ten-minute average and a second, higher limit.",
+      "If it happens once in a while the grid was briefly out of range and the inverter reconnects on its own. If it is frequent, check the grid voltage and frequency, the grid standard set in the inverter, and the AC breaker and output cable. Protection limits may only be changed by Solis service after the DISCO approves.",
       "Yes"
      ],
      [
       "UN-G-V (1011)",
       "Grid undervoltage",
-      "Article: 'Grid voltage is lower than the limit.'",
-      "Same steps as OV-G-V (wait if occasional; check grid/wiring and protection settings if frequent).",
+      "The grid voltage is below the limit.",
+      "Same as OV-G-V: wait if occasional; if frequent, check the grid, the wiring and the protection settings.",
       "Yes"
      ],
      [
       "OV-G-F (1012)",
       "Grid overfrequency",
-      "Article: 'Grid frequency is higher the limit.'",
-      "Same steps as OV-G-V.",
+      "The grid frequency is above the limit.",
+      "Same as OV-G-V.",
       "Usually not"
      ],
      [
       "UN-G-F (1013)",
       "Grid underfrequency",
-      "Article: 'Grid frequency is lower the limit.'",
-      "Same steps as OV-G-V.",
+      "The grid frequency is below the limit.",
+      "Same as OV-G-V.",
       "Usually not"
      ],
      [
       "Backfeed_Iac (1014)",
       "AC backfeed current",
-      "Article: 'AC backfeed current'",
-      "Article: '1. Restart the inverter, if it is still not ruled out, please contact the manufacturer's customer service.'",
+      "Current is flowing back from the AC side into the inverter.",
+      "Restart the inverter; if it stays, contact Solis service.",
       "Yes"
      ],
      [
       "NO-Grid (1015)",
       "No grid detected",
-      "Article: 'No grid'",
-      "Article: '1. Confirm whether the power grid is properly connected. 2. Confirm whether the connected power grid is normal. 3. Check if the Grid Standard is set correctly. 3. If the grid connection is normal, you need to contact manufacturer's customer service...' Owner: check for outage and AC breaker.",
+      "The inverter cannot detect the grid.",
+      "Check for load-shedding and that the AC breaker is on, that the grid is connected and normal, and that the right grid standard is set. If the grid is fine and it stays, contact Solis service.",
       "Usually not"
      ],
      [
       "G-PHASE (1016)",
       "Grid 3-phase unbalanced",
-      "Article: 'Grid has unbalanced 3phase'",
-      "Article: '1. Confirm whether the power grid is properly connected.2. Confirm whether the connected power grid is normal. 3. If the grid connection is normal, you need to contact manufacturer's customer service.'",
+      "The three grid phases are unbalanced.",
+      "Check that the grid is connected properly and is normal; if it is, contact Solis service.",
       "Yes"
      ],
      [
       "G-F-FLU (1017)",
       "Grid frequency fluctuation",
-      "Article: 'Grid frequency is abnormal'",
-      "Article: confirm grid connected/normal; if normal, contact customer service.",
+      "The grid frequency is fluctuating abnormally.",
+      "Check that the grid is connected and normal; if it is, contact Solis service.",
       "Usually not"
      ],
      [
       "OV-G-I (1018)",
       "Grid output overcurrent",
-      "Article: 'Grid output overcurrent'",
-      "Article: confirm grid connected/normal; if normal, contact customer service.",
+      "The output current to the grid is too high.",
+      "Check that the grid is connected and normal; if it is, contact Solis service.",
       "Yes"
      ],
      [
       "IGFOL-F (1019)",
       "Grid current tracking error",
-      "Article: 'Grid current tracking error'",
-      "Article: '1. Restart the inverter, if it is still not ruled out, please contact the manufacturer's customer service.'",
+      "The inverter cannot track the grid current correctly.",
+      "Restart the inverter; if it stays, contact Solis service.",
       "Yes"
      ],
      [
       "PHASE-FAULT (101A)",
       "Abnormal grid phase angle",
-      "Article: 'Abnormal grid phase angle'",
-      "Article: '1. Check whether the AC side wiring is correct. 2. Check whether the grid phase angle is 120. 3. Restart the inverter. If it is still not resolved, please contact the manufacturer's customer service.'",
+      "The grid phase angle is abnormal.",
+      "Have the installer check the AC wiring and that the phases are 120 degrees apart, then restart. If it stays, contact Solis service.",
       "Yes"
      ],
      [
       "OV-DC (1020)",
       "DC (PV) overvoltage",
-      "Article: 'DC overvoltage'",
-      "Article: '1. Check whether the input voltage exceeds the maximum input voltage of the inverter;2. Restart the inverter 3. If it is still not ruled out, please contact the manufacturer's customer service.'",
+      "The solar (DC) input voltage is too high.",
+      "Installer work: check that the string voltage is below the inverter's maximum input, then restart. If it stays, contact Solis service.",
       "Yes"
      ],
      [
       "BoostFal (1020)",
       "DC boost circuit fault",
-      "Article: 'DC boost circuit fault'",
-      "Article: 'Restart the inverter. If it is still not resolved, please contact the manufacturer's customer service.'",
+      "The DC boost circuit has a fault.",
+      "Restart the inverter; if it stays, contact Solis service.",
       "Yes"
      ],
      [
       "OV-BUS (1021)",
       "DC bus overvoltage",
-      "Article: 'DC bus overvoltage'",
-      "Article: check input voltage vs max; restart; else contact customer service.",
+      "The internal DC bus voltage is too high.",
+      "Have the input voltage checked against the maximum, restart, and contact Solis service if it stays.",
       "Yes"
      ],
      [
       "UNB-BUS (1022)",
       "DC bus unbalanced",
-      "Article: 'DC bus voltage and DC bus half voltage is not correct'",
-      "Article: restart; if not resolved contact customer service.",
+      "The internal DC bus and its half-voltage point do not match (bus unbalanced).",
+      "Restart the inverter; if it stays, contact Solis service.",
       "Yes"
      ],
      [
       "UN-BUS (1023)",
       "DC bus voltage too low",
-      "Article: 'DC bus voltage is too low'",
-      "Article: '1. Check whether the input voltage is too low 2. Restart the inverter 3. If it is still not ruled out, please contact the manufacturer's after sales engineer.'",
+      "The internal DC bus voltage is too low.",
+      "Check whether the input voltage is too low and restart; if it stays, contact Solis service.",
       "Yes"
      ],
      [
       "DC-INTF. (1027)",
       "Abnormal DC input current",
-      "Article: 'Abnormal DC input current'",
-      "Article: '1. Check whether the DC wiring is falsely connected or damaged.2. Restart the inverter. 3. If it is still not resolved, please contact the manufacturer's customer service.'",
+      "The DC input current is abnormal.",
+      "Have the installer check the DC wiring for wrong or damaged connections, then restart. If it stays, contact Solis service.",
       "Yes"
      ],
      [
       "Reve-DC (1028)",
       "DC reversely connected",
-      "Article: 'DC reversely connected.'",
-      "Article: '1. Check whether the DC wiring is reversed. 2. Check whether the wire has correct size. 3. Check if correct Grid Standard is set.4. Restart the inverter 5. If it is still not resolved, please contact the manufacturer's customer service.' Installer task.",
+      "A DC input is connected with reversed polarity.",
+      "Installer work: check the DC polarity and cable size and the grid standard setting, then restart. If it stays, contact Solis service.",
       "Yes"
      ],
      [
       "PvMidIso / PVGndRun (1029)",
       "PV mid-point low insulation / PV grounded during operation",
-      "Article: 'PV middle point low insulation protection' / 'The PV terminal of the inverter is grounded during operation.'",
-      "Article: check time of day (early morning/rain = moisture, normal); measure PV string to ground resistance (should be above 20k ohm); check N-to-ground; update software; else contact after-sales. Installer task.",
+      "The insulation at the PV mid-point is low, or a PV terminal is touching earth while running.",
+      "Installer work. In early morning or after rain it is usually moisture and clears by itself. Otherwise the installer measures each string's resistance to earth (it should be above about 20 kilo-ohm), checks neutral to earth and the software version, then contacts Solis service.",
       "Yes"
      ],
      [
       "GRID-INTF. (1030)",
       "Grid interference",
-      "Article: 'Grid interference' - '1. Multiple inverters installed in line and the grid voltage wave is non-ideal.'",
-      "Article: '2. Grid filters need to be set... 3. Downstream equipment needs to be changed or repaired. Restart the inverter. If it is still not resolved, please contact the manufacturer's customer service.'",
+      "The grid voltage waveform is distorted, often where several inverters share one line.",
+      "The installer may need grid filter settings or to repair equipment downstream, then restart. If it stays, contact Solis service.",
       "Yes"
      ],
      [
       "INI-FAULT (1031)",
       "DSP initializing fault",
-      "Article: 'DSP initializing fault.'",
-      "Article: 'Restart the inverter. If it is still not resolved, please contact the manufacturer's customer service.'",
+      "The control processor failed to start up properly.",
+      "Restart the inverter; if it stays, contact Solis service.",
       "Yes"
      ],
      [
       "OV-TEM (1032)",
       "Over temperature",
-      "Article: 'The internal temperature near IGBTs is beyond the limitation. Typically 90C for 1P inverters 115C for 3P inverters'",
-      "Article: '1: Check whether the installation location of the inverter meets the requirements of the user manual. (Installation in direct sunlight?...) 2: Try to lower the ambient temperature 3: Turn off the inverter and restart it after 15 minutes 4: If the error still exists, please contact the manufacturer's customer service.'",
+      "The temperature near the power switches is above its limit (around 90 °C on single-phase and 115 °C on three-phase units).",
+      "Check the unit is not in direct sun and has the clearance the manual asks for, lower the room temperature, switch off and restart after fifteen minutes. If it stays, contact Solis service.",
       "Usually not"
      ],
      [
       "PV ISO-PRO 01/02 (1033)",
       "Low PV insulation protection",
-      "Article: 'Low PV insulation protection'",
-      "Article: '1. Check the time when the error is reported. If ... early morning or late afternoon or on a rainy day, it is a normal phenomenon... 2. Use the resistance level of the multimeter to measure the resistance of the PV string to the ground, and the resistance should be above 20k ohm... 3. ...measure the resistance of the N wire and the ground wire... 4. ...update the software... 5. If the above is normal, please contact after-sales service.' Installer task.",
+      "The insulation of the solar array to earth is too low.",
+      "Installer work. In early morning, late afternoon or rain it is often normal moisture. Otherwise the installer measures each string's resistance to earth (above about 20 kilo-ohm), checks neutral to earth, updates the software, then contacts Solis service.",
       "Yes"
      ],
      [
       "ILeak-PRO 01-04 (1034)",
       "Leakage current protection",
-      "Article: '1. Connect each string of components individually in turn to determine whether it is caused by a single string problem... A: Damaged PV wire insulation. B: PV wire is incorrect gauge. C: Faulty transformer downstream. D: Incorrect wiring of RSD. E: Buried AC wires are saturated with Water F: AC Wire is low quality 2. If this error occurs only on a rainy day or in the morning, the leakage current is too large due to the aging of the module...'",
-      "Article: '3. This issue may be solved by remotely upgrading the software. Please contact our customer support team.' Installer task.",
+      "Leakage current to earth is too high. Typical causes: damaged PV cable insulation, wrong cable size, a faulty transformer downstream, wrong rapid-shutdown wiring, wet buried AC cables or poor AC cable; in rain or early morning, ageing panels.",
+      "Installer work: connect the strings one at a time to find the faulty one. Solis support can sometimes fix it with a remote software update.",
       "Yes"
      ],
      [
       "RelayChk-FAIL (1035)",
       "Relay check failed",
-      "Article lists the message and code; solution text not captured in the extracted slice.",
-      "Restart; if persistent contact service (per article pattern for internal faults).",
+      "The grid relay failed its self-check. The source lists the code without a solution.",
+      "Restart; if it stays, contact Solis service, as for other internal faults.",
       "Yes"
      ],
      [
       "Fan Alarm / Fan_H Alarm",
       "Internal / external fan fault",
-      "Article: 'Internal Fan fault' / 'External Fan fault'",
-      "Owner: check fan is unobstructed; replacement by installer.",
+      "The internal or external cooling fan has a fault.",
+      "Check the fan is not blocked; a replacement is installer work.",
       "Yes"
      ],
      [
       "Surge Alarm",
       "Grid surge recorded",
-      "Article: 'Grid has surge. It is for after-sale information analysis, doesn't affect inverter operation.'",
+      "A surge on the grid was recorded for service records; it does not stop the inverter.",
       "No action needed.",
       "Usually not"
      ],
      [
       "VgSpdFail",
       "AC SPD fault",
-      "Article: 'AC SPD fault'",
-      "Article: 'Restart the inverter. If it is still not resolved, please contact the manufacturer's customer service.'",
+      "The AC surge protection device has a fault.",
+      "Restart the inverter; if it stays, contact Solis service.",
       "Yes"
      ]
     ]
@@ -970,197 +970,197 @@
      [
       "F01 Grid Power Outage",
       "No grid",
-      "Manual: '1. Grid power outage. 2. The AC line or AC Switch is disconnected.'",
-      "Manual: '1. The alarm automatically disappears after grid power supply is restored. 2. Check whether the AC line or AC Switch is disconnected.'",
+      "There is no grid: a power cut, or the AC cable or AC switch is disconnected.",
+      "The code clears by itself when the grid returns. Check for load-shedding and that the AC switch and cable are connected.",
       "Usually not"
      ],
      [
       "F02 Grid Overvoltage Protection",
       "Grid voltage too high",
-      "Manual: 'The grid voltage is higher than the allowable range, or the high-voltage Duration exceeds the high voltage ride-through setpoint.'",
-      "Manual: '1. If it occurs occasionally, it may be a short-term grid abnormality. The inverter will resume normal operation after detecting that the grid is normal, and no manual intervention is required. 2. If it occurs frequently, check whether the grid voltage is within the allowable range. If not, contact the local power operator... 3. If it cannot recover for a long time, check whether the AC-side circuit breaker and output cable are connected properly.'",
+      "The grid voltage is above the allowed range, or has stayed high longer than the high-voltage ride-through time.",
+      "If it happens now and then, the grid was briefly out of range and the inverter reconnects on its own. If it is frequent, check the grid voltage; if it is out of range, contact the DISCO. If it does not clear for a long time, check the AC breaker and output cable.",
       "Usually not"
      ],
      [
       "F03 Grid Undervoltage Protection",
       "Grid voltage too low",
-      "Manual: 'The grid voltage is lower than the allowable range, or the Low Voltage Duration exceeds the Low Voltage Ride-Through setpoint.'",
-      "Manual: '1. If it occurs occasionally, it may be a short-term grid abnormality. The inverter will resume normal operation after detecting that the grid is normal, and no manual intervention is required. 2. If it occurs frequently, check whether the grid voltage is within the allowable range. If not, contact the local power operator... 3. If it cannot recover for a long time, check whether the AC-side circuit breaker and output cable are connected properly.'",
+      "The grid voltage is below the allowed range, or has stayed low longer than the low-voltage ride-through time.",
+      "If it happens now and then, the grid was briefly out of range and the inverter reconnects on its own. If it is frequent, check the grid voltage; if it is out of range, contact the DISCO. If it does not clear for a long time, check the AC breaker and output cable.",
       "Usually not"
      ],
      [
       "F04 Grid Rapid Overvoltage Protection",
       "Sudden grid overvoltage",
-      "Manual: 'Abnormal grid voltage detection or ultra-high voltage triggers the fault.'",
-      "Manual: '1. If it occurs occasionally, it may be a short-term grid abnormality. The inverter will resume normal operation after detecting that the grid is normal, and no manual intervention is required. 2. If it occurs frequently, check whether the grid voltage is within the allowable range. If not, contact the local power operator... 3. If it cannot recover for a long time, check whether the AC-side circuit breaker and output cable are connected properly.'",
+      "A sudden very high grid voltage, or a fault in the grid voltage measurement, tripped the inverter.",
+      "If it happens now and then, the grid was briefly out of range and the inverter reconnects on its own. If it is frequent, check the grid voltage; if it is out of range, contact the DISCO. If it does not clear for a long time, check the AC breaker and output cable.",
       "Usually not"
      ],
      [
       "F05 10min Overvoltage",
       "10-minute average grid voltage too high",
-      "Manual: 'Within 10min the grid voltage sliding average exceeds the range specified by safety regulations.'",
-      "Manual: 'Check whether the grid voltage operates at a relatively high voltage for a long time... If not, contact your local power operator.'",
+      "The grid voltage averaged over ten minutes is above the limit of the grid standard.",
+      "Check whether the grid voltage stays high for long periods; if it does, contact the DISCO.",
       "Usually not"
      ],
      [
       "F06 Grid Overfrequency",
       "Grid frequency too high",
-      "Manual: 'Grid abnormal: The actual grid frequency is higher than the local grid standard requirements.'",
-      "Manual: occasional = auto resume; frequent = check grid frequency, contact power operator; protection point change only with operator consent.",
+      "The grid frequency is above the local grid standard.",
+      "Occasional: the inverter reconnects by itself. Frequent: check the grid frequency and contact the DISCO. Protection limits change only with the DISCO's consent.",
       "Usually not"
      ],
      [
       "F07 Grid Underfrequency",
       "Grid frequency too low",
-      "Manual: 'Grid abnormal: The actual grid frequency is lower than the local grid standard requirements.'",
+      "The grid frequency is below the local grid standard.",
       "Same as F06.",
       "Usually not"
      ],
      [
       "F08 Grid Frequency Instability",
       "Grid frequency changing too fast",
-      "Manual: 'Grid abnormal: The actual grid frequency change rate does not comply with the local grid standard.'",
-      "Manual: occasional = auto resume; frequent = contact local power operator.",
+      "The grid frequency is changing faster than the local grid standard allows.",
+      "Occasional: the inverter reconnects by itself. Frequent: contact the DISCO.",
       "Usually not"
      ],
      [
       "F09 Anti-islanding Protection",
       "Grid lost but voltage held by load; inverter stops grid connection",
-      "Manual: 'The grid has been disconnected; the grid voltage is maintained due to the presence of the load. According to safety code Protection requirements, stop grid connection.'",
-      "Manual: occasional = auto resume; frequent = contact local power operator.",
+      "The grid has gone off but connected loads are holding up the voltage, so the inverter stops exporting as safety rules require.",
+      "Occasional: the inverter reconnects by itself. Frequent: contact the DISCO.",
       "Usually not"
      ],
      [
       "F10 / F11 LVRT / HVRT fault",
       "Grid voltage abnormal longer than ride-through time",
-      "Manual: 'Grid abnormal: The duration of Grid Voltage Abnormal exceeds the time specified for high/low voltage ride-through.'",
-      "Manual: occasional = auto resume; '2. If it occurs frequently, check whether the grid voltage and frequency are within the allowable range and stable. If not, contact your local power operator.'",
+      "The grid voltage stayed abnormal longer than the ride-through time.",
+      "Occasional: the inverter reconnects by itself. Frequent: check that grid voltage and frequency are in range and stable; if not, contact the DISCO.",
       "Usually not"
      ],
      [
       "F12 / F13 / F14 / F15 GFCI Protection (30mA / 60mA / 150mA / slow change)",
       "Leakage current to ground",
-      "Manual: 'The input-to-ground insulation impedance becomes low during inverter operation.'",
-      "Manual: '1. If it occurs occasionally, it may be caused by a sporadic external line abnormality... no manual intervention is required. 2. If it occurs frequently or cannot be recovered for a long time, check whether the PV string-to-ground impedance is too low.' Installer task.",
+      "Leakage current to earth tripped the inverter (the levels shown are the trip thresholds) because the insulation of the input side to earth dropped while running.",
+      "Occasional: a passing external fault, the inverter recovers by itself. Frequent or lasting: the installer should check the PV string-to-earth resistance.",
       "Yes"
      ],
      [
       "F16 / F17 DCI Protection Level 1 / 2",
       "DC component in AC output too high",
-      "Manual: 'High DC Component: The DC component of the inverter output current is higher than the allowable range specified by safety regulations or the machine default.'",
-      "Manual: '1. If the abnormality is caused by an external fault, the inverter will automatically resume... 2. If this alarm occurs frequently and affects the normal power generation of the plant, please contact your distributor or after-sales service center.'",
+      "The DC part of the inverter's output current is above the allowed limit.",
+      "If an external fault caused it, the inverter recovers by itself. If it is frequent and cuts generation, contact the dealer or GoodWe service.",
       "Yes"
      ],
      [
       "F18 Low Insulation Resistance",
       "PV or battery insulation to ground too low",
-      "Manual: '1. The PV string is short-circuited to protective ground. 2. The environment where the PV strings are installed has been humid for a long time, and the line-to-ground insulation is poor. 3. Battery port line-to-ground Low Insulation Resistance.'",
-      "Manual: '1. Check the impedance of the PV string/battery port to protective ground. If a short circuit occurs, identify the short-circuit point and rectify it. 2. Check whether the inverter's protective ground conductor is correctly connected. 3. If it is confirmed that this impedance is indeed lower than the default value in rainy weather, please use the App to reset the inverter's Insulation Resistance Protection Point.' Installer task.",
+      "The PV string or battery port is shorted to earth, or long damp weather has lowered the insulation to earth.",
+      "Installer work: measure the string and battery port resistance to earth and find any short, and check the inverter's earth conductor. If the resistance is only low in rainy weather, the installer can adjust the insulation protection point in the app.",
       "Yes"
      ],
      [
       "F19 Grounding Abnormal",
       "Protective earth not connected",
-      "Manual: '1. The inverter's protective ground conductor is Not Connected. 2. When the output of the PV string is grounded, no isolation transformer is connected on the inverter output side.'",
-      "Manual: '1. Please confirm whether the inverter's protective ground conductor is Not Connected properly. 2. ...confirm whether an isolation transformer is connected on the inverter output side.' Installer task.",
+      "The inverter's protective earth is not connected, or a grounded PV string is used without an isolation transformer on the output.",
+      "Installer work: connect the protective earth properly; with a grounded PV string, fit an isolation transformer on the output.",
       "Yes"
      ],
      [
       "F20 Hard Power Limit Protection",
       "Abnormal load fluctuation",
-      "Manual: 'Abnormal Load Fluctuation'",
-      "Manual: auto resume if external; if frequent contact distributor/after-sales.",
+      "The load is fluctuating abnormally.",
+      "If an external cause, the inverter recovers by itself; if frequent, contact the dealer or GoodWe service.",
       "Usually not"
      ],
      [
       "F21 Internal Comm Loss",
       "Internal DSP communication timeout",
-      "Manual: 'Chip not powered on' / 'Chip firmware version error'",
-      "Manual: 'Disconnect the AC output side switch and DC input side switch, 5 minutes later close the AC output side switch and DC input side switch. If the fault still exists, contact your dealer or after-sales service center.'",
+      "An internal chip is not powered or has the wrong firmware, so internal communication timed out.",
+      "Switch off the AC output switch and the DC input switch, wait five minutes and switch them back on. If the fault stays, contact the dealer or GoodWe service.",
       "Yes"
      ],
      [
       "F22-F27 Generator faults (waveform, abnormal connection, voltage low/high, frequency low/high)",
       "Generator input out of range",
-      "Manual (F26/F27): '1. When the generator is Not Connected, this fault will be displayed continuously; 2. When the generator is operating, failure to meet generator safety regulations will trigger this fault.'",
-      "Manual: '1. When the generator is not connected, ignore this fault; 2. It is normal for this fault to occur when the generator has a fault. After the generator recovers, wait for a period of time and the fault will be automatically cleared; 3. This fault will not affect the normal operation of off-grid mode.'",
+      "The generator input is outside its limits. This shows all the time when no generator is connected.",
+      "With no generator connected, ignore it. With a generator it clears by itself once the generator runs normally; off-grid operation is not affected.",
       "Usually not"
      ],
      [
       "F28 Parallel I/O Self-check Abnormal",
       "Parallel communication cable / IO chip",
-      "Manual: 'Parallel communication cable is not securely connected or parallel IO chip is damaged'",
-      "Manual: 'Check whether the parallel communication cable is securely connected, then check whether the IO chip is damaged; if so, replace the IO chip.' Installer task.",
+      "A parallel communication cable is loose or the parallel I/O chip is damaged.",
+      "Installer work: secure the parallel communication cable; if the chip is damaged it must be replaced.",
       "Yes"
      ],
      [
       "F29 Parallel Grid Line Reversed",
       "Grid wires reversed between parallel units",
-      "Manual: 'Grid wires of some machines are reversed relative to others'",
-      "Manual: 'Reconnect the grid wires.' Installer task.",
+      "Some parallel units have their grid wires reversed compared with the others.",
+      "Installer work: reconnect the grid wires correctly.",
       "Yes"
      ],
      [
       "F30 AC HCT Check Abnormal",
       "AC current sensor sampling abnormal",
-      "Manual: 'AC sensor sampling abnormal'",
-      "Manual: 'Disconnect the AC output side switch and DC input side switch, 5 minutes later close the AC output side switch and DC input side switch. If the fault still exists, contact your dealer or after-sales service center.'",
+      "The AC current sensor reading is abnormal.",
+      "Switch off the AC output switch and the DC input switch, wait five minutes and switch them back on. If the fault stays, contact the dealer or GoodWe service.",
       "Yes"
      ],
      [
       "F31 GFCI HCT Check Abnormal",
       "Leakage current sensor sampling abnormal",
-      "Manual: 'Leakage current sensor sampling abnormal'",
-      "Manual: 'Disconnect the AC output side switch and DC input side switch, 5 minutes later close the AC output side switch and DC input side switch. If the fault still exists, contact your dealer or after-sales service center.'",
+      "The leakage-current sensor reading is abnormal.",
+      "Switch off the AC output switch and the DC input switch, wait five minutes and switch them back on. If the fault stays, contact the dealer or GoodWe service.",
       "Yes"
      ],
      [
       "F32 Inverter Internal Failure",
       "Internal fault detected",
-      "Manual: 'Inverter fault detected'",
-      "Manual: 'Disconnect the AC output side switch and DC input side switch, 5 minutes later close the AC output side switch and DC input side switch. If the fault still exists, contact your dealer or after-sales service center.'",
+      "The inverter has detected an internal fault.",
+      "Switch off the AC output switch and the DC input switch, wait five minutes and switch them back on. If the fault stays, contact the dealer or GoodWe service.",
       "Yes"
      ],
      [
       "F33 Flash R/W Abnormal",
       "Flash memory read/write error",
-      "Manual: 'flash content has changed; flash lifespan exhausted'",
-      "Manual: '1. Upgrade to the latest firmware; 2. Contact the distributor or after-sales service center.'",
+      "The internal flash memory changed unexpectedly or is worn out.",
+      "Update to the latest firmware; if it stays, contact the dealer or GoodWe service.",
       "Yes"
      ],
      [
       "F34 AFCI Check Failure",
       "Arc-fault self-check failed",
-      "Manual: 'During the Arc Failure self-check, the Arc Failure module did not detect an Arc Failure as expected.'",
-      "Manual: 'Disconnect the AC output side switch and DC input side switch, 5 minutes later close the AC output side switch and DC input side switch. If the fault still exists, contact your dealer or after-sales service center.'",
+      "The arc-fault module did not detect the test arc during its self-check.",
+      "Switch off the AC output switch and the DC input switch, wait five minutes and switch them back on. If the fault stays, contact the dealer or GoodWe service.",
       "Yes"
      ],
      [
       "F35 Cabinet Overtemperature",
       "Inverter too hot",
-      "Manual: '1. Insufficient ventilation at the inverter installation location. 2. Ambient Overtemperature. 3. Internal fan operating abnormally.'",
-      "Manual: '1. Check whether the ventilation at the inverter installation location is adequate and whether the ambient temperature exceeds the maximum permissible ambient temperature range. 2. If there is no ventilation or Ambient Overtemperature, improve the ventilation and heat dissipation conditions. 3. If ventilation and ambient temperature are normal, contact your dealer or after-sales service center.'",
+      "The inverter is too hot: poor ventilation, a hot room, or the internal fan not working.",
+      "Improve ventilation and keep the room within the allowed temperature. If both are fine and it stays, contact the dealer or GoodWe service.",
       "Usually not"
      ],
      [
       "F36 Bus Overvoltage",
       "Internal DC bus voltage too high",
-      "Manual: '1. PV voltage too high; 2. Inverter BUS voltage sampling abnormal; 3. ...isolation performance of the dual-split transformer... is poor...'",
-      "Manual: 'Disconnect the AC output side switch and DC input side switch, 5 minutes later close the AC output side switch and DC input side switch. If the fault still exists, contact your dealer or after-sales service center.'",
+      "The internal DC bus voltage is too high, from a high PV voltage or a measurement or transformer problem.",
+      "Switch off the AC output switch and the DC input switch, wait five minutes and switch them back on. If the fault stays, contact the dealer or GoodWe service.",
       "Yes"
      ],
      [
       "F37 PV Input Overvoltage",
       "PV string voltage above inverter maximum",
-      "Manual: 'The PV array configuration is incorrect; too many PV modules are connected in series in the string, causing the string open-circuit voltage to exceed the inverter's maximum operating voltage'",
-      "Manual: 'Check the series configuration of the corresponding PV array string to ensure that the string open-circuit voltage does not exceed the inverter's maximum operating voltage. After the PV array is configured correctly, the inverter alarm automatically disappears.' Installer task.",
+      "Too many panels are connected in series, so the string's open-circuit voltage is above the inverter's maximum.",
+      "Installer work: re-design the string so its open-circuit voltage stays below the maximum; the alarm clears once it is correct.",
       "Yes"
      ],
      [
       "F38 / F39 PV Continuous Hardware / Software Overcurrent",
       "PV input overcurrent",
-      "Manual: '1. Improper module configuration 2. Hardware damage'",
-      "Manual: 'Disconnect the AC output side switch and DC input side switch, 5 minutes later close the AC output side switch and DC input side switch. If the fault still exists, contact your dealer or after-sales service center.'",
+      "The PV input current is too high, from a wrong module configuration or damaged hardware.",
+      "Switch off the AC output switch and the DC input switch, wait five minutes and switch them back on. If the fault stays, contact the dealer or GoodWe service.",
       "Yes"
      ]
     ]
@@ -1181,169 +1181,169 @@
      [
       "002, 003, 014, 015 Grid Overvoltage",
       "Grid voltage too high",
-      "Manual: 'Generally, the inverter will be reconnected to the grid after the grid returns to normal.'",
-      "Manual: 'If the fault occurs repeatedly: 1. Measure the actual grid voltage, and contact the local electric power company for solutions if the grid voltage is higher than the set value. 2. Check whether the protection parameters are appropriately set via the App or the LCD. Modify the overvoltage protection values with the consent of the local electric power operator. 3. Contact Sungrow Customer Service if the preceding causes are ruled out and the fault persists.'",
+      "The grid voltage is above the protection setting. The inverter normally reconnects once the grid is back to normal.",
+      "If it repeats, measure the grid voltage and contact the DISCO if it is above the setting, and have the protection settings checked in the app or display. Limits change only with the DISCO's consent. Contact Sungrow service if these are fine and the fault keeps coming.",
       "Yes"
      ],
      [
       "004, 005 Grid Undervoltage",
       "Grid voltage too low",
-      "Same auto-reconnect note.",
-      "Manual: measure grid voltage / contact power company; check protection parameters; '3. Check whether the AC cable is firmly in place. 4. Contact Sungrow Customer Service...'",
+      "The grid voltage is below the protection setting. The inverter normally reconnects once the grid is back to normal.",
+      "If it repeats, measure the grid voltage and contact the DISCO, have the protection settings and the AC cable checked. Contact Sungrow service if these are fine and the fault keeps coming.",
       "Yes"
      ],
      [
       "008 Grid Overfrequency",
       "Grid frequency too high",
-      "Same auto-reconnect note.",
-      "Manual: '1. Measure the actual grid frequency, and contact the local electric power company for solutions if the grid frequency is beyond the set range. 2. Check whether the protection parameters are appropriately set via the App or the LCD. 3. Contact Sungrow Customer Service...'",
+      "The grid frequency is above the protection setting. The inverter normally reconnects by itself.",
+      "If it repeats, measure the grid frequency and contact the DISCO if it is out of range, and have the protection settings checked. Contact Sungrow service if these are fine and the fault keeps coming.",
       "Yes"
      ],
      [
       "009 Grid Underfrequency",
       "Grid frequency too low",
-      "Same auto-reconnect note.",
+      "The grid frequency is below the protection setting. The inverter normally reconnects by itself.",
       "Same as 008.",
       "Usually not"
      ],
      [
       "010 Grid Power Outage",
       "No grid",
-      "Same auto-reconnect note.",
-      "Manual: '1. Check whether the grid supplies power reliably. 2. Check whether the AC cable is firmly in place. 3. Check whether the AC cable is connected to the correct terminal (whether the live wire and the N wire are correctly in place). 4. Check whether the AC circuit breaker is connected. 5. Contact Sungrow Customer Service...' Owner: check for outage / AC breaker.",
+      "There is no grid. The inverter reconnects when the grid returns.",
+      "Check for load-shedding and that the AC breaker is on; the installer checks that the AC cable is tight and live and neutral are on the right terminals. Contact Sungrow service if these are fine and the fault keeps coming.",
       "Yes"
      ],
      [
       "012 Excess Leakage Current",
       "Leakage current too high",
-      "Manual: '1. The fault can be caused by poor sunlight or damp environment, and generally the inverter will be reconnected to the grid after the environment is improved.'",
-      "Manual: '2. If the environment is normal, check whether the AC and DC cables are well insulated. 3. Contact Sungrow Customer Service...' Installer task if persistent.",
+      "Leakage current is too high, often from weak sunlight or a damp setting; the inverter usually reconnects when conditions improve.",
+      "If conditions are normal and it stays, the installer should check the insulation of the AC and DC cables. Contact Sungrow service if these are fine and the fault keeps coming.",
       "Yes"
      ],
      [
       "013 Grid Abnormal",
       "Grid parameter out of range",
-      "Same auto-reconnect note.",
-      "Manual: '1. Measure the actual grid, and contact the local electric power company for solutions if the grid parameter exceeds the set range. 2. Contact Sungrow Customer Service...'",
+      "A grid value is outside the set range. The inverter normally reconnects by itself.",
+      "Measure the grid and contact the DISCO if it is out of range. Contact Sungrow service if these are fine and the fault keeps coming.",
       "Usually not"
      ],
      [
       "017 Grid Voltage Imbalance",
       "Phase voltages differ too much (3-phase)",
-      "Same auto-reconnect note.",
-      "Manual: '1. Measure the actual grid voltage. If grid phase voltages differ greatly, contact the electric power company for solutions. 2. ...modify the grid voltage imbalance parameter through the App or the LCD. 3. Contact Sungrow Customer Service...'",
+      "On a three-phase supply, the phase voltages differ too much. The inverter normally reconnects by itself.",
+      "Measure the phase voltages and contact the DISCO if they differ a lot; the installer can adjust the imbalance setting. Contact Sungrow service if these are fine and the fault keeps coming.",
       "Yes"
      ],
      [
       "028, 029, 208, 212, 448-479 PV Reverse Connection Fault",
       "PV string polarity reversed",
-      "Manual: 'Check whether the corresponding string is of reverse polarity.' (28/29 = PV1/PV2; 448-479 = string 1-32)",
-      "Manual: 'If so, disconnect the DC switch and adjust the polarity when the string current drops below 0.5 A. 2. Contact Sungrow Customer Service if the preceding causes are ruled out and the fault persists.' Installer task.",
+      "A PV string is connected with reversed polarity (the code number shows which input or string).",
+      "Installer work: switch the DC isolator off once the string current is very low and correct the polarity. Contact Sungrow service if these are fine and the fault keeps coming.",
       "Yes"
      ],
      [
       "037 Excessively High Ambient Temperature",
       "Inverter/module too hot",
-      "Manual: 'Generally, the inverter will resume operation when the internal or module temperature returns to normal.'",
-      "Manual: '1. Check whether the ambient temperature of the inverter is too high; 2. Check whether the inverter is in a well-ventilated place; 3. Check whether the inverter is exposed to direct sunlight. Shield it if so; 4. Check whether the fan is running properly. Replace the fan if not; 5. Contact Sungrow Power Customer Service...'",
+      "The inverter or its power module is too hot; it restarts once the temperature is normal.",
+      "Check that the room is not too hot, the unit is well ventilated and out of direct sun (shade it if not), and that the fan runs; a dead fan is replaced. Contact Sungrow service if these are fine and the fault keeps coming.",
       "Yes"
      ],
      [
       "039 Low System Insulation Resistance",
       "PV/battery insulation to ground too low",
-      "Manual: 'Wait for the inverter to return to normal. If the fault occurs repeatedly: 1. Check whether the ISO resistance protection value is excessively high via the app or the LCD... 2. Check the resistance to ground of the string and DC cable... 3. If the cable is normal and the fault occurs on rainy days, check it again when the weather turns fine. 4. If there are batteries, check whether battery cables are damaged...'",
-      "Manual: '5. Contact Sungrow Customer Service if the preceding causes are ruled out and the fault persists.' Installer task.",
+      "The insulation of the system to earth is too low.",
+      "Installer work. Wait for the inverter to recover; if it repeats, check the insulation protection setting, measure the string and DC cable resistance to earth, re-check in dry weather if it only happens in rain, and check the battery cables. Contact Sungrow service if these are fine and the fault keeps coming.",
       "Yes"
      ],
      [
       "043 Excessively Low Ambient Temperature",
       "Too cold to operate",
-      "Manual: 'Stop and disconnect the inverter.'",
-      "Manual: 'Restart the inverter when the ambient temperature rises within the operation temperature range.'",
+      "The room is too cold for the inverter to run, so it stops.",
+      "It restarts when the temperature is back within its operating range.",
       "Usually not"
      ],
      [
       "075 Inverter Parallel Communication Alarm",
       "Parallel communication cable problem",
-      "Manual: '1. Check whether the communication cable and the terminals are abnormal.'",
-      "Manual: '2. Reconnect the communication cable... 3. Contact Sungrow Customer Service...'",
+      "The parallel communication cable or its terminals have a problem.",
+      "Installer work: check and reconnect the communication cable. Contact Sungrow service if these are fine and the fault keeps coming.",
       "Yes"
      ],
      [
       "084 Reverse Connection Alarm of the Meter/CT",
       "Energy meter or CT wired backwards",
-      "Manual: '1. Check if the meter is wrongly connected. 2. Check if the input and output wiring of the meter is reversed.'",
-      "Manual: '3. If the existing system is enabled, please check if the rated power setting of the existing inverter is correct.' Installer task.",
+      "The energy meter or current sensor (CT) is wired wrongly or reversed.",
+      "Installer work: check the meter wiring and its input and output direction, and the rated power setting where an existing inverter is also connected.",
       "Yes"
      ],
      [
       "088 Electric Arc Fault",
       "DC arc detected",
-      "Manual: '1. Disconnect the DC power supply, and check whether any DC cable is damaged, the connection terminal or fuse is loose or there is a weak contact.'",
-      "Manual: '2. After performing step 1, reconnect the DC power supply, and clear the electric arc fault via the App or the LCD... 3. Contact Sungrow Customer Service if the fault persists.' Installer task.",
+      "An electric arc was detected on the DC side.",
+      "Installer work: switch the DC supply off and check for damaged DC cables and loose terminals or fuses, then switch back on and clear the fault in the app or display. Contact Sungrow service if these are fine and the fault keeps coming.",
       "Yes"
      ],
      [
       "106 Grounding Cable Fault",
       "Earth/ground cable problem",
-      "Manual: '1. Check whether the AC cable is correctly connected. 2. Check whether the insulation between the ground cable and the live wire is normal.'",
-      "Manual: '3. Contact Sungrow Customer Service...' Installer task.",
+      "The earth cable has a problem.",
+      "Installer work: check the AC cable connections and the insulation between earth and live. Contact Sungrow service if these are fine and the fault keeps coming.",
       "Yes"
      ],
      [
       "264-283 MPPT Reverse Connection",
       "MPPT input polarity reversed",
-      "Manual: 'Check whether the corresponding string is of reverse polarity.' (264-279 = string 1-20)",
-      "Disconnect DC switch and correct polarity when string current < 0.5 A; else contact Sungrow. Installer task.",
+      "An MPPT input is connected with reversed polarity.",
+      "Installer work: switch the DC isolator off once the string current is very low and correct the polarity; otherwise contact Sungrow.",
       "Yes"
      ],
      [
       "323 Grid Confrontation",
       "Output port connected to a live grid when it should not be",
-      "Manual: '1. Check whether the output port is connected to actual grid. Disconnect it from the grid if so.'",
-      "Manual: '2. Contact Sungrow Customer Service...' Installer task.",
+      "The inverter's output port is connected to a live grid where it should not be.",
+      "Installer work: disconnect the output from the grid. Contact Sungrow service if these are fine and the fault keeps coming.",
       "Yes"
      ],
      [
       "332-363 / 364-395 Boost Capacitor Overvoltage Alarm / Fault",
       "Boost capacitor overvoltage",
-      "Alarm (332-363): 'The inverter can continue running.'",
-      "Alarm: check wiring/terminals and foreign materials. Fault (364-395): 'Disconnect the AC and DC switches, and disconnect the battery side switches if there are batteries. Close the AC and DC switches in turn 15 minutes later and restart the system. 2. If the fault persists, please contact Sungrow Power Customer Service.'",
+      "The boost capacitor voltage is too high. As an alarm (332-363) the inverter keeps running; as a fault (364-395) it stops.",
+      "Alarm: check the wiring and terminals and for anything foreign in the unit. Fault: switch off AC, DC and any battery switches, wait fifteen minutes, switch on AC and DC in turn and restart. Contact Sungrow service if these are fine and the fault keeps coming.",
       "Yes"
      ],
      [
       "514 Meter Communication Abnormal Alarm",
       "Meter not communicating",
-      "Manual: '1. Check whether the communication cable and the terminals are abnormal.'",
-      "Manual: '2. Reconnect the communication cable of the meter. 3. Contact Sungrow Customer Service...'",
+      "The energy meter is not communicating.",
+      "Check and reconnect the meter's communication cable. Contact Sungrow service if these are fine and the fault keeps coming.",
       "Yes"
      ],
      [
       "532-547, 564-579 PV Reverse Connection Alarm",
       "String polarity reversed (alarm level)",
-      "As PV Reverse Connection Fault; 532-547 = string 1-16, 564-579 = string 17-32.",
+      "A PV string has reversed polarity (alarm level; the code shows which string).",
       "Same as 028/029.",
       "Yes"
      ],
      [
       "548-563, 580-595 PV Abnormal Alarm",
       "String producing abnormally (shading, loose wiring, fuse)",
-      "Manual: '1. Check whether the corresponding module is sheltered... 2. Check whether the battery board wiring is loose... 3. Check if the DC fuse is damaged.'",
-      "Manual: '4. Contact Sungrow Customer Service if the preceding causes are ruled out and the alarm persists.' Owner can check shading/cleanliness; wiring/fuse is installer work.",
+      "A PV string is producing less than expected: shading or dirt on its modules, loose wiring or a blown DC fuse.",
+      "You can check for shade and dirt on the panels; wiring and fuses are installer work. Contact Sungrow service if these are fine and the fault keeps coming.",
       "Yes"
      ],
      [
       "System Fault (007, 011, 016, 019-025, 030-034, 036, 038, 040-042, 044-050, 052-058, 060-069, 085, 087, 092, 093, 100-105, 107-114, 116-124, 200-211, 248-255, 300-322, 324-328, 401-412, 600-603, 605, 608, 612, 616, 620, 622-624, 800, 802, 804, 807, 1096-1122)",
       "Internal system fault",
-      "Manual: 'System Fault'",
-      "Manual: '1. Wait for the inverter to return to normal. 2. Disconnect the AC and DC switches, and disconnect the battery side switches if there are batteries. Close the AC and DC switches in turn 15 minutes later and restart the system. 3. Contact Sungrow Customer Service if the preceding causes are ruled out and the fault persists.'",
+      "A general internal system fault.",
+      "Wait for the inverter to recover. If not, switch off AC, DC and any battery switches, wait fifteen minutes, switch on AC and DC in turn and restart. Contact Sungrow service if these are fine and the fault keeps coming.",
       "Yes"
      ],
      [
       "System Alarm (059, 070-074, 076-083, 089, 216-218, 220-233, 432-434, 500-513, 515-518, 635-638, 900, 901, 910, 911, 996)",
       "Non-blocking system alarm",
-      "Manual: '1. The inverter can continue running.'",
-      "Manual: '2. Check whether the related wiring and terminal are abnormal, check whether there are any foreign materials or other environmental abnormalities, and take corresponding corrective measures when necessary. 3. If the fault persists, please contact Sungrow Power Customer Service.'",
+      "A general system alarm; the inverter keeps running.",
+      "Check the related wiring and terminals and look for foreign objects or other problems around the unit, and correct them. Contact Sungrow service if these are fine and the fault keeps coming.",
       "Yes"
      ]
     ]
@@ -1364,155 +1364,155 @@
      [
       "STATE 102 (also 103, 105, 106, 107, 108, 112)",
       "AC (grid) voltage too high; class 1 codes = grid conditions outside permissible range",
-      "Manual: 'AC voltage too high' (102); the row covers 103-112 grid voltage/frequency/islanding conditions.",
-      "Manual: inverter resumes 'Following careful testing and when the grid conditions are within the permissible range again'. Remedy: check grid connections; contact the system fitter if the code keeps recurring.",
+      "The grid voltage is too high (102). The other class 1 codes in this group cover grid voltage, frequency or islanding conditions outside the allowed range.",
+      "The inverter waits until the grid has been back in range for a while, then starts again. Check for grid problems; if the code keeps coming back, call the installer.",
       "Usually not"
      ],
      [
       "STATE 301",
       "Overcurrent AC",
-      "Manual: 'Overcurrent (AC)'",
-      "Manual: short-term interruption to feed-in, after which the inverter repeats its start-up routine; 'if the code is displayed permanently, notify a Fronius-trained service technician'.",
+      "The AC output current was too high.",
+      "Feed-in stops for a moment and the inverter starts again. If the code stays on permanently, a Fronius-trained technician is needed.",
       "Yes"
      ],
      [
       "STATE 302",
       "Overcurrent DC or battery not detected",
-      "Manual: 'Overcurrent DC or battery not detected'",
+      "The DC current is too high, or the battery is not detected.",
       "Same as 301.",
       "Yes"
      ],
      [
       "STATE 303 / 304",
       "DC module overtemperature (PV) / AC module overtemperature",
-      "Manual: 'DC module overtemperature PV' / 'AC module overtemperature'",
-      "Manual: 'purge the cooling air openings and heat sink'; the fault is rectified automatically; if the code recurs contact the system fitter.",
+      "The DC (PV) or AC power module is too hot.",
+      "Clean the cooling air openings and heat sink. The inverter clears it by itself; if the code keeps coming back, call the installer.",
       "Usually not"
      ],
      [
       "STATE 305",
       "No power being fed in, despite closed relays",
-      "Manual: 'No power being fed in, despite closed relays'",
-      "Manual: fault is rectified automatically; contact the system fitter if it recurs.",
+      "The relays are closed but no power is being fed in.",
+      "The inverter clears it by itself; if the code keeps coming back, call the installer.",
       "Usually not"
      ],
      [
       "STATE 306 (Power low)",
       "Not enough PV power to feed in (normal at dawn/dusk)",
-      "Manual: 'There is not enough PV power available for feeding energy into the grid and no power has been requested from the battery.' and 'the status codes STATE 306 (Power low) and STATE 307 (DC low) are displayed routinely at these times of day' and 'do not indicate any kind of fault'.",
-      "Manual: wait for sufficient insolation.",
+      "There is not enough solar power to feed in and none is being drawn from the battery. At dawn and dusk this is routine, not a fault.",
+      "Wait for more sunlight.",
       "Usually not"
      ],
      [
       "STATE 307 (DC low)",
       "DC input voltage too low to feed in (normal at night)",
-      "Manual: 'DC input voltage too low for feeding energy into the grid'",
-      "Manual: wait for sufficient insolation.",
+      "The DC input voltage is too low to feed in; normal at night.",
+      "Wait for more sunlight.",
       "Usually not"
      ],
      [
       "STATE 308",
       "Intermediate circuit voltage too high",
-      "Manual: 'Intermediate circuit voltage too high'",
-      "Manual: fault is rectified automatically; contact the system fitter if it recurs.",
+      "The internal (intermediate circuit) voltage is too high.",
+      "The inverter clears it by itself; if the code keeps coming back, call the installer.",
       "Usually not"
      ],
      [
       "STATE 401",
       "Unable to communicate with the power stage set",
-      "Manual: 'Unable to communicate with the power stage set'",
-      "Manual: 'The inverter will automatically attempt to connect again and, if possible, will resume feeding energy into the grid.' If displayed permanently, notify a Fronius-trained service engineer.",
+      "The inverter cannot communicate with its power stage.",
+      "It retries by itself and resumes feeding in when it can. If the code stays permanently, a Fronius-trained technician is needed.",
       "Yes"
      ],
      [
       "STATE 406 / 407 / 408",
       "DC module temperature sensor faulty (PV) / AC module temperature sensor faulty / DC component measured in the grid too high",
-      "Manual descriptions as listed.",
-      "Manual: contact the system engineer if the code keeps recurring.",
+      "A temperature sensor on the DC or AC module is faulty (406, 407), or the DC part measured in the grid is too high (408).",
+      "If the code keeps coming back, call the installer.",
       "Yes"
      ],
      [
       "STATE 412",
       "Fixed voltage mode selected instead of MPP voltage mode",
-      "Manual: 'Fixed voltage mode has been selected instead of MPP voltage mode, and the fixed voltage has been set to too low or too high a value.'",
-      "Manual: contact the system engineer if the code keeps recurring (settings change).",
+      "The inverter is set to a fixed input voltage instead of tracking the best (MPP) voltage, and the fixed value is too low or too high.",
+      "A setting the installer has to correct.",
       "Yes"
      ],
      [
       "STATE 416",
       "No communication between power stage set and control system",
-      "Manual: 'No communication between power stage set and control system'",
+      "The power stage and the control system cannot communicate.",
       "Same as 401.",
       "Yes"
      ],
      [
       "STATE 457",
       "Grid relay sticking or neutral conductor ground voltage too high",
-      "Manual: 'Grid relay sticking or neutral conductor ground voltage too high'; 'The inverter is not feeding any energy into the grid.'",
-      "Manual: 'check the grounding, so that the neutral conductor ground voltage is below 30 V.' Installer task.",
+      "A grid relay is sticking, or the neutral-to-earth voltage is too high; the inverter has stopped feeding in.",
+      "Installer work: check the earthing so the neutral-to-earth voltage stays below 30 V.",
       "Yes"
      ],
      [
       "STATE 459 / 460 / 461",
       "Error recording the measuring signal for the insulation test / DSP reference voltage out of tolerance / DSP data memory error",
-      "Manual descriptions as listed; inverter not feeding in.",
-      "Notify a service engineer if the code is permanent (table layout inference, see notes).",
+      "An internal check failed: the insulation-test measurement, a processor reference voltage or the processor's data memory. The inverter is not feeding in.",
+      "If the code stays permanently, a service technician is needed.",
       "Yes"
      ],
      [
       "STATE 502",
       "Insulation fault on solar modules or on the battery",
-      "Manual: 'Insulation fault on solar modules or on the battery'; warning shown on display.",
-      "Manual: contact the system engineer if the code keeps recurring.",
+      "There is an insulation fault on the solar modules or the battery.",
+      "If the code keeps coming back, call the installer.",
       "Yes"
      ],
      [
       "STATE 509",
       "No energy fed into the grid in the past 24 hours",
-      "Manual: 'No energy fed into the grid in the past 24 hours'",
-      "Manual: acknowledge the code and 'check whether all conditions for feed-in are met, for example whether the modules are covered in snow'. Owner: check DC switch, shading/soiling, then installer.",
+      "No energy has been fed into the grid in the past 24 hours.",
+      "Acknowledge the code and check that feed-in is possible: DC switch on, panels not shaded, dirty or covered. If all is fine, call the installer.",
       "Usually not"
      ],
      [
       "STATE 522",
       "DC low (PV), no PV voltage available",
-      "Manual: 'this message appears overnight if no photovoltaics are connected to the Fronius Symo Hybrid' or when the inverter is in standby mode.",
-      "No action at night; if during the day, check DC switch / call installer.",
+      "There is no PV voltage (DC low). At night, or in standby, this is normal.",
+      "No action at night. In the day, check the DC switch; if it is on, call the installer.",
       "Usually not"
      ],
      [
       "STATE 558",
       "Functional incompatibility between PC boards",
-      "Manual: 'Functional incompatibility (one or more PC boards in the inverter are not compatible with each other...'",
-      "Manual: update the inverter firmware (installer/service).",
+      "Some circuit boards in the inverter are not compatible with each other.",
+      "The inverter firmware needs updating by the installer or Fronius service.",
       "Yes"
      ],
      [
       "STATE 567",
       "Power derating caused by overvoltage",
-      "Manual: power is reduced when grid voltage is excessively high.",
-      "Manual: 'As soon as the grid voltage is back within the permissible range' the fault is rectified automatically; contact the system engineer if it recurs.",
+      "Output power is being reduced because the grid voltage is very high.",
+      "It clears by itself once the grid voltage is back in range; if it keeps coming back, call the installer.",
       "Usually not"
      ],
      [
       "1030 WSD Open (GEN24)",
       "Wired shutdown chain open",
-      "Manual: 'A device that is connected in the WSD chain has interrupted the signal line (e.g., surge protection device) or the bypass installed ex works as standard has been removed and no trigger device has been installed.'",
-      "Manual: 'If the SPD surge protection device has tripped, the inverter must be repaired by an authorized specialist. OR: Install the bypass installed ex works as standard or a trigger device. OR: Turn the WSD (wired shutdown) switch to position 1 (WSD primary device).'",
+      "The wired shutdown (WSD) chain is open: a connected device such as a surge protector broke the signal line, or the factory bypass was removed without fitting a trigger device.",
+      "Installer work: if the surge protector tripped, an authorised specialist must repair the inverter; otherwise refit the bypass or a trigger device, or set the WSD switch to position 1 (primary device).",
       "Yes"
      ],
      [
       "1173 ArcContinuousFault (GEN24)",
       "Repeated DC arc detected; max auto-reconnects reached",
-      "Manual: 'An electric arc has been identified on the PV system, and the maximum number of automatic connections within 24 hours has been reached.'",
-      "Manual: confirm the status (sensor press 3 s, or Event Log / Notifications) BUT 'Before the status 1173 - ArcContinuousFault is confirmed, the entire photovoltaic system affected must be checked for any possible damage. Damaged components must be repaired by qualified specialists.'",
+      "An electric arc was detected on the PV system and the inverter has used up its automatic restarts for the day.",
+      "Do not just clear it: the whole affected PV system must first be checked for damage, and damaged parts repaired by qualified specialists. Only then is the status confirmed (sensor held three seconds, or in the event log).",
       "Yes"
      ],
      [
       "1191 AfciDataTransfer (GEN24)",
       "Arc identified (info)",
-      "Manual: 'An electric arc has been identified on the PV system.'",
-      "Manual: 'No action required.'",
+      "An electric arc was detected on the PV system (information only).",
+      "No action needed by itself; if it repeats it becomes 1173.",
       "Usually not"
      ]
     ]
@@ -1533,442 +1533,442 @@
      [
       "F01",
       "DC input polarity reverse fault",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Do not open the DC (solar) side yourself: PV strings are live whenever there is daylight, even with the DC breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Do not open the DC (solar) side yourself: PV strings are live whenever there is daylight, even with the DC breaker off. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F02",
       "DC insulation impedance permanent fault",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Do not open the DC (solar) side yourself: PV strings are live whenever there is daylight, even with the DC breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Do not open the DC (solar) side yourself: PV strings are live whenever there is daylight, even with the DC breaker off. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F03",
       "DC leakage current fault",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Do not open the DC (solar) side yourself: PV strings are live whenever there is daylight, even with the DC breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Do not open the DC (solar) side yourself: PV strings are live whenever there is daylight, even with the DC breaker off. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F04",
       "Ground fault GFDI",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Do not open the DC (solar) side yourself: PV strings are live whenever there is daylight, even with the DC breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Do not open the DC (solar) side yourself: PV strings are live whenever there is daylight, even with the DC breaker off. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F05",
       "Read the memory error",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F06",
       "Write the memory error",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F07",
       "GFDI blown fuse",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Do not open the DC (solar) side yourself: PV strings are live whenever there is daylight, even with the DC breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Do not open the DC (solar) side yourself: PV strings are live whenever there is daylight, even with the DC breaker off. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F08",
       "GFDI grounding touch failure",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Do not open the DC (solar) side yourself: PV strings are live whenever there is daylight, even with the DC breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Do not open the DC (solar) side yourself: PV strings are live whenever there is daylight, even with the DC breaker off. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F09",
       "IGBT damaged by excessive drop voltage",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F10",
       "Auxiliary switch power supply failure",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F11",
       "AC main contactor errors",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F12",
       "AC auxiliary contactor errors",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F14",
       "DC firmware over current",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F15",
       "AC firmware over current",
-      "Manual (table 10.2): surge loads on the grid.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Surge loads on the grid.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F16",
       "GFCI (RCD) AC leakage current fault",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. If it trips again, do not keep resetting it: earth leakage can mean a shock risk, so call the installer. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If it trips again, do not keep resetting it: earth leakage can mean a shock risk, so call the installer. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F17",
       "Three phase current, over-current fault",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F18",
       "AC over current fault of hardware",
-      "Manual (table 10.2): surge loads on the grid.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Surge loads on the grid.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F19",
       "All hardware failure synthesis",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F20",
       "DC over current fault of the hardware",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F21",
       "DC leakage flow fault",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Do not open the DC (solar) side yourself: PV strings are live whenever there is daylight, even with the DC breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Do not open the DC (solar) side yourself: PV strings are live whenever there is daylight, even with the DC breaker off. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F22",
       "Crash stop (if there is a stop button)",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Release the emergency stop button if one is fitted, then restart the inverter. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Release the emergency stop button if one is fitted, then restart the inverter. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Usually not"
      ],
      [
       "F23",
       "AC leakage current is transient over current",
-      "Manual (table 10.2): ground error, or PV+ or PV- shorted to ground.",
-      "Do not open the DC (solar) side yourself: PV strings are live whenever there is daylight, even with the DC breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Ground error, or PV+ or PV- shorted to ground.",
+      "Do not open the DC (solar) side yourself: PV strings are live whenever there is daylight, even with the DC breaker off. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F24",
       "DC insulation impedance failure",
-      "Manual (table 10.2): PV+ or PV- to ground resistance is too low.",
-      "Do not open the DC (solar) side yourself: PV strings are live whenever there is daylight, even with the DC breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "PV+ or PV- to ground resistance is too low.",
+      "Do not open the DC (solar) side yourself: PV strings are live whenever there is daylight, even with the DC breaker off. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F25",
       "DC reverse irrigation failure",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Do not open the DC (solar) side yourself: PV strings are live whenever there is daylight, even with the DC breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Do not open the DC (solar) side yourself: PV strings are live whenever there is daylight, even with the DC breaker off. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F26",
       "The DC busbar is unbalanced",
-      "Manual (table 10.2): loss of one phase, a poor connection, or inverter hardware damage.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Loss of one phase, a poor connection, or inverter hardware damage.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F27",
       "DC end insulation error",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Do not open the DC (solar) side yourself: PV strings are live whenever there is daylight, even with the DC breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Do not open the DC (solar) side yourself: PV strings are live whenever there is daylight, even with the DC breaker off. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F28",
       "Inverter 1 DC high fault",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Do not open the DC (solar) side yourself: a high DC voltage can come from the panel string, and PV strings are live whenever there is daylight, even with the DC breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Do not open the DC (solar) side yourself: a high DC voltage can come from the panel string, and PV strings are live whenever there is daylight, even with the DC breaker off. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F29",
       "AC load switch failure",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F30",
       "AC main contactor failure",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F31",
       "AC secondary contactor failure",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F32",
       "Inverter 2 DC high fault",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Do not open the DC (solar) side yourself: a high DC voltage can come from the panel string, and PV strings are live whenever there is daylight, even with the DC breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Do not open the DC (solar) side yourself: a high DC voltage can come from the panel string, and PV strings are live whenever there is daylight, even with the DC breaker off. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F33",
       "AC over current",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F34",
       "AC current over load",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F35",
       "No AC grid",
-      "Manual (table 10.2): 'Grid failure.'",
-      "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Grid failure.",
+      "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Usually not"
      ],
      [
       "F36",
       "AC grid phase error",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F37",
       "AC three-phase voltage imbalance failure",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F38",
       "AC three-phase current imbalance failure",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F39",
       "AC over current",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F40",
       "DC over current",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F41",
       "AC line W,U over voltage",
-      "Manual (table 10.2): grid voltage or frequency outside the inverter's normal working range.",
-      "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Grid voltage or frequency outside the inverter's normal working range.",
+      "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Usually not"
      ],
      [
       "F42",
       "AC line W,U low voltage",
-      "Manual (table 10.2): grid voltage or frequency outside the inverter's normal working range.",
-      "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Grid voltage or frequency outside the inverter's normal working range.",
+      "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Usually not"
      ],
      [
       "F43",
       "AC line V,W over voltage",
-      "Manual (table 10.2): grid voltage or frequency outside the inverter's normal working range.",
-      "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Grid voltage or frequency outside the inverter's normal working range.",
+      "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Usually not"
      ],
      [
       "F44",
       "AC line V,W low voltage",
-      "Manual (table 10.2): grid voltage or frequency outside the inverter's normal working range.",
-      "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Grid voltage or frequency outside the inverter's normal working range.",
+      "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Usually not"
      ],
      [
       "F45",
       "AC line U,V over voltage",
-      "Manual (table 10.2): grid voltage or frequency outside the inverter's normal working range.",
-      "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Grid voltage or frequency outside the inverter's normal working range.",
+      "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Usually not"
      ],
      [
       "F46",
       "AC line U,V low voltage",
-      "Manual (table 10.2): grid voltage or frequency outside the inverter's normal working range.",
-      "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Grid voltage or frequency outside the inverter's normal working range.",
+      "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Usually not"
      ],
      [
       "F47",
       "AC over frequency",
-      "Manual (table 10.2): grid voltage or frequency outside the inverter's normal working range.",
-      "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Grid voltage or frequency outside the inverter's normal working range.",
+      "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Usually not"
      ],
      [
       "F48",
       "AC lower frequency",
-      "Manual (table 10.2): grid voltage or frequency outside the inverter's normal working range.",
-      "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Grid voltage or frequency outside the inverter's normal working range.",
+      "Usually clears by itself when the grid voltage and frequency return to normal (common during loadshedding and low voltage). If it shows every day, ask the installer to check the grid protection settings and the AC cable. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Usually not"
      ],
      [
       "F49",
       "U phase grid current DC over current",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F50",
       "V phase grid current DC over current",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F51",
       "W phase grid current DC over current",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F52",
       "AC inductor A phase current DC current high",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F53",
       "AC inductor B phase current DC current high",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F54",
       "AC inductor C phase current DC current high",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F55",
       "DC busbar voltage is too high",
-      "Manual (table 10.2): solar (PV) over voltage.",
-      "Do not open the DC (solar) side yourself: PV strings are live whenever there is daylight, even with the DC breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Solar (PV) over voltage.",
+      "Do not open the DC (solar) side yourself: PV strings are live whenever there is daylight, even with the DC breaker off. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F56",
       "DC busbar voltage is too low",
-      "Manual (table 10.2): solar (PV) under voltage.",
-      "Do not open the DC (solar) side yourself: PV strings are live whenever there is daylight, even with the DC breaker off. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "Solar (PV) under voltage.",
+      "Do not open the DC (solar) side yourself: PV strings are live whenever there is daylight, even with the DC breaker off. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F57",
       "AC reverse irrigation",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F58",
       "AC grid U over current",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F59",
       "AC grid V over current",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F60",
       "AC grid W over current",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F61",
       "Reactor A phase over current",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F62",
       "Reactor B phase over current",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F63",
       "Reactor C phase over current",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Switch the inverter off and on once. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Switch the inverter off and on once. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Yes"
      ],
      [
       "F64",
       "IGBT heat sink high temperature",
-      "Manual lists the name only (table 10.1); no cause is given.",
-      "Check that the inverter's air vents are not blocked and that it is out of direct sun. Manual: if the fault stays after a reset, contact the distributor with the serial number, installation date, the LCD code and the LED status.",
+      "The manual gives only the code's name (table 10.1), no cause.",
+      "Check that the inverter's air vents are not blocked and that it is out of direct sun. If the fault stays after a reset, contact the Inverex distributor with the serial number, installation date, the LCD code and the LED status.",
       "Usually not"
      ]
     ]
@@ -1989,155 +1989,155 @@
      [
       "Fault 01",
       "Fan is locked / fan fault",
-      "Manual: 'Fan fault'",
-      "Manual: 'Replace the fan.' Owner: check for dust; replacement by installer.",
+      "The cooling fan has failed.",
+      "Clean dust from the fan; if it does not turn, the installer replaces it.",
       "Yes"
      ],
      [
       "Fault 02",
       "Over temperature",
-      "Manual: 'Temperature of internal converter component is over 120C.' / 'Internal temperature of inverter component is over 100C.'",
-      "Manual: 'Check whether the air flow of the unit is blocked or whether the ambient temperature is too high.'",
+      "A part inside the inverter is too hot (above about 100 to 120 °C).",
+      "Make sure air can flow around the unit and the room is not too hot.",
       "Usually not"
      ],
      [
       "Fault 03",
       "Battery voltage is too high",
-      "Manual: 'Battery is over-charged.' / 'The battery voltage is too high.'",
-      "Manual: 'Return to repair center.' / 'Check if spec and quantity of batteries are meet requirements.'",
+      "The battery is over-charged or its voltage is too high.",
+      "Have the installer check that the battery type, number of batteries and charge settings suit the inverter; otherwise the unit needs the service centre.",
       "Yes"
      ],
      [
       "Fault 04",
       "Battery voltage is too low",
-      "Fault table: 'Battery voltage is too low'. Troubleshooting (startup shutdown): 'The battery voltage is too low (<1.91V/Cell)'",
-      "Manual: '1. Re-charge battery. 2. Replace battery.'",
+      "The battery voltage is too low (below about 1.91 V per cell at start-up).",
+      "Recharge the battery; if it will not hold charge, it needs replacing.",
       "Usually not"
      ],
      [
       "Fault 05",
       "Output short circuited (or converter over-temperature)",
-      "Manual: 'Output short circuited or over temperature is detected by internal converter components.'",
-      "Manual: 'Check if wiring is connected well and remove abnormal load.'",
+      "The output is short-circuited, or an internal part has overheated.",
+      "Switch the loads off and look for a faulty appliance or wiring fault; if it stays, call the installer.",
       "Yes"
      ],
      [
       "Fault 06 / 58",
       "Output voltage too high / too low",
-      "Manual: 'Output abnormal (Inverter voltage below than 190Vac or is higher than 260Vac)'",
-      "Manual: '1. Reduce the connected load. 2. Return to repair center'",
+      "The output voltage is outside its normal band (below about 190 V or above about 260 V).",
+      "Reduce the load. If it repeats, the unit needs the service centre.",
       "Yes"
      ],
      [
       "Fault 07",
       "Overload time out",
-      "Manual: 'Overload error. The inverter is overload 110% and time is up.' Also: 'If PV input voltage is higher than specification, the output power will be derated... it will cause overload.'",
-      "Manual: 'Reduce the connected load by switching off some equipment.' / 'Reduce the number of PV modules in series or the connected load.'",
+      "The load has been above about 110% of the rating for too long. A PV voltage above the specification also reduces output power and can cause this.",
+      "Switch some appliances off; if the PV voltage is too high, the installer reduces the number of panels in series.",
       "Usually not"
      ],
      [
       "Fault 08 / 09 / 53 / 57",
       "Bus voltage too high / bus soft start failed / inverter soft start failed / current sensor failed",
-      "Manual: 'Internal components failed.'",
-      "Manual: 'Return to repair center.'",
+      "An internal component has failed.",
+      "The unit needs the service centre.",
       "Yes"
      ],
      [
       "Fault 51",
       "Over current or surge",
-      "Manual: 'Over current or surge.'",
-      "Manual: 'Restart the unit, if the error happens again, please return to repair center.'",
+      "An over-current or surge was detected.",
+      "Restart the unit; if the code comes back, it needs the service centre.",
       "Yes"
      ],
      [
       "Fault 52",
       "Bus voltage is too low",
-      "Manual: 'Bus voltage is too low.'",
-      "Manual: 'Restart the unit, if the error happens again, please return to repair center.'",
+      "The internal DC bus voltage is too low.",
+      "Restart the unit; if the code comes back, it needs the service centre.",
       "Yes"
      ],
      [
       "Fault 55",
       "Over DC voltage in AC output / output voltage unbalanced",
-      "Manual: 'Output voltage is unbalanced.'",
-      "Manual: 'Restart the unit, if the error happens again, please return to repair center.'",
+      "The output voltage is unbalanced.",
+      "Restart the unit; if the code comes back, it needs the service centre.",
       "Yes"
      ],
      [
       "Fault 59",
       "PV voltage is over limitation",
-      "Manual: 'PV input voltage is beyond the specification.'",
-      "Manual: 'Reduce the number of PV modules in series.' Installer task.",
+      "The PV input voltage is above the specification.",
+      "Installer work: reduce the number of panels in series.",
       "Yes"
      ],
      [
       "Warning 01",
       "Fan is locked when inverter is on (beep three times every second)",
-      "Warning table entry.",
-      "Check fan is free; if it persists call installer.",
+      "Fan warning.",
+      "Check that the fan turns freely; if it stays, call the installer.",
       "Usually not"
      ],
      [
       "Warning 02",
       "Over temperature (no beep)",
-      "Warning table entry.",
-      "Reduce load, improve ventilation.",
+      "Over-temperature warning.",
+      "Reduce the load and improve ventilation.",
       "Usually not"
      ],
      [
       "Warning 03",
       "Battery is over-charged (beep once every second)",
-      "Warning table entry.",
-      "Check charger/battery settings with installer.",
+      "Battery over-charge warning.",
+      "Have the installer check the charger and battery settings.",
       "Yes"
      ],
      [
       "Warning 04",
       "Low battery (beep once every second)",
-      "Warning table entry.",
-      "Recharge battery; reduce load.",
+      "Low battery warning.",
+      "Recharge the battery and reduce the load.",
       "Usually not"
      ],
      [
       "Warning 07",
       "Overload (beep once every 0.5 second)",
-      "Warning table entry.",
-      "Switch off some loads.",
+      "Overload warning.",
+      "Switch some loads off.",
       "Usually not"
      ],
      [
       "Warning 10",
       "Output power derating (beep twice every 3 seconds)",
-      "Warning table entry.",
-      "Reduce load; see Fault 07 note on high PV voltage derating.",
+      "Output power is being reduced (derating).",
+      "Reduce the load; see Fault 07 on derating from a high PV voltage.",
       "Usually not"
      ],
      [
       "Warning 15",
       "PV energy is low (beep twice every 3 seconds)",
-      "Warning table entry.",
-      "Normal in low sun; no action in manual.",
+      "Solar power is low.",
+      "Normal in low sun; no action needed.",
       "Usually not"
      ],
      [
       "Warning 16",
       "High AC input (>280VAC) during BUS soft start",
-      "Warning table entry.",
-      "Wait for utility voltage to normalise; if frequent, have installer check input voltage.",
+      "The grid (utility) voltage is out of range.",
+      "Wait for the grid voltage to settle; if it is frequent, the installer checks the input voltage.",
       "Usually not"
      ],
      [
       "Warning 32",
       "Communication failure between inverter and remote display panel",
-      "Warning table entry.",
-      "Check the display panel cable; installer if persistent.",
+      "The display panel is not communicating.",
+      "Check the display cable; if it stays, call the installer.",
       "Usually not"
      ],
      [
       "Warning (battery icon)",
       "Battery is not connected / Battery equalization",
-      "Warning table entries (no number; icon only). Troubleshooting: 'Battery is disconnected.' -> relay switches on and off repeatedly",
-      "Manual: 'Check if battery wires are connected well.'",
+      "The battery is disconnected; the relay may click on and off repeatedly.",
+      "Check that the battery cables are connected tightly (switch off first).",
       "Usually not"
      ]
     ]
@@ -2295,7 +2295,7 @@
       "name": "Where do these tables come from?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "From the manufacturers' own manuals and support pages, listed under Sources with a link for each brand and the date we last checked them. Rows quote the manual; the owner notes are our plain-English reading of that text."
+       "text": "From the manufacturers' own manuals and support pages, listed under Sources with a link for each brand and the date we last checked them. Each row is our own plain-English summary of the manual's entry, not a copy of it."
       }
      }
     ]
