@@ -74,7 +74,8 @@ final class Wattlyst_Site {
 			$path = (string) wp_parse_url( $uri, PHP_URL_PATH );
 			if ( '' !== $path && strtolower( $path ) !== $path ) {
 				$query = wp_parse_url( $uri, PHP_URL_QUERY );
-				wp_safe_redirect( strtolower( $path ) . ( $query ? '?' . $query : '' ), 301 );
+				// Absolute URL with the permalink slash, so /SOLAR/page lands on /solar/page/ in one hop (WL-208).
+				wp_safe_redirect( home_url( user_trailingslashit( strtolower( $path ) ) ) . ( $query ? '?' . $query : '' ), 301 );
 				exit;
 			}
 		}

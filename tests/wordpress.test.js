@@ -35,10 +35,10 @@ test('after a purge the cache is warmed one page at a time, home and hubs first 
   assert.match(pages, /add_action\( self::WARM, array\( \$this, 'warm' \) \)/);
   assert.match(pages, /foreach \( \$batch as \$url \) \{\s*wp_remote_get\(/, 'pages fetched in turn, never in parallel');
   assert.match(pages, /array\( 'home', 'pillar' \)/, 'home and hubs first');
-  assert.match(php('wattlyst-tools.php'), /wp_clear_scheduled_hook\( Wattlyst_Pages::WARM \)/);
+  assert.match(php('wattlyst-tools.php'), /wp_unschedule_hook\( Wattlyst_Pages::WARM \)/);
   const un = php('uninstall.php');
   assert.match(un, /wattlyst_warm_queue/);
-  assert.match(un, /wp_clear_scheduled_hook\( 'wattlyst_warm' \)/);
+  assert.match(un, /wp_unschedule_hook\( 'wattlyst_warm' \)/);
 });
 
 test('author archives, empty archives and feeds are 404; feed links removed (WL-37, WL-38)', () => {

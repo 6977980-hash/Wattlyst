@@ -1,6 +1,30 @@
 # Progress
 
-## Handoff for next phase (after 21 Oct audit fix Phase 6: phone layout and navigation) — written by the audit Phase 6 thread, 2026-10-21
+## Handoff for next phase (after 21 Oct audit fix Phase 7: technical SEO plumbing) — written by the audit Phase 7 thread, 2026-10-21
+
+Owner: every fix phase of the 21 Oct 2026 audit runs in its own new thread, only after the owner says to start it. Shared rules and phase notes: `/mnt/project-files/electricity-tool-hub/audit/2026-10-21/handoff/` (README, `phase-N-*.md`, `status.md`; Phases 1 to 7 ticked). Next is **Phase 8 (trust + AdSense readiness)**: read README, then only `phase-8-trust-adsense.md` and its rows in `audit/fix-list-2026-10-21.md`. After Phase 8 comes row 9 of status.md (H1/D10 ToU path), also only with the owner's yes. Plugin v0.8.29. Phase 7 changed PHP plumbing, the build, the upkeep report, content anchors and source URLs; no engine formula or figure moved.
+
+**What is where**
+- WL-208 lowercase redirect: `gate()` in `includes/class-wattlyst-site.php` (absolute URL via `home_url( user_trailingslashit() )`, query kept). The http://www two-hop is a Hostinger hPanel rule, not the plugin (owner item, unchanged).
+- WL-209 entities: `person()` + `personUrl()` in `tools/build.js` (Person `url` = About entry); the About people block (`'people'` in `renderTrust` blocks) prints `<li id="<person id>">`. Organization `areaServed`/`knowsLanguage` read `area_served`/`languages` in `data/site.json`.
+- WL-210 error-code headings: data `heading` per brand in `data/inverter-codes.json`; `codeTables()` builds the short caption and the `note` (name + models); `ref_table()` prints any table `note` under the H2 (`aria-describedby`).
+- WL-211 anchors: optional content key `anchor` in `content/pages/<ID>.json` (29 much-linked pages have one); the build checks it differs from the H1 and puts it in the manifest row; `related()` uses it at the bottom (`link_to( $r, true )`), the Next step box under the result keeps the H1. Test counts inbound anchors per page.
+- WL-212 outbound links: `outboundLinks()`, `linkFlags()`, `checkLinks()` in `tools/maintenance.js`; every report lists http links and hosts in `data/maintenance.json` `link_watch_hosts`; `node tools/maintenance.js --links` runs the quarterly network pass (one request a second, redirects not followed). The 21 Oct pass replaced every plain redirect with its final address in content/ and data/.
+- WL-213: `queue_warm()` in `includes/class-wattlyst-pages.php`, deactivation in `wattlyst-tools.php` and `uninstall.php` use `wp_unschedule_hook` (clears the batches that carry an argument).
+- Tests: `tests/technical-seo.test.js`.
+
+**Do not touch / watch**
+- A new much-linked page: give it an `anchor` if the WL-211 test fails; never set an anchor equal to the H1.
+- `checkLinks` must not follow redirects (it reports the new address); keep the one-second delay.
+- The LinkedIn URL in `data/site.json` lost its trailing slash (final address); keep it in sync if the owner edits it.
+
+**Open to-dos (from the 21 Oct link pass, need a Pakistani connection or the owner)**
+- "Check by hand": w11stop.com (403 bot wall, many price sources), powerhouseexpress.com.pk and surmawala.pk (429), profit.pakistantoday.com.pk, exideindustries.com, business-standard (403), lesco/gepco/hesco sites and two bill.pitc.com.pk pages (timeouts), several 503s (bill.pitc.com.pk, fesco, mepco, vt.edu extension page, Yamaha datasheets, Huawei manual PDF): likely blocking this egress, re-run `--links` from Pakistan.
+- Not replaced on purpose: the toolsfluent.com blog source now redirects to a tracker tool page (different content; competitor source already open), myadcenter.google.com (Google's own wording in the privacy policy).
+- One dead charger source (jsbl.com) was dropped from data/backup-prices.json; the 2.4 kVA UPS charger figure now rests on one listing (still marked engineer to confirm).
+- Everything open from the earlier handoffs below still stands.
+
+## Earlier handoff (after 21 Oct audit fix Phase 6: phone layout and navigation) — written by the audit Phase 6 thread, 2026-10-21
 
 Owner: every fix phase of the 21 Oct 2026 audit runs in its own new thread, only after the owner says to start it. Shared rules and phase notes: `/mnt/project-files/electricity-tool-hub/audit/2026-10-21/handoff/` (README, `phase-N-*.md`, `status.md`; Phases 1 to 6 ticked). Next is **Phase 7 (technical SEO)**: read README, then only `phase-7-technical-seo.md` and its rows in `audit/fix-list-2026-10-21.md`. Plugin v0.8.28. Phase 6 changed layout only (render PHP, CSS, two small browser files, table row labels in content); no engine formula or data value moved. WL-199 (Calculators menu) was not built: it still waits for the owner's yes on the mockups.
 
@@ -699,6 +723,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | 2026-10-21 | Audit 2026-10-21 fix Phase 4: solar, battery and wiring engine (WL-169 to 182, 230 to 232: on-grid vs hybrid inverter, sizes to buy, battery cards, build-time prices, hybrid starting string, pump string and drive, hybrid quote battery, roof area, cables to 120 mm² + DC message, PV cable EN 50618, DC current at cut-off, C-rate notice, 1 hp motor, appliance PF), plugin v0.8.26 | done: tests green, Engineer Reviewer PASS (second round), local WordPress browser check on 19 pages | #43 |
 | 2026-10-21 | Audit 2026-10-21 fix Phase 5: page text (WL-183 rough runtimes, WL-184 average month in text, WL-185 home saving labels, WL-233 lithium guide vs datasheet and fire safety, WL-234 outside sources on every page, WL-235 honest metas, WL-189 internal links, WL-188 tracker title, WL-190 lakh prices, WL-236 wrong statements, WL-192 slab rate, WL-193 index date, WL-194 peak-hours title, WL-195 llms.txt answers + home title, WL-196 installer term + MCB margin + N2 meta, WL-220 E3 label, WL-237 404 rule), plugin v0.8.27 | done: tests green | #44 |
 | 2026-10-21 | Audit 2026-10-21 fix Phase 6: phone layout and navigation (WL-198 Next step under the result, WL-238 embed result first + taller list iframe, WL-202 error-code count/jump/phone cards, WL-204 list calculators in two columns on desktop, WL-200 hub task groups, WL-239 table row labels, WL-205 small fixes: counts, 404, touch sizes, scroll cue, picker groups, select labels), plugin v0.8.28 | done: tests green | #45 |
+| 2026-10-21 | Audit 2026-10-21 fix Phase 7: technical SEO plumbing (WL-208 one-hop lowercase redirect, WL-209 Person url + Organization areaServed, WL-210 short error-code H2s, WL-211 varied Related anchors, WL-212 outbound-link check in the upkeep report + redirecting source links replaced, WL-213 warm-up cron cleared fully), plugin v0.8.29 | done: tests green | #46 |
 
 ## Owner to do
 - Audit Phase 4: one Hostinger redirect so http and www go straight to https://wattlyst.com (WL-40); HTML browser cache time of a few hours in LiteSpeed/Hostinger (WL-36); after deploy, open wp-admin once so the new build syncs and the cache is purged; before switching on the quote form, ask Hostinger which header carries the visitor IP and put it in data/site.json leads.client_ip_header (WL-64); 2FA for wp-admin.
