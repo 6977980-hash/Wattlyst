@@ -2848,7 +2848,7 @@
       "load_pct": 50,
       "can_run": true,
       "hours": 2.3502,
-      "stored_wh": 900.0
+      "stored_wh": 900
     },
     "tolerance": 0.001,
     "note": "PF 0.6 line-interactive default; 150x12x0.5x0.85/300; battery draw = load ÷ η + idle 30 W (full audit WL-120)"
@@ -2900,7 +2900,7 @@
     },
     "expected": {
       "hours": 5.76,
-      "stored_wh": 1152.0
+      "stored_wh": 1152
     },
     "tolerance": 0.001,
     "note": "Phase 3; battery draw = load ÷ η + idle 0 W (full audit WL-120)"
@@ -3651,7 +3651,7 @@
       "max_w": 4000,
       "load_pct": 75,
       "hours": 1.3485,
-      "stored_wh": 4800.0
+      "stored_wh": 4800
     },
     "tolerance": 0.001,
     "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): large; 200 x 48 x 0.5 x 0.85 = 4080 Wh; battery draw = load ÷ η + idle 30 W (full audit WL-120)"
@@ -5167,11 +5167,11 @@
       "load_w": 2000
     },
     "expected": {
-      "price": 398.3,
+      "price": 382.02,
       "hours": 1
     },
     "tolerance": 0.001,
-    "note": ""
+    "note": "Re-derived 2026-10-21 for the data refresh (WL-159 fuel price, WL-160 1.2 kVA UPS high price)."
   },
   {
     "calc": "panel_price",
@@ -6917,10 +6917,10 @@
       "backup_hours": 7300.8,
       "ups_kva": 1.2,
       "batteries": 3,
-      "ups_total": 604664.088,
+      "ups_total": 600664.588,
       "gen_kva": 2.5,
       "l_per_h": 0.488,
-      "gen_total": 1680692.688,
+      "gen_total": 1622690.461,
       "inverter_kw": 6,
       "lithium_packs": 1,
       "panels": 2,
@@ -6928,7 +6928,7 @@
       "cheapest": "hybrid solar"
     },
     "tolerance": 0.001,
-    "note": "Full audit 2026-10-15 Phase 2b: UPS rows labelled by their real VA (WL-97), the hybrid inverter must take the 51.2 V pack, so the 6 kW 48 V row (WL-98), 30.42-day months (WL-106); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b: UPS rows labelled by their real VA (WL-97), the hybrid inverter must take the 51.2 V pack, so the 6 kW 48 V row (WL-98), 30.42-day months (WL-106); recomputed from data/. Re-derived 2026-10-21 for the data refresh (WL-159 fuel price, WL-160 1.2 kVA UPS high price)."
   },
   {
     "calc": "backup_compare",
@@ -6941,13 +6941,13 @@
     },
     "expected": {
       "batteries": 1,
-      "ups_total": 212632.772,
-      "gen_total": 698951.922,
+      "ups_total": 208633.272,
+      "gen_total": 678508.514,
       "solar_total": 534758.75,
       "cheapest": "UPS"
     },
     "tolerance": 0.001,
-    "note": "Full audit 2026-10-15 Phase 2b: UPS rows labelled by their real VA (WL-97), the hybrid inverter must take the 51.2 V pack, so the 6 kW 48 V row (WL-98), 30.42-day months (WL-106); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b: UPS rows labelled by their real VA (WL-97), the hybrid inverter must take the 51.2 V pack, so the 6 kW 48 V row (WL-98), 30.42-day months (WL-106); recomputed from data/. Re-derived 2026-10-21 for the data refresh (WL-159 fuel price, WL-160 1.2 kVA UPS high price)."
   },
   {
     "calc": "backup_compare",
@@ -6964,12 +6964,12 @@
       "lithium_packs": 3,
       "panels": 5,
       "ups_total": 2076370.35,
-      "gen_total": 4900390.753,
+      "gen_total": 4715924.652,
       "solar_total": 1159793.75,
       "cheapest": "hybrid solar"
     },
     "tolerance": 0.001,
-    "note": "Full audit 2026-10-15 Phase 2b: UPS rows labelled by their real VA (WL-97), the hybrid inverter must take the 51.2 V pack, so the 6 kW 48 V row (WL-98), 30.42-day months (WL-106); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b: UPS rows labelled by their real VA (WL-97), the hybrid inverter must take the 51.2 V pack, so the 6 kW 48 V row (WL-98), 30.42-day months (WL-106); recomputed from data/. Re-derived 2026-10-21 for the data refresh (WL-159 fuel price, WL-160 1.2 kVA UPS high price)."
   },
   {
     "calc": "backup_compare",
@@ -6983,12 +6983,12 @@
     "expected": {
       "ups_repl": 3,
       "solar_repl": 1,
-      "ups_total": 1165079.175,
-      "gen_total": 3225435.377,
+      "ups_total": 1161079.675,
+      "gen_total": 3109430.921,
       "solar_total": 822267.5
     },
     "tolerance": 0.001,
-    "note": "Full audit 2026-10-15 Phase 2b: UPS rows labelled by their real VA (WL-97), the hybrid inverter must take the 51.2 V pack, so the 6 kW 48 V row (WL-98), 30.42-day months (WL-106); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b: UPS rows labelled by their real VA (WL-97), the hybrid inverter must take the 51.2 V pack, so the 6 kW 48 V row (WL-98), 30.42-day months (WL-106); recomputed from data/. Re-derived 2026-10-21 for the data refresh (WL-159 fuel price, WL-160 1.2 kVA UPS high price)."
   },
   {
     "calc": "backup_compare",
@@ -7138,13 +7138,13 @@
       "hybrid_repl_rs": 262500,
       "standby_option": "UPS 1.2 kVA + 2 tubular batteries",
       "standby_low_rs": 115239,
-      "standby_high_rs": 199499,
-      "standby_rs": 157369,
+      "standby_high_rs": 191500,
+      "standby_rs": 153369.5,
       "standby_running_rs": 1162,
       "standby_repl_rs": 339360,
       "combo_option": "On-grid solar 3.51 kW + UPS 1.2 kVA + 2 tubular batteries",
       "combo_low_rs": 478989,
-      "combo_high_rs": 801499,
+      "combo_high_rs": 793500,
       "combo_repl_rs": 339360,
       "combo_running_rs": 0,
       "decision_price": "Rs 578,750 to Rs 912,000",
@@ -7154,7 +7154,7 @@
       "years": 10
     },
     "tolerance": 0.01,
-    "note": "Full audit 2026-10-15 Phase 2b: cuts spread over the day (WL-93), generator credited with the grid units it supplies (WL-95), UPS labelled 1.2 kVA (WL-97), 30.42-day months (WL-106); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b: cuts spread over the day (WL-93), generator credited with the grid units it supplies (WL-95), UPS labelled 1.2 kVA (WL-97), 30.42-day months (WL-106); recomputed from data/. Re-derived 2026-10-21 for the data refresh (WL-159 fuel price, WL-160 1.2 kVA UPS high price)."
   },
   {
     "calc": "home_decision",
@@ -7192,12 +7192,12 @@
       "decision_key": "combo",
       "decision": "On-grid solar 3.51 kW + UPS 1.2 kVA + 1 tubular battery",
       "combo_low_rs": 438369,
-      "combo_high_rs": 728999,
+      "combo_high_rs": 721000,
       "combo_running_rs": 0,
       "hybrid_rs": 745375
     },
     "tolerance": 0.01,
-    "note": "Full audit 2026-10-15 Phase 2b: cuts spread over the day (WL-93), generator credited with the grid units it supplies (WL-95), UPS labelled 1.2 kVA (WL-97), 30.42-day months (WL-106); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b: cuts spread over the day (WL-93), generator credited with the grid units it supplies (WL-95), UPS labelled 1.2 kVA (WL-97), 30.42-day months (WL-106); recomputed from data/. Re-derived 2026-10-21 for the data refresh (WL-159 fuel price, WL-160 1.2 kVA UPS high price)."
   },
   {
     "calc": "home_decision",
@@ -7237,11 +7237,11 @@
       "decision": "UPS 1.2 kVA + 2 tubular batteries",
       "over_budget": false,
       "budget_gap_rs": 0,
-      "decision_rs": 157369,
+      "decision_rs": 153369.5,
       "budget_rs": 300000
     },
     "tolerance": 0.01,
-    "note": "Full audit 2026-10-15 Phase 2b: cuts spread over the day (WL-93), generator credited with the grid units it supplies (WL-95), UPS labelled 1.2 kVA (WL-97), 30.42-day months (WL-106); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b: cuts spread over the day (WL-93), generator credited with the grid units it supplies (WL-95), UPS labelled 1.2 kVA (WL-97), 30.42-day months (WL-106); recomputed from data/. Re-derived 2026-10-21 for the data refresh (WL-159 fuel price, WL-160 1.2 kVA UPS high price)."
   },
   {
     "calc": "home_decision",
@@ -7615,11 +7615,11 @@
       "hybrid_inverter_kw": 6.231,
       "hybrid_premium_rs": 18580.469,
       "combo_option": "On-grid solar 3.51 kW + Petrol generator 5 kVA",
-      "combo_running_rs": 91270.586,
+      "combo_running_rs": 87625.637,
       "combo_low_rs": 616250
     },
     "tolerance": 0.01,
-    "note": "Full audit 2026-10-15 Phase 2b: the backup load must fit in the list (WL-103), so a three-AC home. 3,000 x 1.25 = 3,750 W > 2.5 kVA x 0.8; 12 kWh / (0.9 x 0.9) = 14.8 kWh -> 3 packs; recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b: the backup load must fit in the list (WL-103), so a three-AC home. 3,000 x 1.25 = 3,750 W > 2.5 kVA x 0.8; 12 kWh / (0.9 x 0.9) = 14.8 kWh -> 3 packs; recomputed from data/. Re-derived 2026-10-21 for the data refresh (WL-159 fuel price, WL-160 1.2 kVA UPS high price)."
   },
   {
     "calc": "home_decision",
@@ -8170,11 +8170,11 @@
       "standby_option": "Petrol generator 2.5 kVA",
       "standby_saving_rs": 14011,
       "combo_saving_rs": 14011,
-      "combo_running_rs": 112600.384,
+      "combo_running_rs": 108511.703,
       "hybrid_saving_rs": 12095
     },
     "tolerance": 0.01,
-    "note": "Full audit 2026-10-15 WL-93: g = 1 - 24/24 = 0, so on-grid solar makes nothing; the hybrid uses its solar in the home but exports nothing; the UPS cannot refill with no grid, so the generator, credited with the 300 W x 24 h x 30.42 days of grid units it supplies (WL-95)."
+    "note": "Full audit 2026-10-15 WL-93: g = 1 - 24/24 = 0, so on-grid solar makes nothing; the hybrid uses its solar in the home but exports nothing; the UPS cannot refill with no grid, so the generator, credited with the 300 W x 24 h x 30.42 days of grid units it supplies (WL-95). Re-derived 2026-10-21 for the data refresh (WL-159 fuel price, WL-160 1.2 kVA UPS high price)."
   },
   {
     "calc": "home_decision",
@@ -8253,13 +8253,13 @@
     },
     "expected": {
       "standby_option": "Petrol generator 2.5 kVA",
-      "standby_running_rs": 70258.154,
+      "standby_running_rs": 67643.299,
       "standby_saving_rs": 11307,
-      "standby_net": "Rs 7,210,088 cost",
+      "standby_net": "Rs 6,896,306 cost",
       "backup_surge_w": 580
     },
     "tolerance": 0.01,
-    "note": "Full audit 2026-10-15 WL-95: credit = full_before - bill_total(units - 0.5 kW x 12 h x 30.42 days); running = petrol and oil a month."
+    "note": "Full audit 2026-10-15 WL-95: credit = full_before - bill_total(units - 0.5 kW x 12 h x 30.42 days); running = petrol and oil a month. Re-derived 2026-10-21 for the data refresh (WL-159 fuel price, WL-160 1.2 kVA UPS high price)."
   },
   {
     "calc": "home_decision",
@@ -9094,7 +9094,7 @@
       "worst_month": "January",
       "worst_month_kwh": 8.3051,
       "worst_short_kwh": 0,
-      "worst_short_pct": 0.0,
+      "worst_short_pct": 0,
       "months_short": 0
     },
     "tolerance": 0.001,
@@ -9317,7 +9317,7 @@
         },
         {
           "id": "custom",
-          "watts": 10000000000000.0
+          "watts": 10000000000000
         }
       ]
     },
@@ -9334,7 +9334,7 @@
       "loads": [
         {
           "id": "custom",
-          "watts": 10000000000000.0,
+          "watts": 10000000000000,
           "length": 10
         }
       ]

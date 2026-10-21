@@ -1,6 +1,31 @@
 # Progress
 
-## Handoff for next phase (after full-audit fix Phase 6: speed and hygiene) — written by the audit Phase 6 thread, 2026-10-16
+## Handoff for next phase (after 21 Oct audit fix Phase 1: correct data live and announced) — written by the audit Phase 1 thread, 2026-10-21
+
+Owner: every fix phase of the 21 Oct 2026 audit runs in its own new thread, only after the owner says to start it. Shared rules and phase notes: `/mnt/project-files/electricity-tool-hub/audit/2026-10-21/handoff/` (README, `phase-N-*.md`, `status.md`; Phase 1 ticked). Next is **Phase 2 (bill engine)**: read README, then only `phase-2-bill-engine.md` and its rows in `audit/fix-list-2026-10-21.md`. Plugin v0.8.23, PR #40.
+
+**What is where**
+- WL-156/158 FPA months: `data/bill-index.json` `months` (newest first; `fpa_verified` true only with a NEPRA PDF; `fpa_ke` = the source covers K-Electric). F14 reads `data.fpa_latest` (pre-fill, newest verified month) and `data.fpa_newest.lead` (answer opens with the newest month) from `loadInputs` in `tools/build.js`.
+- WL-160: `data/backup-prices.json` first UPS row (`sources_note` says why a source was dropped; `browserBackup` drops every `*_note`).
+- WL-159: `data/generator-fuel.json` `prices` (one `effective` ISO day per fuel; build adds `effective_text` for page text, C8 prints it). Upkeep report `tools/maintenance.js` `out.fuel` flags fuel older than `fuel_price_max_age_days` in `data/maintenance.json`.
+- WL-228: HAZECO sentences in `content/pages/F7.json`, `F9.json`, `bill-index.json` (FAQ). A HAZECO bill page is owner decision OW-7, not built.
+- WL-214: `when()` in `includes/class-wattlyst-render.php` feeds the byline and the "Last ..." line: "Reviewed" + `reviewed` only when `data/site.json` reviewer is `signed_off`, else "Updated" + `modified`. Schema `lastReviewed` only after sign-off (`schemaFor`).
+- WL-206: `generated/page-dates.json` (committed; never edit by hand) holds a hash of each built page and the day it last changed (`changedOn`, `PAGE_DATES` in `tools/build.js`). Page `modified` = newest of review day, change day and (hubs) children; manifest `lastmod`, schema `dateModified`, `article:modified_time` and the IndexNow batch use it. A content or data change gets the build day automatically; `WATTLYST_TODAY` pins it in tests.
+- WL-207: `HTML_CACHE` and `headers()` in `includes/class-wattlyst-site.php` (visitors only; WordPress's own no-cache wins).
+- Spec cases whose expected values come from refreshed prices were re-derived (notes say so). Tests: `tests/data-announce.test.js`.
+
+**Do not touch / watch**
+- Never hand-edit `generated/page-dates.json`; rebuilding is what moves a page's date. A build on a later day after a content change gives that later day, so always commit the rebuilt `generated/` with the change.
+- Do not mark an FPA month verified without the NEPRA PDF. The protected-FPA exemption (WL-157) is still in `engine/bill.js`: Phase 2.
+- Homepage JS budget unchanged by this phase (no browser JS changed).
+
+**Open to-dos**
+- Owner hPanel: HTML cache setting (LiteSpeed/Hostinger CDN browser cache was sending a week for the home page); the plugin now sends a short header, but a host rule can override it. Purge the CDN once after this deploy.
+- Fuel source is a news report of the Petroleum Division notification (`verified` false): switch to the OGRA PDF when OGRA lists it. Fuel needs a refresh about weekly now (upkeep report).
+- 1.2 kVA UPS row has two dealer sources; add a third dated dealer listing at the next price refresh.
+- Everything open from the earlier handoffs below still stands.
+
+## Earlier handoff (after full-audit fix Phase 6: speed and hygiene) — written by the audit Phase 6 thread, 2026-10-16
 
 Owner: every audit fix phase runs in its own thread and ends with this note. Phase plan: `/mnt/project-files/electricity-tool-hub/audit/fix-phases-2026-10-15.md` (all phases 1 to 6 ticked; the 15 Oct full audit is done). Next per that plan: a short read-only re-check of the P0/P1 items on the live site (no full re-audit unless the owner asks). Plugin v0.8.22, PR #38. Rules: `specs/seo-rules.md` (Core Web Vitals bullet: JS budget wording), spec cases at the end of `specs/calculator-test-cases.json` (third case per calculator).
 
@@ -541,6 +566,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | 2026-10-14 | Audit fix Phase 1, wiring safety (WL-01 DC voltage, WL-07 temperature and grouping derating, WL-08 three-phase ratings, WL-09 one Pakistani cable size rule, WL-10 AC power factor so W1 and E4 agree, WL-19 welder D curve, WL-24 PEC questions); W1 W2 W3 W5 E4 text updated | done: tests green, Engineer Reviewer pass, wiring pages checked on local WP | PR #8 |
 | 2026-10-14 | Phase 6: monetize and maintain: three manual AdSense units per tool page (off until approval), solar quote request form with private Solar leads inbox, email and retention cleanup (off until the owner switches it on), affiliate "Where to buy" box with rel=sponsored and disclosure (empty until a programme is joined), privacy and editorial policy sections, upkeep report tools/maintenance.js, monthly scheduled task, plugin v0.7.0 | done: tests green, Engineer Reviewer pass (no formula or calculator change), Lighthouse mobile 98-100 with the form on, form and ads checked on local WP | PR phase-6 |
 | 2026-10-14 | Phase 5: Wave 3, 24 pages live (table below); Pakistan Electricity Bill Index and Solar Price Tracker data pages (chart, CSV, Dataset schema, journalist summary) under the new /data/ hub; embeddable calculators (iframe + script, credit link, /embed-calculators/); live solar forecast (N6), generator fuel (C8), panel price (D9), mosque/shop solar (N13), battery wiring diagram (N11); off-page plan; plugin v0.6.0 | done: tests green, Engineer Reviewer must-fixes all fixed (notes in handoff), Lighthouse mobile 96-100 on new templates, checked in a headless browser on local WP | PR #6 |
+| 2026-10-21 | Audit 2026-10-21 fix Phase 1: correct data live and announced (WL-156 July FPA NEPRA-approved + K-Electric, WL-158 October FPA exact and F14 leads with newest month, WL-160 hijacked source removed, WL-159 fuel prices + upkeep age check, WL-228 HAZECO, WL-214 "Updated" byline, WL-206 lastmod from content changes, WL-207 short HTML cache), plugin v0.8.23 | done: tests green, CI + Lighthouse green, local WordPress checked | #40 |
 
 ## Owner to do
 - Audit Phase 4: one Hostinger redirect so http and www go straight to https://wattlyst.com (WL-40); HTML browser cache time of a few hours in LiteSpeed/Hostinger (WL-36); after deploy, open wp-admin once so the new build syncs and the cache is purged; before switching on the quote form, ask Hostinger which header carries the visitor IP and put it in data/site.json leads.client_ip_header (WL-64); 2FA for wp-admin.

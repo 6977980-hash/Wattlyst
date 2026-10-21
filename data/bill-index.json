@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "Wattlyst Pakistan Electricity Bill Index: every bill is computed by the Wattlyst bill engine from data/tariff-pk-2026.json (NEPRA SRO 279(I)/2026 A-1 domestic rates, uniform for ex-WAPDA DISCOs and K-Electric) plus the month's fuel price adjustment and quarterly adjustment below",
-  "checked": "2026-10-14",
+  "checked": "2026-10-21",
   "method": "For each billing month and units level: energy charge (protected: slab-wise; unprotected: all units at the rate of the slab reached) + fixed charge for the sanctioned load below + FC surcharge + QTA for the quarter + FPA for the month (not charged to protected consumers) + GST on the subtotal. Change = this month minus last month. One sanctioned load for every row so months compare like for like.",
   "status": "Add one month at the top at each monthly refresh (FPA notified by NEPRA for the month two months earlier). Keep old months: they are the index history. fpa_verified false = the rate is from a news report (pages mark the month \"(FPA reported)\"); fpa_ke = the month's FPA source also covers K-Electric (else its row leaves the FPA out).",
   "license": "CC BY 4.0: free to reuse with a link to the index page"
@@ -38,9 +38,9 @@
   {
    "month": "2026-10",
    "label": "October 2026",
-   "fpa_per_unit": 1.11,
+   "fpa_per_unit": 1.1086,
    "fpa_for": "August 2026",
-   "fpa_source": "Express Tribune, 8 October 2026: NEPRA notifies Rs 1.11 per unit fuel adjustment for August in October bills (ex-WAPDA DISCOs and K-Electric)",
+   "fpa_source": "Express Tribune, 8 October 2026: NEPRA allows Rs 1.11 (Rs 1.1086) per unit fuel adjustment for August in October bills (ex-WAPDA DISCOs and K-Electric); NEPRA's decision PDF not yet listed",
    "fpa_url": "https://tribune.com.pk/story/2633704/nepra-allows-rs111-per-unit-fuel-adjustment-in-october-billing",
    "fpa_verified": false,
    "fpa_ke": true,
@@ -49,12 +49,12 @@
   {
    "month": "2026-09",
    "label": "September 2026",
-   "fpa_per_unit": 2.5182,
+   "fpa_per_unit": 2.0581,
    "fpa_for": "July 2026",
-   "fpa_source": "NEPRA decision on the fuel charges adjustment for July 2026, ex-WAPDA DISCOs, SRO 1499(I)/2026",
+   "fpa_source": "NEPRA decision on the fuel charges adjustment for July 2026, SRO 1499(I)/2026: approved FCA (para 21), also applied to K-Electric (para 20)",
    "fpa_url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20MFPA%20FOR%20THE%20MONTH%20OF%20JULY%202026%20EX-WAPDA%20DISCOS%2004-09-2026%2018342-60.PDF",
    "fpa_verified": true,
-   "fpa_ke": false,
+   "fpa_ke": true,
    "qta_period": "2026-09..2026-11"
   }
  ]

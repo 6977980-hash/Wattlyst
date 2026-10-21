@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "Fuel curve fitted by Wattlyst from manufacturer run-time specifications (petrol) and the industry approximate diesel fuel consumption chart (diesel); fuel prices from news reports of the Petroleum Division notification",
-  "checked": "2026-10-14",
+  "checked": "2026-10-21",
   "method": "Fuel use in litres per hour = intercept x rated kW + slope x load kW (the straight-line fuel curve used by HOMER microgrid software: no-load fuel per rated kW plus marginal fuel per kWh). Rated kW = generator kVA x the generator power factor (data/defaults.json pf_generator). Petrol: each source point is litres per hour at quarter load and at rated load from tank size / run time; both generators were normalised per rated kW and averaged, then the line through the two averaged points gives the coefficients. Diesel: the line through the quarter-load and full-load points of the chart (the same coefficients fit every size row of the chart within a few percent). Small generators sold in Pakistan vary; a worn or open-frame generator burns more. Engineer to confirm.",
   "status": "Planning estimates, not a measured figure for any one generator. Fuel prices change every few days in Pakistan (short-period pricing since 2026); refresh monthly and let the user enter today's price.",
   "engineer_confirm": ["fuels", "fuels.petrol.open_frame_datasheets"]
@@ -45,12 +45,13 @@
   }
  },
  "prices": {
-  "petrol": {"rs_per_litre": 398.30, "effective": "2026-10-10 to 2026-10-12"},
-  "diesel": {"rs_per_litre": 396.24, "effective": "2026-10-10 to 2026-10-12"},
-  "source": "Gari.pk report of the Petroleum Division notification (petrol and high-speed diesel, 10 to 12 October 2026)",
-  "source_url": "https://www.gari.pk/news/petrol-price-update-new-rates-effective-from-october-10-5641/",
-  "checked": "2026-10-14",
+  "petrol": {"rs_per_litre": 382.02, "effective": "2026-10-21"},
+  "diesel": {"rs_per_litre": 389.80, "effective": "2026-10-21"},
+  "source": "Petroleum Division notification of 20 October 2026 (prices revised by OGRA, in force from 21 October 2026), as reported by 24 News HD",
+  "source_url": "https://www.24newshd.tv/20-Oct-2026/petrol-price-raised-88-paisa-diesel-53-paisa-per-litre",
+  "official_list_url": "https://www.ogra.org.pk/notified-petroleum-prices",
+  "checked": "2026-10-21",
   "verified": false,
-  "note": "Secondary source; prices are now revised every few days. Replace with the Petroleum Division / OGRA notification when fetched."
+  "note": "News report of the Petroleum Division notification (full audit 2026-10-21 WL-159). OGRA's notified-prices list (official_list_url) had not yet posted this notification on the checked date; set verified true once the figures are read from the OGRA or Petroleum Division PDF. Prices are revised every few days: tools/maintenance.js flags this block when 'effective' is older than data/maintenance.json fuel_price_max_age_days."
  }
 }

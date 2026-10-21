@@ -108,8 +108,16 @@ final class Wattlyst_Site {
 	/** Front-end responses (WP::send_headers). The /embed/ document sends its own set (embed_headers). */
 	public function headers( $headers ) {
 		unset( $headers['X-Pingback'] );
+		// Short HTML cache (WL-207): browsers re-check after a few minutes and a CDN keeps a copy at most an hour,
+		// so corrected numbers reach visitors soon after a deploy. WordPress's own no-cache (logged in, admin) wins.
+		if ( ! isset( $headers['Cache-Control'] ) && ! is_user_logged_in() ) {
+			$headers['Cache-Control'] = self::HTML_CACHE;
+		}
 		return array_merge( $headers, self::security_headers( false ) );
 	}
+
+	/** Cache-Control for front-end HTML (WL-207). LiteSpeed's purge on sync empties the server copy at once. */
+	const HTML_CACHE = 'public, max-age=300, s-maxage=3600';
 
 	/**
 	 * Security headers (WL-63). frame-ancestors / X-Frame-Options stop other sites framing normal pages

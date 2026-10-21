@@ -132,8 +132,8 @@ final class Wattlyst_Head {
 		foreach ( $og as $k => $v ) {
 			printf( '<meta property="%s" content="%s">' . "\n", esc_attr( $k ), esc_attr( $v ) );
 		}
-		if ( 'article' === $type && ! empty( $page['reviewed'] ) ) {
-			printf( '<meta property="article:modified_time" content="%s">' . "\n", esc_attr( $page['reviewed'] ) );
+		if ( 'article' === $type && ! empty( $page['modified'] ) ) {
+			printf( '<meta property="article:modified_time" content="%s">' . "\n", esc_attr( $page['modified'] ) );
 		}
 		$tw = array(
 			'twitter:card'        => 'summary_large_image',
