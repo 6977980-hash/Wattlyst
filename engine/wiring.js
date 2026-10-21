@@ -23,6 +23,7 @@ export const voltage_drop = calculator((i, d) => {
   const k = mode === 'ac3' ? Math.sqrt(3) : 1;
   // DC watts are an inverter's output: the battery also supplies its loss, as in designCurrent (WL-121).
   const eff = mode === 'dc' ? frac(i, 'inverter_eff', dflt(d, 'inverter_eff_hybrid')) : 1;
+  if (has(i, 'inverter_eff')) frac(i, 'inverter_eff'); // used only on DC, but a filled box is still checked (WL-223)
   const amps = has(i, 'amps') || !('watts' in i) ? pos(i, 'amps') : pos(i, 'watts') / (k * volts * pf * eff);
   const kv = mode === 'ac3' ? Math.sqrt(3) : 2;
   const drop_v = (kv * length_m * amps * rho) / area_mm2;
@@ -98,6 +99,7 @@ function designCurrent(i, d, t) {
   const pf = mode === 'dc' ? 1 : frac(i, 'pf', d?.defaults?.pf_by_load_type?.[load_type] || dflt(d, 'pf_mixed'));
   const k = mode === 'ac3' ? Math.sqrt(3) : 1;
   const eff = mode === 'dc' ? frac(i, 'inverter_eff', dflt(d, 'inverter_eff_hybrid')) : 1;
+  if (has(i, 'inverter_eff')) frac(i, 'inverter_eff'); // used only on DC, but a filled box is still checked (WL-223)
   const out = { mode, volts, pf, k, inverter_eff: eff };
   let watts;
   let ib;
@@ -120,7 +122,7 @@ function designCurrent(i, d, t) {
  * current for long periods) and the cable ampacity it needs: I_z ≥ max(I_b × margin, I_n).
  */
 function breakerFor(dc, i, d, t) {
-  const margin = num(i, 'margin', { def: dflt(d, 'margin'), min: 1 });
+  const margin = num(i, 'margin', { def: dflt(d, 'margin'), min: 1, max: dflt(d, 'margin_max') });
   const motor = (t.breaker_margin_load_types || []).includes(dc.load_type);
   const breaker_design_a = motor ? dc.ib_a * margin : dc.ib_a;
   // DC battery feeds above the largest MCB take a DC fuse (data/defaults.json standard_dc_fuse_a, WL-121).

@@ -38,8 +38,10 @@ body.separate-containers .inside-article{border-radius:18px;box-shadow:var(--wl-
 .wl-field label,.wl-label{display:block;font-weight:600;font-size:.95rem;margin-bottom:.35rem;color:var(--wl-ink)}
 .wl-field input[type=text],.wl-field input[type=tel],.wl-field input[type=search],.wl-field input[type=email],.wl-field select,.wl-field textarea{width:100%;min-height:48px;font-size:1rem;padding:.6rem .75rem;border:1px solid var(--wl-field);border-radius:10px;background:#fff;color:var(--wl-ink);box-sizing:border-box;transition:border-color .15s,box-shadow .15s;font-variant-numeric:tabular-nums}
 .wl-field input:hover,.wl-field select:hover,.wl-loads input:hover,.wl-loads select:hover{border-color:var(--wl-accent-2)}
-.wl-field input:focus,.wl-field select:focus,.wl-field textarea:focus{outline:3px solid var(--wl-focus);outline-offset:1px;border-color:var(--wl-accent-2)}
-.wl-field [aria-invalid=true]{border-color:#b00020;border-width:2px}
+.wl-field input:focus,.wl-field select:focus,.wl-field textarea:focus{outline:3px solid var(--wl-ink);outline-offset:2px;box-shadow:0 0 0 5px var(--wl-focus);border-color:var(--wl-accent-2)}
+.wl-field [aria-invalid=true],.wl-field [aria-invalid=true]:focus{border-color:#b00020;border-width:2px}
+.wl-field .wl-error{margin:.5rem 0 0}
+[data-lang=ur]~.wl-how-en h2::after{content:" (English)"}
 .wl-unit{font-weight:400;color:var(--wl-muted)}
 .wl-hint{font-size:.85rem;line-height:1.5;color:var(--wl-muted);margin:.35rem 0 0}
 .wl-check{display:flex;flex-wrap:wrap;gap:.25rem .5rem;align-items:center}.wl-field.wl-check .wl-hint{flex-basis:100%;margin-top:0}
@@ -54,7 +56,7 @@ body.separate-containers .inside-article{border-radius:18px;box-shadow:var(--wl-
 .wl-btn:hover{transform:translateY(-1px);box-shadow:0 12px 22px -12px rgba(11,61,46,.8)}
 .wl-btn:active{transform:none}
 /* Keyboard focus: dark ring outside a yellow band, visible on the green button and on white or tinted backgrounds (audit WL-59). */
-.wl-btn:focus-visible,.wl-btn-secondary:focus-visible,.wl-table-wrap:focus-visible,.wl-advanced summary:focus-visible,.wl-embed summary:focus-visible,.wl-page a:focus-visible,.wl-footer a:focus-visible{outline:3px solid var(--wl-ink);outline-offset:2px;box-shadow:0 0 0 2px var(--wl-focus)}
+.wl-btn:focus-visible,.wl-btn-secondary:focus-visible,.wl-table-wrap:focus-visible,.wl-advanced summary:focus-visible,.wl-embed summary:focus-visible,.wl-page a:focus-visible,.wl-footer a:focus-visible,.main-navigation a:focus-visible{outline:3px solid var(--wl-ink);outline-offset:2px;box-shadow:0 0 0 2px var(--wl-focus)}
 .wl-error{margin:1rem 0 0;padding:.8rem 1rem;border-left:4px solid #b00020;border-radius:10px;background:#fff5f6;color:#7a0016;font-weight:600}
 /* A notice on a valid result (size above the standard list, low price confidence, typical day shown) is advice, not an error (audit WL-54). */
 .wl-notice{border-left-color:#b25e00;background:#fff8e6;color:#5c3500;font-weight:500}
@@ -307,4 +309,4 @@ body .wl-404-links a:hover{border-color:var(--wl-accent-2);background:var(--wl-b
 }
 /* Fields in one row line up: labels sit at the bottom of a shared label row, so the inputs share one line
    even when one label wraps, and the hints start under them (subgrid; older browsers keep the plain grid). */
-@supports (grid-template-rows:subgrid){.wl-fields{row-gap:0}.wl-fields>.wl-field{padding-bottom:1rem}.wl-fields>.wl-check{grid-row:span 3;align-self:start}.wl-fields>.wl-field:not(.wl-check):not(.wl-field-loads){grid-row:span 3;display:grid;grid-template-rows:subgrid;row-gap:0}.wl-fields>.wl-field>label{align-self:end}.wl-fields>.wl-field>.wl-hint{align-self:start}}
+@supports (grid-template-rows:subgrid){.wl-fields{row-gap:0}.wl-fields>.wl-field{padding-bottom:1rem}.wl-fields>.wl-check{grid-row:span 3;align-self:start}.wl-fields>.wl-field:not(.wl-check):not(.wl-field-loads){grid-row:span 3;display:grid;grid-template-rows:subgrid;row-gap:0}.wl-fields>.wl-field:not(.wl-check):not(.wl-field-loads):has(>.wl-error){grid-row:span 4}.wl-fields>.wl-field>label{align-self:end}.wl-fields>.wl-field>.wl-hint{align-self:start}}

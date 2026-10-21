@@ -22,6 +22,8 @@ function chargeEffFor(chemistry, i, d) {
 function drawFor(i, d) {
   const inverter_eff = frac(i, 'inverter_eff', dflt(d, 'inverter_eff_ups'));
   const load_w = pos(i, 'load_w', undefined, 'load_must_be_positive');
+  // A home-scale ceiling: a bigger number is a unit mistake, not a battery bank (WL-224).
+  if (load_w > dflt(d, 'load_w_max')) throw new CalcError('load_w_too_large', 'load_w', dflt(d, 'load_w_max'));
   const idle_w = inverter_eff < 1 ? (has(i, 'idle_w') ? nonneg(i, 'idle_w') : appliance(d, 'ups-idle').running_w) : 0;
   return { inverter_eff, load_w, idle_w, battery_w: load_w / inverter_eff + idle_w };
 }

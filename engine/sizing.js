@@ -32,7 +32,7 @@ export function loadRows(loads, d) {
   try {
     return loads.map((row, idx) => rowOf(row, idx, d));
   } catch (e) {
-    if (e instanceof CalcError) throw new CalcError(e.code, 'loads'); // the UI points at the list, not a field name
+    if (e instanceof CalcError) throw new CalcError(e.code, 'loads', e.limit); // the UI points at the list, not a field name
     throw e;
   }
 }
@@ -42,6 +42,7 @@ function rowOf(row, idx, d) {
     const id = typeof row?.id === 'string' ? row.id.trim() : '';
     const item = id && id !== 'custom' ? appliance(d, id, 'loads') : null;
     const qty = num(row, 'qty', { def: 1, min: 0, code: `load_${idx}_qty_invalid` });
+    if (!Number.isInteger(qty)) throw new CalcError(`load_${idx}_qty_invalid`, 'loads'); // 2.5 fans is not a count (WL-227)
     let run;
     if (has(row, 'run') && !has(row, 'watts')) run = num(row, 'run', { min: 0, code: `load_${idx}_run_invalid` });
     else if (has(row, 'watts') || !item) run = num(row, 'watts', { min: 0, code: item || has(row, 'watts') ? `load_${idx}_watts_invalid` : `load_${idx}_watts_required` });
@@ -60,7 +61,7 @@ function rowOf(row, idx, d) {
 export const inverter_size = calculator((i, d) => {
   const rows = loadRows(i.loads, d);
   const { running_w, surge_w } = sumLoads(rows);
-  const margin = num(i, 'margin', { def: dflt(d, 'margin'), min: 1 });
+  const margin = num(i, 'margin', { def: dflt(d, 'margin'), min: 1, max: dflt(d, 'margin_max') });
   const pf = frac(i, 'pf', dflt(d, 'pf_mixed'));
   const continuous_w = running_w * margin;
   return { appliances: rows.length, items: rows.reduce((t, r) => t + r.qty, 0), running_w, surge_w, margin, pf, continuous_w, kva: continuous_w / pf / 1000 };
@@ -69,7 +70,7 @@ export const inverter_size = calculator((i, d) => {
 /** Generator: kVA = max(P_run × margin, P_surge) / PF / 1000. PF 0.8 nameplate convention; next standard size from data/defaults.json. */
 function generatorFor(loads, i, d) {
   const { running_w, surge_w } = sumLoads(loads);
-  const margin = num(i, 'margin', { def: dflt(d, 'margin'), min: 1 });
+  const margin = num(i, 'margin', { def: dflt(d, 'margin'), min: 1, max: dflt(d, 'margin_max') });
   const pf = frac(i, 'pf', dflt(d, 'pf_generator'));
   const sized_w = Math.max(running_w * margin, surge_w);
   const recommended_kva = sized_w / pf / 1000;
@@ -91,7 +92,7 @@ export const generator_size = calculator((i, d) => generatorFor(loadRows(i.loads
  */
 export const generator_capacity = calculator((i, d) => {
   const kva = pos(i, 'kva');
-  const margin = num(i, 'margin', { def: dflt(d, 'margin'), min: 1 });
+  const margin = num(i, 'margin', { def: dflt(d, 'margin'), min: 1, max: dflt(d, 'margin_max') });
   const pf = frac(i, 'pf', dflt(d, 'pf_generator'));
   const capacity_w = kva * 1000 * pf;
   const out = { kva, pf, margin, capacity_w, max_running_w: capacity_w / margin, max_start_w: capacity_w };

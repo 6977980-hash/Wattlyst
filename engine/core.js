@@ -1,10 +1,11 @@
 // Shared helpers for every calculator. Pure: no DOM, no WordPress, no globals.
 
 export class CalcError extends Error {
-  constructor(code, field) {
+  constructor(code, field, limit) {
     super(code);
     this.code = code;
     this.field = field;
+    this.limit = limit; // the bound an input broke, printed in its message (WL-226)
   }
 }
 
@@ -38,8 +39,8 @@ export function num(inputs, key, opts = {}) {
   const all = /_(invalid|out_of_range)$/.test(opts.code || '');
   if (!isNum(v)) throw new CalcError(all ? opts.code : `${key}_invalid`, key);
   if (opts.gt !== undefined && !(v > opts.gt)) throw new CalcError(opts.code || `${key}_must_be_positive`, key);
-  if (opts.min !== undefined && v < opts.min) throw new CalcError(opts.code || `${key}_too_small`, key);
-  if (opts.max !== undefined && v > opts.max) throw new CalcError(opts.code || `${key}_too_large`, key);
+  if (v < opts.min) throw new CalcError(opts.code || `${key}_too_small`, key, opts.min);
+  if (v > opts.max) throw new CalcError(opts.code || `${key}_too_large`, key, opts.max);
   if (Math.abs(v) > MAX_INPUT) throw new CalcError(all ? opts.code : `${key}_too_large`, key);
   return v;
 }
@@ -97,10 +98,13 @@ export function calculator(fn, { allowNegative = [] } = {}) {
   const wrapped = (inputs = {}, data = {}) => {
     try {
       const out = fn(inputs, data);
+      // A listed appliance with a blank watts, quantity or hours box was worked out with its typical value: the
+      // result says so (formulas.md E, "Blank boxes"; audit 2026-10-21 WL-221).
+      if (Array.isArray(inputs.loads) && inputs.loads.some((r) => r?.id && r.id != 'custom' && ['watts', 'qty', 'hours'].some((k) => k in r && !has(r, k)))) out.typical_used = true;
       assertFinite(out, '', allowNegative);
       return { ok: true, ...out };
     } catch (e) {
-      if (e instanceof CalcError) return { ok: false, error: e.code, field: e.field };
+      if (e instanceof CalcError) return { ok: false, error: e.code, field: e.field, limit: e.limit };
       return { ok: false, error: 'internal_error' };
     }
   };

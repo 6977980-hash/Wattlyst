@@ -8,7 +8,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { data, root } from './load-data.js';
 import { calculators as C } from '../engine/index.js';
-import { errorMessage, noticeCode } from '../engine/messages.js';
+import { errorMessage, noticeCode } from '../engine/message-text.js';
 import { fmt } from '../engine/format.js';
 import { inverterAt } from '../engine/prices.js';
 const J = (p) => JSON.parse(readFileSync(join(root, p), 'utf8'));

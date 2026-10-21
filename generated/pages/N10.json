@@ -37,7 +37,7 @@
    "url": "/load/inverter-ac-payback-calculator/"
   }
  ],
- "modified": "2026-10-14",
+ "modified": "2026-10-21",
  "content": {
   "intro": "",
   "sections": [
@@ -176,6 +176,7 @@
      "key": "payback_months",
      "label": "Calendar months to pay back the extra price",
      "spec": "1",
+     "label_ur": "Izafi qeemat wapas aane mein mahine",
      "value": "24.9"
     },
     {
@@ -196,24 +197,28 @@
      "key": "units_noninv",
      "label": "Non-inverter AC units a year",
      "spec": "int",
+     "label_ur": "Non-inverter AC ke saalana units",
      "value": "1,728"
     },
     {
      "key": "rs_noninv",
      "label": "Non-inverter AC energy cost a year",
      "spec": "rs",
+     "label_ur": "Non-inverter AC ka saalana bijli kharcha",
      "value": "Rs 63,003"
     },
     {
      "key": "units_inv",
      "label": "Inverter AC units a year",
      "spec": "int",
+     "label_ur": "Inverter AC ke saalana units",
      "value": "1,200"
     },
     {
      "key": "rs_inv",
      "label": "Inverter AC energy cost a year",
      "spec": "rs",
+     "label_ur": "Inverter AC ka saalana bijli kharcha",
      "value": "Rs 43,752"
     }
    ],
@@ -223,6 +228,21 @@
    },
    "submit": "Calculate",
    "notice": "",
+   "msg": {
+    "load_must_be_positive": "Enter a load greater than 0 watts.",
+    "loads_required": "Add at least one appliance.",
+    "inverter_ac_must_use_less": "The inverter AC must use less power than the non-inverter AC for a payback to exist.",
+    "inverter_ac_no_payback": "At these figures the saving is too small to pay back the extra price within the working life of an air conditioner. Check the hours a year, the tariff and both power figures.",
+    "appliance_unknown": "Pick an appliance from the list, or choose Custom and enter its watts.",
+    "other_start_below_run": "Starting watts of the other loads cannot be lower than their running watts.",
+    "above_standard_sizes": "This is above the largest standard size we list. Split the array or circuit into two, or ask a licensed electrician or engineer; the sizes shown are the calculated minimums.",
+    "generator_above_standard_sizes": "This is above the largest generator size we list. Use two generators on separate circuits or a larger industrial set, and ask a licensed electrician; the size shown is the calculated minimum.",
+    "forecast_unavailable": "The live forecast is not available right now, so a typical day is shown. Try again later.",
+    "hours_year_invalid": "Hours a year must be above 0 and at most 8,760.",
+    "duty_invalid": "Compressor on-time must be a share from 0 to 1, e.g. 0.8.",
+    "typical_used": "Blank boxes in your list use the typical value for that appliance (its listed watts and hours a day, quantity 1). Type your own numbers for an exact result.",
+    "internal_non_finite": "These numbers are outside a realistic range. Please check your inputs."
+   },
    "data_checked": [
     {
      "label": "Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)",
@@ -364,7 +384,7 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/load/inverter-ac-payback-calculator/#breadcrumb"
     },
-    "dateModified": "2026-10-14",
+    "dateModified": "2026-10-21",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }

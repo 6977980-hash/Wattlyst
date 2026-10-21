@@ -123,7 +123,7 @@ export const panel_price = calculator((i, d) => {
   const p = d?.solar_prices?.panel_rs_per_w;
   if (!(p?.low > 0) || !(p?.high >= p.low)) throw new CalcError('price_data_missing', 'panel_w');
   const panel_w = pos(i, 'panel_w', dflt(d, 'panel_w'));
-  const panels = num(i, 'panels', { def: 1, min: 1 });
+  const panels = num(i, 'panels', { min: 1 }); // blank is an error, not one panel (WL-221)
   if (!Number.isInteger(panels)) throw new CalcError('panels_must_be_whole', 'panels');
   const kw = (panel_w * panels) / 1000;
   return { panel_w, panels, kw, rs_per_w_low: p.low, rs_per_w_high: p.high, panel_low_rs: panel_w * p.low, panel_high_rs: panel_w * p.high, total_low_rs: panel_w * panels * p.low, total_high_rs: panel_w * panels * p.high };

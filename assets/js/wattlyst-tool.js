@@ -18,8 +18,6 @@ async function init(form) {
   const extra = () => (x ||= import(`./wattlyst-extra.js${q}`));
   const calc = mod[cfg.calc];
   if (typeof calc !== 'function') return;
-  const labels = Object.fromEntries(cfg.fields.map((f) => [f.name, f.label.replace(/^[A-Z](?=[a-z])/, (c) => c.toLowerCase())]));
-  const choices = cfg.fields.filter((f) => f.options).map((f) => f.name);
   const errorEl = form.querySelector('.wl-error');
   const results = form.querySelector('.wl-results');
   const howEl = form.parentElement.querySelector('[data-wl-how]');
@@ -71,8 +69,10 @@ async function init(form) {
       const ids = (n.getAttribute('aria-describedby') || '').split(' ').filter((x) => x && x !== errorEl.id);
       if (ids.length) n.setAttribute('aria-describedby', ids.join(' ')); else n.removeAttribute('aria-describedby');
     });
+    // The message box sits above the results; an error on Calculate moves it under the wrong field, so it is seen on a phone (WL-197).
+    results.before(errorEl);
     if (!out.ok) {
-      say(errorMessage(out.error, labels, choices), true);
+      say(errorMessage(out.error, { fields: cfg.fields, texts: cfg.msg, limit: out.limit }), true);
       results.hidden = true;
       if (howEl) howEl.hidden = true;
       // Nothing from the last good result stays on screen or in a shared link (audit WL-30).
@@ -85,7 +85,15 @@ async function init(form) {
         if (adv) adv.open = true; // a field under "Advanced settings" must be visible before it takes focus
         bad.setAttribute('aria-invalid', 'true');
         bad.setAttribute('aria-describedby', `${bad.getAttribute('aria-describedby') || ''} ${errorEl.id}`.trim());
-        if (pushState) bad.focus();
+        // Only on Calculate or a pick: moving it when a typed field loses focus would shift the button under the
+        // pointer and swallow the click (WL-90).
+        if (pushState) {
+          // In an appliance list it goes right under the table, not under the hint and buttons.
+          const box = bad.closest('.wl-field');
+          const table = box?.querySelector('.wl-table-wrap');
+          if (table) table.after(errorEl); else box?.append(errorEl);
+          bad.focus();
+        }
       }
       return;
     }
@@ -94,7 +102,7 @@ async function init(form) {
     if (diagram) diagram.hidden = false;
     // Warning flags (size above the standard list, solar above the sanctioned load) print a notice, not a blank.
     const notice = noticeCode(out) || (liveFailed && out.source === 'typical' ? 'forecast_unavailable' : '');
-    say(notice ? errorMessage(notice) : '');
+    say(notice ? errorMessage(notice, { texts: cfg.msg }) : '');
     for (const o of cfg.outputs) {
       const node = results.querySelector(`[data-out="${o.key}"] .wl-val`);
       if (!node) continue;

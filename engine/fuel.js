@@ -26,6 +26,8 @@ export const generator_fuel = calculator((i, d) => {
     l_per_h, l_per_day: l_per_h * hours, l_per_month: l_per_h * hours * days,
     rs_per_h: l_per_h * price, rs_per_day: l_per_h * hours * price, rs_per_month: l_per_h * hours * days * price,
   };
-  if (load_kw > 0) Object.assign(out, { l_per_kwh: l_per_h / load_kw, rs_per_unit: (l_per_h * price) / load_kw });
+  // Per unit only from a minimum share of the rating up: near zero load the idle fuel makes it meaningless (WL-224).
+  if (out.load_pct >= dflt(d, 'fuel_per_unit_min_load_pct') - 1e-9) Object.assign(out, { l_per_kwh: l_per_h / load_kw, rs_per_unit: (l_per_h * price) / load_kw });
+  else out.per_unit_hidden = true; // the page says why the per-unit card is gone
   return out;
 });

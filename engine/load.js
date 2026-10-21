@@ -20,6 +20,8 @@ export const ac_units = calculator((i, d) => {
     Object.assign(out, { ac: String(i.ac).trim(), ac_name: ac.name, ac_rated_w: ac.running_w });
     // The planning range of the average draw, where the data gives one (formulas.md E, WL-146).
     if (ac.avg_w_range) Object.assign(out, { avg_kw_low: ac.avg_w_range[0] / 1000, avg_kw_high: ac.avg_w_range[1] / 1000 });
+    // The average-draw box is used only for Custom; a filled one is still checked, not silently ignored (WL-223).
+    if (has(i, 'avg_kw')) pos(i, 'avg_kw');
   } else {
     avg_kw = pos(i, 'avg_kw');
   }

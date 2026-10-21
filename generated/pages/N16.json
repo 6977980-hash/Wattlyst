@@ -324,42 +324,49 @@
      "key": "extra_rs",
      "label": "Extra on your bill a month",
      "spec": "rs",
+     "label_ur": "Mahana bill mein izafa",
      "value": "Rs 18,536"
     },
     {
      "key": "after_rs",
      "label": "Bill with the AC",
      "spec": "rs",
+     "label_ur": "AC ke saath bill",
      "value": "Rs 22,511"
     },
     {
      "key": "before_rs",
      "label": "Bill without the AC",
      "spec": "rs",
+     "label_ur": "AC ke baghair bill",
      "value": "Rs 3,975"
     },
     {
      "key": "ac_units",
      "label": "AC units a month",
      "spec": "int",
+     "label_ur": "AC ke mahana units",
      "value": "243"
     },
     {
      "key": "rs_per_ac_unit",
      "label": "Real cost of each AC unit",
      "spec": "rs2",
+     "label_ur": "AC ke har unit ki asal qeemat",
      "value": "Rs 76.17"
     },
     {
      "key": "protected_lost",
      "label": "Protected status lost",
      "spec": "yesno",
+     "label_ur": "Protected status khatam",
      "value": "Yes"
     },
     {
      "key": "lock_extra_rs",
      "label": "Penalty on the next bills without the AC",
      "spec": "rs",
+     "label_ur": "AC ke baghair agle bills par jurmana",
      "value": "Rs 22,014"
     }
    ],
@@ -369,6 +376,26 @@
    },
    "submit": "Calculate",
    "notice": "With the AC your monthly total goes over the protected limit, so this bill and the bills of the following six months are charged at unprotected rates. Fewer AC hours may keep you protected.",
+   "msg": {
+    "load_must_be_positive": "Enter a load greater than 0 watts.",
+    "loads_required": "Add at least one appliance.",
+    "inverter_ac_must_use_less": "The inverter AC must use less power than the non-inverter AC for a payback to exist.",
+    "inverter_ac_no_payback": "At these figures the saving is too small to pay back the extra price within the working life of an air conditioner. Check the hours a year, the tariff and both power figures.",
+    "tariff_data_missing": "Tariff data could not be loaded. Please refresh the page.",
+    "tou_required_at_5kw": "Connections of 5 kW or more use a Time-of-Use meter: see the ToU bill link under Sanctioned load.",
+    "ac_protected_lost": "With the AC your monthly total goes over the protected limit, so this bill and the bills of the following six months are charged at unprotected rates. Fewer AC hours may keep you protected.",
+    "ac_above_sanctioned": "This AC alone is above your sanctioned load: apply for a higher one before installing it.",
+    "period_unknown": "We do not have the QTA rate for that quarter. Enter the QTA from your bill.",
+    "appliance_unknown": "Pick an appliance from the list, or choose Custom and enter its watts.",
+    "other_start_below_run": "Starting watts of the other loads cannot be lower than their running watts.",
+    "above_standard_sizes": "This is above the largest standard size we list. Split the array or circuit into two, or ask a licensed electrician or engineer; the sizes shown are the calculated minimums.",
+    "generator_above_standard_sizes": "This is above the largest generator size we list. Use two generators on separate circuits or a larger industrial set, and ask a licensed electrician; the size shown is the calculated minimum.",
+    "forecast_unavailable": "The live forecast is not available right now, so a typical day is shown. Try again later.",
+    "hours_year_invalid": "Hours a year must be above 0 and at most 8,760.",
+    "duty_invalid": "Compressor on-time must be a share from 0 to 1, e.g. 0.8.",
+    "typical_used": "Blank boxes in your list use the typical value for that appliance (its listed watts and hours a day, quantity 1). Type your own numbers for an exact result.",
+    "internal_non_finite": "These numbers are outside a realistic range. Please check your inputs."
+   },
    "data_checked": [
     {
      "label": "Pakistan electricity tariff (NEPRA notification)",

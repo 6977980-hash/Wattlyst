@@ -36,7 +36,7 @@
    "url": "/converters/3-phase-current-calculator/"
   }
  ],
- "modified": "2026-10-14",
+ "modified": "2026-10-21",
  "content": {
   "intro": "",
   "sections": [
@@ -168,7 +168,7 @@
      "label": "Line current",
      "spec": "1",
      "unit": "A",
-     "label_ur": "Line current",
+     "label_ur": "Line ka current",
      "value": "27.1"
     }
    ],
@@ -178,6 +178,14 @@
    },
    "submit": "Calculate",
    "notice": "",
+   "msg": {
+    "loads_required": "Add at least one appliance.",
+    "appliance_unknown": "Pick an appliance from the list, or choose Custom and enter its watts.",
+    "forecast_unavailable": "The live forecast is not available right now, so a typical day is shown. Try again later.",
+    "volts_required_dc": "For DC, enter the battery or system voltage; there is no standard DC voltage to assume.",
+    "typical_used": "Blank boxes in your list use the typical value for that appliance (its listed watts and hours a day, quantity 1). Type your own numbers for an exact result.",
+    "internal_non_finite": "These numbers are outside a realistic range. Please check your inputs."
+   },
    "data_checked": []
   },
   "examples": [
@@ -292,7 +300,7 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/converters/3-phase-current-calculator/#breadcrumb"
     },
-    "dateModified": "2026-10-14",
+    "dateModified": "2026-10-21",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }

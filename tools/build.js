@@ -13,7 +13,7 @@ import { createHash } from 'node:crypto';
 import { billIndex, solarTracker, embedList } from './lib/datasets.js';
 import { adsConfig, leadsConfig, affiliatesByPage } from './lib/monetize.js';
 import { render, fmt, placeholders, isSpec, lookup } from '../engine/format.js';
-import { errorMessage, noticeCode } from '../engine/messages.js';
+import { errorMessage, noticeCode, EXACT, NOTICES } from '../engine/message-text.js';
 import { marketRs, roughHours } from '../engine/approx.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -25,6 +25,24 @@ const ENGINE_MODULES = ['conversions', 'battery', 'sizing', 'solar', 'bill', 'lo
 const MODULE_DATA = { bill: ['tariff'], solar: ['cities'], wiring: ['cables'], planner: ['tariff', 'cities'], prices: ['solar_prices'], forecast: ['cities'], acbill: ['tariff'], sanction: ['cables'], seasonal: ['cities'], offgrid: ['cities'], circuits: ['cables'], backup: ['cities', 'solar_prices', 'generator_fuel', 'component_prices', 'backup_prices'], decision: ['tariff', 'cities', 'solar_prices', 'generator_fuel', 'component_prices', 'backup_prices'] };
 /** Extra data a single calculator needs (shipped only on its page). */
 const CALC_DATA = { generator_fuel: ['generator_fuel'] };
+
+// WL-226: the browser gets only the exact-code message texts its page can show. A code is kept when its name appears
+// in the page module's import chain or the tool script (a literal code or a notice flag), or when it is a generic
+// code (<input>_required ...) for an input name that chain reads. A superset is harmless; a missing text would fall
+// back to the generic message, which tests/messages.test.js rules out for every error the calculators produce.
+const GENERIC_CODE = /^(\w+?)_(required|invalid|must_be_positive|too_small|too_large|out_of_range)$/;
+function pageTexts(module) {
+  const seen = new Set();
+  const walk = (f) => { if (seen.has(f)) return; seen.add(f); for (const d of staticImports(read(`engine/${f}`))) walk(d.replace('./', '')); };
+  walk(`${module}.js`);
+  const src = [...seen].map((f) => read(`engine/${f}`)).join('\n') + read('assets/js/wattlyst-tool.js');
+  const mapped = Object.entries(NOTICES).filter(([k, v]) => v !== 1 && src.includes(k)).map(([, v]) => v);
+  if (src.includes('above_standard_sizes')) mapped.push('above_standard_sizes', 'generator_above_standard_sizes'); // noticeCode picks one
+  return Object.fromEntries(Object.entries(EXACT).filter(([code]) => {
+    const g = GENERIC_CODE.exec(code);
+    return src.includes(code) || mapped.includes(code) || (g && [`'${g[1]}'`, `"${g[1]}"`].some((q) => src.includes(q)));
+  }));
+}
 /** Appliance fields the browser engine and the loads picker need. */
 const APPLIANCE_KEYS = ['name', 'running_w', 'starting_w', 'typical_hours_per_day', 'avg_w', 'avg_w_range', 'load_type'];
 
@@ -257,13 +275,14 @@ function buildContent(c, ctx) {
       outputs: (c.outputs || []).map((o) => {
         if (o.spec && !isSpec(o.spec)) fail(`${c.id}: output ${o.key} uses unknown format ${o.spec}`);
         const v = result[o.key];
-        // An optional result (N1 spike without last year's units, the next slab above the top band) may be absent: its card starts hidden.
-        if (o.optional && v === undefined) return { ...o, value: '' };
-        if (typeof v !== 'number' && typeof v !== 'string' && typeof v !== 'boolean') fail(`${c.id}: output ${o.key} missing from ${c.calc}`);
-        if (typeof v === 'boolean' && o.spec !== 'yesno') fail(`${c.id}: output ${o.key} is a flag and needs the yesno format`);
         // Roman Urdu label: the page's own label_ur, else the shared glossary content/labels-ur.json.
         const label_ur = o.label_ur || ctx.labelsUr[o.label];
-        return { ...o, ...(label_ur ? { label_ur } : {}), value: fmt(v, o.spec || '2') };
+        const ur = label_ur ? { label_ur } : {};
+        // An optional result (N1 spike without last year's units, the next slab above the top band) may be absent: its card starts hidden.
+        if (o.optional && v === undefined) return { ...o, ...ur, value: '' };
+        if (typeof v !== 'number' && typeof v !== 'string' && typeof v !== 'boolean') fail(`${c.id}: output ${o.key} missing from ${c.calc}`);
+        if (typeof v === 'boolean' && o.spec !== 'yesno') fail(`${c.id}: output ${o.key} is a flag and needs the yesno format`);
+        return { ...o, ...ur, value: fmt(v, o.spec || '2') };
       }),
       how: c.how ? { tpl: c.how, text: text(ctx, c.how, scope, 'how'), ...(c.how_ur ? { tpl_ur: c.how_ur, text_ur: text(ctx, c.how_ur, scope, 'how_ur') } : {}) } : null,
       submit: c.submit || 'Calculate',
@@ -271,6 +290,7 @@ function buildContent(c, ctx) {
       ...(c.result_table ? { rtable: resultTable(ctx, c, result, scope) } : {}),
       ...(c.live ? { live: c.live } : {}),
       notice: noticeCode(result) ? errorMessage(noticeCode(result)) : '',
+      msg: pageTexts(module),
       data_checked: dataChecked(module, { ...ctx, usesAppliances: fields.some((f) => f.type === 'appliance' || f.type === 'loads') }),
     };
     out.examples = (c.examples || []).map((ex, n) => ({
@@ -777,7 +797,8 @@ export async function build() {
     // modified = newest of the review date and the day the shown page last changed (WL-206); a hub also
     // changes when a page in it changes (WL-42). Sitemap lastmod, schema dateModified and IndexNow follow it.
     const { reviewed, modified, ...shown } = r;
-    const sig = createHash('sha256').update(JSON.stringify({ ...shown, content: built, csv: pageCtx.dataset?.csv })).digest('hex').slice(0, 16);
+    // The error texts a page ships (tool.msg) are not page content, so new wording does not move every page's date.
+    const sig = createHash('sha256').update(JSON.stringify({ ...shown, content: built?.tool ? { ...built, tool: { ...built.tool, msg: undefined } } : built, csv: pageCtx.dataset?.csv })).digest('hex').slice(0, 16);
     const kids = r.type === 'pillar' ? newest(...r.children.map((cid) => byId.get(cid).modified)) : undefined;
     const changed = changedOn(prevDates[r.id], sig, r.reviewed || kids, today);
     pageDates[r.id] = { hash: sig, date: changed };

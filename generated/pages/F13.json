@@ -255,6 +255,7 @@
      "key": "total_rs",
      "label": "Estimated ToU bill",
      "spec": "rs",
+     "label_ur": "Andaazan ToU bill",
      "value": "Rs 42,251"
     },
     {
@@ -289,6 +290,7 @@
      "key": "fpa_rs",
      "label": "FPA (fuel price adjustment)",
      "spec": "rs",
+     "label_ur": "FPA (fuel price adjustment)",
      "value": "Rs 1,646"
     },
     {
@@ -321,6 +323,16 @@
    },
    "submit": "Work out the ToU bill",
    "notice": "",
+   "msg": {
+    "loads_required": "Add at least one appliance.",
+    "tariff_data_missing": "Tariff data could not be loaded. Please refresh the page.",
+    "tou_required_at_5kw": "Connections of 5 kW or more use a Time-of-Use meter: see the ToU bill link under Sanctioned load.",
+    "period_unknown": "We do not have the QTA rate for that quarter. Enter the QTA from your bill.",
+    "appliance_unknown": "Pick an appliance from the list, or choose Custom and enter its watts.",
+    "forecast_unavailable": "The live forecast is not available right now, so a typical day is shown. Try again later.",
+    "typical_used": "Blank boxes in your list use the typical value for that appliance (its listed watts and hours a day, quantity 1). Type your own numbers for an exact result.",
+    "internal_non_finite": "These numbers are outside a realistic range. Please check your inputs."
+   },
    "data_checked": [
     {
      "label": "Pakistan electricity tariff (NEPRA notification)",

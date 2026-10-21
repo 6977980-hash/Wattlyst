@@ -3031,7 +3031,7 @@
       "city": "lahore"
     },
     "expected": {
-      "error": "hours_required"
+      "error": "loads_hours_required"
     },
     "tolerance": 0,
     "note": "Phase 3"
@@ -10010,5 +10010,204 @@
     },
     "tolerance": 0.01,
     "note": "21 Oct 2026 audit WL-165 (Engineer Reviewer): protected 100 u = 1,054 + 200 + 323 + 52 = 1,629, GST 293, total 1,922; protected 101 u = 1,067 + 300 + 326 + 52 = 1,745, GST 314, total 2,059; 2,059 − 1,922 = 137 (the fixed charge steps up with the slab)."
+  },
+  {
+    "calc": "generator_size",
+    "name": "fractional appliance count is an error",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ceiling-fan-ac",
+          "qty": 2.5
+        }
+      ]
+    },
+    "expected": {
+      "error": "load_0_qty_invalid"
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit Phase 3 WL-227: 2.5 fans is not a count; the row's quantity must be a whole number."
+  },
+  {
+    "calc": "home_load",
+    "name": "blank watts and hours of a listed appliance use its typical values and say so",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ceiling-fan-ac",
+          "watts": "",
+          "qty": 2,
+          "hours": ""
+        }
+      ]
+    },
+    "expected": {
+      "typical_used": true,
+      "running_w": 160
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit Phase 3 WL-221: catalogue running watts and typical hours fill the blank boxes (formulas.md Phase 3 tools, Appliance rows); the result carries typical_used so the page shows the notice."
+  },
+  {
+    "calc": "home_load",
+    "name": "every box filled: no typical-values notice",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ceiling-fan-ac",
+          "watts": 80,
+          "qty": 2,
+          "hours": 12
+        }
+      ]
+    },
+    "expected": {
+      "running_w": 160
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit Phase 3 WL-221: with every box filled the result has no typical_used flag."
+  },
+  {
+    "calc": "panel_price",
+    "name": "blank panels is an error, not one panel",
+    "inputs": {
+      "panel_w": 585
+    },
+    "expected": {
+      "error": "panels_required"
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit Phase 3 WL-221: D9 panels are required."
+  },
+  {
+    "calc": "generator_for_ac",
+    "name": "design margin above margin_max is an error",
+    "inputs": {
+      "ac": "ac-split-1-5ton-inverter",
+      "other_w": 500,
+      "margin": 12
+    },
+    "expected": {
+      "error": "margin_too_large"
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit Phase 3 WL-224: margin 12 gave a 30 kVA generator for one AC; data/defaults.json margin_max."
+  },
+  {
+    "calc": "panel_for_12v",
+    "name": "peak sun hours below psh_min is an error",
+    "inputs": {
+      "ah": 100,
+      "volts": 12,
+      "psh": 0.0001
+    },
+    "expected": {
+      "error": "psh_too_small"
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit Phase 3 WL-224: 0.0001 sun hours gave a 9 MW panel; data/defaults.json psh_min."
+  },
+  {
+    "calc": "battery_bank",
+    "name": "load above load_w_max is an error",
+    "inputs": {
+      "load_w": 1000000000000,
+      "hours": 4,
+      "volts": 24,
+      "chemistry": "tubular"
+    },
+    "expected": {
+      "error": "load_w_too_large"
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit Phase 3 WL-224: 1e12 W gave billions of batteries; data/defaults.json load_w_max."
+  },
+  {
+    "calc": "solar_size",
+    "name": "both daily and monthly units filled: daily is used and flagged",
+    "inputs": {
+      "daily_kwh": 10,
+      "monthly_units": 600,
+      "city": "lahore"
+    },
+    "expected": {
+      "daily_kwh": 10,
+      "usage_both": true
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit Phase 3 WL-222: the daily figure wins; usage_both makes the page say so."
+  },
+  {
+    "calc": "ac_units",
+    "name": "a filled average-draw box with a preset AC is still checked",
+    "inputs": {
+      "ac": "ac-split-1-5ton-inverter",
+      "avg_kw": "abc",
+      "hours": 8
+    },
+    "expected": {
+      "error": "avg_kw_invalid"
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit Phase 3 WL-223: the Custom-only box is validated when filled, not silently ignored."
+  },
+  {
+    "calc": "charge_controller",
+    "name": "MPPT: a filled PWM Isc box is still checked",
+    "inputs": {
+      "type": "mppt",
+      "panel_w": 1000,
+      "battery_v": 24,
+      "isc": -5
+    },
+    "expected": {
+      "error": "isc_must_be_positive"
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit Phase 3 WL-223."
+  },
+  {
+    "calc": "units",
+    "name": "watts mode: a filled amps box is still checked",
+    "inputs": {
+      "input": "watts",
+      "watts": 1000,
+      "hours": 1,
+      "amps": "abc"
+    },
+    "expected": {
+      "error": "amps_invalid"
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit Phase 3 WL-223."
+  },
+  {
+    "calc": "wire_size",
+    "name": "AC: a filled inverter efficiency above 1 is an error",
+    "inputs": {
+      "watts": 2000,
+      "length_m": 20,
+      "mode": "ac1",
+      "inverter_eff": 1.01
+    },
+    "expected": {
+      "error": "inverter_eff_too_large"
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit Phase 3 WL-223: inverter efficiency is used only on DC but a filled box is checked."
+  },
+  {
+    "calc": "amps_to_kw",
+    "name": "amps to kW: a negative kW box is still checked",
+    "inputs": {
+      "direction": "amps_to_kw",
+      "amps": 32,
+      "kw": -5
+    },
+    "expected": {
+      "error": "kw_too_small"
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit Phase 3 WL-223."
   }
 ]

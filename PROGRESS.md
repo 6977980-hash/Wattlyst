@@ -1,6 +1,30 @@
 # Progress
 
-## Handoff for next phase (after 21 Oct audit fix Phase 2: bill engine and bill pages) — written by the audit Phase 2 thread, 2026-10-21
+## Handoff for next phase (after 21 Oct audit fix Phase 3: input and error fixes) — written by the audit Phase 3 thread, 2026-10-21
+
+Owner: every fix phase of the 21 Oct 2026 audit runs in its own new thread, only after the owner says to start it. Shared rules and phase notes: `/mnt/project-files/electricity-tool-hub/audit/2026-10-21/handoff/` (README, `phase-N-*.md`, `status.md`; Phases 1 to 3 ticked). Next is **Phase 4 (solar, battery, wiring)**: read README, then only `phase-4-solar-battery-wiring.md` and its rows in `audit/fix-list-2026-10-21.md`. Plugin v0.8.25, PR #42. Rules live only in `specs/formulas.md` (bullets "Input checks (audit 2026-10-21 Phase 3)", Appliance rows "Blank boxes", D "Daily energy", C8, D9, F "Bill total") and the spec cases at the end of `specs/calculator-test-cases.json`.
+
+**What is where**
+- WL-226 messages: `engine/messages.js` is the small browser part (generic patterns, `NOTICES` flag map, `noticeCode`, `errorMessage(code, { fields, texts, limit })`). Exact-code texts live only in `engine/message-text.js` (`EXACT`; build and tests import `errorMessage` from there). The build ships each page only the texts its calculator can produce: `pageTexts` in `tools/build.js` → tool `msg` → PHP config `msg` (`class-wattlyst-render.php`, which also passes each field's `unit`). `tool.msg` is left out of the page-date hash. `CalcError` carries `limit` (core.js `num` min/max), the result returns it, messages print it. A new exact code needs only a line in `EXACT`; `tests/input-errors.test.js` fails if a page lacks a text its calculator gives.
+- WL-197: `say`/`show` in `assets/js/wattlyst-tool.js` move the message box under the wrong field (or under the appliance table) only on Calculate or a pick, and back above the results otherwise. CSS in `assets/css/wattlyst.css`: invalid red border on focus, dark field focus ring, `:has(>.wl-error)` spans a fourth subgrid row.
+- WL-221: `typical_used` flag set in the `calculator` wrapper (engine/core.js) for listed appliances with blank boxes; D5 in `solar_for_ac`. D9 `panels_required` (engine/prices.js).
+- WL-222: D7 field order and defaults in `content/pages/D7.json`; `usage_both` in `solar_size` (engine/solar.js).
+- WL-223: mode-ignored boxes checked in `ac_units` (load.js), `charge_controller` (solartools.js), `units` and `amps_to_kw` (conversions.js), `voltage_drop`/`wire_size` (wiring.js).
+- WL-224: bounds `margin_max`, `psh_min`, `load_w_max`, `fuel_per_unit_min_load_pct` in `data/defaults.json` (with sources); C8 `per_unit_hidden` notice, C8 `rs_per_unit` output optional.
+- WL-225: `content/labels-ur.json` (every output on a toggle page now has one; optional outputs keep theirs in the build). The "How" heading gets "(English)" by CSS (`wl-how-en` class from `how()` in the render) while Roman Urdu is on.
+- WL-227: whole quantities in `rowOf` (engine/sizing.js). List-only hours code is `loads_hours_required`.
+- WL-241/242: `addons_secondary.fc_surcharge_per_unit.by_category` and `gst_pct.by_category` in `data/tariff-pk-2026.json` (sources, checked, verified flags); `addOns` in engine/bill.js reads them.
+
+**Do not touch / watch**
+- Homepage JS budget now has about 5 KB raw headroom (the message move); still plan bytes for 💾 rows.
+- Never put an exact message text back into `engine/messages.js` (test checks). Notice flags go in `NOTICES`.
+- List-row errors sit under the whole table; on a phone with a long list that is below the screen (the cell itself is focused and red). Phase 6 (phone layout) may want a per-row message.
+
+**Open to-dos**
+- [VERIFY] lifeline GST and the current protected FC surcharge rate: when the owner's expert or a real bill answers, change only `by_category` in the tariff file (plus formulas.md F and a spec case).
+- Everything open from the earlier handoffs below still stands.
+
+## Earlier handoff (after 21 Oct audit fix Phase 2: bill engine and bill pages) — written by the audit Phase 2 thread, 2026-10-21
 
 Owner: every fix phase of the 21 Oct 2026 audit runs in its own new thread, only after the owner says to start it. Shared rules and phase notes: `/mnt/project-files/electricity-tool-hub/audit/2026-10-21/handoff/` (README, `phase-N-*.md`, `status.md`; Phases 1 and 2 ticked). Next is **Phase 3 (input and error fixes)**: read README, then only `phase-3-input-errors.md` and its rows in `audit/fix-list-2026-10-21.md`. Plugin v0.8.24, PR #41. Rules live only in `specs/formulas.md` section F (bullets FPA exemption, Energy sum as printed, Next slab cliff, Default add-ons on F1–F12, ToU bill) and the spec cases at the end of `specs/calculator-test-cases.json`.
 
@@ -592,6 +616,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | 2026-10-14 | Phase 5: Wave 3, 24 pages live (table below); Pakistan Electricity Bill Index and Solar Price Tracker data pages (chart, CSV, Dataset schema, journalist summary) under the new /data/ hub; embeddable calculators (iframe + script, credit link, /embed-calculators/); live solar forecast (N6), generator fuel (C8), panel price (D9), mosque/shop solar (N13), battery wiring diagram (N11); off-page plan; plugin v0.6.0 | done: tests green, Engineer Reviewer must-fixes all fixed (notes in handoff), Lighthouse mobile 96-100 on new templates, checked in a headless browser on local WP | PR #6 |
 | 2026-10-21 | Audit 2026-10-21 fix Phase 1: correct data live and announced (WL-156 July FPA NEPRA-approved + K-Electric, WL-158 October FPA exact and F14 leads with newest month, WL-160 hijacked source removed, WL-159 fuel prices + upkeep age check, WL-228 HAZECO, WL-214 "Updated" byline, WL-206 lastmod from content changes, WL-207 short HTML cache), plugin v0.8.23 | done: tests green, CI + Lighthouse green, local WordPress checked | #40 |
 | 2026-10-21 | Audit 2026-10-21 fix Phase 2: bill engine and bill pages (WL-157 protected homes pay the FPA, exempt list in data, WL-229 FPA pre-filled on F1-F12, WL-161 lifeline example matches, WL-164 slab-by-slab how text + CSV avg rate, WL-163 N1 spike row, WL-162 full ToU bill on F13 + 5 kW link, WL-165 next slab cliff, WL-167/168/166 DISCO, F13 and Bill Index text), plugin v0.8.24 | done: tests green, Engineer Reviewer, local WordPress checked | #41 |
+| 2026-10-21 | Audit 2026-10-21 fix Phase 3: input and error fixes (WL-197 error under the field + red focus, WL-226 messages with unit/example/limit and per-page texts, WL-221 typical-values notice + D9 panels required, WL-222 D7 monthly default, WL-223 ignored boxes checked, WL-224 bounds in data + C8 per unit, WL-225 Roman Urdu labels, WL-227 whole counts, WL-241/242 FC/GST per category in data, partial), plugin v0.8.25 | done: tests green, Engineer Reviewer (2 C8 defects fixed), local WordPress checked at 375 px | #42 |
 
 ## Owner to do
 - Audit Phase 4: one Hostinger redirect so http and www go straight to https://wattlyst.com (WL-40); HTML browser cache time of a few hours in LiteSpeed/Hostinger (WL-36); after deploy, open wp-admin once so the new build syncs and the cache is purged; before switching on the quote form, ask Hostinger which header carries the visitor IP and put it in data/site.json leads.client_ip_header (WL-64); 2FA for wp-admin.

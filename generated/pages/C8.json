@@ -288,6 +288,7 @@
      "key": "rs_per_unit",
      "label": "Cost per unit of electricity",
      "spec": "rs",
+     "optional": true,
      "label_ur": "Bijli ke fi unit ka kharcha",
      "value": "Rs 260"
     },
@@ -301,11 +302,21 @@
     }
    ],
    "how": {
-    "tpl": "Rated output: {{out.kva|1}} kVA × {{out.pf|2}} = {{out.rated_kw|1}} kW. Your load: {{out.load_kw|2}} kW, {{out.load_pct|int}}% of rated. Fuel = {{out.intercept|2}} L × {{out.rated_kw|1}} rated kW (idle burn, {{out.idle_l_per_h|2}} L/h) + {{out.slope|2}} L × {{out.load_kw|2}} kW of load = {{out.l_per_h|2}} litres an hour. × {{out.hours|1}} h = {{out.l_per_day|1}} L a day, × {{out.days}} days = {{out.l_per_month|int}} L a month. Cost: {{out.l_per_h|2}} L × {{out.price|rs2}} = {{out.rs_per_h|rs}} an hour, {{out.rs_per_month|rs}} a month, or {{out.rs_per_unit|rs}} per unit (kWh) delivered.",
-    "text": "Rated output: 5 kVA × 0.8 = 4 kW. Your load: 2 kW, 50% of rated. Fuel = 0.1 L × 4 rated kW (idle burn, 0.4 L/h) + 0.48 L × 2 kW of load = 1.36 litres an hour. × 4 h = 5.4 L a day, × 30.42 days = 165 L a month. Cost: 1.36 L × Rs 382.02 = Rs 520 an hour, Rs 63,219 a month, or Rs 260 per unit (kWh) delivered."
+    "tpl": "Rated output: {{out.kva|1}} kVA × {{out.pf|2}} = {{out.rated_kw|1}} kW. Your load: {{out.load_kw|2}} kW, {{out.load_pct|int}}% of rated. Fuel = {{out.intercept|2}} L × {{out.rated_kw|1}} rated kW (idle burn, {{out.idle_l_per_h|2}} L/h) + {{out.slope|2}} L × {{out.load_kw|2}} kW of load = {{out.l_per_h|2}} litres an hour. × {{out.hours|1}} h = {{out.l_per_day|1}} L a day, × {{out.days}} days = {{out.l_per_month|int}} L a month. Cost: {{out.l_per_h|2}} L × {{out.price|rs2}} = {{out.rs_per_h|rs}} an hour and {{out.rs_per_month|rs}} a month.",
+    "text": "Rated output: 5 kVA × 0.8 = 4 kW. Your load: 2 kW, 50% of rated. Fuel = 0.1 L × 4 rated kW (idle burn, 0.4 L/h) + 0.48 L × 2 kW of load = 1.36 litres an hour. × 4 h = 5.4 L a day, × 30.42 days = 165 L a month. Cost: 1.36 L × Rs 382.02 = Rs 520 an hour and Rs 63,219 a month."
    },
    "submit": "Work out the fuel cost",
    "notice": "",
+   "msg": {
+    "loads_required": "Add at least one appliance.",
+    "appliance_unknown": "Pick an appliance from the list, or choose Custom and enter its watts.",
+    "load_above_generator": "This load is more than the generator can deliver (kVA × power factor). Enter a bigger generator or a smaller load.",
+    "fuel_data_missing": "Fuel data could not be loaded. Please refresh the page.",
+    "forecast_unavailable": "The live forecast is not available right now, so a typical day is shown. Try again later.",
+    "per_unit_hidden": "At this small load the cost per unit is not shown: the generator's idle fuel would make it look huge. The litres and rupees an hour above still apply.",
+    "typical_used": "Blank boxes in your list use the typical value for that appliance (its listed watts and hours a day, quantity 1). Type your own numbers for an exact result.",
+    "internal_non_finite": "These numbers are outside a realistic range. Please check your inputs."
+   },
    "data_checked": [
     {
      "label": "Generator fuel curve (fitted from manufacturer run-time data, listed under Sources)",

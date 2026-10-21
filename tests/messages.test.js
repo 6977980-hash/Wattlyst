@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { errorMessage, noticeCode } from '../engine/messages.js';
+import { errorMessage, noticeCode } from '../engine/message-text.js';
 import { calculators } from '../engine/index.js';
 import { data, cases } from './load-data.js';
 

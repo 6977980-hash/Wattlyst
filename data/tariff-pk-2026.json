@@ -98,7 +98,12 @@
   "fc_surcharge_per_unit": {
    "value": 3.23,
    "source": "Profit 15 Jan 2026",
-   "verified": false
+   "verified": false,
+   "by_category": {"lifeline": 0},
+   "by_category_note": "Default per consumer category when the page field is blank (engine/bill.js addOns, audit 2026-10-21 WL-241). Lifeline: no FC surcharge, from NEPRA's category table. Protected: NEPRA's 2023 table gave protected consumers a lower rate than the full rate (Dawn), but the current protected rate has no primary source or real protected bill yet, so protected bills use the full value until it is confirmed [VERIFY, WL-242].",
+   "by_category_source": "NEPRA decision on the Financing Cost (FC) surcharge for ex-WAPDA DISCOs, TRF-100, 6 March 2023: consumer category table, lifeline row without the surcharge (primary). Protected rate: Dawn report 1741521 on the same decision (secondary).",
+   "by_category_checked": "2026-10-21",
+   "by_category_verified": {"lifeline": true, "protected": false}
   },
   "qta_per_unit": {
    "2026-03..2026-05": 0.3504,
@@ -134,7 +139,12 @@
   },
   "gst_pct": {
    "value": 18,
-   "verified": false
+   "verified": false,
+   "by_category": {"lifeline": 0},
+   "by_category_note": "Lifeline GST stays 0 by default, as before, until the owner's expert or a real lifeline bill confirms it [VERIFY, WL-241]. No FBR exemption for lifeline was found; secondary sources say lifeline bills pay GST (a 2012 ministry statement put the GST exemption at 1 to 50 units only). The user can still enter GST on the page.",
+   "by_category_source": "Business Recorder report 3974034 and a FESCO consumer guide (secondary); no primary FBR source found.",
+   "by_category_checked": "2026-10-21",
+   "by_category_verified": false
   },
   "electricity_duty_pct": {
    "value": 0,
