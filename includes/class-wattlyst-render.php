@@ -242,13 +242,25 @@ final class Wattlyst_Render {
 		return '' === $text ? '' : '<p class="wl-answer">' . esc_html( $text ) . '</p>';
 	}
 
-	/** One line under the answer: author and review date (the same values as the author box and "Last reviewed"). */
+	/** One line under the answer: author and date. "Reviewed" only after the engineer signs off; until then "Updated" (WL-214). */
 	private function byline(): string {
 		$author = $this->author();
-		if ( ! $author || empty( $this->page['reviewed'] ) ) {
+		$when   = $this->when();
+		if ( ! $author || ! $when || empty( $this->page['reviewed'] ) ) {
 			return '';
 		}
-		return '<p class="wl-byline">By <span>' . esc_html( $author['name'] ) . '</span> <span aria-hidden="true">&middot;</span> Reviewed <time datetime="' . esc_attr( $this->page['reviewed'] ) . '">' . esc_html( self::date( $this->page['reviewed'] ) ) . '</time></p>';
+		return '<p class="wl-byline">By <span>' . esc_html( $author['name'] ) . '</span> <span aria-hidden="true">&middot;</span> ' . $when[0] . ' <time datetime="' . esc_attr( $when[1] ) . '">' . esc_html( self::date( $when[1] ) ) . '</time></p>';
+	}
+
+	/** Label and date for the byline and "Last ...": the review date once signed off, else the last change (build `modified`, WL-206). */
+	private function when(): ?array {
+		$p      = $this->page;
+		$signed = 'signed_off' === ( $this->plugin->site()['reviewer']['status'] ?? '' );
+		if ( $signed && ! empty( $p['reviewed'] ) && 'trust' !== $p['type'] ) {
+			return array( 'Reviewed', $p['reviewed'] );
+		}
+		$date = ( $p['modified'] ?? '' ) ?: ( $p['reviewed'] ?? '' );
+		return '' === $date ? null : array( 'Updated', $date );
 	}
 
 	private function author(): ?array {
@@ -822,14 +834,13 @@ final class Wattlyst_Render {
 		return $out . $this->dates();
 	}
 
-	/** "Last reviewed" date; a hub with no review date of its own shows when its newest page was reviewed (WL-142). */
+	/** "Last reviewed" once signed off, else "Last updated" (WL-214); a hub changes when a page in it changes (WL-142). */
 	private function dates(): string {
-		$date = ( $this->page['reviewed'] ?? '' ) ?: ( $this->page['modified'] ?? '' );
-		if ( '' === $date ) {
+		$when = $this->when();
+		if ( ! $when ) {
 			return '';
 		}
-		$label = empty( $this->page['reviewed'] ) || 'trust' === $this->page['type'] ? 'Last updated' : 'Last reviewed';
-		return '<p class="wl-dates">' . $label . ': <time datetime="' . esc_attr( $date ) . '">' . esc_html( self::date( $date ) ) . '</time></p>';
+		return '<p class="wl-dates">Last ' . strtolower( $when[0] ) . ': <time datetime="' . esc_attr( $when[1] ) . '">' . esc_html( self::date( $when[1] ) ) . '</time></p>';
 	}
 
 	private static function date( string $ymd ): string {

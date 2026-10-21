@@ -66,6 +66,18 @@ export async function loadInputs() {
   return { site, data, citiesMeta, appliances, cables, solarPrices, inverterCodes, labelsUr, modules, keywordRows, siteRows, content, trustHtml, affiliates, leadForm };
 }
 
+// Page dates (audit WL-206): generated/page-dates.json keeps, per page, a hash of what the page shows and the day
+// that hash last changed. The build reuses the stored day while the hash is unchanged, so build.js --check stays
+// deterministic; a page whose text or numbers change gets the build day. A page with no entry yet starts from
+// its own review date. WATTLYST_TODAY (YYYY-MM-DD) pins the build day for tests.
+export const PAGE_DATES = 'generated/page-dates.json';
+export function changedOn(prev, hash, baseline, today) {
+  if (prev && prev.hash === hash) return prev.date;
+  return prev ? today : baseline || today;
+}
+const buildDay = () => process.env.WATTLYST_TODAY || new Date().toISOString().slice(0, 10);
+const newest = (...d) => d.filter(Boolean).sort().at(-1);
+
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 function typeOf(row) {
@@ -495,7 +507,9 @@ function schemaFor(page, built, ctx) {
     inLanguage: 'en',
     isPartOf: { '@id': `${site.url}#website` },
     ...(crumbs ? { breadcrumb: { '@id': `${abs(page.url)}#breadcrumb` } } : {}),
-    ...(page.reviewed ? { dateModified: page.reviewed, lastReviewed: page.reviewed } : page.modified ? { dateModified: page.modified } : {}),
+    // lastReviewed only once the engineer has signed off (WL-214); until then the page was updated, not reviewed.
+    ...(page.modified ? { dateModified: page.modified } : {}),
+    ...(page.reviewed && site.reviewer.status === 'signed_off' ? { lastReviewed: page.reviewed } : {}),
     ...(site.reviewer.status === 'signed_off' && page.type !== 'trust' ? { reviewedBy: { '@id': `${site.url}#/person/reviewer` } } : {}),
     // The author box is visible on every content page, so the page names its author too (audit WL-50).
     ...(page.author && page.type !== 'trust' ? { author: { '@id': `${site.url}#/person/${page.author}` } } : {}),
@@ -527,7 +541,7 @@ function schemaFor(page, built, ctx) {
       author: { '@id': `${site.url}#/person/${page.author}` },
       publisher: { '@id': `${site.url}#organization` },
       ...(page.published ? { datePublished: page.published } : {}),
-      ...(page.reviewed ? { dateModified: page.reviewed } : {}),
+      ...(page.modified ? { dateModified: page.modified } : {}),
       ...(site.reviewer.status === 'signed_off' ? { reviewedBy: { '@id': `${site.url}#/person/reviewer` } } : {}),
     });
   }
@@ -711,8 +725,6 @@ export async function build() {
   for (const r of rows.filter((x) => x.type === 'pillar')) {
     const children = rows.filter((x) => x.parent === r.id && x.live);
     r.children = children.map((x) => x.id);
-    // A hub changes when a page in it changes: dateModified = newest reviewed date of its live pages (WL-42).
-    if (!r.reviewed) r.modified = children.map((x) => x.reviewed).filter(Boolean).sort().at(-1);
     r.live = r.status === 'publish' || (r.status === 'auto' && children.length > 0) || (content[r.id]?.status === 'publish');
   }
   for (const r of rows) {
@@ -732,6 +744,9 @@ export async function build() {
   // Hubs last: their text can repeat a key fact or a default result of their pages (WL-142).
   const builtById = {};
   const results = {};
+  const prevDates = existsSync(join(root, PAGE_DATES)) ? readJson(PAGE_DATES) : {};
+  const pageDates = {};
+  const today = buildDay();
   for (const r of [...rows.filter((x) => x.type !== 'pillar'), ...rows.filter((x) => x.type === 'pillar')]) {
     const c = content[r.id];
     let built = null;
@@ -750,6 +765,14 @@ export async function build() {
       if (!inp.trustHtml[r.id]) fail(`trust page ${r.id} has no content/trust/${r.id}.html`);
       built = { html: renderTrust(r.id, inp.trustHtml[r.id], { ...ctxBase, flags: { affiliates: Object.keys(affiliates).length > 0 } }) };
     }
+    // modified = newest of the review date and the day the shown page last changed (WL-206); a hub also
+    // changes when a page in it changes (WL-42). Sitemap lastmod, schema dateModified and IndexNow follow it.
+    const { reviewed, modified, ...shown } = r;
+    const sig = createHash('sha256').update(JSON.stringify({ ...shown, content: built, csv: pageCtx.dataset?.csv })).digest('hex').slice(0, 16);
+    const kids = r.type === 'pillar' ? newest(...r.children.map((cid) => byId.get(cid).modified)) : undefined;
+    const changed = changedOn(prevDates[r.id], sig, r.reviewed || kids, today);
+    pageDates[r.id] = { hash: sig, date: changed };
+    r.modified = newest(r.reviewed, changed, kids);
     const page = { ...r, content: built };
     // Phase 6: quote form flag and affiliate box (the PHP prints them only from these fields).
     if (built && leads.pages.includes(r.id)) page.lead = true;
@@ -774,11 +797,12 @@ export async function build() {
       // N7 backup comparison: equipment price ranges and upkeep, numbers only (sources stay in data/ and on the page).
       component_prices: { items: inp.data.component_prices.items.map(({ category, size, low, high, n_sources, export_capable, bank_v }) => ({ category, size, low, high, n_sources, ...(export_capable === false ? { export_capable } : {}), ...(bank_v ? { bank_v } : {}) })) },
       backup_prices: browserBackup(inp.data.backup_prices) },
-    // lastmod: the same date as the page's schema dateModified, used for the sitemap <lastmod> (WL-84).
-    pages: rows.map(({ id, type, url, h1, title, meta, status, live, parent, children, related, next, wave, reviewed, modified }) => ({ id, type, url, h1, title, meta, status, live, parent, children, related, next, wave, lastmod: reviewed || modified })),
+    // lastmod: the same date as the page's schema dateModified, used for the sitemap <lastmod> (WL-84, WL-206).
+    pages: rows.map(({ id, type, url, h1, title, meta, status, live, parent, children, related, next, wave, modified }) => ({ id, type, url, h1, title, meta, status, live, parent, children, related, next, wave, lastmod: modified })),
     nav: rows.filter((r) => r.nav_label).sort((a, b) => a.nav_order - b.nav_order).map((r) => ({ id: r.id, label: r.nav_label, url: r.url })),
     website_schema: websiteSchema(site, pluginUrl),
   };
+  files[PAGE_DATES] = JSON.stringify(pageDates, null, 1) + '\n';
   files['generated/manifest.json'] = JSON.stringify(manifest, null, 1) + '\n';
   files['generated/llms.txt'] = llmsTxt(rows, ctxBase);
   Object.assign(files, dist.files);
