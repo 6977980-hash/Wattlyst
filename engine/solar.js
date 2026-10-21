@@ -7,7 +7,7 @@ import { fmt } from './format.js';
 export const stdSize = (sizes, v) => sizes.find((s) => s >= v - 1e-9);
 
 /** The size to buy as text: the standard size, or the minimum when it is above the list (WL-174). */
-export const buyKw = (pick, kw) => (pick === undefined ? `${fmt(kw, 'up2')} kW or more (above the sizes we list: two units or a larger commercial one)` : `${fmt(pick, '2')} kW`);
+export const buyKw = (pick, kw, over = 'two units or a larger commercial one') => (pick === undefined ? `${fmt(kw, 'up2')} kW or more (above the sizes we list: ${over})` : `${fmt(pick, '2')} kW`);
 
 /** Roof area of one panel: panel W × the area per watt of the listed size at or below it (data panel_area_m2_by_w; WL-232). */
 const panelArea = (d, w) => {
@@ -236,7 +236,12 @@ export const solar_for_pump = calculator((i, d) => {
   const pump_w = (hp * dflt(d, 'w_per_hp')) / motor_eff;
   const v = panelVolts(d);
   const bus_v = dflt(d, 'pump_dc_bus_factor') * motor_v;
-  const sys = solarSystem((pump_w * hours) / 1000, pump_w, pump_w, i, d, true, ceilSafe(bus_v / v.vmp_hot));
+  // Panels in series: enough for the drive's DC bus on a hot afternoon, but never above its maximum DC input on a cold
+  // morning (data vfd_max_dc_v by motor voltage, Engineer Reviewer 2026-10-21); the cap wins and is flagged.
+  const vmax = dflt(d, 'vfd_max_dc_v').find(([mv]) => mv >= motor_v - 1e-9)?.[1] ?? dflt(d, 'vfd_max_dc_v').at(-1)[1];
+  const need = ceilSafe(bus_v / v.vmp_hot);
+  const cap = Math.max(1, Math.floor(vmax / v.voc_cold + 1e-9));
+  const sys = solarSystem((pump_w * hours) / 1000, pump_w, pump_w, i, d, true, Math.min(need, cap));
   const motor_kw = (hp * dflt(d, 'w_per_hp')) / 1000;
   const drive_kw = Math.max(sys.inverter_kw_load, motor_kw);
   const drive_pick_kw = stdSize(dflt(d, 'standard_vfd_kw'), drive_kw);
@@ -244,7 +249,8 @@ export const solar_for_pump = calculator((i, d) => {
   return {
     hp, motor_eff, hours, motor_v, pump_w, pump_kw: pump_w / 1000, motor_kw, ...rest, drive_kw, bus_v,
     string_vmp_hot_v: sys.series * v.vmp_hot, string_voc_cold_v: sys.series * v.voc_cold, panel_vmp_hot_v: v.vmp_hot,
-    drive_buy: buyKw(drive_pick_kw, drive_kw),
+    drive_max_dc_v: vmax, ...(need > cap ? { string_below_bus: true } : {}),
+    drive_buy: buyKw(drive_pick_kw, drive_kw, 'one larger drive for this motor; ask the supplier'),
     ...(drive_pick_kw === undefined ? { drive_above_standard_sizes: true } : { drive_pick_kw, array_drive_ratio: sys.installed_kw / drive_pick_kw }),
   };
 });

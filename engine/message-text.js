@@ -36,6 +36,7 @@ export const EXACT = {
   cable_size_unknown: 'Pick a standard cable size.',
   load_above_standard_breakers: 'This load needs more than the largest single-phase MCB. Split it into separate circuits or ask a licensed electrician about a three-phase connection.',
   dc_load_above_cable_table: 'This battery current is above the largest cable in our table. Do not split a battery feed into separate circuits: use a higher battery voltage (it lowers the current) or have a licensed electrician design the busbars, parallel cables and fusing.',
+  string_below_bus: 'The panels in series are capped by the drive\'s maximum DC input on a cold morning, so on the hottest afternoons the string gives a little under the voltage the motor needs at full speed and the pump runs slightly slower. Check the drive\'s DC input range with the supplier.',
   high_c_rate: 'This load draws a high current for the battery size: a lead-acid battery then gives well under its rated Ah, so the real backup is shorter than shown, and a lithium battery may shut off. Check the battery\'s maximum discharge current or use a bigger bank.',
   load_above_cable_table: 'This load is above the largest cable in our table. Split it into separate circuits and consult a licensed electrician.',
   ambient_out_of_range: 'Enter an air temperature around the cable between 10 and 60 °C.',

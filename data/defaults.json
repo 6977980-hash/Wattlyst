@@ -4,7 +4,7 @@
   "checked": "2026-10-21",
   "days": "days_per_month = 365 ÷ 12 (an average calendar month, two decimals) for every day, month and year conversion, so a year is 12 × days_per_month on every page and matches the 365-day yearly yield (full audit 2026-10-15 WL-106). bill_month_days = the 30-day billing month the bill check (N1) scales a reading cycle to.",
   "status": "Engineering defaults, every one editable on the page. Items marked engineer_confirm need PEC engineer sign-off before launch.",
-  "engineer_confirm": ["diversity_home", "heat_pump_cop", "ac_saving_per_degree", "soiling_rate_per_day", "soiling_cap", "gas_heater_eff", "gas_cv_mj_m3", "start_factors", "standard_generator_kva", "planner_day_share", "hybrid_bank_v", "forecast_sky_bands", "rho_aluminium", "dc_ac_ratio_max", "forecast_max_day_whm2", "soiling_rate_max_per_day", "pf_by_load_type", "ac_life_years", "standard_dc_fuse_a", "panel_area_m2_by_w", "panel_vmp_v", "panel_tc_vmp_pct", "cell_temp_hot_c", "cell_temp_cold_c", "hybrid_pv_start_v", "hybrid_pv_mppt_min_v", "pump_dc_bus_factor", "standard_inverter_kw", "standard_vfd_kw", "dc_cutoff_ratio", "max_c_rate_lead_acid", "max_c_rate_lifepo4"]
+  "engineer_confirm": ["diversity_home", "heat_pump_cop", "ac_saving_per_degree", "soiling_rate_per_day", "soiling_cap", "gas_heater_eff", "gas_cv_mj_m3", "start_factors", "standard_generator_kva", "planner_day_share", "hybrid_bank_v", "forecast_sky_bands", "rho_aluminium", "dc_ac_ratio_max", "forecast_max_day_whm2", "soiling_rate_max_per_day", "pf_by_load_type", "ac_life_years", "standard_dc_fuse_a", "panel_area_m2_by_w", "panel_vmp_v", "panel_tc_vmp_pct", "cell_temp_hot_c", "cell_temp_cold_c", "hybrid_pv_start_v", "hybrid_pv_mppt_min_v", "pump_dc_bus_factor", "standard_inverter_kw", "standard_vfd_kw", "vfd_max_dc_v", "dc_cutoff_ratio", "max_c_rate_lead_acid", "max_c_rate_lifepo4"]
  },
  "v_1ph": 230,
  "v_3ph": 400,
@@ -48,6 +48,8 @@
  "hybrid_pv_start_v": 150,
  "hybrid_pv_mppt_min_v": 120,
  "hybrid_pv_source": "PV input of a 48 V low-voltage hybrid inverter: Growatt SPF 6000 ES Plus user manual (a site source on N2, https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf): start-up voltage 150 Vdc, PV array MPPT voltage range 120 to 450 Vdc, max PV open-circuit voltage 500 Vdc. The string's hot Voc must reach the start-up voltage and its hot Vmp the MPPT minimum (audit 2026-10-21 WL-230); engineer to confirm for other models",
+ "vfd_max_dc_v": [[250, 400], [1000, 800]],
+ "vfd_max_dc_v_source": "Highest DC input of a solar pump drive by motor voltage (row at or above the motor V): 220 V-class drives about 400 V DC, 380/400 V-class drives 800 V DC (INVT GD100-PV, Veichi SI23, Growatt SPI datasheets, Engineer Reviewer 2026-10-21). The panels in series are capped so the cold-morning Voc stays below it. [ENGINEER] confirm.",
  "dc_cutoff_ratio": 0.875,
  "dc_cutoff_source": "Battery voltage at the low-battery cut-off as a share of the bank's nominal voltage, for the DC current a cable and fuse must carry (audit 2026-10-21 WL-177): Growatt SPF 6000 ES Plus user manual low DC cut-off 42.0 V on a 48 V bank at light load (40.8 V and 38.4 V at heavier loads, lead-acid mode; 42.0 V in lithium mode) = 0.875; a 12 V lead-acid UPS cuts off near 10.5 V = 0.875. [ENGINEER] confirm.",
  "max_c_rate_lead_acid": 0.25,

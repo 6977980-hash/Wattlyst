@@ -4528,18 +4528,19 @@
       "daily_kwh": 55.928,
       "kw_energy": 12.857,
       "kw_power": 11.95,
-      "panels": 30,
-      "installed_kw": 17.55,
+      "panels": 28,
+      "installed_kw": 16.38,
       "drive_kw": 11.652,
       "limited_by": "energy",
       "panels_energy": 22,
-      "series": 15,
+      "series": 14,
       "strings": 2,
       "drive_pick_kw": 15,
-      "string_voc_cold_v": 830.561
+      "string_voc_cold_v": 775.19,
+      "string_below_bus": true
     },
     "tolerance": 0.001,
-    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/. 21 Oct 2026 audit Phase 4 WL-172/174: string = ceil(1.35 × 400 V ÷ (44.21 V × (1 − 0.35% × 45))) = ceil(540 ÷ 37.247) = 15 panels; 22 panels by energy → 2 strings = 30; drive max(11.652, 7.457) kW → 15 kW VFD; cold Voc 15 × 52.36 × (1 + 0.23% × 25) = 830.56 V."
+    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/. 21 Oct 2026 audit Phase 4 WL-172/174: string = ceil(1.35 × 400 V ÷ (44.21 V × (1 − 0.35% × 45))) = ceil(540 ÷ 37.247) = 15 panels; 22 panels by energy → 2 strings = 30; drive max(11.652, 7.457) kW → 15 kW VFD; cold Voc 15 × 52.36 × (1 + 0.23% × 25) = 830.56 V. Engineer Reviewer 21 Oct 2026: series capped at floor(drive max DC ÷ cold Voc 55.371 V) (vfd_max_dc_v): 800 V ÷ 55.371 = 14 (775 V cold, 521 V hot, a little under the 540 V bus) → 2 × 14 = 28 panels."
   },
   {
     "calc": "solar_for_pump",
@@ -4553,14 +4554,14 @@
       "pump_w": 4660.625,
       "kw_power": 5.975,
       "kw_energy": 4.666,
-      "panels": 15,
+      "panels": 14,
       "limited_by": "power",
       "panels_energy": 11,
-      "series": 15,
+      "series": 14,
       "strings": 1
     },
     "tolerance": 0.001,
-    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/. 21 Oct 2026 audit Phase 4 WL-172: 11 panels by the power rule, one whole string of 15 for the drive voltage."
+    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/. 21 Oct 2026 audit Phase 4 WL-172: 11 panels by the power rule, one whole string of 15 for the drive voltage. Engineer Reviewer 21 Oct 2026: series capped at floor(drive max DC ÷ cold Voc 55.371 V) (vfd_max_dc_v): 14 in series."
   },
   {
     "calc": "solar_for_pump",
@@ -10326,7 +10327,7 @@
   },
   {
     "calc": "solar_for_pump",
-    "name": "1 hp, 220 V motor: one string of 8 panels for the drive voltage",
+    "name": "1 hp, 220 V motor: one string capped at 7 panels by a 400 V drive input",
     "inputs": {
       "hp": 1,
       "hours": 6,
@@ -10336,15 +10337,17 @@
     "expected": {
       "pump_w": 932.125,
       "panels_energy": 3,
-      "series": 8,
+      "series": 7,
       "strings": 1,
-      "panels": 8,
+      "panels": 7,
       "drive_kw": 1.1652,
       "drive_pick_kw": 1.5,
-      "string_vmp_hot_v": 297.975
+      "string_vmp_hot_v": 260.7285,
+      "string_voc_cold_v": 387.5949,
+      "string_below_bus": true
     },
     "tolerance": 0.001,
-    "note": "21 Oct 2026 audit Phase 4 WL-172/179: 1.35 × 220 = 297 V ÷ 37.247 V = 7.97 → 8 in series; power rule 0.932 ÷ 0.78 = 1.195 kW = 3 panels; drive max(1.165, 0.746) → 1.5 kW."
+    "note": "21 Oct 2026 audit Phase 4 WL-172/179: 1.35 × 220 = 297 V ÷ 37.247 V = 7.97 → 8 in series; power rule 0.932 ÷ 0.78 = 1.195 kW = 3 panels; drive max(1.165, 0.746) → 1.5 kW. Engineer Reviewer 21 Oct 2026: series capped at floor(drive max DC ÷ cold Voc 55.371 V) (vfd_max_dc_v): 400 ÷ 55.371 = 7 (8 would reach the 297 V bus but give 443 V cold)."
   },
   {
     "calc": "backup_compare",
@@ -10735,5 +10738,40 @@
     },
     "tolerance": 0.001,
     "note": "21 Oct 2026 audit Phase 4 WL-231."
+  },
+  {
+    "calc": "solar_for_pump",
+    "name": "Drive above the listed sizes: one larger drive, never two",
+    "inputs": {
+      "hp": 50,
+      "hours": 6,
+      "yield_kwh_per_kwp_day": 5
+    },
+    "expected": {
+      "drive_above_standard_sizes": true,
+      "drive_buy": "58.26 kW or more (above the sizes we list: one larger drive for this motor; ask the supplier)"
+    },
+    "tolerance": 0,
+    "note": "21 Oct 2026 audit Phase 4, Engineer Reviewer: two drives cannot share one motor."
+  },
+  {
+    "calc": "voltage_drop",
+    "name": "PV cable is checked at 1.25 × the string Isc",
+    "inputs": {
+      "mode": "dc",
+      "cable": "pv",
+      "amps": 40,
+      "volts": 420,
+      "length_m": 25,
+      "area_mm2": 4
+    },
+    "expected": {
+      "design_a": 50,
+      "ampacity_a": 47.84,
+      "over_cable_rating": true,
+      "current_v": 420
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit Phase 4, Engineer Reviewer: IEC 62548-1 1.25 × Isc; with amps entered current_v is the voltage entered."
   }
 ]

@@ -406,7 +406,7 @@
   ]
  },
  "pv_cables": {
-  "_source": "EN 50618:2014 (H1Z2Z2-K solar cable) Annex A Table A.3: current-carrying capacity at 60 C ambient, 120 C conductor, single core: in free air, on a surface, two cables touching (on a surface); Table A.4 ambient correction factors. Default roof air 70 C: a cable on or under hot panels in a Pakistani summer [ENGINEER]. Added 2026-10-21 for W4 (audit WL-180); house-wiring PVC ratings stay in cables. Below 60 C the factor is kept at 1 (no uprating).",
+  "_source": "EN 50618:2014 (H1Z2Z2-K solar cable) Annex A Table A.3: current-carrying capacity at 60 C ambient, 120 C conductor, single core: in free air, on a surface, two cables touching (on a surface); Table A.4 ambient correction factors. Default roof air 70 C: a cable on or under hot panels in a Pakistani summer [ENGINEER]. Added 2026-10-21 for W4 (audit WL-180); house-wiring PVC ratings stay in cables. Below 60 C the factor is kept at 1 (no uprating). isc_factor: a PV string cable must be rated for at least 1.25 × the string's short-circuit current (IEC 62548-1 / IEC 60364-7-712).",
   "methods": {
    "surface": "Clipped on a roof, frame or tray surface",
    "free_air": "In free air, spaced from surfaces",
@@ -533,6 +533,7 @@
      "touching": 390
     }
    }
-  ]
+  ],
+  "isc_factor": 1.25
  }
 }

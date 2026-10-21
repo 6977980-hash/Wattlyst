@@ -51,11 +51,14 @@ test('WL-230: the homepage hybrid and the N7 hybrid have enough panels in series
   assert.ok(n7.panels >= n7.string_min && n7.string_min > 1);
 });
 
-test('WL-172: the pump string reaches the drive DC bus when hot, and its cold Voc is printed', () => {
-  const r = atDefault('D15');
-  const bus = data.defaults.pump_dc_bus_factor * r.motor_v;
-  assert.ok(r.string_vmp_hot_v >= bus - 1e-9 && r.string_vmp_hot_v - r.panel_vmp_hot_v < bus);
-  assert.ok(r.string_voc_cold_v > r.string_vmp_hot_v);
+test('WL-172: the pump string reaches the drive DC bus when hot, unless the drive maximum DC input caps it (flagged)', () => {
+  for (const motor_v of [220, 400]) {
+    const r = atDefault('D15', { motor_v });
+    const bus = data.defaults.pump_dc_bus_factor * r.motor_v;
+    assert.ok(r.string_voc_cold_v <= r.drive_max_dc_v, `${motor_v} V: cold Voc ${r.string_voc_cold_v} under the drive input`);
+    assert.ok(r.string_vmp_hot_v >= bus - 1e-9 || r.string_below_bus === true, `${motor_v} V`);
+    assert.ok(r.string_vmp_hot_v - r.panel_vmp_hot_v < bus);
+  }
 });
 
 test('WL-170: a 5 kW inverter on a 48 V battery gets a cable; a feed above the table gets the DC message', () => {

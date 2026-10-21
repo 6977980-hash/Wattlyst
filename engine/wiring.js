@@ -25,8 +25,9 @@ export const voltage_drop = calculator((i, d) => {
   const eff = mode === 'dc' ? frac(i, 'inverter_eff', dflt(d, 'inverter_eff_hybrid')) : 1;
   if (has(i, 'inverter_eff')) frac(i, 'inverter_eff'); // used only on DC, but a filled box is still checked (WL-223)
   // DC watts from a battery: the current at the low-battery cut-off voltage (WL-177 [ENGINEER]).
-  const current_v = mode === 'dc' ? volts * dflt(d, 'dc_cutoff_ratio') : volts;
-  const amps = has(i, 'amps') || !('watts' in i) ? pos(i, 'amps') : pos(i, 'watts') / (k * current_v * pf * eff);
+  const by_amps = has(i, 'amps') || !('watts' in i);
+  const current_v = mode === 'dc' && !by_amps ? volts * dflt(d, 'dc_cutoff_ratio') : volts;
+  const amps = by_amps ? pos(i, 'amps') : pos(i, 'watts') / (k * current_v * pf * eff);
   const kv = mode === 'ac3' ? Math.sqrt(3) : 2;
   const drop_v = (kv * length_m * amps * rho) / area_mm2;
   if (drop_v >= volts) throw new CalcError('cable_far_too_small_for_load', 'area_mm2');
@@ -60,7 +61,9 @@ function pvRating(i, t, area_mm2, amps) {
   const base = { ampacity_checked: true, cable: 'pv', method, ambient_c, ambient_factor, derate: ambient_factor };
   if (!rated) return { ...base, over_cable_rating: true };
   const ampacity_a = rated.ampacity_a[method] * ambient_factor;
-  return { ...base, rated_mm2: rated.area_mm2, ampacity_base_a: rated.ampacity_a[method], ampacity_a, over_cable_rating: amps > ampacity_a + 1e-9 };
+  // A string cable must carry 1.25 × the string's Isc (IEC 62548-1; data pv_cables.isc_factor).
+  const design_a = amps * pv.isc_factor;
+  return { ...base, isc_factor: pv.isc_factor, design_a, rated_mm2: rated.area_mm2, ampacity_base_a: rated.ampacity_a[method], ampacity_a, over_cable_rating: design_a > ampacity_a + 1e-9 };
 }
 
 /** PK designation n/d: n strands of diameter d inches. A = n × π × (d × 25.4 / 2)² mm². */

@@ -17,7 +17,7 @@
    "label": "String current",
    "unit": "A",
    "default": 14,
-   "hint": "Imp or Isc of one panel from its label (strings in series carry the same current). If two strings are joined before this cable, add their currents."
+   "hint": "Isc (short-circuit current) of one panel from its label (strings in series carry the same current). If two strings are joined before this cable, add their currents."
   },
   {
    "name": "volts",
@@ -153,7 +153,7 @@
   }
  ],
  "answer": "A 4 mm² DC cable from solar panels carrying {{in.amps|int}} A at {{in.volts|int}} V over a {{in.length_m|int}} m run loses {{out.drop_v|1}} V, a {{out.drop_pct|2}}% voltage drop, within the {{out.limit_pct|int}}% limit for solar DC, so 4 mm² is the right size for this string. Drop = two × length × current × copper resistivity ÷ cable area; move up to 6 mm² when the drop passes the limit.",
- "how": "The current flows out along the positive and back along the negative, so the cable length counts twice: {{out.rho|4}} Ω·mm²/m copper resistivity × two × {{in.length_m}} m × {{in.amps}} A ÷ {{in.area_mm2}} mm² = {{out.drop_v|1}} V lost. {{out.drop_v|1}} V ÷ {{in.volts}} V string voltage = {{out.drop_pct|2}}%, against the {{out.limit_pct|int}}% limit you chose, leaving {{out.voltage_at_load|int}} V at the inverter. If the drop is above the limit, pick the next cable size and check again. Current check: {{in.area_mm2}} mm² solar cable is rated {{out.ampacity_base_a|int}} A in hot air, × {{out.ambient_factor|2}} for {{out.ambient_c}} °C around it = {{out.ampacity_a|int}} A, against the {{in.amps}} A in the cable.",
+ "how": "The current flows out along the positive and back along the negative, so the cable length counts twice: {{out.rho|4}} Ω·mm²/m copper resistivity × two × {{in.length_m}} m × {{in.amps}} A ÷ {{in.area_mm2}} mm² = {{out.drop_v|1}} V lost. {{out.drop_v|1}} V ÷ {{in.volts}} V string voltage = {{out.drop_pct|2}}%, against the {{out.limit_pct|int}}% limit you chose, leaving {{out.voltage_at_load|int}} V at the inverter. If the drop is above the limit, pick the next cable size and check again. Current check: {{in.area_mm2}} mm² solar cable is rated {{out.ampacity_base_a|int}} A in hot air, × {{out.ambient_factor|2}} for {{out.ambient_c}} °C around it = {{out.ampacity_a|int}} A against {{in.amps}} A × {{out.isc_factor|2}} = {{out.design_a|1}} A, the current a string cable must carry.",
  "key_facts": [
   "DC cable voltage drop = two × run length × current × copper resistivity ÷ cable area: a {{in.amps|int}} A string at {{in.volts|int}} V over {{in.length_m|int}} m in {{in.area_mm2|int}} mm² loses {{out.drop_v|1}} V, {{out.drop_pct|2}}%, under the {{d.vdrop_limit_lighting_pct|int}}% solar DC target.",
   "At {{ex.1.in.length_m|int}} m the same string loses {{ex.1.out.drop_pct|2}}% in 4 mm² and {{ex.2.out.drop_pct|2}}% in 6 mm², so both are within the limit; 6 mm² simply wastes less energy for the life of the system.",
@@ -164,7 +164,7 @@
   "text": "ΔV = 2 × L × I × ρ ÷ A; drop% = ΔV ÷ V_string × 100; V_inverter = V_string − ΔV",
   "lines": [
    "L = one-way cable run in metres (the two counts the return conductor)",
-   "I = string current in amps (Imp or Isc from the panel label)",
+   "I = string current in amps (Isc from the panel label; the cable must carry 1.25 × Isc)",
    "ρ = resistivity of copper in Ω·mm²/m at working temperature",
    "A = cable cross-section in mm²",
    "V_string = Vmp × panels in series"
