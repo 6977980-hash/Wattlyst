@@ -107,10 +107,22 @@
    "label": "Usable energy",
    "spec": "int",
    "unit": "Wh"
+  },
+  {
+   "key": "battery_a",
+   "label": "Battery current",
+   "spec": "1",
+   "unit": "A"
+  },
+  {
+   "key": "cutoff_a",
+   "label": "Current at low-battery cut-off",
+   "spec": "1",
+   "unit": "A"
   }
  ],
  "answer": "A {{in.ah|int}} Ah, {{in.volts|int}} V tubular battery gives about {{out.hours|hm}} of backup for a {{in.load_w|int}} W load (a fan, lights and a TV) through a home UPS, using the safe {{out.dod|pct}} of its capacity. Backup hours = Ah × volts × usable depth of discharge ÷ (load watts ÷ inverter efficiency + the inverter's idle draw); the chart below shows common loads.",
- "how": "{{in.ah}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable = {{out.stored_wh|int}} Wh in the battery. The battery gives {{in.load_w}} W ÷ {{out.inverter_eff|pct}} inverter efficiency + {{out.idle_w}} W the inverter draws itself = {{out.battery_w|1}} W. {{out.stored_wh|int}} Wh ÷ {{out.battery_w|1}} W = {{out.hours|2}} hours, about {{out.hours|hm}}.",
+ "how": "{{in.ah}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable = {{out.stored_wh|int}} Wh in the battery. The battery gives {{in.load_w}} W ÷ {{out.inverter_eff|pct}} inverter efficiency + {{out.idle_w}} W the inverter draws itself = {{out.battery_w|1}} W. {{out.stored_wh|int}} Wh ÷ {{out.battery_w|1}} W = {{out.hours|2}} hours, about {{out.hours|hm}}. Battery current: {{out.battery_w|1}} W ÷ {{in.volts|1}} V = {{out.battery_a|1}} A, {{out.c_rate|2}} times the battery's Ah (its C-rate), rising to {{out.cutoff_a|1}} A as the battery nears its low-battery cut-off; the cables and fuse must carry that.",
  "key_facts": [
   "A {{in.ah|int}} Ah, {{in.volts|int}} V tubular battery stores about {{out.stored_wh|int}} Wh of usable energy for a UPS when used to the recommended {{d.dod_lead_acid|pct}} of its rating.",
   "That {{out.stored_wh|int}} Wh runs one ceiling fan ({{ex.0.in.load_w|int}} W) for about {{ex.0.out.hours|hm}}, two fans with lights ({{ex.1.in.load_w|int}} W) for about {{ex.1.out.hours|hm}}, and a {{ex.2.in.load_w|int}} W load for only about {{ex.2.out.hours|hm}}.",

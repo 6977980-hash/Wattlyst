@@ -24,7 +24,7 @@ const ENGINE_MODULES = ['conversions', 'battery', 'sizing', 'solar', 'bill', 'lo
 /** Data each engine module needs in the browser (keeps page weight down). Appliances are added per page, only the ones its fields use. */
 const MODULE_DATA = { bill: ['tariff'], solar: ['cities'], wiring: ['cables'], planner: ['tariff', 'cities'], prices: ['solar_prices'], forecast: ['cities'], acbill: ['tariff'], sanction: ['cables'], seasonal: ['cities'], offgrid: ['cities'], circuits: ['cables'], backup: ['cities', 'solar_prices', 'generator_fuel', 'component_prices', 'backup_prices'], decision: ['tariff', 'cities', 'solar_prices', 'generator_fuel', 'component_prices', 'backup_prices'] };
 /** Extra data a single calculator needs (shipped only on its page). */
-const CALC_DATA = { generator_fuel: ['generator_fuel'] };
+const CALC_DATA = { generator_fuel: ['generator_fuel'], quote_checker: ['component_prices', 'backup_prices'] };
 
 // WL-226: the browser gets only the exact-code message texts its page can show. A code is kept when its name appears
 // in the page module's import chain or the tool script (a literal code or a notice flag), or when it is a generic
@@ -265,6 +265,13 @@ function buildContent(c, ctx) {
       const res = runCalc(ctx, { ...inputs, ...Object.fromEntries(Object.entries(r).map(([k, v]) => [k, resolveDefault(v, ctx)])) }, `table row ${n + 1}`);
       return { in: res, out: res };
     });
+    // WL-182: a sizing page names the dated price range of its default system, built here ({{px.out.price_low_rs|rsm}}) by the
+    // D14 calculator on the page's own result; the browser never re-renders it.
+    if (c.price_of) {
+      const r = ctx.modules.prices.solar_price_estimate({ kwp: result[c.price_of.kwp], type: c.price_of.type }, ctx.data);
+      if (!r.ok) fail(`${c.id}: price_of gives error ${r.error}`);
+      scope.px = { out: r, checked: longDate(ctx.solarPrices._meta.checked) };
+    }
     out.tool = {
       calc: c.calc,
       module: `${module}.js`,
@@ -316,7 +323,7 @@ function buildContent(c, ctx) {
   }
   if (c.embeds) out.embeds = embedList(ctx.allRows, ctx.site, ctx.pluginUrl);
   if (c.codes_table) Object.assign(out, codeTables(ctx, out.sources));
-  if (c.calc === 'quote_checker' || c.calc === 'solar_price_estimate') out.sources = [...out.sources, ...priceSources(ctx)];
+  if (c.calc === 'quote_checker' || c.calc === 'solar_price_estimate' || c.price_of) out.sources = [...out.sources, ...priceSources(ctx)];
   if (c.calc === 'panel_price') out.sources = [...out.sources, ...priceSources(ctx, { panelsOnly: true })];
   if (c.calc === 'generator_fuel') out.sources = [...out.sources, ...fuelSources(ctx)];
   if (c.calc === 'backup_compare') out.sources = [...out.sources, ...backupSources(ctx)];
@@ -666,6 +673,9 @@ function defaultsTable(d) {
     ['Solar performance ratio', fmt(d.pr, 'pct')],
     ['Days per billing month', fmt(d.days_per_month)],
     ['Default solar panel size', `${fmt(d.panel_w)} W`],
+    ['Largest panel-to-inverter (DC/AC) ratio', `${fmt(d.dc_ac_ratio_max)} ×`],
+    ['Panel cell temperature, hot and cold design days', `${fmt(d.cell_temp_hot_c)} °C and ${fmt(d.cell_temp_cold_c)} °C`],
+    ['Hybrid inverter solar start voltage', `${fmt(d.hybrid_pv_start_v)} V`],
     ['Watts per horsepower', `${fmt(d.w_per_hp)} W`],
     ['Copper resistivity at working temperature', `${fmt(d.rho_copper, '4')} Ω·mm²/m`],
     ['Aluminium resistivity at working temperature', `${fmt(d.rho_aluminium, '4')} Ω·mm²/m`],

@@ -28,6 +28,19 @@ function drawFor(i, d) {
   return { inverter_eff, load_w, idle_w, battery_w: load_w / inverter_eff + idle_w };
 }
 
+/**
+ * Battery current (formulas.md B, audit 2026-10-21 WL-177 [ENGINEER]): nominal I = P_bat ÷ V_bank; at the low-battery
+ * cut-off I = P_bat ÷ (V_bank × dc_cutoff_ratio), the current the cables and fuse must carry; C-rate = nominal I ÷ Ah.
+ * high_c_rate (notice) when the C-rate is above the chemistry's limit: a lead-acid bank then gives well under its
+ * rated Ah (the runtime is optimistic) and a lithium BMS may cut off.
+ */
+function currentFor(battery_w, volts, ah, chemistry, d) {
+  const battery_a = battery_w / volts;
+  const c_rate = battery_a / ah;
+  const max_c_rate = chemistry === 'lifepo4' ? dflt(d, 'max_c_rate_lifepo4') : dflt(d, 'max_c_rate_lead_acid');
+  return { battery_a, cutoff_a: battery_a / dflt(d, 'dc_cutoff_ratio'), c_rate, max_c_rate, high_c_rate: c_rate > max_c_rate + 1e-9 };
+}
+
 /** t_h = (Ah × V_bank × DoD) / P_bat, P_bat = P_load / η_inv + P_idle. DC load: pass inverter_eff = 1. */
 export const battery_runtime = calculator((i, d) => {
   const ah = pos(i, 'ah');
@@ -36,7 +49,7 @@ export const battery_runtime = calculator((i, d) => {
   const w = drawFor(i, d);
   const stored_wh = ah * volts * dod;
   const hours = stored_wh / w.battery_w;
-  return { chemistry, ah, volts, dod, ...w, stored_wh, hours, minutes: hours * 60 };
+  return { chemistry, ah, volts, dod, ...w, stored_wh, hours, minutes: hours * 60, ...currentFor(w.battery_w, volts, ah, chemistry, d) };
 });
 
 /**
@@ -58,7 +71,8 @@ export const battery_bank = calculator((i, d) => {
     const strings = ceilSafe(ah_required / battery_ah);
     Object.assign(out, { battery_ah, battery_v, series: Math.round(series), strings, batteries: strings * Math.round(series) });
   }
-  return out;
+  // The current is checked against the bank that is bought (whole strings), else the Ah needed.
+  return { ...out, ...currentFor(w.battery_w, volts, out.strings ? out.strings * out.battery_ah : ah_required, chemistry, d) };
 });
 
 /** t_recharge = (Ah × DoD) / (I_charge × η_chg); fully recharged if t_recharge ≤ grid hours between outages. */

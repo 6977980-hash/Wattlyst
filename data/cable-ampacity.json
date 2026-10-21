@@ -1,7 +1,7 @@
 {
  "_meta": {
-  "source": "IEC 60364-5-52:2009 Table B.52.4 (PVC insulated copper, two loaded conductors: single-phase and DC) and Table B.52.5 (three loaded conductors: three-phase), 30 C ambient: columns B1 (insulated conductors in conduit on or in a masonry wall; NOT A1, conduit in a thermally insulated wall, which is rated lower) and C (clipped direct). The 1 mm2 row is not in Tables B.52.4/B.52.5 (they start at 1.5 mm2); its values are the same-basis BS 7671 Table 4D1A figures (methods B and C, two and three loaded conductors). Correction factors: Table B.52.14 (ambient air other than 30 C, PVC) and Table B.52.17 row 1 (circuits bunched in air, on a surface, embedded or enclosed). Pakistani n/d sizes converted with formulas.md section W (A = n x pi x (d x 25.4 / 2)^2) and rated as the largest IEC size not above their real area (one rule for every wiring page, conservative).",
-  "checked": "2026-10-14",
+  "source": "IEC 60364-5-52:2009 Table B.52.4 (PVC insulated copper, two loaded conductors: single-phase and DC) and Table B.52.5 (three loaded conductors: three-phase), 30 C ambient, 1 to 120 mm2 (the 50 to 120 mm2 rows added 2026-10-21 for battery and inverter DC cables, audit WL-170): columns B1 (insulated conductors in conduit on or in a masonry wall; NOT A1, conduit in a thermally insulated wall, which is rated lower) and C (clipped direct). The 1 mm2 row is not in Tables B.52.4/B.52.5 (they start at 1.5 mm2); its values are the same-basis BS 7671 Table 4D1A figures (methods B and C, two and three loaded conductors). Correction factors: Table B.52.14 (ambient air other than 30 C, PVC) and Table B.52.17 row 1 (circuits bunched in air, on a surface, embedded or enclosed). Pakistani n/d sizes converted with formulas.md section W (A = n x pi x (d x 25.4 / 2)^2) and rated as the largest IEC size not above their real area (one rule for every wiring page, conservative).",
+  "checked": "2026-10-21",
   "status": "Engineer to confirm against the IEC tables and Pakistan Cables / Fast Cables datasheets. Every rating is multiplied by the ambient factor (design air temperature, default derating.default_ambient_c, a conservative hot-climate value pending PEC review, editable on the page) and the grouping factor (circuits in one conduit, default 1).",
   "engineer_confirm": [
    "ampacity",
@@ -10,9 +10,11 @@
    "mcb_curves",
    "min_area_mm2",
    "breaker_margin_load_types",
-   "derating.default_ambient_c"
+   "derating.default_ambient_c",
+   "pk_sizes.sold_as_mm2",
+   "pv_cables.default_ambient_c"
   ],
-  "fields": "cables: area_mm2 nominal conductor size; ampacity_a per installation method with two loaded conductors (single-phase, DC); ampacity_3ph_a the same with three loaded conductors (three-phase). pk_sizes: strands, strand diameter in inches, real area, rated_as_mm2 = the largest row of cables whose area is not above the real area (used for its ampacity). derating: ambient_factors and grouping_factors as [value, factor] rows; a value between two rows takes the factor of the next row up (higher temperature, more circuits). breaker_margin_load_types: load types whose MCB is chosen at I_b x margin (continuous motor-type loads), so a 1.5 ton AC gets a 16 A MCB on 2.5 mm2 rather than 10 A on 1 mm2."
+  "fields": "cables: area_mm2 nominal conductor size; ampacity_a per installation method with two loaded conductors (single-phase, DC); ampacity_3ph_a the same with three loaded conductors (three-phase). pk_sizes: strands, strand diameter in inches, real area, rated_as_mm2 = the largest row of cables whose area is not above the real area (used for its ampacity). derating: ambient_factors and grouping_factors as [value, factor] rows; a value between two rows takes the factor of the next row up (higher temperature, more circuits). breaker_margin_load_types: load types whose MCB is chosen at I_b x margin (continuous motor-type loads), so a 1.5 ton AC gets a 16 A MCB on 2.5 mm2 rather than 10 A on 1 mm2. sold_as_mm2: the metric size the shop sells that n/d cable as (BS imperial to metric equivalence charts; Pakistan Cables price lists name sizes both ways), printed next to the n/d name when it differs from the size we rate it as; set on the rows where the two differ in a way that misleads a buyer (7/52 sold as 10 mm2 but rated 6; 7/64 sold as 16 mm2 but rated 10; the large sizes added 2026-10-21, audit WL-170/180)."
  },
  "methods": {
   "B1": "In conduit in a brick or plastered (masonry) wall, most Pakistani house wiring; a conduit buried in thermal insulation is method A1 and is rated lower",
@@ -117,6 +119,50 @@
     "B1": 110,
     "C": 119
    }
+  },
+  {
+   "area_mm2": 50,
+   "ampacity_a": {
+    "B1": 151,
+    "C": 168
+   },
+   "ampacity_3ph_a": {
+    "B1": 134,
+    "C": 144
+   }
+  },
+  {
+   "area_mm2": 70,
+   "ampacity_a": {
+    "B1": 192,
+    "C": 213
+   },
+   "ampacity_3ph_a": {
+    "B1": 171,
+    "C": 184
+   }
+  },
+  {
+   "area_mm2": 95,
+   "ampacity_a": {
+    "B1": 232,
+    "C": 258
+   },
+   "ampacity_3ph_a": {
+    "B1": 207,
+    "C": 223
+   }
+  },
+  {
+   "area_mm2": 120,
+   "ampacity_a": {
+    "B1": 269,
+    "C": 299
+   },
+   "ampacity_3ph_a": {
+    "B1": 239,
+    "C": 259
+   }
   }
  ],
  "pk_sizes": [
@@ -153,14 +199,16 @@
    "strands": 7,
    "strand_in": 0.052,
    "area_mm2": 9.59,
-   "rated_as_mm2": 6
+   "rated_as_mm2": 6,
+   "sold_as_mm2": 10
   },
   {
    "name": "7/64",
    "strands": 7,
    "strand_in": 0.064,
    "area_mm2": 14.53,
-   "rated_as_mm2": 10
+   "rated_as_mm2": 10,
+   "sold_as_mm2": 16
   },
   {
    "name": "19/44",
@@ -182,6 +230,38 @@
    "strand_in": 0.064,
    "area_mm2": 39.43,
    "rated_as_mm2": 35
+  },
+  {
+   "name": "19/72",
+   "strands": 19,
+   "strand_in": 0.072,
+   "area_mm2": 49.91,
+   "rated_as_mm2": 35,
+   "sold_as_mm2": 50
+  },
+  {
+   "name": "19/83",
+   "strands": 19,
+   "strand_in": 0.083,
+   "area_mm2": 66.32,
+   "rated_as_mm2": 50,
+   "sold_as_mm2": 70
+  },
+  {
+   "name": "37/72",
+   "strands": 37,
+   "strand_in": 0.072,
+   "area_mm2": 97.19,
+   "rated_as_mm2": 95,
+   "sold_as_mm2": 95
+  },
+  {
+   "name": "37/83",
+   "strands": 37,
+   "strand_in": 0.083,
+   "area_mm2": 129.16,
+   "rated_as_mm2": 120,
+   "sold_as_mm2": 120
   }
  ],
  "mcb_curves": {
@@ -324,5 +404,136 @@
     0.38
    ]
   ]
+ },
+ "pv_cables": {
+  "_source": "EN 50618:2014 (H1Z2Z2-K solar cable) Annex A Table A.3: current-carrying capacity at 60 C ambient, 120 C conductor, single core: in free air, on a surface, two cables touching (on a surface); Table A.4 ambient correction factors. Default roof air 70 C: a cable on or under hot panels in a Pakistani summer [ENGINEER]. Added 2026-10-21 for W4 (audit WL-180); house-wiring PVC ratings stay in cables. Below 60 C the factor is kept at 1 (no uprating). isc_factor: a PV string cable must be rated for at least 1.25 × the string's short-circuit current (IEC 62548-1 / IEC 60364-7-712).",
+  "methods": {
+   "surface": "Clipped on a roof, frame or tray surface",
+   "free_air": "In free air, spaced from surfaces",
+   "touching": "Two cables touching on a surface (positive and negative together)"
+  },
+  "default_method": "surface",
+  "default_ambient_c": 70,
+  "ambient_factors": [
+   [
+    10,
+    1
+   ],
+   [
+    60,
+    1
+   ],
+   [
+    70,
+    0.92
+   ],
+   [
+    80,
+    0.84
+   ],
+   [
+    90,
+    0.75
+   ]
+  ],
+  "cables": [
+   {
+    "area_mm2": 1.5,
+    "ampacity_a": {
+     "free_air": 30,
+     "surface": 29,
+     "touching": 24
+    }
+   },
+   {
+    "area_mm2": 2.5,
+    "ampacity_a": {
+     "free_air": 41,
+     "surface": 39,
+     "touching": 33
+    }
+   },
+   {
+    "area_mm2": 4,
+    "ampacity_a": {
+     "free_air": 55,
+     "surface": 52,
+     "touching": 44
+    }
+   },
+   {
+    "area_mm2": 6,
+    "ampacity_a": {
+     "free_air": 70,
+     "surface": 67,
+     "touching": 57
+    }
+   },
+   {
+    "area_mm2": 10,
+    "ampacity_a": {
+     "free_air": 98,
+     "surface": 93,
+     "touching": 79
+    }
+   },
+   {
+    "area_mm2": 16,
+    "ampacity_a": {
+     "free_air": 132,
+     "surface": 125,
+     "touching": 107
+    }
+   },
+   {
+    "area_mm2": 25,
+    "ampacity_a": {
+     "free_air": 176,
+     "surface": 167,
+     "touching": 142
+    }
+   },
+   {
+    "area_mm2": 35,
+    "ampacity_a": {
+     "free_air": 218,
+     "surface": 207,
+     "touching": 176
+    }
+   },
+   {
+    "area_mm2": 50,
+    "ampacity_a": {
+     "free_air": 276,
+     "surface": 262,
+     "touching": 221
+    }
+   },
+   {
+    "area_mm2": 70,
+    "ampacity_a": {
+     "free_air": 347,
+     "surface": 330,
+     "touching": 278
+    }
+   },
+   {
+    "area_mm2": 95,
+    "ampacity_a": {
+     "free_air": 416,
+     "surface": 395,
+     "touching": 333
+    }
+   },
+   {
+    "area_mm2": 120,
+    "ampacity_a": {
+     "free_air": 488,
+     "surface": 464,
+     "touching": 390
+    }
+   }
+  ],
+  "isc_factor": 1.25
  }
 }

@@ -24,15 +24,19 @@ export const voltage_drop = calculator((i, d) => {
   // DC watts are an inverter's output: the battery also supplies its loss, as in designCurrent (WL-121).
   const eff = mode === 'dc' ? frac(i, 'inverter_eff', dflt(d, 'inverter_eff_hybrid')) : 1;
   if (has(i, 'inverter_eff')) frac(i, 'inverter_eff'); // used only on DC, but a filled box is still checked (WL-223)
-  const amps = has(i, 'amps') || !('watts' in i) ? pos(i, 'amps') : pos(i, 'watts') / (k * volts * pf * eff);
+  // DC watts from a battery: the current at the low-battery cut-off voltage (WL-177 [ENGINEER]).
+  const by_amps = has(i, 'amps') || !('watts' in i);
+  const current_v = mode === 'dc' && !by_amps ? volts * dflt(d, 'dc_cutoff_ratio') : volts;
+  const amps = by_amps ? pos(i, 'amps') : pos(i, 'watts') / (k * current_v * pf * eff);
   const kv = mode === 'ac3' ? Math.sqrt(3) : 2;
   const drop_v = (kv * length_m * amps * rho) / area_mm2;
   if (drop_v >= volts) throw new CalcError('cable_far_too_small_for_load', 'area_mm2');
   const drop_pct = (drop_v / volts) * 100;
   const limit_pct = circuit === 'lighting' ? dflt(d, 'vdrop_limit_lighting_pct') : dflt(d, 'vdrop_limit_other_pct');
-  const out = { mode, volts, pf, k, kv, inverter_eff: eff, length_m, area_mm2, conductor, rho, amps, drop_v, drop_pct, limit_pct, within_limit: drop_pct <= limit_pct, voltage_at_load: volts - drop_v };
+  const out = { mode, volts, current_v, pf, k, kv, inverter_eff: eff, length_m, area_mm2, conductor, rho, amps, drop_v, drop_pct, limit_pct, within_limit: drop_pct <= limit_pct, voltage_at_load: volts - drop_v };
   if (conductor === 'aluminium') return { ...out, ampacity_checked: false };
   const t = cableTable(d);
+  if (pick(i, 'cable', ['pvc', 'pv'], 'pvc') === 'pv') return { ...out, ...pvRating(i, t, area_mm2, amps) };
   const method = pick(i, 'method', Object.keys(t.methods), 'B1');
   const der = derating(i, t);
   const rated = [...t.cables].reverse().find((c) => c.area_mm2 <= area_mm2 + 1e-9);
@@ -41,6 +45,26 @@ export const voltage_drop = calculator((i, d) => {
   const ampacity_a = ampacity_30c_a * der.derate;
   return { ...out, ampacity_checked: true, method, ...der, rated_mm2: rated.area_mm2, ampacity_30c_a, ampacity_a, over_cable_rating: amps > ampacity_a + 1e-9 };
 });
+
+/**
+ * Solar PV cable (W4, WL-180 [ENGINEER]): EN 50618 Table A.3 ratings at 60 °C air (data/cable-ampacity.json pv_cables:
+ * free air, on a surface, two cables touching) × the Table A.4 factor for the roof air temperature (default pv_derating).
+ */
+function pvRating(i, t, area_mm2, amps) {
+  const pv = t.pv_cables;
+  if (!pv?.cables?.length) throw new CalcError('cable_data_missing', 'cables');
+  const method = pick(i, 'method', Object.keys(pv.methods), pv.default_method);
+  const amb = pv.ambient_factors;
+  const ambient_c = num(i, 'ambient_c', { def: pv.default_ambient_c, min: amb[0][0], max: amb[amb.length - 1][0], code: 'ambient_out_of_range' });
+  const ambient_factor = factorFor(amb, ambient_c);
+  const rated = [...pv.cables].reverse().find((c) => c.area_mm2 <= area_mm2 + 1e-9);
+  const base = { ampacity_checked: true, cable: 'pv', method, ambient_c, ambient_factor, derate: ambient_factor };
+  if (!rated) return { ...base, over_cable_rating: true };
+  const ampacity_a = rated.ampacity_a[method] * ambient_factor;
+  // A string cable must carry 1.25 × the string's Isc (IEC 62548-1; data pv_cables.isc_factor).
+  const design_a = amps * pv.isc_factor;
+  return { ...base, isc_factor: pv.isc_factor, design_a, rated_mm2: rated.area_mm2, ampacity_base_a: rated.ampacity_a[method], ampacity_a, over_cable_rating: design_a > ampacity_a + 1e-9 };
+}
 
 /** PK designation n/d: n strands of diameter d inches. A = n × π × (d × 25.4 / 2)² mm². */
 export const pk_cable_area = calculator((i) => {
@@ -112,9 +136,12 @@ function designCurrent(i, d, t) {
     watts = ib * k * volts * pf;
   } else {
     watts = pos(i, 'watts');
-    ib = watts / (k * volts * pf * eff);
+    // DC: the battery current at the low-battery cut-off, where it is highest (data/defaults.json dc_cutoff_ratio, WL-177).
+    const current_v = mode === 'dc' ? volts * dflt(d, 'dc_cutoff_ratio') : volts;
+    ib = watts / (k * current_v * pf * eff);
+    out.current_v = current_v;
   }
-  return { ...out, watts, ib_a: ib, load_type };
+  return { current_v: volts, ...out, watts, ib_a: ib, load_type };
 }
 
 /**
@@ -128,7 +155,7 @@ function breakerFor(dc, i, d, t) {
   // DC battery feeds above the largest MCB take a DC fuse (data/defaults.json standard_dc_fuse_a, WL-121).
   const sizes = dc.mode === 'dc' ? [...dflt(d, 'standard_breaker_a'), ...dflt(d, 'standard_dc_fuse_a')] : dflt(d, 'standard_breaker_a');
   const breaker = sizes.find((s) => s >= breaker_design_a - 1e-9);
-  if (breaker === undefined) throw new CalcError('load_above_standard_breakers', 'watts');
+  if (breaker === undefined) throw new CalcError(dc.mode === 'dc' ? 'dc_load_above_cable_table' : 'load_above_standard_breakers', 'watts');
   return { margin, breaker_design_a, breaker_a: breaker, min_cable_a: Math.max(dc.ib_a * margin, breaker) };
 }
 
@@ -139,7 +166,11 @@ const minArea = (t, circuit) => t.min_area_mm2?.[circuit] ?? 0;
  * so its voltage drop is never above the one computed for the IEC size and W5 rates it at least as that size.
  */
 const pkFor = (t, mm2) => t.pk_sizes?.find((p) => p.area_mm2 >= mm2 - 1e-9);
-const pkSizeFor = (t, mm2) => pkFor(t, mm2)?.name ?? 'none';
+// The shop's metric name is added when it differs from the size shown, e.g. 7/64 is sold as 16 mm² (WL-180).
+const pkLabel = (p, mm2) => (p.sold_as_mm2 && Math.abs(p.sold_as_mm2 - mm2) > 1e-9 ? `${p.name}, sold as ${p.sold_as_mm2} mm²` : p.name);
+const pkSizeFor = (t, mm2) => { const p = pkFor(t, mm2); return p ? pkLabel(p, mm2) : 'none'; };
+// A DC battery feed above the table is not split into circuits like an AC load (WL-170).
+const aboveTable = (dc) => (dc.mode === 'dc' ? 'dc_load_above_cable_table' : 'load_above_cable_table');
 
 /**
  * W2/W1: smallest copper cable (data/cable-ampacity.json) whose derated ampacity for the installation method
@@ -167,7 +198,7 @@ export const wire_size = calculator((i, d) => {
     if (by_ampacity === null) by_ampacity = c;
     if ((dropOf(c.area_mm2) / dc.volts) * 100 <= limit_pct + 1e-9) { chosen = c; break; }
   }
-  if (!chosen) throw new CalcError(by_ampacity ? 'run_too_long_for_table' : 'load_above_cable_table', 'length_m');
+  if (!chosen) throw new CalcError(by_ampacity ? 'run_too_long_for_table' : aboveTable(dc), 'length_m');
   const drop_v = dropOf(chosen.area_mm2);
   return {
     ...dc, length_m, method, circuit, rho, ...br, ...der, min_mm2, area_mm2: chosen.area_mm2, ampacity_30c_a: ratingAt30(chosen, method, dc.mode), ampacity_a: iz(chosen), pk_size: pkSizeFor(t, chosen.area_mm2),
@@ -191,7 +222,7 @@ export const breaker_size = calculator((i, d) => {
   const iz = (c) => ratingAt30(c, method, dc.mode) * der.derate;
   const min_mm2 = minArea(t, dc.load_type === 'lighting' ? 'lighting' : 'other');
   const cable = t.cables.find((c) => c.area_mm2 >= min_mm2 - 1e-9 && iz(c) >= br.min_cable_a - 1e-9);
-  if (!cable) throw new CalcError('load_above_cable_table', 'watts');
+  if (!cable) throw new CalcError(aboveTable(dc), 'watts');
   return {
     ...dc, ...br, ...der, curve, trip_min: cv.trip_min, trip_max: cv.trip_max, trip_min_a: cv.trip_min * br.breaker_a, trip_max_a: cv.trip_max * br.breaker_a, curve_use: cv.use,
     method, min_mm2, area_mm2: cable.area_mm2, ampacity_30c_a: ratingAt30(cable, method, dc.mode), ampacity_a: iz(cable), pk_size: pkSizeFor(t, cable.area_mm2),
@@ -211,6 +242,6 @@ export const cable_rating = calculator((i, d) => {
   const b1 = c.ampacity_a.B1 * der.derate;
   const cm = c.ampacity_a.C * der.derate;
   const out = { area_mm2: c.area_mm2, ...der, ampacity_30c_b1_a: c.ampacity_a.B1, ampacity_30c_c_a: c.ampacity_a.C, ampacity_b1_a: b1, ampacity_c_a: cm, volts, pf, max_w_b1: b1 * volts * pf, max_w_c: cm * volts * pf };
-  if (pk) Object.assign(out, { pk_size: pk.name, pk_area_mm2: pk.area_mm2, pk_strands: pk.strands, pk_strand_mm: pk.strand_in * 25.4 });
+  if (pk) Object.assign(out, { pk_size: pkLabel(pk, c.area_mm2), pk_area_mm2: pk.area_mm2, pk_strands: pk.strands, pk_strand_mm: pk.strand_in * 25.4 });
   return out;
 });

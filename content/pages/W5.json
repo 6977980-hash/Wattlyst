@@ -87,7 +87,7 @@
    "unit": "0 to 1",
    "default": "@inverter_eff_hybrid",
    "advanced": true,
-   "hint": "DC with watts entered: for a battery-to-inverter cable the watts are what the inverter delivers, and the battery also supplies its loss, so current = watts ÷ (efficiency × volts). Enter 1 for a DC load wired straight to the battery. Ignored when you enter the amps."
+   "hint": "DC with watts entered: for a battery-to-inverter cable the watts are what the inverter delivers, and the battery also supplies its loss, so current = watts ÷ (efficiency × volts), at the battery's low-battery cut-off voltage, where the current is highest. Enter 1 for a DC load wired straight to the battery. Ignored when you enter the amps."
   },
   {
    "name": "circuit",
@@ -171,7 +171,7 @@
   }
  ],
  "answer": "A {{out.amps|1}} A load on {{in.area_mm2|1}} mm² {{out.conductor}} cable over {{in.length_m|int}} m at {{in.volts|int}} V loses {{out.drop_v|1}} V, a voltage drop of {{out.drop_pct|2}}%, under the {{out.limit_pct|int}}% limit. Voltage drop = two × length × current × resistivity ÷ cable area for single-phase and DC; three-phase uses √3 instead of two. The cable must also be rated for the current, which the calculator checks for copper.",
- "how": "Current: {{out.amps|1}} A (the watts ÷ ({{out.k|4}} × {{out.volts}} V × {{out.pf|2}} power factor × {{out.inverter_eff|2}}), unless you entered the amps; the last factor is the inverter efficiency for watts on a DC battery cable, one on AC). Drop = {{out.kv|4}} × {{in.length_m}} m × {{out.amps|1}} A × {{out.rho|4}} Ω·mm²/m ÷ {{in.area_mm2|2}} mm² = {{out.drop_v|1}} V, which is {{out.drop_pct|2}}% of {{out.volts}} V, leaving {{out.voltage_at_load|int}} V at the load. The current factor is one for single-phase and DC and √3 for three-phase; the drop factor is two (out and back) for single-phase and DC and √3 for three-phase. The limit you chose is {{out.limit_pct|int}}%; if the drop is over it, try the next cable size. A small drop does not make a cable safe: it must also be rated for the current.",
+ "how": "Current: {{out.amps|1}} A (the watts ÷ ({{out.k|4}} × {{out.current_v|2}} V × {{out.pf|2}} power factor × {{out.inverter_eff|2}}), unless you entered the amps; the last factor is the inverter efficiency for watts on a DC battery cable, one on AC; for watts on DC the voltage is the battery's at its low-battery cut-off). Drop = {{out.kv|4}} × {{in.length_m}} m × {{out.amps|1}} A × {{out.rho|4}} Ω·mm²/m ÷ {{in.area_mm2|2}} mm² = {{out.drop_v|1}} V, which is {{out.drop_pct|2}}% of {{out.volts}} V, leaving {{out.voltage_at_load|int}} V at the load. The current factor is one for single-phase and DC and √3 for three-phase; the drop factor is two (out and back) for single-phase and DC and √3 for three-phase. The limit you chose is {{out.limit_pct|int}}%; if the drop is over it, try the next cable size. A small drop does not make a cable safe: it must also be rated for the current.",
  "key_facts": [
   "Voltage drop = 2 × length × current × resistivity ÷ area (single-phase and DC) or √3 × length × current × resistivity ÷ area (three-phase), with copper resistivity of {{d.rho_copper|4}} Ω·mm²/m at working temperature.",
   "A {{out.amps|1}} A single-phase load on {{in.area_mm2|1}} mm² copper over {{in.length_m|int}} m drops {{out.drop_pct|2}}%; on {{ex.0.in.area_mm2|int}} mm² the drop falls to {{ex.0.out.drop_pct|2}}%.",

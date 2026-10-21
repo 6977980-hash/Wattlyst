@@ -45,8 +45,8 @@
    {
     "h2": "Running load, peak load and monthly units: what each number is for",
     "p": [
-     "The 3,085 W running load of the default home is what an inverter, UPS or generator must carry for as long as everything is on, and what the main breaker sees. The 4,885 W peak is the moment the largest motor or compressor starts on top of that load: it sets the surge rating of an inverter and, more often than the running load, the size of a generator.",
-     "The 460 units a month are a different quantity: energy, not power. They are what the bill charges for and what a solar system has to produce. Take the running and peak watts to the inverter size calculator or the generator size calculator, and the daily units to the solar system size calculator."
+     "The 3,017 W running load of the default home is what an inverter, UPS or generator must carry for as long as everything is on, and what the main breaker sees. The 4,881 W peak is the moment the largest motor or compressor starts on top of that load: it sets the surge rating of an inverter and, more often than the running load, the size of a generator.",
+     "The 458 units a month are a different quantity: energy, not power. They are what the bill charges for and what a solar system has to produce. Take the running and peak watts to the inverter size calculator or the generator size calculator, and the daily units to the solar system size calculator."
     ],
     "l": [
      [],
@@ -89,7 +89,7 @@
    {
     "h2": "Home load in amps and the wiring",
     "p": [
-     "At 230 V and a power factor of 0.8, the default running load of 3,085 W is 16.8 A on a single-phase supply. That is the current the main cable and the main breaker carry when everything on the list is running.",
+     "At 230 V and a power factor of 0.8, the default running load of 3,017 W is 15.4 A on a single-phase supply. That is the current the main cable and the main breaker carry when everything on the list is running.",
      "Each circuit in the house carries only its own share, so wire and breaker sizes are chosen circuit by circuit. Use the home wiring load schedule to size every circuit at once, or the MCB size calculator for one circuit; have a licensed electrician confirm the main breaker and cable before changing them."
     ],
     "l": [
@@ -120,7 +120,7 @@
    },
    {
     "q": "What is the total load of a house in kW?",
-    "a": "Most Pakistani homes without an AC run at well under one kilowatt; a home with one inverter AC, fans, lights and a fridge runs at about 3.1 kW, and each extra inverter AC adds about 1 kW on average and more at full speed."
+    "a": "Most Pakistani homes without an AC run at well under one kilowatt; a home with one inverter AC, fans, lights and a fridge runs at about 3 kW, and each extra inverter AC adds about 1 kW on average and more at full speed."
    },
    {
     "q": "What is a connected load and how is it different from running load?",
@@ -128,7 +128,7 @@
    },
    {
     "q": "How many units does this load use per month?",
-    "a": "Each appliance's watts × hours a day ÷ 1,000 gives its units a day; add them and multiply by 30.42. The default home above uses about 15.1 units a day and 460 a month."
+    "a": "Each appliance's watts × hours a day ÷ 1,000 gives its units a day; add them and multiply by 30.42. The default home above uses about 15.1 units a day and 458 a month."
    },
    {
     "q": "Can I use this load to size a UPS, inverter or solar system?",
@@ -143,7 +143,7 @@
    "Home electrical load in watts = the sum of the running watts of every appliance that is on at the same time; divide by volts × power factor to get amps.",
    "Peak load adds the starting surge of the largest motor or compressor only once, because two motors rarely start in the same instant.",
    "Monthly units (kWh) = watts × hours a day ÷ 1,000 × 30.42 days, added over every appliance; this is the number your electricity bill is based on.",
-   "The default example home above (18 appliances of 6 kinds) draws 3,085 W running, 4,885 W at peak and uses about 460 units a month."
+   "The default example home above (18 appliances of 6 kinds) draws 3,017 W running, 4,881 W at peak and uses about 458 units a month."
   ],
   "mistakes": [
    "Adding every appliance in the house. Only count what runs at the same time; an iron used for half an hour matters for the monthly units but rarely for the peak load.",
@@ -516,8 +516,8 @@
     },
     "water-motor-1hp": {
      "name": "Water pump / donkey motor 1 hp",
-     "running_w": 1000,
-     "starting_w": 2800,
+     "running_w": 932,
+     "starting_w": 2796,
      "typical_hours_per_day": 1,
      "load_type": "motor"
     },
@@ -1303,9 +1303,8 @@
      "name": "pf",
      "label": "Power factor",
      "unit": "0 to 1",
-     "default": 0.8,
      "advanced": true,
-     "hint": "Mixed home loads with fans and motors are about 0.8; pure heaters are 1.0."
+     "hint": "Leave blank to use each appliance's own power factor: heaters, irons, kettles and geysers 1.0, inverter ACs 0.9, motors and compressors about 0.8. A figure here is used for every row."
     }
    ],
    "fixed_inputs": {},
@@ -1316,7 +1315,7 @@
      "spec": "int",
      "unit": "W",
      "label_ur": "Kul chalta load",
-     "value": "3,085"
+     "value": "3,017"
     },
     {
      "key": "peak_w",
@@ -1324,7 +1323,7 @@
      "spec": "int",
      "unit": "W",
      "label_ur": "Sab se bare motor ke start par peak",
-     "value": "4,885"
+     "value": "4,881"
     },
     {
      "key": "amps",
@@ -1332,7 +1331,7 @@
      "spec": "1",
      "unit": "A",
      "label_ur": "Poore load par current",
-     "value": "16.8"
+     "value": "15.4"
     },
     {
      "key": "daily_kwh",
@@ -1347,19 +1346,19 @@
      "label": "Units a month",
      "spec": "int",
      "label_ur": "Mahana units",
-     "value": "460"
+     "value": "458"
     },
     {
      "key": "monthly_rs",
      "label": "Estimated monthly bill",
      "spec": "rs",
      "label_ur": "Andaazan mahana bill",
-     "value": "Rs 23,506"
+     "value": "Rs 23,402"
     }
    ],
    "how": {
     "tpl": "Running load = the watts of every appliance × its quantity, added up = {{out.running_w|int}} W. Peak load adds the starting surge of the largest motor = {{out.peak_w|int}} W. Current = {{out.running_w|int}} W ÷ ({{out.volts}} V × {{out.pf|2}} power factor) = {{out.amps|1}} A. Energy = each appliance's watts × hours a day (an inverter AC counts at its average draw, below its rated watts), added up = {{out.daily_kwh|1}} units a day, × {{out.days|int}} days = {{out.monthly_units|int}} units a month. Bill: {{out.monthly_units|int}} units reach the {{out.bill_rate|rs2}} slab, so every unit is charged at that rate = {{out.bill_energy_rs|rs}}, plus the fixed charge for {{out.bill_kw|int}} kW, FC surcharge, QTA and GST (no FPA, unprotected) = {{out.monthly_rs|rs}} a month, the same as the electricity bill calculator gives for these units.",
-    "text": "Running load = the watts of every appliance × its quantity, added up = 3,085 W. Peak load adds the starting surge of the largest motor = 4,885 W. Current = 3,085 W ÷ (230 V × 0.8 power factor) = 16.8 A. Energy = each appliance's watts × hours a day (an inverter AC counts at its average draw, below its rated watts), added up = 15.1 units a day, × 30 days = 460 units a month. Bill: 460 units reach the Rs 38.95 slab, so every unit is charged at that rate = Rs 17,933, plus the fixed charge for 1 kW, FC surcharge, QTA and GST (no FPA, unprotected) = Rs 23,506 a month, the same as the electricity bill calculator gives for these units."
+    "text": "Running load = the watts of every appliance × its quantity, added up = 3,017 W. Peak load adds the starting surge of the largest motor = 4,881 W. Current = 3,017 W ÷ (230 V × 0.85 power factor) = 15.4 A. Energy = each appliance's watts × hours a day (an inverter AC counts at its average draw, below its rated watts), added up = 15.1 units a day, × 30 days = 458 units a month. Bill: 458 units reach the Rs 38.95 slab, so every unit is charged at that rate = Rs 17,852, plus the fixed charge for 1 kW, FC surcharge, QTA and GST (no FPA, unprotected) = Rs 23,402 a month, the same as the electricity bill calculator gives for these units."
    },
    "submit": "Calculate",
    "notice": "",
@@ -1403,11 +1402,11 @@
    },
    {
     "title": "Family home with two inverter ACs",
-    "text": "Five fans, twelve bulbs, a fridge, two 1.5 ton inverter ACs, an iron and a water pump come to 5,564 W running and 7,364 W at peak, or 30.2 A. Expect about 741 units a month, an estimated bill of Rs 47,290 at the Rs 47.20 slab, using 139% of a 4 kW sanctioned load."
+    "text": "Five fans, twelve bulbs, a fridge, two 1.5 ton inverter ACs, an iron and a water pump come to 5,496 W running and 7,360 W at peak, or 27 A. Expect about 739 units a month, an estimated bill of Rs 47,167 at the Rs 47.20 slab, using 137% of a 4 kW sanctioned load."
    },
    {
     "title": "Non-inverter AC plus an electric geyser on a 2 kW connection",
-    "text": "The running load is 5,440 W, but the non-inverter compressor pushes the peak to 9,040 W, or 49.1 A for a moment. At 272% of the sanctioned load this connection is overloaded; a higher sanctioned load or an inverter AC is the fix."
+    "text": "The running load is 5,440 W, but the non-inverter compressor pushes the peak to 9,040 W, or 43.7 A for a moment. At 272% of the sanctioned load this connection is overloaded; a higher sanctioned load or an inverter AC is the fix."
    }
   ],
   "table": {
@@ -1436,28 +1435,28 @@
     ],
     [
      "18 appliances, 6 kinds",
-     "3,085 W",
-     "4,885 W",
-     "16.8 A",
-     "460"
+     "3,017 W",
+     "4,881 W",
+     "15.4 A",
+     "458"
     ],
     [
      "22 appliances, 6 kinds",
-     "5,564 W",
-     "7,364 W",
-     "30.2 A",
-     "741"
+     "5,496 W",
+     "7,360 W",
+     "27 A",
+     "739"
     ],
     [
      "28 appliances, 7 kinds",
-     "9,330 W",
-     "11,130 W",
-     "50.7 A",
-     "1,248"
+     "9,262 W",
+     "11,126 W",
+     "44.4 A",
+     "1,246"
     ]
    ]
   },
-  "answer": "A typical home with 18 appliances running together (fans, lights, a fridge, a TV, a 1.5 ton inverter AC and a water pump) draws about 3,085 W, or 16.8 A at 230 V, and uses about 460 units a month. Add your own appliances below to get your total watts, peak load, amps and monthly units.",
+  "answer": "A typical home with 18 appliances running together (fans, lights, a fridge, a TV, a 1.5 ton inverter AC and a water pump) draws about 3,017 W, or 15.4 A at 230 V, and uses about 458 units a month. Add your own appliances below to get your total watts, peak load, amps and monthly units.",
   "formula": {
    "text": "P = Σ (W × qty); I = P ÷ (V × PF); units/day = Σ (W × qty × h) ÷ 1000",
    "lines": [
@@ -1563,7 +1562,7 @@
       "name": "What is the total load of a house in kW?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Most Pakistani homes without an AC run at well under one kilowatt; a home with one inverter AC, fans, lights and a fridge runs at about 3.1 kW, and each extra inverter AC adds about 1 kW on average and more at full speed."
+       "text": "Most Pakistani homes without an AC run at well under one kilowatt; a home with one inverter AC, fans, lights and a fridge runs at about 3 kW, and each extra inverter AC adds about 1 kW on average and more at full speed."
       }
      },
      {
@@ -1579,7 +1578,7 @@
       "name": "How many units does this load use per month?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Each appliance's watts × hours a day ÷ 1,000 gives its units a day; add them and multiply by 30.42. The default home above uses about 15.1 units a day and 460 a month."
+       "text": "Each appliance's watts × hours a day ÷ 1,000 gives its units a day; add them and multiply by 30.42. The default home above uses about 15.1 units a day and 458 a month."
       }
      },
      {

@@ -78,7 +78,7 @@
    {
     "h2": "What wire size for a 5 kW load?",
     "p": [
-     "On single phase at 230 V a 5,000 W mixed load draws 27.2 A, so it needs a 32 A MCB and a 10 mm² cable (7/64) rated 45 A, with a 1.1% drop over 20 m. This is the size of a typical main feed for a small home or a sub-main to a floor. The same five kW on three phase splits over three live wires and needs a smaller cable."
+     "On single phase at 230 V a 5,000 W mixed load draws 27.2 A, so it needs a 32 A MCB and a 10 mm² cable (7/64, sold as 16 mm²) rated 45 A, with a 1.1% drop over 20 m. This is the size of a typical main feed for a small home or a sub-main to a floor. The same five kW on three phase splits over three live wires and needs a smaller cable."
     ]
    }
   ],
@@ -93,11 +93,11 @@
    },
    {
     "q": "What size wire for a five kW load at 230 V?",
-    "a": "10 mm² copper (7/64) with a 32 A MCB: the load draws 27.2 A and the cable is rated 45 A."
+    "a": "10 mm² copper (7/64, sold as 16 mm²) with a 32 A MCB: the load draws 27.2 A and the cable is rated 45 A."
    },
    {
     "q": "Which wire for a 5,000 W load on a 32 A MCB?",
-    "a": "10 mm² (7/64), rated 45 A in conduit in 45 °C air. The cable must cover both the MCB and the design current × 1.25 (34 A here, which is what decides it), so that the breaker always protects the cable."
+    "a": "10 mm² (7/64, sold as 16 mm²), rated 45 A in conduit in 45 °C air. The cable must cover both the MCB and the design current × 1.25 (34 A here, which is what decides it), so that the breaker always protects the cable."
    },
    {
     "q": "Does cable length change the wire size?",
@@ -109,7 +109,7 @@
    },
    {
     "q": "Which wire between the battery and the inverter?",
-    "a": "DC current is high because the voltage is low: 3,000 W at 48 V is 69.4 A, needing 35 mm² (19/64) over a 3 m run with a DC-rated breaker or fuse. Keep battery cables as short as possible."
+    "a": "DC current is high because the voltage is low: 3,000 W from a 48 V battery is 79.4 A by the time the battery is low, needing 50 mm² (19/83, sold as 70 mm²) over a 3 m run with a DC-rated breaker or fuse. Keep battery cables as short as possible."
    },
    {
     "q": "What do 3/29, 7/29 and 7/36 mean?",
@@ -119,7 +119,7 @@
   "key_facts": [
    "Wire size = the smallest copper cable whose current rating covers the design current × 1.25 (and the MCB) and whose voltage drop over the run stays under 5% for power circuits or 3% for lighting.",
    "Pakistani wire sizes are strands/diameter: 7/29 is rated as a 2.5 mm² cable and carries 19 A in conduit; 7/36 as 4 mm² at 25 A (IEC 60364-5-52, PVC copper, in conduit, corrected for 45 °C air).",
-   "A 2,000 W load at 230 V draws 10.9 A and fits on 7/29 with a 16 A MCB; a 5,000 W load draws 27.2 A and needs 10 mm² (7/64) with a 32 A MCB.",
+   "A 2,000 W load at 230 V draws 10.9 A and fits on 7/29 with a 16 A MCB; a 5,000 W load draws 27.2 A and needs 10 mm² (7/64, sold as 16 mm²) with a 32 A MCB.",
    "Long runs are sized by voltage drop, not current: 2,000 W over 60 m needs 4 mm² although 2.5 mm² would carry the current."
   ],
   "mistakes": [
@@ -194,7 +194,7 @@
      "unit": "0 to 1",
      "default": 0.9,
      "advanced": true,
-     "hint": "DC only: for a battery-to-inverter cable the watts are what the inverter delivers, and the battery also supplies its loss, so current = watts ÷ (efficiency × volts). Enter 1 for a DC load wired straight to the battery. For the worst case enter the battery's lowest working voltage above."
+     "hint": "DC only: for a battery-to-inverter cable the watts are what the inverter delivers, and the battery also supplies its loss, so current = watts ÷ (efficiency × volts). Enter 1 for a DC load wired straight to the battery. Enter the bank's nominal voltage above: the calculator works at the battery's low-battery cut-off voltage, where the current is highest."
     },
     {
      "name": "load_type",
@@ -328,8 +328,8 @@
     }
    ],
    "how": {
-    "tpl": "Design current = {{out.watts}} W ÷ ({{out.k|2}} × {{out.volts}} V × {{out.pf|2}} power factor × {{out.inverter_eff|2}}) = {{out.ib_a|1}} A (the first factor is one for single phase and DC, root three for three phase; the last is the inverter efficiency on a DC battery feed, one on AC). MCB (or DC fuse above the largest MCB) = next standard size above {{out.breaker_design_a|1}} A = {{out.breaker_a|int}} A. The cable must be rated at least {{out.min_cable_a|1}} A, the larger of {{out.ib_a|1}} A × {{out.margin|2}} and the MCB, and be at least {{out.min_mm2|1}} mm² for this circuit type: {{out.area_mm2|1}} mm² ({{out.pk_size|raw}}) is rated {{out.ampacity_a|int}} A. Voltage drop over the {{in.length_m}} m run = {{out.drop_v|1}} V, which is {{out.drop_pct|1}}% of {{out.volts}} V, within the {{out.limit_pct|int}}% limit.",
-    "text": "Design current = 2,000 W ÷ (1 × 230 V × 0.8 power factor × 1) = 10.9 A (the first factor is one for single phase and DC, root three for three phase; the last is the inverter efficiency on a DC battery feed, one on AC). MCB (or DC fuse above the largest MCB) = next standard size above 10.9 A = 16 A. The cable must be rated at least 16 A, the larger of 10.9 A × 1.25 and the MCB, and be at least 2.5 mm² for this circuit type: 2.5 mm² (7/29) is rated 19 A. Voltage drop over the 20 m run = 3.9 V, which is 1.7% of 230 V, within the 5% limit."
+    "tpl": "Design current = {{out.watts}} W ÷ ({{out.k|2}} × {{out.current_v|2}} V × {{out.pf|2}} power factor × {{out.inverter_eff|2}}) = {{out.ib_a|1}} A (the first factor is one for single phase and DC, root three for three phase; the last is the inverter efficiency on a DC battery feed, one on AC; on DC the voltage is the battery's at its low-battery cut-off, where the current is highest). MCB (or DC fuse above the largest MCB) = next standard size above {{out.breaker_design_a|1}} A = {{out.breaker_a|int}} A. The cable must be rated at least {{out.min_cable_a|1}} A, the larger of {{out.ib_a|1}} A × {{out.margin|2}} and the MCB, and be at least {{out.min_mm2|1}} mm² for this circuit type: {{out.area_mm2|1}} mm² ({{out.pk_size|raw}}) is rated {{out.ampacity_a|int}} A. Voltage drop over the {{in.length_m}} m run = {{out.drop_v|1}} V, which is {{out.drop_pct|1}}% of {{out.volts}} V, within the {{out.limit_pct|int}}% limit.",
+    "text": "Design current = 2,000 W ÷ (1 × 230 V × 0.8 power factor × 1) = 10.9 A (the first factor is one for single phase and DC, root three for three phase; the last is the inverter efficiency on a DC battery feed, one on AC; on DC the voltage is the battery's at its low-battery cut-off, where the current is highest). MCB (or DC fuse above the largest MCB) = next standard size above 10.9 A = 16 A. The cable must be rated at least 16 A, the larger of 10.9 A × 1.25 and the MCB, and be at least 2.5 mm² for this circuit type: 2.5 mm² (7/29) is rated 19 A. Voltage drop over the 20 m run = 3.9 V, which is 1.7% of 230 V, within the 5% limit."
    },
    "submit": "Calculate",
    "notice": "",
@@ -340,6 +340,7 @@
     "cable_data_missing": "Cable data could not be loaded. Please refresh the page.",
     "cable_size_unknown": "Pick a standard cable size.",
     "load_above_standard_breakers": "This load needs more than the largest single-phase MCB. Split it into separate circuits or ask a licensed electrician about a three-phase connection.",
+    "dc_load_above_cable_table": "This battery current is above the largest cable in our table. Do not split a battery feed into separate circuits: use a higher battery voltage (it lowers the current) or have a licensed electrician design the busbars, parallel cables and fusing.",
     "load_above_cable_table": "This load is above the largest cable in our table. Split it into separate circuits and consult a licensed electrician.",
     "ambient_out_of_range": "Enter an air temperature around the cable between 10 and 60 °C.",
     "circuits_out_of_range": "Enter how many circuits share the conduit or bundle, from 1 to 20.",
@@ -355,14 +356,14 @@
     {
      "label": "Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)",
      "url": "https://webstore.iec.ch/publication/1878",
-     "checked": "2026-10-14"
+     "checked": "2026-10-21"
     }
    ]
   },
   "examples": [
    {
     "title": "Five kW mixed load, 20 m, single phase",
-    "text": "5,000 W ÷ (230 V × 0.8) = 27.2 A, so a 32 A MCB. The cable must be rated 34 A: 10 mm² (7/64) at 45 A. Voltage drop 2.4 V, or 1.1%."
+    "text": "5,000 W ÷ (230 V × 0.8) = 27.2 A, so a 32 A MCB. The cable must be rated 34 A: 10 mm² (7/64, sold as 16 mm²) at 45 A. Voltage drop 2.4 V, or 1.1%."
    },
    {
     "title": "Long 60 m run: voltage drop decides",
@@ -374,7 +375,7 @@
    },
    {
     "title": "48 V battery to inverter cable, 3,000 W, 3 m",
-    "text": "DC has no power factor, but the battery also supplies the inverter's loss: 3,000 W ÷ (90% × 48 V) = 69.4 A. The cable must be rated 86.8 A, so 35 mm² (19/64) at 99 A, protected by a DC-rated breaker or fuse of 80 A. Even at 3 m the drop is 0.6%, which is why battery cables are kept short and thick."
+    "text": "DC has no power factor, but the battery also supplies the inverter's loss, and the current is highest when the battery is nearly empty: 3,000 W ÷ (90% × 42 V, the 48 V bank at its low-battery cut-off) = 79.4 A. The cable must be rated 99.2 A, so 50 mm² (19/83, sold as 70 mm²) at 119 A, protected by a DC-rated breaker or fuse of 80 A. Even at 3 m the drop is 0.4%, which is why battery cables are kept short and thick."
    },
    {
     "title": "3,000 W socket circuit, 10 m",
@@ -424,7 +425,7 @@
      "5,000 W",
      "27.2 A",
      "10 mm²",
-     "7/64",
+     "7/64, sold as 16 mm²",
      "45 A",
      "32 A",
      "1.1%"
@@ -564,7 +565,7 @@
       "name": "What size wire for a five kW load at 230 V?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "10 mm² copper (7/64) with a 32 A MCB: the load draws 27.2 A and the cable is rated 45 A."
+       "text": "10 mm² copper (7/64, sold as 16 mm²) with a 32 A MCB: the load draws 27.2 A and the cable is rated 45 A."
       }
      },
      {
@@ -572,7 +573,7 @@
       "name": "Which wire for a 5,000 W load on a 32 A MCB?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "10 mm² (7/64), rated 45 A in conduit in 45 °C air. The cable must cover both the MCB and the design current × 1.25 (34 A here, which is what decides it), so that the breaker always protects the cable."
+       "text": "10 mm² (7/64, sold as 16 mm²), rated 45 A in conduit in 45 °C air. The cable must cover both the MCB and the design current × 1.25 (34 A here, which is what decides it), so that the breaker always protects the cable."
       }
      },
      {
@@ -596,7 +597,7 @@
       "name": "Which wire between the battery and the inverter?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "DC current is high because the voltage is low: 3,000 W at 48 V is 69.4 A, needing 35 mm² (19/64) over a 3 m run with a DC-rated breaker or fuse. Keep battery cables as short as possible."
+       "text": "DC current is high because the voltage is low: 3,000 W from a 48 V battery is 79.4 A by the time the battery is low, needing 50 mm² (19/83, sold as 70 mm²) over a 3 m run with a DC-rated breaker or fuse. Keep battery cables as short as possible."
       }
      },
      {

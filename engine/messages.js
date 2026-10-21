@@ -34,12 +34,13 @@ const lim = (c) => c.limit.toLocaleString('en-US');
 const eg = (c, key) => { const d = fld(c, key).default; return d != null && typeof d != 'object' && !fld(c, key).options ? `, for example ${d}` : ''; };
 
 /** Warning flags on a valid result and the notice each prints (the flag name is the notice code unless mapped). */
-export const NOTICES = { solar_above_sanctioned: 1, low_confidence: 'price_low_confidence', over_cable_rating: 'cable_over_current_rating', ampacity_checked: 'ampacity_not_checked_aluminium', protected_lost: 'ac_protected_lost', ac_above_sanctioned: 1, usage_both: 1, typical_used: 1, per_unit_hidden: 1 };
+export const NOTICES = { solar_above_sanctioned: 1, low_confidence: 'price_low_confidence', over_cable_rating: 'cable_over_current_rating', ampacity_checked: 'ampacity_not_checked_aluminium', protected_lost: 'ac_protected_lost', ac_above_sanctioned: 1, usage_both: 1, typical_used: 1, per_unit_hidden: 1, battery_unknown: 1, high_c_rate: 1, string_below_bus: 1 };
 
 /** Notice for a valid result that carries a warning flag (shown above the results, same text in build and browser). */
 export function noticeCode(out) {
   const above = Object.keys(out).filter((k) => k.endsWith('above_standard_sizes') && out[k] === true);
   // A generator gets its own advice (two sets or an industrial set), not "split the array or circuit".
+  if (above.includes('drive_above_standard_sizes')) return 'drive_above_standard_sizes'; // one larger drive, never two
   if (above.length) return above.every((k) => k === 'generator_above_standard_sizes' || 'recommended_kva' in out) ? 'generator_above_standard_sizes' : 'above_standard_sizes';
   // Every flag warns when true, except ampacity_checked, which warns when false (aluminium cable).
   for (const k in NOTICES) if (out[k] === (k != 'ampacity_checked')) return NOTICES[k] === 1 ? k : NOTICES[k];

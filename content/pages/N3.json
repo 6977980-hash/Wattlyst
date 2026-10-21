@@ -41,6 +41,30 @@
    "hint": "Everything on the quote: panels, inverter, structure, wiring, installation. Add GST if the quote shows it separately."
   },
   {
+   "name": "battery_kwh",
+   "label": "Battery in the quote (hybrid)",
+   "unit": "kWh",
+   "placeholder": "Hybrid only",
+   "hint": "From the quote, in kWh: one lithium pack of the usual home size is {{data.backup_prices.lithium_pack.kwh|2}} kWh; for tubular batteries multiply their number × volts × Ah and divide by one thousand. The checker then adds that battery at today's price to the on-grid range, instead of a hybrid range that covers any battery."
+  },
+  {
+   "name": "chemistry",
+   "label": "Battery type (hybrid)",
+   "type": "select",
+   "default": "lifepo4",
+   "options": [
+    [
+     "lifepo4",
+     "Lithium (LiFePO4)"
+    ],
+    [
+     "tubular",
+     "Tubular / lead-acid"
+    ]
+   ],
+   "hint": "Used only with the battery size above."
+  },
+  {
    "name": "range_low",
    "label": "Your own low price",
    "unit": "Rs per W",
@@ -99,7 +123,7 @@
   }
  ],
  "answer": "A {{in.kwp|int}} kW {{in.type}} solar quote of {{in.price|rs}} works out to {{out.rs_per_w|rs2}} per watt, which is {{out.verdict}} the typical installed range of {{out.range_low|rsm}} to {{out.range_high|rsm}} per watt ({{out.range_low_rs|rsm}} to {{out.range_high_rs|rsm}} for this size) seen in Pakistani installer price lists and reports. Price per watt = total price ÷ (kW × one thousand). The range is a market check, not a verdict on any installer.",
- "how": "{{in.price|rs}} ÷ ({{in.kwp}} kW × 1,000) = {{out.rs_per_w|rs2}} per watt. Typical {{in.type}} range for {{in.kwp}} kW: {{out.range_low|rs2}} to {{out.range_high|rs2}} per watt, that is {{out.range_low_rs|rs}} to {{out.range_high_rs|rs}}. Against the low end your quote differs by {{out.vs_low_pct|int}}%, against the high end by {{out.vs_high_pct|int}}% (a minus sign means below it), so it is {{out.verdict}} the range.",
+ "how": "{{in.price|rs}} ÷ ({{in.kwp}} kW × 1,000) = {{out.rs_per_w|rs2}} per watt. Typical range for {{in.kwp}} kW ({{out.range_basis}}): {{out.range_low|rs2}} to {{out.range_high|rs2}} per watt, that is {{out.range_low_rs|rs}} to {{out.range_high_rs|rs}}. Against the low end your quote differs by {{out.vs_low_pct|int}}%, against the high end by {{out.vs_high_pct|int}}% (a minus sign means below it), so it is {{out.verdict}} the range.",
  "key_facts": [
   "Price per watt = total quoted price ÷ (system kW × one thousand); it is the only fair way to compare quotes of different sizes.",
   "In Pakistan a {{in.kwp|int}} kW on-grid system was quoted at about {{out.range_low|rsm}} to {{out.range_high|rsm}} per watt in installer price lists checked in the month shown under Sources; large systems (around ten kW and up) usually cost less per watt than small ones, hybrid systems with a battery cost more.",

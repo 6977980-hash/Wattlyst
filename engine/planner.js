@@ -3,7 +3,7 @@
 // owns its formula; this file only passes numbers along and adds the monthly solar split.
 import { calculator, CalcError, frac, nonneg, num, pos, dflt, has } from './core.js';
 import { inverter_size, generator_size, loadRows } from './sizing.js';
-import { solar_from_loads, solar_battery } from './solar.js';
+import { solar_from_loads, solar_battery, stdSize, buyKw } from './solar.js';
 import { bill_energy, bill_total, net_billing } from './bill.js';
 
 /**
@@ -34,7 +34,7 @@ export const home_plan = calculator((i, d) => {
     running_w: inv.running_w, peak_w: inv.surge_w, daily_kwh: sun.daily_kwh, monthly_units,
     margin: inv.margin, dc_ac_ratio_max: sun.dc_ac_ratio_max,
     inverter_kw_load: inv.continuous_w / 1000, inverter_kw_array: sun.inverter_kw_array,
-    inverter_w, inverter_kw: inverter_w / 1000, inverter_kva: inverter_w / inv.pf / 1000, inverter_surge_w: inv.surge_w,
+    inverter_w, inverter_kw: inverter_w / 1000, inverter_buy: buyKw(stdSize(dflt(d, 'standard_inverter_kw'), inverter_w / 1000), inverter_w / 1000), inverter_kva: inverter_w / inv.pf / 1000, inverter_surge_w: inv.surge_w,
     // Starting peak of the backup load: any motor whose running watts fit in it may start on it (C1 rule, WL-96).
     backup_w, backup_surge_w: backup_w + loadRows(i.loads, d).reduce((m, r) => (r.qty > 0 && r.run <= backup_w + 1e-9 ? Math.max(m, r.start - r.run) : m), 0),
     backup_hours, battery_v, chemistry: lithium ? 'lifepo4' : 'tubular',

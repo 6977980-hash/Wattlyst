@@ -38,7 +38,7 @@
    "url": "/battery/battery-bank-size-calculator/"
   }
  ],
- "modified": "2026-10-13",
+ "modified": "2026-10-21",
  "content": {
   "intro": "",
   "sections": [
@@ -306,11 +306,19 @@
      "unit": "kWh",
      "label_ur": "Battery bank ka rated size",
      "value": "5"
+    },
+    {
+     "key": "battery_a",
+     "label": "Battery current",
+     "spec": "1",
+     "unit": "A",
+     "label_ur": "Battery current",
+     "value": "25.8"
     }
    ],
    "how": {
-    "tpl": "The battery gives {{out.load_w}} W ÷ {{out.inverter_eff|pct}} inverter efficiency + {{out.idle_w}} W the inverter draws itself = {{out.battery_w|1}} W; × {{out.hours}} h = {{out.battery_kwh_draw|2}} kWh taken from the battery for {{out.load_kwh|2}} kWh used by the load. Divide by {{out.volts|1}} V and by {{out.dod|pct}} usable depth of discharge: {{out.ah_required|up}} Ah, a rated bank of {{out.kwh_required|up1}} kWh. A {{out.volts|1}} V bank made of {{out.battery_v|1}} V batteries needs {{out.series|int}} in series per string; {{out.ah_required|up}} Ah ÷ {{out.battery_ah}} Ah per battery, rounded up, is {{out.strings|int}} string(s) in parallel; {{out.series|int}} × {{out.strings|int}} = {{out.batteries|int}} batteries.",
-    "text": "The battery gives 500 W ÷ 85% inverter efficiency + 30 W the inverter draws itself = 618.2 W; × 4 h = 2.47 kWh taken from the battery for 2 kWh used by the load. Divide by 24 V and by 50% usable depth of discharge: 207 Ah, a rated bank of 5 kWh. A 24 V bank made of 12 V batteries needs 2 in series per string; 207 Ah ÷ 200 Ah per battery, rounded up, is 2 string(s) in parallel; 2 × 2 = 4 batteries."
+    "tpl": "The battery gives {{out.load_w}} W ÷ {{out.inverter_eff|pct}} inverter efficiency + {{out.idle_w}} W the inverter draws itself = {{out.battery_w|1}} W; × {{out.hours}} h = {{out.battery_kwh_draw|2}} kWh taken from the battery for {{out.load_kwh|2}} kWh used by the load. Divide by {{out.volts|1}} V and by {{out.dod|pct}} usable depth of discharge: {{out.ah_required|up}} Ah, a rated bank of {{out.kwh_required|up1}} kWh. A {{out.volts|1}} V bank made of {{out.battery_v|1}} V batteries needs {{out.series|int}} in series per string; {{out.ah_required|up}} Ah ÷ {{out.battery_ah}} Ah per battery, rounded up, is {{out.strings|int}} string(s) in parallel; {{out.series|int}} × {{out.strings|int}} = {{out.batteries|int}} batteries. Battery current: {{out.battery_w|1}} W ÷ {{out.volts|1}} V = {{out.battery_a|1}} A, {{out.c_rate|2}} times the bank's Ah (its C-rate), rising to {{out.cutoff_a|1}} A as the battery nears its low-battery cut-off; the cables and fuse must carry that.",
+    "text": "The battery gives 500 W ÷ 85% inverter efficiency + 30 W the inverter draws itself = 618.2 W; × 4 h = 2.47 kWh taken from the battery for 2 kWh used by the load. Divide by 24 V and by 50% usable depth of discharge: 207 Ah, a rated bank of 5 kWh. A 24 V bank made of 12 V batteries needs 2 in series per string; 207 Ah ÷ 200 Ah per battery, rounded up, is 2 string(s) in parallel; 2 × 2 = 4 batteries. Battery current: 618.2 W ÷ 24 V = 25.8 A, 0.06 times the bank's Ah (its C-rate), rising to 29.4 A as the battery nears its low-battery cut-off; the cables and fuse must carry that."
    },
    "submit": "Calculate",
    "notice": "",
@@ -325,6 +333,7 @@
     "appliance_unknown": "Pick an appliance from the list, or choose Custom and enter its watts.",
     "load_exceeds_ups_rating": "This load is more than the UPS can deliver (VA × power factor). Choose a bigger UPS or reduce the load.",
     "surge_exceeds_ups_rating": "The starting surge is above the UPS surge rating. Choose a bigger UPS or remove the motor load.",
+    "high_c_rate": "This load draws a high current for the battery size: a lead-acid battery then gives well under its rated Ah, so the real backup is shorter than shown, and a lithium battery may shut off. Check the battery's maximum discharge current or use a bigger bank.",
     "forecast_unavailable": "The live forecast is not available right now, so a typical day is shown. Try again later.",
     "typical_used": "Blank boxes in your list use the typical value for that appliance (its listed watts and hours a day, quantity 1). Type your own numbers for an exact result.",
     "internal_non_finite": "These numbers are outside a realistic range. Please check your inputs."
@@ -457,7 +466,7 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/battery/battery-bank-size-calculator/#breadcrumb"
     },
-    "dateModified": "2026-10-13",
+    "dateModified": "2026-10-21",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }

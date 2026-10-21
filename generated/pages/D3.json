@@ -479,8 +479,8 @@
     },
     "water-motor-1hp": {
      "name": "Water pump / donkey motor 1 hp",
-     "running_w": 1000,
-     "starting_w": 2800,
+     "running_w": 932,
+     "starting_w": 2796,
      "typical_hours_per_day": 1,
      "load_type": "motor"
     },
@@ -1380,11 +1380,18 @@
      "value": "5.6"
     },
     {
+     "key": "inverter_buy",
+     "label": "Off-grid inverter to buy",
+     "spec": "raw",
+     "label_ur": "Lene wala off-grid inverter",
+     "value": "1.5 kW"
+    },
+    {
      "key": "inverter_kw",
-     "label": "Off-grid inverter",
+     "label": "Off-grid inverter, at least",
      "spec": "up2",
      "unit": "kW",
-     "label_ur": "Off-grid inverter",
+     "label_ur": "Off-grid inverter, kam az kam",
      "value": "1.43"
     },
     {
@@ -1412,8 +1419,8 @@
     }
    ],
    "how": {
-    "tpl": "Energy: watts × quantity × hours a day for every appliance = {{out.daily_kwh|1}} units a day; the night share, {{out.night_kwh|1}} units, comes from the battery, so the panels must refill it through charging and inverter losses: {{out.day_kwh|1}} + {{out.night_kwh|1}} ÷ ({{out.battery_inverter_eff|pct}} × {{out.charge_eff|pct}}) = {{out.array_kwh|1}} units a day, ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW of panels a day in your city = {{out.kw_energy|2}} kW. Power: the panels must also carry the {{out.running_w|int}} W running load at midday, ÷ {{out.pr|2}} performance ratio = {{out.kw_power|2}} kW. The larger, {{out.kw|2}} kW, rounded up to whole {{out.panel_w}} W panels = {{out.panels|int}} panels, {{out.installed_kw|2}} kW. Battery: {{out.running_w|int}} W × {{out.night_hours}} hours = {{out.night_kwh|1}} units after sunset, ÷ ({{out.battery_v}} V × {{out.battery_dod|pct}} usable × inverter efficiency) = {{out.battery_ah|up}} Ah, a bank of {{out.battery_kwh|1}} kWh. Inverter: the larger of {{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_kw_load|2}} kW for the load and {{out.installed_kw|2}} kW of panels ÷ {{out.dc_ac_ratio_max|1}} = {{out.inverter_kw_array|2}} kW, so the panels are never more than {{out.dc_ac_ratio_max|1}} times the inverter: {{out.inverter_kw|up2}} kW continuous, with a surge rating of at least {{out.inverter_surge_w|int}} W for the pump. Weakest month: in {{out.worst_month|raw}} the same panels make about {{out.worst_month_kwh|1}} units a day against the {{out.array_kwh|1}} needed, {{out.worst_short_pct|int}}% short; the size above is set on the yearly average sun, so plan a generator, fewer loads or more panels for any month that comes up short.",
-    "text": "Energy: watts × quantity × hours a day for every appliance = 5.9 units a day; the night share, 4.6 units, comes from the battery, so the panels must refill it through charging and inverter losses: 1.3 + 4.6 ÷ (90% × 95%) = 6.6 units a day, ÷ 4 units per kW of panels a day in your city = 1.66 kW. Power: the panels must also carry the 1,141 W running load at midday, ÷ 0.78 performance ratio = 1.46 kW. The larger, 1.66 kW, rounded up to whole 585 W panels = 3 panels, 1.76 kW. Battery: 1,141 W × 4 hours = 4.6 units after sunset, ÷ (48 V × 90% usable × inverter efficiency) = 118 Ah, a bank of 5.6 kWh. Inverter: the larger of 1,141 W × 1.25 = 1.43 kW for the load and 1.76 kW of panels ÷ 1.3 = 1.35 kW, so the panels are never more than 1.3 times the inverter: 1.43 kW continuous, with a surge rating of at least 2,341 W for the pump. Weakest month: in January the same panels make about 5.2 units a day against the 6.6 needed, 22% short; the size above is set on the yearly average sun, so plan a generator, fewer loads or more panels for any month that comes up short."
+    "tpl": "Energy: watts × quantity × hours a day for every appliance = {{out.daily_kwh|1}} units a day; the night share, {{out.night_kwh|1}} units, comes from the battery, so the panels must refill it through charging and inverter losses: {{out.day_kwh|1}} + {{out.night_kwh|1}} ÷ ({{out.battery_inverter_eff|pct}} × {{out.charge_eff|pct}}) = {{out.array_kwh|1}} units a day, ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW of panels a day in your city = {{out.kw_energy|2}} kW. Power: the panels must also carry the {{out.running_w|int}} W running load at midday, ÷ {{out.pr|2}} performance ratio = {{out.kw_power|2}} kW. The larger, {{out.kw|2}} kW, rounded up to whole {{out.panel_w}} W panels = {{out.panels|int}} panels, {{out.installed_kw|2}} kW. Battery: {{out.running_w|int}} W × {{out.night_hours}} hours = {{out.night_kwh|1}} units after sunset, ÷ ({{out.battery_v}} V × {{out.battery_dod|pct}} usable × inverter efficiency) = {{out.battery_ah|up}} Ah, a bank of {{out.battery_kwh|1}} kWh. Inverter: the larger of {{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_kw_load|2}} kW for the load and {{out.installed_kw|2}} kW of panels ÷ {{out.dc_ac_ratio_max|1}} = {{out.inverter_kw_array|2}} kW, so the panels are never more than {{out.dc_ac_ratio_max|1}} times the inverter: {{out.inverter_kw|up2}} kW continuous (the size to buy: {{out.inverter_buy}}), with a surge rating of at least {{out.inverter_surge_w|int}} W for the pump. Weakest month: in {{out.worst_month|raw}} the same panels make about {{out.worst_month_kwh|1}} units a day against the {{out.array_kwh|1}} needed, {{out.worst_short_pct|int}}% short; the size above is set on the yearly average sun, so plan a generator, fewer loads or more panels for any month that comes up short.",
+    "text": "Energy: watts × quantity × hours a day for every appliance = 5.9 units a day; the night share, 4.6 units, comes from the battery, so the panels must refill it through charging and inverter losses: 1.3 + 4.6 ÷ (90% × 95%) = 6.6 units a day, ÷ 4 units per kW of panels a day in your city = 1.66 kW. Power: the panels must also carry the 1,141 W running load at midday, ÷ 0.78 performance ratio = 1.46 kW. The larger, 1.66 kW, rounded up to whole 585 W panels = 3 panels, 1.76 kW. Battery: 1,141 W × 4 hours = 4.6 units after sunset, ÷ (48 V × 90% usable × inverter efficiency) = 118 Ah, a bank of 5.6 kWh. Inverter: the larger of 1,141 W × 1.25 = 1.43 kW for the load and 1.76 kW of panels ÷ 1.3 = 1.35 kW, so the panels are never more than 1.3 times the inverter: 1.43 kW continuous (the size to buy: 1.5 kW), with a surge rating of at least 2,341 W for the pump. Weakest month: in January the same panels make about 5.2 units a day against the 6.6 needed, 22% short; the size above is set on the yearly average sun, so plan a generator, fewer loads or more panels for any month that comes up short."
    },
    "submit": "Calculate",
    "notice": "",
@@ -1426,6 +1433,9 @@
     "appliance_unknown": "Pick an appliance from the list, or choose Custom and enter its watts.",
     "other_start_below_run": "Starting watts of the other loads cannot be lower than their running watts.",
     "loads_hours_required": "Enter hours per day for at least one appliance.",
+    "drive_above_standard_sizes": "This drive is above the largest size we list. Use one larger solar pump drive rated for this motor (two drives cannot share one motor) and ask the supplier or a licensed engineer; the size shown is the calculated minimum.",
+    "motor_v_invalid": "Pick the motor voltage from the list: 220 V single-phase or 400 V three-phase.",
+    "string_below_bus": "The panels in series are capped by the drive's maximum DC input on a cold morning, so on hot afternoons the string gives less than the voltage the motor needs at full speed and the pump runs slower then (see the string voltage in the working). Check the drive's DC input range with the supplier.",
     "above_standard_sizes": "This is above the largest standard size we list. Split the array or circuit into two, or ask a licensed electrician or engineer; the sizes shown are the calculated minimums.",
     "generator_above_standard_sizes": "This is above the largest generator size we list. Use two generators on separate circuits or a larger industrial set, and ask a licensed electrician; the size shown is the calculated minimum.",
     "forecast_unavailable": "The live forecast is not available right now, so a typical day is shown. Try again later.",

@@ -36,7 +36,7 @@
    "url": "/wiring/voltage-drop-calculator/"
   }
  ],
- "modified": "2026-10-14",
+ "modified": "2026-10-21",
  "content": {
   "intro": "",
   "sections": [
@@ -218,7 +218,7 @@
      "unit": "0 to 1",
      "default": 0.9,
      "advanced": true,
-     "hint": "DC with watts entered: for a battery-to-inverter cable the watts are what the inverter delivers, and the battery also supplies its loss, so current = watts ÷ (efficiency × volts). Enter 1 for a DC load wired straight to the battery. Ignored when you enter the amps."
+     "hint": "DC with watts entered: for a battery-to-inverter cable the watts are what the inverter delivers, and the battery also supplies its loss, so current = watts ÷ (efficiency × volts), at the battery's low-battery cut-off voltage, where the current is highest. Enter 1 for a DC load wired straight to the battery. Ignored when you enter the amps."
     },
     {
      "name": "circuit",
@@ -313,8 +313,8 @@
     }
    ],
    "how": {
-    "tpl": "Current: {{out.amps|1}} A (the watts ÷ ({{out.k|4}} × {{out.volts}} V × {{out.pf|2}} power factor × {{out.inverter_eff|2}}), unless you entered the amps; the last factor is the inverter efficiency for watts on a DC battery cable, one on AC). Drop = {{out.kv|4}} × {{in.length_m}} m × {{out.amps|1}} A × {{out.rho|4}} Ω·mm²/m ÷ {{in.area_mm2|2}} mm² = {{out.drop_v|1}} V, which is {{out.drop_pct|2}}% of {{out.volts}} V, leaving {{out.voltage_at_load|int}} V at the load. The current factor is one for single-phase and DC and √3 for three-phase; the drop factor is two (out and back) for single-phase and DC and √3 for three-phase. The limit you chose is {{out.limit_pct|int}}%; if the drop is over it, try the next cable size. A small drop does not make a cable safe: it must also be rated for the current.",
-    "text": "Current: 16.3 A (the watts ÷ (1 × 230 V × 0.8 power factor × 1), unless you entered the amps; the last factor is the inverter efficiency for watts on a DC battery cable, one on AC). Drop = 2 × 30 m × 16.3 A × 0.0225 Ω·mm²/m ÷ 2.5 mm² = 8.8 V, which is 3.83% of 230 V, leaving 221 V at the load. The current factor is one for single-phase and DC and √3 for three-phase; the drop factor is two (out and back) for single-phase and DC and √3 for three-phase. The limit you chose is 5%; if the drop is over it, try the next cable size. A small drop does not make a cable safe: it must also be rated for the current."
+    "tpl": "Current: {{out.amps|1}} A (the watts ÷ ({{out.k|4}} × {{out.current_v|2}} V × {{out.pf|2}} power factor × {{out.inverter_eff|2}}), unless you entered the amps; the last factor is the inverter efficiency for watts on a DC battery cable, one on AC; for watts on DC the voltage is the battery's at its low-battery cut-off). Drop = {{out.kv|4}} × {{in.length_m}} m × {{out.amps|1}} A × {{out.rho|4}} Ω·mm²/m ÷ {{in.area_mm2|2}} mm² = {{out.drop_v|1}} V, which is {{out.drop_pct|2}}% of {{out.volts}} V, leaving {{out.voltage_at_load|int}} V at the load. The current factor is one for single-phase and DC and √3 for three-phase; the drop factor is two (out and back) for single-phase and DC and √3 for three-phase. The limit you chose is {{out.limit_pct|int}}%; if the drop is over it, try the next cable size. A small drop does not make a cable safe: it must also be rated for the current.",
+    "text": "Current: 16.3 A (the watts ÷ (1 × 230 V × 0.8 power factor × 1), unless you entered the amps; the last factor is the inverter efficiency for watts on a DC battery cable, one on AC; for watts on DC the voltage is the battery's at its low-battery cut-off). Drop = 2 × 30 m × 16.3 A × 0.0225 Ω·mm²/m ÷ 2.5 mm² = 8.8 V, which is 3.83% of 230 V, leaving 221 V at the load. The current factor is one for single-phase and DC and √3 for three-phase; the drop factor is two (out and back) for single-phase and DC and √3 for three-phase. The limit you chose is 5%; if the drop is over it, try the next cable size. A small drop does not make a cable safe: it must also be rated for the current."
    },
    "submit": "Calculate",
    "notice": "",
@@ -325,6 +325,7 @@
     "cable_data_missing": "Cable data could not be loaded. Please refresh the page.",
     "cable_size_unknown": "Pick a standard cable size.",
     "load_above_standard_breakers": "This load needs more than the largest single-phase MCB. Split it into separate circuits or ask a licensed electrician about a three-phase connection.",
+    "dc_load_above_cable_table": "This battery current is above the largest cable in our table. Do not split a battery feed into separate circuits: use a higher battery voltage (it lowers the current) or have a licensed electrician design the busbars, parallel cables and fusing.",
     "load_above_cable_table": "This load is above the largest cable in our table. Split it into separate circuits and consult a licensed electrician.",
     "ambient_out_of_range": "Enter an air temperature around the cable between 10 and 60 °C.",
     "circuits_out_of_range": "Enter how many circuits share the conduit or bundle, from 1 to 20.",
@@ -340,7 +341,7 @@
     {
      "label": "Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)",
      "url": "https://webstore.iec.ch/publication/1878",
-     "checked": "2026-10-14"
+     "checked": "2026-10-21"
     }
    ]
   },
@@ -480,7 +481,7 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/wiring/voltage-drop-calculator/#breadcrumb"
     },
-    "dateModified": "2026-10-14",
+    "dateModified": "2026-10-21",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }

@@ -1038,13 +1038,14 @@
    "id": "water-motor-1hp",
    "name": "Water pump / donkey motor 1 hp",
    "category": "water",
-   "running_w": 1000,
+   "running_w": 932,
    "running_w_range": [
     900,
     1200
    ],
-   "starting_w": 2800,
-   "starting_w_basis": "source",
+   "starting_w": 2796,
+   "starting_w_basis": "formula",
+   "basis_note": "Same rule as the pump pages (formulas.md section A and C5): 1 hp × w_per_hp ÷ motor_eff, start × start_factors.motor, so one 1 hp motor never shows two figures (audit 2026-10-21 WL-178); inside the measured range above.",
    "typical_hours_per_day": 1,
    "load_type": "motor",
    "pk_brands": [

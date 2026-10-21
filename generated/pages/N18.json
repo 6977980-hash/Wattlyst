@@ -57,7 +57,7 @@
    {
     "h2": "Connected load is not your sanctioned load",
     "p": [
-     "The sheet adds up 10.05 kW for the example house, but the lights, geyser, motor and both ACs rarely run together. The main switch and the sanctioned load are sized on the load that runs at the same time, which the sanctioned load calculator works out.",
+     "The sheet adds up 9.98 kW for the example house, but the lights, geyser, motor and both ACs rarely run together. The main switch and the sanctioned load are sized on the load that runs at the same time, which the sanctioned load calculator works out.",
      "Keep each heavy appliance on its own circuit. Two ACs on one circuit need a bigger MCB and cable than either alone, and a fault on one switches off the other."
     ]
    },
@@ -72,7 +72,7 @@
   "faq": [
    {
     "q": "What is a load schedule in house wiring?",
-    "a": "A list of every circuit on the distribution board with what it feeds, its current, MCB rating and curve, and cable size. The example house has 6 circuits and 10.05 kW connected."
+    "a": "A list of every circuit on the distribution board with what it feeds, its current, MCB rating and curve, and cable size. The example house has 6 circuits and 9.98 kW connected."
    },
    {
     "q": "Which wire and MCB for a 1.5 ton AC circuit?",
@@ -99,7 +99,7 @@
    "A home wiring load schedule (circuit sheet) gives each circuit its own MCB rating, MCB curve and cable size, so the electrician wires every room to the same rules.",
    "Every circuit is sized twice: the cable must carry the current at the hottest air temperature (45 °C by default), and the voltage drop over the run must stay within the limit for lighting or other circuits.",
    "Lights take a B curve MCB, sockets, ACs and motors a C curve; a Split AC 1.5 ton inverter gets a 16 A MCB on 2.5 mm² cable.",
-   "The connected load of the example house is 10.05 kW, which is not the sanctioned load: not everything runs at once, so size the main switch and sanctioned load separately."
+   "The connected load of the example house is 9.98 kW, which is not the sanctioned load: not everything runs at once, so size the main switch and sanctioned load separately."
   ],
   "mistakes": [
    "Wiring the whole house in one cable size. Lights need far less, while an AC or geyser circuit needs more than the usual socket cable.",
@@ -284,8 +284,8 @@
     },
     "water-motor-1hp": {
      "name": "Water pump / donkey motor 1 hp",
-     "running_w": 1000,
-     "starting_w": 2800,
+     "running_w": 932,
+     "starting_w": 2796,
      "typical_hours_per_day": 1,
      "load_type": "motor"
     },
@@ -509,7 +509,7 @@
      "spec": "2",
      "unit": "kW",
      "label_ur": "Connected load",
-     "value": "10.05"
+     "value": "9.98"
     },
     {
      "key": "biggest_breaker_a",
@@ -530,7 +530,7 @@
    ],
    "how": {
     "tpl": "Each row: current = design watts ÷ ({{out.volts}} V × power factor of the load type); an inverter AC is designed at its maximum input. MCB = next standard size at or above the current (× the margin for motors and compressors), curve by load type. Cable = smallest size whose rating in {{out.ambient_c}} °C air ({{out.method|raw}}, {{out.group_circuits}} per conduit, factor {{out.derate|2}}) covers the MCB and whose drop over the run stays within the limit (lighting or other). Connected load = {{out.connected_w|int}} W over {{out.circuits_count|int}} circuits.",
-    "text": "Each row: current = design watts ÷ (230 V × power factor of the load type); an inverter AC is designed at its maximum input. MCB = next standard size at or above the current (× the margin for motors and compressors), curve by load type. Cable = smallest size whose rating in 45 °C air (B1, 1 per conduit, factor 0.79) covers the MCB and whose drop over the run stays within the limit (lighting or other). Connected load = 10,050 W over 6 circuits."
+    "text": "Each row: current = design watts ÷ (230 V × power factor of the load type); an inverter AC is designed at its maximum input. MCB = next standard size at or above the current (× the margin for motors and compressors), curve by load type. Cable = smallest size whose rating in 45 °C air (B1, 1 per conduit, factor 0.79) covers the MCB and whose drop over the run stays within the limit (lighting or other). Connected load = 9,982 W over 6 circuits."
    },
    "submit": "Calculate",
    "rtable": {
@@ -648,13 +648,13 @@
      [
       "6",
       "Water pump / donkey motor 1 hp",
-      "1,000 W",
-      "5.4 A",
+      "932 W",
+      "5.1 A",
       "10 A",
       "C",
       "2.5 mm²",
       "7/29",
-      "1.1%"
+      "1%"
      ]
     ]
    },
@@ -667,6 +667,7 @@
     "cable_data_missing": "Cable data could not be loaded. Please refresh the page.",
     "cable_size_unknown": "Pick a standard cable size.",
     "load_above_standard_breakers": "This load needs more than the largest single-phase MCB. Split it into separate circuits or ask a licensed electrician about a three-phase connection.",
+    "dc_load_above_cable_table": "This battery current is above the largest cable in our table. Do not split a battery feed into separate circuits: use a higher battery voltage (it lowers the current) or have a licensed electrician design the busbars, parallel cables and fusing.",
     "load_above_cable_table": "This load is above the largest cable in our table. Split it into separate circuits and consult a licensed electrician.",
     "ambient_out_of_range": "Enter an air temperature around the cable between 10 and 60 °C.",
     "circuits_out_of_range": "Enter how many circuits share the conduit or bundle, from 1 to 20.",
@@ -682,7 +683,7 @@
     {
      "label": "Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)",
      "url": "https://webstore.iec.ch/publication/1878",
-     "checked": "2026-10-14"
+     "checked": "2026-10-21"
     },
     {
      "label": "Appliance running and starting watts (Wattlyst appliance data, sources listed on the appliance list page)",
@@ -694,7 +695,7 @@
   "examples": [
    {
     "title": "Six-circuit house in conduit",
-    "text": "6 circuits, 10.05 kW connected. The Split AC 2 ton non-inverter needs a 20 A C curve MCB on 4 mm² (7/36); the lights need only a 6 A MCB on 1 mm²."
+    "text": "6 circuits, 9.98 kW connected. The Split AC 2 ton non-inverter needs a 20 A C curve MCB on 4 mm² (7/36); the lights need only a 6 A MCB on 1 mm²."
    },
    {
     "title": "Same house with cables clipped on the surface",
@@ -756,10 +757,10 @@
     ],
     [
      "Water pump / donkey motor 1 hp × 1, 25 m",
-     "5.4 A",
+     "5.1 A",
      "10 A, curve C",
      "2.5 mm² (7/29)",
-     "1.1%"
+     "1%"
     ],
     [
      "Electric kettle × 1, 10 m",
@@ -770,7 +771,7 @@
     ]
    ]
   },
-  "answer": "A load schedule lists every circuit with its MCB and cable. In the example house the 6 circuits carry 10.05 kW; each gets the smallest copper cable that carries its current in 45 °C air within the voltage drop limit, the worst drop being 1.3%. The largest MCB is 20 A, for the Split AC 2 ton non-inverter.",
+  "answer": "A load schedule lists every circuit with its MCB and cable. In the example house the 6 circuits carry 9.98 kW; each gets the smallest copper cable that carries its current in 45 °C air within the voltage drop limit, the worst drop being 1.3%. The largest MCB is 20 A, for the Split AC 2 ton non-inverter.",
   "formula": {
    "text": "For each circuit: I = P ÷ (V × PF); MCB ≥ I; cable rating × derating ≥ max(I × margin, MCB); voltage drop = 2 × L × I × ρ ÷ A ≤ limit",
    "lines": [
@@ -867,7 +868,7 @@
       "name": "What is a load schedule in house wiring?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "A list of every circuit on the distribution board with what it feeds, its current, MCB rating and curve, and cable size. The example house has 6 circuits and 10.05 kW connected."
+       "text": "A list of every circuit on the distribution board with what it feeds, its current, MCB rating and curve, and cable size. The example house has 6 circuits and 9.98 kW connected."
       }
      },
      {

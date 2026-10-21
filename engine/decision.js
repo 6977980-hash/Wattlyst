@@ -6,6 +6,7 @@ import { fmt } from './format.js';
 import { home_plan, netSaving } from './planner.js';
 import { standbyFor, hybridBank } from './backup.js';
 import { priceRange, hybridPremium, rank } from './prices.js';
+import { hybridString } from './solar.js';
 
 const mid = (r) => (r.low + r.high) / 2;
 const rs = (v) => fmt(v, 'rs');
@@ -62,8 +63,11 @@ export const home_decision = calculator((i, d) => {
     const [premium, known, hw, above, hkw] = hybridPremium(cp, p.net_billing_inverter_kw, Math.max(p.backup_w * p.margin, p.backup_surge_w) / 1000, dflt(d, 'hybrid_bank_v'));
     const repl = Math.max(0, Math.floor((years - 1e-9) / bp.battery_life_years[p.chemistry]));
     const bat = units * mid(item);
-    const y = add('hybrid', `Hybrid solar${K} + ${battery}`, og[0] + premium + units * item.low, og[1] + premium + units * item.high, repl * bat, Math.max(0, netSaving(p, d, 1, g, 0)), 0, kw ? `${hours} from the battery` : NOSUN, kw > 0);
-    if (kw) lines.push(`${y.option}: ${y.price} (the on-grid price plus ${rs(bat)} of battery; ${known ? `${rs(premium)} extra for` : 'extra cost not known (none added) for'} a ${fmt(hkw, 'up1')} kW grid-tie hybrid inverter${above ? ' (above our list: rough)' : ''}), saves ${rs(y.saving)} a month (exports only while the grid is on), battery replacements ${rs(repl * bat)}, net ${y.net}.`);
+    // A hybrid inverter starts only with enough panels in series (WL-230): fewer is not a hybrid setup.
+    const sm = hybridString(d);
+    const hy = p.net_billing_panels >= sm;
+    const y = add('hybrid', `Hybrid solar${K} + ${battery}`, og[0] + premium + units * item.low, og[1] + premium + units * item.high, repl * bat, Math.max(0, netSaving(p, d, 1, g, 0)), 0, !kw ? NOSUN : hy ? `${hours} from the battery` : `Fewer than ${sm} panels: too few to start a hybrid inverter`, hy);
+    if (hy) lines.push(`${y.option}: ${y.price} (the on-grid price plus ${rs(bat)} of battery; ${known ? `${rs(premium)} extra for` : 'extra cost not known (none added) for'} a ${fmt(hkw, 'up1')} kW grid-tie hybrid inverter${above ? ' (above our list: rough)' : ''}), saves ${rs(y.saving)} a month (exports only while the grid is on), battery replacements ${rs(repl * bat)}, net ${y.net}.`);
     Object.assign(out, { hybrid_battery: battery, hybrid_battery_units: units, hybrid_inverter_kw: hkw, hybrid_premium_rs: premium, hybrid_replacements: repl, low_confidence: out.low_confidence || hw || (item.n_sources ?? 0) < 2 });
 
     // UPS or generator (N7) on one bill baseline: a UPS recharge adds units to the whole bill, a generator takes the

@@ -37,14 +37,14 @@
    "url": "/load/appliance-load-calculator/"
   }
  ],
- "modified": "2026-10-13",
+ "modified": "2026-10-21",
  "content": {
   "intro": "",
   "sections": [
    {
     "h2": "Appliance wattage calculator: running watts vs starting watts",
     "p": [
-     "Every appliance has a running figure, the watts it draws while working, and some have a much higher starting figure. Heaters, irons, kettles, lights and electronics start at their running watts. Anything with a motor or compressor (fridge, water pump, non-inverter AC, washing machine) draws a surge of about three times its running watts for a second or two. The default fridge runs at 200 W but starts at about 1,200 W; a 1 hp water pump runs at 1,000 W and starts at 2,800 W.",
+     "Every appliance has a running figure, the watts it draws while working, and some have a much higher starting figure. Heaters, irons, kettles, lights and electronics start at their running watts. Anything with a motor or compressor (fridge, water pump, non-inverter AC, washing machine) draws a surge of about three times its running watts for a second or two. The default fridge runs at 200 W but starts at about 1,200 W; a 1 hp water pump runs at 932 W and starts at 2,796 W.",
      "Which number you need depends on the question. For the electricity bill only the running watts and the hours matter. For a UPS, inverter or generator the starting watts decide whether the appliance will even switch on, which is why the result shows both. This page is for one appliance or a few; to add up a whole house and check it against the sanctioned load, use the home electrical load calculator."
     ]
    },
@@ -103,13 +103,13 @@
   "key_facts": [
    "Appliance load in watts is the running watts on its label; the starting watts of a motor or compressor appliance are about three times higher for a second or two, which matters for a UPS, inverter or generator but not for the bill.",
    "Units a day for one appliance = running watts × hours it actually runs ÷ 1,000; a 200 W fridge compressor that runs about eight hours in twenty-four uses 1.6 units a day and 48.7 a month.",
-   "Amps = watts ÷ (volts × power factor): a 1,000 W iron draws 5.4 A at 230 V, and a 1,450 W inverter AC about 7.9 A while running.",
+   "Amps = watts ÷ (volts × power factor): a 1,000 W iron draws 4.3 A at 230 V, and a 1,450 W inverter AC about 7 A while running.",
    "The monthly cost of one appliance = its units a month × your energy rate; at Rs 36.46 per unit a 1,450 W inverter AC for 8 units a day costs about Rs 8,873 a month, an 80 W ceiling fan about Rs 1,065."
   ],
   "mistakes": [
    "Counting twenty-four hours for a fridge. The compressor cycles; about eight running hours a day is typical, so a 200 W fridge uses 1.6 units a day, not three times that.",
    "Using the rated watts of an inverter AC for the bill. Its input varies with the room temperature; the bill follows the average, about 1 kW for a 1.5 ton unit, while the rated 1,450 W is for wire and breaker sizing.",
-   "Ignoring starting watts when buying a UPS. A 1,000 W pump needs 2,800 W to start; a UPS sized on running watts alone will trip.",
+   "Ignoring starting watts when buying a UPS. A 932 W pump needs 2,796 W to start; a UPS sized on running watts alone will trip.",
    "Confusing watts and units. Watts are the rate right now; units are watts × hours ÷ one thousand and are what you pay for."
   ],
   "sources": [
@@ -471,8 +471,8 @@
     },
     "water-motor-1hp": {
      "name": "Water pump / donkey motor 1 hp",
-     "running_w": 1000,
-     "starting_w": 2800,
+     "running_w": 932,
+     "starting_w": 2796,
      "typical_hours_per_day": 1,
      "load_type": "motor"
     },
@@ -1228,9 +1228,8 @@
      "name": "pf",
      "label": "Power factor",
      "unit": "0 to 1",
-     "default": 0.8,
      "advanced": true,
-     "hint": "Motors and compressors are about 0.8; heaters, irons and kettles are 1.0."
+     "hint": "Leave blank to use the appliance's own power factor: heaters, irons and kettles 1.0, inverter ACs 0.9, motors and compressors about 0.8. A figure here overrides it."
     },
     {
      "name": "days",
@@ -1314,7 +1313,7 @@
     {
      "label": "Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)",
      "url": "https://webstore.iec.ch/publication/1878",
-     "checked": "2026-10-14"
+     "checked": "2026-10-21"
     },
     {
      "label": "Appliance running and starting watts (Wattlyst appliance data, sources listed on the appliance list page)",
@@ -1326,7 +1325,7 @@
   "examples": [
    {
     "title": "Electric iron, half an hour a day",
-    "text": "1,000 W running and starting (a heater has no surge), 5.4 A at 230 V. Half an hour a day gives 0.5 units a day, 15.2 units a month, about Rs 555."
+    "text": "1,000 W running and starting (a heater has no surge), 4.3 A at 230 V. Half an hour a day gives 0.5 units a day, 15.2 units a month, about Rs 555."
    },
    {
     "title": "Ceiling fan, twelve hours a day",
@@ -1334,11 +1333,11 @@
    },
    {
     "title": "1.5 ton inverter AC, eight hours a day",
-    "text": "Up to 1,450 W running and 1,900 W at full speed, 7.9 A. Counted at its average draw it uses 8 units a day and 243 units a month, about Rs 8,873, the biggest single appliance in most homes."
+    "text": "Up to 1,450 W running and 1,900 W at full speed, 7 A. Counted at its average draw it uses 8 units a day and 243 units a month, about Rs 8,873, the biggest single appliance in most homes."
    },
    {
     "title": "1 hp water pump, one hour a day",
-    "text": "1,000 W running but 2,800 W to start, which is 15.2 A for a moment against 5.4 A running. One hour a day is only 1 unit a day, 30 units a month, about Rs 1,109."
+    "text": "932 W running but 2,796 W to start, which is 15.2 A for a moment against 5.1 A running. One hour a day is only 0.9 unit a day, 28 units a month, about Rs 1,034."
    },
    {
     "title": "Custom appliance: a 2,000 W geyser, two hours a day",
@@ -1391,7 +1390,7 @@
     [
      "1,000 W",
      "1,000 W",
-     "5.4 A",
+     "4.3 A",
      "0.5",
      "15.2",
      "Rs 555"
@@ -1405,17 +1404,17 @@
      "Rs 366"
     ],
     [
-     "1,000 W",
-     "2,800 W",
-     "5.4 A",
-     "1",
-     "30.4",
-     "Rs 1,109"
+     "932 W",
+     "2,796 W",
+     "5.1 A",
+     "0.93",
+     "28.4",
+     "Rs 1,034"
     ],
     [
      "1,450 W",
      "1,900 W",
-     "7.9 A",
+     "7 A",
      "8",
      "243.4",
      "Rs 8,873"
@@ -1475,7 +1474,7 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/load/appliance-load-calculator/#breadcrumb"
     },
-    "dateModified": "2026-10-13",
+    "dateModified": "2026-10-21",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }

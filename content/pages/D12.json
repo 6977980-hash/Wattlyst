@@ -140,8 +140,13 @@
    "spec": "int"
   },
   {
+   "key": "inverter_buy",
+   "label": "Inverter to buy",
+   "spec": "raw"
+  },
+  {
    "key": "inverter_kw",
-   "label": "Inverter size",
+   "label": "Inverter, at least",
    "spec": "up2",
    "unit": "kW"
   },
@@ -161,13 +166,27 @@
    "key": "monthly_kwh_estimate",
    "label": "Units the system makes a month",
    "spec": "int"
+  },
+  {
+   "key": "battery_ah",
+   "label": "Battery",
+   "spec": "up",
+   "unit": "Ah",
+   "optional": true
+  },
+  {
+   "key": "battery_kwh",
+   "label": "Battery energy",
+   "spec": "1",
+   "unit": "kWh",
+   "optional": true
   }
  ],
- "answer": "A typical 10 marla house with six fans, lights, an inverter fridge, a deep freezer, two TVs, three inverter ACs, a water pump, an iron and a washing machine needs a solar system of about {{out.installed_kw|2}} kW ({{out.panels|int}} panels) with a {{out.inverter_kw|up2}} kW inverter. Panels = daily units ÷ sun yield; the grid covers the moments when everything runs at once.",
- "how": "Energy: watts × quantity × hours a day for each appliance (inverter ACs count at their average draw, not their rated watts), added up = {{out.daily_kwh|1}} units a day; ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW of panels a day in your city = {{out.kw_energy|2}} kW. A grid-tied or hybrid system is sized by energy: when the {{out.running_w|int}} W running load is more than the panels give at that moment, the grid supplies the rest. {{out.kw|2}} kW needs {{out.panels|int}} panels of {{out.panel_w}} W = {{out.installed_kw|2}} kW installed, which makes about {{out.monthly_kwh_estimate|int}} units a month on about {{out.roof_m2|int}} square metres of roof. Inverter: the larger of {{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_kw_load|2}} kW for the load and {{out.installed_kw|2}} kW of panels ÷ {{out.dc_ac_ratio_max|1}} = {{out.inverter_kw_array|2}} kW, so the panels are never more than {{out.dc_ac_ratio_max|1}} times the inverter: {{out.inverter_kw|up2}} kW continuous, with a surge rating of at least {{out.inverter_surge_w|int}} W for the water pump.",
+ "answer": "A typical 10 marla house with six fans, lights, an inverter fridge, a deep freezer, two TVs, three inverter ACs, a water pump, an iron and a washing machine needs a solar system of about {{out.installed_kw|2}} kW ({{out.panels|int}} panels) with an on-grid inverter of {{out.inverter_buy}}. Panels = daily units ÷ sun yield; the grid covers the moments when everything runs at once.",
+ "how": "Energy: watts × quantity × hours a day for each appliance (inverter ACs count at their average draw, not their rated watts), added up = {{out.daily_kwh|1}} units a day; ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW of panels a day in your city = {{out.kw_energy|2}} kW. A grid-tied or hybrid system is sized by energy: when the {{out.running_w|int}} W running load is more than the panels give at that moment, the grid supplies the rest. {{out.kw|2}} kW needs {{out.panels|int}} panels of {{out.panel_w}} W = {{out.installed_kw|2}} kW installed, which makes about {{out.monthly_kwh_estimate|int}} units a month on about {{out.roof_m2|int}} square metres of roof. {{out.inverter_text}}",
  "key_facts": [
-  "A typical 10 marla house with three inverter ACs (two 1.5 ton, one 1 ton) has a running load of about {{out.running_w|int}} W and uses about {{out.daily_kwh|1}} units a day, so it needs a solar system of about {{out.installed_kw|2}} kW with a {{out.inverter_kw|up2}} kW inverter.",
-  "With two 1.5 ton inverter ACs and no third AC the same house needs about {{ex.1.out.installed_kw|2}} kW of panels ({{ex.1.out.panels|int}} panels) and an inverter of {{ex.1.out.inverter_kw|up2}} kW; each extra inverter AC adds roughly its daily units (average watts × hours) ÷ the city's yield to the array.",
+  "A typical 10 marla house with three inverter ACs (two 1.5 ton, one 1 ton) has a running load of about {{out.running_w|int}} W and uses about {{out.daily_kwh|1}} units a day, so it needs a solar system of about {{out.installed_kw|2}} kW with an inverter of {{out.inverter_buy}}.",
+  "With two 1.5 ton inverter ACs and no third AC the same house needs about {{ex.1.out.installed_kw|2}} kW of panels ({{ex.1.out.panels|int}} panels) and an inverter of {{ex.1.out.inverter_buy}}; each extra inverter AC adds roughly its daily units (average watts × hours) ÷ the city's yield to the array.",
   "In Lahore one kW of panels makes about {{out.yield_kwh_per_kwp_day|1}} units a day over the year, so the {{out.installed_kw|2}} kW system makes about {{out.monthly_kwh_estimate|int}} units a month, which covers the house's {{out.daily_kwh|1}} units a day with spare units for export.",
   "Running one 1.5 ton inverter AC with fans, lights, fridge and freezer for {{ex.2.out.night_hours|int}} hours after sunset needs a lithium battery of about {{ex.2.out.battery_ah|up}} Ah at {{ex.2.out.battery_v|int}} V ({{ex.2.out.battery_kwh|1}} units); the same night without the AC needs about {{ex.3.out.battery_ah|up}} Ah.",
   "A system of this size usually needs a sanctioned load above {{d.tou_threshold_kw|int}} kW, which puts the house on a time-of-use meter; the net billing application is approved only up to the sanctioned load."
@@ -179,7 +198,7 @@
    "yield = units one kW of panels makes a day in your city",
    "P_run = total running watts, PR = performance ratio",
    "W_panel = watts of one panel",
-   "Inverter W = max(P_run × margin, kW × 1000 ÷ r_max), r_max = largest panel-to-inverter (DC/AC) ratio; surge ≥ largest starting load",
+   "On-grid inverter W = kW × 1000 ÷ r_max, r_max = largest panel-to-inverter (DC/AC) ratio; hybrid (backup hours set): max(P_run × margin, kW × 1000 ÷ r_max), surge ≥ largest starting load; then the next size sold",
    "Battery Ah = P_run × night hours ÷ (V × DoD × η)"
   ]
  },
@@ -188,20 +207,21 @@
    "h2": "What is the load of a 10 marla house?",
    "p": [
     "A 10 marla house usually has three or four bedrooms, a lounge, a drawing room, a kitchen and two or three bathrooms, so it carries more ACs and more fans than a 5 marla house. The default list is a summer evening in such a house: six ceiling fans, sixteen LED bulbs, an inverter fridge, a deep freezer, two TVs, two 1.5 ton inverter ACs in the bedrooms, a 1 ton inverter AC in the drawing room, a 1 hp water pump, an iron, an automatic washing machine and a WiFi router. Together they come to {{out.running_w|int}} W running, {{out.daily_kwh|1}} units a day and about {{out.monthly_kwh_estimate|int}} units a month.",
-    "The ACs set the size. Three inverter ACs are more than half of the running load and most of the summer units, so they decide both the panels (from the daily units, {{out.kw_energy|2}} kW) and the inverter (from the running load). Panels big enough to carry every AC at once at midday would need {{out.kw_power|2}} kW and make more units than the house uses; that rule is for off-grid systems. Edit the list to match your house; a house that uses two ACs at a time is the second worked example below."
+    "The ACs set the size. Three inverter ACs are more than half of the running load and most of the summer units, so they decide the panels (from the daily units, {{out.kw_energy|2}} kW) and, with a battery, the hybrid inverter (from the running load). Panels big enough to carry every AC at once at midday would need {{out.kw_power|2}} kW and make more units than the house uses; that rule is for off-grid systems. Edit the list to match your house; a house that uses two ACs at a time is the second worked example below."
    ]
   },
   {
    "h2": "How many kW solar for a 10 marla house?",
    "p": [
-    "For the typical house above the answer is {{out.installed_kw|2}} kW of panels with a {{out.inverter_kw|up2}} kW inverter. The panel count is rounded up to {{out.panels|int}} panels of {{out.panel_w|int}} W, which takes about {{out.roof_m2|int}} square metres of roof; a 10 marla roof has room for that, but check for water tanks, stairs and shade from the parapet before you order.",
-    "The inverter is sized from the running load with a {{out.margin|2}} margin and is never smaller than the panel kW ÷ {{out.dc_ac_ratio_max|1}}; here the load rule gives the larger figure. It must carry a surge of at least {{out.inverter_surge_w|int}} W when the water pump starts. Installers quote by inverter size, so this house is sold as a ten kW system."
+    "For the typical house above the answer is {{out.installed_kw|2}} kW of panels with an inverter of {{out.inverter_buy}}. The panel count is rounded up to {{out.panels|int}} panels of {{out.panel_w|int}} W, which takes about {{out.roof_m2|int}} square metres of roof; a 10 marla roof has room for that, but check for water tanks, stairs and shade from the parapet before you order.",
+    "An on-grid inverter runs beside the grid, so it is sized from the panels: at least the panel kW ÷ {{out.dc_ac_ratio_max|1}}, which is {{out.inverter_kw|up2}} kW, so an inverter of {{out.inverter_buy}}; the grid starts the pump and the ACs. A hybrid inverter that carries the house in a power cut is sized from the running load instead: {{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_kw_load|up2}} kW, with a surge rating for the pump, which is why the battery examples below list only the night loads.",
+    "Do not put every panel in one string. On a cold morning each {{out.panel_w|int}} W panel gives about {{out.panel_voc_cold_v|int}} V open-circuit, so {{out.panels|int}} panels in series would be about {{out.array_voc_cold_v|int}} V; split them into strings that each stay below the inverter's maximum DC input voltage on its datasheet."
    ]
   },
   {
    "h2": "Is a 10 kW solar system right for a 10 marla house?",
    "p": [
-    "Yes for a house like the default list, where three inverter ACs run for most of a summer day: the array comes out at {{out.installed_kw|2}} kW and the inverter at {{out.inverter_kw|up2}} kW. With two inverter ACs the house needs {{ex.1.out.installed_kw|2}} kW of panels and an inverter of {{ex.1.out.inverter_kw|up2}} kW, so a smaller system does the job.",
+    "Yes for a house like the default list, where three inverter ACs run for most of a summer day: the array comes out at {{out.installed_kw|2}} kW and the inverter at {{out.inverter_buy}}. With two inverter ACs the house needs {{ex.1.out.installed_kw|2}} kW of panels and an inverter of {{ex.1.out.inverter_buy}}, so a smaller system does the job.",
     "The reference table below runs the same house from no AC to three 1.5 ton inverter ACs with an electric geyser, so you can read off the size that matches the appliances you actually run together."
    ]
   },
@@ -222,7 +242,7 @@
   {
    "h2": "What does a 10 marla solar system cost?",
    "p": [
-    "We do not print a price because panel, inverter and battery prices in Pakistan move with the exchange rate from month to month. Ask installers for a complete quote in Rs per watt of panels for a {{out.installed_kw|2}} kW system with a {{out.inverter_kw|up2}} kW inverter, so that quotes compare like for like, and add the battery separately with its usable units stated.",
+    "An on-grid system of this size ({{out.installed_kw|2}} kW of panels with an inverter of {{out.inverter_buy}}, no battery) costs about {{px.out.price_low_rs|rsm}} to {{px.out.price_high_rs|rsm}} installed, from the installer price lists and reports checked on {{px.checked}}. Prices move with the exchange rate, so check today's range with the [[D14|solar system price calculator]], ask for complete quotes in Rs per watt of panels, add the battery separately with its units stated, and test a quote with the [[N3|solar quote checker]].",
     "A complete quote includes the panels, the inverter, the mounting structure, DC and AC cables, breakers and surge protection, earthing, installation labour, the net billing application and the bidirectional meter. A quote that leaves any of these out looks cheaper than it is."
    ]
   }
@@ -231,7 +251,7 @@
   {
    "inputs": {},
    "title": "Typical 10 marla house with three inverter ACs",
-   "text": "Six fans, sixteen bulbs, inverter fridge, deep freezer, two TVs, two 1.5 ton and one 1 ton inverter ACs, water pump, iron, washing machine and router: {{out.running_w|int}} W running and {{out.daily_kwh|1}} units a day. Solar system {{out.installed_kw|2}} kW ({{out.panels|int}} panels), inverter {{out.inverter_kw|up2}} kW, about {{out.monthly_kwh_estimate|int}} units a month."
+   "text": "Six fans, sixteen bulbs, inverter fridge, deep freezer, two TVs, two 1.5 ton and one 1 ton inverter ACs, water pump, iron, washing machine and router: {{out.running_w|int}} W running and {{out.daily_kwh|1}} units a day. Solar system {{out.installed_kw|2}} kW ({{out.panels|int}} panels), inverter {{out.inverter_buy}}, about {{out.monthly_kwh_estimate|int}} units a month."
   },
   {
    "inputs": {
@@ -285,7 +305,7 @@
     ]
    },
    "title": "10 marla house with two 1.5 ton inverter ACs",
-   "text": "The same house without the drawing-room AC: {{out.running_w|int}} W running and {{out.daily_kwh|1}} units a day. Solar system {{out.installed_kw|2}} kW ({{out.panels|int}} panels), inverter {{out.inverter_kw|up2}} kW, about {{out.monthly_kwh_estimate|int}} units a month. One AC fewer means fewer daily units and a lower running load, so both the panels and the inverter come down."
+   "text": "The same house without the drawing-room AC: {{out.running_w|int}} W running and {{out.daily_kwh|1}} units a day. Solar system {{out.installed_kw|2}} kW ({{out.panels|int}} panels), inverter {{out.inverter_buy}}, about {{out.monthly_kwh_estimate|int}} units a month. One AC fewer means fewer daily units and a lower running load, so both the panels and the inverter come down."
   },
   {
    "inputs": {
@@ -739,7 +759,7 @@
    },
    {
     "label": "Inverter",
-    "tpl": "{{out.inverter_kw|up2}} kW, surge {{out.inverter_surge_w|int}} W"
+    "tpl": "{{out.inverter_buy}}"
    },
    {
     "label": "Units a month",
@@ -751,7 +771,7 @@
   "Sizing from the bill of a house that will add ACs. The bill shows past units; list the ACs you plan to run, with their hours, so the daily units and the running load include them.",
   "Ordering a ten kW inverter with a five kW sanctioned load. The DISCO caps the net billing system at the sanctioned load, so apply for the load extension first.",
   "Sizing the battery for the whole list. The battery line assumes every appliance runs after dark; list only the night loads, and decide whether the AC is one of them, before you price a battery.",
-  "Counting inverter ACs at their rated watts for energy. An inverter AC cycles down once the room is cool, so the daily units use its average draw; the running load and the inverter size still use the rated watts.",
+  "Counting inverter ACs at their rated watts for energy. An inverter AC cycles down once the room is cool, so the daily units use its average draw; the running load and a hybrid inverter's size still use the rated watts.",
   "Expecting rated panel watts every day. The performance ratio of {{d.pr|pct}} covers heat, dust, cable loss and cloud; the monthly units shown are a yearly average, not a sunny-day peak."
  ],
  "safety": "A rooftop solar system of this size connects to the grid and to your house wiring at mains voltage, and its DC side runs at several hundred volts; have a licensed electrician and a DISCO-approved installer do the wiring, earthing, surge protection and net billing connection.",
@@ -762,11 +782,11 @@
   },
   {
    "q": "Is a 10 kW solar system enough for a 10 marla house with three ACs?",
-   "a": "Yes for three inverter ACs (two 1.5 ton and one 1 ton) with fans, lights, fridge, freezer, pump and washing machine: the house needs {{out.installed_kw|2}} kW of panels and a {{out.inverter_kw|up2}} kW inverter. Three 1.5 ton inverter ACs or non-inverter ACs move it to the next size; see the table."
+   "a": "Yes for three inverter ACs (two 1.5 ton and one 1 ton) with fans, lights, fridge, freezer, pump and washing machine: the house needs {{out.installed_kw|2}} kW of panels and an inverter of {{out.inverter_buy}}. Three 1.5 ton inverter ACs or non-inverter ACs move it to the next size; see the table."
   },
   {
    "q": "What solar system does a 10 marla house with two ACs need?",
-   "a": "With two 1.5 ton inverter ACs and the same fans, lights, fridge, freezer, pump and washing machine, the house needs {{ex.1.out.installed_kw|2}} kW of panels ({{ex.1.out.panels|int}} panels) and an inverter of {{ex.1.out.inverter_kw|up2}} kW, making about {{ex.1.out.monthly_kwh_estimate|int}} units a month in Lahore."
+   "a": "With two 1.5 ton inverter ACs and the same fans, lights, fridge, freezer, pump and washing machine, the house needs {{ex.1.out.installed_kw|2}} kW of panels ({{ex.1.out.panels|int}} panels) and an inverter of {{ex.1.out.inverter_buy}}, making about {{ex.1.out.monthly_kwh_estimate|int}} units a month in Lahore."
   },
   {
    "q": "How many units does a 10 marla solar system make a month?",
@@ -782,7 +802,7 @@
   },
   {
    "q": "What is the price of a 10 marla solar system?",
-   "a": "Prices change with the exchange rate, so we do not print one. Compare quotes in Rs per watt for a complete {{out.installed_kw|2}} kW system with a {{out.inverter_kw|up2}} kW inverter, including structure, cables, protection, installation and the net billing application, and price the battery separately."
+   "a": "About {{px.out.price_low_rs|rsm}} to {{px.out.price_high_rs|rsm}} installed for a {{out.installed_kw|2}} kW on-grid system with no battery, from price lists checked on {{px.checked}}. Compare quotes in Rs per watt for the complete system, including structure, cables, protection, installation and the net billing application, price the battery separately, and check a quote with the [[N3|solar quote checker]]."
   }
  ],
  "related": [
@@ -815,5 +835,9 @@
    "label": "Wattlyst methodology and default values",
    "url": "/methodology/"
   }
- ]
+ ],
+ "price_of": {
+  "kwp": "installed_kw",
+  "type": "on-grid"
+ }
 }

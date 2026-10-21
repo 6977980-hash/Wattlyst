@@ -37,7 +37,7 @@
    "url": "/wiring/breaker-size-calculator/"
   }
  ],
- "modified": "2026-10-13",
+ "modified": "2026-10-21",
  "content": {
   "intro": "",
   "sections": [
@@ -73,7 +73,7 @@
    {
     "h2": "What load can a 32 A MCB take?",
     "p": [
-     "A socket circuit of 5,500 W at 230 V draws 29.9 A and takes a 32 A type C MCB; that is close to the most a 32 A breaker should carry continuously. The cable has to be rated 37.4 A, so in 45 °C air it needs 10 mm² (7/64), rated 45 A; any smaller cable loses too much of its rating in the heat. A 32 A MCB is a common choice for a kitchen, a geyser-plus-sockets circuit or a small sub-main."
+     "A socket circuit of 5,500 W at 230 V draws 29.9 A and takes a 32 A type C MCB; that is close to the most a 32 A breaker should carry continuously. The cable has to be rated 37.4 A, so in 45 °C air it needs 10 mm² (7/64, sold as 16 mm²), rated 45 A; any smaller cable loses too much of its rating in the heat. A 32 A MCB is a common choice for a kitchen, a geyser-plus-sockets circuit or a small sub-main."
     ]
    },
    {
@@ -321,6 +321,7 @@
     "cable_data_missing": "Cable data could not be loaded. Please refresh the page.",
     "cable_size_unknown": "Pick a standard cable size.",
     "load_above_standard_breakers": "This load needs more than the largest single-phase MCB. Split it into separate circuits or ask a licensed electrician about a three-phase connection.",
+    "dc_load_above_cable_table": "This battery current is above the largest cable in our table. Do not split a battery feed into separate circuits: use a higher battery voltage (it lowers the current) or have a licensed electrician design the busbars, parallel cables and fusing.",
     "load_above_cable_table": "This load is above the largest cable in our table. Split it into separate circuits and consult a licensed electrician.",
     "ambient_out_of_range": "Enter an air temperature around the cable between 10 and 60 °C.",
     "circuits_out_of_range": "Enter how many circuits share the conduit or bundle, from 1 to 20.",
@@ -336,7 +337,7 @@
     {
      "label": "Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)",
      "url": "https://webstore.iec.ch/publication/1878",
-     "checked": "2026-10-14"
+     "checked": "2026-10-21"
     }
    ]
   },
@@ -359,7 +360,7 @@
    },
    {
     "title": "Kitchen socket circuit of 5,500 W",
-    "text": "5,500 W ÷ (230 V × 0.8) = 29.9 A, so a 32 A type C MCB. The cable must be rated 37.4 A, which takes 10 mm² (7/64) at 45 A."
+    "text": "5,500 W ÷ (230 V × 0.8) = 29.9 A, so a 32 A type C MCB. The cable must be rated 37.4 A, which takes 10 mm² (7/64, sold as 16 mm²) at 45 A."
    }
   ],
   "table": {
@@ -412,14 +413,14 @@
      "27.2 A",
      "32 A",
      "C",
-     "10 mm² (7/64)"
+     "10 mm² (7/64, sold as 16 mm²)"
     ],
     [
      "6,000 W",
      "32.6 A",
      "40 A",
      "C",
-     "10 mm² (7/64)"
+     "10 mm² (7/64, sold as 16 mm²)"
     ],
     [
      "7,000 W",
@@ -482,7 +483,7 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/wiring/breaker-size-calculator/#breadcrumb"
     },
-    "dateModified": "2026-10-13",
+    "dateModified": "2026-10-21",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }

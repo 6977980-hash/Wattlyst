@@ -44,7 +44,7 @@
    {
     "h2": "Which is the cheapest backup for loadshedding?",
     "p": [
-     "With the defaults, 600 W for 4 hours a day over 5 years, the answer is hybrid solar at Rs 559,768 in total. The UPS comes to Rs 600,665, hybrid solar to Rs 559,768 and the generator to Rs 1,622,690; solar has no running cost once bought, the generator pays for petrol every hour.",
+     "With the defaults, 600 W for 4 hours a day over 5 years, the answer is UPS at Rs 600,665 in total. The UPS comes to Rs 600,665, hybrid solar to Rs 609,785 and the generator to Rs 1,622,690; solar has no running cost once bought, the generator pays for petrol every hour.",
      "The answer can change with the load and the hours. For 300 W over 2 hours a day the cheapest is UPS (Rs 208,633 over 5 years); hybrid solar still has to buy a whole lithium pack and an inverter however small the load. Enter your own load and hours above."
     ]
    },
@@ -58,7 +58,7 @@
    {
     "h2": "What the hybrid solar figure includes",
     "p": [
-     "The smallest hybrid inverter in our price data that carries the load and is built for the lithium pack's battery voltage, lithium batteries in whole packs for one night's backup, and enough panels to refill the battery on an average day in your city. It assumes the sun recharges the battery, so a run of cloudy days would still need the grid.",
+     "The smallest hybrid inverter in our price data that carries the load and is built for the lithium pack's battery voltage, lithium batteries in whole packs for one night's backup, and enough panels to refill the battery on an average day in your city, never fewer than the string a hybrid inverter needs to start: a hybrid inverter for the lithium pack switches on only when the panels in series give about 150 V, and works from about 120 V, which on a hot afternoon takes 4 panels of 585 W. It assumes the sun recharges the battery, so a run of cloudy days would still need the grid.",
      "It does not count the bill savings solar makes during the day. The Home Power Planner on our home page does: it prices the same backup with on-grid or hybrid solar for your whole appliance list and its bill, so its pick can differ from the one here. It also leaves out mounting, cabling and installation (they add to every option, most to solar), the inverter's own standby draw and grid charging on cloudy days."
     ]
    },
@@ -73,7 +73,7 @@
   "faq": [
    {
     "q": "Which is cheaper for loadshedding: UPS, solar or generator?",
-    "a": "It depends on the load and the hours. For 600 W through 4 hours a day over 5 years, hybrid solar is cheapest at Rs 77 per backup hour; for 300 W through 2 hours the cheapest is UPS at Rs 57."
+    "a": "It depends on the load and the hours. For 600 W through 4 hours a day over 5 years, UPS is cheapest at Rs 82 per backup hour; for 300 W through 2 hours the cheapest is UPS at Rs 57."
    },
    {
     "q": "How much does a petrol generator cost per hour?",
@@ -89,7 +89,7 @@
    },
    {
     "q": "Is solar worth it only for backup?",
-    "a": "It depends on the load and the hours. For 300 W through 2 hours a day the cheapest backup is UPS, because even a small solar backup buys a whole lithium pack and a hybrid inverter; for 600 W through 4 hours over 5 years it is hybrid solar. This comparison leaves out the bill savings solar makes during the day; the Home Power Planner on our home page counts them for your whole appliance list."
+    "a": "It depends on the load and the hours. For 300 W through 2 hours a day the cheapest backup is UPS, because even a small solar backup buys a whole lithium pack and a hybrid inverter; for 600 W through 4 hours over 5 years it is UPS. This comparison leaves out the bill savings solar makes during the day; the Home Power Planner on our home page counts them for your whole appliance list."
    },
    {
     "q": "Does the comparison include installation?",
@@ -100,7 +100,7 @@
    "Cost per backup hour = (equipment + running cost a year × years + battery replacements) ÷ hours of backup over the same years; it puts a cheap-to-buy generator and a dear-to-buy solar system on one scale.",
    "For 600 W through 4 hours a day a petrol generator burns about 0.49 litres an hour, Rs 272,211 of petrol a year. Cheapest to buy here: petrol generator; dearest after the first year (purchase plus one year of running): hybrid solar.",
    "A UPS takes more units from the grid than it delivers: 1,213 units a year here, Rs 44,211 at Rs 36.46 a unit, and its tubular batteries are replaced every 3 years.",
-   "For a small load and short cuts: 300 W for 2 hours a day costs Rs 57 per backup hour on a UPS against Rs 146 on hybrid solar, and the cheapest is UPS; even a small solar backup buys a whole lithium pack and a hybrid inverter built for it."
+   "For a small load and short cuts: 300 W for 2 hours a day costs Rs 57 per backup hour on a UPS against Rs 167 on hybrid solar, and the cheapest is UPS; even a small solar backup buys a whole lithium pack and a hybrid inverter built for it."
   ],
   "mistakes": [
    "Comparing purchase prices only. The cheapest option to buy is often the dearest to own; compare the cost per backup hour over the same years.",
@@ -345,14 +345,14 @@
      "label": "Cheapest over the period",
      "spec": "raw",
      "label_ur": "Is muddat mein sab se sasta",
-     "value": "hybrid solar"
+     "value": "UPS"
     },
     {
      "key": "cheapest_per_hour",
      "label": "Cheapest: cost per backup hour",
      "spec": "rs",
      "label_ur": "Sab se sasta: har backup ghante ka kharcha",
-     "value": "Rs 77"
+     "value": "Rs 82"
     },
     {
      "key": "ups_per_hour",
@@ -373,7 +373,7 @@
      "label": "Hybrid solar: cost per backup hour",
      "spec": "rs",
      "label_ur": "Hybrid solar: har backup ghante ka kharcha",
-     "value": "Rs 77"
+     "value": "Rs 84"
     },
     {
      "key": "ups_total",
@@ -394,7 +394,7 @@
      "label": "Hybrid solar: total over the period",
      "spec": "rs",
      "label_ur": "Hybrid solar: muddat ka kul kharcha",
-     "value": "Rs 559,768"
+     "value": "Rs 609,785"
     },
     {
      "key": "ups_status",
@@ -405,8 +405,8 @@
     }
    ],
    "how": {
-    "tpl": "Backup a day: {{out.load_w}} W × {{out.hours}} h = {{out.day_kwh|2}} kWh; backup hours: {{out.hours}} h × {{out.days}} days × twelve months × {{out.years}} years = {{out.backup_hours|int}} h. UPS: {{out.ups_kva}} kVA, tubular batteries: {{out.batteries|int}} ({{out.bank_wh|int}} Wh needed), {{out.ups_buy|rs}}; recharge {{out.recharge_kwh_year|int}} units a year × {{out.tariff|rs2}} = {{out.ups_run_year|rs}}; battery replacements: {{out.ups_repl|int}}, {{out.ups_repl_rs|rs}}; charger check: {{out.refill_need_kwh|2}} kWh to put back in {{out.refill_hours|int}} grid hours, {{out.charger_a|int}} A at {{out.bank_v}} V gives up to {{out.refill_max_kwh|2}} kWh; total {{out.ups_total|rs}} ÷ {{out.backup_hours|int}} h = {{out.ups_per_hour|rs}}. Generator: {{out.gen_kva}} kVA, {{out.gen_buy|rs}}; {{out.l_per_h|2}} litres an hour × {{out.run_h_year|int}} h × {{out.fuel_price|rs2}} = {{out.fuel_year|rs}} fuel plus {{out.oil_year|rs}} oil a year; total {{out.gen_total|rs}} ÷ {{out.backup_hours|int}} h = {{out.gen_per_hour|rs}}. Hybrid solar: {{out.inverter_kw}} kW inverter, {{out.lithium_packs|int}} lithium pack(s), {{out.panels|int}} panels, {{out.solar_buy|rs}}; battery replacements: {{out.solar_repl|int}}, {{out.solar_repl_rs|rs}}; total {{out.solar_total|rs}} ÷ {{out.backup_hours|int}} h = {{out.solar_per_hour|rs}}.",
-    "text": "Backup a day: 600 W × 4 h = 2.4 kWh; backup hours: 4 h × 30.42 days × twelve months × 5 years = 7,301 h. UPS: 1.2 kVA, tubular batteries: 3 (5,647 Wh needed), Rs 209,930; recharge 1,213 units a year × Rs 36.46 = Rs 44,211; battery replacements: 1, Rs 169,680; charger check: 3.32 kWh to put back in 20 grid hours, 25 A at 12 V gives up to 6 kWh; total Rs 600,665 ÷ 7,301 h = Rs 82. Generator: 2.5 kVA, Rs 135,950; 0.49 litres an hour × 1,460 h × Rs 382.02 = Rs 272,211 fuel plus Rs 25,137 oil a year; total Rs 1,622,690 ÷ 7,301 h = Rs 222. Hybrid solar: 6 kW inverter, 1 lithium pack(s), 2 panels, Rs 559,768; battery replacements: 0, Rs 0; total Rs 559,768 ÷ 7,301 h = Rs 77."
+    "tpl": "Backup a day: {{out.load_w}} W × {{out.hours}} h = {{out.day_kwh|2}} kWh; backup hours: {{out.hours}} h × {{out.days}} days × twelve months × {{out.years}} years = {{out.backup_hours|int}} h. UPS: {{out.ups_kva}} kVA, tubular batteries: {{out.batteries|int}} ({{out.bank_wh|int}} Wh needed), {{out.ups_buy|rs}}; recharge {{out.recharge_kwh_year|int}} units a year × {{out.tariff|rs2}} = {{out.ups_run_year|rs}}; battery replacements: {{out.ups_repl|int}}, {{out.ups_repl_rs|rs}}; charger check: {{out.refill_need_kwh|2}} kWh to put back in {{out.refill_hours|int}} grid hours, {{out.charger_a|int}} A at {{out.bank_v}} V gives up to {{out.refill_max_kwh|2}} kWh; total {{out.ups_total|rs}} ÷ {{out.backup_hours|int}} h = {{out.ups_per_hour|rs}}. Generator: {{out.gen_kva}} kVA, {{out.gen_buy|rs}}; {{out.l_per_h|2}} litres an hour × {{out.run_h_year|int}} h × {{out.fuel_price|rs2}} = {{out.fuel_year|rs}} fuel plus {{out.oil_year|rs}} oil a year; total {{out.gen_total|rs}} ÷ {{out.backup_hours|int}} h = {{out.gen_per_hour|rs}}. Hybrid solar: {{out.inverter_kw}} kW inverter, {{out.lithium_packs|int}} lithium pack(s), {{out.panels|int}} panels (the larger of {{out.panels_energy|int}} to refill the battery and {{out.string_min|int}} in series, the fewest that start a hybrid inverter and keep it in its MPPT range on a hot day), {{out.solar_buy|rs}}; battery replacements: {{out.solar_repl|int}}, {{out.solar_repl_rs|rs}}; total {{out.solar_total|rs}} ÷ {{out.backup_hours|int}} h = {{out.solar_per_hour|rs}}.",
+    "text": "Backup a day: 600 W × 4 h = 2.4 kWh; backup hours: 4 h × 30.42 days × twelve months × 5 years = 7,301 h. UPS: 1.2 kVA, tubular batteries: 3 (5,647 Wh needed), Rs 209,930; recharge 1,213 units a year × Rs 36.46 = Rs 44,211; battery replacements: 1, Rs 169,680; charger check: 3.32 kWh to put back in 20 grid hours, 25 A at 12 V gives up to 6 kWh; total Rs 600,665 ÷ 7,301 h = Rs 82. Generator: 2.5 kVA, Rs 135,950; 0.49 litres an hour × 1,460 h × Rs 382.02 = Rs 272,211 fuel plus Rs 25,137 oil a year; total Rs 1,622,690 ÷ 7,301 h = Rs 222. Hybrid solar: 6 kW inverter, 1 lithium pack(s), 4 panels (the larger of 2 to refill the battery and 4 in series, the fewest that start a hybrid inverter and keep it in its MPPT range on a hot day), Rs 609,785; battery replacements: 0, Rs 0; total Rs 609,785 ÷ 7,301 h = Rs 84."
    },
    "submit": "Calculate",
    "rtable": {
@@ -464,11 +464,11 @@
      ],
      [
       "Hybrid solar 6 kW + 1 lithium pack",
-      "Rs 559,768",
+      "Rs 609,785",
       "Rs 0",
       "Rs 0",
-      "Rs 559,768",
-      "Rs 77"
+      "Rs 609,785",
+      "Rs 84"
      ]
     ]
    },
@@ -477,10 +477,20 @@
     "load_must_be_positive": "Enter a load greater than 0 watts.",
     "loads_required": "Add at least one appliance.",
     "city_unknown": "We do not have sun data for this city yet. Pick the nearest city or enter the yield yourself.",
+    "usage_required": "Enter your monthly units or daily kWh.",
+    "yield_or_city_or_psh_required": "Pick a city or enter peak sun hours.",
     "surge_w_required": "Enter the starting (surge) watts of your load, or leave both surge fields blank.",
     "appliance_unknown": "Pick an appliance from the list, or choose Custom and enter its watts.",
+    "other_start_below_run": "Starting watts of the other loads cannot be lower than their running watts.",
+    "loads_hours_required": "Enter hours per day for at least one appliance.",
+    "drive_above_standard_sizes": "This drive is above the largest size we list. Use one larger solar pump drive rated for this motor (two drives cannot share one motor) and ask the supplier or a licensed engineer; the size shown is the calculated minimum.",
+    "motor_v_invalid": "Pick the motor voltage from the list: 220 V single-phase or 400 V three-phase.",
+    "string_below_bus": "The panels in series are capped by the drive's maximum DC input on a cold morning, so on hot afternoons the string gives less than the voltage the motor needs at full speed and the pump runs slower then (see the string voltage in the working). Check the drive's DC input range with the supplier.",
+    "above_standard_sizes": "This is above the largest standard size we list. Split the array or circuit into two, or ask a licensed electrician or engineer; the sizes shown are the calculated minimums.",
+    "generator_above_standard_sizes": "This is above the largest generator size we list. Use two generators on separate circuits or a larger industrial set, and ask a licensed electrician; the size shown is the calculated minimum.",
     "price_data_missing": "Price data could not be loaded. Enter the typical price range yourself or refresh the page.",
     "forecast_unavailable": "The live forecast is not available right now, so a typical day is shown. Try again later.",
+    "usage_both": "Both boxes are filled, so the units a day are used and the monthly units are left out. Clear the daily box to size from your bill.",
     "typical_used": "Blank boxes in your list use the typical value for that appliance (its listed watts and hours a day, quantity 1). Type your own numbers for an exact result.",
     "internal_non_finite": "These numbers are outside a realistic range. Please check your inputs."
    },
@@ -510,11 +520,11 @@
   "examples": [
    {
     "title": "Fans, lights, router and TV through four hours a day",
-    "text": "7,301 backup hours over 5 years. UPS Rs 600,665 (Rs 82 an hour), generator Rs 1,622,690 (Rs 222 an hour), hybrid solar Rs 559,768 (Rs 77 an hour). Cheapest: hybrid solar."
+    "text": "7,301 backup hours over 5 years. UPS Rs 600,665 (Rs 82 an hour), generator Rs 1,622,690 (Rs 222 an hour), hybrid solar Rs 609,785 (Rs 84 an hour). Cheapest: UPS."
    },
    {
     "title": "Small load, short cuts",
-    "text": "300 W for 2 hours a day needs only 1 tubular battery. UPS Rs 57 per backup hour, hybrid solar Rs 146, generator Rs 186. Cheapest: UPS."
+    "text": "300 W for 2 hours a day needs only 1 tubular battery. UPS Rs 57 per backup hour, hybrid solar Rs 167, generator Rs 186. Cheapest: UPS."
    },
    {
     "title": "Bigger load through long cuts",
@@ -522,7 +532,7 @@
    },
    {
     "title": "The default home over ten years",
-    "text": "Over 10 years the UPS needs 3 battery replacements and the solar system 1. Per backup hour: UPS Rs 80, generator Rs 213, hybrid solar Rs 56."
+    "text": "Over 10 years the UPS needs 3 battery replacements and the solar system 1. Per backup hour: UPS Rs 80, generator Rs 213, hybrid solar Rs 60."
    }
   ],
   "table": {
@@ -541,7 +551,7 @@
      "Rs 57",
      "Yes",
      "Rs 186",
-     "Rs 146",
+     "Rs 167",
      "UPS"
     ],
     [
@@ -549,7 +559,7 @@
      "Rs 103",
      "Yes",
      "Rs 241",
-     "Rs 146",
+     "Rs 167",
      "UPS"
     ],
     [
@@ -557,15 +567,15 @@
      "Rs 82",
      "Yes",
      "Rs 222",
-     "Rs 77",
-     "hybrid solar"
+     "Rs 84",
+     "UPS"
     ],
     [
      "600 W, 8 h a day",
      "Rs 72",
      "No",
      "Rs 213",
-     "Rs 58",
+     "Rs 60",
      "hybrid solar"
     ],
     [
@@ -573,7 +583,7 @@
      "Rs 121",
      "Yes",
      "Rs 296",
-     "Rs 80",
+     "Rs 84",
      "hybrid solar"
     ],
     [
@@ -586,7 +596,7 @@
     ]
    ]
   },
-  "answer": "For 600 W through 4 hours of loadshedding a day, the cheapest backup over 5 years is hybrid solar at about Rs 77 per backup hour: a UPS with tubular batteries costs Rs 82, hybrid solar Rs 77 and a petrol generator Rs 222. Cost = equipment + yearly running cost + battery replacements, divided by the backup hours.",
+  "answer": "For 600 W through 4 hours of loadshedding a day, the cheapest backup over 5 years is UPS at about Rs 82 per backup hour: a UPS with tubular batteries costs Rs 82, hybrid solar Rs 84 and a petrol generator Rs 222. Cost = equipment + yearly running cost + battery replacements, divided by the backup hours.",
   "formula": {
    "text": "Cost per backup hour = (B + Y × R + N × P) ÷ (h × days × twelve × Y)",
    "lines": [
@@ -684,7 +694,7 @@
       "name": "Which is cheaper for loadshedding: UPS, solar or generator?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "It depends on the load and the hours. For 600 W through 4 hours a day over 5 years, hybrid solar is cheapest at Rs 77 per backup hour; for 300 W through 2 hours the cheapest is UPS at Rs 57."
+       "text": "It depends on the load and the hours. For 600 W through 4 hours a day over 5 years, UPS is cheapest at Rs 82 per backup hour; for 300 W through 2 hours the cheapest is UPS at Rs 57."
       }
      },
      {
@@ -716,7 +726,7 @@
       "name": "Is solar worth it only for backup?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "It depends on the load and the hours. For 300 W through 2 hours a day the cheapest backup is UPS, because even a small solar backup buys a whole lithium pack and a hybrid inverter; for 600 W through 4 hours over 5 years it is hybrid solar. This comparison leaves out the bill savings solar makes during the day; the Home Power Planner on our home page counts them for your whole appliance list."
+       "text": "It depends on the load and the hours. For 300 W through 2 hours a day the cheapest backup is UPS, because even a small solar backup buys a whole lithium pack and a hybrid inverter; for 600 W through 4 hours over 5 years it is UPS. This comparison leaves out the bill savings solar makes during the day; the Home Power Planner on our home page counts them for your whole appliance list."
       }
      },
      {

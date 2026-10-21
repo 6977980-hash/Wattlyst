@@ -2,6 +2,7 @@
 // Own module so no other page ships it. Every price, life and upkeep figure comes from data/ (equipment only, middle of each range).
 import { calculator, CalcError, pos, nonneg, num, pick, ceilSafe, dflt } from './core.js';
 import { fmt } from './format.js';
+import { hybridString } from './solar.js';
 
 const mid = (r) => (r.low + r.high) / 2;
 const sizeKw = (s) => parseFloat(String(s));
@@ -15,7 +16,8 @@ const sizeKw = (s) => parseFloat(String(s));
  * Generator: smallest listed set with kVA × PF ≥ load × margin; fuel L/h = C8 curve; oil change every N hours.
  * Hybrid solar: smallest listed hybrid inverter with kW ≥ load × margin; LiFePO4 kWh = E ÷ (DoD × η_hybrid);
  *   bought in whole packs (data/backup-prices.json lithium_pack, priced in data/component-prices.json);
- *   panels to refill it on an average day = ceil(E ÷ η_inv ÷ η_chg ÷ yield ÷ panel W); no running cost; replacements every LiFePO4 life.
+ *   panels to refill it on an average day = ceil(E ÷ η_inv ÷ η_chg ÷ yield ÷ panel W), at least the string that starts the
+ *   hybrid inverter (hybridString, WL-230); no running cost; replacements every LiFePO4 life.
  * Total = purchase + years × running a year + replacements; per backup hour = total ÷ backup hours.
  */
 export const backup_compare = calculator((i, d) => {
@@ -94,7 +96,9 @@ export const backup_compare = calculator((i, d) => {
   const li_kwh = li_packs * pack.kwh;
   const panel_w = pos(i, 'panel_w', dflt(d, 'panel_w'));
   const refill_kwh = day_kwh / eta_h / dflt(d, 'charge_eff_lifepo4');
-  const panels = ceilSafe((refill_kwh / c.yield) * 1000 / panel_w);
+  const panels_energy = ceilSafe((refill_kwh / c.yield) * 1000 / panel_w);
+  const string_min = hybridString(d);
+  const panels = Math.max(panels_energy, string_min);
   const solar_buy = inv.rs + li_packs * mid(liItem) + panels * panel_w * ((panel.low + panel.high) / 2);
   const life_l = bp.battery_life_years.lifepo4;
   const solar_repl = Math.max(0, Math.floor((years - 1e-9) / life_l));
@@ -115,7 +119,7 @@ export const backup_compare = calculator((i, d) => {
     load_w, surge_w, hours, days, years, tariff, fuel, fuel_price, city, margin, day_kwh, backup_hours,
     ups_kva: ups.kva, ups_rated_w: ups.rated_w, bank_v: ups.battery_v, battery_ah: tub.ah, battery_v: tub.v, bank_wh, batteries, recharge_kwh_year, tubular_life_years: life_t,
     gen_kva: gen.kva, gen_rated_kw: gen.kva * pf, l_per_h, run_h_year, fuel_year, oil_year, oil_change_hours: up.oil_change_hours,
-    inverter_kw: inv.kw, lithium_need_kwh: li_need_kwh, lithium_packs: li_packs, lithium_kwh: li_kwh, panels, panel_w, solar_kw: (panels * panel_w) / 1000, lifepo4_life_years: life_l,
+    inverter_kw: inv.kw, lithium_need_kwh: li_need_kwh, lithium_packs: li_packs, lithium_kwh: li_kwh, panels, panels_energy, string_min, panel_w, solar_kw: (panels * panel_w) / 1000, lifepo4_life_years: life_l,
     ...(ups_fits ? { ups_buy, ups_run_year, ups_repl, ups_repl_rs, ups_total, ups_per_hour: ups_total / backup_hours } : {}),
     gen_buy, gen_run_year, gen_total, gen_per_hour: gen_total / backup_hours,
     solar_buy, solar_repl, solar_repl_rs, solar_total, solar_per_hour: solar_total / backup_hours,

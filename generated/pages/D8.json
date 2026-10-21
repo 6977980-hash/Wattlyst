@@ -38,43 +38,57 @@
    "url": "/solar/solar-system-for-5-marla-house/"
   }
  ],
- "modified": "2026-10-15",
+ "modified": "2026-10-21",
  "content": {
   "intro": "",
   "sections": [
    {
     "h2": "What is the electrical load of a 5 marla house?",
     "p": [
-     "A 5 marla house usually has two or three bedrooms, a lounge, a kitchen and one or two bathrooms. The default list above is what runs in such a house in summer: four ceiling fans, ten LED bulbs, an inverter fridge, a TV, one 1.5 ton inverter AC, a water pump and an iron. Together they come to 4,085 W running and 15.6 units a day, which is about 498 units a month from the solar system.",
-     "The daily units, not the running load, set the panel size here. The AC, the pump and the fans can all be on at noon, and when their 4,085 W is more than the panels give, the grid supplies the rest. The running load still sets the inverter. If your house has fewer or more appliances, change the list and the result updates."
+     "A 5 marla house usually has two or three bedrooms, a lounge, a kitchen and one or two bathrooms. The default list above is what runs in such a house in summer: four ceiling fans, ten LED bulbs, an inverter fridge, a TV, one 1.5 ton inverter AC, a water pump and an iron. Together they come to 4,017 W running and 15.6 units a day, which is about 498 units a month from the solar system.",
+     "The daily units, not the running load, set the panel size here. The AC, the pump and the fans can all be on at noon, and when their 4,017 W is more than the panels give, the grid supplies the rest. The panels also set an on-grid inverter, which runs beside the grid; the running load sets a hybrid inverter, which carries the house in a power cut. If your house has fewer or more appliances, change the list and the result updates."
     ]
    },
    {
     "h2": "How many kW solar for a 5 marla house?",
     "p": [
-     "For the typical house above the answer is 4.1 kW of panels with a 5.11 kW inverter. The energy rule asks for 3.91 kW. Panels big enough to carry the whole 4,085 W at midday (4,085 W ÷ 0.78 = 5.24 kW) would make more units than the house uses, and the extra would be sold at the low buyback rate; that rule is for off-grid systems, which have no grid to fall back on.",
-     "The panel count is rounded up, so the installed size is a little above the calculated 3.91 kW. Installers quote by inverter size, which is why this house is sold as a five kW system."
+     "For the typical house above the answer is 4.1 kW of panels with an inverter of 3.6 kW. The energy rule asks for 3.9 kW. Panels big enough to carry the whole 4,017 W at midday (4,017 W ÷ 0.78 = 5.15 kW) would make more units than the house uses, and the extra would be sold at the low buyback rate; that rule is for off-grid systems, which have no grid to fall back on.",
+     "The panel count is rounded up, so the installed size is a little above the calculated 3.9 kW. Installers quote by inverter size: with no battery this house takes an on-grid inverter of 3.6 kW, and a five kW one leaves room for more panels later. With a battery for power cuts the hybrid inverter must carry the 4,017 W running load, so it needs at least 5.03 kW.",
+     "Do not put every panel in one string. On a cold morning each 585 W panel gives about 55 V open-circuit, so 7 panels in series would be about 388 V; split them into strings that each stay below the inverter's maximum DC input voltage on its datasheet."
     ]
    },
    {
     "h2": "When is a 5 kW solar system right for a 5 marla house?",
     "p": [
-     "An inverter of at least 5.11 kW with 7 panels suits a 5 marla house with one inverter AC, fans, lights, a fridge and a pump, which is exactly the default above. It runs the whole house in the day and feeds spare units to the grid.",
-     "With two inverter ACs running at the same time the running load goes above the inverter rating, and the calculator moves you to the next size. See the second worked example below for that house."
+     "7 panels on an on-grid inverter of at least 3.15 kW suit a 5 marla house with one inverter AC, fans, lights, a fridge and a pump, which is exactly the default above, so a five kW on-grid system covers it. It runs the whole house in the day and feeds spare units to the grid.",
+     "With two inverter ACs the daily units rise, so the panels and the inverter move up a size, and a hybrid inverter must carry both ACs at once. See the second worked example below for that house."
     ]
    },
    {
     "h2": "Solar for a 5 marla house with one AC",
     "p": [
-     "One 1.5 ton inverter AC is the single biggest load in the list. On average it draws about 1 kW while running, which is most of the house's daily units in summer. The default result is the one-AC case: 4.1 kW of panels and a 5.11 kW inverter.",
-     "If the AC is non-inverter, the starting surge is much larger and the inverter must handle it. Pick the non-inverter AC in the list and the surge rating in the result changes."
+     "One 1.5 ton inverter AC is the single biggest load in the list. On average it draws about 1 kW while running, which is most of the house's daily units in summer. The default result is the one-AC case: 4.1 kW of panels and an inverter of 3.6 kW.",
+     "If the AC is non-inverter, its starting surge is much larger. An on-grid inverter does not have to start it, because the grid does; a hybrid inverter that runs the AC in a power cut must, so enter backup hours and the result shows the surge rating it needs."
     ]
    },
    {
     "h2": "What does a 5 marla solar system cost?",
     "p": [
-     "We do not print a price here because panel and inverter prices in Pakistan move with the dollar rate and change from month to month. Ask for quotes in Rs per watt of panels, so a 4.1 kW system is compared like for like; a quote checker that compares your quote against the current market range is coming to this site.",
+     "An on-grid system of this size (4.1 kW of panels, no battery) costs about Rs 437,000 to Rs 719,000 installed, from the installer price lists and reports checked on 14 October 2026; a battery and a hybrid inverter add to that. Prices move with the dollar rate, so check today's range with the solar system price calculator, ask for quotes in Rs per watt of panels so they compare like for like, and test a quote you have with the solar quote checker.",
      "A complete quote must include the panels, the inverter, the mounting structure, DC and AC cables, breakers and surge protection, earthing, installation labour and, for a grid-tied system, the net billing application and the bidirectional meter. A quote that leaves any of these out looks cheaper than it is."
+    ],
+    "l": [
+     [
+      {
+       "t": "solar system price calculator",
+       "u": "/solar/solar-system-price-pakistan/"
+      },
+      {
+       "t": "solar quote checker",
+       "u": "/solar/solar-quote-checker/"
+      }
+     ],
+     []
     ]
    },
    {
@@ -92,7 +106,7 @@
    },
    {
     "q": "Is a 5 kW solar system enough for a 5 marla house?",
-    "a": "Check the inverter more than the panels. One 1.5 ton inverter AC with fans, lights, a fridge and a pump needs 4.1 kW of panels and an inverter of at least 5.11 kW, so a five kW system whose inverter is below 5.11 kW is too small for this load; keep its running load lower or take the next inverter size. For two ACs at the same time, or an electric geyser, the calculator moves to the next size."
+    "a": "Yes for one 1.5 ton inverter AC with fans, lights, a fridge and a pump on the grid: the house needs 4.1 kW of panels and an on-grid inverter of at least 3.15 kW. A hybrid inverter with a battery also carries the house in a power cut, so it must be at least 5.03 kW for the whole list; put only the loads you need in a cut on the battery side to keep it smaller. For two ACs at the same time, or an electric geyser, the calculator moves to the next size."
    },
    {
     "q": "How many units will a 5 marla solar system make a month?",
@@ -104,7 +118,13 @@
    },
    {
     "q": "What is the price of a solar system for a 5 marla house?",
-    "a": "Prices change with the dollar rate, so we do not print one. Compare quotes in Rs per watt for a complete system of 4.1 kW, including structure, cables, protection, installation and the net billing application."
+    "a": "About Rs 437,000 to Rs 719,000 installed for a 4.1 kW on-grid system with no battery, from price lists checked on 14 October 2026. Compare quotes in Rs per watt for the complete system, including structure, cables, protection, installation and the net billing application, and check one with the solar quote checker.",
+    "l": [
+     {
+      "t": "solar quote checker",
+      "u": "/solar/solar-quote-checker/"
+     }
+    ]
    },
    {
     "q": "Grid-tied, hybrid or off-grid for a 5 marla house?",
@@ -112,19 +132,19 @@
    },
    {
     "q": "Why does the result change when I add an appliance that runs for a few minutes?",
-    "a": "The panels follow the daily units, so a short-running appliance adds only its few units. It still counts in the running load, which sets the inverter, and a pump's start sets the inverter's surge rating."
+    "a": "The panels follow the daily units, so a short-running appliance adds only its few units. It still counts in the running load, which sets a hybrid inverter and its surge rating; an on-grid inverter follows the panels."
    }
   ],
   "key_facts": [
-   "A typical 5 marla house with one 1.5 ton inverter AC has a running load of about 4,085 W and uses about 15.6 units a day, so it needs a solar system of about 4.1 kW with a 5.11 kW inverter.",
+   "A typical 5 marla house with one 1.5 ton inverter AC has a running load of about 4,017 W and uses about 15.6 units a day, so it needs a solar system of about 4.1 kW with an inverter of 3.6 kW.",
    "Solar system size in kW = units a day ÷ sun yield per kW a day. With the grid connected the panels do not have to carry every appliance at once; only an off-grid system is sized that way.",
    "One kW of panels makes about 4 units a day in Lahore over the year, so a 4.1 kW system makes about 498 units a month.",
-   "Panels are counted up to the next whole panel: 3.91 kW ÷ 585 W = 7 panels, about 18 square metres of roof."
+   "Panels are counted up to the next whole panel: 3.9 kW ÷ 585 W = 7 panels, about 18 square metres of roof."
   ],
   "mistakes": [
    "Sizing the panels to run every appliance at once. That is the off-grid rule; with the grid connected it buys panels whose extra units are sold back at the low buyback rate.",
-   "Forgetting the pump and iron. They run for minutes, but they are on the running load when they do, and the pump's starting surge sets the inverter's surge rating.",
-   "Buying an inverter equal to the panel kW without checking the load. The inverter is sized from the running load with a margin, and only raised when the panels would be more than 1.3 times it; the panels are sized from the daily units, so the two numbers usually differ.",
+   "Forgetting the pump and iron. They run for minutes, but they are on the running load when they do, and the pump's starting surge sets a hybrid inverter's surge rating.",
+   "Mixing up the two inverter rules. An on-grid inverter is sized from the panels, which may be up to 1.3 times its rating; a hybrid inverter also carries the house in a power cut, so it is sized from the running load with a margin. A hybrid inverter smaller than the running load trips when the AC and the pump run together.",
    "Expecting the rated panel watts every day. The performance ratio of 78% covers heat, dust, cable loss and cloudy days; the units a month shown is the realistic yearly average, not a sunny-day peak.",
    "Sizing a battery for the whole house. The battery line assumes every listed appliance runs after dark; list only the night loads for a battery you can afford."
   ],
@@ -136,6 +156,66 @@
    {
     "label": "Wattlyst methodology and default values",
     "url": "/methodology/"
+   },
+   {
+    "label": "Toolsfluent (blog), 2026-07-14 (price data)",
+    "url": "https://www.toolsfluent.com/blog/3kw-solar-system-pakistan-complete-guide"
+   },
+   {
+    "label": "PriceData.pk (market data), page 'Last Updated: October 14, 2026' (price data)",
+    "url": "https://www.pricedata.pk/solar/solar-panel-prices-in-pakistan"
+   },
+   {
+    "label": "GreenOH (installer marketplace), 2026-10-14 (price data)",
+    "url": "https://thegreenoh.com/solar-guides/on-grid-vs-hybrid-solar-system-pakistan"
+   },
+   {
+    "label": "Toolsfluent (blog), 2026-05-13 (price data)",
+    "url": "https://www.toolsfluent.com/blog/5kw-solar-system-pakistan-complete-guide"
+   },
+   {
+    "label": "Max Power (manufacturer/installer blog), undated (price data)",
+    "url": "https://maxpower.com.pk/?p=4888"
+   },
+   {
+    "label": "GreenOH (installer marketplace), 2026-10-14 (price data)",
+    "url": "https://thegreenoh.com/solar-guides/10kw-solar-system-price-pakistan"
+   },
+   {
+    "label": "Toolsfluent (blog), 2026-07-14 (price data)",
+    "url": "https://www.toolsfluent.com/blog/10kw-solar-system-pakistan-complete-guide"
+   },
+   {
+    "label": "Max Power (manufacturer/installer blog), 2026-07-28 (price data)",
+    "url": "https://maxpower.com.pk/?p=4877"
+   },
+   {
+    "label": "SheikhX Solar Corporation (installer), 2026-10-14 (price data)",
+    "url": "https://sheikhxsolarcorp.com/solar-rates-pakistan"
+   },
+   {
+    "label": "PhoneWorld.com.pk, 2026-06-11 (price data)",
+    "url": "https://www.phoneworld.com.pk/solar-panel-price-in-pakistan-today-updated-rates/"
+   },
+   {
+    "label": "Toolsfluent (blog), 2026-08-18 (price data)",
+    "url": "https://www.toolsfluent.com/blog/solar-panel-price-pakistan-2026"
+   },
+   {
+    "label": "Toolsfluent price tracker, 'Last reviewed: 18 August 2026' (price data)",
+    "url": "https://www.toolsfluent.com/tools/solar-panel-price-tracker-pakistan"
+   },
+   {
+    "label": "ARY News, 2026-07-01 (price data)",
+    "url": "https://arynews.tv/solar-panel-batteries-and-inverters-prices-drop-in-karachi"
+   },
+   {
+    "label": "Zell (zell.pk), Updated October 2026 (price data)",
+    "url": "https://www.zell.pk/solar-panel-price-in-pakistan"
+   },
+   {
+    "label": "JBMS Solar (dealer), 'A-Grade Tier-1 Solar Panel Prices in Pakistan 7th October 2026' (price data)",
+    "url": "https://jbmssolar.pk/"
    }
   ],
   "tool": {
@@ -489,8 +569,8 @@
     },
     "water-motor-1hp": {
      "name": "Water pump / donkey motor 1 hp",
-     "running_w": 1000,
-     "starting_w": 2800,
+     "running_w": 932,
+     "starting_w": 2796,
      "typical_hours_per_day": 1,
      "load_type": "motor"
     },
@@ -1301,7 +1381,7 @@
      "label": "Battery bank voltage",
      "unit": "V",
      "type": "select",
-     "default": 24,
+     "default": 48,
      "advanced": true,
      "options": [
       [
@@ -1350,12 +1430,19 @@
      "value": "7"
     },
     {
+     "key": "inverter_buy",
+     "label": "Inverter to buy",
+     "spec": "raw",
+     "label_ur": "Lene wala inverter",
+     "value": "3.6 kW"
+    },
+    {
      "key": "inverter_kw",
-     "label": "Inverter size",
+     "label": "Inverter, at least",
      "spec": "up2",
      "unit": "kW",
-     "label_ur": "Inverter ka size",
-     "value": "5.11"
+     "label_ur": "Inverter, kam az kam",
+     "value": "3.15"
     },
     {
      "key": "daily_kwh",
@@ -1371,11 +1458,29 @@
      "spec": "int",
      "label_ur": "System ke mahana units",
      "value": "498"
+    },
+    {
+     "key": "battery_ah",
+     "label": "Battery",
+     "spec": "up",
+     "unit": "Ah",
+     "optional": true,
+     "label_ur": "Battery",
+     "value": ""
+    },
+    {
+     "key": "battery_kwh",
+     "label": "Battery energy",
+     "spec": "1",
+     "unit": "kWh",
+     "optional": true,
+     "label_ur": "Battery ki energy",
+     "value": ""
     }
    ],
    "how": {
-    "tpl": "Energy: each appliance's watts × quantity × hours a day (an inverter AC counts at its average draw, below its rated watts), added up = {{out.daily_kwh|1}} units a day; ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW of panels a day for your city = {{out.kw_energy|2}} kW. A grid-tied or hybrid system is sized by energy: when the {{out.running_w|int}} W running load is more than the panels give at that moment, the grid supplies the rest. {{out.kw|2}} kW needs {{out.panels|int}} panels of {{out.panel_w}} W = {{out.installed_kw|2}} kW installed, which makes about {{out.monthly_kwh_estimate|int}} units a month. Inverter: the larger of {{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_kw_load|2}} kW for the load and {{out.installed_kw|2}} kW of panels ÷ {{out.dc_ac_ratio_max|1}} = {{out.inverter_kw_array|2}} kW, so the panels are never more than {{out.dc_ac_ratio_max|1}} times the inverter: {{out.inverter_kw|up2}} kW continuous, with a surge rating of at least {{out.inverter_surge_w|int}} W for the water pump.",
-    "text": "Energy: each appliance's watts × quantity × hours a day (an inverter AC counts at its average draw, below its rated watts), added up = 15.6 units a day; ÷ 4 units per kW of panels a day for your city = 3.91 kW. A grid-tied or hybrid system is sized by energy: when the 4,085 W running load is more than the panels give at that moment, the grid supplies the rest. 3.91 kW needs 7 panels of 585 W = 4.1 kW installed, which makes about 498 units a month. Inverter: the larger of 4,085 W × 1.25 = 5.11 kW for the load and 4.1 kW of panels ÷ 1.3 = 3.15 kW, so the panels are never more than 1.3 times the inverter: 5.11 kW continuous, with a surge rating of at least 5,885 W for the water pump."
+    "tpl": "Energy: each appliance's watts × quantity × hours a day (an inverter AC counts at its average draw, below its rated watts), added up = {{out.daily_kwh|1}} units a day; ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW of panels a day for your city = {{out.kw_energy|2}} kW. A grid-tied or hybrid system is sized by energy: when the {{out.running_w|int}} W running load is more than the panels give at that moment, the grid supplies the rest. {{out.kw|2}} kW needs {{out.panels|int}} panels of {{out.panel_w}} W = {{out.installed_kw|2}} kW installed, which makes about {{out.monthly_kwh_estimate|int}} units a month. {{out.inverter_text}}",
+    "text": "Energy: each appliance's watts × quantity × hours a day (an inverter AC counts at its average draw, below its rated watts), added up = 15.6 units a day; ÷ 4 units per kW of panels a day for your city = 3.9 kW. A grid-tied or hybrid system is sized by energy: when the 4,017 W running load is more than the panels give at that moment, the grid supplies the rest. 3.9 kW needs 7 panels of 585 W = 4.1 kW installed, which makes about 498 units a month. Inverter: an on-grid inverter runs beside the grid, which starts motors and covers any shortfall, so it is sized by the panels: 4.1 kW ÷ 1.3 = at least 3.15 kW, so the on-grid inverter to buy is 3.6 kW; no surge rating is needed."
    },
    "submit": "Calculate",
    "notice": "",
@@ -1388,6 +1493,9 @@
     "appliance_unknown": "Pick an appliance from the list, or choose Custom and enter its watts.",
     "other_start_below_run": "Starting watts of the other loads cannot be lower than their running watts.",
     "loads_hours_required": "Enter hours per day for at least one appliance.",
+    "drive_above_standard_sizes": "This drive is above the largest size we list. Use one larger solar pump drive rated for this motor (two drives cannot share one motor) and ask the supplier or a licensed engineer; the size shown is the calculated minimum.",
+    "motor_v_invalid": "Pick the motor voltage from the list: 220 V single-phase or 400 V three-phase.",
+    "string_below_bus": "The panels in series are capped by the drive's maximum DC input on a cold morning, so on hot afternoons the string gives less than the voltage the motor needs at full speed and the pump runs slower then (see the string voltage in the working). Check the drive's DC input range with the supplier.",
     "above_standard_sizes": "This is above the largest standard size we list. Split the array or circuit into two, or ask a licensed electrician or engineer; the sizes shown are the calculated minimums.",
     "generator_above_standard_sizes": "This is above the largest generator size we list. Use two generators on separate circuits or a larger industrial set, and ask a licensed electrician; the size shown is the calculated minimum.",
     "forecast_unavailable": "The live forecast is not available right now, so a typical day is shown. Try again later.",
@@ -1411,19 +1519,19 @@
   "examples": [
    {
     "title": "Typical 5 marla house with one inverter AC",
-    "text": "Four fans, ten bulbs, an inverter fridge, a TV, one 1.5 ton inverter AC, a water pump and an iron: 4,085 W running and 15.6 units a day. Solar system 4.1 kW (7 panels), inverter 5.11 kW, about 498 units a month."
+    "text": "Four fans, ten bulbs, an inverter fridge, a TV, one 1.5 ton inverter AC, a water pump and an iron: 4,017 W running and 15.6 units a day. Solar system 4.1 kW (7 panels), inverter 3.6 kW, about 498 units a month."
    },
    {
     "title": "5 marla house with two inverter ACs",
-    "text": "The same house with a second 1.5 ton inverter AC: 5,535 W running and 23.6 units a day. Solar system 6.44 kW (11 panels), inverter 6.92 kW, about 782 units a month. This is a step above a five kW system."
+    "text": "The same house with a second 1.5 ton inverter AC: 5,467 W running and 23.6 units a day. Solar system 6.44 kW (11 panels), inverter 5 kW, about 782 units a month. Both the panels and the inverter move up from the one-AC house."
    },
    {
     "title": "Typical house with 5 hours of battery backup",
-    "text": "The default house with 5 hours of backup after sunset on a 48 V lithium bank: the panels and inverter stay at 4.1 kW and 5.11 kW, and the battery must hold 20.4 units, which is about 526 Ah at 48 V using 90% of it. Running only fans, lights and the fridge at night needs a far smaller battery."
+    "text": "The default house with 5 hours of backup after sunset on a 48 V lithium bank: the panels stay at 4.1 kW, the inverter becomes a hybrid of 6 kW with a surge rating of at least 5,881 W because it now carries the house in a power cut, and the battery must hold 20.1 units, which is about 517 Ah at 48 V using 90% of it. Running only fans, lights and the fridge at night needs a far smaller battery."
    },
    {
     "title": "5 marla house without an AC",
-    "text": "Fans, bulbs, fridge, TV, pump and iron only: 2,635 W running and 7.6 units a day. Solar system 2.34 kW (4 panels), inverter 3.3 kW. The water pump and iron set the running load even though they run for a short time."
+    "text": "Fans, bulbs, fridge, TV, pump and iron only: 2,567 W running and 7.6 units a day. Solar system 2.34 kW (4 panels), inverter 2 kW. The water pump and iron set the running load even though they run for a short time."
    }
   ],
   "table": {
@@ -1440,47 +1548,47 @@
      "4 kinds of appliance, 576 W running, 5.2 units a day",
      "1.76 kW",
      "3 × 585 W",
-     "1.35 kW",
+     "1.5 kW",
      "213"
     ],
     [
-     "6 kinds of appliance, 2,635 W running, 7.6 units a day",
+     "6 kinds of appliance, 2,567 W running, 7.6 units a day",
      "2.34 kW",
      "4 × 585 W",
-     "3.3 kW",
+     "2 kW",
      "284"
     ],
     [
-     "7 kinds of appliance, 4,085 W running, 15.6 units a day",
+     "7 kinds of appliance, 4,017 W running, 15.6 units a day",
      "4.1 kW",
      "7 × 585 W",
-     "5.11 kW",
+     "3.6 kW",
      "498"
     ],
     [
-     "7 kinds of appliance, 4,435 W running, 19.2 units a day",
+     "7 kinds of appliance, 4,367 W running, 19.1 units a day",
      "5.27 kW",
      "9 × 585 W",
-     "5.55 kW",
+     "5 kW",
      "640"
     ],
     [
-     "7 kinds of appliance, 5,535 W running, 23.6 units a day",
+     "7 kinds of appliance, 5,467 W running, 23.6 units a day",
      "6.44 kW",
      "11 × 585 W",
-     "6.92 kW",
+     "5 kW",
      "782"
     ],
     [
-     "8 kinds of appliance, 8,535 W running, 29.6 units a day",
+     "8 kinds of appliance, 8,467 W running, 29.6 units a day",
      "7.61 kW",
      "13 × 585 W",
-     "10.67 kW",
+     "6 kW",
      "924"
     ]
    ]
   },
-  "answer": "A typical 5 marla house with fans, LED lights, an inverter fridge, a TV, one 1.5 ton inverter AC, a water pump and an iron needs a solar system of about 4.1 kW (7 panels of 585 W) with a 5.11 kW inverter. The panels are sized from the daily units ÷ the city's sun yield; the grid covers the moments when everything runs at once.",
+  "answer": "A typical 5 marla house with fans, LED lights, an inverter fridge, a TV, one 1.5 ton inverter AC, a water pump and an iron needs a solar system of about 4.1 kW (7 panels of 585 W) with an on-grid inverter of 3.6 kW. The panels are sized from the daily units ÷ the city's sun yield; the grid covers the moments when everything runs at once.",
   "formula": {
    "text": "kW = E_day ÷ yield (grid-tied or hybrid; P_run ÷ 1000 ÷ PR is the off-grid rule, shown for comparison); panels = ceil(kW × 1000 ÷ W_panel)",
    "lines": [
@@ -1488,7 +1596,7 @@
     "yield = units one kW of panels makes a day in your city",
     "P_run = total running watts, PR = performance ratio",
     "W_panel = watts of one panel",
-    "Inverter W = max(P_run × margin, kW × 1000 ÷ r_max), r_max = largest panel-to-inverter (DC/AC) ratio; surge ≥ largest starting load",
+    "On-grid inverter W = kW × 1000 ÷ r_max, r_max = largest panel-to-inverter (DC/AC) ratio; hybrid (backup hours set): max(P_run × margin, kW × 1000 ÷ r_max), surge ≥ largest starting load; then the next size sold",
     "Battery Ah = P_run × night hours ÷ (V × DoD × η)"
    ]
   },
@@ -1535,7 +1643,7 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/solar/solar-system-for-5-marla-house/#breadcrumb"
     },
-    "dateModified": "2026-10-15",
+    "dateModified": "2026-10-21",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }
@@ -1588,7 +1696,7 @@
       "name": "Is a 5 kW solar system enough for a 5 marla house?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Check the inverter more than the panels. One 1.5 ton inverter AC with fans, lights, a fridge and a pump needs 4.1 kW of panels and an inverter of at least 5.11 kW, so a five kW system whose inverter is below 5.11 kW is too small for this load; keep its running load lower or take the next inverter size. For two ACs at the same time, or an electric geyser, the calculator moves to the next size."
+       "text": "Yes for one 1.5 ton inverter AC with fans, lights, a fridge and a pump on the grid: the house needs 4.1 kW of panels and an on-grid inverter of at least 3.15 kW. A hybrid inverter with a battery also carries the house in a power cut, so it must be at least 5.03 kW for the whole list; put only the loads you need in a cut on the battery side to keep it smaller. For two ACs at the same time, or an electric geyser, the calculator moves to the next size."
       }
      },
      {
@@ -1612,7 +1720,7 @@
       "name": "What is the price of a solar system for a 5 marla house?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Prices change with the dollar rate, so we do not print one. Compare quotes in Rs per watt for a complete system of 4.1 kW, including structure, cables, protection, installation and the net billing application."
+       "text": "About Rs 437,000 to Rs 719,000 installed for a 4.1 kW on-grid system with no battery, from price lists checked on 14 October 2026. Compare quotes in Rs per watt for the complete system, including structure, cables, protection, installation and the net billing application, and check one with the solar quote checker."
       }
      },
      {
@@ -1628,7 +1736,7 @@
       "name": "Why does the result change when I add an appliance that runs for a few minutes?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "The panels follow the daily units, so a short-running appliance adds only its few units. It still counts in the running load, which sets the inverter, and a pump's start sets the inverter's surge rating."
+       "text": "The panels follow the daily units, so a short-running appliance adds only its few units. It still counts in the running load, which sets a hybrid inverter and its surge rating; an on-grid inverter follows the panels."
       }
      }
     ]

@@ -72,7 +72,7 @@
    {
     "h2": "How much roof does the solar system need?",
     "p": [
-     "Each 585 W panel needs about 2.6 m², so 7 panels take about 18.2 m² of unshaded roof, plus walkways. A large house using 40 units a day needs 18 panels on about 46.8 m². Water tanks, stairs and a parapet shadow all cost panels, so measure the clear area before you fix the size."
+     "Each 585 W panel needs about 2.6 m², so 7 panels take about 18.1 m² of unshaded roof, plus walkways. A large house using 40 units a day needs 18 panels on about 46.4 m². Water tanks, stairs and a parapet shadow all cost panels, so measure the clear area before you fix the size."
     ]
    }
   ],
@@ -110,7 +110,7 @@
    "Solar system size in kW = units used a day ÷ the units one kW of solar makes a day in the city; 15.8 units a day in Lahore needs 3.95 kW, installed as 7 panels of 585 W.",
    "In Lahore one kW of solar makes about 4 units a day over the year, in Quetta about 5.3, so the same 15.8 units a day needs 4.1 kW in Lahore but 3.51 kW in Quetta (Global Solar Atlas).",
    "A bill of five hundred units a month is 16.4 units a day and needs a 4.68 kW system (8 panels) in Lahore; three hundred units a month needs 2.93 kW (5 panels).",
-   "Each 585 W panel needs about 2.6 m² of roof, so a 4.1 kW system takes about 18.2 m² and a 10.53 kW system about 46.8 m²."
+   "Each 585 W panel needs about 2.6 m² of roof, so a 4.1 kW system takes about 18.1 m² and a 10.53 kW system about 46.4 m²."
   ],
   "mistakes": [
    "Using the inverter kW as the system size. The inverter is sized from the running load; the panels from the daily units. A five kW inverter with three kW of panels makes three kW of solar.",
@@ -217,7 +217,7 @@
      "spec": "1",
      "unit": "m²",
      "label_ur": "Chhat ki jagah",
-     "value": "18.2"
+     "value": "18.1"
     },
     {
      "key": "monthly_kwh_estimate",
@@ -229,7 +229,7 @@
    ],
    "how": {
     "tpl": "Daily usage = {{out.daily_kwh|1}} units (from the daily box, or monthly units ÷ {{d.days_per_month|2}}). In your city one kW of solar makes about {{out.yield_kwh_per_kwp_day|1}} units a day averaged over the year, with heat, dust, wiring and inverter losses already removed. System size = {{out.daily_kwh|1}} ÷ {{out.yield_kwh_per_kwp_day|1}} = {{out.kw|2}} kW. With {{out.panel_w}} W panels that is {{out.panels|int}} panels, {{out.installed_kw|2}} kW installed on about {{out.roof_m2|1}} m², which should make about {{out.monthly_kwh_estimate|int}} units a month.",
-    "text": "Daily usage = 15.8 units (from the daily box, or monthly units ÷ 30.42). In your city one kW of solar makes about 4 units a day averaged over the year, with heat, dust, wiring and inverter losses already removed. System size = 15.8 ÷ 4 = 3.95 kW. With 585 W panels that is 7 panels, 4.1 kW installed on about 18.2 m², which should make about 498 units a month."
+    "text": "Daily usage = 15.8 units (from the daily box, or monthly units ÷ 30.42). In your city one kW of solar makes about 4 units a day averaged over the year, with heat, dust, wiring and inverter losses already removed. System size = 15.8 ÷ 4 = 3.95 kW. With 585 W panels that is 7 panels, 4.1 kW installed on about 18.1 m², which should make about 498 units a month."
    },
    "submit": "Calculate",
    "notice": "",
@@ -242,6 +242,9 @@
     "appliance_unknown": "Pick an appliance from the list, or choose Custom and enter its watts.",
     "other_start_below_run": "Starting watts of the other loads cannot be lower than their running watts.",
     "loads_hours_required": "Enter hours per day for at least one appliance.",
+    "drive_above_standard_sizes": "This drive is above the largest size we list. Use one larger solar pump drive rated for this motor (two drives cannot share one motor) and ask the supplier or a licensed engineer; the size shown is the calculated minimum.",
+    "motor_v_invalid": "Pick the motor voltage from the list: 220 V single-phase or 400 V three-phase.",
+    "string_below_bus": "The panels in series are capped by the drive's maximum DC input on a cold morning, so on hot afternoons the string gives less than the voltage the motor needs at full speed and the pump runs slower then (see the string voltage in the working). Check the drive's DC input range with the supplier.",
     "above_standard_sizes": "This is above the largest standard size we list. Split the array or circuit into two, or ask a licensed electrician or engineer; the sizes shown are the calculated minimums.",
     "generator_above_standard_sizes": "This is above the largest generator size we list. Use two generators on separate circuits or a larger industrial set, and ask a licensed electrician; the size shown is the calculated minimum.",
     "forecast_unavailable": "The live forecast is not available right now, so a typical day is shown. Try again later.",
@@ -260,7 +263,7 @@
   "examples": [
    {
     "title": "10 units a day in Lahore",
-    "text": "10 ÷ 4 units per kW a day = 2.5 kW. 5 panels of 585 W, 2.93 kW installed, about 13 m² of roof, making about 355 units a month."
+    "text": "10 ÷ 4 units per kW a day = 2.5 kW. 5 panels of 585 W, 2.93 kW installed, about 12.9 m² of roof, making about 355 units a month."
    },
    {
     "title": "Solar system for five hundred units a month",
@@ -276,7 +279,7 @@
    },
    {
     "title": "Large house using 40 units a day in Lahore",
-    "text": "40 ÷ 4 = 10.01 kW. 18 panels of 585 W, 10.53 kW installed on about 46.8 m², making about 1,280 units a month. Above five kW, check the sanctioned load and net-billing cap with your DISCO first."
+    "text": "40 ÷ 4 = 10.01 kW. 18 panels of 585 W, 10.53 kW installed on about 46.4 m², making about 1,280 units a month. Above five kW, check the sanctioned load and net-billing cap with your DISCO first."
    }
   ],
   "table": {
@@ -333,7 +336,7 @@
     ]
    ]
   },
-  "answer": "A home that uses 15.8 units a day in Lahore needs a solar system of about 3.95 kW, installed as 7 panels of 585 W (4.1 kW) on about 18.2 m² of roof, making about 498 units a month. Solar system kW = daily kWh ÷ the units one kW makes a day in your city.",
+  "answer": "A home that uses 15.8 units a day in Lahore needs a solar system of about 3.95 kW, installed as 7 panels of 585 W (4.1 kW) on about 18.1 m² of roof, making about 498 units a month. Solar system kW = daily kWh ÷ the units one kW makes a day in your city.",
   "formula": {
    "text": "kW = E_day ÷ yield; panels = ceil(kW × 1000 ÷ W_panel); kW_installed = panels × W_panel ÷ 1000; units_month = kW_installed × yield × 30.42",
    "lines": [

@@ -115,10 +115,22 @@
    "label": "Usable energy",
    "spec": "int",
    "unit": "Wh"
+  },
+  {
+   "key": "battery_a",
+   "label": "Battery current",
+   "spec": "1",
+   "unit": "A"
+  },
+  {
+   "key": "cutoff_a",
+   "label": "Current at low-battery cut-off",
+   "spec": "1",
+   "unit": "A"
   }
  ],
  "answer": "A {{in.ah|int}} Ah, {{in.volts|1}} V tubular battery runs a {{in.load_w|int}} W load for about {{out.hours|hm5}} through a UPS while using only the recommended {{out.dod|pct}} of its capacity. Backup time equals battery Ah × volts × usable depth of discharge ÷ (load watts ÷ inverter efficiency + the inverter's idle draw).",
- "how": "{{in.ah}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable = {{out.stored_wh|int}} Wh in the battery. The battery gives {{in.load_w}} W ÷ {{out.inverter_eff|pct}} inverter efficiency + {{out.idle_w}} W the inverter draws itself = {{out.battery_w|1}} W. {{out.stored_wh|int}} Wh ÷ {{out.battery_w|1}} W = {{out.hours|2}} hours, about {{out.hours|hm}}.",
+ "how": "{{in.ah}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable = {{out.stored_wh|int}} Wh in the battery. The battery gives {{in.load_w}} W ÷ {{out.inverter_eff|pct}} inverter efficiency + {{out.idle_w}} W the inverter draws itself = {{out.battery_w|1}} W. {{out.stored_wh|int}} Wh ÷ {{out.battery_w|1}} W = {{out.hours|2}} hours, about {{out.hours|hm}}. Battery current: {{out.battery_w|1}} W ÷ {{in.volts|1}} V = {{out.battery_a|1}} A, {{out.c_rate|2}} times the battery's Ah (its C-rate), rising to {{out.cutoff_a|1}} A as the battery nears its low-battery cut-off; the cables and fuse must carry that.",
  "key_facts": [
   "Backup time (hours) = battery Ah × battery volts × usable depth of discharge ÷ (load watts ÷ inverter efficiency + the inverter's idle draw).",
   "Tubular and lead-acid batteries should be used to about {{d.dod_lead_acid|pct}} of their capacity; lithium (LiFePO4) batteries to about {{d.dod_lifepo4|pct}}.",
@@ -287,7 +299,7 @@
  ],
  "next": "D4",
  "literal_numbers": [
-    "twenty hours",
+  "twenty hours",
   "LiFePO4"
  ],
  "sources": [
