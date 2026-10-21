@@ -53,7 +53,7 @@
    "unit": "Rs per unit",
    "advanced": true,
    "hint": "Financing cost surcharge per unit, from the bill. Secondary-source default.",
-   "placeholder": "Blank = {{data.tariff.addons_secondary.fc_surcharge_per_unit.value|rs2}} per unit (none on lifeline)"
+   "placeholder": "Blank = {{data.tariff.addons_secondary.fc_surcharge_per_unit.value|rs2}} per unit (none on lifeline or protected)"
   },
   {
    "name": "fpa_per_unit",
@@ -62,6 +62,14 @@
    "advanced": true,
    "hint": "Pre-filled with the latest NEPRA-verified fuel adjustment, the one for {{data.fpa_latest.fpa_for}} charged on {{data.fpa_latest.label}} bills. {{data.fpa_newest.note}} Replace it with the FPA rate printed on your bill (negative is a credit). Protected homes pay it too; lifeline bills carry none.",
    "default": "@data.fpa_latest.fpa_per_unit"
+  },
+  {
+   "name": "fpa_units",
+   "label": "Units in the FPA month",
+   "unit": "units",
+   "hint": "NEPRA charges the FPA on the units of the month it adjusts (the FPA month, usually two months before this bill), not on this month's units. Copy that month's units from the units history on your bill. Blank = this month's units.",
+   "placeholder": "Blank = this month's units",
+   "advanced": true
   },
   {
    "name": "gst_pct",

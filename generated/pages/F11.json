@@ -239,7 +239,7 @@
      "unit": "Rs per unit",
      "advanced": true,
      "hint": "Financing cost surcharge per unit, from the bill. Secondary-source default.",
-     "placeholder": "Blank = Rs 3.23 per unit (none on lifeline)"
+     "placeholder": "Blank = Rs 3.23 per unit (none on lifeline or protected)"
     },
     {
      "name": "fpa_per_unit",
@@ -248,6 +248,14 @@
      "advanced": true,
      "hint": "Pre-filled with the latest NEPRA-verified fuel adjustment, the one for July 2026 charged on September 2026 bills. October 2026 bills carry Rs 1.11 per unit for August 2026, reported in the news; this page keeps the latest NEPRA-verified rate until that decision is published. Replace it with the FPA rate printed on your bill (negative is a credit). Protected homes pay it too; lifeline bills carry none.",
      "default": 2.0581
+    },
+    {
+     "name": "fpa_units",
+     "label": "Units in the FPA month",
+     "unit": "units",
+     "hint": "NEPRA charges the FPA on the units of the month it adjusts (the FPA month, usually two months before this bill), not on this month's units. Copy that month's units from the units history on your bill. Blank = this month's units.",
+     "placeholder": "Blank = this month's units",
+     "advanced": true
     },
     {
      "name": "gst_pct",
@@ -353,7 +361,7 @@
   "examples": [
    {
     "title": "200 units, TESCO protected consumer",
-    "text": "Energy charge Rs 2,355 slab-wise at protected rates, fixed charge Rs 300 for 1 kW, FC surcharge Rs 646, QTA Rs 104, FPA Rs 412, GST Rs 687. Estimated TESCO bill Rs 4,504."
+    "text": "Energy charge Rs 2,355 slab-wise at protected rates, fixed charge Rs 300 for 1 kW, FC surcharge Rs 0, QTA Rs 104, FPA Rs 412, GST Rs 571. Estimated TESCO bill Rs 3,742."
    },
    {
     "title": "The same 200 units billed unprotected",
@@ -390,14 +398,14 @@
      "Rs 10.54",
      "Rs 1,054",
      "Rs 200",
-     "Rs 2,165"
+     "Rs 1,784"
     ],
     [
      "200 (protected)",
      "Rs 11.78",
      "Rs 2,355",
      "Rs 300",
-     "Rs 4,504"
+     "Rs 3,742"
     ],
     [
      "100 (unprotected)",

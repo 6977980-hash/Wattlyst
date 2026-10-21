@@ -9959,10 +9959,10 @@
     },
     "expected": {
       "next_units": 200,
-      "next_rs": 5134
+      "next_rs": 5896
     },
     "tolerance": 0.01,
-    "note": "21 Oct 2026 audit WL-165: protected 200 u = 2,355 + 300 + 646 + 104 = 3,405, GST 613, total 4,018; unprotected 201 u total 9,152; 9,152 − 4,018 = 5,134."
+    "note": "21 Oct 2026 audit WL-165; protected FC surcharge 0 from audit Phase 8 WL-243: protected 200 u = 2,355 + 300 + 0 + 104 = 2,759, GST 497, total 3,256; unprotected 201 u total 9,152; 9,152 − 3,256 = 5,896."
   },
   {
     "calc": "bill_tou",
@@ -10021,10 +10021,10 @@
     },
     "expected": {
       "next_units": 100,
-      "next_rs": 137
+      "next_rs": 133
     },
     "tolerance": 0.01,
-    "note": "21 Oct 2026 audit WL-165 (Engineer Reviewer): protected 100 u = 1,054 + 200 + 323 + 52 = 1,629, GST 293, total 1,922; protected 101 u = 1,067 + 300 + 326 + 52 = 1,745, GST 314, total 2,059; 2,059 − 1,922 = 137 (the fixed charge steps up with the slab)."
+    "note": "21 Oct 2026 audit WL-165 (Engineer Reviewer); protected FC surcharge 0 from audit Phase 8 WL-243: protected 100 u = 1,054 + 200 + 0 + 52 = 1,306, GST 235, total 1,541; protected 101 u = 1,067 + 300 + 0 + 52 = 1,419, GST 255, total 1,674; 1,674 − 1,541 = 133 (the fixed charge steps up with the slab)."
   },
   {
     "calc": "generator_size",
@@ -10788,5 +10788,114 @@
     },
     "tolerance": 0,
     "note": "21 Oct 2026 audit Phase 4, Engineer Reviewer: the drive DC limit is known only for 220 V and 400 V motors."
+  },
+  {
+    "calc": "bill_total",
+    "name": "owner's LESCO protected bill: FPA on the FPA month's units, no FC surcharge",
+    "inputs": {
+      "units": 29,
+      "protected": true,
+      "sanctioned_kw": 2,
+      "period": "2026-09..2026-11",
+      "fpa_per_unit": 2.0581,
+      "fpa_units": 185
+    },
+    "expected": {
+      "energy_rs": 306,
+      "fixed_rs": 400,
+      "fc_rs": 0,
+      "qta_rs": 15,
+      "fpa_rs": 381,
+      "fpa_units": 185,
+      "subtotal_rs": 1102,
+      "gst_rs": 198,
+      "total_rs": 1300
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit Phase 8 WL-243/WL-244, a real LESCO protected domestic bill (September 2026, 2 kW, itemised PITC duplicate): energy 29 × 10.54 = 306; fixed 200 × 2 kW = 400; no FC surcharge line; QTA 29 × 0.5194 = 15; FPA on July's 185 units × 2.0581 = 381; subtotal 1,102; GST 18% = 198; total 1,300, the bill's total."
+  },
+  {
+    "calc": "bill_total",
+    "name": "FPA units blank: FPA on this month's units",
+    "inputs": {
+      "units": 29,
+      "protected": true,
+      "sanctioned_kw": 2,
+      "period": "2026-09..2026-11",
+      "fpa_per_unit": 2.0581
+    },
+    "expected": {
+      "fpa_units": 29,
+      "fpa_rs": 60,
+      "total_rs": 922
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit Phase 8 WL-244: a blank FPA-month units field uses the current units: 29 × 2.0581 = 60; subtotal 306 + 400 + 0 + 15 + 60 = 781; GST 141; total 922."
+  },
+  {
+    "calc": "bill_total",
+    "name": "FPA units zero: no FPA line (a new connection had no units in the FPA month)",
+    "inputs": {
+      "units": 300,
+      "sanctioned_kw": 2,
+      "fpa_per_unit": 2.0581,
+      "fpa_units": 0
+    },
+    "expected": {
+      "fpa_rs": 0,
+      "fpa_units": 0
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit Phase 8 WL-244: FPA = rate × units of the FPA month = 2.0581 × 0 = 0."
+  },
+  {
+    "calc": "bill_total",
+    "name": "FPA units negative is an error",
+    "inputs": {
+      "units": 300,
+      "sanctioned_kw": 2,
+      "fpa_per_unit": 2.0581,
+      "fpa_units": -5
+    },
+    "expected": {
+      "error": "fpa_units_too_small"
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit Phase 8 WL-244: units cannot be negative."
+  },
+  {
+    "calc": "bill_total",
+    "name": "lifeline stays FPA-exempt whatever the FPA-month units",
+    "inputs": {
+      "units": 80,
+      "lifeline": true,
+      "fpa_per_unit": 2.0581,
+      "fpa_units": 185
+    },
+    "expected": {
+      "fpa_rs": 0,
+      "gst_rs": 0
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit Phase 8 WL-244 with WL-157: lifeline is in the FPA exempt list, so the FPA-month units do not matter."
+  },
+  {
+    "calc": "bill_tou",
+    "name": "ToU bill: FPA on the FPA month's units",
+    "inputs": {
+      "peak_units": 100,
+      "offpeak_units": 400,
+      "sanctioned_kw": 6,
+      "period": "2026-09..2026-11",
+      "fpa_per_unit": 2.0581,
+      "fpa_units": 650
+    },
+    "expected": {
+      "fpa_rs": 1338,
+      "fpa_units": 650,
+      "units": 500
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit Phase 8 WL-244: the ToU bill uses the same add-on lines: FPA 650 × 2.0581 = 1,338 (not 500 × 2.0581 = 1,029)."
   }
 ]

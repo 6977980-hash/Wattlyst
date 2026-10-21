@@ -107,7 +107,7 @@
    },
    {
     "q": "How do I calculate FPA charges on my bill?",
-    "a": "Multiply the units on the bill by the FPA rate for the month: 300 units at the pre-filled rate give Rs 617. Then expect GST at 18% on the subtotal that includes it."
+    "a": "Multiply the units you used in the FPA month (find them in the units history on your bill) by the FPA rate for that month: 300 units at the pre-filled rate give Rs 617. Then expect GST at 18% on the subtotal that includes it."
    },
    {
     "q": "What is FCA in an electricity bill?",
@@ -127,7 +127,7 @@
    },
    {
     "q": "Why is my bill high this month because of FPA?",
-    "a": "A positive FPA is charged on every unit, so a high-use month with a large adjustment can add thousands of rupees: on 700 units the default rate adds Rs 1,441 before GST. If the line does not equal the notified rate times your units, query it with the DISCO."
+    "a": "A positive FPA is charged on every unit, so a high-use month with a large adjustment can add thousands of rupees: on 700 units the default rate adds Rs 1,441 before GST. The line is worked out on the units of the FPA month, so a low-use month can still carry a large FPA from a busy summer month. If the line does not equal the notified rate times that month's units, query it with the DISCO."
    },
    {
     "q": "Why is my real bill higher than this estimate when it is over Rs 25,000?",
@@ -137,13 +137,14 @@
   "key_facts": [
    "FPA, the fuel price adjustment (printed as FCA, fuel charges adjustment, on K-Electric and NEPRA documents), is a monthly per-unit figure that NEPRA determines after a public hearing and notifies in the Gazette; the DISCOs apply it to a later month's bills.",
    "The FPA is positive when the actual fuel cost of generation was above the reference cost built into the tariff and negative when it was below: a negative FPA is a credit that lowers the bill.",
-   "FPA line = FPA rate × units: at NEPRA's July 2026 rate, a 300 unit bill carries Rs 617 of FPA, and GST at 18% is charged on it as well.",
+   "FPA line = FPA rate × the units used in the FPA month, not the units of the bill month: at NEPRA's July 2026 rate, a 300 unit bill carries Rs 617 of FPA, and GST at 18% is charged on it as well.",
    "NEPRA's fuel adjustment orders charge the monthly FPA to every consumer category except lifeline consumers, electric vehicle charging stations and prepaid consumers (July 2026 decision, SRO 1499(I)/2026, para 21(a)), so protected homes pay it; the review decision for March 2026 (SRO 852(I)/2026) spared protected consumers for that one month only.",
    "QTA is different: the quarterly tariff adjustment covers capacity and other non-fuel costs over a three-month period; the FPA covers fuel only and changes every month.",
    "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of 7.5% on a monthly bill of Rs 25,000 or more; consumers on the list pay none."
   ],
   "mistakes": [
    "Reading the FPA month as the bill month. The month printed next to the FPA is the month whose fuel is being adjusted; the charge lands on a later bill.",
+   "Checking the FPA against this month's units. NEPRA's rate is charged on the units of the month it adjusts, so a winter bill can carry FPA on summer units; enter that month's units in the FPA month box.",
    "Treating the FPA as a fixed tax. It is a different number every month and can be a credit; copy the rate from each bill rather than carrying one over.",
    "Forgetting GST on the FPA. GST at 18% is charged on the subtotal including the FPA line, so Rs 617 of FPA costs more than that.",
    "Confusing FPA with QTA. The FPA is monthly and about fuel; the QTA is quarterly and about capacity and other costs. Both can appear on the same bill.",
@@ -192,6 +193,13 @@
      "unit": "Rs per unit",
      "default": 2.0581,
      "hint": "From your bill (FPA, FCA or fuel adjustment line). The pre-filled value is the latest NEPRA-verified adjustment, the one for July 2026, charged on September 2026 bills; replace it with this month's rate. Negative is allowed."
+    },
+    {
+     "name": "fpa_units",
+     "label": "Units in the FPA month",
+     "unit": "units",
+     "hint": "NEPRA charges the FPA on the units of the month it adjusts (the FPA month, usually two months before this bill), not on this month's units. Copy that month's units from the units history on your bill. Blank = this month's units.",
+     "placeholder": "Blank = this month's units"
     },
     {
      "name": "sanctioned_kw",
@@ -300,8 +308,8 @@
     }
    ],
    "how": {
-    "tpl": "FPA line = {{out.units}} units × the FPA rate entered = {{out.fpa_rs|rs}}. Energy charge {{out.energy_rs|rs}} at {{out.rate|rs2}} per unit, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
-    "text": "FPA line = 300 units × the FPA rate entered = Rs 617. Energy charge Rs 9,930 at Rs 33.10 per unit, fixed charge Rs 350, FC surcharge Rs 969, QTA Rs 156. Subtotal Rs 12,022 + GST 18% (Rs 2,164) = Rs 14,186."
+    "tpl": "FPA line = {{out.fpa_units}} units of the FPA month × the FPA rate entered = {{out.fpa_rs|rs}}. Energy charge {{out.energy_rs|rs}} at {{out.rate|rs2}} per unit, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
+    "text": "FPA line = 300 units of the FPA month × the FPA rate entered = Rs 617. Energy charge Rs 9,930 at Rs 33.10 per unit, fixed charge Rs 350, FC surcharge Rs 969, QTA Rs 156. Subtotal Rs 12,022 + GST 18% (Rs 2,164) = Rs 14,186."
    },
    "submit": "Calculate FPA",
    "notice": "",
@@ -402,9 +410,9 @@
     ]
    ]
   },
-  "answer": "FPA (fuel price adjustment) is a per-unit charge or credit NEPRA sets monthly for the gap between tariff and actual fuel cost. October 2026 bills carry Rs 1.11 per unit for August 2026, reported in the news. FPA line = rate × units: at the pre-filled July 2026 rate (latest NEPRA-verified), 300 units add Rs 617, plus GST.",
+  "answer": "FPA (fuel price adjustment) is NEPRA's monthly per-unit charge or credit for the fuel cost gap. October 2026 bills carry Rs 1.11 per unit for August 2026, reported in the news. FPA line = rate × the units of the FPA month (not this month's): at the pre-filled July 2026 rate (latest NEPRA-verified), 300 units add Rs 617, plus GST.",
   "formula": {
-   "text": "FPA line = FPA rate (Rs per unit, notified by NEPRA for the month) × units billed; GST is then charged on the subtotal that includes it",
+   "text": "FPA line = FPA rate (Rs per unit, notified by NEPRA for the month) × units used in that month (the FPA month, not the bill month); GST is then charged on the subtotal that includes it",
    "lines": [
     "FPA rate = actual fuel cost per kWh of the month's generation − reference fuel cost per kWh in the tariff",
     "positive rate = extra charge; negative rate = credit",
@@ -506,7 +514,7 @@
       "name": "How do I calculate FPA charges on my bill?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Multiply the units on the bill by the FPA rate for the month: 300 units at the pre-filled rate give Rs 617. Then expect GST at 18% on the subtotal that includes it."
+       "text": "Multiply the units you used in the FPA month (find them in the units history on your bill) by the FPA rate for that month: 300 units at the pre-filled rate give Rs 617. Then expect GST at 18% on the subtotal that includes it."
       }
      },
      {
@@ -546,7 +554,7 @@
       "name": "Why is my bill high this month because of FPA?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "A positive FPA is charged on every unit, so a high-use month with a large adjustment can add thousands of rupees: on 700 units the default rate adds Rs 1,441 before GST. If the line does not equal the notified rate times your units, query it with the DISCO."
+       "text": "A positive FPA is charged on every unit, so a high-use month with a large adjustment can add thousands of rupees: on 700 units the default rate adds Rs 1,441 before GST. The line is worked out on the units of the FPA month, so a low-use month can still carry a large FPA from a busy summer month. If the line does not equal the notified rate times that month's units, query it with the DISCO."
       }
      },
      {
