@@ -221,9 +221,15 @@ final class Wattlyst_Head {
 
 	/** Search Console HTML-tag verification from data/site.json `verification`; Google reads it on the home page only. */
 	public function verification(): void {
-		$code = (string) ( $this->plugin->site()['verification']['google'] ?? '' );
+		$site = $this->plugin->site();
+		$code = (string) ( $site['verification']['google'] ?? '' );
 		if ( '' !== $code && is_front_page() ) {
 			printf( '<meta name="google-site-verification" content="%s">' . "\n", esc_attr( $code ) );
+		}
+		// AdSense ownership check: the account meta tag from the pub id, even while ads are off (audit 2026-10-21 policy #8).
+		$pub = (string) ( $site['ads']['adsense_pub_id'] ?? '' );
+		if ( '' !== $pub && is_front_page() ) {
+			printf( '<meta name="google-adsense-account" content="%s">' . "\n", esc_attr( 'ca-' . $pub ) );
 		}
 	}
 

@@ -1,6 +1,31 @@
 # Progress
 
-## Handoff for next phase (after 21 Oct audit fix Phase 7: technical SEO plumbing) — written by the audit Phase 7 thread, 2026-10-21
+## Handoff for next phase (after 21 Oct audit fix Phase 8: trust and AdSense readiness) — written by the audit Phase 8 thread, 2026-10-21
+
+Owner: every fix phase of the 21 Oct 2026 audit runs in its own new thread, only after the owner says to start it. Shared rules and phase notes: `/mnt/project-files/electricity-tool-hub/audit/2026-10-21/handoff/` (README, `phase-N-*.md`, `status.md`; Phases 1 to 8 ticked). All eight audit phases are done. Next is row 9 of status.md (**H1/D10 ToU path for 5 kW and above**, WL-162 c), only with the owner's yes; WL-199 (Calculators menu) still waits for the owner's decision on the mockups. Plugin v0.8.30. Phase 8 changed one bill rule (FPA units), bill data, appliance and error-code data, trust pages, the author bio and the ads gate.
+
+**What is where**
+- WL-243/244 bills: protected FC surcharge default in `data/tariff-pk-2026.json` `addons_secondary.fc_surcharge_per_unit.by_category` (source: the owner's itemised LESCO protected bill; name and address never stored). FPA-month units: input `fpa_units` in `addOns()` (`engine/bill.js`), rule in `specs/formulas.md` section F bullet "FPA units", spec cases at the end of `specs/calculator-test-cases.json`; the optional box is in the `fields` of `content/pages/F1.json` to `F14.json` (F14 explains it in its text). N16 and the planner pass no `fpa_units`, so they use the month's own units.
+- WL-217/240 ads gate: `adsConfig()` in `tools/lib/monetize.js` (fails without `consent.cmp` when ads are enabled; every page whose content has `live` must be in `data/site.json` `ads.no_ads_pages`); the manifest ads block carries `no_ads_pages` and `cmp`, read by `Wattlyst_Ads::active()` (`includes/class-wattlyst-ads.php`). N6 credit: content key `credit` in `content/pages/N6.json`, `creditOf()` in `tools/build.js`, printed by `credit()` in `includes/class-wattlyst-render.php` under the result. AdSense account meta tag: `verification()` in `includes/class-wattlyst-head.php` (front page, when `adsense_pub_id` is set).
+- WL-215 bio: `data/site.json` `people[0]` (`short_bio`, `bio`, `knows_about`, `credential`, `home_location`, `bio_source`); About people block in `renderTrust` (`tools/build.js`), Person schema in `person()`, author box in `author_box()` in the render (`short_bio`). Facts are the owner's own words of 21 Oct 2026; change only with the owner.
+- WL-219: `data/site.json` `operator` (name, country); privacy policy section "Who runs this site" and Terms "Governing law" in `content/trust/`. DISCO pages F2 to F13 carry a one-sentence income-tax FAQ linking F1; F1 and F14 keep the full text.
+- WL-216: every `causes`/`action` in `data/inverter-codes.json` is our own summary (no manual quotes; `_meta.notes` says so); DC safety sentences kept. N2 text says rows are summaries.
+- WL-218: `data/appliances.json` inverter AC rows cite Haier Pakistan product pages (starting watts = the maker's maximum cooling input), TVs Samsung Pakistan, LED bulb Philips Pakistan; ceiling fans (AC and DC), pedestal DC fan and chest freezer are now "Wattlyst estimate, engineer to confirm" (no maker source was reachable).
+- Tests: `tests/trust-adsense.test.js`.
+
+**Do not touch / watch**
+- Never enable ads without `consent.cmp`; never take N6 off `no_ads_pages` unless the owner buys the Open-Meteo commercial plan.
+- Never add a bio fact the owner did not give (he is not a licensed electrician; the bio says so).
+- Error-code rows: write any new code in our own words with the manual linked; no quoted manual text (test).
+
+**Open to-dos**
+- AdSense owner steps (OW-1, OW-2): Search Console indexing first; then set `adsense_pub_id` with `enabled` false (meta tag + ads.txt prove ownership), apply, install a Google-certified CMP and set `consent.cmp`, then slots and `enabled` true.
+- The 1.5 ton inverter AC row still cites Gree's figures through a retailer page (Japan Electronics); gree.com.pk was unreachable from here: swap to a maker page when reachable.
+- Fans and chest freezer need a maker datasheet, NEECA label or a Wattlyst meter reading (owner can photograph nameplates).
+- Lifeline GST default (WL-241) still [VERIFY]: needs a real lifeline bill.
+- Everything open from the earlier handoffs below still stands.
+
+## Earlier handoff (after 21 Oct audit fix Phase 7: technical SEO plumbing) — written by the audit Phase 7 thread, 2026-10-21
 
 Owner: every fix phase of the 21 Oct 2026 audit runs in its own new thread, only after the owner says to start it. Shared rules and phase notes: `/mnt/project-files/electricity-tool-hub/audit/2026-10-21/handoff/` (README, `phase-N-*.md`, `status.md`; Phases 1 to 7 ticked). Next is **Phase 8 (trust + AdSense readiness)**: read README, then only `phase-8-trust-adsense.md` and its rows in `audit/fix-list-2026-10-21.md`. After Phase 8 comes row 9 of status.md (H1/D10 ToU path), also only with the owner's yes. Plugin v0.8.29. Phase 7 changed PHP plumbing, the build, the upkeep report, content anchors and source URLs; no engine formula or figure moved.
 
@@ -724,6 +749,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | 2026-10-21 | Audit 2026-10-21 fix Phase 5: page text (WL-183 rough runtimes, WL-184 average month in text, WL-185 home saving labels, WL-233 lithium guide vs datasheet and fire safety, WL-234 outside sources on every page, WL-235 honest metas, WL-189 internal links, WL-188 tracker title, WL-190 lakh prices, WL-236 wrong statements, WL-192 slab rate, WL-193 index date, WL-194 peak-hours title, WL-195 llms.txt answers + home title, WL-196 installer term + MCB margin + N2 meta, WL-220 E3 label, WL-237 404 rule), plugin v0.8.27 | done: tests green | #44 |
 | 2026-10-21 | Audit 2026-10-21 fix Phase 6: phone layout and navigation (WL-198 Next step under the result, WL-238 embed result first + taller list iframe, WL-202 error-code count/jump/phone cards, WL-204 list calculators in two columns on desktop, WL-200 hub task groups, WL-239 table row labels, WL-205 small fixes: counts, 404, touch sizes, scroll cue, picker groups, select labels), plugin v0.8.28 | done: tests green | #45 |
 | 2026-10-21 | Audit 2026-10-21 fix Phase 7: technical SEO plumbing (WL-208 one-hop lowercase redirect, WL-209 Person url + Organization areaServed, WL-210 short error-code H2s, WL-211 varied Related anchors, WL-212 outbound-link check in the upkeep report + redirecting source links replaced, WL-213 warm-up cron cleared fully), plugin v0.8.29 | done: tests green | #46 |
+| 2026-10-21 | Audit 2026-10-21 fix Phase 8: trust and AdSense readiness (WL-243 protected FC surcharge 0, WL-244 FPA on the FPA month's units, WL-217 ads need a CMP, WL-240 N6 no ads + Open-Meteo credit, WL-215 author bio, WL-219 operator/governing law/short tax FAQ, WL-216 error codes in own words, WL-218 appliance sources), plugin v0.8.30 | done: tests green | #47 |
 
 ## Owner to do
 - Audit Phase 4: one Hostinger redirect so http and www go straight to https://wattlyst.com (WL-40); HTML browser cache time of a few hours in LiteSpeed/Hostinger (WL-36); after deploy, open wp-admin once so the new build syncs and the cache is purged; before switching on the quote form, ask Hostinger which header carries the visitor IP and put it in data/site.json leads.client_ip_header (WL-64); 2FA for wp-admin.

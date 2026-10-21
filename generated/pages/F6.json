@@ -57,7 +57,7 @@
    {
     "h2": "FESCO summer vs winter bills in Faisalabad",
     "p": [
-     "Faisalabad summers are long and hot, and the AC decides the bill from May to September. A one and a half ton inverter split draws up to about 1,450 W, so a few hundred units a month is normal with one unit running through the night. In the examples, a summer month of 550 units on 3 kW costs Rs 32,262, while a winter month of 150 protected units costs Rs 3,395.",
+     "Faisalabad summers are long and hot, and the AC decides the bill from May to September. A one and a half ton inverter split draws up to about 1,450 W, so a few hundred units a month is normal with one unit running through the night. In the examples, a summer month of 550 units on 3 kW costs Rs 32,262, while a winter month of 150 protected units costs Rs 2,823.",
      "Because the summer months break the protected run, the lower rates come back only after 6 bills in a row under 200 units. The AC units calculator estimates the units for your tonnage and hours; enter the result here to see the FESCO bill."
     ],
     "l": [
@@ -128,7 +128,13 @@
    },
    {
     "q": "Why is my real bill higher than this estimate when it is over Rs 25,000?",
-    "a": "A bill of Rs 25,000 or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: 7.5% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
+    "a": "Usually because of advance income tax, which this estimate leaves out: a domestic consumer not on FBR's Active Taxpayers List pays 7.5% on a monthly bill of Rs 25,000 or more. Who pays the income tax line is explained with the electricity bill calculator.",
+    "l": [
+     {
+      "t": "Who pays the income tax line",
+      "u": "/bill/electricity-bill-calculator-pakistan/"
+     }
+    ]
    }
   ],
   "key_facts": [
@@ -244,7 +250,7 @@
      "unit": "Rs per unit",
      "advanced": true,
      "hint": "Financing cost surcharge per unit, from the bill. Secondary-source default.",
-     "placeholder": "Blank = Rs 3.23 per unit (none on lifeline)"
+     "placeholder": "Blank = Rs 3.23 per unit (none on lifeline or protected)"
     },
     {
      "name": "fpa_per_unit",
@@ -253,6 +259,14 @@
      "advanced": true,
      "hint": "Pre-filled with the latest NEPRA-verified fuel adjustment, the one for July 2026 charged on September 2026 bills. October 2026 bills carry Rs 1.11 per unit for August 2026, reported in the news; this page keeps the latest NEPRA-verified rate until that decision is published. Replace it with the FPA rate printed on your bill (negative is a credit). Protected homes pay it too; lifeline bills carry none.",
      "default": 2.0581
+    },
+    {
+     "name": "fpa_units",
+     "label": "Units in the FPA month",
+     "unit": "units",
+     "hint": "NEPRA charges the FPA on the units of the month it adjusts (the FPA month, usually two months before this bill), not on this month's units. Copy that month's units from the units history on your bill. Blank = this month's units.",
+     "placeholder": "Blank = this month's units",
+     "advanced": true
     },
     {
      "name": "gst_pct",
@@ -370,7 +384,7 @@
    },
    {
     "title": "150 units, protected consumer in a winter month, 1 kW",
-    "text": "Energy charge Rs 1,705 slab-wise at protected rates, fixed charge Rs 300 for 1 kW, FC surcharge Rs 485, QTA Rs 78, FPA Rs 309, GST Rs 518. Estimated FESCO bill Rs 3,395."
+    "text": "Energy charge Rs 1,705 slab-wise at protected rates, fixed charge Rs 300 for 1 kW, FC surcharge Rs 0, QTA Rs 78, FPA Rs 309, GST Rs 431. Estimated FESCO bill Rs 2,823."
    }
   ],
   "table": {
@@ -390,7 +404,7 @@
      "Rs 11.78",
      "Rs 300",
      "Rs 2,355",
-     "Rs 4,504"
+     "Rs 3,742"
     ],
     [
      "350 (unprotected)",
@@ -532,6 +546,22 @@
     "name": "Ali Ahmad",
     "url": "https://wattlyst.com/about/#ali-ahmad",
     "jobTitle": "Founder, Author",
+    "description": "A revenue expert in the Revenue Department who understands home wiring and solar installation and works out loads, watts, solar output and running costs himself.",
+    "knowsAbout": [
+     "Electricity bills in Pakistan",
+     "Home electrical load",
+     "Solar system sizing",
+     "Battery and inverter backup"
+    ],
+    "hasCredential": {
+     "@type": "EducationalOccupationalCredential",
+     "credentialCategory": "degree",
+     "name": "MA Sociology"
+    },
+    "homeLocation": {
+     "@type": "Place",
+     "name": "Okara, Pakistan"
+    },
     "sameAs": [
      "https://www.linkedin.com/in/ali-ahmad-chaudhry-12777486"
     ],
@@ -604,7 +634,7 @@
       "name": "Why is my real bill higher than this estimate when it is over Rs 25,000?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "A bill of Rs 25,000 or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: 7.5% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
+       "text": "Usually because of advance income tax, which this estimate leaves out: a domestic consumer not on FBR's Active Taxpayers List pays 7.5% on a monthly bill of Rs 25,000 or more. Who pays the income tax line is explained with the electricity bill calculator."
       }
      }
     ]

@@ -70,7 +70,7 @@
    {
     "h2": "Inverter appliances: when the two numbers nearly match",
     "p": [
-     "Inverter ACs, inverter fridges and DC ceiling fans control their motor speed electronically and ramp up slowly. A 1 ton inverter AC runs at about 900 W and peaks at about 1,200 W, its maximum rated input. The running watts × 1.25 come to only 1,125 W, so even here the peak sets the generator: 1,200 W, against 3,600 W for the non-inverter AC.",
+     "Inverter ACs, inverter fridges and DC ceiling fans control their motor speed electronically and ramp up slowly. A 1 ton inverter AC runs at about 900 W and peaks at about 1,390 W, its maximum rated input. The running watts × 1.25 come to only 1,125 W, so even here the peak sets the generator: 1,390 W, against 3,600 W for the non-inverter AC.",
      "That is why replacing a non-inverter AC with an inverter one often lets a home use a smaller generator or a UPS: the chart below puts the inverter and non-inverter versions of the same appliances side by side."
     ]
    }
@@ -105,7 +105,7 @@
    "Running watts (also called rated or continuous watts) are what an appliance draws for as long as it is on; starting watts (surge or peak watts) are drawn for a second or two while a motor or compressor starts.",
    "For heaters, irons, kettles, bulbs and electronics the two are the same: an electric iron runs and starts at 1,000 W, so the running watts × 1.25 (1,250 W) decide the generator.",
    "For motors and compressors the starting watts decide: a non-inverter fridge needs 1,200 W at start against 200 W running, and a 1 ton non-inverter AC needs 3,600 W against 1,200 W.",
-   "Inverter fridges and inverter ACs ramp up gradually, so their starting watts are close to their running watts: a 1 ton inverter AC peaks at about 1,200 W."
+   "Inverter fridges and inverter ACs ramp up gradually, so their starting watts are close to their running watts: a 1 ton inverter AC peaks at about 1,390 W."
   ],
   "mistakes": [
    "Using running watts to size a generator or inverter for a motor load. The appliance may never start.",
@@ -180,7 +180,7 @@
     "ac-split-1ton-inverter": {
      "name": "Split AC 1 ton inverter",
      "running_w": 900,
-     "starting_w": 1200,
+     "starting_w": 1390,
      "typical_hours_per_day": 8,
      "avg_w": 650,
      "load_type": "inverter_compressor"
@@ -216,7 +216,7 @@
     "ac-split-2ton-inverter": {
      "name": "Split AC 2 ton inverter",
      "running_w": 1900,
-     "starting_w": 2500,
+     "starting_w": 2140,
      "typical_hours_per_day": 8,
      "avg_w": 1300,
      "load_type": "inverter_compressor"
@@ -1294,7 +1294,7 @@
    },
    {
     "title": "1 ton inverter AC: a small peak still decides",
-    "text": "Running 900 W, highest draw 1,200 W. Running × 1.25 = 1,125 W is below that peak, so the peak of 1,200 W sets the size: 1.5 kVA and a 2.5 kVA set, against 5 kVA for the non-inverter AC."
+    "text": "Running 900 W, highest draw 1,390 W. Running × 1.25 = 1,125 W is below that peak, so the peak of 1,390 W sets the size: 1.74 kVA and a 2.5 kVA set, against 5 kVA for the non-inverter AC."
    },
    {
     "title": "Fridge and iron together",
@@ -1342,8 +1342,8 @@
     [
      "1 ton inverter AC",
      "900 W",
-     "1,200 W",
-     "1,200 W",
+     "1,390 W",
+     "1,390 W",
      "2.5 kVA"
     ],
     [
@@ -1446,6 +1446,22 @@
     "name": "Ali Ahmad",
     "url": "https://wattlyst.com/about/#ali-ahmad",
     "jobTitle": "Founder, Author",
+    "description": "A revenue expert in the Revenue Department who understands home wiring and solar installation and works out loads, watts, solar output and running costs himself.",
+    "knowsAbout": [
+     "Electricity bills in Pakistan",
+     "Home electrical load",
+     "Solar system sizing",
+     "Battery and inverter backup"
+    ],
+    "hasCredential": {
+     "@type": "EducationalOccupationalCredential",
+     "credentialCategory": "degree",
+     "name": "MA Sociology"
+    },
+    "homeLocation": {
+     "@type": "Place",
+     "name": "Okara, Pakistan"
+    },
     "sameAs": [
      "https://www.linkedin.com/in/ali-ahmad-chaudhry-12777486"
     ],

@@ -26,6 +26,11 @@ final class Wattlyst_Ads {
 		if ( ! in_array( $page['type'] ?? '', self::TYPES, true ) ) {
 			return false;
 		}
+		// Pages listed in no_ads_pages never carry ads (N6: free Open-Meteo licence, WL-240); the build also
+		// refuses ads without a consent tool (tools/lib/monetize.js adsConfig, WL-217).
+		if ( in_array( $page['id'] ?? '', $ads['no_ads_pages'] ?? array(), true ) || empty( $ads['cmp'] ) ) {
+			return false;
+		}
 		// A quote-form thank-you or error state is not a place for ads (AdSense policy).
 		if ( isset( $_GET['lead'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 			return false;

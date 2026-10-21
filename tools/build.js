@@ -31,6 +31,14 @@ const CALC_DATA = { generator_fuel: ['generator_fuel'], quote_checker: ['compone
 // code (<input>_required ...) for an input name that chain reads. A superset is harmless; a missing text would fall
 // back to the generic message, which tests/messages.test.js rules out for every error the calculators produce.
 const GENERIC_CODE = /^(\w+?)_(required|invalid|must_be_positive|too_small|too_large|out_of_range)$/;
+/** Credit line for a page with a live data feed: content `credit` {by, by_url, licence, licence_url} (WL-240). */
+function creditOf(c, fail) {
+  const k = c.credit || {};
+  for (const f of ['by', 'licence']) if (!k[f]) fail(`${c.id}: live data needs credit.${f} (data licence attribution)`);
+  for (const f of ['by_url', 'licence_url']) if (!/^https:\/\//.test(k[f] || '')) fail(`${c.id}: credit.${f} must be an https URL`);
+  return { by: k.by, by_url: k.by_url, licence: k.licence, licence_url: k.licence_url };
+}
+
 function pageTexts(module) {
   const seen = new Set();
   const walk = (f) => { if (seen.has(f)) return; seen.add(f); for (const d of staticImports(read(`engine/${f}`))) walk(d.replace('./', '')); };
@@ -297,6 +305,8 @@ function buildContent(c, ctx) {
       ...(c.diagram ? { diagram: c.diagram } : {}),
       ...(c.result_table ? { rtable: resultTable(ctx, c, result, scope) } : {}),
       ...(c.live ? { live: c.live } : {}),
+      // A live data feed under an attribution licence prints its credit next to the result (Open-Meteo CC BY 4.0, WL-240).
+      ...(c.live ? { credit: creditOf(c, fail) } : {}),
       notice: noticeCode(result) ? errorMessage(noticeCode(result)) : '',
       msg: pageTexts(module),
       data_checked: dataChecked(module, { ...ctx, usesAppliances: fields.some((f) => f.type === 'appliance' || f.type === 'loads') }),
@@ -509,7 +519,14 @@ function dataChecked(module, ctx) {
 function person(site, id) {
   const p = site.people.find((x) => x.id === id) || site.people[0];
   // url = the person's entry on the About page (WL-209); the About people block prints the same id.
-  return { '@type': 'Person', '@id': `${site.url}#/person/${p.id}`, name: p.name, url: personUrl(site, p.id), jobTitle: p.roles.join(', '), sameAs: p.same_as, worksFor: { '@id': `${site.url}#organization` } };
+  // description, knowsAbout, credential and home town come from the person's bio fields (WL-215), only when set.
+  const bio = {
+    ...(p.short_bio ? { description: p.short_bio } : {}),
+    ...(p.knows_about?.length ? { knowsAbout: p.knows_about } : {}),
+    ...(p.credential ? { hasCredential: { '@type': 'EducationalOccupationalCredential', credentialCategory: 'degree', name: p.credential } } : {}),
+    ...(p.home_location ? { homeLocation: { '@type': 'Place', name: [p.home_location.locality, p.home_location.country].filter(Boolean).join(', ') } } : {}),
+  };
+  return { '@type': 'Person', '@id': `${site.url}#/person/${p.id}`, name: p.name, url: personUrl(site, p.id), jobTitle: p.roles.join(', '), ...bio, sameAs: p.same_as, worksFor: { '@id': `${site.url}#organization` } };
 }
 
 export function personUrl(site, id) {
@@ -648,7 +665,8 @@ function renderTrust(id, html, ctx) {
   const blocks = {
     'defaults-table': () => defaultsTable(data.defaults),
     'data-sources': () => dataSources(ctx),
-    'people': () => site.people.map((p) => `<li id="${esc(p.id)}"><strong>${esc(p.name)}</strong>, ${esc(p.roles.join(' and '))}${p.same_as.length ? ` (<a href="${esc(p.same_as[0])}" rel="me noopener">LinkedIn</a>)` : ''}</li>`).join(''),
+    // Each person's factual bio from data/site.json (owner's own facts, WL-215) under the name line.
+    'people': () => site.people.map((p) => `<li id="${esc(p.id)}"><strong>${esc(p.name)}</strong>, ${esc(p.roles.join(' and '))}${p.same_as.length ? ` (<a href="${esc(p.same_as[0])}" rel="me noopener">LinkedIn</a>)` : ''}${(p.bio || []).map((x) => `<p>${esc(x)}</p>`).join('')}</li>`).join(''),
     'reviewer': () => site.reviewer.status === 'signed_off'
       ? `<p>Technical review: <strong>${esc(site.reviewer.name)}</strong>, ${esc(site.reviewer.credential)}.</p>`
       : '<p>Technical review by a PEC-registered electrical engineer is in progress. Until it is complete, no page claims an engineer sign-off.</p>',
@@ -797,7 +815,7 @@ export async function build() {
     r.cards = rows.filter((x) => x.type === 'pillar' && x.live).sort((a, b) => (a.nav_order ?? 99) - (b.nav_order ?? 99)).map((p) => ({ id: p.id, url: p.url, h1: p.h1, label: p.nav_label || (p.primary_keyword ? title(p.primary_keyword) : p.h1), meta: p.meta, children: p.children.map((cid) => ({ id: cid, url: byId.get(cid).url, h1: byId.get(cid).h1 })) }));
   }
   const files = {};
-  const ads = adsConfig(site, fail);
+  const ads = adsConfig(site, fail, rows, content);
   const leads = leadsConfig(site, inp.leadForm, rows, inp.data.cities, fail);
   const affiliates = affiliatesByPage(inp.affiliates, site, rows, fail);
   for (const r of rows) {

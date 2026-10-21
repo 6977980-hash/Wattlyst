@@ -87,6 +87,8 @@ function addOns(base, i, d) {
   const fpa = num(i, 'fpa_per_unit', { def: a.fpa_per_unit?.value ?? 0, min: a.fpa_per_unit?.min, max: a.fpa_per_unit?.max });
   const gst_pct = num(i, 'gst_pct', { def: def(a.gst_pct), min: 0, max: 100 });
   const exempt = Array.isArray(i.fpa_exempt) ? i.fpa_exempt : a.fpa_per_unit?.exempt || [];
+  // The FPA is billed on the units of the month it adjusts, not this month's (WL-244); blank = this month's units.
+  const fpa_units = nonneg(i, 'fpa_units', base.units);
   // A bill prints whole rupees: each line is rounded, the subtotal is the sum of the printed lines and GST is
   // rounded on that subtotal, so the printed lines always add up to the printed total (WL-109).
   const R = Math.round;
@@ -94,10 +96,10 @@ function addOns(base, i, d) {
   const fc_rs = R(fc * base.units);
   const qta_rs = life ? 0 : R(qta * base.units);
   const fpa_exempt = exempt.includes(base.category);
-  const fpa_rs = fpa_exempt ? 0 : R(fpa * base.units);
+  const fpa_rs = fpa_exempt ? 0 : R(fpa * fpa_units);
   const subtotal_rs = Math.max(0, energy_rs + fixed_rs + fc_rs + qta_rs + fpa_rs);
   const gst_rs = R((subtotal_rs * gst_pct) / 100);
-  return { energy_rs, fixed_rs, fc_surcharge_per_unit: fc, qta_per_unit: qta, fpa_per_unit: fpa, fpa_exempt, fc_rs, qta_rs, fpa_rs, subtotal_rs, gst_pct, gst_rs, total_rs: subtotal_rs + gst_rs };
+  return { energy_rs, fixed_rs, fc_surcharge_per_unit: fc, qta_per_unit: qta, fpa_per_unit: fpa, fpa_units, fpa_exempt, fc_rs, qta_rs, fpa_rs, subtotal_rs, gst_pct, gst_rs, total_rs: subtotal_rs + gst_rs };
 }
 
 const SIGNED = ['qta_rs', 'fpa_rs', 'qta_per_unit', 'fpa_per_unit'];

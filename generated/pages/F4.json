@@ -51,7 +51,7 @@
     "h2": "MEPCO summer vs winter units: why the June bill is many times the January bill",
     "p": [
      "South Punjab has long, hot summers, so from May to September the AC does most of the consumption. A split inverter AC of one and a half tons draws up to about 1,450 W and a non-inverter one about 1,800 W, so eight to ten hours a night adds a few hundred units. The slab the month reaches then applies to every unit, which is why the summer bill grows faster than the units do.",
-     "In the examples, the winter month of 120 units stays protected at Rs 2,727, the one-AC summer month of 400 units costs Rs 20,894, and the two-AC month of 750 units costs Rs 49,303. Use the AC units calculator to estimate your own summer units before entering them here."
+     "In the examples, the winter month of 120 units stays protected at Rs 2,269, the one-AC summer month of 400 units costs Rs 20,894, and the two-AC month of 750 units costs Rs 49,303. Use the AC units calculator to estimate your own summer units before entering them here."
     ],
     "l": [
      [],
@@ -134,13 +134,19 @@
    },
    {
     "q": "Why is my real bill higher than this estimate when it is over Rs 25,000?",
-    "a": "A bill of Rs 25,000 or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: 7.5% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
+    "a": "Usually because of advance income tax, which this estimate leaves out: a domestic consumer not on FBR's Active Taxpayers List pays 7.5% on a monthly bill of Rs 25,000 or more. Who pays the income tax line is explained with the electricity bill calculator.",
+    "l": [
+     {
+      "t": "Who pays the income tax line",
+      "u": "/bill/electricity-bill-calculator-pakistan/"
+     }
+    ]
    }
   ],
   "key_facts": [
    "MEPCO, the Multan Electric Power Company, supplies south Punjab from Multan through zones in Khanewal, Sahiwal, Bahawalpur, Bahawalnagar, Muzaffargarh, Dera Ghazi Khan, Rahim Yar Khan and Vehari, and bills the uniform NEPRA A-1 domestic tariff for 2026 rather than a tariff of its own.",
    "An unprotected MEPCO consumer using 400 units pays Rs 36.46 on every unit, which is Rs 14,584 of energy charge before the fixed charge, FC surcharge, QTA and GST.",
-   "A south Punjab summer month of 400 units with one inverter AC costs about Rs 20,894, while the same home's protected winter month of 120 units costs about Rs 2,727.",
+   "A south Punjab summer month of 400 units with one inverter AC costs about Rs 20,894, while the same home's protected winter month of 120 units costs about Rs 2,269.",
    "The FPA on a MEPCO bill is a per-unit figure that changes every month; on 400 units the FPA entered in the fourth example adds Rs 1,000 before GST, which is why two months with the same units can total differently.",
    "A MEPCO protected consumer is one whose last 6 bills were all at or under 200 units on a connection below 5 kW; the first AC month of summer usually ends that run.",
    "The bill jumps at 700 units: up to there every unit is billed at Rs 41.85, but one unit more moves all of them to the top slab rate of Rs 47.20, which adds Rs 4,480 to the bill of an unprotected 2 kW home.",
@@ -254,7 +260,7 @@
      "unit": "Rs per unit",
      "advanced": true,
      "hint": "Financing cost surcharge per unit, from the bill. Secondary-source default.",
-     "placeholder": "Blank = Rs 3.23 per unit (none on lifeline)"
+     "placeholder": "Blank = Rs 3.23 per unit (none on lifeline or protected)"
     },
     {
      "name": "fpa_per_unit",
@@ -263,6 +269,14 @@
      "advanced": true,
      "hint": "Pre-filled with the latest NEPRA-verified fuel adjustment, the one for July 2026 charged on September 2026 bills. October 2026 bills carry Rs 1.11 per unit for August 2026, reported in the news; this page keeps the latest NEPRA-verified rate until that decision is published. Replace it with the FPA rate printed on your bill (negative is a credit). Protected homes pay it too; lifeline bills carry none.",
      "default": 2.0581
+    },
+    {
+     "name": "fpa_units",
+     "label": "Units in the FPA month",
+     "unit": "units",
+     "hint": "NEPRA charges the FPA on the units of the month it adjusts (the FPA month, usually two months before this bill), not on this month's units. Copy that month's units from the units history on your bill. Blank = this month's units.",
+     "placeholder": "Blank = this month's units",
+     "advanced": true
     },
     {
      "name": "gst_pct",
@@ -368,7 +382,7 @@
   "examples": [
    {
     "title": "120 units, protected consumer in a winter month",
-    "text": "Fans and lights only: energy charge Rs 1,314 slab-wise at protected rates, fixed charge Rs 300 for 1 kW, FC surcharge Rs 388, QTA Rs 62, FPA Rs 247, GST Rs 416. Estimated MEPCO bill Rs 2,727."
+    "text": "Fans and lights only: energy charge Rs 1,314 slab-wise at protected rates, fixed charge Rs 300 for 1 kW, FC surcharge Rs 0, QTA Rs 62, FPA Rs 247, GST Rs 346. Estimated MEPCO bill Rs 2,269."
    },
    {
     "title": "400 units, summer month with one inverter AC",
@@ -405,7 +419,7 @@
      "Rs 11.36",
      "Rs 1,705",
      "Rs 600",
-     "Rs 3,749"
+     "Rs 3,177"
     ],
     [
      "300 (unprotected)",
@@ -526,6 +540,22 @@
     "name": "Ali Ahmad",
     "url": "https://wattlyst.com/about/#ali-ahmad",
     "jobTitle": "Founder, Author",
+    "description": "A revenue expert in the Revenue Department who understands home wiring and solar installation and works out loads, watts, solar output and running costs himself.",
+    "knowsAbout": [
+     "Electricity bills in Pakistan",
+     "Home electrical load",
+     "Solar system sizing",
+     "Battery and inverter backup"
+    ],
+    "hasCredential": {
+     "@type": "EducationalOccupationalCredential",
+     "credentialCategory": "degree",
+     "name": "MA Sociology"
+    },
+    "homeLocation": {
+     "@type": "Place",
+     "name": "Okara, Pakistan"
+    },
     "sameAs": [
      "https://www.linkedin.com/in/ali-ahmad-chaudhry-12777486"
     ],
@@ -598,7 +628,7 @@
       "name": "Why is my real bill higher than this estimate when it is over Rs 25,000?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "A bill of Rs 25,000 or more a month carries advance income tax under section 235 of the Income Tax Ordinance 2001: 7.5% of the bill for a domestic consumer who is not on FBR's Active Taxpayers List. This calculator leaves it out because it depends on your tax status; check the income tax line on your bill and FBR's current withholding tax card."
+       "text": "Usually because of advance income tax, which this estimate leaves out: a domestic consumer not on FBR's Active Taxpayers List pays 7.5% on a monthly bill of Rs 25,000 or more. Who pays the income tax line is explained with the electricity bill calculator."
       }
      }
     ]

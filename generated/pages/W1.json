@@ -50,13 +50,13 @@
    {
     "h2": "What wire size for a 1 ton AC?",
     "p": [
-     "2.5 mm² copper (7/29), the minimum for any AC circuit, with a 10 A type C MCB. A 1 ton inverter has a maximum input of 1,200 W and a design current of 5.8 A, so a 10 m run drops only 0.5%. Do not go down to 3/29 to save money: it is a lighting size and below the minimum for an AC."
+     "2.5 mm² copper (7/29), the minimum for any AC circuit, with a 10 A type C MCB. A 1 ton inverter has a maximum input of 1,390 W and a design current of 6.7 A, so a 10 m run drops only 0.5%. Do not go down to 3/29 to save money: it is a lighting size and below the minimum for an AC."
     ]
    },
    {
     "h2": "What wire size for a 2 ton AC?",
     "p": [
-     "Still 2.5 mm² (7/29) for most homes, with a 16 A type C MCB. A 2 ton inverter has a maximum input of 2,500 W, a design current of 12.1 A, and even over a 30 m run the voltage drop is 2.8%, within the 5% limit. The 2 ton non-inverter is different: its 20 A MCB is above what 7/29 carries in 45 °C air, so it needs 4 mm² (7/36). On very long runs, or where several cables share a conduit, enter that above and the calculator moves up a size."
+     "Still 2.5 mm² (7/29) for most homes, with a 16 A type C MCB. A 2 ton inverter has a maximum input of 2,140 W, a design current of 10.3 A, and even over a 30 m run the voltage drop is 2.4%, within the 5% limit. The 2 ton non-inverter is different: its 20 A MCB is above what 7/29 carries in 45 °C air, so it needs 4 mm² (7/36). On very long runs, or where several cables share a conduit, enter that above and the calculator moves up a size."
     ]
    },
    {
@@ -83,7 +83,7 @@
    {
     "h2": "Why does the run length change the AC wiring size in mm²?",
     "p": [
-     "Every metre of cable has resistance, so some voltage is lost on the way to the AC and back. At 15 m a 1.5 ton inverter loses 2.5 V (1.1%); at 30 m the 2 ton inverter loses 2.8%. The limit for a power circuit is 5%: above it the compressor runs hot, starts badly and wastes energy, so the calculator picks the next cable size that brings the drop back under the limit.",
+     "Every metre of cable has resistance, so some voltage is lost on the way to the AC and back. At 15 m a 1.5 ton inverter loses 2.5 V (1.1%); at 30 m the 2 ton inverter loses 2.4%. The limit for a power circuit is 5%: above it the compressor runs hot, starts badly and wastes energy, so the calculator picks the next cable size that brings the drop back under the limit.",
      "Measure the run along the walls and ceiling, not across the room, and include the drop from the ceiling to the indoor unit and the run to the outdoor unit if it is fed from the same cable."
     ]
    }
@@ -95,7 +95,7 @@
    },
    {
     "q": "Can I use 7/29 wire for a 2 ton AC?",
-    "a": "For a 2 ton inverter, yes: it needs 2.5 mm² (7/29) with a 16 A type C MCB even over 30 m, with a 2.8% drop. A 2 ton non-inverter gets a 20 A MCB, and in 45 °C air 7/29 is rated only 19 A, so it needs 4 mm² (7/36)."
+    "a": "For a 2 ton inverter, yes: it needs 2.5 mm² (7/29) with a 16 A type C MCB even over 30 m, with a 2.4% drop. A 2 ton non-inverter gets a 20 A MCB, and in 45 °C air 7/29 is rated only 19 A, so it needs 4 mm² (7/36)."
    },
    {
     "q": "What breaker for an inverter AC?",
@@ -111,7 +111,7 @@
    },
    {
     "q": "How far can the AC be from the distribution board on 7/29?",
-    "a": "Far enough for most homes: the 2 ton inverter example at 30 m drops 2.8% against a 5% limit. Enter your own run length and the calculator moves to the next size when the drop goes over the limit."
+    "a": "Far enough for most homes: the 2 ton inverter example at 30 m drops 2.4% against a 5% limit. Enter your own run length and the calculator moves to the next size when the drop goes over the limit."
    },
    {
     "q": "Do I need a separate breaker for each AC?",
@@ -175,7 +175,7 @@
     "ac-split-1ton-inverter": {
      "name": "Split AC 1 ton inverter",
      "running_w": 900,
-     "starting_w": 1200,
+     "starting_w": 1390,
      "typical_hours_per_day": 8,
      "avg_w": 650,
      "load_type": "inverter_compressor"
@@ -191,7 +191,7 @@
     "ac-split-2ton-inverter": {
      "name": "Split AC 2 ton inverter",
      "running_w": 1900,
-     "starting_w": 2500,
+     "starting_w": 2140,
      "typical_hours_per_day": 8,
      "avg_w": 1300,
      "load_type": "inverter_compressor"
@@ -395,11 +395,11 @@
    },
    {
     "title": "Split AC 2 ton inverter on a long 30 m run",
-    "text": "Maximum input 2,500 W gives 12.1 A and a 16 A type C MCB. 2.5 mm² (7/29) still works: the drop over 30 m is 6.5 V, or 2.8%, under the 5% limit."
+    "text": "Maximum input 2,140 W gives 10.3 A and a 16 A type C MCB. 2.5 mm² (7/29) still works: the drop over 30 m is 5.6 V, or 2.4%, under the 5% limit."
    },
    {
     "title": "Split AC 1 ton inverter, 10 m in conduit",
-    "text": "Maximum input 1,200 W gives 5.8 A; × 1.25 = 7.2 A, so a 10 A type C MCB. The cable stays at the AC minimum of 2.5 mm² (7/29); voltage drop 0.5%."
+    "text": "Maximum input 1,390 W gives 6.7 A; × 1.25 = 8.4 A, so a 10 A type C MCB. The cable stays at the AC minimum of 2.5 mm² (7/29); voltage drop 0.5%."
    },
    {
     "title": "Split AC 2 ton non-inverter, 15 m in conduit, 45 °C air",
@@ -419,11 +419,11 @@
    "rows": [
     [
      "Split AC 1 ton inverter",
-     "1,200 W",
+     "1,390 W",
      "2.5 mm²",
      "7/29",
      "10 A",
-     "0.7%"
+     "0.8%"
     ],
     [
      "Split AC 1 ton non-inverter",
@@ -451,11 +451,11 @@
     ],
     [
      "Split AC 2 ton inverter",
-     "2,500 W",
+     "2,140 W",
      "2.5 mm²",
      "7/29",
      "16 A",
-     "1.4%"
+     "1.2%"
     ],
     [
      "Split AC 2 ton non-inverter",
@@ -549,6 +549,22 @@
     "name": "Ali Ahmad",
     "url": "https://wattlyst.com/about/#ali-ahmad",
     "jobTitle": "Founder, Author",
+    "description": "A revenue expert in the Revenue Department who understands home wiring and solar installation and works out loads, watts, solar output and running costs himself.",
+    "knowsAbout": [
+     "Electricity bills in Pakistan",
+     "Home electrical load",
+     "Solar system sizing",
+     "Battery and inverter backup"
+    ],
+    "hasCredential": {
+     "@type": "EducationalOccupationalCredential",
+     "credentialCategory": "degree",
+     "name": "MA Sociology"
+    },
+    "homeLocation": {
+     "@type": "Place",
+     "name": "Okara, Pakistan"
+    },
     "sameAs": [
      "https://www.linkedin.com/in/ali-ahmad-chaudhry-12777486"
     ],
@@ -573,7 +589,7 @@
       "name": "Can I use 7/29 wire for a 2 ton AC?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "For a 2 ton inverter, yes: it needs 2.5 mm² (7/29) with a 16 A type C MCB even over 30 m, with a 2.8% drop. A 2 ton non-inverter gets a 20 A MCB, and in 45 °C air 7/29 is rated only 19 A, so it needs 4 mm² (7/36)."
+       "text": "For a 2 ton inverter, yes: it needs 2.5 mm² (7/29) with a 16 A type C MCB even over 30 m, with a 2.4% drop. A 2 ton non-inverter gets a 20 A MCB, and in 45 °C air 7/29 is rated only 19 A, so it needs 4 mm² (7/36)."
       }
      },
      {
@@ -605,7 +621,7 @@
       "name": "How far can the AC be from the distribution board on 7/29?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Far enough for most homes: the 2 ton inverter example at 30 m drops 2.8% against a 5% limit. Enter your own run length and the calculator moves to the next size when the drop goes over the limit."
+       "text": "Far enough for most homes: the 2 ton inverter example at 30 m drops 2.4% against a 5% limit. Enter your own run length and the calculator moves to the next size when the drop goes over the limit."
       }
      },
      {

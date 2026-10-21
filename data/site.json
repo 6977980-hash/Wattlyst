@@ -8,6 +8,11 @@
  "url": "https://wattlyst.com/",
  "tagline": "Electricity math, done right.",
  "contact_email": "contact@wattlyst.com",
+ "operator": {
+  "name": "Ali Ahmad",
+  "country": "Pakistan",
+  "note": "Who runs the site and is responsible for visitor data (data controller), printed in the privacy policy and the terms' governing-law line (audit 2026-10-21 Phase 8, WL-219). Country from the owner (Pakistan-based founder, 21 Oct 2026); add a city only when the owner gives it."
+ },
  "organization_same_as": [],
  "people": [
   {
@@ -17,6 +22,24 @@
     "Founder",
     "Author"
    ],
+   "short_bio": "A revenue expert in the Revenue Department who understands home wiring and solar installation and works out loads, watts, solar output and running costs himself.",
+   "bio": [
+    "Ali Ahmad lives in Okara, Pakistan. He holds an MA in Sociology and has worked as a revenue expert in the Revenue Department since 2021.",
+    "He understands how home wiring and solar systems are put together and works out costs, watts, solar output, loads and running costs himself. He is not a licensed electrician or engineer, which is why the formulas are documented on the methodology page and checked by a separate technical review.",
+    "He built Wattlyst because amps, watts, units, bill slabs and taxes are hard to understand, and knowing them saves electricity: a lower bill for the home and less waste for the country. The tools turn those numbers into a clear answer anyone can use."
+   ],
+   "knows_about": [
+    "Electricity bills in Pakistan",
+    "Home electrical load",
+    "Solar system sizing",
+    "Battery and inverter backup"
+   ],
+   "credential": "MA Sociology",
+   "home_location": {
+    "locality": "Okara",
+    "country": "Pakistan"
+   },
+   "bio_source": "Facts given by Ali Ahmad in the project thread, 21 October 2026 (audit 2026-10-21 Phase 8, WL-215). Change only with the owner's own words.",
    "same_as": [
     "https://www.linkedin.com/in/ali-ahmad-chaudhry-12777486"
    ]
@@ -57,7 +80,13 @@
    "content-2": null,
    "content-3": null
   },
-  "note": "Stays false until AdSense approves the site (seo-rules.md 8). When approved: set adsense_pub_id (pub-...) so /ads.txt is served, create three display ad units in AdSense and put their data-ad-slot numbers in slots, then enabled true. A slot with no number prints nothing. Ads show only on tool, appliance, guide and lookup pages (max three, never near inputs or the Calculate button), never on the home page, data, embed, trust or thank-you pages."
+  "no_ads_pages": [
+   "N6"
+  ],
+  "no_ads_note": "Pages that never show ads, whatever enabled says (audit 2026-10-21 Phase 8). N6: its live solar forecast uses the free Open-Meteo API, whose free tier is for non-commercial use (no ads); owner decision 21 Oct 2026: keep the free forecast and no ads on N6 rather than buy the commercial plan. The build fails if a page with a live data feed is missing here.",
+  "no_ads_source": "Open-Meteo terms and pricing (free API: non-commercial use; data CC BY 4.0, credit required): https://open-meteo.com/en/terms",
+  "no_ads_checked": "2026-10-21",
+  "note": "Stays false until AdSense approves the site (seo-rules.md 8). When approved: set adsense_pub_id (pub-...) so /ads.txt is served, create three display ad units in AdSense and put their data-ad-slot numbers in slots, then enabled true. A slot with no number prints nothing. Ads show only on tool, appliance, guide and lookup pages (max three, never near inputs or the Calculate button), never on the home page, data, embed, trust or thank-you pages. To apply: set adsense_pub_id first and keep enabled false; the front page then prints the google-adsense-account meta tag and /ads.txt is served, either of which proves ownership. enabled true also needs consent.cmp (the build fails without it, WL-217)."
  },
  "consent": {
   "cmp": null,

@@ -387,7 +387,7 @@ final class Wattlyst_Render {
 			: '<p class="wl-error wl-notice" id="' . esc_attr( $id ) . '-error" role="status">' . esc_html( $notice ) . '</p>';
 		// Split: the result table goes under the inputs, the result column is too narrow for it. The compact Next step
 		// follows the share bar, so it sits right under the result on a phone (WL-198).
-		$out    .= '<div class="wl-results" aria-live="polite">' . $results . '</div>' . ( $split ? '' : $this->rtable( $id, $t ) ) . $this->diagram( $t ) . $share . ( $home ? '' : $this->next_inline() );
+		$out    .= '<div class="wl-results" aria-live="polite">' . $results . '</div>' . $this->credit( $t ) . ( $split ? '' : $this->rtable( $id, $t ) ) . $this->diagram( $t ) . $share . ( $home ? '' : $this->next_inline() );
 		$class   = $split ? ( $home ? ' wl-tool-split' : ' wl-tool-list' ) : '';
 		$form    = '<form class="wl-tool' . $class . '" id="' . esc_attr( $id ) . '" data-wl-tool novalidate onsubmit="return false">';
 		if ( $split ) {
@@ -826,6 +826,21 @@ final class Wattlyst_Render {
 		return $out . '</section>';
 	}
 
+	/** Data licence credit under a live-data result (N6 Open-Meteo, CC BY 4.0, WL-240). */
+	private function credit( array $t ): string {
+		$c = $t['credit'] ?? null;
+		if ( ! $c ) {
+			return '';
+		}
+		return sprintf(
+			'<p class="wl-hint wl-credit">Weather data by <a href="%1$s">%2$s</a>, licensed under <a href="%3$s" rel="license">%4$s</a>.</p>',
+			esc_url( $c['by_url'] ),
+			esc_html( $c['by'] ),
+			esc_url( $c['licence_url'] ),
+			esc_html( $c['licence'] )
+		);
+	}
+
 	/** A manifest row by id, only when its page is live, so a page never links to a URL that does not exist yet. */
 	private function live_row( $id ): ?array {
 		$r = '' !== (string) $id ? $this->plugin->row( (string) $id ) : null;
@@ -954,7 +969,7 @@ final class Wattlyst_Render {
 		} else {
 			$review = 'Technical review by a PEC-registered electrical engineer is in progress.';
 		}
-		return '<aside class="wl-author" aria-label="About this page"><p><strong>Written by</strong> ' . $name . ', ' . esc_html( implode( ' and ', $author['roles'] ) ) . ' of ' . esc_html( $site['brand'] ?? '' ) . '.</p><p>' . $review . ' <a href="' . esc_url( Wattlyst_Tools::link( '/methodology/' ) ) . '">How we calculate</a>.</p></aside>';
+		return '<aside class="wl-author" aria-label="About this page"><p><strong>Written by</strong> ' . $name . ', ' . esc_html( implode( ' and ', $author['roles'] ) ) . ' of ' . esc_html( $site['brand'] ?? '' ) . '.' . ( empty( $author['short_bio'] ) ? '' : ' ' . esc_html( $author['short_bio'] ) ) . '</p><p>' . $review . ' <a href="' . esc_url( Wattlyst_Tools::link( '/methodology/' ) ) . '">How we calculate</a>.</p></aside>';
 	}
 
 	private function sources(): string {
