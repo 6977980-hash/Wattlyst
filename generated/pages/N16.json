@@ -254,11 +254,11 @@
      "label": "Sanctioned load",
      "unit": "kW",
      "default": 2,
-     "hint": "The kW printed on the bill; a home with an AC needs more than 1 kW. It sets the fixed charge. At 5 kW or more the bill is on ToU rates: use the ToU bill calculator.",
+     "hint": "The kW printed on the bill; a home with an AC needs more than 1 kW. It sets the fixed charge. At 5 kW or more the bill is on ToU rates with our estimate of the peak share (untick Protected); the electricity bill calculator takes your own peak units.",
      "l": [
       {
-       "t": "ToU bill calculator",
-       "u": "/guides/peak-hours-pakistan/"
+       "t": "electricity bill calculator",
+       "u": "/bill/electricity-bill-calculator-pakistan/"
       }
      ]
     },
@@ -371,7 +371,7 @@
     }
    ],
    "how": {
-    "tpl": "AC: {{out.avg_kw|2}} kW × {{out.hours}} hours = {{out.daily_units|1}} units a day; {{out.daily_units|1}} units × {{out.days}} days = {{out.ac_units|int}} units a month. Without the AC: {{out.other_units}} units on the {{out.before_category|raw}} tariff = {{out.before_rs|rs}}. With the AC: {{out.total_units|int}} units on the {{out.after_category|raw}} tariff (top slab rate {{out.after_rate|rs2}} per unit) = {{out.after_rs|rs}}, including fixed charge, surcharges and GST; an FPA counts only if you enter it. Extra: {{out.after_rs|rs}} − {{out.before_rs|rs}} = {{out.extra_rs|rs}}; {{out.extra_rs|rs}} ÷ {{out.ac_units|int}} AC units = {{out.rs_per_ac_unit|rs2}} for each unit the AC uses. Protection penalty: {{out.lock_months|int}} bills × {{out.lock_per_month|rs}} = {{out.lock_extra_rs|rs}}.",
+    "tpl": "AC: {{out.avg_kw|2}} kW × {{out.hours}} hours = {{out.daily_units|1}} units a day; {{out.daily_units|1}} units × {{out.days}} days = {{out.ac_units|int}} units a month. Without the AC: {{out.other_units}} units on the {{out.before_tariff}} = {{out.before_rs|rs}}. With the AC: {{out.total_units|int}} units on the {{out.after_tariff}} = {{out.after_rs|rs}}, including fixed charge, surcharges and GST; an FPA counts only if you enter it. Extra: {{out.after_rs|rs}} − {{out.before_rs|rs}} = {{out.extra_rs|rs}}; {{out.extra_rs|rs}} ÷ {{out.ac_units|int}} AC units = {{out.rs_per_ac_unit|rs2}} for each unit the AC uses. Protection penalty: {{out.lock_months|int}} bills × {{out.lock_per_month|rs}} = {{out.lock_extra_rs|rs}}.",
     "text": "AC: 1 kW × 8 hours = 8 units a day; 8 units × 30.42 days = 243 units a month. Without the AC: 180 units on the protected tariff = Rs 3,975. With the AC: 423 units on the unprotected tariff (top slab rate Rs 38.95 per unit) = Rs 22,511, including fixed charge, surcharges and GST; an FPA counts only if you enter it. Extra: Rs 22,511 − Rs 3,975 = Rs 18,536; Rs 18,536 ÷ 243 AC units = Rs 76.17 for each unit the AC uses. Protection penalty: 6 bills × Rs 3,669 = Rs 22,014."
    },
    "submit": "Calculate",
@@ -403,6 +403,8 @@
     "appliance_unknown": "Pick an appliance from the list, or choose Custom and enter its watts.",
     "other_start_below_run": "Starting watts of the other loads cannot be lower than their running watts.",
     "tou_peak_estimate": "At 5 kW sanctioned load or more the import is billed on Time-of-Use rates, and the peak units are our estimate (a share of the import, see how it works). Enter the peak units from your ToU bill for your own figure.",
+    "tou_bill_estimate": "At 5 kW sanctioned load or more the bill is on Time-of-Use rates, and the peak units are our estimate (a share of all units, see how it works). Enter the peak units from your ToU bill under Advanced for your own figure.",
+    "tou_share_estimate": "At 5 kW sanctioned load or more the bill is on Time-of-Use rates, with our estimate of the share of units used in the peak hours (see how it works). For your own peak units, use the electricity bill calculator.",
     "above_standard_sizes": "This is above the largest standard size we list. Split the array or circuit into two, or ask a licensed electrician or engineer; the sizes shown are the calculated minimums.",
     "generator_above_standard_sizes": "This is above the largest generator size we list. Use two generators on separate circuits or a larger industrial set, and ask a licensed electrician; the size shown is the calculated minimum.",
     "forecast_unavailable": "The live forecast is not available right now, so a typical day is shown. Try again later.",

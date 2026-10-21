@@ -35,7 +35,7 @@
    "label": "Sanctioned load",
    "unit": "kW",
    "default": "@default_sanctioned_kw",
-   "hint": "The kW printed on the bill. It sets the fixed charge, not the FPA. At {{d.tou_threshold_kw|int}} kW or more use the [[F13|ToU bill calculator]]."
+   "hint": "The kW printed on the bill. It sets the fixed charge, not the FPA. At {{d.tou_threshold_kw|int}} kW or more the bill is on ToU rates: enter its peak units under Advanced ([[F13|ToU peak hours]])."
   },
   {
    "name": "protected",
@@ -76,6 +76,22 @@
    "default": "@data.tariff.addons_secondary.gst_pct.value",
    "advanced": true,
    "hint": "Sales tax applied to the bill subtotal, FPA included."
+  },
+  {
+   "name": "peak_units",
+   "label": "Units in peak hours (ToU)",
+   "unit": "units",
+   "placeholder": "Our estimate",
+   "advanced": true,
+   "hint": "Only for a sanctioned load of {{d.tou_threshold_kw|int}} kW or more: the peak units on your ToU bill. Blank uses our estimate of {{d.tou_peak_share|pct}} of the units."
+  },
+  {
+   "name": "mdi_kw",
+   "label": "MDI (ToU)",
+   "unit": "kW",
+   "placeholder": "Optional, from your ToU bill",
+   "advanced": true,
+   "hint": "Only for {{d.tou_threshold_kw|int}} kW or more: the maximum demand printed on a ToU bill. The fixed charge is on the higher of half the sanctioned load and the MDI; blank uses half the sanctioned load."
   }
  ],
  "outputs": [
@@ -106,7 +122,7 @@
   }
  ],
  "answer": "FPA (fuel price adjustment) is NEPRA's monthly per-unit charge or credit for the fuel cost gap. {{data.fpa_newest.lead}} FPA line = rate × the units of the FPA month (not this month's): at the pre-filled {{data.fpa_latest.fpa_for}} rate (latest NEPRA-verified), {{out.units|int}} units add {{out.fpa_rs|rs}}, plus GST.",
- "how": "FPA line = {{out.fpa_units}} units of the FPA month × the FPA rate entered = {{out.fpa_rs|rs}}. Energy charge {{out.energy_rs|rs}} at {{out.rate|rs2}} per unit, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
+ "how": "FPA line = {{out.fpa_units}} units of the FPA month × the FPA rate entered = {{out.fpa_rs|rs}}. Energy charge {{out.energy_calc}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
  "key_facts": [
   "FPA, the fuel price adjustment (printed as FCA, fuel charges adjustment, on K-Electric and NEPRA documents), is a monthly per-unit figure that NEPRA determines after a public hearing and notifies in the Gazette; the DISCOs apply it to a later month's bills.",
   "The FPA is positive when the actual fuel cost of generation was above the reference cost built into the tariff and negative when it was below: a negative FPA is a credit that lowers the bill.",

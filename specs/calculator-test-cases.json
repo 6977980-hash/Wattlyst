@@ -6581,7 +6581,7 @@
   },
   {
     "calc": "ac_bill_impact",
-    "name": "5 kW sanctioned load needs the ToU bill",
+    "name": "5 kW sanctioned load: both bills on ToU rates with the default peak share",
     "inputs": {
       "fc_surcharge_per_unit": 3.23,
       "qta_per_unit": 0,
@@ -6593,10 +6593,14 @@
       "other_units": 300
     },
     "expected": {
-      "error": "tou_required_at_5kw"
+      "before_category": "tou",
+      "tou_share_estimate": true,
+      "before_rs": 16449,
+      "after_rs": 24072,
+      "extra_rs": 7623
     },
-    "tolerance": 0,
-    "note": "flat A-1 bill refuses 5 kW and above (section F)"
+    "tolerance": 0.01,
+    "note": "audit 2026-10-21 Phase 9b (WL-162 c, owner 21 Oct 2026): ToU path on the bill pages, hand-checked: before 300 units: 75 peak × 46.85 + 225 × 34.53 = 11,283; fixed 675 × 2.5 = 1,688; FC 3.23 × 300 = 969; subtotal 13,940; GST 18% 2,509; total 16,449. After 458.18 units: 114.55 × 46.85 + 343.64 × 34.53 = 17,232; + 1,688 + 1,480 = 20,400; GST 3,672; total 24,072. Was the 5 kW error."
   },
   {
     "calc": "ac_bill_impact",
@@ -8908,7 +8912,7 @@
   },
   {
     "calc": "home_load_bill",
-    "name": "E1 at 5 kW: ToU meter, flat slab bill not available",
+    "name": "E1 at 5 kW: bill on ToU rates with the default peak share",
     "inputs": {
       "loads": [
         {
@@ -8919,10 +8923,12 @@
       "sanctioned_kw": 5
     },
     "expected": {
-      "error": "tou_required_at_5kw"
+      "tou": true,
+      "bill_energy_rs": 4393,
+      "monthly_rs": 7620
     },
     "tolerance": 0.01,
-    "note": "audit 2026-10-15 (full audit fix Phase 3), WL-112: same rule as the bill calculator"
+    "note": "audit 2026-10-21 Phase 9b (WL-162 c, owner 21 Oct 2026): ToU path on the bill pages, hand-checked: 116.81 units, 29.20 peak × 46.85 + 87.61 × 34.53 = 4,393; fixed 1,688; FC 3.23 × 116.81 = 377; subtotal 6,458; GST 1,162; total 7,620. Was the 5 kW error."
   },
   {
     "calc": "ac_bill_impact",
@@ -11077,5 +11083,75 @@
     },
     "tolerance": 0.01,
     "note": "21 Oct 2026 audit Phase 8 WL-244 (Engineer Reviewer): both bills carry the same FPA (185 × 2.0581 = 381), so next_rs differs from the no-FPA figure only by GST rounding."
+  },
+  {
+    "calc": "bill_total",
+    "name": "ToU 6 kW, 700 units, 100 peak, MDI 4, FPA and QTA (bills expert T6)",
+    "inputs": {
+      "units": 700,
+      "sanctioned_kw": 6,
+      "peak_units": 100,
+      "mdi_kw": 4,
+      "fpa_per_unit": 1.1086,
+      "period": "2026-09..2026-11"
+    },
+    "expected": {
+      "category": "tou",
+      "tou_bill_estimate": false,
+      "energy_rs": 25403,
+      "fixed_rs": 2700,
+      "fc_rs": 2261,
+      "qta_rs": 364,
+      "fpa_rs": 776,
+      "gst_rs": 5671,
+      "total_rs": 37175
+    },
+    "tolerance": 0,
+    "note": "audit 2026-10-21 Phase 9b (WL-162 c, owner 21 Oct 2026): ToU path on the bill pages, hand-checked: the audit bills expert's independent full ToU bill T6 = Rs 37,175: 100 × 46.85 + 600 × 34.53 = 25,403; fixed 675 × max(3, 4) = 2,700; FC 2,261; QTA 0.5194 × 700 = 364; FPA 1.1086 × 700 = 776; GST 18% of 31,504 = 5,671."
+  },
+  {
+    "calc": "bill_total",
+    "name": "ToU 5 kW, peak units blank: default share",
+    "inputs": {
+      "units": 400,
+      "sanctioned_kw": 5
+    },
+    "expected": {
+      "tou_bill_estimate": true,
+      "energy_rs": 15044,
+      "fixed_rs": 1688,
+      "fc_rs": 1292,
+      "total_rs": 21268
+    },
+    "tolerance": 0,
+    "note": "audit 2026-10-21 Phase 9b (WL-162 c, owner 21 Oct 2026): ToU path on the bill pages, hand-checked: 25% of 400 = 100 peak × 46.85 + 300 × 34.53 = 15,044; fixed 675 × 2.5 = 1,688; FC 1,292; GST 18% of 18,024 = 3,244; total 21,268."
+  },
+  {
+    "calc": "bill_total",
+    "name": "ToU peak units above the units",
+    "inputs": {
+      "units": 400,
+      "sanctioned_kw": 5,
+      "peak_units": 401
+    },
+    "expected": {
+      "error": "peak_units_too_large"
+    },
+    "tolerance": 0,
+    "note": "audit 2026-10-21 Phase 9b (WL-162 c, owner 21 Oct 2026): ToU path on the bill pages, hand-checked"
+  },
+  {
+    "calc": "bill_total",
+    "name": "protected at 5 kW",
+    "inputs": {
+      "units": 150,
+      "sanctioned_kw": 5,
+      "protected": true
+    },
+    "expected": {
+      "error": "protected_at_tou"
+    },
+    "tolerance": 0,
+    "note": "audit 2026-10-21 Phase 9b (WL-162 c, owner 21 Oct 2026): ToU path on the bill pages, hand-checked: a ToU connection cannot be protected or lifeline."
   }
 ]
