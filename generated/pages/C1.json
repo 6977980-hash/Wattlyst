@@ -37,14 +37,14 @@
    "url": "/generator/generator-size-calculator/"
   }
  ],
- "modified": "2026-10-14",
+ "modified": "2026-10-21",
  "content": {
   "intro": "",
   "sections": [
    {
     "h2": "What size generator do I need for my house?",
     "p": [
-     "List what you actually want running during a power cut, not everything you own. For the example home, fans, lights, an inverter fridge, a TV, one inverter AC and the water motor, the answer is 6.5 kVA. The running load is only 3,085 W; the size is set by the 4,885 W moment when the water motor starts while everything else is on.",
+     "List what you actually want running during a power cut, not everything you own. For the example home, fans, lights, an inverter fridge, a TV, one inverter AC and the water motor, the answer is 6.5 kVA. The running load is only 3,017 W; the size is set by the 4,881 W moment when the water motor starts while everything else is on.",
      "That is why the cheapest way to a smaller generator is often a habit, not a purchase: fill the tank with the pump before switching the AC on, or run the pump when the AC is off. With the pump left out the same home needs 3.5 kVA."
     ]
    },
@@ -71,7 +71,7 @@
    {
     "h2": "What size generator for a 3 bedroom house?",
     "p": [
-     "A three-bedroom home that wants two bedrooms cooled during a cut, with six fans, twelve bulbs, an inverter fridge, a TV, two 1.5 ton inverter ACs and the water motor, runs at 4,719 W and peaks at 6,519 W. The calculated size is 8.15 kVA, so the generator to buy is 10 kVA.",
+     "A three-bedroom home that wants two bedrooms cooled during a cut, with six fans, twelve bulbs, an inverter fridge, a TV, two 1.5 ton inverter ACs and the water motor, runs at 4,651 W and peaks at 6,515 W. The calculated size is 8.15 kVA, so the generator to buy is 10 kVA.",
      "Each extra inverter AC adds about 1,450 W of running load. With three such ACs, more fans and lights and an iron, the home in the last example reaches 12.5 kVA. At that size a diesel set and a changeover switch on the main board are the usual choice."
     ]
    },
@@ -144,8 +144,8 @@
    }
   ],
   "key_facts": [
-   "A typical Pakistani home with four fans, ten LED bulbs, an inverter fridge, a TV, one 1.5 ton inverter AC and a 1 hp water motor runs at about 3,085 W and needs a 6.5 kVA generator, because the pump's start lifts the peak to 4,885 W.",
-   "Keep the water motor off while the generator runs and the same home needs only 3.5 kVA: the pump adds 1,000 W of running load but about 2,800 W at the moment it starts.",
+   "A typical Pakistani home with four fans, ten LED bulbs, an inverter fridge, a TV, one 1.5 ton inverter AC and a 1 hp water motor runs at about 3,017 W and needs a 6.5 kVA generator, because the pump's start lifts the peak to 4,881 W.",
+   "Keep the water motor off while the generator runs and the same home needs only 3.5 kVA: the pump adds 932 W of running load but about 2,796 W at the moment it starts.",
    "Fans, lights, a TV and a non-inverter fridge alone, the usual loadshedding basics, need the smallest common size, 2.5 kVA.",
    "Home generator size in kVA = the larger of (running watts × 1.25) or (running watts plus the largest starting surge) ÷ 0.8 power factor ÷ 1,000, rounded up to the next size sold."
   ],
@@ -514,8 +514,8 @@
     },
     "water-motor-1hp": {
      "name": "Water pump / donkey motor 1 hp",
-     "running_w": 1000,
-     "starting_w": 2800,
+     "running_w": 932,
+     "starting_w": 2796,
      "typical_hours_per_day": 1,
      "load_type": "motor"
     },
@@ -1305,7 +1305,7 @@
      "spec": "int",
      "unit": "W",
      "label_ur": "Ghar ka chalta load",
-     "value": "3,085"
+     "value": "3,017"
     },
     {
      "key": "peak_w",
@@ -1313,12 +1313,12 @@
      "spec": "int",
      "unit": "W",
      "label_ur": "Sab se bare motor ke start par peak",
-     "value": "4,885"
+     "value": "4,881"
     }
    ],
    "how": {
     "tpl": "Your list runs at {{out.running_w|int}} W in total. When its largest motor starts, the peak is {{out.peak_w|int}} W. The generator is sized on the larger of {{out.running_w|int}} W × {{out.margin|2}} margin and {{out.peak_w|int}} W, which is {{out.sized_w|int}} W; ÷ {{out.pf|2}} power factor ÷ 1,000 = {{out.recommended_kva|up2}} kVA, so the next standard size is {{out.standard_kva|1}} kVA.",
-    "text": "Your list runs at 3,085 W in total. When its largest motor starts, the peak is 4,885 W. The generator is sized on the larger of 3,085 W × 1.25 margin and 4,885 W, which is 4,885 W; ÷ 0.8 power factor ÷ 1,000 = 6.11 kVA, so the next standard size is 6.5 kVA."
+    "text": "Your list runs at 3,017 W in total. When its largest motor starts, the peak is 4,881 W. The generator is sized on the larger of 3,017 W × 1.25 margin and 4,881 W, which is 4,881 W; ÷ 0.8 power factor ÷ 1,000 = 6.11 kVA, so the next standard size is 6.5 kVA."
    },
    "submit": "Size my generator",
    "notice": "",
@@ -1352,7 +1352,7 @@
    },
    {
     "title": "Three-bedroom house with two inverter ACs and a water motor",
-    "text": "Six fans, twelve bulbs, an inverter fridge, a TV, two 1.5 ton inverter ACs and a 1 hp pump: 4,719 W running, 6,519 W when the pump starts, 8.15 kVA calculated. Buy a 10 kVA generator."
+    "text": "Six fans, twelve bulbs, an inverter fridge, a TV, two 1.5 ton inverter ACs and a 1 hp pump: 4,651 W running, 6,515 W when the pump starts, 8.15 kVA calculated. Buy a 10 kVA generator."
    },
    {
     "title": "Home with a non-inverter fridge and a 1.5 ton non-inverter AC",
@@ -1360,7 +1360,7 @@
    },
    {
     "title": "Larger house: three inverter ACs, a pump and an iron",
-    "text": "Eight fans, sixteen bulbs, an inverter fridge, two TVs, three 1.5 ton inverter ACs, a 1 hp pump and an iron run at 7,452 W. Here the running load × 1.25 (9,315 W) is larger than the 9,252 W peak, so it sets the size: 11.65 kVA, buy 12.5 kVA."
+    "text": "Eight fans, sixteen bulbs, an inverter fridge, two TVs, three 1.5 ton inverter ACs, a 1 hp pump and an iron run at 7,384 W. Here the running load × 1.25 (9,248 W) is larger than the 9,248 W peak, so it sets the size: 11.56 kVA, buy 12.5 kVA."
    }
   ],
   "table": {
@@ -1391,26 +1391,26 @@
      "3.5 kVA"
     ],
     [
-     "3,085 W",
-     "4,885 W",
+     "3,017 W",
+     "4,881 W",
      "6.11 kVA",
      "6.5 kVA"
     ],
     [
-     "4,719 W",
-     "6,519 W",
+     "4,651 W",
+     "6,515 W",
      "8.15 kVA",
      "10 kVA"
     ],
     [
-     "7,452 W",
-     "9,252 W",
-     "11.65 kVA",
+     "7,384 W",
+     "9,248 W",
+     "11.56 kVA",
      "12.5 kVA"
     ]
    ]
   },
-  "answer": "A home with four fans, ten LED bulbs, an inverter fridge, a TV, a 1.5 ton inverter AC and a 1 hp water motor needs a 6.5 kVA generator: 3,085 W running, 4,885 W when the pump starts. kVA = the larger of running watts × 1.25 or peak watts, ÷ 0.8 power factor ÷ 1,000.",
+  "answer": "A home with four fans, ten LED bulbs, an inverter fridge, a TV, a 1.5 ton inverter AC and a 1 hp water motor needs a 6.5 kVA generator: 3,017 W running, 4,881 W when the pump starts. kVA = the larger of running watts × 1.25 or peak watts, ÷ 0.8 power factor ÷ 1,000.",
   "formula": {
    "text": "P_run = Σ (W × qty); P_peak = P_run + max(W_start − W); kVA = max(P_run × m, P_peak) ÷ PF ÷ 1000",
    "lines": [
@@ -1464,7 +1464,7 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/generator/generator-size-calculator/#breadcrumb"
     },
-    "dateModified": "2026-10-14",
+    "dateModified": "2026-10-21",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }

@@ -39,13 +39,17 @@ export const ac_units = calculator((i, d) => {
 
 /**
  * E1: home load from an appliance list. Running W = Σ run × qty; peak W adds the largest starting step
- * (formulas.md C); amps = W / (V × PF); daily units = Σ run × qty × hours / 1000; monthly = daily × days.
+ * (formulas.md C); amps = Σ (run × qty ÷ PF_row) ÷ V, PF_row = the entered PF, else the appliance's load-type PF
+ * (data/defaults.json pf_by_load_type, else pf_mixed; WL-231), and pf = the list's overall PF (W ÷ VA); daily units = Σ run × qty × hours / 1000; monthly = daily × days.
  */
 export const home_load = calculator((i, d) => {
   const rows = loadRows(i.loads, d);
   const { running_w, surge_w } = sumLoads(rows);
   const volts = pos(i, 'volts', dflt(d, 'v_1ph'));
-  const pf = frac(i, 'pf', dflt(d, 'pf_mixed'));
+  const pf_in = has(i, 'pf') ? frac(i, 'pf') : null;
+  const pfOf = (r) => pf_in ?? d?.defaults?.pf_by_load_type?.[r.load_type] ?? dflt(d, 'pf_mixed');
+  const va = rows.reduce((s, r) => s + (r.run * r.qty) / pfOf(r), 0);
+  const pf = va > 0 ? running_w / va : pf_in ?? dflt(d, 'pf_mixed');
   const days = nonneg(i, 'days', dflt(d, 'days_per_month'));
   const daily_kwh = rows.reduce((s, r) => s + r.energy_w * r.qty * r.hours, 0) / 1000;
   const out = {

@@ -45,15 +45,15 @@
    {
     "h2": "What is the electrical load of a 5 marla house?",
     "p": [
-     "A 5 marla house usually has two or three bedrooms, a lounge, a kitchen and one or two bathrooms. The default list above is what runs in such a house in summer: four ceiling fans, ten LED bulbs, an inverter fridge, a TV, one 1.5 ton inverter AC, a water pump and an iron. Together they come to 4,085 W running and 15.6 units a day, which is about 498 units a month from the solar system.",
-     "The daily units, not the running load, set the panel size here. The AC, the pump and the fans can all be on at noon, and when their 4,085 W is more than the panels give, the grid supplies the rest. The panels also set an on-grid inverter, which runs beside the grid; the running load sets a hybrid inverter, which carries the house in a power cut. If your house has fewer or more appliances, change the list and the result updates."
+     "A 5 marla house usually has two or three bedrooms, a lounge, a kitchen and one or two bathrooms. The default list above is what runs in such a house in summer: four ceiling fans, ten LED bulbs, an inverter fridge, a TV, one 1.5 ton inverter AC, a water pump and an iron. Together they come to 4,017 W running and 15.6 units a day, which is about 498 units a month from the solar system.",
+     "The daily units, not the running load, set the panel size here. The AC, the pump and the fans can all be on at noon, and when their 4,017 W is more than the panels give, the grid supplies the rest. The panels also set an on-grid inverter, which runs beside the grid; the running load sets a hybrid inverter, which carries the house in a power cut. If your house has fewer or more appliances, change the list and the result updates."
     ]
    },
    {
     "h2": "How many kW solar for a 5 marla house?",
     "p": [
-     "For the typical house above the answer is 4.1 kW of panels with an inverter of 3.6 kW. The energy rule asks for 3.91 kW. Panels big enough to carry the whole 4,085 W at midday (4,085 W ÷ 0.78 = 5.24 kW) would make more units than the house uses, and the extra would be sold at the low buyback rate; that rule is for off-grid systems, which have no grid to fall back on.",
-     "The panel count is rounded up, so the installed size is a little above the calculated 3.91 kW. Installers quote by inverter size: with no battery this house takes an on-grid inverter of 3.6 kW, and a five kW one leaves room for more panels later. With a battery for power cuts the hybrid inverter must carry the 4,085 W running load, so it needs at least 5.11 kW.",
+     "For the typical house above the answer is 4.1 kW of panels with an inverter of 3.6 kW. The energy rule asks for 3.9 kW. Panels big enough to carry the whole 4,017 W at midday (4,017 W ÷ 0.78 = 5.15 kW) would make more units than the house uses, and the extra would be sold at the low buyback rate; that rule is for off-grid systems, which have no grid to fall back on.",
+     "The panel count is rounded up, so the installed size is a little above the calculated 3.9 kW. Installers quote by inverter size: with no battery this house takes an on-grid inverter of 3.6 kW, and a five kW one leaves room for more panels later. With a battery for power cuts the hybrid inverter must carry the 4,017 W running load, so it needs at least 5.03 kW.",
      "Do not put every panel in one string. On a cold morning each 585 W panel gives about 55 V open-circuit, so 7 panels in series would be about 388 V; split them into strings that each stay below the inverter's maximum DC input voltage on its datasheet."
     ]
    },
@@ -106,7 +106,7 @@
    },
    {
     "q": "Is a 5 kW solar system enough for a 5 marla house?",
-    "a": "Yes for one 1.5 ton inverter AC with fans, lights, a fridge and a pump on the grid: the house needs 4.1 kW of panels and an on-grid inverter of at least 3.15 kW. A hybrid inverter with a battery also carries the house in a power cut, so it must be at least 5.11 kW for the whole list; put only the loads you need in a cut on the battery side to keep it smaller. For two ACs at the same time, or an electric geyser, the calculator moves to the next size."
+    "a": "Yes for one 1.5 ton inverter AC with fans, lights, a fridge and a pump on the grid: the house needs 4.1 kW of panels and an on-grid inverter of at least 3.15 kW. A hybrid inverter with a battery also carries the house in a power cut, so it must be at least 5.03 kW for the whole list; put only the loads you need in a cut on the battery side to keep it smaller. For two ACs at the same time, or an electric geyser, the calculator moves to the next size."
    },
    {
     "q": "How many units will a 5 marla solar system make a month?",
@@ -136,10 +136,10 @@
    }
   ],
   "key_facts": [
-   "A typical 5 marla house with one 1.5 ton inverter AC has a running load of about 4,085 W and uses about 15.6 units a day, so it needs a solar system of about 4.1 kW with an inverter of 3.6 kW.",
+   "A typical 5 marla house with one 1.5 ton inverter AC has a running load of about 4,017 W and uses about 15.6 units a day, so it needs a solar system of about 4.1 kW with an inverter of 3.6 kW.",
    "Solar system size in kW = units a day ÷ sun yield per kW a day. With the grid connected the panels do not have to carry every appliance at once; only an off-grid system is sized that way.",
    "One kW of panels makes about 4 units a day in Lahore over the year, so a 4.1 kW system makes about 498 units a month.",
-   "Panels are counted up to the next whole panel: 3.91 kW ÷ 585 W = 7 panels, about 18 square metres of roof."
+   "Panels are counted up to the next whole panel: 3.9 kW ÷ 585 W = 7 panels, about 18 square metres of roof."
   ],
   "mistakes": [
    "Sizing the panels to run every appliance at once. That is the off-grid rule; with the grid connected it buys panels whose extra units are sold back at the low buyback rate.",
@@ -569,8 +569,8 @@
     },
     "water-motor-1hp": {
      "name": "Water pump / donkey motor 1 hp",
-     "running_w": 1000,
-     "starting_w": 2800,
+     "running_w": 932,
+     "starting_w": 2796,
      "typical_hours_per_day": 1,
      "load_type": "motor"
     },
@@ -1480,7 +1480,7 @@
    ],
    "how": {
     "tpl": "Energy: each appliance's watts × quantity × hours a day (an inverter AC counts at its average draw, below its rated watts), added up = {{out.daily_kwh|1}} units a day; ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW of panels a day for your city = {{out.kw_energy|2}} kW. A grid-tied or hybrid system is sized by energy: when the {{out.running_w|int}} W running load is more than the panels give at that moment, the grid supplies the rest. {{out.kw|2}} kW needs {{out.panels|int}} panels of {{out.panel_w}} W = {{out.installed_kw|2}} kW installed, which makes about {{out.monthly_kwh_estimate|int}} units a month. {{out.inverter_text}}",
-    "text": "Energy: each appliance's watts × quantity × hours a day (an inverter AC counts at its average draw, below its rated watts), added up = 15.6 units a day; ÷ 4 units per kW of panels a day for your city = 3.91 kW. A grid-tied or hybrid system is sized by energy: when the 4,085 W running load is more than the panels give at that moment, the grid supplies the rest. 3.91 kW needs 7 panels of 585 W = 4.1 kW installed, which makes about 498 units a month. Inverter: an on-grid inverter runs beside the grid, which starts motors and covers any shortfall, so it is sized by the panels: 4.1 kW ÷ 1.3 = at least 3.15 kW, so the on-grid inverter to buy is 3.6 kW; no surge rating is needed."
+    "text": "Energy: each appliance's watts × quantity × hours a day (an inverter AC counts at its average draw, below its rated watts), added up = 15.6 units a day; ÷ 4 units per kW of panels a day for your city = 3.9 kW. A grid-tied or hybrid system is sized by energy: when the 4,017 W running load is more than the panels give at that moment, the grid supplies the rest. 3.9 kW needs 7 panels of 585 W = 4.1 kW installed, which makes about 498 units a month. Inverter: an on-grid inverter runs beside the grid, which starts motors and covers any shortfall, so it is sized by the panels: 4.1 kW ÷ 1.3 = at least 3.15 kW, so the on-grid inverter to buy is 3.6 kW; no surge rating is needed."
    },
    "submit": "Calculate",
    "notice": "",
@@ -1516,19 +1516,19 @@
   "examples": [
    {
     "title": "Typical 5 marla house with one inverter AC",
-    "text": "Four fans, ten bulbs, an inverter fridge, a TV, one 1.5 ton inverter AC, a water pump and an iron: 4,085 W running and 15.6 units a day. Solar system 4.1 kW (7 panels), inverter 3.6 kW, about 498 units a month."
+    "text": "Four fans, ten bulbs, an inverter fridge, a TV, one 1.5 ton inverter AC, a water pump and an iron: 4,017 W running and 15.6 units a day. Solar system 4.1 kW (7 panels), inverter 3.6 kW, about 498 units a month."
    },
    {
     "title": "5 marla house with two inverter ACs",
-    "text": "The same house with a second 1.5 ton inverter AC: 5,535 W running and 23.6 units a day. Solar system 6.44 kW (11 panels), inverter 5 kW, about 782 units a month. Both the panels and the inverter move up from the one-AC house."
+    "text": "The same house with a second 1.5 ton inverter AC: 5,467 W running and 23.6 units a day. Solar system 6.44 kW (11 panels), inverter 5 kW, about 782 units a month. Both the panels and the inverter move up from the one-AC house."
    },
    {
     "title": "Typical house with 5 hours of battery backup",
-    "text": "The default house with 5 hours of backup after sunset on a 48 V lithium bank: the panels stay at 4.1 kW, the inverter becomes a hybrid of 6 kW with a surge rating of at least 5,885 W because it now carries the house in a power cut, and the battery must hold 20.4 units, which is about 526 Ah at 48 V using 90% of it. Running only fans, lights and the fridge at night needs a far smaller battery."
+    "text": "The default house with 5 hours of backup after sunset on a 48 V lithium bank: the panels stay at 4.1 kW, the inverter becomes a hybrid of 6 kW with a surge rating of at least 5,881 W because it now carries the house in a power cut, and the battery must hold 20.1 units, which is about 517 Ah at 48 V using 90% of it. Running only fans, lights and the fridge at night needs a far smaller battery."
    },
    {
     "title": "5 marla house without an AC",
-    "text": "Fans, bulbs, fridge, TV, pump and iron only: 2,635 W running and 7.6 units a day. Solar system 2.34 kW (4 panels), inverter 2 kW. The water pump and iron set the running load even though they run for a short time."
+    "text": "Fans, bulbs, fridge, TV, pump and iron only: 2,567 W running and 7.6 units a day. Solar system 2.34 kW (4 panels), inverter 2 kW. The water pump and iron set the running load even though they run for a short time."
    }
   ],
   "table": {
@@ -1549,35 +1549,35 @@
      "213"
     ],
     [
-     "6 kinds of appliance, 2,635 W running, 7.6 units a day",
+     "6 kinds of appliance, 2,567 W running, 7.6 units a day",
      "2.34 kW",
      "4 × 585 W",
      "2 kW",
      "284"
     ],
     [
-     "7 kinds of appliance, 4,085 W running, 15.6 units a day",
+     "7 kinds of appliance, 4,017 W running, 15.6 units a day",
      "4.1 kW",
      "7 × 585 W",
      "3.6 kW",
      "498"
     ],
     [
-     "7 kinds of appliance, 4,435 W running, 19.2 units a day",
+     "7 kinds of appliance, 4,367 W running, 19.1 units a day",
      "5.27 kW",
      "9 × 585 W",
      "5 kW",
      "640"
     ],
     [
-     "7 kinds of appliance, 5,535 W running, 23.6 units a day",
+     "7 kinds of appliance, 5,467 W running, 23.6 units a day",
      "6.44 kW",
      "11 × 585 W",
      "5 kW",
      "782"
     ],
     [
-     "8 kinds of appliance, 8,535 W running, 29.6 units a day",
+     "8 kinds of appliance, 8,467 W running, 29.6 units a day",
      "7.61 kW",
      "13 × 585 W",
      "6 kW",
@@ -1693,7 +1693,7 @@
       "name": "Is a 5 kW solar system enough for a 5 marla house?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Yes for one 1.5 ton inverter AC with fans, lights, a fridge and a pump on the grid: the house needs 4.1 kW of panels and an on-grid inverter of at least 3.15 kW. A hybrid inverter with a battery also carries the house in a power cut, so it must be at least 5.11 kW for the whole list; put only the loads you need in a cut on the battery side to keep it smaller. For two ACs at the same time, or an electric geyser, the calculator moves to the next size."
+       "text": "Yes for one 1.5 ton inverter AC with fans, lights, a fridge and a pump on the grid: the house needs 4.1 kW of panels and an on-grid inverter of at least 3.15 kW. A hybrid inverter with a battery also carries the house in a power cut, so it must be at least 5.03 kW for the whole list; put only the loads you need in a cut on the battery side to keep it smaller. For two ACs at the same time, or an electric geyser, the calculator moves to the next size."
       }
      },
      {

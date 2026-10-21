@@ -53,7 +53,7 @@ function rowOf(row, idx, d) {
     // Energy uses the average draw where one is known (inverter ACs cycle well below their rated input, formulas.md E).
     const energy_w = item?.avg_w ? (item.avg_w * run) / item.running_w : run;
     const hours = num(row, 'hours', { def: item?.typical_hours_per_day ?? 0, min: 0, max: 24, code: `load_${idx}_hours_invalid` });
-    return { id: item ? id : 'custom', name: item?.name ?? 'Custom load', run, start, energy_w, qty, hours };
+    return { id: item ? id : 'custom', name: item?.name ?? 'Custom load', run, start, energy_w, qty, hours, load_type: item?.load_type };
   }
 }
 

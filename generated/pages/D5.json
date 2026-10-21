@@ -358,11 +358,29 @@
      "unit": "units",
      "label_ur": "AC ki rozana energy",
      "value": "8"
+    },
+    {
+     "key": "battery_ah",
+     "label": "Battery",
+     "spec": "up",
+     "unit": "Ah",
+     "optional": true,
+     "label_ur": "Battery",
+     "value": ""
+    },
+    {
+     "key": "battery_kwh",
+     "label": "Battery energy",
+     "spec": "1",
+     "unit": "kWh",
+     "optional": true,
+     "label_ur": "Battery ki energy",
+     "value": ""
     }
    ],
    "how": {
-    "tpl": "{{out.ac_name}} draws about {{out.ac_avg_w|int}} W on average, so {{in.hours}} hours a day = {{out.daily_kwh|1}} units. Energy: {{out.daily_kwh|1}} units ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW per day in your city = {{out.kw_energy|2}} kW. Power: the panels must also carry the AC's running {{out.running_w|int}} W at midday, {{out.running_w|int}} W ÷ {{out.pr|2}} performance ratio = {{out.kw_power|2}} kW. The larger, {{out.kw|2}} kW, ÷ {{out.panel_w}} W per panel, rounded up = {{out.panels|int}} panels, {{out.installed_kw|2}} kW installed (about {{out.roof_m2|1}} m² of roof). Inverter: the larger of {{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_kw_load|2}} kW for the load and {{out.installed_kw|2}} kW of panels ÷ {{out.dc_ac_ratio_max|1}} = {{out.inverter_kw_array|2}} kW, so the panels are never more than {{out.dc_ac_ratio_max|1}} times the inverter: {{out.inverter_kw|up2}} kW continuous (the size to buy: {{out.inverter_buy}}), with a surge rating of at least {{out.inverter_surge_w|int}} W.",
-    "text": "Split AC 1.5 ton inverter draws about 1,000 W on average, so 8 hours a day = 8 units. Energy: 8 units ÷ 4 units per kW per day in your city = 2 kW. Power: the panels must also carry the AC's running 1,450 W at midday, 1,450 W ÷ 0.78 performance ratio = 1.86 kW. The larger, 2 kW, ÷ 585 W per panel, rounded up = 4 panels, 2.34 kW installed (about 10.3 m² of roof). Inverter: the larger of 1,450 W × 1.25 = 1.81 kW for the load and 2.34 kW of panels ÷ 1.3 = 1.8 kW, so the panels are never more than 1.3 times the inverter: 1.82 kW continuous (the size to buy: 2 kW), with a surge rating of at least 1,900 W."
+    "tpl": "{{out.ac_name}} draws about {{out.ac_avg_w|int}} W on average, so {{in.hours}} hours a day = {{out.daily_kwh|1}} units. Energy: {{out.daily_kwh|1}} units ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW per day in your city = {{out.kw_energy|2}} kW. Power: the panels must also carry the AC's running {{out.running_w|int}} W at midday, {{out.running_w|int}} W ÷ {{out.pr|2}} performance ratio = {{out.kw_power|2}} kW. The larger, {{out.kw|2}} kW, ÷ {{out.panel_w}} W per panel, rounded up = {{out.panels|int}} panels, {{out.installed_kw|2}} kW installed (about {{out.roof_m2|1}} m² of roof). {{out.inverter_text}}",
+    "text": "Split AC 1.5 ton inverter draws about 1,000 W on average, so 8 hours a day = 8 units. Energy: 8 units ÷ 4 units per kW per day in your city = 2 kW. Power: the panels must also carry the AC's running 1,450 W at midday, 1,450 W ÷ 0.78 performance ratio = 1.86 kW. The larger, 2 kW, ÷ 585 W per panel, rounded up = 4 panels, 2.34 kW installed (about 10.3 m² of roof). Inverter: it carries the load, so the larger of 1,450 W × 1.25 = 1.82 kW and 2.34 kW of panels ÷ 1.3 = 1.8 kW: at least 1.82 kW, so the inverter to buy is 2 kW, with a surge rating of at least 1,900 W."
    },
    "submit": "Calculate",
    "notice": "",

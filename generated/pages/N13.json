@@ -44,7 +44,7 @@
     "h2": "Solar system for mosque: sized around prayer times",
     "p": [
      "A mosque's load comes in blocks: fans and lights through each congregation, ACs mainly for Zuhr, Asr and Isha in summer, the water pump for wudu, and a longer, fuller Jummah once a week. The default list averages those hours over the week. It is a Wattlyst estimate for a small one-hall mosque, not a survey of mosques, so change the counts and hours to match yours.",
-     "Zuhr and Asr fall in full sun, so the panels serve those prayers directly. Fajr, Maghrib and Isha are in the dark, so their load comes from the grid or a battery. The panels are sized to make the week's average units a day (4.07 kW); panels big enough to carry the whole 5,540 W at Zuhr would need 7.1 kW and make far more units than the mosque uses, sold back at the low buyback rate.",
+     "Zuhr and Asr fall in full sun, so the panels serve those prayers directly. Fajr, Maghrib and Isha are in the dark, so their load comes from the grid or a battery. The panels are sized to make the week's average units a day (4.04 kW); panels big enough to carry the whole 5,472 W at Zuhr would need 7.02 kW and make far more units than the mosque uses, sold back at the low buyback rate.",
      "Do not put every panel in one string. On a cold morning each 585 W panel gives about 55 V open-circuit, so 7 panels in series would be about 388 V; split them into strings that each stay below the inverter's maximum DC input voltage on its datasheet."
     ]
    },
@@ -90,7 +90,7 @@
    },
    {
     "q": "Can a mosque run its ACs on solar?",
-    "a": "In daylight, mostly: Zuhr and Asr fall in full sun, and the panels make the day's units, ACs included; when the 5,540 W running load is more than the panels give at that moment, the grid supplies the rest. Maghrib, Isha and Fajr run from the grid or a battery."
+    "a": "In daylight, mostly: Zuhr and Asr fall in full sun, and the panels make the day's units, ACs included; when the 5,472 W running load is more than the panels give at that moment, the grid supplies the rest. Maghrib, Isha and Fajr run from the grid or a battery."
    },
    {
     "q": "What size solar system does a small shop need?",
@@ -116,7 +116,7 @@
    }
   ],
   "key_facts": [
-   "A small one-hall mosque in Lahore with fans, lights, 1.5 ton inverter ACs, a water pump, a dispenser and a sound system runs about 5,540 W and uses about 16.2 units a day, so it needs about 4.1 kW of solar and an inverter of 3.6 kW.",
+   "A small one-hall mosque in Lahore with fans, lights, 1.5 ton inverter ACs, a water pump, a dispenser and a sound system runs about 5,472 W and uses about 16.1 units a day, so it needs about 4.1 kW of solar and an inverter of 3.6 kW.",
    "A small shop open all day with lights, fans, a deep freezer, a computer, CCTV and Wi-Fi uses about 8.4 units a day and needs about 2.34 kW of solar with an inverter of 2 kW.",
    "Adding a 1.5 ton inverter AC for most of the opening hours to that shop raises the need to about 4.68 kW of solar and an inverter of 3.6 kW.",
    "The mosque and shop load lists on this page are Wattlyst estimates from typical fit-outs, not measurements of any one building; change every row to match yours before you ask for quotes."
@@ -549,8 +549,8 @@
     },
     "water-motor-1hp": {
      "name": "Water pump / donkey motor 1 hp",
-     "running_w": 1000,
-     "starting_w": 2800,
+     "running_w": 932,
+     "starting_w": 2796,
      "typical_hours_per_day": 1,
      "load_type": "motor"
     },
@@ -1427,7 +1427,7 @@
      "spec": "1",
      "unit": "units",
      "label_ur": "Imarat ki rozana energy",
-     "value": "16.2"
+     "value": "16.1"
     },
     {
      "key": "monthly_kwh_estimate",
@@ -1457,7 +1457,7 @@
    ],
    "how": {
     "tpl": "Energy: each appliance's watts × quantity × hours a day (inverter ACs at their average draw), added up = {{out.daily_kwh|1}} units a day; ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW of panels a day for your city = {{out.kw_energy|2}} kW. A grid-tied system is sized by energy: when the {{out.running_w|int}} W running load at Zuhr or at the shop's midday peak is more than the panels give, the grid supplies the rest. {{out.kw|2}} kW needs {{out.panels|int}} panels of {{out.panel_w}} W = {{out.installed_kw|2}} kW, about {{out.monthly_kwh_estimate|int}} units a month. {{out.inverter_text}}",
-    "text": "Energy: each appliance's watts × quantity × hours a day (inverter ACs at their average draw), added up = 16.2 units a day; ÷ 4 units per kW of panels a day for your city = 4.07 kW. A grid-tied system is sized by energy: when the 5,540 W running load at Zuhr or at the shop's midday peak is more than the panels give, the grid supplies the rest. 4.07 kW needs 7 panels of 585 W = 4.1 kW, about 498 units a month. Inverter: an on-grid inverter runs beside the grid, which starts motors and covers any shortfall, so it is sized by the panels: 4.1 kW ÷ 1.3 = at least 3.15 kW, so the on-grid inverter to buy is 3.6 kW; no surge rating is needed."
+    "text": "Energy: each appliance's watts × quantity × hours a day (inverter ACs at their average draw), added up = 16.1 units a day; ÷ 4 units per kW of panels a day for your city = 4.04 kW. A grid-tied system is sized by energy: when the 5,472 W running load at Zuhr or at the shop's midday peak is more than the panels give, the grid supplies the rest. 4.04 kW needs 7 panels of 585 W = 4.1 kW, about 498 units a month. Inverter: an on-grid inverter runs beside the grid, which starts motors and covers any shortfall, so it is sized by the panels: 4.1 kW ÷ 1.3 = at least 3.15 kW, so the on-grid inverter to buy is 3.6 kW; no surge rating is needed."
    },
    "submit": "Calculate",
    "notice": "",
@@ -1493,7 +1493,7 @@
   "examples": [
    {
     "title": "Small mosque, one hall",
-    "text": "6 kinds of load, 5,540 W running, 16.2 units a day: 4.1 kW of solar (7 panels), an inverter of 3.6 kW, about 498 units a month."
+    "text": "6 kinds of load, 5,472 W running, 16.1 units a day: 4.1 kW of solar (7 panels), an inverter of 3.6 kW, about 498 units a month."
    },
    {
     "title": "Larger mosque with main hall and veranda",
@@ -1509,7 +1509,7 @@
    },
    {
     "title": "Small mosque with 2 hours of battery for Maghrib and Isha",
-    "text": "The panels stay at 4.1 kW; the inverter becomes a hybrid of 8 kW with a surge rating of at least 7,340 W, because it carries the mosque in a power cut; the battery must hold 11.1 units, about 285 Ah at 48 V. That assumes the whole list runs after dark; with fans and lights only, the battery is far smaller."
+    "text": "The panels stay at 4.1 kW; the inverter becomes a hybrid of 8 kW with a surge rating of at least 7,336 W, because it carries the mosque in a power cut; the battery must hold 10.9 units, about 282 Ah at 48 V. That assumes the whole list runs after dark; with fans and lights only, the battery is far smaller."
    }
   ],
   "table": {
@@ -1524,7 +1524,7 @@
    ],
    "rows": [
     [
-     "5,540 W running, 16.2 units a day",
+     "5,472 W running, 16.1 units a day",
      "4 units per kW a day",
      "4.1 kW",
      "7 × 585 W",
@@ -1556,7 +1556,7 @@
      "569"
     ],
     [
-     "5,540 W running, 16.2 units a day",
+     "5,472 W running, 16.1 units a day",
      "4.7 units per kW a day",
      "3.51 kW",
      "6 × 585 W",
@@ -1681,7 +1681,7 @@
       "name": "Can a mosque run its ACs on solar?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "In daylight, mostly: Zuhr and Asr fall in full sun, and the panels make the day's units, ACs included; when the 5,540 W running load is more than the panels give at that moment, the grid supplies the rest. Maghrib, Isha and Fajr run from the grid or a battery."
+       "text": "In daylight, mostly: Zuhr and Asr fall in full sun, and the panels make the day's units, ACs included; when the 5,472 W running load is more than the panels give at that moment, the grid supplies the rest. Maghrib, Isha and Fajr run from the grid or a battery."
       }
      },
      {

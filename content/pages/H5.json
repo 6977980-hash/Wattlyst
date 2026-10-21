@@ -23,8 +23,8 @@
    ],
    "default": [
     {
-      "id": "water-motor-1hp",
-      "qty": 1
+     "id": "water-motor-1hp",
+     "qty": 1
     }
    ],
    "hint": "Pick the motor size and set how many hours a day it pumps (a 1 hp donkey pump usually fills an overhead tank in well under an hour). Change the watts if the nameplate gives input watts."
@@ -149,7 +149,7 @@
   {
    "h2": "1 hp motor starting current",
    "p": [
-    "A pump motor starting from rest draws a surge of current until it reaches speed. The appliance data used here puts the surge of a 1 hp water motor at about {{appliance.starting_w|int}} W, nearly three times the running watts, for a second or two. At {{out.volts|int}} V and a {{out.pf|1}} power factor that is {{out.peak_amps|1}} A at start against {{out.amps|1}} A running. A submersible pump of the same size starts harder, at about {{ex.3.out.peak_w|int}} W or {{ex.3.out.peak_amps|1}} A.",
+    "A pump motor starting from rest draws a surge of current until it reaches speed. The appliance data used here puts the surge of a 1 hp water motor at about {{appliance.starting_w|int}} W, nearly three times the running watts, for a second or two. At {{out.volts|int}} V and a {{out.pf|1}} power factor that is {{out.peak_amps|1}} A at start against {{out.amps|1}} A running. This is the surge in watts turned into amps, the figure a UPS, inverter or generator must supply; for the first fraction of a second the motor's locked-rotor current, printed on its nameplate or datasheet, is higher still, which a type C MCB is made to ride through. A submersible pump of the same size starts harder, at about {{ex.3.out.peak_w|int}} W or {{ex.3.out.peak_amps|1}} A.",
     "This surge is why a pump needs its own circuit with a type C MCB rather than the type B breaker used for lights, and why a long, thin cable to a pump in the lawn drops the voltage at start and makes the motor hum and overheat. The [[W3|MCB size]] and [[W2|wire size calculators]] pick the breaker, curve and cable for your motor and cable length."
    ]
   },
@@ -332,7 +332,7 @@
   },
   {
    "q": "What is the starting current of a 1 hp motor?",
-   "a": "About {{out.peak_amps|1}} A at {{out.volts|int}} V for a second or two, from a starting surge of about {{out.peak_w|int}} W, against {{out.amps|1}} A while running. A submersible pump of the same size starts at about {{ex.3.out.peak_amps|1}} A."
+   "a": "About {{out.peak_amps|1}} A at {{out.volts|int}} V for a second or two, from a starting surge of about {{out.peak_w|int}} W, against {{out.amps|1}} A while running. The locked-rotor current in the first instant is higher; take it from the motor's nameplate when choosing a breaker. A submersible pump of the same size starts at about {{ex.3.out.peak_amps|1}} A."
   },
   {
    "q": "Can a UPS run a 1 hp water motor?",

@@ -3066,17 +3066,18 @@
       "items": 16,
       "running_w": 2010,
       "peak_w": 2460,
-      "amps": 10.924,
-      "peak_amps": 13.37,
+      "amps": 9.9758,
+      "peak_amps": 12.2092,
       "daily_kwh": 13.76,
       "monthly_units": 418.579,
       "monthly_rs": 15261.398,
       "within_sanctioned": false,
       "load_pct": 100.5,
-      "largest_w": 1450
+      "largest_w": 1450,
+      "pf": 0.876
     },
     "tolerance": 0.01,
-    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/. 21 Oct 2026 audit Phase 4 WL-231: PF per appliance: VA = 320/0.8 + 120/0.8 (LEDs at pf_mixed) + 120/0.9 + 1450/0.9 = 2,294.4 VA; 2,294.4 ÷ 230 = 9.98 A; overall PF 2010 ÷ 2294.4 = 0.876."
   },
   {
     "calc": "home_load",
@@ -6753,12 +6754,12 @@
     },
     "expected": {
       "circuits_count": 6,
-      "connected_w": 10050,
+      "connected_w": 9982,
       "biggest_breaker_a": 20,
       "biggest_name": "Split AC 2 ton non-inverter"
     },
     "tolerance": 0.001,
-    "note": "N18; each row equals wire_size for that circuit"
+    "note": "N18; each row equals wire_size for that circuit 21 Oct 2026 audit Phase 4 WL-178: water motor 932 W (was 1,000)."
   },
   {
     "calc": "circuit_schedule",
@@ -8294,15 +8295,15 @@
       ],
       "city": "lahore",
       "sanctioned_kw": 4,
-      "backup_w": 1160,
+      "backup_w": 1140,
       "backup_hours": 1
     },
     "expected": {
-      "backup_surge_w": 2960,
+      "backup_surge_w": 3004,
       "standby_option": "Petrol generator 5 kVA"
     },
     "tolerance": 0.01,
-    "note": "Full audit 2026-10-15 WL-96: backup start = 1,160 W + the pump's start step = 2,960 W (the C1 rule); a UPS must carry and start it (rated W ≥ max(load × margin, start)), the 2.4 kVA row is 1,600 W, so the generator: kVA x 0.8 x 1000 >= 2,960 W gives 5 kVA."
+    "note": "Full audit 2026-10-15 WL-96: backup start = 1,160 W + the pump's start step = 2,960 W (the C1 rule); a UPS must carry and start it (rated W ≥ max(load × margin, start)), the 2.4 kVA row is 1,600 W, so the generator: kVA x 0.8 x 1000 >= 2,960 W gives 5 kVA. 21 Oct 2026 audit Phase 4 WL-178: the 1 hp motor is 932 W running, 2,796 W at start (the C5 rule): backup = the whole 1,140 W list, start 1,140 + 1,864 = 3,004 W, still a 5 kVA set."
   },
   {
     "calc": "home_decision",
@@ -10699,5 +10700,40 @@
     },
     "tolerance": 0.01,
     "note": "21 Oct 2026 audit Phase 4 WL-177: (1000 ÷ 0.85 + 30) ÷ 12 = 100.54 A; 201 Ah needed → two 200 Ah strings = 400 Ah: 0.251 C, just above lead-acid 0.25 C."
+  },
+  {
+    "calc": "home_load",
+    "name": "One iron: resistive load at PF 1",
+    "inputs": {
+      "loads": [
+        {
+          "id": "electric-iron"
+        }
+      ]
+    },
+    "expected": {
+      "amps": 4.3478,
+      "pf": 1
+    },
+    "tolerance": 0.001,
+    "note": "21 Oct 2026 audit Phase 4 WL-231: 1000 W ÷ (230 V × 1.0); the old list PF 0.8 gave 5.43 A."
+  },
+  {
+    "calc": "home_load",
+    "name": "An entered PF is used for every row",
+    "inputs": {
+      "loads": [
+        {
+          "id": "electric-iron"
+        }
+      ],
+      "pf": 0.8
+    },
+    "expected": {
+      "amps": 5.4348,
+      "pf": 0.8
+    },
+    "tolerance": 0.001,
+    "note": "21 Oct 2026 audit Phase 4 WL-231."
   }
 ]

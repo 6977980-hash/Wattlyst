@@ -36,14 +36,14 @@
    "url": "/generator/generator-starting-watts-calculator/"
   }
  ],
- "modified": "2026-10-14",
+ "modified": "2026-10-21",
  "content": {
   "intro": "",
   "sections": [
    {
     "h2": "Why only the largest starting surge counts",
     "p": [
-     "A motor draws its big surge for a second or two while it gets up to speed, then settles to its running watts. The chance that two motors start in exactly the same second is small, and you can make it zero by switching them on one after the other. So the generator needs the running watts of everything plus one surge, the biggest. In the default list the 1 hp pump has the biggest jump, which gives 3,840 W.",
+     "A motor draws its big surge for a second or two while it gets up to speed, then settles to its running watts. The chance that two motors start in exactly the same second is small, and you can make it zero by switching them on one after the other. So the generator needs the running watts of everything plus one surge, the biggest. In the default list the 1 hp pump has the biggest jump, which gives 3,836 W.",
      "Adding every starting figure together would size the generator for a moment that never happens and push you to a set one or two sizes larger than you need. The exception is after a power cut, when everything restarts at once; the safe habit is to switch loads on one at a time once the generator is running."
     ]
    },
@@ -57,7 +57,7 @@
    {
     "h2": "Starting watts of an AC",
     "p": [
-     "Non-inverter ACs have the largest starting surge in a home: a 1.5 ton unit starts at about 5,400 W and a 2 ton unit at about 7,200 W. With a fridge, a pump, fans and lights also on, the AC's jump sets a peak of 7,040 W and a 10 kVA generator.",
+     "Non-inverter ACs have the largest starting surge in a home: a 1.5 ton unit starts at about 5,400 W and a 2 ton unit at about 7,200 W. With a fridge, a pump, fans and lights also on, the AC's jump sets a peak of 6,972 W and a 10 kVA generator.",
      "Inverter ACs ramp the compressor up gradually, so their highest draw is their maximum rated input, about 1,900 W for 1.5 ton. In the same house the pump's jump then becomes the largest and the generator drops to 6.5 kVA."
     ]
    },
@@ -91,7 +91,7 @@
    },
    {
     "q": "Do I add the starting watts of all my appliances?",
-    "a": "No. Add all running watts, then only the biggest starting jump. In the default list the pump, the fridge and the washer all have a jump, but only the pump's is added, giving 3,840 W."
+    "a": "No. Add all running watts, then only the biggest starting jump. In the default list the pump, the fridge and the washer all have a jump, but only the pump's is added, giving 3,836 W."
    },
    {
     "q": "How long do starting watts last?",
@@ -106,7 +106,7 @@
    "Generator starting watts = the running watts of everything on + the largest single starting jump; a second motor's surge is not added because two motors almost never start in the same second.",
    "In this site's appliance data non-inverter AC compressors and pump motors start at about 3 times their running watts for a second or two; a non-inverter fridge jumps from 200 W to about 1,200 W.",
    "A 1.5 ton non-inverter AC runs at 1,800 W but starts at about 5,400 W, so on its own it needs a 7.5 kVA generator, while the fridge alone fits the smallest common size, 2.5 kVA.",
-   "In a house with a fridge, a water pump and a non-inverter AC, the AC sets the starting peak (7,040 W); swap it for an inverter AC and the pump sets a much lower peak of 4,890 W."
+   "In a house with a fridge, a water pump and a non-inverter AC, the AC sets the starting peak (6,972 W); swap it for an inverter AC and the pump sets a much lower peak of 4,886 W."
   ],
   "mistakes": [
    "Adding the starting watts of every motor together. Only the largest jump is added to the running total; summing them all oversizes the generator.",
@@ -473,8 +473,8 @@
     },
     "water-motor-1hp": {
      "name": "Water pump / donkey motor 1 hp",
-     "running_w": 1000,
-     "starting_w": 2800,
+     "running_w": 932,
+     "starting_w": 2796,
      "typical_hours_per_day": 1,
      "load_type": "motor"
     },
@@ -1244,7 +1244,7 @@
      "spec": "int",
      "unit": "W",
      "label_ur": "Start par generator ko kitne watts dene honge",
-     "value": "3,840"
+     "value": "3,836"
     },
     {
      "key": "running_w",
@@ -1252,7 +1252,7 @@
      "spec": "int",
      "unit": "W",
      "label_ur": "Kul chalne ke watts",
-     "value": "2,040"
+     "value": "1,972"
     },
     {
      "key": "recommended_kva",
@@ -1273,7 +1273,7 @@
    ],
    "how": {
     "tpl": "Running watts of everything on: {{out.running_w|int}} W. Each motor's jump at start is its starting watts minus its running watts; only the largest jump is added, because one motor starts at a time: {{out.running_w|int}} W + the largest jump = {{out.peak_w|int}} W. The larger of that peak and {{out.running_w|int}} W × {{out.margin|2}} is {{out.sized_w|int}} W; ÷ {{out.pf|2}} ÷ 1,000 = {{out.recommended_kva|up2}} kVA, so {{out.standard_kva|1}} kVA.",
-    "text": "Running watts of everything on: 2,040 W. Each motor's jump at start is its starting watts minus its running watts; only the largest jump is added, because one motor starts at a time: 2,040 W + the largest jump = 3,840 W. The larger of that peak and 2,040 W × 1.25 is 3,840 W; ÷ 0.8 ÷ 1,000 = 4.8 kVA, so 5 kVA."
+    "text": "Running watts of everything on: 1,972 W. Each motor's jump at start is its starting watts minus its running watts; only the largest jump is added, because one motor starts at a time: 1,972 W + the largest jump = 3,836 W. The larger of that peak and 1,972 W × 1.25 is 3,836 W; ÷ 0.8 ÷ 1,000 = 4.8 kVA, so 5 kVA."
    },
    "submit": "Find the starting watts",
    "notice": "",
@@ -1307,11 +1307,11 @@
    },
    {
     "title": "Fridge, pump and a 1.5 ton non-inverter AC with fans and lights",
-    "text": "Running 3,440 W. The fans, the fridge, the pump and the AC all have motors, but only the biggest jump, the AC compressor's, is added: peak 7,040 W, 8.8 kVA, so 10 kVA."
+    "text": "Running 3,372 W. The fans, the fridge, the pump and the AC all have motors, but only the biggest jump, the AC compressor's, is added: peak 6,972 W, 8.72 kVA, so 10 kVA."
    },
    {
     "title": "The same house with a 1.5 ton inverter AC",
-    "text": "Running 3,090 W. The inverter AC has almost no jump, so the pump's start is now the largest: peak 4,890 W, 6.12 kVA, so 6.5 kVA instead of 10 kVA."
+    "text": "Running 3,022 W. The inverter AC has almost no jump, so the pump's start is now the largest: peak 4,886 W, 6.11 kVA, so 6.5 kVA instead of 10 kVA."
    }
   ],
   "table": {
@@ -1373,7 +1373,7 @@
     ]
    ]
   },
-  "answer": "With four fans, ten bulbs, a non-inverter fridge, a 1 hp water motor and a twin-tub washer on, the generator must supply 3,840 W when the pump starts, against 2,040 W running, so 5 kVA. Starting watts = total running watts + the largest single starting jump (starting minus running watts of the biggest motor), not the sum of every surge.",
+  "answer": "With four fans, ten bulbs, a non-inverter fridge, a 1 hp water motor and a twin-tub washer on, the generator must supply 3,836 W when the pump starts, against 1,972 W running, so 5 kVA. Starting watts = total running watts + the largest single starting jump (starting minus running watts of the biggest motor), not the sum of every surge.",
   "formula": {
    "text": "P_peak = Σ (W_run × qty) + max(W_start − W_run); kVA = max(P_run × m, P_peak) ÷ PF ÷ 1000",
    "lines": [
@@ -1426,7 +1426,7 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/generator/generator-starting-watts-calculator/#breadcrumb"
     },
-    "dateModified": "2026-10-14",
+    "dateModified": "2026-10-21",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }
@@ -1495,7 +1495,7 @@
       "name": "Do I add the starting watts of all my appliances?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "No. Add all running watts, then only the biggest starting jump. In the default list the pump, the fridge and the washer all have a jump, but only the pump's is added, giving 3,840 W."
+       "text": "No. Add all running watts, then only the biggest starting jump. In the default list the pump, the fridge and the washer all have a jump, but only the pump's is added, giving 3,836 W."
       }
      },
      {
