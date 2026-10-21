@@ -3,7 +3,7 @@
  * Plugin Name:       Wattlyst Tools
  * Plugin URI:        https://wattlyst.com/
  * Description:       Electricity calculators for Wattlyst (watts, amps, battery, generator, solar, inverter, bill).
- * Version:           0.8.23
+ * Version:           0.8.24
  * Requires at least: 6.4
  * Requires PHP:      8.0
  * Author:            Wattlyst
@@ -13,7 +13,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'WATTLYST_TOOLS_VERSION', '0.8.23' );
+define( 'WATTLYST_TOOLS_VERSION', '0.8.24' );
 define( 'WATTLYST_TOOLS_FILE', __FILE__ );
 define( 'WATTLYST_TOOLS_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WATTLYST_TOOLS_URL', plugin_dir_url( __FILE__ ) );

@@ -212,7 +212,9 @@ function buildContent(c, ctx) {
     Object.assign(ctx, { calc: c.calc, module });
     const fields = (c.fields || []).map((f) => {
       const out = { ...f, default: resolveDefault(f.default, ctx) };
-      if (f.hint) out.hint = text(ctx, f.hint, scope, `field ${f.name} hint`); // {{data.…}} / {{d.…}} placeholders in hints
+      // {{data.…}} / {{d.…}} placeholders in hints and placeholders; a hint may carry [[ID|anchor]] links (WL-162: the ToU bill).
+      if (f.hint) Object.assign(out, withLinks(ctx, f.hint, scope, `field ${f.name} hint`, 'hint'));
+      if (f.placeholder) out.placeholder = text(ctx, f.placeholder, scope, `field ${f.name} placeholder`);
       if (f.options || f.options_from || f.type === 'appliance') out.options = fieldOptions(f, ctx);
       if (f.type === 'loads') {
         const ids = f.catalog === 'all' ? ctx.appliances.items.map((a) => a.id) : f.catalog || [];
@@ -255,6 +257,8 @@ function buildContent(c, ctx) {
       outputs: (c.outputs || []).map((o) => {
         if (o.spec && !isSpec(o.spec)) fail(`${c.id}: output ${o.key} uses unknown format ${o.spec}`);
         const v = result[o.key];
+        // An optional result (N1 spike without last year's units, the next slab above the top band) may be absent: its card starts hidden.
+        if (o.optional && v === undefined) return { ...o, value: '' };
         if (typeof v !== 'number' && typeof v !== 'string' && typeof v !== 'boolean') fail(`${c.id}: output ${o.key} missing from ${c.calc}`);
         if (typeof v === 'boolean' && o.spec !== 'yesno') fail(`${c.id}: output ${o.key} is a flag and needs the yesno format`);
         // Roman Urdu label: the page's own label_ur, else the shared glossary content/labels-ur.json.

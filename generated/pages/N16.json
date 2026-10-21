@@ -37,7 +37,7 @@
    "url": "/bill/ac-bill-calculator/"
   }
  ],
- "modified": "2026-10-15",
+ "modified": "2026-10-21",
  "content": {
   "intro": "",
   "sections": [
@@ -92,7 +92,7 @@
    },
    {
     "q": "Does it work for LESCO, IESCO, MEPCO and other DISCOs?",
-    "a": "Yes. Every DISCO uses the same national domestic tariff; only the FPA differs, and you can enter it from your own bill under Advanced settings."
+    "a": "Yes. Every DISCO uses the same national domestic tariff, and NEPRA sets one FPA for all of them; enter the month's FPA from your own bill under Advanced settings."
    }
   ],
   "key_facts": [
@@ -254,7 +254,13 @@
      "label": "Sanctioned load",
      "unit": "kW",
      "default": 2,
-     "hint": "The kW printed on the bill; most homes are one to five, and a home with an AC needs more than 1 kW. It sets the fixed charge."
+     "hint": "The kW printed on the bill; a home with an AC needs more than 1 kW. It sets the fixed charge. At 5 kW or more the bill is on ToU rates: use the ToU bill calculator.",
+     "l": [
+      {
+       "t": "ToU bill calculator",
+       "u": "/guides/peak-hours-pakistan/"
+      }
+     ]
     },
     {
      "name": "days",
@@ -301,7 +307,7 @@
      "unit": "Rs per unit",
      "placeholder": "From your bill (FPA / FCA)",
      "advanced": true,
-     "hint": "Monthly fuel price adjustment, positive or negative, from the bill. Leave blank if you do not know it. Protected consumers do not pay it."
+     "hint": "Monthly fuel price adjustment, positive or negative, from the bill. Leave blank if you do not know it. Protected homes pay it too; only lifeline bills carry none."
     },
     {
      "name": "gst_pct",
@@ -367,7 +373,7 @@
     {
      "label": "Pakistan electricity tariff (NEPRA notification)",
      "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf",
-     "checked": "2026-10-13"
+     "checked": "2026-10-21"
     },
     {
      "label": "Appliance running and starting watts (Wattlyst appliance data, sources listed on the appliance list page)",
@@ -500,7 +506,7 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/bill/ac-bill-calculator/#breadcrumb"
     },
-    "dateModified": "2026-10-15",
+    "dateModified": "2026-10-21",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }
@@ -585,7 +591,7 @@
       "name": "Does it work for LESCO, IESCO, MEPCO and other DISCOs?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Yes. Every DISCO uses the same national domestic tariff; only the FPA differs, and you can enter it from your own bill under Advanced settings."
+       "text": "Yes. Every DISCO uses the same national domestic tariff, and NEPRA sets one FPA for all of them; enter the month's FPA from your own bill under Advanced settings."
       }
      }
     ]

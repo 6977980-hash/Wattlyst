@@ -54,7 +54,8 @@ for (const p of live.filter((x) => ['tool', 'appliance', 'guide', 'pillar', 'hom
       assert.ok(c.faq.length >= 5, 'at least 5 FAQs on a tool page');
       if (['B', 'C', 'D', 'W'].includes(p.silo)) assert.ok(/licensed electrician/i.test(c.safety || ''), 'safety note naming a licensed electrician');
       for (const f of c.tool.fields) assert.ok(f.label, `field ${f.name} has a label`);
-      for (const o of c.tool.outputs) assert.ok(o.value !== '' && !/NaN|Infinity|-/.test(o.value) || o.spec === 'raw', `${o.key} default value "${o.value}"`);
+      // An optional output (absent for some inputs) may start empty; its card is then hidden (render: wl-result hidden).
+      for (const o of c.tool.outputs) assert.ok((o.value !== '' || o.optional) && !/NaN|Infinity|-/.test(o.value) || o.spec === 'raw', `${o.key} default value "${o.value}"`);
     }
   });
 }

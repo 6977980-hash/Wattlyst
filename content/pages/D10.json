@@ -34,7 +34,7 @@
    "label": "Sanctioned load",
    "unit": "kW",
    "default": 4,
-   "hint": "From your bill; 5 kW and above is billed on a ToU meter which this tool does not cover."
+   "hint": "From your bill. A connection of {{d.tou_threshold_kw|int}} kW or more is billed on peak and off-peak (ToU) rates, which this tool does not cover: price its imports with the [[F13|ToU bill calculator]]."
   },
   {
    "name": "protected",

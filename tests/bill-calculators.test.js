@@ -23,7 +23,7 @@ test('MF-01 (WL-109): printed bill lines add up to the printed total on every F 
     c.examples.forEach((e, k) => {
       if (!/fixed charge/.test(e.text) || /lifeline/.test(e.title)) return;
       const g = (re) => { const x = re.exec(e.text); return x ? n(x[1]) : null; };
-      const en = g(/(?:= |[Ee]nergy charge )(Rs [\d,]+)/), fx = g(/fixed charge (Rs [\d,]+)/), fc = g(/FC surcharge (Rs [\d,]+)/), qta = g(/QTA[a-zA-Z ]*? (Rs -?[\d,]+)/), gst = g(/GST (Rs [\d,]+)/), fpa = g(/FPA[a-zA-Z ]*? (Rs -?[\d,]+)/);
+      const en = g(/(?:= |[Ee]nergy charge )(Rs [\d,]+)/), fx = g(/fixed charge (Rs [\d,]+)/), fc = g(/FC surcharge (Rs [\d,]+)/), qta = g(/QTA[a-zA-Z ]*? (Rs -?[\d,]+)/), gst = g(/GST (Rs [\d,]+)/), fpa = g(/F(?:P|C)A[a-zA-Z ]*? (Rs -?[\d,]+)/);
       if ([en, fx, fc, gst].includes(null) || /subtotal/i.test(e.text)) return;
       const parts = [en, fx, fc, qta ?? 0, fpa ?? 0, gst];
       const tot = /(?:Estimated (?:\w+ )*bill) (Rs [\d,]+)/.exec(e.text);
@@ -132,7 +132,7 @@ test('WL-116: every 300-unit bill answer names its kW and FPA basis; the home pa
     const a = page(id).answer;
     if (!/\b300 units\b/.test(a)) continue;
     assert.match(a, /\d kW connection/, id);
-    assert.match(a, /(before the month's (FPA|FCA)|FPA added from your bill|FPA from your bill)/, id);
+    assert.match(a, /(before the month's (FPA|FCA)|FPA added from your bill|FPA from your bill|the [A-Z][a-z]+ \d{4} (FPA|FCA))/, id);
   }
   const h1 = JSON.stringify(page('H1'));
   assert.doesNotMatch(h1, /no two pages can disagree/);
@@ -143,8 +143,9 @@ test('WL-117: F1 and every DISCO page explain the top-slab cliff with the engine
     const c = page(id);
     const kf = c.key_facts.find((t) => /one unit more moves all of them to the top slab/.test(t));
     assert.ok(kf, id);
-    const kw = n(c.tool.fields.find((f) => f.name === 'sanctioned_kw').default);
-    const at = (units) => C.bill_total({ units, sanctioned_kw: kw }, data).total_rs;
+    // The page's own default inputs (sanctioned load, quarter and, since WL-229, the pre-filled FPA).
+    const dflt = Object.fromEntries(c.tool.fields.filter((f) => f.default !== undefined).map((f) => [f.name, f.default]));
+    const at = (units) => C.bill_total({ ...dflt, units, protected: false, lifeline: false }, data).total_rs;
     const edge = data.tariff.unprotected.at(-2).upto;
     assert.ok(kf.includes(`adds ${fmt(at(edge + 1) - at(edge), 'rs')} `), `${id}: ${kf}`);
   }

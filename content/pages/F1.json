@@ -20,7 +20,7 @@
    "label": "Sanctioned load",
    "unit": "kW",
    "default": "@default_sanctioned_kw",
-   "hint": "The kW printed on the bill; most homes are one to five. It sets the fixed charge."
+   "hint": "The kW printed on the bill; most homes are one to five. It sets the fixed charge. A connection of {{d.tou_threshold_kw|int}} kW or more is billed on peak and off-peak (ToU) rates instead: use the [[F13|ToU bill calculator]]."
   },
   {
    "name": "protected",
@@ -50,25 +50,25 @@
    "name": "fc_surcharge_per_unit",
    "label": "FC surcharge",
    "unit": "Rs per unit",
-   "default": "@data.tariff.addons_secondary.fc_surcharge_per_unit.value",
    "advanced": true,
-   "hint": "Financing cost surcharge per unit, from your bill. Secondary-source default; change it if your bill differs."
+   "hint": "Financing cost surcharge per unit, from your bill. Secondary-source default; change it if your bill differs.",
+   "placeholder": "Blank = {{data.tariff.addons_secondary.fc_surcharge_per_unit.value|rs2}} per unit (none on lifeline)"
   },
   {
    "name": "fpa_per_unit",
    "label": "FPA / FCA",
    "unit": "Rs per unit",
-   "placeholder": "From your bill (FPA / FCA)",
    "advanced": true,
-   "hint": "Monthly fuel price adjustment, positive or negative, from the bill. Leave blank if you do not know it."
+   "hint": "Pre-filled with the latest NEPRA-verified fuel adjustment, the one for {{data.fpa_latest.fpa_for}} charged on {{data.fpa_latest.label}} bills. {{data.fpa_newest.note}} Replace it with the FPA rate printed on your bill (negative is a credit). Protected homes pay it too; lifeline bills carry none.",
+   "default": "@data.fpa_latest.fpa_per_unit"
   },
   {
    "name": "gst_pct",
    "label": "GST",
    "unit": "%",
-   "default": "@data.tariff.addons_secondary.gst_pct.value",
    "advanced": true,
-   "hint": "Sales tax applied to the bill subtotal."
+   "hint": "Sales tax applied to the bill subtotal.",
+   "placeholder": "Blank = {{data.tariff.addons_secondary.gst_pct.value|int}}% (none on lifeline)"
   }
  ],
  "outputs": [
@@ -98,13 +98,30 @@
    "spec": "rs"
   },
   {
+   "key": "fpa_rs",
+   "label": "FPA (fuel price adjustment)",
+   "spec": "rs"
+  },
+  {
    "key": "gst_rs",
    "label": "GST",
    "spec": "rs"
+  },
+  {
+   "key": "next_units",
+   "label": "This slab ends at (units)",
+   "spec": "int",
+   "optional": true
+  },
+  {
+   "key": "next_rs",
+   "label": "One unit past that limit adds",
+   "spec": "rs",
+   "optional": true
   }
  ],
- "answer": "An unprotected home using {{in.units|int}} units a month on a {{in.sanctioned_kw|int}} kW connection pays about {{out.total_rs|rs}}: {{out.energy_rs|rs}} in energy charges at {{out.rate|rs2}} per unit, plus the fixed charge, FC surcharge, QTA and {{out.gst_pct|int}}% GST, before the month's FPA. Bill = units × slab rate + fixed charge + surcharges, then GST on the subtotal.",
- "how": "Energy: {{out.units}} units × {{out.rate|rs2}} (the {{out.category}} rate of the slab reached) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge = {{out.fc_rs|rs}}, QTA = {{out.qta_rs|rs}}, FPA = {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}}; GST at {{out.gst_pct}}% = {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}.",
+ "answer": "An unprotected home using {{in.units|int}} units a month on a {{in.sanctioned_kw|int}} kW connection pays about {{out.total_rs|rs}}: {{out.energy_rs|rs}} in energy charges at {{out.rate|rs2}} per unit, plus the fixed charge, FC surcharge, QTA, the {{data.fpa_latest.fpa_for}} FPA and {{out.gst_pct|int}}% GST. Bill = units × slab rate + fixed charge + surcharges, then GST on the subtotal.",
+ "how": "Energy ({{out.category}}): {{out.energy_calc}} = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge = {{out.fc_rs|rs}}, QTA = {{out.qta_rs|rs}}, FPA = {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}}; GST at {{out.gst_pct}}% = {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}.",
  "key_facts": [
   "An unprotected consumer pays the rate of the slab the monthly total reaches on every unit: {{out.units|int}} units are all charged at {{out.rate|rs2}}, giving {{out.energy_rs|rs}} in energy charges.",
   "A protected consumer is billed slab-wise with the benefit of the lower slab, and the category needs every one of the last {{d.protected_months|int}} months at or under {{d.protected_max_units|int}} units.",
@@ -128,7 +145,7 @@
   {
    "h2": "How does this electricity bill calculator work?",
    "p": [
-    "The calculator applies the NEPRA uniform A-1 domestic tariff for 2026, notified by the Government as SRO 279(I)/2026, which every DISCO ([[F2|LESCO]], [[F3|IESCO]], [[F5|GEPCO]], [[F6|FESCO]], [[F4|MEPCO]], [[F7|PESCO]], [[F8|HESCO]], [[F9|SEPCO]], [[F10|QESCO]], [[F11|TESCO]]) and [[F12|K-Electric]] charges; each name opens that company's own bill calculator. Enter your units, the sanctioned load from your bill and your category, and it shows the energy charge, fixed charge, FC surcharge, QTA and GST as separate lines, the way the bill prints them.",
+    "The calculator applies the NEPRA uniform A-1 domestic tariff for 2026, notified by the Government as SRO 279(I)/2026, which every DISCO ([[F2|LESCO]], [[F3|IESCO]], [[F5|GEPCO]], [[F6|FESCO]], [[F4|MEPCO]], [[F7|PESCO]], [[F8|HESCO]], [[F9|SEPCO]], [[F10|QESCO]], [[F11|TESCO]]) and [[F12|K-Electric]] charges; each name opens that company's own bill calculator. Enter your units, the sanctioned load from your bill and your category, and it shows the energy charge, fixed charge, FC surcharge, QTA, FPA and GST as separate lines, the way the bill prints them.",
     "The energy and fixed rates were verified from the NEPRA tariff PDF. The FC surcharge, QTA, FPA and GST are from secondary sources, change monthly or quarterly, and whether GST and the FC surcharge apply to lifeline and protected bills in exactly this way is still being verified; copy those lines from your own bill into the advanced fields for a closer match."
    ]
   },
@@ -149,13 +166,13 @@
   {
    "h2": "What is the bill for 200 units (LESCO or any DISCO)?",
    "p": [
-    "A {{d.protected_max_units|int}} unit bill depends almost entirely on the category. Protected, the units are billed slab-wise at the two protected rates; unprotected, all of them are at the second unprotected slab rate. The two worked examples below give both totals with the same fixed charge, surcharges and GST, and the reference table lists them side by side. For the typical bill at every step of units in every DISCO, see the [[bill-index|Pakistan Bill Index for this month]]."
+    "A {{d.protected_max_units|int}} unit bill depends almost entirely on the category. Protected, the units are billed slab-wise at the two protected rates; unprotected, all of them are at the second unprotected slab rate. The two worked examples below give both totals with the same fixed charge, surcharges and GST, and the reference table lists them side by side. For the typical bill at every step of units in every DISCO, see the [[bill-index|Pakistan Bill Index for this month]]; it prices every bill on a {{data.bill_index.sanctioned_kw|int}} kW sanctioned load, so its totals differ from a bill on another load."
    ]
   },
   {
    "h2": "What is the bill for 300 units?",
    "p": [
-    "{{out.units|int}} units is the default above: all units at {{out.rate|rs2}} = {{out.energy_rs|rs}}, plus {{out.fixed_rs|rs}} fixed charge for {{out.sanctioned_kw|int}} kW, {{out.fc_rs|rs}} FC surcharge, {{out.qta_rs|rs}} QTA and {{out.gst_rs|rs}} GST, for about {{out.total_rs|rs}}. One unit over {{out.units|int}} moves every unit to the next slab, so {{out.units|int}} units is a line worth staying under."
+    "{{out.units|int}} units is the default above: all units at {{out.rate|rs2}} = {{out.energy_rs|rs}}, plus {{out.fixed_rs|rs}} fixed charge for {{out.sanctioned_kw|int}} kW, {{out.fc_rs|rs}} FC surcharge, {{out.qta_rs|rs}} QTA, {{out.fpa_rs|rs}} FPA and {{out.gst_rs|rs}} GST, for about {{out.total_rs|rs}}. One unit over {{out.units|int}} moves every unit to the next slab, so {{out.units|int}} units is a line worth staying under."
    ]
   }
  ],
@@ -166,7 +183,7 @@
     "protected": true
    },
    "title": "{{in.units|int}} units, protected consumer",
-   "text": "Energy charge {{out.energy_rs|rs}} billed slab-wise at protected rates, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}."
+   "text": "Energy charge {{out.energy_rs|rs}} billed slab-wise at protected rates, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, FPA {{out.fpa_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}."
   },
   {
    "inputs": {
@@ -174,14 +191,14 @@
     "protected": false
    },
    "title": "{{in.units|int}} units, unprotected consumer",
-   "text": "The same {{out.units|int}} units at the unprotected rate of {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}, about double the protected bill."
+   "text": "The same {{out.units|int}} units at the unprotected rate of {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, FPA {{out.fpa_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}, about double the protected bill."
   },
   {
    "inputs": {
     "units": 300
    },
    "title": "{{in.units|int}} units, unprotected",
-   "text": "{{out.units|int}} units × {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}."
+   "text": "{{out.units|int}} units × {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, FPA {{out.fpa_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}."
   },
   {
    "inputs": {
@@ -189,7 +206,7 @@
     "sanctioned_kw": 2
    },
    "title": "{{in.units|int}} units on a {{in.sanctioned_kw|int}} kW connection",
-   "text": "A summer bill with an AC: {{out.units|int}} units × {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}."
+   "text": "A summer bill with an AC: {{out.units|int}} units × {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, FPA {{out.fpa_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}."
   },
   {
    "inputs": {
@@ -199,11 +216,11 @@
     "gst_pct": ""
    },
    "title": "{{in.units|int}} units, lifeline consumer",
-   "text": "A lifeline consumer using {{out.units|int}} units pays {{out.rate|rs2}} per unit = {{out.energy_rs|rs}} with no fixed charge and no QTA. With the FC surcharge and GST fields left blank the calculator assumes neither applies to lifeline bills, which is still being verified, so the estimated bill is {{out.total_rs|rs}}."
+   "text": "A lifeline consumer using {{out.units|int}} units pays {{out.rate|rs2}} per unit = {{out.energy_rs|rs}} with no fixed charge, no QTA and no FPA. With the FC surcharge and GST fields left blank the calculator assumes neither applies to lifeline bills, which is still being verified, so the estimated bill is {{out.total_rs|rs}}."
   }
  ],
  "table": {
-  "caption": "Estimated monthly bill by units for a {{in.sanctioned_kw|int}} kW connection with the default FC surcharge, QTA and GST (unprotected unless marked)",
+  "caption": "Estimated monthly bill by units for a {{in.sanctioned_kw|int}} kW connection with the default FC surcharge, QTA and GST and the {{data.fpa_latest.fpa_for}} FPA (unprotected unless marked)",
   "rows": [
    {
     "units": 100
@@ -254,7 +271,7 @@
  "mistakes": [
   "Billing slab-wise as an unprotected consumer. Unprotected bills charge every unit at the rate of the slab the total reaches, so one extra unit can raise the whole bill.",
   "Ticking protected because this month is low. Protection needs all of the last six months under the limit; the bill prints the category.",
-  "Leaving out the FPA. The monthly fuel adjustment can be a large positive or negative line; copy it from the bill into the advanced field.",
+  "Keeping the pre-filled FPA when your bill shows a different one. The monthly fuel adjustment can be a large positive or negative line; copy your bill's rate into the advanced field.",
   "Using an old fixed charge. The fixed charge is per kW of sanctioned load and steps up with the slab, so a higher-usage month also pays a higher fixed charge.",
   "Reading the estimate as the exact bill. Surcharge, QTA, FPA and tax values change monthly and some are from secondary sources; the estimate is for planning and for checking a bill that looks wrong."
  ],
@@ -265,7 +282,7 @@
   },
   {
    "q": "Does this bill calculator work for every DISCO in Pakistan?",
-   "a": "Yes. LESCO, IESCO, GEPCO, FESCO, MEPCO, PESCO, HESCO, SEPCO, QESCO, TESCO and K-Electric all charge the same uniform domestic tariff; only the monthly FPA line can differ, and you can enter it."
+   "a": "Yes. LESCO, IESCO, GEPCO, FESCO, MEPCO, PESCO, HESCO, SEPCO, QESCO, TESCO and K-Electric all charge the same uniform domestic tariff; NEPRA sets one FPA for all of them as well, so the same units give the same estimate; real bills differ only by billing days, arrears and local items."
   },
   {
    "q": "Is there a WAPDA bill calculator?",

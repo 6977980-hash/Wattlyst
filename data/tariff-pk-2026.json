@@ -2,7 +2,7 @@
  "_meta": {
   "source": "NEPRA decision 11 Feb 2026, notified SRO 279(I)/2026 on 12 Feb 2026 (A-1 domestic, uniform for CY2026)",
   "source_url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf",
-  "checked": "2026-10-13",
+  "checked": "2026-10-21",
   "status": "energy and fixed rates verified from NEPRA PDF via research; add-ons below are secondary sources and must be re-checked monthly",
   "rules": "Protected: benefit of one previous slab. Unprotected: all units at the rate of the band reached. Fixed charge = Rs/kW/month x sanctioned kW. >=5 kW must be ToU."
  },
@@ -109,8 +109,11 @@
   },
   "fpa_per_unit": {
    "value": null,
-   "note": "Changes monthly and is not applied by default (a blank field = 0). The monthly FPA history lives only in data/bill-index.json (months[].fpa_per_unit); pages that explain the FPA pre-fill its newest NEPRA-verified month (build: data.fpa_latest; audit WL-13). Not charged to lifeline, protected, EV charging station and prepaid consumers (NEPRA review decision on the March 2026 FCA, SRO 852(I)/2026).",
+   "note": "Changes monthly. The monthly FPA history lives only in data/bill-index.json (months[].fpa_per_unit); pages that explain the FPA and the bill calculators F1 to F12 pre-fill its newest NEPRA-verified month (build: data.fpa_latest; audit WL-13, WL-229), every other caller leaves it at 0 when blank. NEPRA's FCA orders charge it to every consumer category except lifeline, EV charging stations and prepaid (July 2026 order para 21(a); March 2026 notification para 4(a)). The March 2026 review decision (SRO 852(I)/2026) added protected consumers for that one month only (a negative FCA), so it is not a standing exemption (audit WL-157).",
    "verified": true,
+   "exempt": ["lifeline"],
+   "exempt_note": "Consumer categories the bill engine does not charge the FPA (engine/bill.js addOns). Only lifeline among the categories the engine models; EV charging stations and prepaid consumers are also exempt, but the calculators do not model them. A data/bill-index.json month can carry its own list (fpa_exempt) when an order differs.",
+   "exempt_source": "NEPRA decision on the fuel charges adjustment for July 2026, SRO 1499(I)/2026, para 21(a): applicable to all consumer categories of K-Electric and ex-WAPDA DISCOs except lifeline consumers, EVCS and prepaid consumers (checked 2026-10-21): https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20MFPA%20FOR%20THE%20MONTH%20OF%20JULY%202026%20EX-WAPDA%20DISCOS%2004-09-2026%2018342-60.PDF",
    "min": -15,
    "max": 15,
    "range_note": "Input bound only (audit WL-118): a sanity range wider than any monthly FCA NEPRA has notified for domestic consumers (the largest, Rs 9.90 per unit for June 2022, was charged in August 2022 bills). A value outside it is almost certainly a typing mistake (for example the bill's FPA amount in rupees instead of the rate per unit). Widen it if NEPRA ever notifies a larger adjustment.",

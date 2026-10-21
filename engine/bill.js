@@ -1,5 +1,6 @@
 // F. Pakistan A-1 domestic bill (specs/formulas.md section F). All rates come from data/tariff-pk-2026.json.
 import { calculator, CalcError, bool, has, num, pos, nonneg, dflt } from './core.js';
+import { fmt } from './format.js';
 
 function tariffOf(d) {
   const t = d?.tariff;
@@ -62,29 +63,15 @@ export const bill_energy = calculator((i, d) => {
   return { units, sanctioned_kw, category, ...energyCharge(t, units, category, sanctioned_kw) };
 });
 
-/** ToU (≥ 5 kW): peak × peak rate + off-peak × off-peak rate; fixed = Rs/kW × max(fixed_min_fraction × sanctioned, MDI). */
-export const bill_tou = calculator((i, d) => {
-  const t = tariffOf(d).tou;
-  const peak_units = nonneg(i, 'peak_units');
-  const offpeak_units = nonneg(i, 'offpeak_units');
-  const sanctioned_kw = pos(i, 'sanctioned_kw');
-  const mdi_kw = nonneg(i, 'mdi_kw', 0);
-  if (!(t.fixed_min_fraction > 0)) throw new CalcError('tariff_data_missing', 'tariff');
-  const billable_kw = Math.max(t.fixed_min_fraction * sanctioned_kw, mdi_kw);
-  const energy_rs = peak_units * t.peak + offpeak_units * t.offpeak;
-  return { peak_units, offpeak_units, units: peak_units + offpeak_units, sanctioned_kw, mdi_kw, billable_kw, energy_rs, fixed_rs: t.fixed_per_kw * billable_kw };
-});
-
 /**
- * Full estimate: energy + fixed + FC surcharge + QTA + FPA, then GST on that subtotal.
+ * Add-on lines on top of energy + fixed: FC surcharge + QTA + FPA, then GST on that subtotal (flat and ToU bills alike).
  * Add-on rates are inputs; a blank field uses data/tariff-pk-2026.json addons_secondary (FC surcharge, GST,
  * QTA for the given `period` like "2026-09..2026-11", FPA value when notified, else 0). Each line is shown with source/date.
- * QTA is not applied to lifeline. FPA (monthly fuel charges adjustment) is not applied to lifeline or
- * protected consumers (NEPRA exempts them, SRO 852(I)/2026); the per-unit rates are echoed for page text.
- * QTA/FPA may be negative (a credit).
+ * QTA is not applied to lifeline. FPA (monthly fuel charges adjustment) is not charged to the categories NEPRA's FCA
+ * order exempts: input `fpa_exempt` (a month's list from data/bill-index.json), else addons_secondary.fpa_per_unit.exempt
+ * (WL-157: lifeline only among the categories modelled; protected homes pay it). QTA/FPA may be negative (a credit).
  */
-function billLines(i, d) {
-  const base = bill_energy.raw(i, d);
+function addOns(base, i, d) {
   const a = tariffOf(d).addons_secondary || {};
   // Lifeline: FC surcharge and GST defaults are 0 until confirmed on a lifeline bill [VERIFY]; the user can still enter them.
   const life = base.category === 'lifeline';
@@ -97,30 +84,79 @@ function billLines(i, d) {
   // FPA bounded by the range NEPRA has notified (data/tariff-pk-2026.json addons_secondary.fpa_per_unit.min/max, WL-118).
   const fpa = num(i, 'fpa_per_unit', { def: a.fpa_per_unit?.value ?? 0, min: a.fpa_per_unit?.min, max: a.fpa_per_unit?.max });
   const gst_pct = num(i, 'gst_pct', { def: life ? 0 : a.gst_pct?.value ?? 0, min: 0, max: 100 });
+  const exempt = Array.isArray(i.fpa_exempt) ? i.fpa_exempt : a.fpa_per_unit?.exempt || [];
   // A bill prints whole rupees: each line is rounded, the subtotal is the sum of the printed lines and GST is
   // rounded on that subtotal, so the printed lines always add up to the printed total (WL-109).
   const R = Math.round;
   const energy_rs = R(base.energy_rs), fixed_rs = R(base.fixed_rs);
   const fc_rs = R(fc * base.units);
-  const qta_rs = base.category === 'lifeline' ? 0 : R(qta * base.units);
-  const fpa_exempt = base.category !== 'unprotected';
+  const qta_rs = life ? 0 : R(qta * base.units);
+  const fpa_exempt = exempt.includes(base.category);
   const fpa_rs = fpa_exempt ? 0 : R(fpa * base.units);
   const subtotal_rs = Math.max(0, energy_rs + fixed_rs + fc_rs + qta_rs + fpa_rs);
   const gst_rs = R((subtotal_rs * gst_pct) / 100);
+  return { energy_rs, fixed_rs, fc_surcharge_per_unit: fc, qta_per_unit: qta, fpa_per_unit: fpa, fpa_exempt, fc_rs, qta_rs, fpa_rs, subtotal_rs, gst_pct, gst_rs, total_rs: subtotal_rs + gst_rs };
+}
+
+const SIGNED = ['qta_rs', 'fpa_rs', 'qta_per_unit', 'fpa_per_unit'];
+
+/**
+ * ToU (≥ 5 kW): peak × peak rate + off-peak × off-peak rate; fixed = Rs/kW × max(fixed_min_fraction × sanctioned, MDI);
+ * then the same add-on lines and GST as the flat bill (WL-162), category 'tou' (not FPA-exempt).
+ */
+export const bill_tou = calculator((i, d) => {
+  const t = tariffOf(d).tou;
+  const peak_units = nonneg(i, 'peak_units');
+  const offpeak_units = nonneg(i, 'offpeak_units');
+  const sanctioned_kw = pos(i, 'sanctioned_kw');
+  const mdi_kw = nonneg(i, 'mdi_kw', 0);
+  if (!(t.fixed_min_fraction > 0)) throw new CalcError('tariff_data_missing', 'tariff');
+  const billable_kw = Math.max(t.fixed_min_fraction * sanctioned_kw, mdi_kw);
+  const units = peak_units + offpeak_units;
+  const base = { units, category: 'tou', energy_rs: peak_units * t.peak + offpeak_units * t.offpeak, fixed_rs: t.fixed_per_kw * billable_kw };
+  return { peak_units, offpeak_units, sanctioned_kw, mdi_kw, billable_kw, ...addOns(base, i, d), units, category: 'tou', energy_calc: `${fmt(peak_units)} × ${fmt(t.peak, 'rs2')} + ${fmt(offpeak_units)} × ${fmt(t.offpeak, 'rs2')}` };
+}, { allowNegative: SIGNED });
+
+/** Full flat (non-ToU) estimate: energy + fixed (bill_energy) + add-on lines (addOns). */
+function billLines(i, d) {
+  const base = bill_energy.raw(i, d);
   // Average energy rate per unit: a protected bill is charged slab by slab, so its average is below the top slab's rate (WL-114).
   const avg_rate = base.units > 0 ? base.energy_rs / base.units : base.rate;
-  return { ...base, energy_rs, fixed_rs, avg_rate, fc_surcharge_per_unit: fc, qta_per_unit: qta, fpa_per_unit: fpa, fpa_exempt, fc_rs, qta_rs, fpa_rs, subtotal_rs, gst_pct, gst_rs, total_rs: subtotal_rs + gst_rs };
+  // The energy sum as the bill works it out (WL-164): one "units × rate" part per protected slab used, else one part.
+  const t = tariffOf(d)[base.category];
+  const parts = [];
+  if (base.category === 'protected') {
+    let prev = 0;
+    for (let k = 0; k <= base.band_index; k++) {
+      const top = Math.min(base.units, t[k].upto);
+      if (top > prev || k === base.band_index) parts.push(`${fmt(top - prev)} × ${fmt(t[k].rate, 'rs2')}`);
+      prev = top;
+    }
+  } else parts.push(`${fmt(base.units)} × ${fmt(base.rate, 'rs2')}`);
+  return { ...base, ...addOns(base, i, d), avg_rate, energy_calc: parts.join(' + ') };
 }
 
 export const bill_total = calculator((i, d) => {
   const out = billLines(i, d);
+  const bands = tariffOf(d).unprotected;
+  const flat = { ...i, protected: false, lifeline: false };
+  const at = (units, inp = flat) => billLines({ ...inp, units }, d).total_rs;
   // Top-slab cliff for page text (WL-117): one unit past the last closed unprotected band moves every unit to the
   // open-ended rate; same sanctioned load and add-ons as this bill.
-  const bands = tariffOf(d).unprotected;
   const edge = bands[bands.length - 2].upto;
-  const at = (units) => billLines({ ...i, units, protected: false, lifeline: false }, d).total_rs;
-  return { ...out, cliff_units: edge, cliff_rs: at(edge + 1) - at(edge) };
-}, { allowNegative: ['qta_rs', 'fpa_rs', 'qta_per_unit', 'fpa_per_unit', 'cliff_rs'] });
+  const res = { ...out, cliff_units: edge, cliff_rs: at(edge + 1) - at(edge) };
+  // Next slab cliff (WL-165): the limit of the band this bill reached and what one unit past it adds. Unprotected: the
+  // next band's rate on every unit; protected: the next protected slab, or past the protected limit an unprotected bill.
+  // None at the top band or for lifeline.
+  if (out.category === 'protected') {
+    const top = out.band_upto;
+    const past = top < tariffOf(d).protected.at(-1).upto ? i : flat;
+    Object.assign(res, { next_units: top, next_rs: at(top + 1, past) - at(top, i) });
+  } else if (out.category === 'unprotected' && !out.band_open_ended) {
+    Object.assign(res, { next_units: out.band_upto, next_rs: at(out.band_upto + 1) - at(out.band_upto) });
+  }
+  return res;
+}, { allowNegative: [...SIGNED, 'cliff_rs', 'next_rs'] });
 
 /** Protected: last 6 months each ≤ 200 units, not ToU, sanctioned < 5 kW. */
 export const protected_check = calculator((i, d) => {

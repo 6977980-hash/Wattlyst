@@ -36,7 +36,7 @@
    "unit": "units",
    "placeholder": "Optional, from last year's bill",
    "advanced": true,
-   "hint": "If you have last year's bill for the same month, enter its units; a jump of more than half is worth a meter check."
+   "hint": "If you have last year's bill for the same month, enter its units; a jump of more than {{d.spike_threshold|pct}} shows as a spike in the results and is worth a meter check."
   }
  ],
  "outputs": [
@@ -69,6 +69,12 @@
    "key": "fair_rs",
    "label": "Energy + fixed at the normal-month slab",
    "spec": "rs"
+  },
+  {
+   "key": "spike",
+   "label": "Units far above the same month last year?",
+   "spec": "yesno",
+   "optional": true
   }
  ],
  "answer": "This electricity bill overbilling check converts the units on your bill to a normal thirty-day month (units × thirty ÷ days between readings) and recomputes the slab. A bill of {{in.units|int}} units read after {{in.days|int}} days is {{out.units_30|int}} units a month; billed at the higher slab it carries about {{out.extra_rs|rs}} more in energy and fixed charge than the normal-month slab would. An estimate, not an official finding.",
@@ -108,7 +114,7 @@
    "h2": "Signs of a wrong electricity bill",
    "p": [
     "Readings: the present reading on the bill should match the meter; photograph the meter on the reading date. A reading far above the meter is a plain error. Cycle: more than {{d.max_normal_cycle_days|int}} days between readings is a long cycle; the check above shows what it cost. Slab: compare the rate on the bill with the slab the units should reach. Protected status: if your last {{d.protected_months|int}} bills were all at or under {{d.protected_max_units|int}} units and the category has changed, ask why.",
-    "FPA and QTA: both lines should equal the notified per-unit rate for the month times your units; protected and lifeline consumers should see no FPA at all. Spike: if the units are more than half above the same month last year with no new appliance, ask for a meter accuracy test. Enter last year's units under advanced settings and the check flags the spike. Total: compare it with the [[bill-index|typical bill for your units]] in the monthly Bill Index."
+    "FPA and QTA: both lines should equal the notified per-unit rate for the month times your units; protected homes pay the FPA too, and only a lifeline bill should carry none. Spike: if the units are more than half above the same month last year with no new appliance, ask for a meter accuracy test. Enter last year's units under advanced settings and the check flags the spike. Total: compare it with the [[bill-index|typical bill for your units]] in the monthly Bill Index, which assumes a {{data.bill_index.sanctioned_kw|int}} kW sanctioned load."
    ]
   },
   {

@@ -20,7 +20,7 @@
    "label": "Sanctioned load",
    "unit": "kW",
    "default": 2,
-   "hint": "The kW printed in the connection details of the MEPCO bill. It sets the fixed charge; 5 kW and above is billed on ToU rates instead."
+   "hint": "The kW printed in the connection details of the MEPCO bill. It sets the fixed charge. A connection of {{d.tou_threshold_kw|int}} kW or more is billed on peak and off-peak (ToU) rates instead: use the [[F13|ToU bill calculator]]."
   },
   {
    "name": "protected",
@@ -50,25 +50,25 @@
    "name": "fc_surcharge_per_unit",
    "label": "FC surcharge",
    "unit": "Rs per unit",
-   "default": "@data.tariff.addons_secondary.fc_surcharge_per_unit.value",
    "advanced": true,
-   "hint": "Financing cost surcharge per unit, from the bill. Secondary-source default."
+   "hint": "Financing cost surcharge per unit, from the bill. Secondary-source default.",
+   "placeholder": "Blank = {{data.tariff.addons_secondary.fc_surcharge_per_unit.value|rs2}} per unit (none on lifeline)"
   },
   {
    "name": "fpa_per_unit",
    "label": "FPA",
    "unit": "Rs per unit",
-   "placeholder": "From your bill (FPA / FCA)",
    "advanced": true,
-   "hint": "Monthly fuel price adjustment printed on the MEPCO bill, positive or negative. Leave blank if unknown."
+   "hint": "Pre-filled with the latest NEPRA-verified fuel adjustment, the one for {{data.fpa_latest.fpa_for}} charged on {{data.fpa_latest.label}} bills. {{data.fpa_newest.note}} Replace it with the FPA rate printed on your bill (negative is a credit). Protected homes pay it too; lifeline bills carry none.",
+   "default": "@data.fpa_latest.fpa_per_unit"
   },
   {
    "name": "gst_pct",
    "label": "GST",
    "unit": "%",
-   "default": "@data.tariff.addons_secondary.gst_pct.value",
    "advanced": true,
-   "hint": "Sales tax applied to the bill subtotal."
+   "hint": "Sales tax applied to the bill subtotal.",
+   "placeholder": "Blank = {{data.tariff.addons_secondary.gst_pct.value|int}}% (none on lifeline)"
   }
  ],
  "outputs": [
@@ -98,13 +98,30 @@
    "spec": "rs"
   },
   {
+   "key": "fpa_rs",
+   "label": "FPA (fuel price adjustment)",
+   "spec": "rs"
+  },
+  {
    "key": "gst_rs",
    "label": "GST",
    "spec": "rs"
+  },
+  {
+   "key": "next_units",
+   "label": "This slab ends at (units)",
+   "spec": "int",
+   "optional": true
+  },
+  {
+   "key": "next_rs",
+   "label": "One unit past that limit adds",
+   "spec": "rs",
+   "optional": true
   }
  ],
- "answer": "A MEPCO home in Multan or anywhere in south Punjab using {{in.units|int}} units in a summer month as an unprotected consumer on a {{in.sanctioned_kw|int}} kW connection pays about {{out.total_rs|rs}}: {{out.energy_rs|rs}} energy charge at {{out.rate|rs2}} per unit, plus fixed charge, FC surcharge, QTA and GST, before the month's FPA. MEPCO bill = units × slab rate + fixed charge + surcharges, then GST.",
- "how": "{{out.units}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
+ "answer": "A MEPCO home in Multan or anywhere in south Punjab using {{in.units|int}} units in a summer month as an unprotected consumer on a {{in.sanctioned_kw|int}} kW connection pays about {{out.total_rs|rs}}: {{out.energy_rs|rs}} energy charge at {{out.rate|rs2}} per unit, plus fixed charge, FC surcharge, QTA, the {{data.fpa_latest.fpa_for}} FPA and GST. MEPCO bill = units × slab rate + fixed charge + surcharges, then GST.",
+ "how": "Energy ({{out.category}}): {{out.energy_calc}} = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
  "key_facts": [
   "MEPCO, the Multan Electric Power Company, supplies south Punjab from Multan through zones in Khanewal, Sahiwal, Bahawalpur, Bahawalnagar, Muzaffargarh, Dera Ghazi Khan, Rahim Yar Khan and Vehari, and bills the uniform NEPRA A-1 domestic tariff for 2026 rather than a tariff of its own.",
   "An unprotected MEPCO consumer using {{out.units|int}} units pays {{out.rate|rs2}} on every unit, which is {{out.energy_rs|rs}} of energy charge before the fixed charge, FC surcharge, QTA and GST.",
@@ -141,7 +158,7 @@
   {
    "h2": "What is the FPA line on a MEPCO bill?",
    "p": [
-    "FPA is the fuel price adjustment: a per-unit amount NEPRA sets each month for all ex-WAPDA DISCOs to pass on the difference between the fuel cost assumed in the tariff and the actual cost. It can be a charge or a credit, and it is applied to the units of the month named on the bill. Because it is set after the month ends, it is the one line this calculator cannot know in advance; copy it from the bill into the FPA field under advanced settings.",
+    "FPA is the fuel price adjustment: a per-unit amount NEPRA sets each month for all ex-WAPDA DISCOs to pass on the difference between the fuel cost assumed in the tariff and the actual cost. It can be a charge or a credit, and it is applied to the units of the month named on the bill. Because it is set after the month ends, this calculator pre-fills the latest NEPRA-verified month; copy the current rate from the bill into the FPA field under advanced settings.",
     "GST is charged on the subtotal including the FPA, so a positive FPA also raises the GST line. The fourth worked example shows the effect on {{ex.3.out.units|int}} units."
    ]
   },
@@ -149,7 +166,8 @@
    "h2": "MEPCO bill check vs this MEPCO bill estimate",
    "p": [
     "This page estimates the bill from the units, sanctioned load and category you enter. The official MEPCO bill, with the reference number, due date, arrears and the exact FPA, is on the MEPCO website, which links the online bill check on the PITC portal; enter the reference number from the top of any earlier bill there. Use the estimate to see what each printed line should be and to plan the summer months.",
-    "If a bill looks too high, compare its units with the reading dates first: a cycle longer than a month can push the units into a higher slab. The [[N1|bill audit tool]] checks that for you. Every bill also carries an FPA line; see [[F14|what the FPA line on your bill means]]. A home on a time-of-use meter can check the [[F13|peak hours for MEPCO]]."
+    "If a bill looks too high, compare its units with the reading dates first: a cycle longer than a month can push the units into a higher slab. The [[N1|bill audit tool]] checks that for you. Every bill also carries an FPA line; see [[F14|what the FPA line on your bill means]]. A home on a time-of-use meter can check the [[F13|peak hours for MEPCO]].",
+    "The south Punjab districts around Multan, run through zones in Multan, Khanewal, Sahiwal, Bahawalpur, Bahawalnagar, Muzaffargarh, Dera Ghazi Khan, Rahim Yar Khan and Vehari. If your bill carries another company's name, use that company's calculator."
    ]
   }
  ],
@@ -161,14 +179,14 @@
     "sanctioned_kw": 1
    },
    "title": "{{in.units|int}} units, protected consumer in a winter month",
-   "text": "Fans and lights only: energy charge {{out.energy_rs|rs}} slab-wise at protected rates, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated MEPCO bill {{out.total_rs|rs}} before FPA."
+   "text": "Fans and lights only: energy charge {{out.energy_rs|rs}} slab-wise at protected rates, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, FPA {{out.fpa_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated MEPCO bill {{out.total_rs|rs}}."
   },
   {
    "inputs": {
     "units": 400
    },
    "title": "{{in.units|int}} units, summer month with one inverter AC",
-   "text": "All {{out.units|int}} units at {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated MEPCO bill {{out.total_rs|rs}} before FPA."
+   "text": "All {{out.units|int}} units at {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, FPA {{out.fpa_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated MEPCO bill {{out.total_rs|rs}}."
   },
   {
    "inputs": {
@@ -176,7 +194,7 @@
     "sanctioned_kw": 3
    },
    "title": "{{in.units|int}} units, two ACs in a Multan June, {{in.sanctioned_kw|int}} kW connection",
-   "text": "The month reaches the open-ended top slab, so all {{out.units|int}} units are billed at {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated MEPCO bill {{out.total_rs|rs}} before FPA."
+   "text": "The month reaches the open-ended top slab, so all {{out.units|int}} units are billed at {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, FPA {{out.fpa_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated MEPCO bill {{out.total_rs|rs}}."
   },
   {
    "inputs": {
@@ -188,7 +206,7 @@
   }
  ],
  "table": {
-  "caption": "Estimated MEPCO bill by units on a {{in.sanctioned_kw|int}} kW connection with the default surcharges and GST, before FPA; unprotected unless marked",
+  "caption": "Estimated MEPCO bill by units on a {{in.sanctioned_kw|int}} kW connection with the default surcharges and GST, with the {{data.fpa_latest.fpa_for}} FPA; unprotected unless marked",
   "rows": [
    {
     "units": 100
@@ -240,12 +258,12 @@
   "Expecting a MEPCO tariff that differs from Lahore or Karachi. The slab rates are the uniform NEPRA rates; only the monthly FPA is specific to the month.",
   "Estimating the summer from a winter bill. In south Punjab the AC months reach a far higher slab, and every unit of the month is billed at that slab's rate.",
   "Ticking protected after the first AC month. One bill over {{d.protected_max_units|int}} units moves the home to unprotected rates for the next {{d.protected_months|int}} months.",
-  "Leaving the FPA blank when the bill shows one. GST is charged on the FPA too, so the estimate without it is low in a month with a positive FPA."
+  "Keeping the pre-filled FPA when the bill shows a different one. GST is charged on the FPA too, so an FPA that differs from your bill's moves the GST line as well."
  ],
  "faq": [
   {
    "q": "How do I get a MEPCO bill estimate from my units?",
-   "a": "Enter the units and the sanctioned load from the bill, tick protected only if the bill says so, and add the FPA from the bill under advanced settings. For {{out.units|int}} units on {{out.sanctioned_kw|int}} kW the estimate is {{out.total_rs|rs}} before FPA."
+   "a": "Enter the units and the sanctioned load from the bill, tick protected only if the bill says so, and replace the pre-filled FPA with the one on your bill under advanced settings. For {{out.units|int}} units on {{out.sanctioned_kw|int}} kW the estimate is {{out.total_rs|rs}}, FPA included."
   },
   {
    "q": "What is the MEPCO per unit rate for a home?",
@@ -253,7 +271,7 @@
   },
   {
    "q": "Is the MEPCO tariff the same as other DISCOs?",
-   "a": "Yes. The 2026 tariff notified as SRO 279(I)/2026 is uniform for all ex-WAPDA DISCOs and K-Electric. A MEPCO bill differs from a LESCO bill for the same units only by the month's FPA."
+   "a": "Yes. The 2026 tariff notified as SRO 279(I)/2026 is uniform for all ex-WAPDA DISCOs and K-Electric. NEPRA sets one FPA for every DISCO too, so a MEPCO bill for the same units equals a LESCO bill; real bills differ only by billing days, arrears and local items."
   },
   {
    "q": "How many units does an AC add to a MEPCO summer bill?",
@@ -261,7 +279,7 @@
   },
   {
    "q": "Which districts does MEPCO serve?",
-   "a": "The south Punjab districts around Multan, run through zones in Multan, Khanewal, Sahiwal, Bahawalpur, Bahawalnagar, Muzaffargarh, Dera Ghazi Khan, Rahim Yar Khan and Vehari. If your bill carries another company's name, use that company's calculator."
+   "a": "MEPCO covers thirteen districts of south Punjab: Multan, Khanewal, Lodhran, Vehari, Sahiwal, Pakpattan, Bahawalpur, Bahawalnagar, Rahim Yar Khan, Muzaffargarh, Layyah, Dera Ghazi Khan and Rajanpur. Faults and billing complaints go to the national electricity helpline 118 (call, or SMS 8118)."
   },
   {
    "q": "How do I check my MEPCO bill online?",
@@ -269,7 +287,7 @@
   },
   {
    "q": "Why is my MEPCO bill higher than this estimate?",
-   "a": "The estimate leaves out the FPA unless you enter it, and it cannot see arrears, late payment surcharge or meter rent. A reading cycle longer than a month can also push the units into a higher slab; the bill audit tool checks that."
+   "a": "The estimate uses the pre-filled FPA unless you enter your bill's, and it cannot see arrears, late payment surcharge or meter rent. A reading cycle longer than a month can also push the units into a higher slab; the bill audit tool checks that."
   },
   {
    "q": "Why is my real bill higher than this estimate when it is over {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}}?",
@@ -290,7 +308,9 @@
   "A-1",
   "section 235",
   "Ordinance 2001",
-  "Rs 25,000"
+  "Rs 25,000",
+  "SMS 8118",
+  "118"
  ],
  "sources": [
   {
@@ -312,6 +332,14 @@
   {
    "label": "PkRevenue: income tax on domestic electricity bills of Rs 25,000 or more (section 235, FBR withholding rates)",
    "url": "https://pkrevenue.com/domestic-electricity-consumers-to-pay-tax-on-monthly-bill-above-rs25000/"
+  },
+  {
+   "label": "Wikipedia: Multan Electric Power Company (districts served)",
+   "url": "https://en.wikipedia.org/wiki/Multan_Electric_Power_Company"
+  },
+  {
+   "label": "Profit: IESCO launches 118 digital services (call 118 or SMS 8118)",
+   "url": "https://profit.pakistantoday.com.pk/?p=219880"
   }
  ]
 }

@@ -28,7 +28,7 @@
    "label": "Sanctioned load",
    "unit": "kW",
    "default": "@tou_threshold_kw",
-   "hint": "The kW printed on the bill. ToU meters are fitted to domestic connections at this size and above."
+   "hint": "The kW printed on the bill. ToU meters are fitted to domestic connections of {{d.tou_threshold_kw|int}} kW and above; below that, use the [[F1|electricity bill calculator]]."
   },
   {
    "name": "mdi_kw",
@@ -36,9 +36,47 @@
    "unit": "kW",
    "advanced": true,
    "hint": "The MDI reading on the bill, if shown. Leave blank if your bill has none; the fixed charge then uses half the sanctioned load."
+  },
+  {
+   "name": "period",
+   "label": "Billing quarter for QTA",
+   "type": "select",
+   "options_from": "qta_periods",
+   "default": "2026-09..2026-11",
+   "advanced": true,
+   "hint": "The quarterly tariff adjustment depends on the quarter the bill falls in."
+  },
+  {
+   "name": "fpa_per_unit",
+   "label": "FPA / FCA",
+   "unit": "Rs per unit",
+   "default": "@data.fpa_latest.fpa_per_unit",
+   "advanced": true,
+   "hint": "Pre-filled with the latest NEPRA-verified fuel adjustment, the one for {{data.fpa_latest.fpa_for}} charged on {{data.fpa_latest.label}} bills. {{data.fpa_newest.note}} Replace it with the rate printed on your bill (negative is a credit)."
+  },
+  {
+   "name": "fc_surcharge_per_unit",
+   "label": "FC surcharge",
+   "unit": "Rs per unit",
+   "placeholder": "Blank = {{data.tariff.addons_secondary.fc_surcharge_per_unit.value|rs2}} per unit",
+   "advanced": true,
+   "hint": "Financing cost surcharge per unit, from your bill. Secondary-source default; change it if your bill differs."
+  },
+  {
+   "name": "gst_pct",
+   "label": "GST",
+   "unit": "%",
+   "placeholder": "Blank = {{data.tariff.addons_secondary.gst_pct.value|int}}%",
+   "advanced": true,
+   "hint": "Sales tax applied to the bill subtotal."
   }
  ],
  "outputs": [
+  {
+   "key": "total_rs",
+   "label": "Estimated ToU bill",
+   "spec": "rs"
+  },
   {
    "key": "energy_rs",
    "label": "Energy charge",
@@ -47,6 +85,26 @@
   {
    "key": "fixed_rs",
    "label": "Fixed charge",
+   "spec": "rs"
+  },
+  {
+   "key": "fc_rs",
+   "label": "FC surcharge",
+   "spec": "rs"
+  },
+  {
+   "key": "qta_rs",
+   "label": "QTA",
+   "spec": "rs"
+  },
+  {
+   "key": "fpa_rs",
+   "label": "FPA (fuel price adjustment)",
+   "spec": "rs"
+  },
+  {
+   "key": "gst_rs",
+   "label": "GST",
    "spec": "rs"
   },
   {
@@ -62,23 +120,23 @@
    "unit": "kW"
   }
  ],
- "answer": "Peak hours for LESCO and the other ex-WAPDA DISCOs are {{data.tariff.tou.peak_hours.seasons.2.from}} to {{data.tariff.tou.peak_hours.seasons.2.to}} in {{data.tariff.tou.peak_hours.seasons.2.months}} and {{data.tariff.tou.peak_hours.seasons.0.from}} to {{data.tariff.tou.peak_hours.seasons.0.to}} in {{data.tariff.tou.peak_hours.seasons.0.months}}, per NEPRA's 2023 IESCO schedule, not yet re-confirmed for 2026. They matter on time-of-use meters ({{d.tou_threshold_kw|int}} kW and above): energy charge = peak units × {{data.tariff.tou.peak|rs2}} + off-peak units × {{data.tariff.tou.offpeak|rs2}}.",
- "how": "Energy: {{out.peak_units}} peak units at the peak rate + {{out.offpeak_units}} off-peak units at the off-peak rate = {{out.energy_rs|rs}} for {{out.units|int}} units. Fixed charge: billed on {{out.billable_kw|1}} kW, the higher of half the {{out.sanctioned_kw|1}} kW sanctioned load and the MDI entered ({{out.mdi_kw|1}} kW) = {{out.fixed_rs|rs}}. FC surcharge, QTA, FPA and GST come on top; this tool works out the energy and fixed charge only.",
+ "answer": "Peak hours for LESCO and the other ex-WAPDA DISCOs are {{data.tariff.tou.peak_hours.seasons.3.from}} to {{data.tariff.tou.peak_hours.seasons.3.to}} in {{data.tariff.tou.peak_hours.seasons.3.months}}, {{data.tariff.tou.peak_hours.seasons.0.from}} to {{data.tariff.tou.peak_hours.seasons.0.to}} in {{data.tariff.tou.peak_hours.seasons.0.months}}, {{data.tariff.tou.peak_hours.seasons.1.from}} to {{data.tariff.tou.peak_hours.seasons.1.to}} in {{data.tariff.tou.peak_hours.seasons.1.months}} and {{data.tariff.tou.peak_hours.seasons.2.from}} to {{data.tariff.tou.peak_hours.seasons.2.to}} in {{data.tariff.tou.peak_hours.seasons.2.months}}, per NEPRA's 2023 IESCO schedule, not yet re-confirmed for 2026. On a time-of-use meter ({{d.tou_threshold_kw|int}} kW and above) {{out.units|int}} units cost about {{out.total_rs|rs}}.",
+ "how": "Energy: {{out.energy_calc}} (peak + off-peak) = {{out.energy_rs|rs}} for {{out.units|int}} units. Fixed charge: billed on {{out.billable_kw|1}} kW, the higher of half the {{out.sanctioned_kw|1}} kW sanctioned load and the MDI entered ({{out.mdi_kw|1}} kW) = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}}; GST at {{out.gst_pct}}% = {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}.",
  "key_facts": [
   "Under the latest NEPRA schedule found (the 2023 IESCO tariff determination; PITC's bill portal confirms only the {{data.tariff.tou.peak_hours.seasons.0.months}} window), peak hours are {{data.tariff.tou.peak_hours.seasons.0.from}} to {{data.tariff.tou.peak_hours.seasons.0.to}} in {{data.tariff.tou.peak_hours.seasons.0.months}}, {{data.tariff.tou.peak_hours.seasons.1.from}} to {{data.tariff.tou.peak_hours.seasons.1.to}} in {{data.tariff.tou.peak_hours.seasons.1.months}}, {{data.tariff.tou.peak_hours.seasons.2.from}} to {{data.tariff.tou.peak_hours.seasons.2.to}} in {{data.tariff.tou.peak_hours.seasons.2.months}} and {{data.tariff.tou.peak_hours.seasons.3.from}} to {{data.tariff.tou.peak_hours.seasons.3.to}} in {{data.tariff.tou.peak_hours.seasons.3.months}}; every other hour is off-peak.",
   "Peak hours change the price only on a time-of-use (ToU) meter, which domestic connections of {{d.tou_threshold_kw|int}} kW sanctioned load or more must have; smaller connections pay the normal slab rate at any hour.",
   "On the A-1 domestic ToU tariff a peak unit costs {{data.tariff.tou.peak|rs2}} and an off-peak unit {{data.tariff.tou.offpeak|rs2}}, so every unit moved out of peak hours saves the difference between the two.",
-  "A ToU home using {{out.peak_units|int}} peak and {{out.offpeak_units|int}} off-peak units pays {{out.energy_rs|rs}} in energy charges; with only {{ex.1.in.peak_units|int}} of the same units in peak hours the charge falls to {{ex.1.out.energy_rs|rs}}.",
-  "K-Electric publishes its own peak-hour timings, so Karachi consumers should check K-Electric's schedule rather than the DISCO one.",
+  "A ToU home using {{out.peak_units|int}} peak and {{out.offpeak_units|int}} off-peak units pays {{out.energy_rs|rs}} in energy charges and about {{out.total_rs|rs}} in all with the fixed charge, FC surcharge, QTA, FPA and GST; with only {{ex.1.in.peak_units|int}} of the same units in peak hours the bill falls to {{ex.1.out.total_rs|rs}}.",
+  "K-Electric publishes its own peak-hour timings, so Karachi consumers should check K-Electric's schedule rather than the DISCO one; the rates and the fuel adjustment are the same uniform figures.",
   "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of {{data.tariff.addons_secondary.income_tax_235.rate_pct_non_atl|1}}% on a monthly bill of {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}} or more; consumers on the list pay none."
  ],
  "formula": {
-  "text": "ToU energy charge = peak units × peak rate + off-peak units × off-peak rate; fixed charge = fixed rate per kW × max(half the sanctioned load, MDI)",
+  "text": "ToU bill = peak units × peak rate + off-peak units × off-peak rate + fixed rate per kW × max(half the sanctioned load, MDI) + (FC + QTA + FPA) × units, then + GST",
   "lines": [
    "peak and off-peak rates = A-1 domestic ToU rates in the NEPRA tariff (data/tariff-pk-2026.json)",
    "peak window = the season's peak hours; every other hour is off-peak",
    "MDI = maximum demand indicator reading in kW",
-   "FC surcharge, QTA, FPA and GST are added on the real bill"
+   "FC surcharge, QTA and FPA per unit and GST on the subtotal, as on the flat bill (whole rupees per line)"
   ]
  },
  "sections": [
@@ -119,7 +177,7 @@
   {
    "h2": "How much you save by shifting AC, iron and motor use",
    "p": [
-    "Every unit moved out of the peak window saves the gap between {{data.tariff.tou.peak|rs2}} and {{data.tariff.tou.offpeak|rs2}}. For the default month, {{out.peak_units|int}} peak and {{out.offpeak_units|int}} off-peak units cost {{out.energy_rs|rs}}; with only {{ex.1.in.peak_units|int}} units in the peak, the same total costs {{ex.1.out.energy_rs|rs}}.",
+    "Every unit moved out of the peak window saves the gap between {{data.tariff.tou.peak|rs2}} and {{data.tariff.tou.offpeak|rs2}}. For the default month, {{out.peak_units|int}} peak and {{out.offpeak_units|int}} off-peak units carry an energy charge of {{out.energy_rs|rs}}; with only {{ex.1.in.peak_units|int}} units in the peak, the same total carries {{ex.1.out.energy_rs|rs}}, and GST on the gap makes the saving a little larger on the whole bill.",
     "The easy moves: iron, run the washing machine and fill the water tank with the motor before the peak starts; pre-cool rooms before the peak and raise the AC set point by a degree or two during it; charge UPS batteries off-peak. The ToU calculator above shows the bill for your own peak and off-peak readings."
    ]
   }
@@ -128,7 +186,7 @@
   {
    "inputs": {},
    "title": "{{in.peak_units|int}} peak and {{in.offpeak_units|int}} off-peak units on a {{in.sanctioned_kw|int}} kW connection",
-   "text": "Energy {{out.energy_rs|rs}} for {{out.units|int}} units; fixed charge on {{out.billable_kw|1}} kW = {{out.fixed_rs|rs}}."
+   "text": "Energy {{out.energy_rs|rs}} for {{out.units|int}} units, fixed charge on {{out.billable_kw|1}} kW {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, FPA {{out.fpa_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}."
   },
   {
    "inputs": {
@@ -136,7 +194,7 @@
     "offpeak_units": 750
    },
    "title": "Same {{out.units|int}} units, peak use cut to {{in.peak_units|int}}",
-   "text": "Energy {{out.energy_rs|rs}} instead of {{ex.0.out.energy_rs|rs}}, by moving the iron, the water motor and some AC hours out of the peak window. The fixed charge stays {{out.fixed_rs|rs}}."
+   "text": "Energy {{out.energy_rs|rs}} instead of {{ex.0.out.energy_rs|rs}}, by moving the iron, the water motor and some AC hours out of the peak window. The fixed charge stays {{out.fixed_rs|rs}}, and the whole bill falls to {{out.total_rs|rs}} from {{ex.0.out.total_rs|rs}}."
   },
   {
    "inputs": {
@@ -144,7 +202,7 @@
     "offpeak_units": 500
    },
    "title": "Evening AC in the peak: {{in.peak_units|int}} peak units",
-   "text": "Energy {{out.energy_rs|rs}} for the same {{out.units|int}} units, the most expensive way to use them."
+   "text": "Energy {{out.energy_rs|rs}} for the same {{out.units|int}} units, the most expensive way to use them: the whole bill is {{out.total_rs|rs}}."
   },
   {
    "inputs": {
@@ -154,11 +212,11 @@
     "mdi_kw": 7
    },
    "title": "Large house: {{in.sanctioned_kw|int}} kW sanctioned, MDI {{in.mdi_kw|int}} kW",
-   "text": "Energy {{out.energy_rs|rs}} for {{out.units|int}} units. The MDI of {{out.mdi_kw|int}} kW is above half the sanctioned load, so the fixed charge is billed on {{out.billable_kw|1}} kW: {{out.fixed_rs|rs}}."
+   "text": "Energy {{out.energy_rs|rs}} for {{out.units|int}} units. The MDI of {{out.mdi_kw|int}} kW is above half the sanctioned load, so the fixed charge is billed on {{out.billable_kw|1}} kW: {{out.fixed_rs|rs}}. With surcharges, FPA and GST the estimated bill is {{out.total_rs|rs}}."
   }
  ],
  "table": {
-  "caption": "Energy charge for the same {{out.units|int}} units with more or less of it in peak hours ({{in.sanctioned_kw|int}} kW ToU connection, energy and fixed charge only)",
+  "caption": "ToU bill for the same {{out.units|int}} units with more or less of it in peak hours ({{in.sanctioned_kw|int}} kW ToU connection, default FC surcharge, QTA, FPA and GST)",
   "rows": [
    {
     "peak_units": 0,
@@ -201,6 +259,10 @@
    {
     "label": "Fixed charge",
     "tpl": "{{out.fixed_rs|rs}}"
+   },
+   {
+    "label": "Estimated bill",
+    "tpl": "{{out.total_rs|rs}}"
    }
   ]
  },
@@ -234,7 +296,7 @@
   },
   {
    "q": "Do peak hours matter if I do not have a ToU meter?",
-   "a": "No. Below {{d.tou_threshold_kw|int}} kW sanctioned load the bill is worked out on slab rates whatever the time, so use the normal bill calculator instead."
+   "a": "No. Below {{d.tou_threshold_kw|int}} kW sanctioned load the bill is worked out on slab rates whatever the time, so use the [[F1|electricity bill calculator]] instead."
   },
   {
    "q": "Are K-Electric peak hours different?",

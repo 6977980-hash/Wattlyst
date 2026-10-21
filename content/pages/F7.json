@@ -20,7 +20,7 @@
    "label": "Sanctioned load",
    "unit": "kW",
    "default": "@default_sanctioned_kw",
-   "hint": "The kW printed in the connection details of the PESCO bill. It sets the fixed charge; 5 kW and above is billed on ToU rates instead."
+   "hint": "The kW printed in the connection details of the PESCO bill. It sets the fixed charge. A connection of {{d.tou_threshold_kw|int}} kW or more is billed on peak and off-peak (ToU) rates instead: use the [[F13|ToU bill calculator]]."
   },
   {
    "name": "protected",
@@ -58,25 +58,25 @@
    "name": "fc_surcharge_per_unit",
    "label": "FC surcharge",
    "unit": "Rs per unit",
-   "default": "@data.tariff.addons_secondary.fc_surcharge_per_unit.value",
    "advanced": true,
-   "hint": "Financing cost surcharge per unit, from the bill. Secondary-source default."
+   "hint": "Financing cost surcharge per unit, from the bill. Secondary-source default.",
+   "placeholder": "Blank = {{data.tariff.addons_secondary.fc_surcharge_per_unit.value|rs2}} per unit (none on lifeline)"
   },
   {
    "name": "fpa_per_unit",
    "label": "FPA",
    "unit": "Rs per unit",
-   "placeholder": "From your bill (FPA / FCA)",
    "advanced": true,
-   "hint": "Monthly fuel price adjustment printed on the PESCO bill, positive or negative. Leave blank if unknown."
+   "hint": "Pre-filled with the latest NEPRA-verified fuel adjustment, the one for {{data.fpa_latest.fpa_for}} charged on {{data.fpa_latest.label}} bills. {{data.fpa_newest.note}} Replace it with the FPA rate printed on your bill (negative is a credit). Protected homes pay it too; lifeline bills carry none.",
+   "default": "@data.fpa_latest.fpa_per_unit"
   },
   {
    "name": "gst_pct",
    "label": "GST",
    "unit": "%",
-   "default": "@data.tariff.addons_secondary.gst_pct.value",
    "advanced": true,
-   "hint": "Sales tax applied to the bill subtotal."
+   "hint": "Sales tax applied to the bill subtotal.",
+   "placeholder": "Blank = {{data.tariff.addons_secondary.gst_pct.value|int}}% (none on lifeline)"
   }
  ],
  "outputs": [
@@ -106,13 +106,30 @@
    "spec": "rs"
   },
   {
+   "key": "fpa_rs",
+   "label": "FPA (fuel price adjustment)",
+   "spec": "rs"
+  },
+  {
    "key": "gst_rs",
    "label": "GST",
    "spec": "rs"
+  },
+  {
+   "key": "next_units",
+   "label": "This slab ends at (units)",
+   "spec": "int",
+   "optional": true
+  },
+  {
+   "key": "next_rs",
+   "label": "One unit past that limit adds",
+   "spec": "rs",
+   "optional": true
   }
  ],
- "answer": "A PESCO home in Peshawar or elsewhere in Khyber Pakhtunkhwa using {{in.units|int}} units in a month as an unprotected consumer on a {{in.sanctioned_kw|int}} kW connection pays about {{out.total_rs|rs}}: {{out.energy_rs|rs}} energy charge at {{out.rate|rs2}} per unit, plus fixed charge, FC surcharge, the quarter's QTA and GST, before the month's FPA. PESCO bill = units × slab rate + fixed charge + surcharges, then GST.",
- "how": "{{out.units}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
+ "answer": "A PESCO home in Peshawar or elsewhere in Khyber Pakhtunkhwa using {{in.units|int}} units in a month as an unprotected consumer on a {{in.sanctioned_kw|int}} kW connection pays about {{out.total_rs|rs}}: {{out.energy_rs|rs}} energy charge at {{out.rate|rs2}} per unit, plus fixed charge, FC surcharge, the quarter's QTA, the {{data.fpa_latest.fpa_for}} FPA and GST. PESCO bill = units × slab rate + fixed charge + surcharges, then GST.",
+ "how": "Energy ({{out.category}}): {{out.energy_calc}} = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
  "key_facts": [
   "PESCO, the Peshawar Electric Supply Company, supplies the civil districts of Khyber Pakhtunkhwa from its head office in Peshawar and bills the uniform NEPRA A-1 domestic tariff for 2026, the same slabs as every other ex-WAPDA DISCO.",
   "An unprotected PESCO consumer using {{out.units|int}} units pays {{out.rate|rs2}} on every unit, which is {{out.energy_rs|rs}} of energy charge before the fixed charge, FC surcharge, QTA and GST.",
@@ -169,14 +186,14 @@
     "period": "2026-03..2026-05"
    },
    "title": "{{in.units|int}} units, protected consumer in a spring month",
-   "text": "Energy charge {{out.energy_rs|rs}} slab-wise at protected rates, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA for the March to May quarter {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated PESCO bill {{out.total_rs|rs}} before FPA."
+   "text": "Energy charge {{out.energy_rs|rs}} slab-wise at protected rates, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA for the March to May quarter {{out.qta_rs|rs}}, FPA {{out.fpa_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated PESCO bill {{out.total_rs|rs}}."
   },
   {
    "inputs": {
     "units": 300
    },
    "title": "{{in.units|int}} units, unprotected, September to November quarter",
-   "text": "{{out.units|int}} × {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated PESCO bill {{out.total_rs|rs}} before FPA."
+   "text": "{{out.units|int}} × {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, FPA {{out.fpa_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated PESCO bill {{out.total_rs|rs}}."
   },
   {
    "inputs": {
@@ -184,7 +201,7 @@
     "period": "2026-06..2026-08"
    },
    "title": "Same {{in.units|int}} units, June to August quarter",
-   "text": "The energy charge {{out.energy_rs|rs}} and fixed charge {{out.fixed_rs|rs}} are unchanged, but the quarter's QTA was a credit, so the subtotal falls to {{out.subtotal_rs|rs}} and GST to {{out.gst_rs|rs}}. Estimated PESCO bill {{out.total_rs|rs}} before FPA."
+   "text": "The energy charge {{out.energy_rs|rs}} and fixed charge {{out.fixed_rs|rs}} are unchanged, but the quarter's QTA was a credit, so with the FPA of {{out.fpa_rs|rs}} the subtotal falls to {{out.subtotal_rs|rs}} and GST to {{out.gst_rs|rs}}. Estimated PESCO bill {{out.total_rs|rs}}."
   },
   {
    "inputs": {
@@ -192,7 +209,7 @@
     "sanctioned_kw": 2
    },
    "title": "{{in.units|int}} units, winter month with a fan heater and geyser, {{in.sanctioned_kw|int}} kW",
-   "text": "The heater month breaks the protected run, so all {{out.units|int}} units are billed at {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated PESCO bill {{out.total_rs|rs}} before FPA."
+   "text": "The heater month breaks the protected run, so all {{out.units|int}} units are billed at {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, FPA {{out.fpa_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated PESCO bill {{out.total_rs|rs}}."
   },
   {
    "inputs": {
@@ -202,11 +219,11 @@
     "gst_pct": ""
    },
    "title": "{{in.units|int}} units, lifeline consumer",
-   "text": "{{out.units|int}} units at the lifeline rate of {{out.rate|rs2}} = {{out.energy_rs|rs}}, with no fixed charge and no QTA. With the FC surcharge and GST fields blank the estimate assumes neither applies to lifeline bills (still being verified): {{out.total_rs|rs}}."
+   "text": "{{out.units|int}} units at the lifeline rate of {{out.rate|rs2}} = {{out.energy_rs|rs}}, with no fixed charge, no QTA and no FPA. With the FC surcharge and GST fields blank the estimate assumes neither applies to lifeline bills (still being verified): {{out.total_rs|rs}}."
   }
  ],
  "table": {
-  "caption": "Estimated PESCO bill by units on a {{in.sanctioned_kw|int}} kW connection in the September to November quarter with the default surcharges and GST, before FPA; unprotected unless marked",
+  "caption": "Estimated PESCO bill by units on a {{in.sanctioned_kw|int}} kW connection in the September to November quarter with the default surcharges and GST, with the {{data.fpa_latest.fpa_for}} FPA; unprotected unless marked",
   "rows": [
    {
     "units": 100
@@ -267,7 +284,7 @@
  "faq": [
   {
    "q": "How do I get a PESCO bill estimate from my units?",
-   "a": "Enter the units and the sanctioned load from the bill, tick protected only if the bill prints that category, pick the billing quarter and add the FPA from the bill under advanced settings. For {{out.units|int}} units the estimate is {{out.total_rs|rs}} before FPA."
+   "a": "Enter the units and the sanctioned load from the bill, tick protected only if the bill prints that category, pick the billing quarter and replace the pre-filled FPA with the one on your bill under advanced settings. For {{out.units|int}} units the estimate is {{out.total_rs|rs}}, FPA included."
   },
   {
    "q": "What is the PESCO per unit rate for a home?",
@@ -275,7 +292,7 @@
   },
   {
    "q": "Is the PESCO tariff different from the Punjab DISCOs?",
-   "a": "No. The 2026 tariff notified as SRO 279(I)/2026 is uniform for all ex-WAPDA DISCOs and K-Electric. For the same units a PESCO bill differs from a LESCO or IESCO bill only by the month's FPA."
+   "a": "No. The 2026 tariff notified as SRO 279(I)/2026 is uniform for all ex-WAPDA DISCOs and K-Electric. NEPRA sets one FPA for every DISCO too, so a PESCO bill for the same units equals a LESCO or IESCO bill; real bills differ only by billing days, arrears and local items."
   },
   {
    "q": "What is the QTA on a PESCO bill?",

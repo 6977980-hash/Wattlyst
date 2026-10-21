@@ -5,7 +5,7 @@
  "url": "/bill/qesco-bill-calculator/",
  "h1": "QESCO Bill Calculator",
  "title": "QESCO Bill Calculator 2026 (Latest Tariff) | Wattlyst",
- "meta": "Estimate your QESCO bill from units with the 2026 NEPRA slabs, fixed charge, QTA and GST, then add the month's FPA. Quetta winter bills explained.",
+ "meta": "Estimate your QESCO bill from units with the 2026 NEPRA slabs, fixed charge, QTA, GST and the latest NEPRA FPA. Quetta winter bills explained.",
  "primary_keyword": "qesco bill calculator",
  "wave": 2,
  "status": "publish",
@@ -36,7 +36,7 @@
    "url": "/bill/qesco-bill-calculator/"
   }
  ],
- "modified": "2026-10-15",
+ "modified": "2026-10-21",
  "content": {
   "intro": "",
   "sections": [
@@ -44,7 +44,7 @@
     "h2": "What is the QESCO per unit rate in 2026?",
     "p": [
      "QESCO is the Quetta Electric Supply Company Limited, the ex-WAPDA distribution company for Balochistan. Its domestic consumers are billed on the uniform A-1 tariff that NEPRA determined and the Government notified for 2026, the same slabs that apply in Punjab, Sindh and Khyber Pakhtunkhwa. For an unprotected home the rate of the slab the month reaches applies to every unit: 250 units are all billed at Rs 33.10.",
-     "The examples and the table below print the rate for each slab. The month's FPA, set by NEPRA and printed on the bill, is the only line not in the uniform tariff; add it in the advanced fields for the exact figure."
+     "The examples and the table below print the rate for each slab. The month's FPA, set by NEPRA and printed on the bill, is the only line not in the uniform tariff; it is pre-filled with the latest NEPRA-verified month, so replace it in the advanced fields for the exact figure."
     ]
    },
    {
@@ -94,7 +94,7 @@
   "faq": [
    {
     "q": "How do I get a QESCO bill estimate from my units?",
-    "a": "Enter the units and the sanctioned load from your bill, tick protected only if the bill says so, and add the FPA from the bill under advanced settings. For 250 units the estimate is Rs 11,284 before FPA."
+    "a": "Enter the units and the sanctioned load from your bill, tick protected only if the bill says so, and replace the pre-filled FPA with the one on your bill under advanced settings. For 250 units the estimate is Rs 11,892, FPA included."
    },
    {
     "q": "What is the QESCO per unit rate for a home?",
@@ -118,7 +118,7 @@
    },
    {
     "q": "Why is my QESCO bill higher than this estimate?",
-    "a": "Usually the month's FPA, arrears or a late-payment surcharge, or a bill that covers more than a month of readings. Add the FPA in the advanced fields; for a long reading period use the overbilling check.",
+    "a": "Usually the month's FPA, arrears or a late-payment surcharge, or a bill that covers more than a month of readings. Replace the pre-filled FPA with your bill's in the advanced fields; for a long reading period use the overbilling check.",
     "l": [
      {
       "t": "overbilling check",
@@ -136,14 +136,14 @@
    "The QESCO per unit rate for an unprotected home using 250 units is Rs 33.10 on every unit, giving Rs 8,275 in energy charges before the fixed charge, surcharges and GST.",
    "This calculator is for domestic A-1 connections only; QESCO's agricultural tubewell consumers are billed on the separate agricultural tariff and subsidy arrangements, which these slabs do not cover.",
    "A QESCO home stays protected only while every one of the last 6 bills is at or under 200 units; in Quetta an electric heater month in winter can break the run as easily as an AC month does elsewhere.",
-   "The bill jumps at 700 units: up to there every unit is billed at Rs 41.85, but one unit more moves all of them to the top slab rate of Rs 47.20, which adds Rs 4,478 to the bill of an unprotected 1 kW home.",
+   "The bill jumps at 700 units: up to there every unit is billed at Rs 41.85, but one unit more moves all of them to the top slab rate of Rs 47.20, which adds Rs 4,481 to the bill of an unprotected 1 kW home.",
    "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of 7.5% on a monthly bill of Rs 25,000 or more; consumers on the list pay none."
   ],
   "mistakes": [
    "Using this page for a tubewell or shop. The slabs here are the domestic A-1 tariff; agricultural and commercial connections have their own rates.",
    "Expecting a Balochistan-only rate. QESCO bills the uniform NEPRA domestic tariff, so the slab rates match the rest of the country.",
    "Ticking protected after a heater winter. Protection needs all of the last 6 months under 200 units, and one electric-heater month usually breaks the run.",
-   "Leaving the FPA blank when the bill shows one. The fuel adjustment changes monthly and can be a credit; copy it from the bill into the advanced field."
+   "Keeping the pre-filled FPA when the bill shows a different one. The fuel adjustment changes monthly and can be a credit; copy your bill's rate into the advanced field."
   ],
   "sources": [
    {
@@ -183,7 +183,13 @@
      "label": "Sanctioned load",
      "unit": "kW",
      "default": 1,
-     "hint": "The kW printed on the bill; one to three for most Quetta homes. It sets the fixed charge."
+     "hint": "The kW printed on the bill; one to three for most Quetta homes. It sets the fixed charge. A connection of 5 kW or more is billed on peak and off-peak (ToU) rates instead: use the ToU bill calculator.",
+     "l": [
+      {
+       "t": "ToU bill calculator",
+       "u": "/guides/peak-hours-pakistan/"
+      }
+     ]
     },
     {
      "name": "protected",
@@ -227,25 +233,25 @@
      "name": "fc_surcharge_per_unit",
      "label": "FC surcharge",
      "unit": "Rs per unit",
-     "default": 3.23,
      "advanced": true,
-     "hint": "Financing cost surcharge per unit, from the bill. Secondary-source default."
+     "hint": "Financing cost surcharge per unit, from the bill. Secondary-source default.",
+     "placeholder": "Blank = Rs 3.23 per unit (none on lifeline)"
     },
     {
      "name": "fpa_per_unit",
      "label": "FPA",
      "unit": "Rs per unit",
-     "placeholder": "From your bill (FPA / FCA)",
      "advanced": true,
-     "hint": "Monthly fuel price adjustment from the bill, positive or negative. Leave blank if unknown."
+     "hint": "Pre-filled with the latest NEPRA-verified fuel adjustment, the one for July 2026 charged on September 2026 bills. October 2026 bills carry Rs 1.11 per unit for August 2026, reported in the news; this page keeps the latest NEPRA-verified rate until that decision is published. Replace it with the FPA rate printed on your bill (negative is a credit). Protected homes pay it too; lifeline bills carry none.",
+     "default": 2.0581
     },
     {
      "name": "gst_pct",
      "label": "GST",
      "unit": "%",
-     "default": 18,
      "advanced": true,
-     "hint": "Sales tax applied to the bill subtotal."
+     "hint": "Sales tax applied to the bill subtotal.",
+     "placeholder": "Blank = 18% (none on lifeline)"
     }
    ],
    "fixed_inputs": {},
@@ -255,7 +261,7 @@
      "label": "Estimated bill",
      "spec": "rs",
      "label_ur": "Andazan bill",
-     "value": "Rs 11,284"
+     "value": "Rs 11,892"
     },
     {
      "key": "energy_rs",
@@ -286,16 +292,36 @@
      "value": "Rs 130"
     },
     {
+     "key": "fpa_rs",
+     "label": "FPA (fuel price adjustment)",
+     "spec": "rs",
+     "value": "Rs 515"
+    },
+    {
      "key": "gst_rs",
      "label": "GST",
      "spec": "rs",
      "label_ur": "GST",
-     "value": "Rs 1,721"
+     "value": "Rs 1,814"
+    },
+    {
+     "key": "next_units",
+     "label": "This slab ends at (units)",
+     "spec": "int",
+     "optional": true,
+     "value": "300"
+    },
+    {
+     "key": "next_rs",
+     "label": "One unit past that limit adds",
+     "spec": "rs",
+     "optional": true,
+     "value": "Rs 1,297"
     }
    ],
    "how": {
-    "tpl": "{{out.units}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
-    "text": "250 units × Rs 33.10 (unprotected slab rate) = Rs 8,275. Fixed charge for 1 kW = Rs 350. FC surcharge Rs 808 + QTA Rs 130 + FPA Rs 0. Subtotal Rs 9,563 + GST 18% (Rs 1,721) = Rs 11,284."
+    "tpl": "Energy ({{out.category}}): {{out.energy_calc}} = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
+    "text": "Energy (unprotected): 250 × Rs 33.10 = Rs 8,275. Fixed charge for 1 kW = Rs 350. FC surcharge Rs 808 + QTA Rs 130 + FPA Rs 515. Subtotal Rs 10,078 + GST 18% (Rs 1,814) = Rs 11,892."
    },
    "submit": "Calculate",
    "notice": "",
@@ -303,30 +329,30 @@
     {
      "label": "Pakistan electricity tariff (NEPRA notification)",
      "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf",
-     "checked": "2026-10-13"
+     "checked": "2026-10-21"
     }
    ]
   },
   "examples": [
    {
     "title": "180 units, QESCO protected consumer",
-    "text": "Energy charge Rs 2,095 slab-wise at protected rates, fixed charge Rs 300 for 1 kW, FC surcharge Rs 581, QTA Rs 93, GST Rs 552. Estimated QESCO bill Rs 3,621."
+    "text": "Energy charge Rs 2,095 slab-wise at protected rates, fixed charge Rs 300 for 1 kW, FC surcharge Rs 581, QTA Rs 93, FPA Rs 370, GST Rs 619. Estimated QESCO bill Rs 4,058."
    },
    {
     "title": "250 units, unprotected, no heating or cooling",
-    "text": "250 units all at Rs 33.10 = Rs 8,275, fixed charge Rs 350, FC surcharge Rs 808, QTA Rs 130, GST Rs 1,721. Estimated QESCO bill Rs 11,284."
+    "text": "250 units all at Rs 33.10 = Rs 8,275, fixed charge Rs 350, FC surcharge Rs 808, QTA Rs 130, FPA Rs 515, GST Rs 1,814. Estimated QESCO bill Rs 11,892."
    },
    {
     "title": "480 units in a Quetta winter with an electric heater, 2 kW",
-    "text": "480 × Rs 38.95 = Rs 18,696, fixed charge Rs 1,000 for 2 kW, FC surcharge Rs 1,550, QTA Rs 249, GST Rs 3,869. Estimated QESCO bill Rs 25,364 before FPA."
+    "text": "480 × Rs 38.95 = Rs 18,696, fixed charge Rs 1,000 for 2 kW, FC surcharge Rs 1,550, QTA Rs 249, FPA Rs 988, GST Rs 4,047. Estimated QESCO bill Rs 26,530."
    },
    {
     "title": "60 units, lifeline consumer",
-    "text": "60 units at the lifeline rate of Rs 7.74 = Rs 464, with no fixed charge and no QTA. With the FC surcharge and GST fields blank the estimate assumes neither applies to lifeline bills (still being verified): Rs 464."
+    "text": "60 units at the lifeline rate of Rs 7.74 = Rs 464, with no fixed charge, no QTA and no FPA. With the FC surcharge and GST fields blank the estimate assumes neither applies to lifeline bills (still being verified): Rs 464."
    }
   ],
   "table": {
-   "caption": "Estimated QESCO domestic bill by units on a 1 kW connection with the default surcharges and GST, before FPA; unprotected unless marked",
+   "caption": "Estimated QESCO domestic bill by units on a 1 kW connection with the default surcharges and GST, with the July 2026 FPA; unprotected unless marked",
    "head": [
     "Units",
     "Average rate per unit",
@@ -340,53 +366,53 @@
      "Rs 22.44",
      "Rs 2,020",
      "Rs 275",
-     "Rs 3,107"
+     "Rs 3,325"
     ],
     [
      "160 (protected)",
      "Rs 11.47",
      "Rs 1,835",
      "Rs 300",
-     "Rs 3,227"
+     "Rs 3,616"
     ],
     [
      "160 (unprotected)",
      "Rs 28.91",
      "Rs 4,626",
      "Rs 300",
-     "Rs 6,521"
+     "Rs 6,909"
     ],
     [
      "250 (unprotected)",
      "Rs 33.10",
      "Rs 8,275",
      "Rs 350",
-     "Rs 11,284"
+     "Rs 11,892"
     ],
     [
      "350 (unprotected)",
      "Rs 36.46",
      "Rs 12,761",
      "Rs 400",
-     "Rs 17,079"
+     "Rs 17,929"
     ],
     [
      "480 (unprotected)",
      "Rs 38.95",
      "Rs 18,696",
      "Rs 500",
-     "Rs 24,774"
+     "Rs 25,940"
     ],
     [
      "620 (unprotected)",
      "Rs 41.85",
      "Rs 25,947",
      "Rs 675",
-     "Rs 34,157"
+     "Rs 35,663"
     ]
    ]
   },
-  "answer": "A QESCO home in Quetta or elsewhere in Balochistan using 250 units a month as an unprotected domestic consumer on a 1 kW connection pays about Rs 11,284: Rs 8,275 energy charge at Rs 33.10 per unit plus fixed charge, FC surcharge, QTA and GST. QESCO bill = units × slab rate + fixed charge + surcharges + GST, before the month's FPA.",
+  "answer": "A QESCO home in Quetta or elsewhere in Balochistan using 250 units a month as an unprotected domestic consumer on a 1 kW connection pays about Rs 11,892: Rs 8,275 energy charge at Rs 33.10 per unit plus fixed charge, FC surcharge, QTA, the July 2026 FPA and GST. QESCO bill = units × slab rate + fixed charge + surcharges + FPA + GST.",
   "formula": {
    "text": "Bill = units × slab rate + fixed Rs/kW × sanctioned kW + (FC + QTA + FPA) × units, then + GST",
    "lines": [
@@ -430,7 +456,7 @@
     "@id": "https://wattlyst.com/bill/qesco-bill-calculator/#webpage",
     "url": "https://wattlyst.com/bill/qesco-bill-calculator/",
     "name": "QESCO Bill Calculator 2026 (Latest Tariff) | Wattlyst",
-    "description": "Estimate your QESCO bill from units with the 2026 NEPRA slabs, fixed charge, QTA and GST, then add the month's FPA. Quetta winter bills explained.",
+    "description": "Estimate your QESCO bill from units with the 2026 NEPRA slabs, fixed charge, QTA, GST and the latest NEPRA FPA. Quetta winter bills explained.",
     "inLanguage": "en",
     "isPartOf": {
      "@id": "https://wattlyst.com/#website"
@@ -438,7 +464,7 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/bill/qesco-bill-calculator/#breadcrumb"
     },
-    "dateModified": "2026-10-15",
+    "dateModified": "2026-10-21",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }
@@ -448,7 +474,7 @@
     "@id": "https://wattlyst.com/bill/qesco-bill-calculator/#app",
     "name": "QESCO Bill Calculator",
     "url": "https://wattlyst.com/bill/qesco-bill-calculator/",
-    "description": "Estimate your QESCO bill from units with the 2026 NEPRA slabs, fixed charge, QTA and GST, then add the month's FPA. Quetta winter bills explained.",
+    "description": "Estimate your QESCO bill from units with the 2026 NEPRA slabs, fixed charge, QTA, GST and the latest NEPRA FPA. Quetta winter bills explained.",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Any",
     "browserRequirements": "Requires JavaScript for live results",
@@ -483,7 +509,7 @@
       "name": "How do I get a QESCO bill estimate from my units?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Enter the units and the sanctioned load from your bill, tick protected only if the bill says so, and add the FPA from the bill under advanced settings. For 250 units the estimate is Rs 11,284 before FPA."
+       "text": "Enter the units and the sanctioned load from your bill, tick protected only if the bill says so, and replace the pre-filled FPA with the one on your bill under advanced settings. For 250 units the estimate is Rs 11,892, FPA included."
       }
      },
      {
@@ -531,7 +557,7 @@
       "name": "Why is my QESCO bill higher than this estimate?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Usually the month's FPA, arrears or a late-payment surcharge, or a bill that covers more than a month of readings. Add the FPA in the advanced fields; for a long reading period use the overbilling check."
+       "text": "Usually the month's FPA, arrears or a late-payment surcharge, or a bill that covers more than a month of readings. Replace the pre-filled FPA with your bill's in the advanced fields; for a long reading period use the overbilling check."
       }
      },
      {

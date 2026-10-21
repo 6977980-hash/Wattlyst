@@ -38,14 +38,14 @@
    "url": "/bill/electricity-bill-calculator-pakistan/"
   }
  ],
- "modified": "2026-10-15",
+ "modified": "2026-10-21",
  "content": {
   "intro": "",
   "sections": [
    {
     "h2": "How does this electricity bill calculator work?",
     "p": [
-     "The calculator applies the NEPRA uniform A-1 domestic tariff for 2026, notified by the Government as SRO 279(I)/2026, which every DISCO (LESCO, IESCO, GEPCO, FESCO, MEPCO, PESCO, HESCO, SEPCO, QESCO, TESCO) and K-Electric charges; each name opens that company's own bill calculator. Enter your units, the sanctioned load from your bill and your category, and it shows the energy charge, fixed charge, FC surcharge, QTA and GST as separate lines, the way the bill prints them.",
+     "The calculator applies the NEPRA uniform A-1 domestic tariff for 2026, notified by the Government as SRO 279(I)/2026, which every DISCO (LESCO, IESCO, GEPCO, FESCO, MEPCO, PESCO, HESCO, SEPCO, QESCO, TESCO) and K-Electric charges; each name opens that company's own bill calculator. Enter your units, the sanctioned load from your bill and your category, and it shows the energy charge, fixed charge, FC surcharge, QTA, FPA and GST as separate lines, the way the bill prints them.",
      "The energy and fixed rates were verified from the NEPRA tariff PDF. The FC surcharge, QTA, FPA and GST are from secondary sources, change monthly or quarterly, and whether GST and the FC surcharge apply to lifeline and protected bills in exactly this way is still being verified; copy those lines from your own bill into the advanced fields for a closer match."
     ],
     "l": [
@@ -115,7 +115,7 @@
    {
     "h2": "What is the bill for 200 units (LESCO or any DISCO)?",
     "p": [
-     "A 200 unit bill depends almost entirely on the category. Protected, the units are billed slab-wise at the two protected rates; unprotected, all of them are at the second unprotected slab rate. The two worked examples below give both totals with the same fixed charge, surcharges and GST, and the reference table lists them side by side. For the typical bill at every step of units in every DISCO, see the Pakistan Bill Index for this month."
+     "A 200 unit bill depends almost entirely on the category. Protected, the units are billed slab-wise at the two protected rates; unprotected, all of them are at the second unprotected slab rate. The two worked examples below give both totals with the same fixed charge, surcharges and GST, and the reference table lists them side by side. For the typical bill at every step of units in every DISCO, see the Pakistan Bill Index for this month; it prices every bill on a 2 kW sanctioned load, so its totals differ from a bill on another load."
     ],
     "l": [
      [
@@ -129,7 +129,7 @@
    {
     "h2": "What is the bill for 300 units?",
     "p": [
-     "300 units is the default above: all units at Rs 33.10 = Rs 9,930, plus Rs 350 fixed charge for 1 kW, Rs 969 FC surcharge, Rs 156 QTA and Rs 2,053 GST, for about Rs 13,458. One unit over 300 moves every unit to the next slab, so 300 units is a line worth staying under."
+     "300 units is the default above: all units at Rs 33.10 = Rs 9,930, plus Rs 350 fixed charge for 1 kW, Rs 969 FC surcharge, Rs 156 QTA, Rs 617 FPA and Rs 2,164 GST, for about Rs 14,186. One unit over 300 moves every unit to the next slab, so 300 units is a line worth staying under."
     ]
    }
   ],
@@ -140,7 +140,7 @@
    },
    {
     "q": "Does this bill calculator work for every DISCO in Pakistan?",
-    "a": "Yes. LESCO, IESCO, GEPCO, FESCO, MEPCO, PESCO, HESCO, SEPCO, QESCO, TESCO and K-Electric all charge the same uniform domestic tariff; only the monthly FPA line can differ, and you can enter it."
+    "a": "Yes. LESCO, IESCO, GEPCO, FESCO, MEPCO, PESCO, HESCO, SEPCO, QESCO, TESCO and K-Electric all charge the same uniform domestic tariff; NEPRA sets one FPA for all of them as well, so the same units give the same estimate; real bills differ only by billing days, arrears and local items."
    },
    {
     "q": "Is there a WAPDA bill calculator?",
@@ -171,15 +171,15 @@
    "An unprotected consumer pays the rate of the slab the monthly total reaches on every unit: 300 units are all charged at Rs 33.10, giving Rs 9,930 in energy charges.",
    "A protected consumer is billed slab-wise with the benefit of the lower slab, and the category needs every one of the last 6 months at or under 200 units.",
    "The fixed charge is Rs per kW of sanctioned load and rises with the slab: a 1 kW connection using 300 units pays Rs 350 of it, and even a month with no units pays the lowest slab's Rs 275 per kW.",
-   "GST at 18% is applied to the subtotal of energy, fixed charge and surcharges, which adds Rs 2,053 to a 300 unit bill; the surcharge and GST figures are from secondary sources and change monthly.",
+   "GST at 18% is applied to the subtotal of energy, fixed charge and surcharges, which adds Rs 2,164 to a 300 unit bill; the surcharge and GST figures are from secondary sources and change monthly.",
    "Lifeline rates apply only up to 100 units, with no fixed charge, and a connection of 5 kW or more is billed on a peak and off-peak (ToU) meter instead of slabs.",
-   "The bill jumps at 700 units: up to there every unit is billed at Rs 41.85, but one unit more moves all of them to the top slab rate of Rs 47.20, which adds Rs 4,478 to the bill of an unprotected 1 kW home.",
+   "The bill jumps at 700 units: up to there every unit is billed at Rs 41.85, but one unit more moves all of them to the top slab rate of Rs 47.20, which adds Rs 4,481 to the bill of an unprotected 1 kW home.",
    "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of 7.5% on a monthly bill of Rs 25,000 or more; consumers on the list pay none."
   ],
   "mistakes": [
    "Billing slab-wise as an unprotected consumer. Unprotected bills charge every unit at the rate of the slab the total reaches, so one extra unit can raise the whole bill.",
    "Ticking protected because this month is low. Protection needs all of the last six months under the limit; the bill prints the category.",
-   "Leaving out the FPA. The monthly fuel adjustment can be a large positive or negative line; copy it from the bill into the advanced field.",
+   "Keeping the pre-filled FPA when your bill shows a different one. The monthly fuel adjustment can be a large positive or negative line; copy your bill's rate into the advanced field.",
    "Using an old fixed charge. The fixed charge is per kW of sanctioned load and steps up with the slab, so a higher-usage month also pays a higher fixed charge.",
    "Reading the estimate as the exact bill. Surcharge, QTA, FPA and tax values change monthly and some are from secondary sources; the estimate is for planning and for checking a bill that looks wrong."
   ],
@@ -217,7 +217,13 @@
      "label": "Sanctioned load",
      "unit": "kW",
      "default": 1,
-     "hint": "The kW printed on the bill; most homes are one to five. It sets the fixed charge."
+     "hint": "The kW printed on the bill; most homes are one to five. It sets the fixed charge. A connection of 5 kW or more is billed on peak and off-peak (ToU) rates instead: use the ToU bill calculator.",
+     "l": [
+      {
+       "t": "ToU bill calculator",
+       "u": "/guides/peak-hours-pakistan/"
+      }
+     ]
     },
     {
      "name": "protected",
@@ -261,25 +267,25 @@
      "name": "fc_surcharge_per_unit",
      "label": "FC surcharge",
      "unit": "Rs per unit",
-     "default": 3.23,
      "advanced": true,
-     "hint": "Financing cost surcharge per unit, from your bill. Secondary-source default; change it if your bill differs."
+     "hint": "Financing cost surcharge per unit, from your bill. Secondary-source default; change it if your bill differs.",
+     "placeholder": "Blank = Rs 3.23 per unit (none on lifeline)"
     },
     {
      "name": "fpa_per_unit",
      "label": "FPA / FCA",
      "unit": "Rs per unit",
-     "placeholder": "From your bill (FPA / FCA)",
      "advanced": true,
-     "hint": "Monthly fuel price adjustment, positive or negative, from the bill. Leave blank if you do not know it."
+     "hint": "Pre-filled with the latest NEPRA-verified fuel adjustment, the one for July 2026 charged on September 2026 bills. October 2026 bills carry Rs 1.11 per unit for August 2026, reported in the news; this page keeps the latest NEPRA-verified rate until that decision is published. Replace it with the FPA rate printed on your bill (negative is a credit). Protected homes pay it too; lifeline bills carry none.",
+     "default": 2.0581
     },
     {
      "name": "gst_pct",
      "label": "GST",
      "unit": "%",
-     "default": 18,
      "advanced": true,
-     "hint": "Sales tax applied to the bill subtotal."
+     "hint": "Sales tax applied to the bill subtotal.",
+     "placeholder": "Blank = 18% (none on lifeline)"
     }
    ],
    "fixed_inputs": {},
@@ -289,7 +295,7 @@
      "label": "Estimated bill",
      "spec": "rs",
      "label_ur": "Andazan bill",
-     "value": "Rs 13,458"
+     "value": "Rs 14,186"
     },
     {
      "key": "energy_rs",
@@ -320,16 +326,36 @@
      "value": "Rs 156"
     },
     {
+     "key": "fpa_rs",
+     "label": "FPA (fuel price adjustment)",
+     "spec": "rs",
+     "value": "Rs 617"
+    },
+    {
      "key": "gst_rs",
      "label": "GST",
      "spec": "rs",
      "label_ur": "GST",
-     "value": "Rs 2,053"
+     "value": "Rs 2,164"
+    },
+    {
+     "key": "next_units",
+     "label": "This slab ends at (units)",
+     "spec": "int",
+     "optional": true,
+     "value": "300"
+    },
+    {
+     "key": "next_rs",
+     "label": "One unit past that limit adds",
+     "spec": "rs",
+     "optional": true,
+     "value": "Rs 1,297"
     }
    ],
    "how": {
-    "tpl": "Energy: {{out.units}} units × {{out.rate|rs2}} (the {{out.category}} rate of the slab reached) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge = {{out.fc_rs|rs}}, QTA = {{out.qta_rs|rs}}, FPA = {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}}; GST at {{out.gst_pct}}% = {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}.",
-    "text": "Energy: 300 units × Rs 33.10 (the unprotected rate of the slab reached) = Rs 9,930. Fixed charge for 1 kW = Rs 350. FC surcharge = Rs 969, QTA = Rs 156, FPA = Rs 0. Subtotal Rs 11,405; GST at 18% = Rs 2,053. Estimated bill Rs 13,458."
+    "tpl": "Energy ({{out.category}}): {{out.energy_calc}} = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge = {{out.fc_rs|rs}}, QTA = {{out.qta_rs|rs}}, FPA = {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}}; GST at {{out.gst_pct}}% = {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}.",
+    "text": "Energy (unprotected): 300 × Rs 33.10 = Rs 9,930. Fixed charge for 1 kW = Rs 350. FC surcharge = Rs 969, QTA = Rs 156, FPA = Rs 617. Subtotal Rs 12,022; GST at 18% = Rs 2,164. Estimated bill Rs 14,186."
    },
    "submit": "Calculate",
    "notice": "",
@@ -337,34 +363,34 @@
     {
      "label": "Pakistan electricity tariff (NEPRA notification)",
      "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf",
-     "checked": "2026-10-13"
+     "checked": "2026-10-21"
     }
    ]
   },
   "examples": [
    {
     "title": "200 units, protected consumer",
-    "text": "Energy charge Rs 2,355 billed slab-wise at protected rates, fixed charge Rs 300 for 1 kW, FC surcharge Rs 646, QTA Rs 104, GST Rs 613. Estimated bill Rs 4,018."
+    "text": "Energy charge Rs 2,355 billed slab-wise at protected rates, fixed charge Rs 300 for 1 kW, FC surcharge Rs 646, QTA Rs 104, FPA Rs 412, GST Rs 687. Estimated bill Rs 4,504."
    },
    {
     "title": "200 units, unprotected consumer",
-    "text": "The same 200 units at the unprotected rate of Rs 28.91 = Rs 5,782, fixed charge Rs 300, FC surcharge Rs 646, QTA Rs 104, GST Rs 1,230. Estimated bill Rs 8,062, about double the protected bill."
+    "text": "The same 200 units at the unprotected rate of Rs 28.91 = Rs 5,782, fixed charge Rs 300, FC surcharge Rs 646, QTA Rs 104, FPA Rs 412, GST Rs 1,304. Estimated bill Rs 8,548, about double the protected bill."
    },
    {
     "title": "300 units, unprotected",
-    "text": "300 units × Rs 33.10 = Rs 9,930, fixed charge Rs 350, FC surcharge Rs 969, QTA Rs 156, GST Rs 2,053. Estimated bill Rs 13,458."
+    "text": "300 units × Rs 33.10 = Rs 9,930, fixed charge Rs 350, FC surcharge Rs 969, QTA Rs 156, FPA Rs 617, GST Rs 2,164. Estimated bill Rs 14,186."
    },
    {
     "title": "500 units on a 2 kW connection",
-    "text": "A summer bill with an AC: 500 units × Rs 38.95 = Rs 19,475, fixed charge Rs 1,000 for 2 kW, FC surcharge Rs 1,615, QTA Rs 260, GST Rs 4,023. Estimated bill Rs 26,373."
+    "text": "A summer bill with an AC: 500 units × Rs 38.95 = Rs 19,475, fixed charge Rs 1,000 for 2 kW, FC surcharge Rs 1,615, QTA Rs 260, FPA Rs 1,029, GST Rs 4,208. Estimated bill Rs 27,587."
    },
    {
     "title": "100 units, lifeline consumer",
-    "text": "A lifeline consumer using 100 units pays Rs 7.74 per unit = Rs 774 with no fixed charge and no QTA. With the FC surcharge and GST fields left blank the calculator assumes neither applies to lifeline bills, which is still being verified, so the estimated bill is Rs 774."
+    "text": "A lifeline consumer using 100 units pays Rs 7.74 per unit = Rs 774 with no fixed charge, no QTA and no FPA. With the FC surcharge and GST fields left blank the calculator assumes neither applies to lifeline bills, which is still being verified, so the estimated bill is Rs 774."
    }
   ],
   "table": {
-   "caption": "Estimated monthly bill by units for a 1 kW connection with the default FC surcharge, QTA and GST (unprotected unless marked)",
+   "caption": "Estimated monthly bill by units for a 1 kW connection with the default FC surcharge, QTA and GST and the July 2026 FPA (unprotected unless marked)",
    "head": [
     "Units",
     "Average rate per unit",
@@ -378,53 +404,53 @@
      "Rs 22.44",
      "Rs 2,244",
      "Rs 275",
-     "Rs 3,415"
+     "Rs 3,658"
     ],
     [
      "200 (protected)",
      "Rs 11.78",
      "Rs 2,355",
      "Rs 300",
-     "Rs 4,018"
+     "Rs 4,504"
     ],
     [
      "200 (unprotected)",
      "Rs 28.91",
      "Rs 5,782",
      "Rs 300",
-     "Rs 8,062"
+     "Rs 8,548"
     ],
     [
      "300 (unprotected)",
      "Rs 33.10",
      "Rs 9,930",
      "Rs 350",
-     "Rs 13,458"
+     "Rs 14,186"
     ],
     [
      "400 (unprotected)",
      "Rs 36.46",
      "Rs 14,584",
      "Rs 400",
-     "Rs 19,451"
+     "Rs 20,422"
     ],
     [
      "500 (unprotected)",
      "Rs 38.95",
      "Rs 19,475",
      "Rs 500",
-     "Rs 25,783"
+     "Rs 26,997"
     ],
     [
      "700 (unprotected)",
      "Rs 41.85",
      "Rs 29,295",
      "Rs 675",
-     "Rs 38,462"
+     "Rs 40,162"
     ]
    ]
   },
-  "answer": "An unprotected home using 300 units a month on a 1 kW connection pays about Rs 13,458: Rs 9,930 in energy charges at Rs 33.10 per unit, plus the fixed charge, FC surcharge, QTA and 18% GST, before the month's FPA. Bill = units × slab rate + fixed charge + surcharges, then GST on the subtotal.",
+  "answer": "An unprotected home using 300 units a month on a 1 kW connection pays about Rs 14,186: Rs 9,930 in energy charges at Rs 33.10 per unit, plus the fixed charge, FC surcharge, QTA, the July 2026 FPA and 18% GST. Bill = units × slab rate + fixed charge + surcharges, then GST on the subtotal.",
   "formula": {
    "text": "Bill = units × slab rate + fixed Rs/kW × sanctioned kW + (FC + QTA + FPA) × units, then + GST",
    "lines": [
@@ -477,7 +503,7 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/bill/electricity-bill-calculator-pakistan/#breadcrumb"
     },
-    "dateModified": "2026-10-15",
+    "dateModified": "2026-10-21",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }
@@ -530,7 +556,7 @@
       "name": "Does this bill calculator work for every DISCO in Pakistan?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Yes. LESCO, IESCO, GEPCO, FESCO, MEPCO, PESCO, HESCO, SEPCO, QESCO, TESCO and K-Electric all charge the same uniform domestic tariff; only the monthly FPA line can differ, and you can enter it."
+       "text": "Yes. LESCO, IESCO, GEPCO, FESCO, MEPCO, PESCO, HESCO, SEPCO, QESCO, TESCO and K-Electric all charge the same uniform domestic tariff; NEPRA sets one FPA for all of them as well, so the same units give the same estimate; real bills differ only by billing days, arrears and local items."
       }
      },
      {

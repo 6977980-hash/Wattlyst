@@ -5,7 +5,7 @@
  "url": "/bill/hesco-bill-calculator/",
  "h1": "HESCO Bill Calculator",
  "title": "HESCO Bill Calculator 2026 (Latest Tariff) | Wattlyst",
- "meta": "Estimate your HESCO bill from units with the 2026 NEPRA slabs, fixed charge, QTA and GST, then add the month's FPA. Why Hyderabad summer bills are high.",
+ "meta": "Estimate your HESCO bill from units with the 2026 NEPRA slabs, fixed charge, QTA, GST and the latest NEPRA FPA. Why Hyderabad summer bills are high.",
  "primary_keyword": "hesco bill calculator",
  "wave": 2,
  "status": "publish",
@@ -36,7 +36,7 @@
    "url": "/bill/hesco-bill-calculator/"
   }
  ],
- "modified": "2026-10-15",
+ "modified": "2026-10-21",
  "content": {
   "intro": "",
   "sections": [
@@ -44,7 +44,7 @@
     "h2": "What is the HESCO per unit rate in 2026?",
     "p": [
      "HESCO is the Hyderabad Electric Supply Company Limited, the ex-WAPDA distribution company with its head office at the WAPDA Offices Complex in Hussainabad, Hyderabad. It does not set its own prices. Like every other DISCO it bills the uniform A-1 domestic tariff that NEPRA determined and the Government notified for 2026. For an unprotected home the rate of the slab the month's units reach applies to every unit: 350 units are all billed at Rs 36.46, which is why a few extra units at the top of a slab can cost far more than they look.",
-     "The worked examples and the table below print the rate for the protected, the mid-range, the summer-AC and the lifeline cases. Add the FPA from your own bill for the month's exact figure; it is the only line that is not in the uniform tariff."
+     "The worked examples and the table below print the rate for the protected, the mid-range, the summer-AC and the lifeline cases. The FPA, the one line not in the uniform tariff, is pre-filled with the latest NEPRA-verified month; replace it with your own bill's for the exact figure."
     ]
    },
    {
@@ -98,7 +98,7 @@
   "faq": [
    {
     "q": "How do I get a HESCO bill estimate from my units?",
-    "a": "Enter the units and the sanctioned load from your bill, tick protected only if the bill says so, and the estimate shows energy, fixed charge, FC surcharge, QTA and GST. For 350 units the estimate is Rs 17,079 before FPA."
+    "a": "Enter the units and the sanctioned load from your bill, tick protected only if the bill says so, and the estimate shows energy, fixed charge, FC surcharge, QTA and GST. For 350 units the estimate is Rs 17,929, FPA included."
    },
    {
     "q": "What is the HESCO per unit rate for a home?",
@@ -139,14 +139,14 @@
    "HESCO, the Hyderabad Electric Supply Company Limited, bills the uniform NEPRA A-1 domestic tariff for 2026; it has no rates of its own, so a HESCO bill for a given number of units equals a LESCO or IESCO bill apart from the monthly FPA line.",
    "The HESCO per unit rate for an unprotected home using 350 units is Rs 36.46 on every unit, which gives Rs 12,761 before the fixed charge, surcharges and GST.",
    "A HESCO consumer stays protected only while every one of the last 6 bills is at or under 200 units; in lower Sindh a single summer month with a fan-and-AC load above that limit moves the home to unprotected rates.",
-   "GST at 18% is charged on energy, fixed charge and surcharges together, adding Rs 2,605 to a 350 unit HESCO bill; the surcharge and GST values are secondary-source figures that change over time.",
-   "The bill jumps at 700 units: up to there every unit is billed at Rs 41.85, but one unit more moves all of them to the top slab rate of Rs 47.20, which adds Rs 4,478 to the bill of an unprotected 1 kW home.",
+   "GST at 18% is charged on energy, fixed charge and surcharges together, adding Rs 2,735 to a 350 unit HESCO bill; the surcharge and GST values are secondary-source figures that change over time.",
+   "The bill jumps at 700 units: up to there every unit is billed at Rs 41.85, but one unit more moves all of them to the top slab rate of Rs 47.20, which adds Rs 4,481 to the bill of an unprotected 1 kW home.",
    "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of 7.5% on a monthly bill of Rs 25,000 or more; consumers on the list pay none."
   ],
   "mistakes": [
    "Looking for a HESCO-only tariff. HESCO bills the uniform NEPRA domestic tariff; the slab rates are the same in Hyderabad, Lahore and Peshawar.",
    "Ticking protected because the winter bills were small. Protection needs all of the last 6 months under 200 units, and one AC month in lower Sindh usually breaks the run.",
-   "Leaving the FPA blank when the bill shows one. The fuel adjustment is set every month by NEPRA and can swing the total either way; copy it into the advanced field.",
+   "Keeping the pre-filled FPA when the bill shows a different one. The fuel adjustment is set every month by NEPRA and can swing the total either way; copy your bill's rate into the advanced field.",
    "Entering a bill that covers more than a month as if it were a normal month. A long reading cycle can push the units into a higher slab; use the overbilling check for those bills."
   ],
   "sources": [
@@ -191,7 +191,13 @@
      "label": "Sanctioned load",
      "unit": "kW",
      "default": 1,
-     "hint": "The kW printed on the bill; most homes in Hyderabad and the smaller towns are one to three. It sets the fixed charge."
+     "hint": "The kW printed on the bill; most homes in Hyderabad and the smaller towns are one to three. It sets the fixed charge. A connection of 5 kW or more is billed on peak and off-peak (ToU) rates instead: use the ToU bill calculator.",
+     "l": [
+      {
+       "t": "ToU bill calculator",
+       "u": "/guides/peak-hours-pakistan/"
+      }
+     ]
     },
     {
      "name": "protected",
@@ -235,25 +241,25 @@
      "name": "fc_surcharge_per_unit",
      "label": "FC surcharge",
      "unit": "Rs per unit",
-     "default": 3.23,
      "advanced": true,
-     "hint": "Financing cost surcharge per unit, from the bill. Secondary-source default."
+     "hint": "Financing cost surcharge per unit, from the bill. Secondary-source default.",
+     "placeholder": "Blank = Rs 3.23 per unit (none on lifeline)"
     },
     {
      "name": "fpa_per_unit",
      "label": "FPA",
      "unit": "Rs per unit",
-     "placeholder": "From your bill (FPA / FCA)",
      "advanced": true,
-     "hint": "Monthly fuel price adjustment from the bill, positive or negative. Leave blank if unknown."
+     "hint": "Pre-filled with the latest NEPRA-verified fuel adjustment, the one for July 2026 charged on September 2026 bills. October 2026 bills carry Rs 1.11 per unit for August 2026, reported in the news; this page keeps the latest NEPRA-verified rate until that decision is published. Replace it with the FPA rate printed on your bill (negative is a credit). Protected homes pay it too; lifeline bills carry none.",
+     "default": 2.0581
     },
     {
      "name": "gst_pct",
      "label": "GST",
      "unit": "%",
-     "default": 18,
      "advanced": true,
-     "hint": "Sales tax applied to the bill subtotal."
+     "hint": "Sales tax applied to the bill subtotal.",
+     "placeholder": "Blank = 18% (none on lifeline)"
     }
    ],
    "fixed_inputs": {},
@@ -263,7 +269,7 @@
      "label": "Estimated bill",
      "spec": "rs",
      "label_ur": "Andazan bill",
-     "value": "Rs 17,079"
+     "value": "Rs 17,929"
     },
     {
      "key": "energy_rs",
@@ -294,16 +300,36 @@
      "value": "Rs 182"
     },
     {
+     "key": "fpa_rs",
+     "label": "FPA (fuel price adjustment)",
+     "spec": "rs",
+     "value": "Rs 720"
+    },
+    {
      "key": "gst_rs",
      "label": "GST",
      "spec": "rs",
      "label_ur": "GST",
-     "value": "Rs 2,605"
+     "value": "Rs 2,735"
+    },
+    {
+     "key": "next_units",
+     "label": "This slab ends at (units)",
+     "spec": "int",
+     "optional": true,
+     "value": "400"
+    },
+    {
+     "key": "next_rs",
+     "label": "One unit past that limit adds",
+     "spec": "rs",
+     "optional": true,
+     "value": "Rs 1,345"
     }
    ],
    "how": {
-    "tpl": "{{out.units}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
-    "text": "350 units × Rs 36.46 (unprotected slab rate) = Rs 12,761. Fixed charge for 1 kW = Rs 400. FC surcharge Rs 1,131 + QTA Rs 182 + FPA Rs 0. Subtotal Rs 14,474 + GST 18% (Rs 2,605) = Rs 17,079."
+    "tpl": "Energy ({{out.category}}): {{out.energy_calc}} = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
+    "text": "Energy (unprotected): 350 × Rs 36.46 = Rs 12,761. Fixed charge for 1 kW = Rs 400. FC surcharge Rs 1,131 + QTA Rs 182 + FPA Rs 720. Subtotal Rs 15,194 + GST 18% (Rs 2,735) = Rs 17,929."
    },
    "submit": "Calculate",
    "notice": "",
@@ -311,30 +337,30 @@
     {
      "label": "Pakistan electricity tariff (NEPRA notification)",
      "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf",
-     "checked": "2026-10-13"
+     "checked": "2026-10-21"
     }
    ]
   },
   "examples": [
    {
     "title": "150 units, protected home in a small town",
-    "text": "Energy charge Rs 1,705 slab-wise at protected rates, fixed charge Rs 300 for 1 kW, FC surcharge Rs 485, QTA Rs 78, GST Rs 462. Estimated HESCO bill Rs 3,030."
+    "text": "Energy charge Rs 1,705 slab-wise at protected rates, fixed charge Rs 300 for 1 kW, FC surcharge Rs 485, QTA Rs 78, FPA Rs 309, GST Rs 518. Estimated HESCO bill Rs 3,395."
    },
    {
     "title": "350 units, unprotected, fans and a fridge",
-    "text": "350 × Rs 36.46 = Rs 12,761, fixed charge Rs 400, FC surcharge Rs 1,131, QTA Rs 182, GST Rs 2,605. Estimated HESCO bill Rs 17,079."
+    "text": "350 × Rs 36.46 = Rs 12,761, fixed charge Rs 400, FC surcharge Rs 1,131, QTA Rs 182, FPA Rs 720, GST Rs 2,735. Estimated HESCO bill Rs 17,929."
    },
    {
     "title": "550 units in a Hyderabad summer with an AC, 2 kW connection",
-    "text": "550 × Rs 40.22 = Rs 22,121, fixed charge Rs 1,350 for 2 kW, FC surcharge Rs 1,777, QTA Rs 286, GST Rs 4,596. Estimated HESCO bill Rs 30,130 before FPA."
+    "text": "550 × Rs 40.22 = Rs 22,121, fixed charge Rs 1,350 for 2 kW, FC surcharge Rs 1,777, QTA Rs 286, FPA Rs 1,132, GST Rs 4,800. Estimated HESCO bill Rs 31,466."
    },
    {
     "title": "80 units, lifeline consumer",
-    "text": "80 units at the lifeline rate of Rs 7.74 = Rs 619, no fixed charge and no QTA. With the FC surcharge and GST fields blank the estimate assumes neither applies to lifeline bills (still being verified): Rs 619."
+    "text": "80 units at the lifeline rate of Rs 7.74 = Rs 619, no fixed charge, no QTA and no FPA. With the FC surcharge and GST fields blank the estimate assumes neither applies to lifeline bills (still being verified): Rs 619."
    }
   ],
   "table": {
-   "caption": "Estimated HESCO bill by units on a 1 kW connection with the default surcharges and GST, before FPA; unprotected unless marked",
+   "caption": "Estimated HESCO bill by units on a 1 kW connection with the default surcharges and GST, with the July 2026 FPA; unprotected unless marked",
    "head": [
     "Units",
     "Average rate per unit",
@@ -348,53 +374,53 @@
      "Rs 22.44",
      "Rs 2,244",
      "Rs 275",
-     "Rs 3,415"
+     "Rs 3,658"
     ],
     [
      "180 (protected)",
      "Rs 11.64",
      "Rs 2,095",
      "Rs 300",
-     "Rs 3,621"
+     "Rs 4,058"
     ],
     [
      "250 (unprotected)",
      "Rs 33.10",
      "Rs 8,275",
      "Rs 350",
-     "Rs 11,284"
+     "Rs 11,892"
     ],
     [
      "350 (unprotected)",
      "Rs 36.46",
      "Rs 12,761",
      "Rs 400",
-     "Rs 17,079"
+     "Rs 17,929"
     ],
     [
      "450 (unprotected)",
      "Rs 38.95",
      "Rs 17,528",
      "Rs 500",
-     "Rs 23,265"
+     "Rs 24,358"
     ],
     [
      "550 (unprotected)",
      "Rs 40.22",
      "Rs 22,121",
      "Rs 675",
-     "Rs 29,334"
+     "Rs 30,669"
     ],
     [
      "750 (unprotected)",
      "Rs 47.20",
      "Rs 35,400",
      "Rs 675",
-     "Rs 45,888"
+     "Rs 47,710"
     ]
    ]
   },
-  "answer": "A HESCO home in Hyderabad or lower Sindh using 350 units a month as an unprotected consumer on a 1 kW connection pays about Rs 17,079: Rs 12,761 energy charge at Rs 36.46 per unit plus fixed charge, FC surcharge, QTA and GST. HESCO bill = units × slab rate + fixed charge + surcharges + GST, with the month's FPA added from your bill.",
+  "answer": "A HESCO home in Hyderabad or lower Sindh using 350 units a month as an unprotected consumer on a 1 kW connection pays about Rs 17,929: Rs 12,761 energy charge at Rs 36.46 per unit plus fixed charge, FC surcharge, QTA, the July 2026 FPA and GST. HESCO bill = units × slab rate + fixed charge + surcharges + GST, with the month's FPA added from your bill.",
   "formula": {
    "text": "Bill = units × slab rate + fixed Rs/kW × sanctioned kW + (FC + QTA + FPA) × units, then + GST",
    "lines": [
@@ -438,7 +464,7 @@
     "@id": "https://wattlyst.com/bill/hesco-bill-calculator/#webpage",
     "url": "https://wattlyst.com/bill/hesco-bill-calculator/",
     "name": "HESCO Bill Calculator 2026 (Latest Tariff) | Wattlyst",
-    "description": "Estimate your HESCO bill from units with the 2026 NEPRA slabs, fixed charge, QTA and GST, then add the month's FPA. Why Hyderabad summer bills are high.",
+    "description": "Estimate your HESCO bill from units with the 2026 NEPRA slabs, fixed charge, QTA, GST and the latest NEPRA FPA. Why Hyderabad summer bills are high.",
     "inLanguage": "en",
     "isPartOf": {
      "@id": "https://wattlyst.com/#website"
@@ -446,7 +472,7 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/bill/hesco-bill-calculator/#breadcrumb"
     },
-    "dateModified": "2026-10-15",
+    "dateModified": "2026-10-21",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }
@@ -456,7 +482,7 @@
     "@id": "https://wattlyst.com/bill/hesco-bill-calculator/#app",
     "name": "HESCO Bill Calculator",
     "url": "https://wattlyst.com/bill/hesco-bill-calculator/",
-    "description": "Estimate your HESCO bill from units with the 2026 NEPRA slabs, fixed charge, QTA and GST, then add the month's FPA. Why Hyderabad summer bills are high.",
+    "description": "Estimate your HESCO bill from units with the 2026 NEPRA slabs, fixed charge, QTA, GST and the latest NEPRA FPA. Why Hyderabad summer bills are high.",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Any",
     "browserRequirements": "Requires JavaScript for live results",
@@ -491,7 +517,7 @@
       "name": "How do I get a HESCO bill estimate from my units?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Enter the units and the sanctioned load from your bill, tick protected only if the bill says so, and the estimate shows energy, fixed charge, FC surcharge, QTA and GST. For 350 units the estimate is Rs 17,079 before FPA."
+       "text": "Enter the units and the sanctioned load from your bill, tick protected only if the bill says so, and the estimate shows energy, fixed charge, FC surcharge, QTA and GST. For 350 units the estimate is Rs 17,929, FPA included."
       }
      },
      {
