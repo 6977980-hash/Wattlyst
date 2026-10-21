@@ -85,7 +85,7 @@
   "how": "Dust share: {{out.rate|pct}} a day × {{out.days}} days = {{out.soiling|pct}} (never more than {{d.soiling_cap|pct}}, where dust stops building up much). Units lost: {{out.kwp|1}} kW × {{out.yield|1}} units per kW a day × {{out.soiling|pct}} = {{out.loss_kwh_day|1}} units a day. Money lost: {{out.loss_kwh_day|1}} × {{out.tariff|rs2}} = {{out.rs_lost_day|rs}} a day. Cleaning pays when the money lost since the last cleaning, added up day by day, passes the cost of one cleaning.",
   "key_facts": [
     "Solar output lost to dust = system kW × units per kW a day × dust share; by Wattlyst's estimate for dusty Pakistani cities the dust share grows about {{d.soiling_rate_per_day|pct}} a day without rain, up to about {{d.soiling_cap|pct}}.",
-    "A {{in.kwp|int}} kW system in Lahore left {{in.days|int}} days without cleaning loses about {{out.loss_kwh_day|1}} units a day, {{out.rs_lost_day|rs}} a day at the unprotected rate of {{in.tariff|rs2}} per unit.",
+    "A {{in.kwp|int}} kW system in Lahore left {{in.days|int}} days without cleaning loses about {{out.loss_kwh_day|1}} units a day, {{out.rs_lost_day|rs}} a day at the 301 to 400 unit slab rate of {{in.tariff|rs2}} per unit (unprotected).",
     "With a cleaning cost of {{in.cleaning_cost|rs}}, cleaning a {{in.kwp|int}} kW system in Lahore pays for itself about every {{out.clean_after_days|int}} days; a {{ex.2.in.kwp|int}} kW system that exports most of its units, valued at the buyback rate, takes about {{ex.2.out.clean_after_days|int}} days.",
     "The dust rate is an estimate: dust in a city next to a busy road, a brick kiln or a construction site builds faster, and a monsoon shower resets it; compare your inverter app's output on clear days before and after a cleaning to measure your own."
   ],
@@ -240,7 +240,9 @@
     "N6"
   ],
   "next": "D10",
-  "literal_numbers": [],
+  "literal_numbers": [
+    "301 to 400"
+  ],
   "sources": [
     {
       "label": "Global Solar Atlas (sun yield by city)",

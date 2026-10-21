@@ -136,7 +136,7 @@
   {
    "h2": "Fridge units per month and monthly cost",
    "p": [
-    "A non-inverter fridge on the default hours uses about {{out.monthly_units|1}} units in a {{out.days|int}}-day month, about {{out.monthly_rs|rs}} at {{out.tariff|rs2}} per unit. An inverter fridge uses about {{ex.0.out.monthly_units|1}} units, about {{ex.0.out.monthly_rs|rs}}.",
+    "A non-inverter fridge on the default hours uses about {{out.monthly_units|1}} units in a {{out.days|2}}-day month, about {{out.monthly_rs|rs}} at {{out.tariff|rs2}} per unit. An inverter fridge uses about {{ex.0.out.monthly_units|1}} units, about {{ex.0.out.monthly_rs|rs}}.",
     "That is the energy charge only. Because the fridge runs every day of the year it is part of the base load that decides your slab, so in a month near a slab boundary its units can cost more than this. The bill calculator turns total units into a full bill."
    ]
   },
@@ -172,7 +172,7 @@
     ]
    },
    "title": "One inverter fridge",
-   "text": "{{out.running_w|int}} W × its compressor hours = {{out.daily_kwh|2}} units a day, {{out.monthly_units|1}} units in {{out.days|int}} days, about {{out.monthly_rs|rs}} at {{out.tariff|rs2}} per unit. Starting surge only {{out.peak_w|int}} W."
+   "text": "{{out.running_w|int}} W × its compressor hours = {{out.daily_kwh|2}} units a day, {{out.monthly_units|1}} units in {{out.days|2}} days, about {{out.monthly_rs|rs}} at {{out.tariff|rs2}} per unit. Starting surge only {{out.peak_w|int}} W."
   },
   {
    "inputs": {
@@ -230,7 +230,7 @@
   }
  ],
  "table": {
-  "caption": "Units and cost of a non-inverter fridge by running watts, compressor running {{appliance.typical_hours_per_day|int}} hours a day for {{out.days|int}} days at {{out.tariff|rs2}} per unit (energy charge only)",
+  "caption": "Units and cost of a non-inverter fridge by running watts, compressor running {{appliance.typical_hours_per_day|int}} hours a day for {{out.days|2}} days at {{out.tariff|rs2}} per unit (energy charge only)",
   "rows": [
    { "loads": [ { "id": "refrigerator-non-inverter", "qty": 1, "watts": 100 } ] },
    { "loads": [ { "id": "refrigerator-non-inverter", "qty": 1, "watts": 150 } ] },
@@ -272,7 +272,7 @@
   },
   {
    "q": "How many units does a fridge use per month?",
-   "a": "About {{out.monthly_units|1}} units for a non-inverter fridge and {{ex.0.out.monthly_units|1}} for an inverter fridge in a {{out.days|int}}-day month, about {{out.monthly_rs|rs}} and {{ex.0.out.monthly_rs|rs}} at {{out.tariff|rs2}} per unit."
+   "a": "About {{out.monthly_units|1}} units for a non-inverter fridge and {{ex.0.out.monthly_units|1}} for an inverter fridge in a {{out.days|2}}-day month, about {{out.monthly_rs|rs}} and {{ex.0.out.monthly_rs|rs}} at {{out.tariff|rs2}} per unit."
   },
   {
    "q": "How many watts does a refrigerator use?",

@@ -109,7 +109,7 @@
   "An electric iron is rated between {{appliance.running_w_range.0|int}} W and {{appliance.running_w_range.1|int}} W; a {{appliance.running_w|int}} W iron uses {{out.running_kw|2}} kWh per hour with the element on and a {{ex.2.out.running_w|int}} W steam iron about {{ex.2.out.running_kw|2}} kWh per hour (units per hour = watts ÷ one thousand).",
   "The thermostat switches the element off once the plate is hot, so over an hour of ironing the real draw is lower than the rating; the figures here are the upper limit for the rated watts.",
   "At {{out.volts|int}} V a {{out.running_w|int}} W iron draws {{out.amps|1}} A and a {{ex.4.out.running_w|int}} W iron {{ex.4.out.amps|1}} A, with a power factor of {{out.pf|1}} because the element is purely resistive, so watts and VA are equal and there is no starting surge.",
-  "Half an hour of ironing a day with a {{out.running_w|int}} W iron is about {{out.monthly_units|1}} units in a {{out.days|int}}-day month, about {{out.monthly_rs|rs}} of energy charge at {{out.tariff|rs2}} per unit; an hour a day is about {{ex.3.out.monthly_units|1}} units.",
+  "Half an hour of ironing a day with a {{out.running_w|int}} W iron is about {{out.monthly_units|1}} units in a {{out.days|2}}-day month, about {{out.monthly_rs|rs}} of energy charge at {{out.tariff|rs2}} per unit; an hour a day is about {{ex.3.out.monthly_units|1}} units.",
   "A UPS or inverter can run an iron only if its continuous rating in watts, not VA, is above the iron's {{out.running_w|int}} W; a line-interactive UPS delivers only about {{d.pf_ups_line_interactive|pct}} of its VA rating as watts."
  ],
  "formula": {
@@ -169,7 +169,7 @@
     ]
    },
    "title": "{{out.running_w|int}} W dry iron, half an hour a day",
-   "text": "{{out.running_w|int}} W ÷ one thousand = {{out.running_kw|2}} kWh per hour and {{out.amps|1}} A at {{out.volts|int}} V. Half an hour a day is {{out.daily_kwh|2}} kWh a day and {{out.monthly_units|1}} units in {{out.days|int}} days, about {{out.monthly_rs|rs}}."
+   "text": "{{out.running_w|int}} W ÷ one thousand = {{out.running_kw|2}} kWh per hour and {{out.amps|1}} A at {{out.volts|int}} V. Half an hour a day is {{out.daily_kwh|2}} kWh a day and {{out.monthly_units|1}} units in {{out.days|2}} days, about {{out.monthly_rs|rs}}."
   },
   {
    "inputs": {
@@ -225,7 +225,7 @@
   }
  ],
  "table": {
-  "caption": "Electric irons by rating, half an hour a day for {{out.days|int}} days at {{out.tariff|rs2}} per unit and {{out.volts|int}} V",
+  "caption": "Electric irons by rating, half an hour a day for {{out.days|2}} days at {{out.tariff|rs2}} per unit and {{out.volts|int}} V",
   "rows": [
    {
     "loads": [
@@ -313,7 +313,7 @@
   },
   {
    "q": "How many units does an iron use in a month?",
-   "a": "Half an hour a day with a {{out.running_w|int}} W iron is about {{out.monthly_units|1}} units in {{out.days|int}} days, about {{out.monthly_rs|rs}} at {{out.tariff|rs2}} per unit; an hour a day is about {{ex.3.out.monthly_units|1}} units. A {{ex.2.out.running_w|int}} W steam iron for half an hour a day is about {{ex.2.out.monthly_units|1}} units."
+   "a": "Half an hour a day with a {{out.running_w|int}} W iron is about {{out.monthly_units|1}} units in {{out.days|2}} days, about {{out.monthly_rs|rs}} at {{out.tariff|rs2}} per unit; an hour a day is about {{ex.3.out.monthly_units|1}} units. A {{ex.2.out.running_w|int}} W steam iron for half an hour a day is about {{ex.2.out.monthly_units|1}} units."
   },
   {
    "q": "Can a UPS run an iron?",

@@ -142,7 +142,7 @@
  "how": "AC: {{out.avg_kw|2}} kW × {{out.hours}} hours = {{out.daily_units|1}} units a day; {{out.daily_units|1}} units × {{out.days}} days = {{out.ac_units|int}} units a month. Without the AC: {{out.other_units}} units on the {{out.before_category|raw}} tariff = {{out.before_rs|rs}}. With the AC: {{out.total_units|int}} units on the {{out.after_category|raw}} tariff (top slab rate {{out.after_rate|rs2}} per unit) = {{out.after_rs|rs}}, including fixed charge, surcharges and GST; an FPA counts only if you enter it. Extra: {{out.after_rs|rs}} − {{out.before_rs|rs}} = {{out.extra_rs|rs}}; {{out.extra_rs|rs}} ÷ {{out.ac_units|int}} AC units = {{out.rs_per_ac_unit|rs2}} for each unit the AC uses. Protection penalty: {{out.lock_months|int}} bills × {{out.lock_per_month|rs}} = {{out.lock_extra_rs|rs}}.",
  "key_facts": [
   "What an AC adds to a Pakistani electricity bill is the bill with the AC minus the bill without it, not the AC's units × one slab rate, because the slab the whole home reaches sets the rate of every unit.",
-  "A {{out.ac_name|raw}} running {{in.hours|int}} hours a day for {{out.days|int}} days uses about {{out.ac_units|int}} units a month.",
+  "A {{out.ac_name|raw}} running {{in.hours|int}} hours a day for {{out.days|2}} days uses about {{out.ac_units|int}} units a month.",
   "A protected home on {{in.other_units|int}} units pays about {{out.before_rs|rs}}; adding that AC takes it to {{out.total_units|int}} units at the unprotected {{out.after_rate|rs2}} rate, about {{out.after_rs|rs}}, so each AC unit really costs {{out.rs_per_ac_unit|rs2}}.",
   "One month above {{out.protected_limit|int}} units ends protected status: the next {{out.lock_months|int}} bills are charged at unprotected rates even without the AC, at least {{out.lock_extra_rs|rs}} more in this example.",
   "An unprotected home on {{ex.1.in.other_units|int}} units pays about {{ex.1.out.extra_rs|rs}} more a month for the same AC, {{ex.1.out.rs_per_ac_unit|rs2}} for each AC unit, because the total moves from the {{ex.1.out.before_rate|rs2}} slab to the {{ex.1.out.after_rate|rs2}} slab."
@@ -189,7 +189,7 @@
   {
    "inputs": {},
    "title": "Protected home on {{in.other_units|int}} units adds a {{out.ac_name|raw}}",
-   "text": "{{out.avg_kw|2}} kW × {{in.hours|int}} h × {{out.days|int}} days = {{out.ac_units|int}} AC units, {{out.total_units|int}} in all. The bill goes from {{out.before_rs|rs}} (protected) to {{out.after_rs|rs}} (unprotected), {{out.extra_rs|rs}} more, and the next {{out.lock_months|int}} bills cost at least {{out.lock_extra_rs|rs}} more in all."
+   "text": "{{out.avg_kw|2}} kW × {{in.hours|int}} h × {{out.days|2}} days = {{out.ac_units|int}} AC units, {{out.total_units|int}} in all. The bill goes from {{out.before_rs|rs}} (protected) to {{out.after_rs|rs}} (unprotected), {{out.extra_rs|rs}} more, and the next {{out.lock_months|int}} bills cost at least {{out.lock_extra_rs|rs}} more in all."
   },
   {
    "inputs": {

@@ -119,7 +119,7 @@
  "key_facts": [
   "A 1 hp single-phase water motor draws about {{appliance.running_w|int}} W of electrical input while pumping ({{appliance.running_w_range.0|int}} to {{appliance.running_w_range.1|int}} W depending on make and efficiency), which is {{out.running_kw|2}} kWh per hour; one hp of shaft power is {{d.w_per_hp|1}} W and a small motor is about {{d.motor_eff|pct}} efficient, so the input watts are higher than the hp suggests.",
   "At start a 1 hp pump motor draws about {{appliance.starting_w|int}} W for a second or two, nearly three times its running watts, which is {{out.peak_amps|1}} A at {{out.volts|int}} V and {{out.pf|1}} power factor against {{out.amps|1}} A running.",
-  "A 1 hp water motor pumping one hour a day uses about {{out.monthly_units|1}} units in a {{out.days|int}}-day month, about {{out.monthly_rs|rs}} of energy charge at {{out.tariff|rs2}} per unit; two hours a day is about {{ex.1.out.monthly_units|1}} units.",
+  "A 1 hp water motor pumping one hour a day uses about {{out.monthly_units|1}} units in a {{out.days|2}}-day month, about {{out.monthly_rs|rs}} of energy charge at {{out.tariff|rs2}} per unit; two hours a day is about {{ex.1.out.monthly_units|1}} units.",
   "A UPS, inverter or generator for a water motor must be sized on the starting watts ({{out.peak_w|int}} W for 1 hp), not the running watts; a submersible pump of the same 1 hp starts at about {{ex.3.out.peak_w|int}} W."
  ],
  "formula": {
@@ -198,7 +198,7 @@
     ]
    },
    "title": "1 hp pump running two hours a day",
-   "text": "{{out.running_w|int}} W × two hours = {{out.daily_kwh|2}} kWh a day and {{out.monthly_units|1}} units in {{out.days|int}} days, about {{out.monthly_rs|rs}} at {{out.tariff|rs2}} per unit. Starting surge {{out.peak_w|int}} W, {{out.peak_amps|1}} A."
+   "text": "{{out.running_w|int}} W × two hours = {{out.daily_kwh|2}} kWh a day and {{out.monthly_units|1}} units in {{out.days|2}} days, about {{out.monthly_rs|rs}} at {{out.tariff|rs2}} per unit. Starting surge {{out.peak_w|int}} W, {{out.peak_amps|1}} A."
   },
   {
    "inputs": {
@@ -239,7 +239,7 @@
   }
  ],
  "table": {
-  "caption": "Water pumps pumping one hour a day for {{out.days|int}} days at {{out.tariff|rs2}} per unit, {{out.volts|int}} V and {{out.pf|1}} power factor",
+  "caption": "Water pumps pumping one hour a day for {{out.days|2}} days at {{out.tariff|rs2}} per unit, {{out.volts|int}} V and {{out.pf|1}} power factor",
   "rows": [
    {
     "loads": [

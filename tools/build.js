@@ -14,7 +14,7 @@ import { billIndex, solarTracker, embedList } from './lib/datasets.js';
 import { adsConfig, leadsConfig, affiliatesByPage } from './lib/monetize.js';
 import { render, fmt, placeholders, isSpec, lookup } from '../engine/format.js';
 import { errorMessage, noticeCode, EXACT, NOTICES } from '../engine/message-text.js';
-import { marketRs, roughHours } from '../engine/approx.js';
+import { lakhRs, marketRs, roughHours } from '../engine/approx.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => readFileSync(join(root, p), 'utf8');
@@ -174,8 +174,8 @@ function runCalc(ctx, inputs, what) {
 }
 
 /** Build-only formats for page text (engine/approx.js, WL-150): market prices and rough runtimes. The browser never sees them. */
-const APPROX = { rsm: marketRs, hm5: roughHours };
-const APPROX_RE = /\{\{\s*([\w.-]+)\s*\|\s*(rsm|hm5)\s*\}\}/g;
+const APPROX = { rsm: marketRs, lakh: lakhRs, hm5: roughHours };
+const APPROX_RE = /\{\{\s*([\w.-]+)\s*\|\s*(rsm|lakh|hm5)\s*\}\}/g;
 
 function text(ctx, tpl, scope, what, { links = false } = {}) {
   if (tpl === undefined || tpl === null || tpl === '') return '';
@@ -247,7 +247,7 @@ function buildContent(c, ctx) {
       return out;
     });
     // The live templates are rendered again in the browser, which has no build-only format.
-    if (APPROX_RE.test([c.how, c.how_ur, c.result_table?.caption].join(' '))) fail(`${c.id}: the how text or result table caption uses a build-only format (rsm, hm5)`);
+    if (APPROX_RE.test([c.how, c.how_ur, c.result_table?.caption].join(' '))) fail(`${c.id}: the how text or result table caption uses a build-only format (rsm, lakh, hm5)`);
     APPROX_RE.lastIndex = 0;
     const defaults = Object.fromEntries(fields.filter((f) => f.default !== undefined).map((f) => [f.name, f.default]));
     const fixed = c.fixed_inputs || {};
@@ -699,7 +699,9 @@ function llmsTxt(pages, ctx) {
   const { site } = ctx;
   const abs = (u) => site.url.replace(/\/$/, '') + u;
   const live = pages.filter((p) => p.live);
-  const line = (p) => `- [${p.h1}](${abs(p.url)}): ${p.meta}`;
+  // The engine-built answer of each page follows its meta, so an assistant can quote a number with its page (21 Oct audit WL-195).
+  const answer = (p) => { const a = ctx.built?.[p.id]?.answer; return a && p.type !== 'trust' ? ` Answer: ${a}` : ''; };
+  const line = (p) => `- [${p.h1}](${abs(p.url)}): ${p.meta}${answer(p)}`;
   const out = [`# ${site.brand}`, '', `> ${site.brand} (${site.url}) makes free electricity calculators for homes: watts and amps conversions, battery and UPS backup, generator sizing, solar systems, home load and Pakistan electricity bills. ${site.tagline} Every result shows its formula and assumptions; all calculators run in the browser.`, ''];
   const pillars = live.filter((p) => p.type === 'pillar');
   if (pillars.length) out.push('## Sections', '', ...pillars.map(line), '');
@@ -844,7 +846,7 @@ export async function build() {
   };
   files[PAGE_DATES] = JSON.stringify(pageDates, null, 1) + '\n';
   files['generated/manifest.json'] = JSON.stringify(manifest, null, 1) + '\n';
-  files['generated/llms.txt'] = llmsTxt(rows, ctxBase);
+  files['generated/llms.txt'] = llmsTxt(rows, { ...ctxBase, built: builtById });
   Object.assign(files, dist.files);
   // Hash of everything a page shows (page JSON, CSV, llms.txt, inlined CSS, shipped JS). The plugin syncs
   // and purges the page cache when the manifest changes, so a data-only deploy must change it too (WL-36).

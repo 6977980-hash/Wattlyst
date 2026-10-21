@@ -52,7 +52,7 @@
    {
     "h2": "Loadshedding UPS calculator: backup hours during loadshedding",
     "p": [
-     "To plan for loadshedding, compare the backup hours with the length of your longest outage. With the default 200 Ah battery and a 300 W load you get about 3 h 5 min, enough for a typical outage of one to two hours but not for a long evening cut. If the backup is short, the cheapest fix is a smaller load: switch the TV off and keep only fans and lights, and the backup almost doubles for every halving of the watts (not quite, because the UPS itself keeps drawing about 30 W).",
+     "To plan for loadshedding, compare the backup hours with the length of your longest outage. With the default 200 Ah battery and a 300 W load you get about 3 hours, enough for a typical outage of one to two hours but not for a long evening cut. If the backup is short, the cheapest fix is a smaller load: switch the TV off and keep only fans and lights, and the backup almost doubles for every halving of the watts (not quite, because the UPS itself keeps drawing about 30 W).",
      "Backup is only half the story. The battery must also recharge before the next cut. A tubular battery that has given a full backup needs several hours of grid power to refill, so on days with several outages the second and third backups are shorter than the first. Lithium batteries recharge faster and can use more of their capacity, which is why they suit frequent loadshedding better."
     ]
    }
@@ -60,19 +60,19 @@
   "faq": [
    {
     "q": "How long will my UPS battery last?",
-    "a": "On a 200 Ah, 12 V tubular battery with a 300 W load, about 3 h 5 min. Halve the load and the backup almost doubles (the UPS's own idle draw stays); an old or hot battery gives less."
+    "a": "On a 200 Ah, 12 V tubular battery with a 300 W load, about 3 hours. Halve the load and the backup almost doubles (the UPS's own idle draw stays); an old or hot battery gives less."
    },
    {
     "q": "What is the backup time of a 150 Ah battery?",
-    "a": "A 150 Ah, 12 V tubular battery holds about 900 Wh of usable energy through a UPS. That is about 3 h 20 min at 200 W (fans and lights) or about 6 h 5 min at 100 W."
+    "a": "A 150 Ah, 12 V tubular battery holds about 900 Wh of usable energy through a UPS. That is about 3 hours at 200 W (fans and lights) or about 6 hours at 100 W."
    },
    {
     "q": "How many hours of backup does a tubular battery give?",
-    "a": "It depends on the load. A tubular battery should only be used to about 50% of its rating, so a 200 Ah battery gives about 3 h 5 min at 300 W, and a 150 Ah battery about 3 h 20 min at 200 W."
+    "a": "It depends on the load. A tubular battery should only be used to about 50% of its rating, so a 200 Ah battery gives about 3 hours at 300 W, and a 150 Ah battery about 3 hours at 200 W."
    },
    {
     "q": "What is the backup time of a lithium battery?",
-    "a": "Longer than a tubular battery of the same Ah, because lithium (LiFePO4) can safely use about 90% of its capacity against about 50% for tubular. A 100 Ah, 12.8 V lithium battery gives about 3 h at 300 W. Which to buy, a lithium or tubular battery, depends on price and life as well as backup; the guide compares them.",
+    "a": "Longer than a tubular battery of the same Ah, because lithium (LiFePO4) can safely use about 90% of its capacity against about 50% for tubular. A 100 Ah, 12.8 V lithium battery gives about 3 hours at 300 W. Which to buy, a lithium or tubular battery, depends on price and life as well as backup; the guide compares them.",
     "l": [
      {
       "t": "lithium or tubular battery",
@@ -82,7 +82,7 @@
    },
    {
     "q": "How many hours of battery backup for a fan and lights?",
-    "a": "One ceiling fan with a few LED lights is about 100 W. On a 150 Ah tubular battery that is about 6 h 5 min; two fans with lights, about 200 W, give about 3 h 20 min."
+    "a": "One ceiling fan with a few LED lights is about 100 W. On a 150 Ah tubular battery that is about 6 hours; two fans with lights, about 200 W, give about 3 hours."
    },
    {
     "q": "What is the battery backup formula in hours?",
@@ -101,7 +101,7 @@
    "Backup time (hours) = battery Ah × battery volts × usable depth of discharge ÷ (load watts ÷ inverter efficiency + the inverter's idle draw).",
    "Tubular and lead-acid batteries should be used to about 50% of their capacity; lithium (LiFePO4) batteries to about 90%.",
    "A typical home UPS converts battery power to AC at about 85% efficiency, so part of the stored energy is lost as heat, and the UPS draws about 30 W itself while it runs.",
-   "A 200 Ah, 12 V tubular battery holds about 1,200 Wh of usable energy for a UPS, which gives about 3 h 5 min at 300 W or about 6 h 5 min at 100 W on a 150 Ah battery."
+   "A 200 Ah, 12 V tubular battery holds about 1,200 Wh of usable energy for a UPS, which gives about 3 hours at 300 W or about 6 hours at 100 W on a 150 Ah battery."
   ],
   "mistakes": [
    "Using the full Ah rating. Draining a tubular battery below about 50% shortens its life, so only that part counts as usable.",
@@ -349,7 +349,7 @@
     ]
    ]
   },
-  "answer": "A 200 Ah, 12 V tubular battery runs a 300 W load for about 3 h 5 min through a UPS while using only the recommended 50% of its capacity. Backup time equals battery Ah × volts × usable depth of discharge ÷ (load watts ÷ inverter efficiency + the inverter's idle draw).",
+  "answer": "A 200 Ah, 12 V tubular battery runs a 300 W load for about 3 hours through a UPS while using only the recommended 50% of its capacity. Backup time equals battery Ah × volts × usable depth of discharge ÷ (load watts ÷ inverter efficiency + the inverter's idle draw).",
   "formula": {
    "text": "t = (Ah × V × DoD) ÷ (P ÷ η + P_idle)",
    "lines": [
@@ -449,7 +449,7 @@
       "name": "How long will my UPS battery last?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "On a 200 Ah, 12 V tubular battery with a 300 W load, about 3 h 5 min. Halve the load and the backup almost doubles (the UPS's own idle draw stays); an old or hot battery gives less."
+       "text": "On a 200 Ah, 12 V tubular battery with a 300 W load, about 3 hours. Halve the load and the backup almost doubles (the UPS's own idle draw stays); an old or hot battery gives less."
       }
      },
      {
@@ -457,7 +457,7 @@
       "name": "What is the backup time of a 150 Ah battery?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "A 150 Ah, 12 V tubular battery holds about 900 Wh of usable energy through a UPS. That is about 3 h 20 min at 200 W (fans and lights) or about 6 h 5 min at 100 W."
+       "text": "A 150 Ah, 12 V tubular battery holds about 900 Wh of usable energy through a UPS. That is about 3 hours at 200 W (fans and lights) or about 6 hours at 100 W."
       }
      },
      {
@@ -465,7 +465,7 @@
       "name": "How many hours of backup does a tubular battery give?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "It depends on the load. A tubular battery should only be used to about 50% of its rating, so a 200 Ah battery gives about 3 h 5 min at 300 W, and a 150 Ah battery about 3 h 20 min at 200 W."
+       "text": "It depends on the load. A tubular battery should only be used to about 50% of its rating, so a 200 Ah battery gives about 3 hours at 300 W, and a 150 Ah battery about 3 hours at 200 W."
       }
      },
      {
@@ -473,7 +473,7 @@
       "name": "What is the backup time of a lithium battery?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Longer than a tubular battery of the same Ah, because lithium (LiFePO4) can safely use about 90% of its capacity against about 50% for tubular. A 100 Ah, 12.8 V lithium battery gives about 3 h at 300 W. Which to buy, a lithium or tubular battery, depends on price and life as well as backup; the guide compares them."
+       "text": "Longer than a tubular battery of the same Ah, because lithium (LiFePO4) can safely use about 90% of its capacity against about 50% for tubular. A 100 Ah, 12.8 V lithium battery gives about 3 hours at 300 W. Which to buy, a lithium or tubular battery, depends on price and life as well as backup; the guide compares them."
       }
      },
      {
@@ -481,7 +481,7 @@
       "name": "How many hours of battery backup for a fan and lights?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "One ceiling fan with a few LED lights is about 100 W. On a 150 Ah tubular battery that is about 6 h 5 min; two fans with lights, about 200 W, give about 3 h 20 min."
+       "text": "One ceiling fan with a few LED lights is about 100 W. On a 150 Ah tubular battery that is about 6 hours; two fans with lights, about 200 W, give about 3 hours."
       }
      },
      {

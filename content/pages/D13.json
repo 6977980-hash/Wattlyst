@@ -250,8 +250,9 @@
   {
    "h2": "What does a 1 kanal solar system cost?",
    "p": [
-    "An on-grid system of this size ({{out.installed_kw|2}} kW of panels with a three-phase inverter of {{out.inverter_buy}}, no battery) costs about {{px.out.price_low_rs|rsm}} to {{px.out.price_high_rs|rsm}} installed, from the installer price lists and reports checked on {{px.checked}}. Check today's range with the [[D14|solar system price calculator]], ask for complete quotes in Rs per watt of panels, price the battery separately by its units, and test a quote with the [[N3|solar quote checker]].",
-    "A complete quote includes the panels, the three-phase inverter, the mounting structure, DC and AC cables, string breakers and surge protection, earthing, installation labour, the net billing application and the three-phase bidirectional meter. Prices for a system this size are often quoted with and without the structure, so check that line."
+    "An on-grid system of this size ({{out.installed_kw|2}} kW of panels with a three-phase inverter of {{out.inverter_buy}}, no battery) costs about {{px.out.price_low_rs|rsm}} to {{px.out.price_high_rs|rsm}} ({{px.out.price_low_rs|lakh}} to {{px.out.price_high_rs|lakh}}) installed, from the installer price lists and reports checked on {{px.checked}}. Check today's range with the [[D14|solar system price calculator]], ask for complete quotes in Rs per watt of panels, price the battery separately by its units, and test a quote with the [[N3|solar quote checker]]. Month-to-month changes are in [[solar-price-tracker|this month's solar prices]].",
+    "A complete quote includes the panels, the three-phase inverter, the mounting structure, DC and AC cables, string breakers and surge protection, earthing, installation labour, the net billing application and the three-phase bidirectional meter. Prices for a system this size are often quoted with and without the structure, so check that line.",
+    "For other house sizes see the [[D8|5 marla solar system]] and the [[D12|10 marla solar system]]."
    ]
   }
  ],
@@ -874,7 +875,7 @@
   "Sizing the battery for the whole list. For four ACs that is a bank nobody fits at home; list the night loads only and decide which ACs, if any, run on the battery.",
   "Ignoring roof shade. Twenty-plus panels need about {{out.roof_m2|int}} square metres clear of the water tank, the stair tower and the parapet shadow; a shaded string drags down the whole MPPT input it is on."
  ],
- "safety": "A three-phase solar system connects to the grid and to the house wiring at {{d.v_3ph|int}} V, and its DC strings run at several hundred volts; have a licensed electrician and a DISCO-approved installer do the wiring, earthing, surge protection and the net billing connection, and never work on the DC side with the strings connected.",
+ "safety": "A three-phase solar system connects to the grid and to the house wiring at {{d.v_3ph|int}} V, and its DC strings run at several hundred volts; have a licensed electrician and a AEDB-certified installer do the wiring, earthing, surge protection and the net billing connection, and never work on the DC side with the strings connected.",
  "faq": [
   {
    "q": "How many solar panels does a 1 kanal house need?",
@@ -921,7 +922,8 @@
   "1.5 ton",
   "2 ton",
   "1.5 hp",
-  "4 ACs"
+  "4 ACs",
+  "10 marla"
  ],
  "sources": [
   {

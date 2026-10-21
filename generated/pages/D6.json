@@ -93,7 +93,7 @@
    },
    {
     "q": "Is the panel size different for a lithium battery?",
-    "a": "The formula is the same but the numbers differ: lithium charges at about 95% efficiency and is used to about 90%, so a 100 Ah lithium battery used fully each day needs a 300 W panel. Set the depth of discharge and charging efficiency in the advanced options."
+    "a": "The formula is the same but the numbers differ: lithium charges at about 95% efficiency and is used to about 90%, so a 100 Ah lithium battery used fully each day needs a 330 W panel. Set the depth of discharge and charging efficiency in the advanced options."
    },
    {
     "q": "Can I connect a solar panel straight to a 12 V battery?",
@@ -104,7 +104,7 @@
    "A 100 Ah 12 V lead-acid battery used to 50% needs a 200 W solar panel (181 W minimum) to recharge in 5 peak sun hours.",
    "A 200 Ah 12 V battery needs a 400 W panel and a 50 A MPPT controller under the same sun; doubling the Ah doubles the panel watts.",
    "Solar panel watts to charge a battery = Ah × V × depth of discharge ÷ charging efficiency ÷ (peak sun hours × performance ratio); a panel rarely gives its label watts, so the 0.78 ratio matters.",
-   "Lead-acid batteries store about 85% of the energy sent in and should be refilled from about 50%; lithium stores about 95% and can be used to 90%, so a 100 Ah lithium battery needs a 300 W panel."
+   "Lead-acid batteries store about 85% of the energy sent in and should be refilled from about 50%; lithium stores about 95% and can be used to 90%, so a 100 Ah lithium battery needs a 330 W panel."
   ],
   "mistakes": [
    "Using daylight hours instead of peak sun hours. A twelve-hour day gives only about five to six hours of full-strength sun, so a panel sized on daylight hours is far too small.",
@@ -150,11 +150,15 @@
        "12 V"
       ],
       [
+       12.8,
+       "12.8 V (lithium)"
+      ],
+      [
        24,
        "24 V"
       ]
      ],
-     "hint": "A single battery is 12 V; two in series make 24 V."
+     "hint": "A single lead-acid battery is 12 V and a lithium (LiFePO4) one 12.8 V; two lead-acid batteries in series make 24 V."
     },
     {
      "name": "psh",
@@ -286,7 +290,7 @@
    },
    {
     "title": "100 Ah lithium (LiFePO4) battery used to 90%",
-    "text": "Lithium stores 95% of what goes in but is used much deeper, 90%, so there is more to put back: 292 W minimum, a 300 W panel, with a 40 A MPPT controller. Full charge in 4.9 h of peak sun."
+    "text": "Lithium stores 95% of what goes in but is used much deeper, 90%, so there is more to put back: 311 W minimum, a 330 W panel, with a 40 A MPPT controller. Full charge in 4.7 h of peak sun."
    }
   ],
   "table": {
@@ -483,7 +487,7 @@
       "name": "Is the panel size different for a lithium battery?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "The formula is the same but the numbers differ: lithium charges at about 95% efficiency and is used to about 90%, so a 100 Ah lithium battery used fully each day needs a 300 W panel. Set the depth of discharge and charging efficiency in the advanced options."
+       "text": "The formula is the same but the numbers differ: lithium charges at about 95% efficiency and is used to about 90%, so a 100 Ah lithium battery used fully each day needs a 330 W panel. Set the depth of discharge and charging efficiency in the advanced options."
       }
      },
      {

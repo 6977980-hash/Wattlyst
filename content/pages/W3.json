@@ -159,7 +159,7 @@
  "answer": "A {{in.watts|int}} W socket circuit on {{out.volts|int}} V draws {{out.ib_a|1}} A, so the MCB is the next standard size up: {{out.breaker_a|int}} A, type {{out.curve|raw}}, on at least {{out.area_mm2|1}} mm² ({{out.pk_size|raw}}) copper cable. MCB rating = next standard size above watts ÷ (volts × power factor); motor-type loads add a {{out.margin|2}} × margin, and the curve follows the load type.",
  "how": "Design current = {{out.watts}} W ÷ ({{out.k|2}} × {{out.volts}} V × {{out.pf|2}} power factor) = {{out.ib_a|1}} A (the first factor is one for single phase, root three for three phase). Breaker design current = {{out.breaker_design_a|1}} A (× {{out.margin|2}} only for motors, compressors, ACs and welders). Next standard MCB = {{out.breaker_a|int}} A, type {{out.curve|raw}}, which trips instantly between {{out.trip_min_a|int}} A and {{out.trip_max_a|int}} A. The cable must be rated at least {{out.min_cable_a|1}} A and be at least {{out.min_mm2|1}} mm²: {{out.area_mm2|1}} mm² ({{out.pk_size|raw}}), rated {{out.ampacity_a|int}} A for this installation ({{out.ampacity_30c_a|int}} A in the IEC table × {{out.derate|2}} for {{out.ambient_c}} °C air and {{out.circuits}} circuit in the conduit).",
  "key_facts": [
-  "MCB rating = the next standard size above the design current (watts ÷ volts ÷ power factor); standard domestic MCBs run from {{d.standard_breaker_a.0|int}} A to {{d.standard_breaker_a.8|int}} A.",
+  "MCB rating = the next standard size above the design current (watts ÷ volts ÷ power factor, × {{d.margin|2}} for motors and compressors); standard domestic MCBs run from {{d.standard_breaker_a.0|int}} A to {{d.standard_breaker_a.8|int}} A.",
   "Type B trips instantly at three to five times its rating, type C at five to ten times, type D at ten to twenty times (IEC 60898-1): a {{out.breaker_a|int}} A type {{out.curve|raw}} trips instantly between {{out.trip_min_a|int}} A and {{out.trip_max_a|int}} A.",
   "Motors, compressors and inverter ACs get an MCB chosen at design current × {{d.margin|2}} so it does not trip on long full-load running; a 1.5 ton inverter AC therefore gets a {{ex.0.out.breaker_a|int}} A type {{ex.0.out.curve|raw}} on {{ex.0.out.area_mm2|1}} mm² cable.",
   "The cable must always be rated above the MCB, so the MCB protects the cable: minimum {{d.standard_breaker_a.0|int}} A MCB on 1 mm² (3/29) for lighting and {{out.area_mm2|1}} mm² (7/29) for sockets and ACs."
@@ -368,8 +368,8 @@
    "url": "https://webstore.iec.ch/publication/1878"
   },
   {
-   "label": "IEC 60898-1: circuit-breakers for overcurrent protection (B, C and D tripping curves)",
-   "url": "https://webstore.iec.ch/publication/1878"
+   "label": "IEC 60898-1:2015: circuit-breakers for overcurrent protection for household and similar installations (B, C and D tripping curves)",
+   "url": "https://webstore.iec.ch/en/publication/21972"
   },
   {
    "label": "Wattlyst methodology and default values",
