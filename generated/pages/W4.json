@@ -36,7 +36,7 @@
    "url": "/wiring/solar-cable-size-calculator/"
   }
  ],
- "modified": "2026-10-13",
+ "modified": "2026-10-21",
  "content": {
   "intro": "",
   "sections": [
@@ -90,7 +90,7 @@
    },
    {
     "q": "Does this calculator pick the cable size for me?",
-    "a": "It checks the size you pick, and the table shows the common sizes for common runs so you can choose the smallest that passes. It also warns when the current is above the cable's rating (in conduit, in hot air); to pick the size for combined strings or battery cables use the wire size calculator in DC mode."
+    "a": "It checks the size you pick, and the table shows the common sizes for common runs so you can choose the smallest that passes. It also checks the current against the solar cable's rating on a hot roof and warns when it is above it; to pick the size for combined strings or battery cables use the wire size calculator in DC mode."
    },
    {
     "q": "What cable size between the battery and the inverter?",
@@ -122,6 +122,10 @@
    {
     "label": "IEC 60364-5-52: selection and erection of wiring systems (voltage drop, current ratings)",
     "url": "https://webstore.iec.ch/publication/1878"
+   },
+   {
+    "label": "EN 50618: electric cables for photovoltaic systems (current ratings of solar cable, Annex A)",
+    "url": "https://www.dinmedia.de/en/standard/din-en-50618/240741133"
    },
    {
     "label": "Wattlyst methodology and default values (copper resistivity, drop limits)",
@@ -209,6 +213,33 @@
      "hint": "Solar DC runs are usually kept under three percent so the panels lose little output; five percent is the general wiring limit."
     },
     {
+     "name": "method",
+     "label": "How the PV cable is laid",
+     "type": "select",
+     "default": "surface",
+     "options": [
+      [
+       "surface",
+       "On the roof, frame or a tray"
+      ],
+      [
+       "free_air",
+       "In free air, spaced from surfaces"
+      ],
+      [
+       "touching",
+       "Positive and negative touching"
+      ]
+     ]
+    },
+    {
+     "name": "ambient_c",
+     "label": "Air temperature around the cable",
+     "unit": "°C",
+     "default": 70,
+     "hint": "Air under and around the panels on a summer roof. Solar cable ratings start from hot air; above that the rating is reduced, and this check uses the reduced rating."
+    },
+    {
      "name": "rho",
      "label": "Copper resistivity",
      "unit": "Ω·mm²/m",
@@ -218,7 +249,8 @@
     }
    ],
    "fixed_inputs": {
-    "mode": "dc"
+    "mode": "dc",
+    "cable": "pv"
    },
    "outputs": [
     {
@@ -252,11 +284,19 @@
      "unit": "%",
      "label_ur": "Chuni hui had",
      "value": "3"
+    },
+    {
+     "key": "ampacity_a",
+     "label": "Cable current rating on the roof",
+     "spec": "int",
+     "unit": "A",
+     "label_ur": "Chhat par cable ki current rating",
+     "value": "48"
     }
    ],
    "how": {
-    "tpl": "The current flows out along the positive and back along the negative, so the cable length counts twice: {{out.rho|4}} Ω·mm²/m copper resistivity × two × {{in.length_m}} m × {{in.amps}} A ÷ {{in.area_mm2}} mm² = {{out.drop_v|1}} V lost. {{out.drop_v|1}} V ÷ {{in.volts}} V string voltage = {{out.drop_pct|2}}%, against the {{out.limit_pct|int}}% limit you chose, leaving {{out.voltage_at_load|int}} V at the inverter. If the drop is above the limit, pick the next cable size and check again.",
-    "text": "The current flows out along the positive and back along the negative, so the cable length counts twice: 0.0225 Ω·mm²/m copper resistivity × two × 25 m × 14 A ÷ 4 mm² = 3.9 V lost. 3.9 V ÷ 420 V string voltage = 0.94%, against the 3% limit you chose, leaving 416 V at the inverter. If the drop is above the limit, pick the next cable size and check again."
+    "tpl": "The current flows out along the positive and back along the negative, so the cable length counts twice: {{out.rho|4}} Ω·mm²/m copper resistivity × two × {{in.length_m}} m × {{in.amps}} A ÷ {{in.area_mm2}} mm² = {{out.drop_v|1}} V lost. {{out.drop_v|1}} V ÷ {{in.volts}} V string voltage = {{out.drop_pct|2}}%, against the {{out.limit_pct|int}}% limit you chose, leaving {{out.voltage_at_load|int}} V at the inverter. If the drop is above the limit, pick the next cable size and check again. Current check: {{in.area_mm2}} mm² solar cable is rated {{out.ampacity_base_a|int}} A in hot air, × {{out.ambient_factor|2}} for {{out.ambient_c}} °C around it = {{out.ampacity_a|int}} A, against the {{in.amps}} A in the cable.",
+    "text": "The current flows out along the positive and back along the negative, so the cable length counts twice: 0.0225 Ω·mm²/m copper resistivity × two × 25 m × 14 A ÷ 4 mm² = 3.9 V lost. 3.9 V ÷ 420 V string voltage = 0.94%, against the 3% limit you chose, leaving 416 V at the inverter. If the drop is above the limit, pick the next cable size and check again. Current check: 4 mm² solar cable is rated 52 A in hot air, × 0.92 for 70 °C around it = 48 A, against the 14 A in the cable."
    },
    "submit": "Calculate",
    "notice": "",
@@ -267,6 +307,7 @@
     "cable_data_missing": "Cable data could not be loaded. Please refresh the page.",
     "cable_size_unknown": "Pick a standard cable size.",
     "load_above_standard_breakers": "This load needs more than the largest single-phase MCB. Split it into separate circuits or ask a licensed electrician about a three-phase connection.",
+    "dc_load_above_cable_table": "This battery current is above the largest cable in our table. Do not split a battery feed into separate circuits: use a higher battery voltage (it lowers the current) or have a licensed electrician design the busbars, parallel cables and fusing.",
     "load_above_cable_table": "This load is above the largest cable in our table. Split it into separate circuits and consult a licensed electrician.",
     "ambient_out_of_range": "Enter an air temperature around the cable between 10 and 60 °C.",
     "circuits_out_of_range": "Enter how many circuits share the conduit or bundle, from 1 to 20.",
@@ -282,7 +323,7 @@
     {
      "label": "Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)",
      "url": "https://webstore.iec.ch/publication/1878",
-     "checked": "2026-10-14"
+     "checked": "2026-10-21"
     }
    ]
   },
@@ -430,7 +471,7 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/wiring/solar-cable-size-calculator/#breadcrumb"
     },
-    "dateModified": "2026-10-13",
+    "dateModified": "2026-10-21",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }
@@ -499,7 +540,7 @@
       "name": "Does this calculator pick the cable size for me?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "It checks the size you pick, and the table shows the common sizes for common runs so you can choose the smallest that passes. It also warns when the current is above the cable's rating (in conduit, in hot air); to pick the size for combined strings or battery cables use the wire size calculator in DC mode."
+       "text": "It checks the size you pick, and the table shows the common sizes for common runs so you can choose the smallest that passes. It also checks the current against the solar cable's rating on a hot roof and warns when it is above it; to pick the size for combined strings or battery cables use the wire size calculator in DC mode."
       }
      },
      {

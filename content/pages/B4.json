@@ -165,10 +165,16 @@
    "label": "Rated bank size",
    "spec": "up1",
    "unit": "kWh"
+  },
+  {
+   "key": "battery_a",
+   "label": "Battery current",
+   "spec": "1",
+   "unit": "A"
   }
  ],
  "answer": "To run {{out.load_w|int}} W of appliances for {{out.hours}} hours on a {{out.volts|1}} V inverter you need a {{out.ah_required|up}} Ah tubular battery bank: {{out.batteries|int}} batteries of {{out.battery_ah|int}} Ah, {{out.series|int}} in series. Battery Ah = (watts ÷ inverter efficiency + the inverter's idle draw) × hours ÷ (bank volts × usable depth of discharge); batteries = bank Ah ÷ one battery's Ah, times the batteries in series.",
- "how": "The battery gives {{out.load_w}} W ÷ {{out.inverter_eff|pct}} inverter efficiency + {{out.idle_w}} W the inverter draws itself = {{out.battery_w|1}} W; × {{out.hours}} h = {{out.battery_kwh_draw|2}} kWh taken from the battery for {{out.load_kwh|2}} kWh used by the load. Divide by {{out.volts|1}} V and by {{out.dod|pct}} usable depth of discharge: {{out.ah_required|up}} Ah, a rated bank of {{out.kwh_required|up1}} kWh. A {{out.volts|1}} V bank made of {{out.battery_v|1}} V batteries needs {{out.series|int}} in series per string; {{out.ah_required|up}} Ah ÷ {{out.battery_ah}} Ah per battery, rounded up, is {{out.strings|int}} string(s) in parallel; {{out.series|int}} × {{out.strings|int}} = {{out.batteries|int}} batteries.",
+ "how": "The battery gives {{out.load_w}} W ÷ {{out.inverter_eff|pct}} inverter efficiency + {{out.idle_w}} W the inverter draws itself = {{out.battery_w|1}} W; × {{out.hours}} h = {{out.battery_kwh_draw|2}} kWh taken from the battery for {{out.load_kwh|2}} kWh used by the load. Divide by {{out.volts|1}} V and by {{out.dod|pct}} usable depth of discharge: {{out.ah_required|up}} Ah, a rated bank of {{out.kwh_required|up1}} kWh. A {{out.volts|1}} V bank made of {{out.battery_v|1}} V batteries needs {{out.series|int}} in series per string; {{out.ah_required|up}} Ah ÷ {{out.battery_ah}} Ah per battery, rounded up, is {{out.strings|int}} string(s) in parallel; {{out.series|int}} × {{out.strings|int}} = {{out.batteries|int}} batteries. Battery current: {{out.battery_w|1}} W ÷ {{out.volts|1}} V = {{out.battery_a|1}} A, {{out.c_rate|2}} times the bank's Ah (its C-rate), rising to {{out.cutoff_a|1}} A as the battery nears its low-battery cut-off; the cables and fuse must carry that.",
  "key_facts": [
   "Battery bank Ah = (appliance watts ÷ inverter efficiency + the inverter's idle draw) × backup hours ÷ (bank volts × usable depth of discharge); for tubular batteries use {{d.dod_lead_acid|pct}} usable and {{d.inverter_eff_ups|pct}} inverter efficiency, for lithium (LiFePO4) {{d.dod_lifepo4|pct}} usable.",
   "Number of batteries = (bank Ah ÷ Ah of one battery, rounded up) × (bank volts ÷ volts of one battery): a {{ex.1.out.volts|1}} V inverter needs {{ex.1.out.series|int}} batteries of {{ex.1.out.battery_v|1}} V in series per string, so batteries are bought in sets of {{ex.1.out.series|int}}.",

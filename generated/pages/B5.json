@@ -38,7 +38,7 @@
    "url": "/battery/ups-backup-time-calculator/"
   }
  ],
- "modified": "2026-10-13",
+ "modified": "2026-10-21",
  "content": {
   "intro": "",
   "sections": [
@@ -256,11 +256,27 @@
      "unit": "Wh",
      "label_ur": "Qabil-e-istemal battery energy",
      "value": "900"
+    },
+    {
+     "key": "battery_a",
+     "label": "Battery current",
+     "spec": "1",
+     "unit": "A",
+     "label_ur": "Battery current",
+     "value": "31.9"
+    },
+    {
+     "key": "cutoff_a",
+     "label": "Current at low-battery cut-off",
+     "spec": "1",
+     "unit": "A",
+     "label_ur": "Battery khatam hone par current",
+     "value": "36.5"
     }
    ],
    "how": {
-    "tpl": "Capacity check: {{in.va}} VA × {{out.pf|2}} power factor = {{out.max_w|int}} W, and {{in.load_w}} W is {{out.load_pct|int}}% of that, so the UPS can run it. Backup: {{in.ah}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable = {{out.stored_wh|int}} Wh in the battery. The battery gives {{in.load_w}} W ÷ {{out.inverter_eff|pct}} inverter efficiency + {{out.idle_w}} W the inverter draws itself = {{out.battery_w|1}} W. {{out.stored_wh|int}} Wh ÷ {{out.battery_w|1}} W = {{out.hours|2}} hours, about {{out.hours|hm}}.",
-    "text": "Capacity check: 1,000 VA × 0.6 power factor = 600 W, and 300 W is 50% of that, so the UPS can run it. Backup: 150 Ah × 12 V × 50% usable = 900 Wh in the battery. The battery gives 300 W ÷ 85% inverter efficiency + 30 W the inverter draws itself = 382.9 W. 900 Wh ÷ 382.9 W = 2.35 hours, about 2 h 21 min."
+    "tpl": "Capacity check: {{in.va}} VA × {{out.pf|2}} power factor = {{out.max_w|int}} W, and {{in.load_w}} W is {{out.load_pct|int}}% of that, so the UPS can run it. Backup: {{in.ah}} Ah × {{in.volts|1}} V × {{out.dod|pct}} usable = {{out.stored_wh|int}} Wh in the battery. The battery gives {{in.load_w}} W ÷ {{out.inverter_eff|pct}} inverter efficiency + {{out.idle_w}} W the inverter draws itself = {{out.battery_w|1}} W. {{out.stored_wh|int}} Wh ÷ {{out.battery_w|1}} W = {{out.hours|2}} hours, about {{out.hours|hm}}. Battery current: {{out.battery_w|1}} W ÷ {{in.volts|1}} V = {{out.battery_a|1}} A, {{out.c_rate|2}} times the battery's Ah (its C-rate), rising to {{out.cutoff_a|1}} A as the battery nears its low-battery cut-off; the cables and fuse must carry that.",
+    "text": "Capacity check: 1,000 VA × 0.6 power factor = 600 W, and 300 W is 50% of that, so the UPS can run it. Backup: 150 Ah × 12 V × 50% usable = 900 Wh in the battery. The battery gives 300 W ÷ 85% inverter efficiency + 30 W the inverter draws itself = 382.9 W. 900 Wh ÷ 382.9 W = 2.35 hours, about 2 h 21 min. Battery current: 382.9 W ÷ 12 V = 31.9 A, 0.21 times the battery's Ah (its C-rate), rising to 36.5 A as the battery nears its low-battery cut-off; the cables and fuse must carry that."
    },
    "submit": "Calculate",
    "notice": "",
@@ -275,6 +291,7 @@
     "appliance_unknown": "Pick an appliance from the list, or choose Custom and enter its watts.",
     "load_exceeds_ups_rating": "This load is more than the UPS can deliver (VA × power factor). Choose a bigger UPS or reduce the load.",
     "surge_exceeds_ups_rating": "The starting surge is above the UPS surge rating. Choose a bigger UPS or remove the motor load.",
+    "high_c_rate": "This load draws a high current for the battery size: a lead-acid battery then gives well under its rated Ah, so the real backup is shorter than shown, and a lithium battery may shut off. Check the battery's maximum discharge current or use a bigger bank.",
     "forecast_unavailable": "The live forecast is not available right now, so a typical day is shown. Try again later.",
     "typical_used": "Blank boxes in your list use the typical value for that appliance (its listed watts and hours a day, quantity 1). Type your own numbers for an exact result.",
     "internal_non_finite": "These numbers are outside a realistic range. Please check your inputs."
@@ -404,7 +421,7 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/battery/ups-backup-time-calculator/#breadcrumb"
     },
-    "dateModified": "2026-10-13",
+    "dateModified": "2026-10-21",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }
