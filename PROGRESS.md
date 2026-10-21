@@ -18,6 +18,7 @@ Owner said yes (21 Oct 2026) to the same ToU path on the remaining bill pages. P
 
 **Open to-dos**
 - [ENGINEER] confirm `tou_peak_share` (same item as Phase 9).
+- Engineer Reviewer PASS after fixes (2026-10-21). Its non-blocking notes: `fixed_basis` and the MDI hints say "half the sanctioned load" in words while the fraction is data (`tou.fixed_min_fraction`); an MDI above the sanctioned load is accepted without a penalty; F12 uses the national ToU rates and peak hours (K-Electric's may differ); N4, D10 and D11 still point to F13 for the full ToU bill (F1 now gives it too).
 - A comparison "this month on a 5 kW ToU meter" for heavy flat users (bills expert F-6) is still not built.
 - Everything open from the earlier handoffs below still stands.
 
