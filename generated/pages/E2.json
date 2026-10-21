@@ -1345,8 +1345,9 @@
    }
   ],
   "table": {
-   "caption": "Load and monthly units of single appliances at their typical daily hours, from the top: ceiling fan, LED bulb, LED TV, non-inverter fridge, electric iron, microwave oven, 1 hp water pump, 1.5 ton inverter AC",
+   "caption": "Load and monthly units of single appliances at their typical daily hours",
    "head": [
+    "Appliance",
     "Running",
     "Starting",
     "Current",
@@ -1356,6 +1357,7 @@
    ],
    "rows": [
     [
+     "Ceiling fan",
      "80 W",
      "120 W",
      "0.4 A",
@@ -1364,6 +1366,7 @@
      "Rs 1,065"
     ],
     [
+     "LED bulb",
      "12 W",
      "12 W",
      "0.1 A",
@@ -1372,6 +1375,7 @@
      "Rs 80"
     ],
     [
+     "LED TV",
      "75 W",
      "75 W",
      "0.4 A",
@@ -1380,6 +1384,7 @@
      "Rs 499"
     ],
     [
+     "Non-inverter fridge",
      "200 W",
      "1,200 W",
      "1.1 A",
@@ -1388,6 +1393,7 @@
      "Rs 1,775"
     ],
     [
+     "Electric iron",
      "1,000 W",
      "1,000 W",
      "4.3 A",
@@ -1396,6 +1402,7 @@
      "Rs 555"
     ],
     [
+     "Microwave oven",
      "1,100 W",
      "1,100 W",
      "6 A",
@@ -1404,6 +1411,7 @@
      "Rs 366"
     ],
     [
+     "1 hp water pump",
      "932 W",
      "2,796 W",
      "5.1 A",
@@ -1412,6 +1420,7 @@
      "Rs 1,034"
     ],
     [
+     "1.5 ton inverter AC",
      "1,450 W",
      "1,900 W",
      "7 A",
@@ -1419,7 +1428,8 @@
      "243.4",
      "Rs 8,873"
     ]
-   ]
+   ],
+   "row_head": true
   },
   "answer": "A non-inverter fridge is a 200 W appliance load that surges to about 1,200 W when its compressor starts, draws 1.1 A at 230 V and uses about 1.6 units a day, 48.7 units a month, about Rs 1,775. Appliance units a day = watts × hours it runs ÷ 1,000; pick any appliance above to get its watts, amps, units and cost.",
   "formula": {

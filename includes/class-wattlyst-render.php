@@ -16,6 +16,7 @@ final class Wattlyst_Render {
 	private array $page;
 	private array $c;
 	private int $tables = 0; // numbers the reference table headings on this page (unique ids)
+	private bool $embed = false; // /embed/<id>/: result first, no links out but the credit (WL-238)
 
 	public function __construct( Wattlyst_Tools $plugin, array $page ) {
 		$this->plugin = $plugin;
@@ -70,9 +71,10 @@ final class Wattlyst_Render {
 			$out .= $this->author_box();
 			$out .= $this->sources();
 		} elseif ( 'pillar' === $type ) {
+			// Hub (WL-200): each "by task" section with its own calculators as cards, then the rest, then key facts.
 			$out .= $this->children();
 			$out .= $this->key_facts();
-			$out .= $this->sections();
+			$out .= $this->sections( false, true );
 			$out .= $this->tables();
 			$out .= $this->faq();
 			if ( ! empty( $this->c['sections'] ) || ! empty( $this->c['tables'] ) ) {
@@ -83,7 +85,9 @@ final class Wattlyst_Render {
 			}
 		} else {
 			if ( ! empty( $this->c['tool'] ) ) {
-				$out .= $this->tool();
+				// List calculators: the list on the left and the result beside it on wide screens (WL-204).
+				$list = in_array( 'loads', array_column( $this->c['tool']['fields'], 'type' ), true );
+				$out .= $this->tool( $list );
 				$out .= $this->how();
 			}
 			$out .= $this->key_facts();
@@ -220,22 +224,44 @@ final class Wattlyst_Render {
 		$chips = '';
 		$ids   = array();
 		foreach ( $cards as $card ) {
-			$n      = count( $card['children'] );
 			$ids    = array_merge( $ids, array_column( $card['children'], 'id' ) );
-			$chips .= '<li><a class="wl-chip wl-card-' . sanitize_html_class( trim( (string) $card['url'], '/' ) ) . '" href="' . esc_url( Wattlyst_Tools::link( $card['url'] ) ) . '"><span class="wl-ico" aria-hidden="true"></span><span class="wl-chip-name">' . esc_html( $card['label'] ) . '</span><span class="wl-chip-n">' . esc_html( self::tools_label( $n ) ) . '</span></a></li>';
+			$chips .= '<li><a class="wl-chip wl-card-' . sanitize_html_class( trim( (string) $card['url'], '/' ) ) . '" href="' . esc_url( Wattlyst_Tools::link( $card['url'] ) ) . '"><span class="wl-ico" aria-hidden="true"></span><span class="wl-chip-name">' . esc_html( $card['label'] ) . '</span><span class="wl-chip-n">' . esc_html( $this->tools_label( $card['children'] ) ) . '</span></a></li>';
 		}
-		$total = count( array_unique( $ids ) );
+		// Calculators and guides are counted apart, from the manifest, so the home page never calls a guide a tool (WL-205).
+		$kinds = $this->kinds( array_unique( $ids ) );
 		$cta   = ! empty( $this->c['tool'] ) ? '<a class="wl-cta" href="#wl-plan-title">Start planning</a>' : '';
 		$cta  .= $chips ? '<a class="wl-cta wl-cta-ghost" href="#wl-tasks-title">Browse all calculators</a>' : '';
-		$pills = ( $total ? '<li>' . esc_html( $total . ' free tools' ) . '</li>' : '' ) . '<li>No sign-up</li><li>Formulas shown</li><li>Works on your phone</li>';
+		$pills = ( $kinds['calculator'] ? '<li>' . esc_html( $kinds['calculator'] . ' free calculators' ) . '</li>' : '' ) .
+			( $kinds['guide'] ? '<li>' . esc_html( self::count_label( $kinds['guide'], 'guide' ) ) . '</li>' : '' ) . '<li>No sign-up</li><li>Formulas shown</li><li>Works on your phone</li>';
 		$text  = '<div class="wl-hero-text"><h1 class="wl-h1">' . esc_html( $this->page['h1'] ) . '</h1>' . $this->answer( $answer ) .
 			( $cta ? '<p class="wl-ctas">' . $cta . '</p>' : '' ) . '<ul class="wl-pills">' . $pills . '</ul></div>';
 		$nav   = $chips ? '<nav class="wl-hero-cats" aria-label="Calculator categories"><p class="wl-hero-cats-title">Browse by task</p><ul>' . $chips . '</ul></nav>' : '';
 		return '<header class="wl-hero wl-hero-home">' . $text . $nav . '</header>';
 	}
 
-	private static function tools_label( int $n ): string {
-		return 1 === $n ? '1 tool' : $n . ' tools';
+	/** Live pages by kind: calculator (tools, appliance pages, the error-code lookup), guide, dataset. */
+	private function kinds( array $ids ): array {
+		$n = array( 'calculator' => 0, 'guide' => 0, 'dataset' => 0 );
+		foreach ( $ids as $id ) {
+			$type = $this->plugin->row( (string) $id )['type'] ?? 'tool';
+			++$n[ 'guide' === $type ? 'guide' : ( 'data' === $type ? 'dataset' : 'calculator' ) ];
+		}
+		return $n;
+	}
+
+	/** "21 calculators", "5 guides", "2 datasets", or "3 calculators, 1 guide" for a hub that has both. */
+	private function tools_label( array $children ): string {
+		$parts = array();
+		foreach ( $this->kinds( array_column( $children, 'id' ) ) as $kind => $n ) {
+			if ( $n ) {
+				$parts[] = self::count_label( $n, $kind );
+			}
+		}
+		return implode( ', ', $parts );
+	}
+
+	private static function count_label( int $n, string $kind ): string {
+		return $n . ' ' . $kind . ( 1 === $n ? '' : 's' );
 	}
 
 	private function answer( string $text ): string {
@@ -273,8 +299,12 @@ final class Wattlyst_Render {
 		return $site['people'][0] ?? null;
 	}
 
-	/** Calculator form. $split (home planner) wraps the inputs and the results in two columns for the desktop layout. */
+	/**
+	 * Calculator form. $split (home planner, list calculators) wraps the inputs and the results in two columns for the
+	 * desktop layout. In an embed the result comes first, so a short iframe still shows it (WL-238).
+	 */
 	private function tool( bool $split = false ): string {
+		$home = 'home' === $this->page['type'];
 		$t    = $this->c['tool'];
 		$id   = 'wl-' . strtolower( $this->page['id'] );
 		$main = '';
@@ -342,22 +372,29 @@ final class Wattlyst_Render {
 			'rtable'  => isset( $t['rtable'] ) ? array( 'key' => $t['rtable']['key'], 'cap' => $t['rtable']['cap'], 'columns' => $t['rtable']['columns'] ) : '',
 			'data'    => $this->tool_data( $t['data_keys'] ?? array(), $t['appliances'] ?? array() ),
 		);
-		$form  = '<form class="wl-tool' . ( $split ? ' wl-tool-split' : '' ) . '" id="' . esc_attr( $id ) . '" data-wl-tool novalidate onsubmit="return false">';
-		$form .= ( $split ? '<div class="wl-in">' : '' ) . '<div class="wl-fields">' . $main . '</div>';
+		$split = $split && ! $this->embed;
+		$inputs = '<div class="wl-fields">' . $main . '</div>';
 		if ( '' !== $adv ) {
-			$form .= '<details class="wl-advanced"><summary>Advanced settings</summary><div class="wl-fields">' . $adv . '</div></details>';
+			$inputs .= '<details class="wl-advanced"><summary>Advanced settings</summary><div class="wl-fields">' . $adv . '</div></details>';
 		}
-		$form .= '<button type="submit" class="wl-btn">' . esc_html( $t['submit'] ?? 'Calculate' ) . '</button>';
+		$inputs .= '<button type="submit" class="wl-btn">' . esc_html( $t['submit'] ?? 'Calculate' ) . '</button>';
 		// Without JavaScript the button does nothing (onsubmit), instead of reloading the page with the defaults (audit WL-27).
-		$form .= '<noscript><p class="wl-hint">Turn on JavaScript to calculate with your own numbers. The result below uses the default inputs.</p></noscript>';
-		$form  .= $split ? '</div><div class="wl-out"><p class="wl-out-title">Your plan</p>' : '';
-		$notice = (string) ( $t['notice'] ?? '' ); // a warning on the default result, same text the browser prints
+		$inputs .= '<noscript><p class="wl-hint">Turn on JavaScript to calculate with your own numbers. The result ' . ( $this->embed ? 'above' : 'below' ) . ' uses the default inputs.</p></noscript>';
+		$notice  = (string) ( $t['notice'] ?? '' ); // a warning on the default result, same text the browser prints
 		// An empty box waits for errors (role=alert); a notice on the default result is amber and polite (audit WL-54, WL-61).
-		$form  .= '' === $notice
+		$out     = '' === $notice
 			? '<p class="wl-error" id="' . esc_attr( $id ) . '-error" role="alert" hidden></p>'
 			: '<p class="wl-error wl-notice" id="' . esc_attr( $id ) . '-error" role="status">' . esc_html( $notice ) . '</p>';
-		// Split (home planner): the result table goes under the inputs, the plan column is too narrow for it.
-		$form .= '<div class="wl-results" aria-live="polite">' . $results . '</div>' . ( $split ? '' : $this->rtable( $id, $t ) ) . $this->diagram( $t ) . $share . ( $split ? '</div>' . $this->rtable( $id, $t ) : '' );
+		// Split: the result table goes under the inputs, the result column is too narrow for it. The compact Next step
+		// follows the share bar, so it sits right under the result on a phone (WL-198).
+		$out    .= '<div class="wl-results" aria-live="polite">' . $results . '</div>' . ( $split ? '' : $this->rtable( $id, $t ) ) . $this->diagram( $t ) . $share . ( $home ? '' : $this->next_inline() );
+		$class   = $split ? ( $home ? ' wl-tool-split' : ' wl-tool-list' ) : '';
+		$form    = '<form class="wl-tool' . $class . '" id="' . esc_attr( $id ) . '" data-wl-tool novalidate onsubmit="return false">';
+		if ( $split ) {
+			$form .= '<div class="wl-in">' . $inputs . '</div><div class="wl-out"><p class="wl-out-title">' . ( $home ? 'Your plan' : 'Your result' ) . '</p>' . $out . '</div>' . $this->rtable( $id, $t );
+		} else {
+			$form .= $this->embed ? $out . $inputs : $inputs . $out;
+		}
 		$form .= '<script type="application/json" class="wl-config">' . wp_json_encode( $config, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ) . '</script>';
 		$form .= '</form>';
 		return $form;
@@ -434,16 +471,12 @@ final class Wattlyst_Render {
 	 * already in the config, so the catalog is not shipped twice (audit WL-58, homepage weight).
 	 */
 	private static function catalog_groups( array $catalog ): array {
+		// One group per category in order of first appearance, even where the data lists a category twice (WL-205).
 		$groups = array();
 		foreach ( $catalog as $a ) {
-			$last = count( $groups ) - 1;
-			if ( $last < 0 || $groups[ $last ][0] !== $a['category'] ) {
-				$groups[] = array( $a['category'], array() );
-				++$last;
-			}
-			$groups[ $last ][1][] = $a['id'];
+			$groups[ $a['category'] ][] = $a['id'];
 		}
-		return $groups;
+		return array_map( null, array_keys( $groups ), array_values( $groups ) );
 	}
 
 	private function tool_data( array $keys, array $appliances ): array {
@@ -497,7 +530,7 @@ final class Wattlyst_Render {
 		$cell  = static fn( string $k, string $v, string $label, string $extra = '' ) => '<td><label class="screen-reader-text" for="' . esc_attr( "$fid-$r-$k" ) . '">' . esc_html( $label ) . '</label><input type="text" inputmode="decimal" autocomplete="off" id="' . esc_attr( "$fid-$r-$k" ) . '" data-k="' . esc_attr( $k ) . '" value="' . esc_attr( $v ) . '"' . $extra . '></td>';
 		return '<tr class="wl-load-row">' .
 			'<td><label class="screen-reader-text" for="' . esc_attr( "$fid-$r-id" ) . '">Appliance</label><select id="' . esc_attr( "$fid-$r-id" ) . '" data-k="id">' . $opts . '</select></td>' .
-			$cell( 'watts', $watts, 'Watts' ) . ( empty( $f['start'] ) ? '' : $cell( 'start', isset( $row['start'] ) ? (string) $row['start'] : '', 'Starting watts (blank = automatic)', ' placeholder="auto"' ) ) . $cell( 'qty', $qty, 'Quantity', ' size="3"' ) . ( empty( $f['length'] ) ? $cell( 'hours', $hours, 'Hours a day', ' size="4"' ) : $cell( 'length', isset( $row['length'] ) ? (string) $row['length'] : '', 'Cable length in metres', ' size="4"' ) ) .
+			$cell( 'watts', $watts, 'Watts' ) . ( empty( $f['start'] ) ? '' : $cell( 'start', isset( $row['start'] ) ? (string) $row['start'] : '', 'Starting watts', ' placeholder="auto"' ) ) . $cell( 'qty', $qty, 'Quantity', ' size="3"' ) . ( empty( $f['length'] ) ? $cell( 'hours', $hours, 'Hours a day', ' size="4"' ) : $cell( 'length', isset( $row['length'] ) ? (string) $row['length'] : '', 'Cable length in metres', ' size="4"' ) ) .
 			'<td><button type="button" class="wl-remove-row" aria-label="Remove this ' . ( empty( $f['length'] ) ? 'appliance' : 'circuit' ) . '">&times;</button></td></tr>';
 	}
 
@@ -572,10 +605,17 @@ final class Wattlyst_Render {
 		return '<section class="wl-formula"><h2>Formula</h2><p class="wl-eq"><code>' . esc_html( $f['text'] ) . '</code></p>' . ( $lines ? '<ul>' . $lines . '</ul>' : '' ) . '</section>';
 	}
 
-	/** Text sections; with $fold (home) only the first paragraph is open and the rest folds under "Read more". */
-	private function sections( bool $fold = false ): string {
-		$out = '';
-		foreach ( $this->c['sections'] ?? array() as $s ) {
+	/**
+	 * Text sections; with $fold (home) only the first paragraph is open and the rest folds under "Read more". With $rest
+	 * (hubs) the sections children() already printed as task groups are left out.
+	 */
+	private function sections( bool $fold = false, bool $rest = false ): string {
+		$out  = '';
+		$skip = $rest ? $this->groups()[0] : array();
+		foreach ( $this->c['sections'] ?? array() as $i => $s ) {
+			if ( isset( $skip[ $i ] ) ) {
+				continue;
+			}
 			$out .= '<section><h2>' . esc_html( $s['h2'] ) . '</h2>';
 			foreach ( $s['p'] as $n => $p ) {
 				$out .= ( $fold && 1 === $n ? '<details class="wl-more"><summary>Read more</summary>' : '' ) . '<p>' . self::linked( $p, $s['l'][ $n ] ?? array() ) . '</p>';
@@ -625,14 +665,24 @@ final class Wattlyst_Render {
 	 * One reference table under its H2. The table is named by the heading (aria-labelledby, audit WL-60) and its
 	 * scroll box is a focusable, named region, so keyboard users can scroll a wide table on a phone.
 	 */
-	private function ref_table( array $t, string $attrs = '' ): string {
+	private function ref_table( array $t, string $attrs = '', bool $stack = false ): string {
 		$id   = 'wl-t' . ( ++$this->tables ) . '-' . substr( sanitize_title( $t['caption'] ), 0, 40 );
 		$head = implode( '', array_map( static fn( $h ) => '<th scope="col">' . esc_html( $h ) . '</th>', $t['head'] ) );
 		$rows = '';
 		foreach ( $t['rows'] as $r ) {
-			$rows .= '<tr>' . implode( '', array_map( static fn( $v ) => '<td>' . str_replace( 'Rs ', 'Rs&nbsp;', esc_html( $v ) ) . '</td>', $r ) ) . '</tr>';
+			$cells = '';
+			foreach ( array_values( $r ) as $n => $v ) {
+				// A figure never breaks from its unit ("1,200 W", "Rs 300") in a narrow phone column (WL-81, WL-205).
+				$v = preg_replace( '/(\d) (W|kW|kVA|kWh|A|V|Ah|mm²|units)(?![\w²])/u', '$1&nbsp;$2', str_replace( 'Rs ', 'Rs&nbsp;', esc_html( $v ) ) );
+				// A table whose rows are named (appliance or set) heads each row with its name (WL-239); a stacked table
+				// carries each column's name for its phone card (WL-202).
+				$cells .= 0 === $n && ! empty( $t['row_head'] )
+					? '<th scope="row">' . $v . '</th>'
+					: '<td' . ( $stack ? ' data-l="' . esc_attr( $t['head'][ $n ] ?? '' ) . '"' : '' ) . '>' . $v . '</td>';
+			}
+			$rows .= '<tr>' . $cells . '</tr>';
 		}
-		return '<section class="wl-ref"' . $attrs . '><h2 id="' . esc_attr( $id ) . '">' . esc_html( $t['caption'] ) . '</h2>' .
+		return '<section class="wl-ref' . ( $stack ? ' wl-stack' : '' ) . '"' . $attrs . '><h2 id="' . esc_attr( $id ) . '">' . esc_html( $t['caption'] ) . '</h2>' .
 			'<div class="wl-table-wrap" role="region" tabindex="0" aria-labelledby="' . esc_attr( $id ) . '"><table class="wl-table" aria-labelledby="' . esc_attr( $id ) . '"><thead><tr>' . $head . '</tr></thead><tbody>' . $rows . '</tbody></table></div></section>';
 	}
 
@@ -650,13 +700,15 @@ final class Wattlyst_Render {
 		return '<form class="wl-tool wl-lookup" data-wl-lookup onsubmit="return false"><div class="wl-fields">' .
 			'<div class="wl-field"><label for="' . esc_attr( $id ) . '-brand">' . esc_html( $l['label'] ) . '</label><select id="' . esc_attr( $id ) . '-brand" data-wl-group-select>' . $opts . '</select></div>' .
 			'<div class="wl-field"><label for="' . esc_attr( $id ) . '-q">' . esc_html( $l['text_label'] ) . '</label><input type="search" id="' . esc_attr( $id ) . '-q" data-wl-filter autocomplete="off" placeholder="For example 02, 1010, F03, grid"><p class="wl-hint">Type the code as the display shows it, or a word such as battery, fan or grid. ' . esc_html( (string) $l['count'] ) . ' codes from manufacturer manuals, last checked <time datetime="' . esc_attr( $l['checked'] ) . '">' . esc_html( self::date( $l['checked'] ) ) . '</time>.</p></div>' .
-			'</div><p class="wl-error wl-notice" data-wl-nomatch role="status" hidden>No code matches. Check the brand, or try a shorter text such as the code alone.</p></form>';
+			'</div><p class="wl-error wl-notice" data-wl-nomatch role="status" hidden>No code matches. Check the brand, or try a shorter text such as the code alone.</p>' .
+			// While a filter is on: how many codes match and a jump to the first one, which sits below the page text (WL-202).
+			'<p class="wl-lookup-count" data-wl-count role="status" hidden><span></span> <a href="#">Show the matches</a></p>' . $this->next_inline() . '</form>';
 	}
 
 	private function tables(): string {
 		$out = '';
 		foreach ( $this->c['tables'] ?? array() as $t ) {
-			$out .= $this->ref_table( $t, isset( $t['key'] ) ? ' data-wl-group="' . esc_attr( $t['key'] ) . '"' : '' );
+			$out .= isset( $t['key'] ) ? $this->ref_table( $t, ' data-wl-group="' . esc_attr( $t['key'] ) . '"', true ) : $this->ref_table( $t );
 		}
 		return $out;
 	}
@@ -694,10 +746,11 @@ final class Wattlyst_Render {
 			$id   = 'wl-embed-' . strtolower( $e['id'] );
 			$out .= '<details class="wl-embed"><summary>' . esc_html( $e['h1'] ) . '</summary>' .
 				'<p><a href="' . esc_url( Wattlyst_Tools::link( $e['url'] ) ) . '">Open the full ' . esc_html( $e['h1'] ) . '</a></p>' .
-				'<label for="' . esc_attr( $id ) . '-iframe">Iframe code</label><textarea id="' . esc_attr( $id ) . '-iframe" readonly rows="4">' . esc_textarea( $e['iframe'] ) . '</textarea>' .
-				'<button type="button" class="wl-btn-secondary" data-wl-copy="' . esc_attr( $id ) . '-iframe">Copy iframe code</button>' .
-				'<label for="' . esc_attr( $id ) . '-script">Script code (resizes itself)</label><textarea id="' . esc_attr( $id ) . '-script" readonly rows="3">' . esc_textarea( $e['script'] ) . '</textarea>' .
-				'<button type="button" class="wl-btn-secondary" data-wl-copy="' . esc_attr( $id ) . '-script">Copy script code</button></details>';
+				// The script code first: it fits the frame to the calculator; the iframe code has a fixed height (WL-238).
+				'<label for="' . esc_attr( $id ) . '-script">Script code (recommended, resizes itself)</label><textarea id="' . esc_attr( $id ) . '-script" readonly rows="3">' . esc_textarea( $e['script'] ) . '</textarea>' .
+				'<button type="button" class="wl-btn-secondary" data-wl-copy="' . esc_attr( $id ) . '-script">Copy script code</button>' .
+				'<label for="' . esc_attr( $id ) . '-iframe">Iframe code (fixed height, for editors that strip scripts)</label><textarea id="' . esc_attr( $id ) . '-iframe" readonly rows="4">' . esc_textarea( $e['iframe'] ) . '</textarea>' .
+				'<button type="button" class="wl-btn-secondary" data-wl-copy="' . esc_attr( $id ) . '-iframe">Copy iframe code</button></details>';
 		}
 		return $out ? '<section class="wl-embeds"><h2>Calculators you can embed</h2>' . $out . '</section>' : '';
 	}
@@ -710,7 +763,8 @@ final class Wattlyst_Render {
 		if ( empty( $this->c['tool'] ) ) {
 			return '';
 		}
-		$site = $this->plugin->site();
+		$site        = $this->plugin->site();
+		$this->embed = true;
 		return '<div class="wl-page wl-embedded"><p class="wl-embed-title"><strong>' . esc_html( $this->page['h1'] ) . '</strong></p>' . $this->tool() . $this->how() .
 			'<p class="wl-credit"><a href="' . esc_url( Wattlyst_Tools::link( $this->page['url'] ) ) . '" target="_blank" rel="noopener">Calculator by ' . esc_html( $site['brand'] ?? 'Wattlyst' ) . '</a></p></div>';
 	}
@@ -732,7 +786,7 @@ final class Wattlyst_Render {
 			$links .= $more ? '<details class="wl-more"><summary>' . esc_html( sprintf( 'Show %d more', count( $more ) ) ) . '</summary><ul>' . implode( '', $more ) . '</ul></details>' : '';
 			$slug   = sanitize_html_class( trim( (string) $card['url'], '/' ) );
 			// The hub link covers the whole card (stretched); the tool links and the fold sit above it.
-			$cards .= '<div class="wl-card wl-card-' . $slug . '"><div class="wl-card-top"><span class="wl-ico" aria-hidden="true"></span><span class="wl-count">' . esc_html( self::tools_label( count( $items ) ) ) . '</span></div>' .
+			$cards .= '<div class="wl-card wl-card-' . $slug . '"><div class="wl-card-top"><span class="wl-ico" aria-hidden="true"></span><span class="wl-count">' . esc_html( $this->tools_label( $card['children'] ) ) . '</span></div>' .
 				'<h3><a href="' . esc_url( Wattlyst_Tools::link( $card['url'] ) ) . '">' . esc_html( $card['label'] ) . '</a></h3><p>' . esc_html( $card['meta'] ) . '</p>' . $links .
 				'<span class="wl-card-cta" aria-hidden="true">Open ' . esc_html( $card['label'] ) . '</span></div>';
 		}
@@ -769,17 +823,49 @@ final class Wattlyst_Render {
 		return $out . '</section>';
 	}
 
-	/** Links to live pages only, so a page never links to a URL that does not exist yet. */
+	/** A manifest row by id, only when its page is live, so a page never links to a URL that does not exist yet. */
+	private function live_row( $id ): ?array {
+		$r = '' !== (string) $id ? $this->plugin->row( (string) $id ) : null;
+		return $r && ! empty( $r['live'] ) ? $r : null;
+	}
+
+	private static function link_to( array $r ): string {
+		return '<a href="' . esc_url( Wattlyst_Tools::link( $r['url'] ) ) . '">' . esc_html( $r['h1'] ) . '</a>';
+	}
+
+	/**
+	 * The page's Next step and its first two related tools, right under the result (WL-198). The full Related list stays
+	 * at the bottom; these links are plain HTML, so a recalculation or a shared ?load= link never changes them.
+	 */
+	private function next_inline(): string {
+		if ( $this->embed ) {
+			return '';
+		}
+		$next = $this->live_row( $this->page['next'] ?? '' );
+		$more = array();
+		foreach ( $this->page['related'] ?? array() as $rid ) {
+			$r = $rid !== ( $this->page['next'] ?? '' ) ? $this->live_row( $rid ) : null;
+			if ( $r && count( $more ) < 2 ) {
+				$more[] = '<li>' . self::link_to( $r ) . '</li>';
+			}
+		}
+		if ( ! $next && ! $more ) {
+			return '';
+		}
+		return '<nav class="wl-next-inline" aria-label="Next step">' . ( $next ? '<p><strong>Next step:</strong> ' . self::link_to( $next ) . '</p>' : '' ) .
+			( $more ? '<ul>' . implode( '', $more ) . '</ul>' : '' ) . '</nav>';
+	}
+
 	private function related(): string {
 		$links = array();
-		$next  = ! empty( $this->page['next'] ) ? $this->plugin->row( $this->page['next'] ) : null;
-		if ( $next && ! empty( $next['live'] ) ) {
-			$links[] = '<li class="wl-next"><strong>Next step:</strong> <a href="' . esc_url( Wattlyst_Tools::link( $next['url'] ) ) . '">' . esc_html( $next['h1'] ) . '</a></li>';
+		$next  = $this->live_row( $this->page['next'] ?? '' );
+		if ( $next ) {
+			$links[] = '<li class="wl-next"><strong>Next step:</strong> ' . self::link_to( $next ) . '</li>';
 		}
 		foreach ( $this->page['related'] ?? array() as $rid ) {
-			$r = $this->plugin->row( $rid );
-			if ( $r && ! empty( $r['live'] ) ) {
-				$links[] = '<li><a href="' . esc_url( Wattlyst_Tools::link( $r['url'] ) ) . '">' . esc_html( $r['h1'] ) . '</a></li>';
+			$r = $this->live_row( $rid );
+			if ( $r ) {
+				$links[] = '<li>' . self::link_to( $r ) . '</li>';
 			}
 		}
 		$parent = ! empty( $this->page['parent'] ) ? $this->plugin->row( $this->page['parent'] ) : null;
@@ -791,15 +877,57 @@ final class Wattlyst_Render {
 		return $links ? '<section class="wl-related"><h2>Related calculators</h2><ul>' . implode( '', $links ) . '</ul></section>' : '';
 	}
 
-	private function children(): string {
-		$items = '';
+	/**
+	 * Hub task groups (WL-200): a section that links this hub's live pages owns those pages (first link wins, in link
+	 * order). Returns [ section index => rows, rows no section names ].
+	 */
+	private function groups(): array {
+		$kids = array();
 		foreach ( $this->page['children'] ?? array() as $cid ) {
-			$r = $this->plugin->row( $cid );
-			if ( $r && ! empty( $r['live'] ) ) {
-				$items .= '<li><a href="' . esc_url( Wattlyst_Tools::link( $r['url'] ) ) . '">' . esc_html( $r['h1'] ) . '</a><p>' . esc_html( $r['meta'] ) . '</p></li>';
+			$r = $this->live_row( $cid );
+			if ( $r ) {
+				$kids[ $r['url'] ] = $r;
 			}
 		}
-		return $items ? '<ul class="wl-children">' . $items . '</ul>' : '';
+		$groups = array();
+		$used   = array();
+		foreach ( $this->c['sections'] ?? array() as $i => $s ) {
+			foreach ( $s['l'] ?? array() as $para ) {
+				foreach ( $para as $l ) {
+					$u = (string) ( $l['u'] ?? '' );
+					if ( isset( $kids[ $u ] ) && ! isset( $used[ $u ] ) ) {
+						$groups[ $i ][] = $kids[ $u ];
+						$used[ $u ]     = true;
+					}
+				}
+			}
+		}
+		return array( $groups, array_values( array_diff_key( $kids, $used ) ) );
+	}
+
+	/** Hub page: one H2 per task with its text and its calculators as cards, then the pages no task names. */
+	private function children(): string {
+		$cards = static function ( array $rows ): string {
+			$items = '';
+			foreach ( $rows as $r ) {
+				$items .= '<li>' . self::link_to( $r ) . '<p>' . esc_html( $r['meta'] ) . '</p></li>';
+			}
+			return '<ul class="wl-children">' . $items . '</ul>';
+		};
+		[ $groups, $rest ] = $this->groups();
+		$out               = '';
+		foreach ( $groups as $i => $rows ) {
+			$s    = $this->c['sections'][ $i ];
+			$out .= '<section class="wl-group"><h2>' . esc_html( $s['h2'] ) . '</h2>';
+			foreach ( $s['p'] as $n => $p ) {
+				$out .= '<p>' . self::linked( $p, $s['l'][ $n ] ?? array() ) . '</p>';
+			}
+			$out .= $cards( $rows ) . '</section>';
+		}
+		if ( $rest ) {
+			$out .= '<section class="wl-group"><h2>' . esc_html( ( $groups ? 'More ' : 'All ' ) . $this->page['h1'] ) . '</h2>' . $cards( $rest ) . '</section>';
+		}
+		return $out;
 	}
 
 	private function author_box(): string {

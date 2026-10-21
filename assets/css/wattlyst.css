@@ -44,7 +44,7 @@ body.separate-containers .inside-article{border-radius:18px;box-shadow:var(--wl-
 [data-lang=ur]~.wl-how-en h2::after{content:" (English)"}
 .wl-unit{font-weight:400;color:var(--wl-muted)}
 .wl-hint{font-size:.85rem;line-height:1.5;color:var(--wl-muted);margin:.35rem 0 0}
-.wl-check{display:flex;flex-wrap:wrap;gap:.25rem .5rem;align-items:center}.wl-field.wl-check .wl-hint{flex-basis:100%;margin-top:0}
+.wl-check{display:flex;flex-wrap:wrap;gap:.25rem .5rem;align-items:center;min-height:44px}.wl-check input[type=checkbox]{width:22px;height:22px;margin:0;flex:none}.wl-field.wl-check .wl-hint{flex-basis:100%;margin-top:0}
 .wl-advanced{margin:1.1rem 0 0;border-top:1px dashed var(--wl-line);padding-top:.25rem}
 .wl-advanced summary{cursor:pointer;font-weight:600;color:var(--wl-accent-2);min-height:44px;display:flex;align-items:center;gap:.55rem;list-style:none}
 .wl-advanced summary::-webkit-details-marker{display:none}
@@ -84,12 +84,12 @@ body.separate-containers .inside-article{border-radius:18px;box-shadow:var(--wl-
 .wl-examples h3::before{counter-increment:wl-ex;content:counter(wl-ex);position:absolute;left:0;top:-.05rem;width:1.75rem;height:1.75rem;border-radius:50%;background:var(--wl-bg-tint);color:var(--wl-accent);font-size:.9rem;font-weight:800;display:flex;align-items:center;justify-content:center}
 .wl-examples h3+p{padding-left:2.4rem}
 /* Tables. */
-.wl-table-wrap{overflow-x:auto;position:relative;border:1px solid var(--wl-line);border-radius:12px;background:#fff}
+.wl-table-wrap{overflow-x:auto;position:relative;border:1px solid var(--wl-line);border-radius:12px;background:linear-gradient(90deg,#fff 40%,rgba(255,255,255,0)) left/2.5rem 100% no-repeat local,linear-gradient(270deg,#fff 40%,rgba(255,255,255,0)) right/2.5rem 100% no-repeat local,radial-gradient(farthest-side at 0 50%,rgba(19,34,28,.3),transparent) left/.9rem 100% no-repeat,radial-gradient(farthest-side at 100% 50%,rgba(19,34,28,.3),transparent) right/.9rem 100% no-repeat #fff}
 .wl-table{border-collapse:collapse;width:100%;font-size:.95rem;margin:0;border:0;font-variant-numeric:tabular-nums}
 .wl-table caption{text-align:left;font-weight:600;padding:.5rem 0}
 .wl-table th,.wl-table td{border:0;border-bottom:1px solid var(--wl-line);padding:.65rem .8rem;text-align:left;vertical-align:top}
 .wl-table thead th{background:var(--wl-accent);color:#fff;font-weight:600;font-size:.9rem;border-bottom:0}
-.wl-table tbody tr:nth-child(even){background:#f7faf8}
+.wl-table tbody tr:nth-child(even){background:rgba(15,107,79,.035)}.wl-table tbody th{font-weight:600;color:var(--wl-ink)}
 .wl-table tbody tr:last-child th,.wl-table tbody tr:last-child td{border-bottom:0}
 .wl-table tbody tr:hover{background:var(--wl-bg-tint)}
 .wl-table th a,.wl-table td a{font-weight:600}
@@ -143,7 +143,7 @@ body .site-info .copyright-bar{width:100%;text-align:left}
 .wl-footer ul{list-style:none;margin:0;padding:0}
 .wl-footer-col:not(.wl-footer-nav) ul{columns:2;column-gap:1.5rem}
 .wl-footer li{margin:0;break-inside:avoid}
-body .site-info .wl-footer a{display:inline-block;padding:.35rem 0;color:#fff;text-decoration:none}
+body .site-info .wl-footer a{display:inline-flex;align-items:center;min-height:44px;color:#fff;text-decoration:none}
 body .site-info .wl-footer a:hover{color:var(--wl-spark);text-decoration:underline}
 .wl-copy{margin:2rem 0 0;padding-top:1.25rem;border-top:1px solid rgba(255,255,255,.14);font-size:.875rem;color:#b9d3c7}
 @media (min-width:768px){.wl-h1{font-size:2.45rem}}
@@ -199,6 +199,20 @@ body .inside-site-info{padding:2rem 16px 1.25rem}
 .wl-btn-secondary{display:inline-block;min-height:44px;box-sizing:border-box;line-height:1.2;font-family:inherit;margin:.6rem 0 0;padding:.5rem 1.1rem;font-weight:600;font-size:.95rem;color:var(--wl-accent-2);background:#fff;border:1px solid #9fc4b3;border-radius:999px;cursor:pointer;transition:background .15s,border-color .15s}
 .wl-btn-secondary:hover{background:var(--wl-bg-soft);border-color:var(--wl-accent-2)}
 .wl-next{margin-bottom:.5rem}
+/* Next step right under the result (WL-198): the full Related list stays at the bottom of the page. */
+.wl-next-inline{margin-top:1rem;padding:.8rem 1rem;border-radius:12px;background:var(--wl-bg-tint);border:1px solid var(--wl-line)}.wl-next-inline p{margin:0}.wl-next-inline strong{color:var(--wl-accent-2)}.wl-next-inline a{font-weight:700}.wl-next-inline ul{margin:.35rem 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:0 1.25rem}.wl-next-inline li{margin:0}.wl-next-inline li a{display:inline-flex;align-items:center;min-height:44px;font-weight:600}
+.wl-lookup-count{margin:.75rem 0 0;font-weight:600}.wl-lookup-count a{display:inline-flex;align-items:center;min-height:44px;margin-left:.25rem}
+/* Hubs (WL-200): one task group per section, its calculators as cards under its text. */
+.wl-group{margin:0 0 1.75rem}.wl-group>.wl-children{margin-top:1rem}
+/* List calculators on wide screens (WL-204): the list on the left, the result sticky beside it. */
+.wl-page .wl-out-title{margin:0;font-size:.78rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--wl-accent-2)}.wl-tool-list>.wl-out{margin-top:1.25rem}
+@media (min-width:1100px){.wl-tool-list{display:grid;grid-template-columns:minmax(0,1fr) 19rem;gap:0 1.5rem;align-items:start}.wl-tool-list>.wl-in{grid-column:1;grid-row:1}.wl-tool-list>.wl-out{grid-column:2;grid-row:1/span 2;margin:0;padding:1rem;border-radius:16px;background:var(--wl-bg-soft);border:1px solid var(--wl-line)}.wl-tool-list>.wl-rtable{grid-column:1;grid-row:2}.wl-tool-list .wl-out .wl-results{grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem;margin-top:.65rem}.wl-tool-list .wl-out .wl-result{padding:.6rem .7rem}.wl-tool-list .wl-out .wl-result:first-child{grid-column:1/-1}.wl-tool-list .wl-out .wl-result:not(:first-child){background:#fff}.wl-tool-list .wl-out .wl-result-label{font-size:.8rem;line-height:1.3}.wl-tool-list .wl-out .wl-result output{font-size:1.1rem}.wl-tool-list .wl-out .wl-share{gap:.4rem}.wl-tool-list .wl-out .wl-share .wl-btn-secondary{padding:.4rem .8rem;font-size:.85rem}.wl-tool-list .wl-next-inline{padding:.6rem .8rem;font-size:.92rem}.wl-tool-list .wl-next-inline ul{display:block}.wl-tool-list .wl-next-inline li a{min-height:0;padding:.3rem 0}}
+/* Sticky only where the whole result column fits under the header; a taller column would hide its share bar and Next step. */
+@media (min-width:1100px) and (min-height:960px){.wl-tool-list>.wl-out{position:sticky;top:var(--wl-stick)}}
+/* Narrow phones: tables that overflow by a few px fit with tighter cells (WL-205). */
+@media (max-width:400px){.wl-table th,.wl-table td{padding:.55rem .5rem}}
+/* 404 (theme template) heading in the brand style (WL-205). */
+body.error404 .entry-title{font-size:2.1rem;font-weight:800;line-height:1.18;letter-spacing:-.025em;color:var(--wl-accent)}@media (max-width:768px){body.error404 .entry-title{font-size:1.55rem}}
 .screen-reader-text{border:0;clip:rect(1px,1px,1px,1px);clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;word-wrap:normal!important}
 .wl-share{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-top:1rem;padding-top:.9rem;border-top:1px solid #e6eeea}
 .wl-share .wl-btn-secondary{margin:0;text-decoration:none;display:inline-flex;align-items:center}
@@ -250,6 +264,8 @@ body .inside-site-info{padding:2rem 16px 1.25rem}
 .wl-rtable td::before{content:attr(data-l);flex:none;max-width:45%;font-weight:500;color:var(--wl-muted);text-align:left}
 .wl-rtable td:first-child,.wl-rtable tr.wl-rec td:first-child{display:block;padding:0 0 .4rem;margin:0 0 .3rem;border-bottom:1px solid #e6eeea;font-weight:700;text-align:left;box-shadow:none}
 .wl-rtable tr:not(.wl-rec) td:first-child::before{content:none}
+/* Error-code tables (WL-202): one card per code, each column's name above its text, so "What to do" is never off screen. */
+.wl-stack .wl-table-wrap{overflow:visible;border:0;background:none}.wl-stack :is(table,tbody,tr,td){display:block}.wl-stack thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}.wl-stack .wl-table tbody tr{margin:0 0 .6rem;padding:.6rem .75rem;border:1px solid var(--wl-line);border-radius:12px;background:#fff}.wl-stack .wl-table td{padding:.2rem 0;border:0}.wl-stack td::before{content:attr(data-l);display:block;font-size:.8rem;font-weight:500;color:var(--wl-muted)}.wl-stack td:first-child{font-size:1.05rem;font-weight:700}.wl-stack td:first-child::before{content:none}
 }
 .wl-diagram{margin:1rem 0;overflow-x:auto}
 .wl-grid{display:inline-flex;align-items:stretch;padding:.5rem;border:1px dashed var(--wl-line);border-radius:8px}

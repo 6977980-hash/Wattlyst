@@ -1315,54 +1315,64 @@
    }
   ],
   "table": {
-   "caption": "Appliance wattage chart for generator sizing, each appliance on its own, from the top: ceiling fan, 43 inch LED TV, non-inverter fridge, 1.5 ton inverter AC, 1 hp water motor, electric iron, microwave oven, automatic washing machine",
+   "caption": "Appliance wattage chart for generator sizing, each appliance on its own",
    "head": [
+    "Appliance",
     "Running watts",
     "Starting watts",
     "Generator watts needed alone"
    ],
    "rows": [
     [
+     "Ceiling fan",
      "80 W",
      "120 W",
      "120 W"
     ],
     [
+     "43 inch LED TV",
      "75 W",
      "75 W",
      "94 W"
     ],
     [
+     "Non-inverter fridge",
      "200 W",
      "1,200 W",
      "1,200 W"
     ],
     [
+     "1.5 ton inverter AC",
      "1,450 W",
      "1,900 W",
      "1,900 W"
     ],
     [
+     "1 hp water motor",
      "932 W",
      "2,796 W",
      "2,796 W"
     ],
     [
+     "Electric iron",
      "1,000 W",
      "1,000 W",
      "1,250 W"
     ],
     [
+     "Microwave oven",
      "1,100 W",
      "1,100 W",
      "1,375 W"
     ],
     [
+     "Automatic washing machine",
      "500 W",
      "2,250 W",
      "2,250 W"
     ]
-   ]
+   ],
+   "row_head": true
   },
   "answer": "Three fans, six LED bulbs, a TV, a non-inverter fridge and a router run at 597 W and peak at 1,597 W when the fridge starts, so the generator must deliver 1,597 W, a 2.5 kVA set. Generator watts = the larger of total running watts × 1.25 or running watts plus the biggest starting surge.",
   "formula": {

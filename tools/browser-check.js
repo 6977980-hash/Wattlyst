@@ -1,7 +1,8 @@
 // Browser smoke test for CI (audit WL-74: no browser test besides Lighthouse). Opens each URL in headless
 // Chrome at phone width and fails on: a JavaScript error, any script fetched twice (WL-55), the WordPress
 // emoji script (WL-57), or a calculator whose result after Calculate is blank, an error, or shows NaN / Infinity / undefined.
-// On pages with an appliance list it also picks an appliance from the picker and adds a row. Every page must
+// On pages with an appliance list it also picks an appliance from the picker and adds a row. A tool page must show its
+// Next step within 400 px under the result (WL-198) and an embed its result above the inputs (WL-238). Every page must
 // fit the phone width with no sideways scroll (audit WL-05), and no result table may scroll sideways (WL-135).
 // On the homepage it also checks a shared ?load= link round trip (WL-89) and, at 1366 and 1920 px, that an
 // input error keeps the inputs in place and the first click on the button still submits (WL-90).
@@ -49,6 +50,15 @@ for (const url of urls) {
     // itself, since innerText also reads hidden results.
     const state = await page.$eval('form[data-wl-tool]', (f) => ({ hidden: f.querySelector('.wl-results').hidden, error: (() => { const e = f.querySelector('.wl-error'); return e && !e.hidden && !e.classList.contains('wl-notice') ? e.textContent : ''; })() }));
     if (state.hidden || state.error) fail(`default inputs give an error: ${state.error || 'results hidden'}`);
+    // WL-198: a "Next step" right under the result (after its table, diagram and share bar), not at the page bottom;
+    // WL-238: an embed prints the result above the inputs, so a short iframe still shows it.
+    const layout = await page.evaluate(() => {
+      const nx = document.querySelector('.wl-next-inline');
+      const end = Math.max(...[...document.querySelectorAll('.wl-results, .wl-rtable, .wl-diagram')].filter((e) => !e.hidden).map((e) => e.getBoundingClientRect().bottom));
+      return { embed: document.body.hasAttribute('data-wl-embed'), home: !!document.querySelector('.wl-tool-split'), gap: nx ? Math.round(nx.getBoundingClientRect().top - end) : null, first: document.querySelector('.wl-results').getBoundingClientRect().top < document.querySelector('form[data-wl-tool] .wl-btn').getBoundingClientRect().top };
+    });
+    if (layout.embed && !layout.first) fail('embed prints the inputs above the result');
+    if (!layout.embed && !layout.home && (layout.gap === null || layout.gap > 400)) fail(`Next step is ${layout.gap === null ? 'missing' : `${layout.gap} px`} below the result at phone width`);
     const picker = await page.$('.wl-load-row select');
     if (picker) {
       await picker.focus();

@@ -101,7 +101,7 @@ test('content: numbers in page text come from the engine or data/, never typed (
     const allowed = c.literal_numbers || [];
     const texts = [c.answer, c.intro, c.how, c.how_ur, c.safety, ...(c.key_facts || []), ...(c.mistakes || []),
       ...(c.faq || []).flatMap((x) => [x.q, x.a]), ...(c.examples || []).flatMap((x) => [x.title, x.text]),
-      c.table?.caption, ...(c.sections || []).flatMap((s) => [s.h2, ...(s.p || [])])].filter((x) => typeof x === 'string' && x); // a hub's { from, n } key fact is another page's built text
+      c.table?.caption, c.table?.row_head, ...(c.table?.rows || []).map((r) => r.label), ...(c.sections || []).flatMap((s) => [s.h2, ...(s.p || [])])].filter((x) => typeof x === 'string' && x); // a hub's { from, n } key fact is another page's built text
     for (const t of texts) {
       let s = t.replace(/\{\{[^}]*\}\}/g, '').replace(/\[\[[\w-]+\|/g, ''); // [[ID|anchor]]: the ID is not page text (WL-140)
       for (const a of allowed) s = s.split(a).join('');

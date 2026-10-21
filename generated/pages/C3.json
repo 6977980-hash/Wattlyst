@@ -1315,8 +1315,9 @@
    }
   ],
   "table": {
-   "caption": "Starting watts chart for motors and compressors, each on its own, from the top: chest deep freezer, half hp water pump, 1 hp submersible pump, 2 hp water pump, 1 hp air compressor, 1 ton window AC, 1.5 ton non-inverter split AC, 2 ton non-inverter split AC",
+   "caption": "Starting watts chart for motors and compressors, each on its own",
    "head": [
+    "Motor or compressor",
     "Running watts",
     "Starting watts",
     "Calculated kVA",
@@ -1324,54 +1325,63 @@
    ],
    "rows": [
     [
+     "Chest deep freezer",
      "200 W",
      "1,200 W",
      "1.5 kVA",
      "2.5 kVA"
     ],
     [
+     "Half hp water pump",
      "600 W",
      "1,800 W",
      "2.25 kVA",
      "2.5 kVA"
     ],
     [
+     "1 hp submersible pump",
      "1,100 W",
      "3,300 W",
      "4.13 kVA",
      "5 kVA"
     ],
     [
+     "2 hp water pump",
      "2,000 W",
      "6,000 W",
      "7.5 kVA",
      "7.5 kVA"
     ],
     [
+     "1 hp air compressor",
      "1,100 W",
      "4,500 W",
      "5.63 kVA",
      "6.5 kVA"
     ],
     [
+     "1 ton window AC",
      "1,350 W",
      "4,000 W",
      "5 kVA",
      "5 kVA"
     ],
     [
+     "1.5 ton non-inverter split AC",
      "1,800 W",
      "5,400 W",
      "6.75 kVA",
      "7.5 kVA"
     ],
     [
+     "2 ton non-inverter split AC",
      "2,400 W",
      "7,200 W",
      "9 kVA",
      "10 kVA"
     ]
-   ]
+   ],
+   "row_head": true
   },
   "answer": "With four fans, ten bulbs, a non-inverter fridge, a 1 hp water motor and a twin-tub washer on, the generator must supply 3,836 W when the pump starts, against 1,972 W running, so 5 kVA. Starting watts = total running watts + the largest single starting jump (starting minus running watts of the biggest motor), not the sum of every surge.",
   "formula": {
