@@ -8,6 +8,11 @@
  "url": "https://wattlyst.com/",
  "tagline": "Electricity math, done right.",
  "contact_email": "contact@wattlyst.com",
+ "operator": {
+  "name": "Ali Ahmad",
+  "country": "Pakistan",
+  "note": "Who runs the site and is responsible for visitor data (data controller), printed in the privacy policy and the terms' governing-law line (audit 2026-10-21 Phase 8, WL-219). Country from the owner (Pakistan-based founder, 21 Oct 2026); add a city only when the owner gives it."
+ },
  "organization_same_as": [],
  "people": [
   {
@@ -63,7 +68,7 @@
   "no_ads_note": "Pages that never show ads, whatever enabled says (audit 2026-10-21 Phase 8). N6: its live solar forecast uses the free Open-Meteo API, whose free tier is for non-commercial use (no ads); owner decision 21 Oct 2026: keep the free forecast and no ads on N6 rather than buy the commercial plan. The build fails if a page with a live data feed is missing here.",
   "no_ads_source": "Open-Meteo terms and pricing (free API: non-commercial use; data CC BY 4.0, credit required): https://open-meteo.com/en/terms",
   "no_ads_checked": "2026-10-21",
-  "note": "Stays false until AdSense approves the site (seo-rules.md 8). When approved: set adsense_pub_id (pub-...) so /ads.txt is served, create three display ad units in AdSense and put their data-ad-slot numbers in slots, then enabled true. A slot with no number prints nothing. Ads show only on tool, appliance, guide and lookup pages (max three, never near inputs or the Calculate button), never on the home page, data, embed, trust or thank-you pages."
+  "note": "Stays false until AdSense approves the site (seo-rules.md 8). When approved: set adsense_pub_id (pub-...) so /ads.txt is served, create three display ad units in AdSense and put their data-ad-slot numbers in slots, then enabled true. A slot with no number prints nothing. Ads show only on tool, appliance, guide and lookup pages (max three, never near inputs or the Calculate button), never on the home page, data, embed, trust or thank-you pages. To apply: set adsense_pub_id first and keep enabled false; the front page then prints the google-adsense-account meta tag and /ads.txt is served, either of which proves ownership. enabled true also needs consent.cmp (the build fails without it, WL-217)."
  },
  "consent": {
   "cmp": null,
