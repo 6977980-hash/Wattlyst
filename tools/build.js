@@ -519,7 +519,14 @@ function dataChecked(module, ctx) {
 function person(site, id) {
   const p = site.people.find((x) => x.id === id) || site.people[0];
   // url = the person's entry on the About page (WL-209); the About people block prints the same id.
-  return { '@type': 'Person', '@id': `${site.url}#/person/${p.id}`, name: p.name, url: personUrl(site, p.id), jobTitle: p.roles.join(', '), sameAs: p.same_as, worksFor: { '@id': `${site.url}#organization` } };
+  // description, knowsAbout, credential and home town come from the person's bio fields (WL-215), only when set.
+  const bio = {
+    ...(p.short_bio ? { description: p.short_bio } : {}),
+    ...(p.knows_about?.length ? { knowsAbout: p.knows_about } : {}),
+    ...(p.credential ? { hasCredential: { '@type': 'EducationalOccupationalCredential', credentialCategory: 'degree', name: p.credential } } : {}),
+    ...(p.home_location ? { homeLocation: { '@type': 'Place', name: [p.home_location.locality, p.home_location.country].filter(Boolean).join(', ') } } : {}),
+  };
+  return { '@type': 'Person', '@id': `${site.url}#/person/${p.id}`, name: p.name, url: personUrl(site, p.id), jobTitle: p.roles.join(', '), ...bio, sameAs: p.same_as, worksFor: { '@id': `${site.url}#organization` } };
 }
 
 export function personUrl(site, id) {
@@ -658,7 +665,8 @@ function renderTrust(id, html, ctx) {
   const blocks = {
     'defaults-table': () => defaultsTable(data.defaults),
     'data-sources': () => dataSources(ctx),
-    'people': () => site.people.map((p) => `<li id="${esc(p.id)}"><strong>${esc(p.name)}</strong>, ${esc(p.roles.join(' and '))}${p.same_as.length ? ` (<a href="${esc(p.same_as[0])}" rel="me noopener">LinkedIn</a>)` : ''}</li>`).join(''),
+    // Each person's factual bio from data/site.json (owner's own facts, WL-215) under the name line.
+    'people': () => site.people.map((p) => `<li id="${esc(p.id)}"><strong>${esc(p.name)}</strong>, ${esc(p.roles.join(' and '))}${p.same_as.length ? ` (<a href="${esc(p.same_as[0])}" rel="me noopener">LinkedIn</a>)` : ''}${(p.bio || []).map((x) => `<p>${esc(x)}</p>`).join('')}</li>`).join(''),
     'reviewer': () => site.reviewer.status === 'signed_off'
       ? `<p>Technical review: <strong>${esc(site.reviewer.name)}</strong>, ${esc(site.reviewer.credential)}.</p>`
       : '<p>Technical review by a PEC-registered electrical engineer is in progress. Until it is complete, no page claims an engineer sign-off.</p>',
