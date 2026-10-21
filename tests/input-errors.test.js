@@ -67,7 +67,7 @@ test('WL-226 messages name the field, its unit, an example or the limit', () => 
 
 test('WL-197 an error is printed under the wrong field, with a red border that survives focus', () => {
   const js = read('assets/js/wattlyst-tool.js');
-  assert.match(js, /bad\.closest\('\.wl-field'\)\?\.append\(errorEl\)/);
+  assert.match(js, /if \(table\) table\.after\(errorEl\); else box\?\.append\(errorEl\);/);
   assert.match(js, /results\.before\(errorEl\)/);
   const css = read('assets/css/wattlyst.css');
   assert.match(css, /\.wl-field \[aria-invalid=true\]:focus\{border-color:#b00020/);
@@ -107,6 +107,10 @@ test('WL-224 C8 gives no per-unit figure near zero load', () => {
   assert.equal(tiny.ok, true);
   assert.equal(tiny.rs_per_unit, undefined);
   assert.equal(tiny.l_per_kwh, undefined);
+  assert.equal(noticeCode(tiny), 'per_unit_hidden');
+  // Exactly at the minimum share the per-unit figures still show (Engineer Reviewer: floating point at 10%).
+  const edge = calculators.generator_fuel({ ...base, kva: 2.2, load_w: 176 }, data);
+  assert.ok(edge.rs_per_unit > 0);
   for (const k of ['margin_max', 'psh_min', 'load_w_max', 'fuel_per_unit_min_load_pct']) assert.ok(data.defaults[`${k}_source`], k);
 });
 

@@ -69,7 +69,7 @@ async function init(form) {
       const ids = (n.getAttribute('aria-describedby') || '').split(' ').filter((x) => x && x !== errorEl.id);
       if (ids.length) n.setAttribute('aria-describedby', ids.join(' ')); else n.removeAttribute('aria-describedby');
     });
-    // The message box sits above the results; an error moves it under the wrong field so it is seen on a phone (WL-197).
+    // The message box sits above the results; an error on Calculate moves it under the wrong field, so it is seen on a phone (WL-197).
     results.before(errorEl);
     if (!out.ok) {
       say(errorMessage(out.error, { fields: cfg.fields, texts: cfg.msg, limit: out.limit }), true);
@@ -83,10 +83,17 @@ async function init(form) {
       if (bad && bad.setAttribute) {
         const adv = bad.closest('details');
         if (adv) adv.open = true; // a field under "Advanced settings" must be visible before it takes focus
-        bad.closest('.wl-field')?.append(errorEl);
         bad.setAttribute('aria-invalid', 'true');
         bad.setAttribute('aria-describedby', `${bad.getAttribute('aria-describedby') || ''} ${errorEl.id}`.trim());
-        if (pushState) bad.focus();
+        // Only on Calculate or a pick: moving it when a typed field loses focus would shift the button under the
+        // pointer and swallow the click (WL-90).
+        if (pushState) {
+          // In an appliance list it goes right under the table, not under the hint and buttons.
+          const box = bad.closest('.wl-field');
+          const table = box?.querySelector('.wl-table-wrap');
+          if (table) table.after(errorEl); else box?.append(errorEl);
+          bad.focus();
+        }
       }
       return;
     }
