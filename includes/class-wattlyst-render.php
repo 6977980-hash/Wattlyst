@@ -319,6 +319,7 @@ final class Wattlyst_Render {
 					array(
 						'name'    => $f['name'],
 						'label'   => $f['label'] ?? $f['name'],
+						'unit'    => $f['unit'] ?? null,
 						'type'    => $f['type'] ?? 'number',
 						'options' => isset( $f['options'] ) ? array_map( static fn( $o ) => (string) $o[0], $f['options'] ) : null,
 						'default' => $f['default'] ?? null,
@@ -331,6 +332,7 @@ final class Wattlyst_Render {
 				$t['fields']
 			),
 			'fixed'   => (object) ( $t['fixed_inputs'] ?? array() ),
+			'msg'     => (object) ( $t['msg'] ?? array() ),
 			'outputs' => array_map( static fn( $o ) => array( 'key' => $o['key'], 'spec' => $o['spec'] ?? '2' ), $t['outputs'] ),
 			'how'     => $t['how']['tpl'] ?? '',
 			'how_ur'  => $t['how']['tpl_ur'] ?? '',
@@ -530,7 +532,8 @@ final class Wattlyst_Render {
 			return '';
 		}
 		if ( ! $steps ) {
-			return '<section class="wl-how"><h2>How this result was calculated</h2><p data-wl-how>' . esc_html( $how['text'] ) . '</p></section>';
+			// No Roman Urdu text yet: the heading says "(English)" while the Roman Urdu toggle is on (CSS, WL-225).
+			return '<section class="wl-how' . ( empty( $how['tpl_ur'] ) ? ' wl-how-en' : '' ) . '"><h2>How this result was calculated</h2><p data-wl-how>' . esc_html( $how['text'] ) . '</p></section>';
 		}
 		// Home: one sentence per step, the first three shown and the rest behind a toggle (all of it stays in the HTML);
 		// the browser splits its live text the same way (wattlyst-extra.js drawTable).

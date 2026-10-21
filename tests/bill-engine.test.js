@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { calculators as C } from '../engine/index.js';
-import { errorMessage } from '../engine/messages.js';
+import { errorMessage } from '../engine/message-text.js';
 import { data, root, readJson } from './load-data.js';
 
 const page = (id) => JSON.parse(readFileSync(join(root, 'generated/pages', `${id}.json`), 'utf8')).content;

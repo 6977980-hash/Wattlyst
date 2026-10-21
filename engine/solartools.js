@@ -5,16 +5,20 @@ import { calculator, CalcError, has, pos, frac, nonneg, dflt, num } from './core
 /** MPPT: A = P_array / V_battery × margin. PWM: A = Isc × N_parallel × margin. */
 export const charge_controller = calculator((i, d) => {
   const type = i.type ?? 'mppt';
-  const margin = num(i, 'margin', { def: dflt(d, 'margin'), min: 1 });
+  const margin = num(i, 'margin', { def: dflt(d, 'margin'), min: 1, max: dflt(d, 'margin_max') });
   let amps;
   let echo; // the inputs used, so the page text can print what was entered (audit WL-12, WL-23)
   if (type === 'mppt') {
     echo = { panel_w: pos(i, 'panel_w'), battery_v: pos(i, 'battery_v') };
+    // The PWM boxes are not used for MPPT, but a filled one must still be a real number (WL-223).
+    if (has(i, 'isc')) pos(i, 'isc');
+    if (has(i, 'n_parallel') && !Number.isInteger(num(i, 'n_parallel', { min: 1 }))) throw new CalcError('n_parallel_must_be_whole', 'n_parallel');
     amps = (echo.panel_w / echo.battery_v) * margin;
   } else if (type === 'pwm') {
     const n_parallel = num(i, 'n_parallel', { def: 1, min: 1 });
     if (!Number.isInteger(n_parallel)) throw new CalcError('n_parallel_must_be_whole', 'n_parallel');
     echo = { isc: pos(i, 'isc'), n_parallel };
+    if (has(i, 'panel_w')) pos(i, 'panel_w'); // not used for PWM, still checked (WL-223)
     amps = echo.isc * n_parallel * margin;
   } else throw new CalcError('type_invalid', 'type');
   const sizes = dflt(d, 'standard_controller_a');

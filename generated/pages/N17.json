@@ -36,7 +36,7 @@
    "url": "/solar/solar-size-from-electricity-bill/"
   }
  ],
- "modified": "2026-10-15",
+ "modified": "2026-10-21",
  "content": {
   "intro": "",
   "sections": [
@@ -271,6 +271,7 @@
      "label": "Solar size for the year",
      "spec": "2",
      "unit": "kW",
+     "label_ur": "Saal bhar ke liye solar size",
      "value": "4.1"
     },
     {
@@ -285,6 +286,7 @@
      "label": "Size to cover the hardest month",
      "spec": "2",
      "unit": "kW",
+     "label_ur": "Sab se mushkil mahine ke liye size",
      "value": "6.28"
     },
     {
@@ -292,24 +294,28 @@
      "label": "Solar units as a share of the year's use",
      "spec": "int",
      "unit": "%",
+     "label_ur": "Saal ke istemal mein solar units ka hissa",
      "value": "112"
     },
     {
      "key": "grid_units_year",
      "label": "Units bought from the grid a year",
      "spec": "int",
+     "label_ur": "Grid se saal mein khareede units",
      "value": "2,660"
     },
     {
      "key": "export_units_year",
      "label": "Units exported a year",
      "spec": "int",
+     "label_ur": "Saal mein grid ko diye units",
      "value": "3,311"
     },
     {
      "key": "export_credit_rs",
      "label": "Credit for exported units a year",
      "spec": "rs",
+     "label_ur": "Diye gaye units ka saalana credit",
      "value": "Rs 26,921"
     },
     {
@@ -317,6 +323,7 @@
      "label": "Share of your units used straight from the panels",
      "spec": "int",
      "unit": "%",
+     "label_ur": "Panels se seedha istemal hone wale units ka hissa",
      "value": "50"
     }
    ],
@@ -461,6 +468,15 @@
     ]
    },
    "notice": "",
+   "msg": {
+    "loads_required": "Add at least one appliance.",
+    "city_unknown": "We do not have sun data for this city yet. Pick the nearest city or enter the yield yourself.",
+    "monthly_units_all_zero": "Enter the units of at least one month.",
+    "appliance_unknown": "Pick an appliance from the list, or choose Custom and enter its watts.",
+    "forecast_unavailable": "The live forecast is not available right now, so a typical day is shown. Try again later.",
+    "typical_used": "Blank boxes in your list use the typical value for that appliance (its listed watts and hours a day, quantity 1). Type your own numbers for an exact result.",
+    "internal_non_finite": "These numbers are outside a realistic range. Please check your inputs."
+   },
    "data_checked": [
     {
      "label": "Monthly solar output by city (Global Solar Atlas PVOUT)",
@@ -593,7 +609,7 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/solar/solar-size-from-electricity-bill/#breadcrumb"
     },
-    "dateModified": "2026-10-15",
+    "dateModified": "2026-10-21",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }

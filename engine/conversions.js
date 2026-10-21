@@ -39,6 +39,9 @@ export const kw_to_amps = calculator((i, d) => {
 /** A6: amps to kW, or (direction kw_to_amps) kW to amps; both return amps, kW and the apparent power VA = k × V × I. */
 export const amps_to_kw = calculator((i, d) => {
   const direction = pick(i, 'direction', ['amps_to_kw', 'kw_to_amps'], 'amps_to_kw');
+  // The box of the other direction is not used, but a filled one must still be a number (WL-223).
+  const other = direction === 'kw_to_amps' ? 'amps' : 'kw';
+  if (has(i, other)) nonneg(i, other);
   if (direction === 'kw_to_amps') {
     const r = kw_to_amps.raw(i, d);
     return { ...r, direction, watts: r.kw * 1000, va: r.k * r.volts * r.amps };
@@ -114,6 +117,10 @@ export const units = calculator((i, d) => {
     Object.assign(out, { mode, volts, pf, amps });
   } else {
     watts = nonneg(i, 'watts');
+    // The amps-mode boxes are not used here, but a filled one must still be a real value (WL-223).
+    if (has(i, 'amps')) nonneg(i, 'amps');
+    if (has(i, 'volts')) pos(i, 'volts');
+    if (has(i, 'pf')) frac(i, 'pf');
   }
   return withCost(i, { ...out, watts, units: (watts * hours * days) / 1000 });
 });

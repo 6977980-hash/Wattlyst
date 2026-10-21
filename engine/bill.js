@@ -73,9 +73,11 @@ export const bill_energy = calculator((i, d) => {
  */
 function addOns(base, i, d) {
   const a = tariffOf(d).addons_secondary || {};
-  // Lifeline: FC surcharge and GST defaults are 0 until confirmed on a lifeline bill [VERIFY]; the user can still enter them.
+  // A blank FC surcharge or GST takes the category's own default from data (by_category: lifeline 0, with sources and
+  // what is still [VERIFY]), else the file value (WL-241, WL-242); the user can still enter them.
   const life = base.category === 'lifeline';
-  const fc = nonneg(i, 'fc_surcharge_per_unit', life ? 0 : a.fc_surcharge_per_unit?.value ?? 0);
+  const def = (x) => x?.by_category?.[base.category] ?? x?.value ?? 0;
+  const fc = nonneg(i, 'fc_surcharge_per_unit', def(a.fc_surcharge_per_unit));
   const period = has(i, 'period') ? String(i.period) : null;
   const qtaTable = a.qta_per_unit || {};
   const qtaDefault = period && /^\d{4}-\d{2}\.\.\d{4}-\d{2}$/.test(period) && Object.hasOwn(qtaTable, period) ? qtaTable[period] : undefined;
@@ -83,7 +85,7 @@ function addOns(base, i, d) {
   const qta = num(i, 'qta_per_unit', { def: qtaDefault ?? 0 });
   // FPA bounded by the range NEPRA has notified (data/tariff-pk-2026.json addons_secondary.fpa_per_unit.min/max, WL-118).
   const fpa = num(i, 'fpa_per_unit', { def: a.fpa_per_unit?.value ?? 0, min: a.fpa_per_unit?.min, max: a.fpa_per_unit?.max });
-  const gst_pct = num(i, 'gst_pct', { def: life ? 0 : a.gst_pct?.value ?? 0, min: 0, max: 100 });
+  const gst_pct = num(i, 'gst_pct', { def: def(a.gst_pct), min: 0, max: 100 });
   const exempt = Array.isArray(i.fpa_exempt) ? i.fpa_exempt : a.fpa_per_unit?.exempt || [];
   // A bill prints whole rupees: each line is rounded, the subtotal is the sum of the printed lines and GST is
   // rounded on that subtotal, so the printed lines always add up to the printed total (WL-109).

@@ -37,21 +37,21 @@
    "url": "/solar/solar-system-size-calculator/"
   }
  ],
- "modified": "2026-10-13",
+ "modified": "2026-10-21",
  "content": {
   "intro": "",
   "sections": [
    {
     "h2": "How many kW solar system do I need?",
     "p": [
-     "Divide the units you use a day by the units one kW of solar makes a day in your city. For 16 units a day in Lahore that is 16 ÷ 4 = 4.01 kW. The yield figure is a yearly average that already includes real-world losses, so the system makes more than your usage in summer and less in winter, and over a year it roughly balances.",
+     "Divide the units you use a day by the units one kW of solar makes a day in your city. For 15.8 units a day in Lahore that is 15.8 ÷ 4 = 3.95 kW. The yield figure is a yearly average that already includes real-world losses, so the system makes more than your usage in summer and less in winter, and over a year it roughly balances.",
      "Because you buy whole panels, the installed size is 7 × 585 W = 4.1 kW, a little above the calculated figure. Installers sell by inverter size, so this house would be quoted as a five kW system."
     ]
    },
    {
     "h2": "Solar system size calculator for Pakistan: why your city changes the answer",
     "p": [
-     "The same 16 units a day needs 4.1 kW in Lahore but only 3.51 kW in Quetta, because a kW of panels makes 5.3 units a day there against 4 in Lahore. Lahore's winter fog and summer dust cost real output; Quetta and Karachi have clearer skies. The table below shows the system size for the same daily usage in every city we have data for.",
+     "The same 15.8 units a day needs 4.1 kW in Lahore but only 3.51 kW in Quetta, because a kW of panels makes 5.3 units a day there against 4 in Lahore. Lahore's winter fog and summer dust cost real output; Quetta and Karachi have clearer skies. The table below shows the system size for the same daily usage in every city we have data for.",
      "The city yields come from the Global Solar Atlas long-term averages for panels at the best tilt. A flat-mounted or partly shaded array makes less, so treat the result as the minimum."
     ]
    },
@@ -79,7 +79,7 @@
   "faq": [
    {
     "q": "How many kW of solar do I need for 16 units a day?",
-    "a": "About 4.01 kW in Lahore, installed as 7 panels of 585 W (4.1 kW). Quetta needs 3.51 kW for the same usage because of its stronger sun."
+    "a": "About 3.95 kW in Lahore, installed as 7 panels of 585 W (4.1 kW). Quetta needs 3.51 kW for the same usage because of its stronger sun."
    },
    {
     "q": "What size solar system for five hundred units a month?",
@@ -107,8 +107,8 @@
    }
   ],
   "key_facts": [
-   "Solar system size in kW = units used a day ÷ the units one kW of solar makes a day in the city; 16 units a day in Lahore needs 4.01 kW, installed as 7 panels of 585 W.",
-   "In Lahore one kW of solar makes about 4 units a day over the year, in Quetta about 5.3, so the same 16 units a day needs 4.1 kW in Lahore but 3.51 kW in Quetta (Global Solar Atlas).",
+   "Solar system size in kW = units used a day ÷ the units one kW of solar makes a day in the city; 15.8 units a day in Lahore needs 3.95 kW, installed as 7 panels of 585 W.",
+   "In Lahore one kW of solar makes about 4 units a day over the year, in Quetta about 5.3, so the same 15.8 units a day needs 4.1 kW in Lahore but 3.51 kW in Quetta (Global Solar Atlas).",
    "A bill of five hundred units a month is 16.4 units a day and needs a 4.68 kW system (8 panels) in Lahore; three hundred units a month needs 2.93 kW (5 panels).",
    "Each 585 W panel needs about 2.6 m² of roof, so a 4.1 kW system takes about 18.2 m² and a 10.53 kW system about 46.8 m²."
   ],
@@ -138,18 +138,18 @@
    "appliances": {},
    "fields": [
     {
-     "name": "daily_kwh",
-     "label": "Units you use a day",
+     "name": "monthly_units",
+     "label": "Units on the monthly bill",
      "unit": "kWh",
-     "default": 16,
-     "hint": "Read the meter at the same time on two days and subtract, or divide a monthly bill by the days it covers. Clear this box to size from monthly units instead."
+     "hint": "The units (kWh) printed on your electricity bill. Used unless the daily box is filled.",
+     "default": 480
     },
     {
-     "name": "monthly_units",
-     "label": "Or units on the monthly bill",
+     "name": "daily_kwh",
+     "label": "Or units you use a day",
      "unit": "kWh",
-     "placeholder": "Used when daily units are blank",
-     "hint": "Only used when the daily box is empty."
+     "hint": "Read the meter at the same time on two days and subtract. If you fill this box, it is used instead of the monthly units.",
+     "placeholder": "Leave blank to use the monthly units"
     },
     {
      "name": "city",
@@ -229,10 +229,26 @@
    ],
    "how": {
     "tpl": "Daily usage = {{out.daily_kwh|1}} units (from the daily box, or monthly units ÷ {{d.days_per_month|2}}). In your city one kW of solar makes about {{out.yield_kwh_per_kwp_day|1}} units a day averaged over the year, with heat, dust, wiring and inverter losses already removed. System size = {{out.daily_kwh|1}} ÷ {{out.yield_kwh_per_kwp_day|1}} = {{out.kw|2}} kW. With {{out.panel_w}} W panels that is {{out.panels|int}} panels, {{out.installed_kw|2}} kW installed on about {{out.roof_m2|1}} m², which should make about {{out.monthly_kwh_estimate|int}} units a month.",
-    "text": "Daily usage = 16 units (from the daily box, or monthly units ÷ 30.42). In your city one kW of solar makes about 4 units a day averaged over the year, with heat, dust, wiring and inverter losses already removed. System size = 16 ÷ 4 = 4.01 kW. With 585 W panels that is 7 panels, 4.1 kW installed on about 18.2 m², which should make about 498 units a month."
+    "text": "Daily usage = 15.8 units (from the daily box, or monthly units ÷ 30.42). In your city one kW of solar makes about 4 units a day averaged over the year, with heat, dust, wiring and inverter losses already removed. System size = 15.8 ÷ 4 = 3.95 kW. With 585 W panels that is 7 panels, 4.1 kW installed on about 18.2 m², which should make about 498 units a month."
    },
    "submit": "Calculate",
    "notice": "",
+   "msg": {
+    "load_must_be_positive": "Enter a load greater than 0 watts.",
+    "loads_required": "Add at least one appliance.",
+    "city_unknown": "We do not have sun data for this city yet. Pick the nearest city or enter the yield yourself.",
+    "usage_required": "Enter your monthly units or daily kWh.",
+    "yield_or_city_or_psh_required": "Pick a city or enter peak sun hours.",
+    "appliance_unknown": "Pick an appliance from the list, or choose Custom and enter its watts.",
+    "other_start_below_run": "Starting watts of the other loads cannot be lower than their running watts.",
+    "loads_hours_required": "Enter hours per day for at least one appliance.",
+    "above_standard_sizes": "This is above the largest standard size we list. Split the array or circuit into two, or ask a licensed electrician or engineer; the sizes shown are the calculated minimums.",
+    "generator_above_standard_sizes": "This is above the largest generator size we list. Use two generators on separate circuits or a larger industrial set, and ask a licensed electrician; the size shown is the calculated minimum.",
+    "forecast_unavailable": "The live forecast is not available right now, so a typical day is shown. Try again later.",
+    "usage_both": "Both boxes are filled, so the units a day are used and the monthly units are left out. Clear the daily box to size from your bill.",
+    "typical_used": "Blank boxes in your list use the typical value for that appliance (its listed watts and hours a day, quantity 1). Type your own numbers for an exact result.",
+    "internal_non_finite": "These numbers are outside a realistic range. Please check your inputs."
+   },
    "data_checked": [
     {
      "label": "Peak sun hours by city (Global Solar Atlas)",
@@ -256,7 +272,7 @@
    },
    {
     "title": "16 units a day in Quetta",
-    "text": "Quetta makes 5.3 units per kW a day, so 16 ÷ 5.3 = 3.02 kW: 6 panels, 3.51 kW installed, making about 566 units a month. Stronger sun means one panel fewer than Lahore."
+    "text": "Quetta makes 5.3 units per kW a day, so 15.8 ÷ 5.3 = 2.98 kW: 6 panels, 3.51 kW installed, making about 566 units a month. Stronger sun means one panel fewer than Lahore."
    },
    {
     "title": "Large house using 40 units a day in Lahore",
@@ -264,7 +280,7 @@
    }
   ],
   "table": {
-   "caption": "Solar system size for 16 units a day in each city, 585 W panels",
+   "caption": "Solar system size for 15.8 units a day in each city, 585 W panels",
    "head": [
     "Units per kW a day",
     "System size",
@@ -275,49 +291,49 @@
    "rows": [
     [
      "4",
-     "4.01 kW",
+     "3.95 kW",
      "7 × 585 W",
      "4.1 kW",
      "498"
     ],
     [
      "4.7",
-     "3.44 kW",
+     "3.39 kW",
      "6 × 585 W",
      "3.51 kW",
      "497"
     ],
     [
      "4.3",
-     "3.75 kW",
+     "3.69 kW",
      "7 × 585 W",
      "4.1 kW",
      "532"
     ],
     [
      "4.1",
-     "3.86 kW",
+     "3.81 kW",
      "7 × 585 W",
      "4.1 kW",
      "516"
     ],
     [
      "5.3",
-     "3.02 kW",
+     "2.98 kW",
      "6 × 585 W",
      "3.51 kW",
      "566"
     ],
     [
      "4.4",
-     "3.68 kW",
+     "3.63 kW",
      "7 × 585 W",
      "4.1 kW",
      "542"
     ]
    ]
   },
-  "answer": "A home that uses 16 units a day in Lahore needs a solar system of about 4.01 kW, installed as 7 panels of 585 W (4.1 kW) on about 18.2 m² of roof, making about 498 units a month. Solar system kW = daily kWh ÷ the units one kW makes a day in your city.",
+  "answer": "A home that uses 15.8 units a day in Lahore needs a solar system of about 3.95 kW, installed as 7 panels of 585 W (4.1 kW) on about 18.2 m² of roof, making about 498 units a month. Solar system kW = daily kWh ÷ the units one kW makes a day in your city.",
   "formula": {
    "text": "kW = E_day ÷ yield; panels = ceil(kW × 1000 ÷ W_panel); kW_installed = panels × W_panel ÷ 1000; units_month = kW_installed × yield × 30.42",
    "lines": [
@@ -370,7 +386,7 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/solar/solar-system-size-calculator/#breadcrumb"
     },
-    "dateModified": "2026-10-13",
+    "dateModified": "2026-10-21",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }
@@ -415,7 +431,7 @@
       "name": "How many kW of solar do I need for 16 units a day?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "About 4.01 kW in Lahore, installed as 7 panels of 585 W (4.1 kW). Quetta needs 3.51 kW for the same usage because of its stronger sun."
+       "text": "About 3.95 kW in Lahore, installed as 7 panels of 585 W (4.1 kW). Quetta needs 3.51 kW for the same usage because of its stronger sun."
       }
      },
      {

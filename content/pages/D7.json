@@ -9,18 +9,18 @@
  "calc": "solar_size",
  "fields": [
   {
-   "name": "daily_kwh",
-   "label": "Units you use a day",
+   "name": "monthly_units",
+   "label": "Units on the monthly bill",
    "unit": "kWh",
-   "default": 16,
-   "hint": "Read the meter at the same time on two days and subtract, or divide a monthly bill by the days it covers. Clear this box to size from monthly units instead."
+   "hint": "The units (kWh) printed on your electricity bill. Used unless the daily box is filled.",
+   "default": 480
   },
   {
-   "name": "monthly_units",
-   "label": "Or units on the monthly bill",
+   "name": "daily_kwh",
+   "label": "Or units you use a day",
    "unit": "kWh",
-   "placeholder": "Used when daily units are blank",
-   "hint": "Only used when the daily box is empty."
+   "hint": "Read the meter at the same time on two days and subtract. If you fill this box, it is used instead of the monthly units.",
+   "placeholder": "Leave blank to use the monthly units"
   },
   {
    "name": "city",

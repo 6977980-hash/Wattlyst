@@ -12,7 +12,7 @@ function yieldFor(i, d) {
     if (!c || !(c.yield > 0)) throw new CalcError('city_unknown', 'city');
     return { yield_kwh_per_kwp_day: c.yield, yield_source: 'city' };
   }
-  const psh = pos(i, 'psh', undefined, 'yield_or_city_or_psh_required');
+  const psh = has(i, 'psh') ? num(i, 'psh', { min: dflt(d, 'psh_min'), max: dflt(d, 'psh_max') }) : pos(i, 'psh', undefined, 'yield_or_city_or_psh_required');
   const pr = frac(i, 'pr', dflt(d, 'pr'));
   return { yield_kwh_per_kwp_day: psh * pr, yield_source: 'psh', psh, pr };
 }
@@ -21,8 +21,10 @@ function yieldFor(i, d) {
 export const solar_size = calculator((i, d) => {
   let daily_kwh;
   const echo = {}; // the monthly units entered, for the page text (audit WL-23)
-  if (has(i, 'daily_kwh')) daily_kwh = pos(i, 'daily_kwh');
-  else {
+  if (has(i, 'daily_kwh')) {
+    daily_kwh = pos(i, 'daily_kwh');
+    if (has(i, 'monthly_units')) echo.usage_both = true; // both boxes filled: the daily figure wins, and the page says so (WL-222)
+  } else {
     echo.monthly_units = pos(i, 'monthly_units', undefined, 'usage_required');
     daily_kwh = echo.monthly_units / dflt(d, 'days_per_month');
   }
@@ -54,7 +56,7 @@ export const panel_for_12v = calculator((i, d) => {
   const ah = pos(i, 'ah');
   const volts = pos(i, 'volts');
   const dod = frac(i, 'dod', dflt(d, 'dod_lead_acid'));
-  const psh = num(i, 'psh', { gt: 0, max: dflt(d, 'psh_max') }); // a day has at most about twelve sun hours (WL-129)
+  const psh = num(i, 'psh', { min: dflt(d, 'psh_min'), max: dflt(d, 'psh_max') }); // about one to twelve sun hours a day (WL-129, WL-224)
   const charge_eff = frac(i, 'charge_eff', dflt(d, 'charge_eff_lead_acid'));
   const pr = frac(i, 'pr', dflt(d, 'pr'));
   const panel_w = (ah * volts * dod) / charge_eff / (psh * pr);
@@ -75,7 +77,7 @@ export const panel_for_12v = calculator((i, d) => {
   out.panels_fitted = out.panels_of_largest ?? 1;
   out.charge_hours = (ah * volts * dod) / charge_eff / (fitted_w * pr);
   out.charge_days = out.charge_hours / psh;
-  const margin = num(i, 'margin', { def: dflt(d, 'margin'), min: 1 });
+  const margin = num(i, 'margin', { def: dflt(d, 'margin'), min: 1, max: dflt(d, 'margin_max') });
   out.margin = margin;
   out.controller_a = (fitted_w / volts) * margin;
   const controllers = dflt(d, 'standard_controller_a');
@@ -94,7 +96,7 @@ function solarSystem(daily_kwh, running_w, surge_w, i, d, power = true) {
   const y = yieldFor(i, d);
   const panel_w = pos(i, 'panel_w', dflt(d, 'panel_w'));
   const pr = frac(i, 'pr', dflt(d, 'pr'));
-  const margin = num(i, 'margin', { def: dflt(d, 'margin'), min: 1 });
+  const margin = num(i, 'margin', { def: dflt(d, 'margin'), min: 1, max: dflt(d, 'margin_max') });
   const night_hours = num(i, 'night_hours', { def: 0, min: 0, max: 24 });
   let bat = null;
   let night_kwh = 0;
@@ -152,7 +154,8 @@ export const solar_for_ac = calculator((i, d) => {
   const hours = num(i, 'hours', { def: ac.typical_hours_per_day ?? 0, min: 0, max: 24 });
   const avg_w = ac.avg_w ?? ac.running_w;
   const daily_kwh = (avg_w * hours) / 1000;
-  return { ac: i.ac.trim(), ac_name: ac.name, ac_run_w: ac.running_w, ac_start_w: ac.starting_w, ac_avg_w: avg_w, hours, ...solarSystem(daily_kwh, ac.running_w, ac.starting_w, i, d) };
+  // A blank hours box takes the AC's typical hours: the result says so (WL-221).
+  return { ac: i.ac.trim(), ac_name: ac.name, ac_run_w: ac.running_w, ac_start_w: ac.starting_w, ac_avg_w: avg_w, hours, ...solarSystem(daily_kwh, ac.running_w, ac.starting_w, i, d), ...(has(i, 'hours') ? {} : { typical_used: true }) };
 });
 
 /**
@@ -163,7 +166,7 @@ export const solar_from_loads = calculator((i, d) => {
   const rows = loadRows(i.loads, d);
   const { running_w, surge_w } = sumLoads(rows);
   const daily_kwh = rows.reduce((s, r) => s + r.energy_w * r.qty * r.hours, 0) / 1000;
-  if (!(daily_kwh > 0)) throw new CalcError('hours_required', 'loads');
+  if (!(daily_kwh > 0)) throw new CalcError('loads_hours_required', 'loads'); // its own code: a plain "hours" box gets the field message (WL-226)
   return { appliances: rows.length, ...solarSystem(daily_kwh, running_w, surge_w, i, d, bool(i.off_grid)) };
 });
 

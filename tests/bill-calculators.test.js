@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { calculators as C } from '../engine/index.js';
-import { noticeCode } from '../engine/messages.js';
+import { noticeCode } from '../engine/message-text.js';
 import { fmt } from '../engine/format.js';
 import { data, root } from './load-data.js';
 
