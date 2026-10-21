@@ -61,13 +61,13 @@
     "h2": "What can a 3 kVA generator run?",
     "p": [
      "A 3 kVA generator gives 2,400 W, about 1,920 W of steady load. That covers the basics during loadshedding: four fans, ten LED bulbs, a TV and a non-inverter fridge come to 715 W, and the fridge's 1,200 W start takes the peak to 1,715 W, still inside the capacity. On its own it could run 7 such fridges.",
-     "A 3 kVA set can run a 1 ton inverter AC on its own (900 W running, 1,200 W maximum), but not together with a non-inverter fridge and a full set of fans; the list above lets you check the exact mix. A 1.5 ton inverter AC fits only with very little else running."
+     "A 3 kVA set can run a 1 ton inverter AC on its own (900 W running, 1,390 W maximum), but not together with a non-inverter fridge and a full set of fans; the list above lets you check the exact mix. A 1.5 ton inverter AC fits only with very little else running."
     ]
    },
    {
     "h2": "Can a 2.5 kVA generator run an AC?",
     "p": [
-     "A 2.5 kVA generator gives 2,000 W, with 1,600 W for steady running. A 1 ton inverter AC with two fans and six LED bulbs runs at 1,132 W, 71% of the running capacity, and peaks at 1,432 W, so that combination works. Any non-inverter AC is out: even the 1 ton size starts at about 3,600 W.",
+     "A 2.5 kVA generator gives 2,000 W, with 1,600 W for steady running. A 1 ton inverter AC with two fans and six LED bulbs runs at 1,132 W, 71% of the running capacity, and peaks at 1,622 W, so that combination works. Any non-inverter AC is out: even the 1 ton size starts at about 3,600 W.",
      "Many 2.5 kVA sets are sold as 2 kW units, which is the same thing: kW is the usable watts after the power factor. Check which figure is on your nameplate before you compare."
     ]
    },
@@ -188,7 +188,7 @@
     "ac-split-1ton-inverter": {
      "name": "Split AC 1 ton inverter",
      "running_w": 900,
-     "starting_w": 1200,
+     "starting_w": 1390,
      "typical_hours_per_day": 8,
      "avg_w": 650,
      "load_type": "inverter_compressor"
@@ -224,7 +224,7 @@
     "ac-split-2ton-inverter": {
      "name": "Split AC 2 ton inverter",
      "running_w": 1900,
-     "starting_w": 2500,
+     "starting_w": 2140,
      "typical_hours_per_day": 8,
      "avg_w": 1300,
      "load_type": "inverter_compressor"
@@ -1443,7 +1443,7 @@
   "examples": [
    {
     "title": "2.5 kVA with a 1 ton inverter AC, two fans and six bulbs",
-    "text": "2.5 kVA × 0.8 = 2,000 W. The list runs at 1,132 W (71% of the 1,600 W running limit) and peaks at 1,432 W, so it fits. The set runs 1 such AC on its own."
+    "text": "2.5 kVA × 0.8 = 2,000 W. The list runs at 1,132 W (71% of the 1,600 W running limit) and peaks at 1,622 W, so it fits. The set runs 1 such AC on its own."
    },
    {
     "title": "3 kVA with fans, lights, a TV and a non-inverter fridge",

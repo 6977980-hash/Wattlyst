@@ -1,6 +1,6 @@
 {
  "_meta": {
-  "source": "Virginia Tech Extension 2901-9014 (DOE appliance wattage table) https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html; Murdoch's generator wattage chart https://www.murdochs.com/the-dirt/power-equipment/how-to-choose-a-generator/; Gree GS-18PITH11G datasheet (Japan Electronics PK) https://japanelectronics.com.pk/products/gree-ac-split-inverter-1-5-ton-gs-18pith11g-aaa; PowerHouse Express PK: AC watts https://powerhouseexpress.com.pk/blogs/news/how-many-watts-does-an-air-conditioner-use; PowerHouse Express PK: 6kW solar load guide https://powerhouseexpress.com.pk/blogs/news/how-many-ac-can-run-on-6kw-solar-system; ARY News: inverter fan watts https://arynews.tv/do-inverter-fans-really-consume-only-30-watts-unveiling-the-truth; Haier HSU-18 non-inverter listing (Star Tech) https://www.startech.com.bd/haier-1-5-ton-non-inverter-ac",
+  "source": "Virginia Tech Extension 2901-9014 (DOE appliance wattage table) https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html; Murdoch's generator wattage chart https://www.murdochs.com/the-dirt/power-equipment/how-to-choose-a-generator/; Gree GS-18PITH11G datasheet (Japan Electronics PK) https://japanelectronics.com.pk/products/gree-ac-split-inverter-1-5-ton-gs-18pith11g-aaa; Haier Pakistan, Samsung Pakistan and Philips Pakistan product pages (per item). Audit 2026-10-21 Phase 8 WL-218: retailer blog, news and Bangladeshi shop sources replaced by maker pages; the fan and chest freezer figures had no maker source reachable and are marked Wattlyst estimates until a maker datasheet, NEECA label or a Wattlyst meter reading is added.",
   "checked": "2026-10-13",
   "status": "Typical values for planning; real appliances vary, the calculators let users enter their own label watts. Starting watts marked as estimates need PEC engineer confirmation.",
   "fields": "running_w typical rated input power W; starting_w surge W; typical_hours_per_day planning default; starting_w_basis 'source' when the surge figure comes from the cited source, 'estimate' otherwise (rule of thumb: ~3x running for compressors/motors, equal to running for resistive/electronic/lighting, max rated input for inverter compressors); source 'Wattlyst estimate, engineer to confirm' with source_url null marks engineering estimates; note optional caveat shown on the page. Pump/motor running watts are never below hp x 745.7 / motor efficiency (formulas.md A). avg_w (air conditioners only): average electrical draw over an hour of normal use for unit-consumption estimates: inverter ACs from formulas.md E (1.0 kW for 1.5 ton, scaled by size), non-inverter = running_w x compressor duty 0.8 (defaults.json ac_noninverter_duty); engineer to confirm. avg_w_range (optional): [low, high] planning range of that average, printed next to it (E5).",
@@ -27,8 +27,8 @@
     "Younas",
     "Super Asia"
    ],
-   "source": "ARY News: inverter fan watts",
-   "source_url": "https://arynews.tv/do-inverter-fans-really-consume-only-30-watts-unveiling-the-truth"
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
   },
   {
    "id": "ceiling-fan-dc-inverter",
@@ -50,8 +50,8 @@
     "Younas",
     "Super Asia"
    ],
-   "source": "ARY News: inverter fan watts",
-   "source_url": "https://arynews.tv/do-inverter-fans-really-consume-only-30-watts-unveiling-the-truth"
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
   },
   {
    "id": "pedestal-fan",
@@ -96,8 +96,8 @@
     "Younas",
     "Super Asia"
    ],
-   "source": "ARY News: inverter fan watts",
-   "source_url": "https://arynews.tv/do-inverter-fans-really-consume-only-30-watts-unveiling-the-truth"
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
   },
   {
    "id": "bracket-fan",
@@ -172,11 +172,11 @@
    "category": "cooling",
    "running_w": 900,
    "running_w_range": [
-    300,
-    1200
+    360,
+    1390
    ],
-   "starting_w": 1200,
-   "starting_w_basis": "estimate",
+   "starting_w": 1390,
+   "starting_w_basis": "source",
    "typical_hours_per_day": 8,
    "load_type": "inverter_compressor",
    "pk_brands": [
@@ -186,8 +186,8 @@
     "Orient",
     "Kenwood"
    ],
-   "source": "PowerHouse Express PK: 6kW solar load guide",
-   "source_url": "https://powerhouseexpress.com.pk/blogs/news/how-many-ac-can-run-on-6kw-solar-system",
+   "source": "Haier Pakistan HSU-12HFMCC Marvel Inverter (1 ton) product page: cooling power input 0.36 to 1.39 kW",
+   "source_url": "https://www.haier.com/pk/air-conditioners/hsu-12hfmcc013wusdc-w-.shtml",
    "avg_w": 650
   },
   {
@@ -263,8 +263,8 @@
     "Orient",
     "Kenwood"
    ],
-   "source": "Haier HSU-18 non-inverter listing (Star Tech)",
-   "source_url": "https://www.startech.com.bd/haier-1-5-ton-non-inverter-ac",
+   "source": "Haier Pakistan HSU-18CFCM Turbo Cool (1.5 ton fixed speed) product page: cooling power input 1.88 kW",
+   "source_url": "https://www.haier.com/pk/air-conditioners/hsu-18cfcm013l-w-.shtml",
    "avg_w": 1440
   },
   {
@@ -273,11 +273,11 @@
    "category": "cooling",
    "running_w": 1900,
    "running_w_range": [
-    500,
-    2500
+    550,
+    2140
    ],
-   "starting_w": 2500,
-   "starting_w_basis": "estimate",
+   "starting_w": 2140,
+   "starting_w_basis": "source",
    "typical_hours_per_day": 8,
    "load_type": "inverter_compressor",
    "pk_brands": [
@@ -287,8 +287,8 @@
     "Orient",
     "Kenwood"
    ],
-   "source": "PowerHouse Express PK: AC watts",
-   "source_url": "https://powerhouseexpress.com.pk/blogs/news/how-many-watts-does-an-air-conditioner-use",
+   "source": "Haier Pakistan HSU-24HFCD Triple Inverter (2 ton) product page: cooling power input 0.55 to 2.14 kW",
+   "source_url": "https://www.haier.com/pk/air-conditioners/hsu-24hfcd023wdc-w-.shtml",
    "avg_w": 1300
   },
   {
@@ -459,8 +459,8 @@
     "Waves",
     "Varioline"
    ],
-   "source": "PowerHouse Express PK: 6kW solar load guide",
-   "source_url": "https://powerhouseexpress.com.pk/blogs/news/how-many-ac-can-run-on-6kw-solar-system"
+   "source": "Wattlyst estimate, engineer to confirm",
+   "source_url": null
   },
   {
    "id": "water-dispenser",
@@ -1164,8 +1164,8 @@
     "Super Star",
     "Pak Fan"
    ],
-   "source": "PowerHouse Express PK: 6kW solar load guide",
-   "source_url": "https://powerhouseexpress.com.pk/blogs/news/how-many-ac-can-run-on-6kw-solar-system"
+   "source": "Philips Pakistan LED bulb 12 W (98 W) E27 product page",
+   "source_url": "https://www.lighting.philips.com.pk/consumer/p/led-bulb/8718696822647"
   },
   {
    "id": "led-tube-light",
@@ -1258,7 +1258,7 @@
    "running_w": 75,
    "running_w_range": [
     55,
-    100
+    115
    ],
    "starting_w": 75,
    "starting_w_basis": "estimate",
@@ -1271,8 +1271,8 @@
     "Sony",
     "Ecostar"
    ],
-   "source": "PowerHouse Express PK: 6kW solar load guide",
-   "source_url": "https://powerhouseexpress.com.pk/blogs/news/how-many-ac-can-run-on-6kw-solar-system"
+   "source": "Samsung Pakistan 43 inch Crystal UHD DU7000 specifications: power consumption (max) 115 W",
+   "source_url": "https://www.samsung.com/pk/tvs/uhd-4k-tv/du7000-43-inch-crystal-uhd-4k-tizen-os-smart-tv-ua43du7000uswk/"
   },
   {
    "id": "led-tv-55",
@@ -1281,7 +1281,7 @@
    "running_w": 120,
    "running_w_range": [
     90,
-    150
+    130
    ],
    "starting_w": 120,
    "starting_w_basis": "source",
@@ -1294,8 +1294,8 @@
     "Sony",
     "Ecostar"
    ],
-   "source": "PowerHouse Express PK: 6kW solar load guide",
-   "source_url": "https://powerhouseexpress.com.pk/blogs/news/how-many-ac-can-run-on-6kw-solar-system"
+   "source": "Samsung Pakistan 55 inch Crystal UHD DU7000 specifications: power consumption (max) 130 W",
+   "source_url": "https://www.samsung.com/pk/tvs/uhd-4k-tv/du7000-55-inch-crystal-uhd-4k-tizen-os-smart-tv-ua55du7000uswk/"
   },
   {
    "id": "laptop",

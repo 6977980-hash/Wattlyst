@@ -3501,12 +3501,12 @@
     },
     "expected": {
       "running_w": 1140,
-      "surge_w": 1440,
+      "surge_w": 1630,
       "continuous_w": 1425,
       "kva": 1.78125
     },
     "tolerance": 0.01,
-    "note": "Phase 3: rows from data/appliances.json (240 + 900 W; AC start step 300 W)"
+    "note": "Phase 3: rows from data/appliances.json (240 + 900 W; AC start step 1,390 − 900 = 490 W, surge 1,140 + 490 = 1,630). Starting watts updated in audit 2026-10-21 Phase 8 WL-218: the inverter AC's starting figure is the maker's maximum cooling input (Haier Pakistan product page)."
   },
   {
     "calc": "generator_for_ac",
@@ -4021,7 +4021,7 @@
     "expected": {
       "new_total_w": 900,
       "new_total_kw": 0.9,
-      "peak_w": 1200,
+      "peak_w": 1390,
       "amps_now": 0,
       "amps_after": 4.891,
       "within_sanctioned": true,
@@ -4030,7 +4030,7 @@
       "needed_kw": 1
     },
     "tolerance": 0.01,
-    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): zero current load"
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): zero current load; peak = the AC's starting 1,390 W. Starting watts updated in audit 2026-10-21 Phase 8 WL-218: the inverter AC's starting figure is the maker's maximum cooling input (Haier Pakistan product page)."
   },
   {
     "calc": "add_ac_check",
@@ -5992,13 +5992,13 @@
     },
     "expected": {
       "pf": 0.9,
-      "ib_a": 12.0773,
+      "ib_a": 10.3382,
       "breaker_a": 16,
       "area_mm2": 2.5,
       "ampacity_a": 18.96
     },
     "tolerance": 0.01,
-    "note": "Audit 2026-10-14 Phase 1 (WL-10): 2500 / (230 x 0.9) x 1.25 = 15.1 -> 16 A; same breaker as E4"
+    "note": "Audit 2026-10-14 Phase 1 (WL-10): 2140 / (230 x 0.9) = 10.34 A x 1.25 = 12.9 -> 16 A; same breaker as E4. Starting watts updated in audit 2026-10-21 Phase 8 WL-218: the inverter AC's starting figure is the maker's maximum cooling input (Haier Pakistan product page)."
   },
   {
     "calc": "add_ac_check",
@@ -6010,7 +6010,7 @@
     },
     "expected": {
       "ac_pf": 0.9,
-      "ac_ib_a": 12.0773,
+      "ac_ib_a": 10.3382,
       "ac_breaker_a": 16,
       "ac_cable_mm2": 2.5,
       "ac_cable_rating_a": 18.96,
@@ -6018,7 +6018,7 @@
       "ac_run_amps": 9.1787
     },
     "tolerance": 0.01,
-    "note": "Audit 2026-10-14 Phase 1 (WL-10): matches wire_size for ac-split-2ton-inverter; ac_run_amps = 1900 running / (230 x 0.9)"
+    "note": "Audit 2026-10-14 Phase 1 (WL-10): matches wire_size for ac-split-2ton-inverter; ac_run_amps = 1900 running / (230 x 0.9) ac_ib_a = 2140 / (230 x 0.9) = 10.34 A. Starting watts updated in audit 2026-10-21 Phase 8 WL-218: the inverter AC's starting figure is the maker's maximum cooling input (Haier Pakistan product page)."
   },
   {
     "calc": "add_ac_check",

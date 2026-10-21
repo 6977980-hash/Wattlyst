@@ -47,13 +47,13 @@
     "h2": "What size inverter do I need for my home?",
     "p": [
      "Add up the running watts of everything that will run on the inverter at the same time, multiply by a safety margin and that is the continuous rating to buy. For the default list of three fans, eight bulbs, a TV, an inverter fridge and a 1 ton inverter AC the running load is 1,431 W, the continuous rating 1,789 W and the label rating about 2.24 kVA.",
-     "Then check the surge. Motors and compressors draw several times their running watts for a second or two when they start; the inverter's surge or peak rating must cover the running load plus that step. Here the 1 ton inverter AC's step from its running watts to its maximum input is larger than the inverter fridge's, so it sets the surge: 1,731 W. Most inverters quote a surge of about twice their continuous rating, so check the figure on the datasheet, not only the headline kVA."
+     "Then check the surge. Motors and compressors draw several times their running watts for a second or two when they start; the inverter's surge or peak rating must cover the running load plus that step. Here the 1 ton inverter AC's step from its running watts to its maximum input is larger than the inverter fridge's, so it sets the surge: 1,921 W. Most inverters quote a surge of about twice their continuous rating, so check the figure on the datasheet, not only the headline kVA."
     ]
    },
    {
     "h2": "Can a UPS or inverter run a 1 ton AC?",
     "p": [
-     "Yes, if it is sized for it. A 1 ton inverter AC runs at about 1,060 W with two fans and has no hard compressor start, so it needs an inverter of about 1,325 W continuous (1.66 kVA) and a surge of 1,360 W. A small home UPS of around one kVA cannot do this; a hybrid or solar inverter of two kVA and up can, as long as its battery bank is big enough for the hours you want.",
+     "Yes, if it is sized for it. A 1 ton inverter AC runs at about 1,060 W with two fans and has no hard compressor start, so it needs an inverter of about 1,325 W continuous (1.66 kVA) and a surge of 1,550 W. A small home UPS of around one kVA cannot do this; a hybrid or solar inverter of two kVA and up can, as long as its battery bank is big enough for the hours you want.",
      "A 1 ton non-inverter AC is a different matter: its compressor starts at several times its running watts, and most UPS units cannot supply that surge. If the AC is non-inverter, size on the surge figure the calculator shows and expect a much larger inverter."
     ]
    },
@@ -75,11 +75,11 @@
   "faq": [
    {
     "q": "What size inverter do I need for fans, lights, a fridge and a 1 ton AC?",
-    "a": "About 1,789 W continuous, or 2.24 kVA, with a surge rating of 1,731 W for the default list on this page (three fans, eight bulbs, a TV, an inverter fridge and a 1 ton inverter AC). A non-inverter AC or fridge raises the surge a lot."
+    "a": "About 1,789 W continuous, or 2.24 kVA, with a surge rating of 1,921 W for the default list on this page (three fans, eight bulbs, a TV, an inverter fridge and a 1 ton inverter AC). A non-inverter AC or fridge raises the surge a lot."
    },
    {
     "q": "Can a UPS run a 1 ton AC?",
-    "a": "A hybrid inverter or large UPS of about two kVA can run a 1 ton inverter AC with a couple of fans (1,325 W continuous, 1,360 W surge). A one kVA home UPS cannot, and a non-inverter AC needs a much larger surge rating. The battery bank decides the hours."
+    "a": "A hybrid inverter or large UPS of about two kVA can run a 1 ton inverter AC with a couple of fans (1,325 W continuous, 1,550 W surge). A one kVA home UPS cannot, and a non-inverter AC needs a much larger surge rating. The battery bank decides the hours."
    },
    {
     "q": "How do I calculate inverter capacity from my load?",
@@ -186,7 +186,7 @@
     "ac-split-1ton-inverter": {
      "name": "Split AC 1 ton inverter",
      "running_w": 900,
-     "starting_w": 1200,
+     "starting_w": 1390,
      "typical_hours_per_day": 8,
      "avg_w": 650,
      "load_type": "inverter_compressor"
@@ -222,7 +222,7 @@
     "ac-split-2ton-inverter": {
      "name": "Split AC 2 ton inverter",
      "running_w": 1900,
-     "starting_w": 2500,
+     "starting_w": 2140,
      "typical_hours_per_day": 8,
      "avg_w": 1300,
      "load_type": "inverter_compressor"
@@ -1274,12 +1274,12 @@
      "spec": "int",
      "unit": "W",
      "label_ur": "Darkar surge rating",
-     "value": "1,731"
+     "value": "1,921"
     }
    ],
    "how": {
     "tpl": "Running load = the running watts of every appliance × its quantity, added up = {{out.running_w|int}} W. Continuous rating = {{out.running_w|int}} W × {{out.margin|2}} margin = {{out.continuous_w|int}} W. kVA = {{out.continuous_w|int}} W ÷ {{out.pf|2}} power factor ÷ 1,000 = {{out.kva|up2}} kVA. Surge = running load plus the extra starting watts of the largest motor or compressor = {{out.surge_w|int}} W, which the inverter's surge rating must cover.",
-    "text": "Running load = the running watts of every appliance × its quantity, added up = 1,431 W. Continuous rating = 1,431 W × 1.25 margin = 1,789 W. kVA = 1,789 W ÷ 0.8 power factor ÷ 1,000 = 2.24 kVA. Surge = running load plus the extra starting watts of the largest motor or compressor = 1,731 W, which the inverter's surge rating must cover."
+    "text": "Running load = the running watts of every appliance × its quantity, added up = 1,431 W. Continuous rating = 1,431 W × 1.25 margin = 1,789 W. kVA = 1,789 W ÷ 0.8 power factor ÷ 1,000 = 2.24 kVA. Surge = running load plus the extra starting watts of the largest motor or compressor = 1,921 W, which the inverter's surge rating must cover."
    },
    "submit": "Calculate",
    "notice": "",
@@ -1309,7 +1309,7 @@
    },
    {
     "title": "Fans, lights, an inverter fridge and a 1 ton inverter AC",
-    "text": "Running load 1,356 W, continuous rating 1,695 W (2.12 kVA). Both start softly, but the inverter AC's step up to its maximum input is the larger one, so it sets the surge: 1,656 W."
+    "text": "Running load 1,356 W, continuous rating 1,695 W (2.12 kVA). Both start softly, but the inverter AC's step up to its maximum input is the larger one, so it sets the surge: 1,846 W."
    },
    {
     "title": "1.5 ton non-inverter AC and a non-inverter fridge: the surge decides",
@@ -1321,7 +1321,7 @@
    },
    {
     "title": "UPS for a 1 ton inverter AC and two fans",
-    "text": "Running load 1,060 W, continuous rating 1,325 W, about 1.66 kVA, with a surge of 1,360 W when the AC reaches its maximum input. A two kVA hybrid inverter runs it; the battery bank sets how long."
+    "text": "Running load 1,060 W, continuous rating 1,325 W, about 1.66 kVA, with a surge of 1,550 W when the AC reaches its maximum input. A two kVA hybrid inverter runs it; the battery bank sets how long."
    }
   ],
   "table": {
@@ -1360,7 +1360,7 @@
      "1,431 W",
      "1,789 W",
      "2.24 kVA",
-     "1,731 W"
+     "1,921 W"
     ],
     [
      "Four fans, ten bulbs, an inverter fridge and a 1.5 ton inverter AC",
@@ -1379,7 +1379,7 @@
    ],
    "row_head": true
   },
-  "answer": "Three fans, eight LED bulbs, a TV, an inverter fridge and a 1 ton inverter AC draw 1,431 W together, so the inverter needs a continuous rating of at least 1,789 W, about 2.24 kVA, with a surge rating of 1,731 W for the AC's step up to full speed, the largest in the list. Inverter watts = running load × margin; kVA = watts ÷ power factor ÷ 1,000.",
+  "answer": "Three fans, eight LED bulbs, a TV, an inverter fridge and a 1 ton inverter AC draw 1,431 W together, so the inverter needs a continuous rating of at least 1,789 W, about 2.24 kVA, with a surge rating of 1,921 W for the AC's step up to full speed, the largest in the list. Inverter watts = running load × margin; kVA = watts ÷ power factor ÷ 1,000.",
   "formula": {
    "text": "P_run = Σ (W × qty); P_inv = P_run × m; kVA = P_inv ÷ PF ÷ 1000; P_surge = P_run + max(W_start − W)",
    "lines": [
@@ -1495,7 +1495,7 @@
       "name": "What size inverter do I need for fans, lights, a fridge and a 1 ton AC?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "About 1,789 W continuous, or 2.24 kVA, with a surge rating of 1,731 W for the default list on this page (three fans, eight bulbs, a TV, an inverter fridge and a 1 ton inverter AC). A non-inverter AC or fridge raises the surge a lot."
+       "text": "About 1,789 W continuous, or 2.24 kVA, with a surge rating of 1,921 W for the default list on this page (three fans, eight bulbs, a TV, an inverter fridge and a 1 ton inverter AC). A non-inverter AC or fridge raises the surge a lot."
       }
      },
      {
@@ -1503,7 +1503,7 @@
       "name": "Can a UPS run a 1 ton AC?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "A hybrid inverter or large UPS of about two kVA can run a 1 ton inverter AC with a couple of fans (1,325 W continuous, 1,360 W surge). A one kVA home UPS cannot, and a non-inverter AC needs a much larger surge rating. The battery bank decides the hours."
+       "text": "A hybrid inverter or large UPS of about two kVA can run a 1 ton inverter AC with a couple of fans (1,325 W continuous, 1,550 W surge). A one kVA home UPS cannot, and a non-inverter AC needs a much larger surge rating. The battery bank decides the hours."
       }
      },
      {
