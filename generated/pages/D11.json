@@ -199,7 +199,7 @@
      "label": "Sanctioned load",
      "unit": "kW",
      "default": 4,
-     "hint": "From your bill. A sanctioned load of 5 kW or more is billed on a time-of-use meter, which this comparison does not cover: price its imports with the ToU bill calculator.",
+     "hint": "From your bill. At 5 kW or more the import is billed on Time-of-Use (peak and off-peak) rates: enter the peak units below. For the whole ToU bill use the ToU bill calculator.",
      "l": [
       {
        "t": "ToU bill calculator",
@@ -208,12 +208,19 @@
      ]
     },
     {
+     "name": "peak_units",
+     "label": "Units imported in peak hours (ToU)",
+     "unit": "units",
+     "placeholder": "Our estimate",
+     "hint": "Only for a sanctioned load of 5 kW or more: the peak import units on your ToU bill. Blank uses our estimate of 25% of the import."
+    },
+    {
      "name": "protected",
      "label": "Protected consumer (all of the last six months under the protected limit)",
      "type": "checkbox",
      "default": false,
      "advanced": true,
-     "hint": "Tick only if every one of your last six bills was within the protected unit limit."
+     "hint": "Tick only if every one of your last six bills was within the protected unit limit. Not at 5 kW or more."
     }
    ],
    "fixed_inputs": {},
@@ -248,8 +255,8 @@
     }
    ],
    "how": {
-    "tpl": "Import: {{out.import_units}} units × {{out.import_rate|rs2}} = {{out.import_energy_rs|rs}}. Export credit: {{out.export_units}} units × {{out.buyback_rs|rs2}} = {{out.export_credit_rs|rs}}. Net billing energy charge = {{out.import_energy_rs|rs}} − {{out.export_credit_rs|rs}} = {{out.net_energy_rs|rs}} (credit carried forward: {{out.carry_forward_rs|rs}}). Old net metering: {{out.net_metering_units|int}} net units × {{out.net_metering_rate|rs2}} = {{out.net_metering_rs|rs}}. Net billing costs {{out.extra_vs_net_metering_rs|rs}} more. Fixed charges, surcharges, adjustments and GST come on top of both.",
-    "text": "Import: 400 units × Rs 36.46 = Rs 14,584. Export credit: 300 units × Rs 8.13 = Rs 2,439. Net billing energy charge = Rs 14,584 − Rs 2,439 = Rs 12,145 (credit carried forward: Rs 0). Old net metering: 100 net units × Rs 22.44 = Rs 2,244. Net billing costs Rs 9,901 more. Fixed charges, surcharges, adjustments and GST come on top of both."
+    "tpl": "Import: {{out.import_calc}} = {{out.import_energy_rs|rs}}. Export credit: {{out.export_units}} units × {{out.buyback_rs|rs2}} = {{out.export_credit_rs|rs}}. Net billing energy charge = {{out.import_energy_rs|rs}} − {{out.export_credit_rs|rs}} = {{out.net_energy_rs|rs}} (credit carried forward: {{out.carry_forward_rs|rs}}). Old net metering: {{out.nm_calc}} = {{out.net_metering_rs|rs}}. Net billing costs {{out.extra_vs_net_metering_rs|rs}} more. Fixed charges, surcharges, adjustments and GST come on top of both (the ToU bill calculator gives the full bill at {{d.tou_threshold_kw|int}} kW or more).",
+    "text": "Import: 400 units at the slab rate of Rs 36.46 = Rs 14,584. Export credit: 300 units × Rs 8.13 = Rs 2,439. Net billing energy charge = Rs 14,584 − Rs 2,439 = Rs 12,145 (credit carried forward: Rs 0). Old net metering: 400 − 300 = 100 net units at Rs 22.44 = Rs 2,244. Net billing costs Rs 9,901 more. Fixed charges, surcharges, adjustments and GST come on top of both (the ToU bill calculator gives the full bill at 5 kW or more)."
    },
    "submit": "Compare net billing and net metering",
    "notice": "",
@@ -257,8 +264,10 @@
     "loads_required": "Add at least one appliance.",
     "tariff_data_missing": "Tariff data could not be loaded. Please refresh the page.",
     "tou_required_at_5kw": "Connections of 5 kW or more use a Time-of-Use meter: see the ToU bill link under Sanctioned load.",
+    "protected_at_tou": "Protected and lifeline rates do not apply at 5 kW sanctioned load or more (a Time-of-Use meter). Untick the box.",
     "period_unknown": "We do not have the QTA rate for that quarter. Enter the QTA from your bill.",
     "appliance_unknown": "Pick an appliance from the list, or choose Custom and enter its watts.",
+    "tou_peak_estimate": "At 5 kW sanctioned load or more the import is billed on Time-of-Use rates, and the peak units are our estimate (a share of the import, see how it works). Enter the peak units from your ToU bill for your own figure.",
     "forecast_unavailable": "The live forecast is not available right now, so a typical day is shown. Try again later.",
     "typical_used": "Blank boxes in your list use the typical value for that appliance (its listed watts and hours a day, quantity 1). Type your own numbers for an exact result.",
     "internal_non_finite": "These numbers are outside a realistic range. Please check your inputs."

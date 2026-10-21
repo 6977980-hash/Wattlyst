@@ -4,7 +4,7 @@
   "checked": "2026-10-21",
   "days": "days_per_month = 365 ÷ 12 (an average calendar month, two decimals) for every day, month and year conversion, so a year is 12 × days_per_month on every page and matches the 365-day yearly yield (full audit 2026-10-15 WL-106). bill_month_days = the 30-day billing month the bill check (N1) scales a reading cycle to.",
   "status": "Engineering defaults, every one editable on the page. Items marked engineer_confirm need PEC engineer sign-off before launch.",
-  "engineer_confirm": ["diversity_home", "heat_pump_cop", "ac_saving_per_degree", "soiling_rate_per_day", "soiling_cap", "gas_heater_eff", "gas_cv_mj_m3", "start_factors", "standard_generator_kva", "planner_day_share", "hybrid_bank_v", "forecast_sky_bands", "rho_aluminium", "dc_ac_ratio_max", "forecast_max_day_whm2", "soiling_rate_max_per_day", "pf_by_load_type", "ac_life_years", "standard_dc_fuse_a", "panel_area_m2_by_w", "panel_vmp_v", "panel_tc_vmp_pct", "cell_temp_hot_c", "cell_temp_cold_c", "hybrid_pv_start_v", "hybrid_pv_mppt_min_v", "pump_dc_bus_factor", "standard_inverter_kw", "standard_vfd_kw", "vfd_max_dc_v", "dc_cutoff_ratio", "max_c_rate_lead_acid", "max_c_rate_lifepo4"]
+  "engineer_confirm": ["diversity_home", "heat_pump_cop", "ac_saving_per_degree", "soiling_rate_per_day", "soiling_cap", "gas_heater_eff", "gas_cv_mj_m3", "start_factors", "standard_generator_kva", "planner_day_share", "hybrid_bank_v", "forecast_sky_bands", "rho_aluminium", "dc_ac_ratio_max", "forecast_max_day_whm2", "soiling_rate_max_per_day", "pf_by_load_type", "ac_life_years", "standard_dc_fuse_a", "panel_area_m2_by_w", "panel_vmp_v", "panel_tc_vmp_pct", "cell_temp_hot_c", "cell_temp_cold_c", "hybrid_pv_start_v", "hybrid_pv_mppt_min_v", "pump_dc_bus_factor", "standard_inverter_kw", "standard_vfd_kw", "vfd_max_dc_v", "dc_cutoff_ratio", "max_c_rate_lead_acid", "max_c_rate_lifepo4", "tou_peak_share"]
  },
  "v_1ph": 230,
  "v_3ph": 400,
@@ -100,6 +100,8 @@
  "standard_vfd_kw_source": "Solar pump drive (VFD) ratings follow the IEC 60072 motor power series (0.75 to 37 kW, the sizes drive makers list); the result names the next size at or above the minimum (audit 2026-10-21 WL-174); engineer to confirm",
  "battery_v_default": 24,
  "planner_day_share": 0.5,
+ "tou_peak_share": 0.25,
+ "tou_peak_share_source": "Share of a home's monthly units used in the ToU peak window, used on the Home Power Planner (H1) and Net Billing (D10) at a sanctioned load of tou_threshold_kw or more when no figure is entered (audit 2026-10-21 WL-162 c). Wattlyst estimate, shown on the page as an estimate: the peak window is four of the 24 hours (data/tariff-pk-2026.json tou.peak_hours), so a home that used power evenly would put a sixth of its units in it; evening lights, fans, TV, pumps and AC push the share up, so the default sits above that, on the cautious side (a higher peak share gives a higher bill and a smaller solar saving). No published Pakistani measurement was found (PRECON smart-meter data of 42 Lahore homes, LUMS, is the closest dataset to check against); engineer to confirm. A ToU bill prints peak and off-peak units: peak units divided by all units is the home's own share.",
  "decision_years": 10,
  "hybrid_bank_v": 48,
  "hybrid_bank_v_source": "Battery bank voltage of a grid-tie hybrid inverter on the home decision engine: the export-capable hybrid inverters in data/component-prices.json (Inverex Nitrox 6 kW 48 V, Solis and Solax low-voltage hybrids) run a 48 V bank; LiFePO4 packs are 51.2 V; engineer to confirm",

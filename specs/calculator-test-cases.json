@@ -2403,18 +2403,78 @@
   },
   {
     "calc": "net_billing",
-    "name": "10 kW connection must use ToU",
+    "name": "10 kW connection: import billed on ToU rates, peak units from the bill",
     "inputs": {
       "import_units": 400,
       "export_units": 300,
       "buyback_rs": 11,
-      "sanctioned_kw": 10
+      "sanctioned_kw": 10,
+      "peak_units": 120
     },
     "expected": {
-      "error": "tou_required_at_5kw"
+      "tou": true,
+      "import_energy_rs": 15290.4,
+      "export_credit_rs": 3300,
+      "net_energy_rs": 11990.4,
+      "net_metering_units": 120,
+      "net_metering_rs": 5622,
+      "net_metering_carry_units": 20,
+      "extra_vs_net_metering_rs": 6368.4,
+      "tou_peak_estimate": false
+    },
+    "tolerance": 0.01,
+    "note": "audit 2026-10-21 Phase 9 (WL-162 c): ToU path for 5 kW and above, hand-checked: 120 × 46.85 + 280 × 34.53 = 15,290.40; credit 300 × 11; old net metering nets the 300 exported against the 280 off-peak units only (20 carried), leaving 120 peak units × 46.85. Was the 5 kW error before."
+  },
+  {
+    "calc": "net_billing",
+    "name": "8 kW ToU, peak units blank: default share of the import",
+    "inputs": {
+      "import_units": 400,
+      "export_units": 100,
+      "sanctioned_kw": 8
+    },
+    "expected": {
+      "tou": true,
+      "tou_peak_estimate": true,
+      "peak_units": 100,
+      "import_energy_rs": 15044,
+      "export_credit_rs": 813,
+      "net_energy_rs": 14231,
+      "net_metering_rs": 11591,
+      "extra_vs_net_metering_rs": 2640
+    },
+    "tolerance": 0.01,
+    "note": "audit 2026-10-21 Phase 9 (WL-162 c): ToU path for 5 kW and above, hand-checked: 25% of 400 = 100 peak × 46.85 + 300 × 34.53 = 15,044; credit 100 × 8.13 = 813; old net metering: 100 × 46.85 + (300 − 100) × 34.53 = 11,591."
+  },
+  {
+    "calc": "net_billing",
+    "name": "ToU peak units above the import",
+    "inputs": {
+      "import_units": 400,
+      "export_units": 100,
+      "sanctioned_kw": 8,
+      "peak_units": 500
+    },
+    "expected": {
+      "error": "peak_units_too_large"
     },
     "tolerance": 0,
-    "note": "reviewer fix 13 Oct"
+    "note": "audit 2026-10-21 Phase 9 (WL-162 c): ToU path for 5 kW and above, hand-checked"
+  },
+  {
+    "calc": "net_billing",
+    "name": "protected box at 5 kW or more",
+    "inputs": {
+      "import_units": 150,
+      "export_units": 100,
+      "sanctioned_kw": 5,
+      "protected": true
+    },
+    "expected": {
+      "error": "protected_at_tou"
+    },
+    "tolerance": 0,
+    "note": "audit 2026-10-21 Phase 9 (WL-162 c): ToU path for 5 kW and above, hand-checked: a ToU connection cannot be protected (section F)."
   },
   {
     "calc": "bill_total",
@@ -4804,7 +4864,7 @@
   },
   {
     "calc": "home_plan",
-    "name": "5 kW and above must use the ToU bill",
+    "name": "5 kW: bill on ToU rates with the default peak share",
     "inputs": {
       "loads": [
         {
@@ -4825,10 +4885,113 @@
       "sanctioned_kw": 5
     },
     "expected": {
-      "error": "tou_required_at_5kw"
+      "tou": true,
+      "tou_estimate": true,
+      "peak_share": 0.25,
+      "monthly_units": 396.6768,
+      "import_units": 198.3384,
+      "bill_before_rs": 14919,
+      "fixed_before_rs": 1688,
+      "full_before_rs": 21108,
+      "bill_after_rs": 6214.924,
+      "full_import_rs": 12271,
+      "full_after_rs": 10415.535
+    },
+    "tolerance": 0.01,
+    "note": "audit 2026-10-21 Phase 9 (WL-162 c): ToU path for 5 kW and above, hand-checked: peak 25% of 396.68 = 99.17 units × 46.85 + 297.51 × 34.53 = 14,919; fixed 675 × 2.5 kW = 1,688; FC 3.23 × 396.68 = 1,281; GST 18% of 17,888 = 3,220; total 21,108. Solar self-use 198.34 comes off the off-peak units: import 99.17 peak + 99.17 off-peak = 8,070 energy; net billing energy 8,070.39 − 228.22 × 8.13 = 6,214.92; whole import bill 8,070 + 1,688 + 641 + GST 1,872 = 12,271, less 1,855.47 credit = 10,415.53."
+  },
+  {
+    "calc": "home_plan",
+    "name": "5 kW: peak share entered",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ceiling-fan-ac",
+          "qty": 4
+        },
+        {
+          "id": "ac-split-1-5ton-inverter",
+          "hours": 8
+        },
+        {
+          "id": "refrigerator-inverter"
+        }
+      ],
+      "backup_w": 500,
+      "backup_hours": 4,
+      "city": "lahore",
+      "sanctioned_kw": 5,
+      "peak_share": 0.3
+    },
+    "expected": {
+      "tou_estimate": false,
+      "peak_share": 0.3,
+      "bill_before_rs": 15163,
+      "full_before_rs": 21396,
+      "full_import_rs": 12560
+    },
+    "tolerance": 0.01,
+    "note": "audit 2026-10-21 Phase 9 (WL-162 c): ToU path for 5 kW and above, hand-checked: 30% of 396.68 = 119.00 peak × 46.85 + 277.67 × 34.53 = 15,163; with fixed 1,688 and FC 1,281 the subtotal is 18,132, GST 3,264, total 21,396. Import 119.00 peak + 79.34 off-peak = 8,315; + 1,688 + 641 = 10,644, GST 1,916, total 12,560."
+  },
+  {
+    "calc": "home_plan",
+    "name": "peak share above what the day share leaves",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ceiling-fan-ac",
+          "qty": 4
+        },
+        {
+          "id": "ac-split-1-5ton-inverter",
+          "hours": 8
+        },
+        {
+          "id": "refrigerator-inverter"
+        }
+      ],
+      "backup_w": 500,
+      "backup_hours": 4,
+      "city": "lahore",
+      "sanctioned_kw": 5,
+      "peak_share": 0.6
+    },
+    "expected": {
+      "error": "peak_share_too_large"
     },
     "tolerance": 0,
-    "note": "net billing and flat bill refuse >= 5 kW (formulas.md contract)"
+    "note": "audit 2026-10-21 Phase 9 (WL-162 c): ToU path for 5 kW and above, hand-checked: the peak hours are evening hours, so the peak share plus the day share (0.5) cannot pass 1."
+  },
+  {
+    "calc": "home_plan",
+    "name": "flat bill below 5 kW keeps the slab tariff",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ceiling-fan-ac",
+          "qty": 4
+        },
+        {
+          "id": "ac-split-1-5ton-inverter",
+          "hours": 8
+        },
+        {
+          "id": "refrigerator-inverter"
+        }
+      ],
+      "backup_w": 500,
+      "backup_hours": 4,
+      "city": "lahore",
+      "sanctioned_kw": 4
+    },
+    "expected": {
+      "tou": false,
+      "tou_estimate": false,
+      "full_before_rs": 20466,
+      "fixed_before_rs": 1600
+    },
+    "tolerance": 0.01,
+    "note": "audit 2026-10-21 Phase 9 (WL-162 c): ToU path for 5 kW and above, hand-checked: below the ToU threshold nothing changes (slab bill as before)."
   },
   {
     "calc": "home_plan",

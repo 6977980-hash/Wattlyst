@@ -4,7 +4,8 @@
 import { calculator, CalcError, frac, nonneg, num, pos, dflt, has } from './core.js';
 import { inverter_size, generator_size, loadRows } from './sizing.js';
 import { solar_from_loads, solar_battery, stdSize, buyKw } from './solar.js';
-import { bill_energy, bill_total, net_billing } from './bill.js';
+import { bill_energy, bill_total, bill_tou, net_billing } from './bill.js';
+import { fmt } from './format.js';
 
 /**
  * Monthly solar split: self-used = min(solar, use × day share); export = solar − self-used;
@@ -50,30 +51,38 @@ export const home_plan = calculator((i, d) => {
   }
 
   const day_share = frac(i, 'day_share', dflt(d, 'planner_day_share'));
-  const bill = { sanctioned_kw: i.sanctioned_kw, protected: false };
-  const before = bill_energy.raw({ ...bill, units: monthly_units }, d);
+  const kw = pos(i, 'sanctioned_kw', dflt(d, 'default_sanctioned_kw'));
+  // At tou_threshold_kw and above the bill is on ToU rates (WL-162 c): this share of the use falls in the peak hours
+  // (blank = the data estimate), never more than the day share leaves, since solar runs in off-peak hours only.
+  const tou = kw >= dflt(d, 'tou_threshold_kw');
+  const peak_share = tou ? num(i, 'peak_share', { def: Math.min(dflt(d, 'tou_peak_share'), 1 - day_share), min: 0, max: 1 - day_share }) : 0;
+  Object.assign(out, { sanctioned_kw: kw, tou, peak_share, tou_estimate: tou && !has(i, 'peak_share') });
+  const bill = { sanctioned_kw: kw, protected: false };
+  const full_before = wholeBill(out, d, monthly_units, 0);
+  const before = tou ? { energy_rs: full_before.energy_rs, rate: full_before.energy_rs / monthly_units || d.tariff.tou.offpeak } : bill_energy.raw({ ...bill, units: monthly_units }, d);
   // Net billing allows an array up to the sanctioned load: above it, only the whole panels that fit are billed.
-  const above = out.installed_kw > before.sanctioned_kw + 1e-9;
-  const nb_panels = above ? Math.floor((before.sanctioned_kw * 1000) / out.panel_w + 1e-9) : out.panels;
+  const above = out.installed_kw > kw + 1e-9;
+  const nb_panels = above ? Math.floor((kw * 1000) / out.panel_w + 1e-9) : out.panels;
   const nb_kw = (nb_panels * out.panel_w) / 1000;
   const nb_solar_kwh = nb_kw * out.city_yield * days;
   const self_used = Math.min(nb_solar_kwh, monthly_units * day_share);
   const export_units = nb_solar_kwh - self_used;
   const import_units = monthly_units - self_used;
-  const nb = net_billing.raw({ ...bill, import_units, export_units, buyback_rs: has(i, 'buyback_rs') ? i.buyback_rs : undefined }, d);
+  const nb = net_billing.raw({ ...bill, import_units, export_units, peak_units: Math.min(monthly_units * peak_share, import_units), buyback_rs: has(i, 'buyback_rs') ? i.buyback_rs : undefined }, d);
+  const T = d.tariff.tou;
   Object.assign(out, {
     net_billing_panels: nb_panels, net_billing_kw: nb_kw, net_billing_solar_kwh: nb_solar_kwh,
     // The inverter rule above for the array net billing accepts (the decision step prices solar at it, WL-91).
     net_billing_inverter_kw: Math.max(out.inverter_kw_load, nb_kw / out.dc_ac_ratio_max),
-    day_share, self_used_units: self_used, export_units, import_units, sanctioned_kw: before.sanctioned_kw, buyback_rs: nb.buyback_rs,
+    day_share, self_used_units: self_used, export_units, import_units, buyback_rs: nb.buyback_rs,
     bill_before_rs: before.energy_rs, rate_before: before.rate, bill_after_rs: nb.net_energy_rs, carry_forward_rs: nb.carry_forward_rs,
     saving_rs: Math.max(0, before.energy_rs - nb.net_energy_rs),
     solar_above_sanctioned: above,
+    tariff_text: tou ? `ToU tariff (${fmt(peak_share, 'pct')} of your use in the peak hours at ${fmt(T.peak, 'rs2')}, the rest at ${fmt(T.offpeak, 'rs2')}; solar replaces off-peak units only; fixed charge on half the sanctioned load, more if your MDI is higher)` : 'slab tariff',
   });
   // Whole bill: the same add-on defaults as the bill calculator (section F). Under net billing the imported
   // units carry the fixed charge, surcharges and GST; the export credit is then set against that bill.
-  const full_before = bill_total.raw({ ...bill, units: monthly_units }, d);
-  const full_import = bill_total.raw({ ...bill, units: import_units }, d);
+  const full_import = wholeBill(out, d, monthly_units, self_used);
   const full_diff = full_import.total_rs - nb.export_credit_rs;
   Object.assign(out, {
     full_before_rs: full_before.total_rs, full_import_rs: full_import.total_rs, export_credit_rs: nb.export_credit_rs,
@@ -89,6 +98,17 @@ export const home_plan = calculator((i, d) => {
 });
 
 /**
+ * Whole bill (section F) of a month's `use` units with `self` of them from solar: the slab bill, or at
+ * tou_threshold_kw and above the ToU bill with the peak share of the use in the peak hours and solar only off the
+ * off-peak units (WL-162 c).
+ */
+function wholeBill(p, d, use, self) {
+  const b = { sanctioned_kw: p.sanctioned_kw, protected: false };
+  const peak = Math.max(0, Math.min(use * p.peak_share, use - self));
+  return p.tou ? bill_tou.raw({ ...b, peak_units: peak, offpeak_units: Math.max(0, use - self - peak) }, d) : bill_total.raw({ ...b, units: Math.max(0, use - self) }, d);
+}
+
+/**
  * Whole-bill saving a month of the planner's net-billed array (formulas.md H1 decision engine): only `sun` of the solar
  * is made and used (an on-grid inverter stops in a cut), only `exp` of the export reaches the grid (a hybrid cannot export
  * in a cut), and `extra` units are added to the import (a UPS recharge) or taken off it (units a generator supplies).
@@ -97,6 +117,5 @@ export function netSaving(p, d, sun, exp, extra) {
   const s = p.net_billing_solar_kwh * sun;
   // In a cut the on-grid inverter is off, so only the daytime use while the grid is on can take its solar.
   const self = Math.min(s, p.monthly_units * p.day_share * sun);
-  const units = Math.max(0, p.monthly_units - self + extra);
-  return p.full_before_rs - Math.max(0, bill_total.raw({ sanctioned_kw: p.sanctioned_kw, protected: false, units }, d).total_rs - (s - self) * exp * p.buyback_rs);
+  return p.full_before_rs - Math.max(0, wholeBill(p, d, p.monthly_units + extra, self).total_rs - (s - self) * exp * p.buyback_rs);
 }
