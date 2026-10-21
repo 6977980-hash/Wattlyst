@@ -42,7 +42,10 @@ export async function loadInputs() {
   data.fpa_latest = data.bill_index.months.find((m) => m.fpa_verified === true) || null;
   // The newest Bill Index month, when its FPA is only reported in the news, is named next to the verified rate (WL-115).
   const newest = data.bill_index.months[0];
-  data.fpa_newest = { ...newest, note: newest === data.fpa_latest ? `${newest.label} bills use this rate.` : `${newest.label} bills carry ${fmt(newest.fpa_per_unit, "rs2")} per unit for ${newest.fpa_for}, reported in the news; this page keeps the latest NEPRA-verified rate until that decision is published.` };
+  // lead: the newest month first, so F14 opens with this month's bills, not the verified month (WL-158).
+  data.fpa_newest = { ...newest, lead: `${newest.label} bills carry ${fmt(newest.fpa_per_unit, 'rs2')} per unit for ${newest.fpa_for}${newest.fpa_verified ? ', as NEPRA decided' : ', reported in the news'}.`, note: newest === data.fpa_latest ? `${newest.label} bills use this rate.` : `${newest.label} bills carry ${fmt(newest.fpa_per_unit, "rs2")} per unit for ${newest.fpa_for}, reported in the news; this page keeps the latest NEPRA-verified rate until that decision is published.` };
+  // Fuel price day as page text ("21 October 2026"), from the ISO date in data (WL-159).
+  for (const k of ['petrol', 'diesel']) { const pr = data.generator_fuel.prices[k]; pr.effective_text = longDate(pr.effective); }
   // One source for the 1.5 ton AC figures (audit WL-107): the planning defaults N10 and the page text read are
   // copied from the appliance records in data/appliances.json, not kept a second time in data/defaults.json.
   data.defaults.ac_inverter_avg_kw_1_5_ton = data.appliances['ac-split-1-5ton-inverter'].avg_w / 1000;
@@ -75,6 +78,8 @@ export function changedOn(prev, hash, baseline, today) {
   if (prev && prev.hash === hash) return prev.date;
   return prev ? today : baseline || today;
 }
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const longDate = (ymd) => { const [y, m, d] = ymd.split('-').map(Number); return `${d} ${MONTHS[m - 1]} ${y}`; };
 const buildDay = () => process.env.WATTLYST_TODAY || new Date().toISOString().slice(0, 10);
 const newest = (...d) => d.filter(Boolean).sort().at(-1);
 
@@ -388,7 +393,7 @@ function lean(o) {
 }
 
 function browserBackup(b) {
-  const strip = (o) => Object.fromEntries(Object.entries(o).filter(([k]) => !['label', 'sources', 'note', 'rated_w_note', 'kva_note', 'bank_v_note', 'charger_a_note', 'charger_sources'].includes(k)));
+  const strip = (o) => Object.fromEntries(Object.entries(o).filter(([k]) => !['label', 'sources', 'note', 'charger_sources'].includes(k) && !/_note$/.test(k)));
   return { ups: b.ups.map(strip), generators: b.generators.map(strip), generator_upkeep: strip(b.generator_upkeep), tubular_unit: strip(b.tubular_unit), lithium_pack: strip(b.lithium_pack), battery_life_years: strip(b.battery_life_years) };
 }
 

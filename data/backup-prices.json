@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "Pakistani retailer listings (URLs and quotes on every item), the Honda generator owner's manual and published battery life ranges; no official price list exists",
-  "checked": "2026-10-15",
+  "checked": "2026-10-21",
   "currency": "PKR",
   "method": "Equipment only, no installation. Low = lowest listed price, high = highest, over the publishers counted in n_sources; listings seen only in search snippets (W11stop returns HTTP 403) and clearly stale or out-of-range prices are not counted. No retailer page shows its own update date, so every price is 'live on the page on the checked date'. The UPS vs solar vs generator calculator (N7) uses the middle of each range. Batteries, hybrid inverters and panels come from data/component-prices.json and data/solar-prices.json, not from this file.",
   "status": "Secondary sources only; refresh monthly with data/component-prices.json."
@@ -10,7 +10,8 @@
   {
    "label": "Home UPS / inverter, 1.2 kVA (sold as 1 kVA), 12 V battery (without battery)",
    "kva_note": "Labelled by the VA of the listed models (1200VA/900W, 1200VA/1000W), so the UPS backup time calculator (B5, VA x its power factor) accepts every load the cost comparison puts on it (full audit 2026-10-15 WL-97).",
-   "kva": 1.2, "rated_w": 900, "battery_v": 12, "charger_a": 25, "low": 33999, "high": 54499, "n_sources": 3,
+   "kva": 1.2, "rated_w": 900, "battery_v": 12, "charger_a": 25, "low": 33999, "high": 46500, "n_sources": 2,
+   "sources_note": "Full audit 2026-10-21 WL-160: the GoShop post (the old high, Rs 54,499) was removed with its link, because goshop.pk now redirects to an unrelated domain. No third dated dealer listing was found on 2026-10-21 (classified ads of used sets are not counted).",
    "rated_w_note": "Lowest continuous rating among the listed 1 kVA models (Inverex 1200VA/900W; Homage 1200VA/1000W).",
    "charger_a_note": "Grid (AC) charging current at the highest setting of the Homage Vertex listing; no maker datasheet found. Used to check the charger can refill the bank between cuts. Engineer to confirm.",
    "charger_sources": [
@@ -18,8 +19,7 @@
    ],
    "sources": [
     { "url": "https://mns.com.pk/product-category/ups/", "publisher": "MNS (mns.com.pk)", "date": "undated, live 2026-10-15", "quote": "Homage HVS-1214SCC Vertex Series Inverter UPS+Solar 1200VA/1000Watts/12V ₨44,500; Inverex 1KVA (1200VA/900Watts/12V) Solar Inverter Xtron X1200 ₨46,500; Trion-Connect 1201 UPS 12V PKR 39,500" },
-    { "url": "https://shadenterprises.pk/product/inverex-inverter-ups-xp-pro-1200-55-720-watts-modified-sine-wave/", "publisher": "Shad Enterprises (shadenterprises.pk)", "date": "undated, live 2026-10-15", "quote": "NRE UPS 1000W ₨33,999; NS Pro 1200VA Pure Inverter 12V DC (1000) Watt ₨39,499" },
-    { "url": "https://goshop.pk/best-ups-inverter-in-pakistan-with-prices-2026-updated/", "publisher": "GoShop (goshop.pk)", "date": "post dated 2023-01-26, title '2026 Updated'", "quote": "Inverex Veyron 1.2 kW MPPT Solar Inverter Rs. 54,499; Homage HVS-1214-SCC Rs. 39,999", "note": "Weakest source: the post date and the title disagree." }
+    { "url": "https://shadenterprises.pk/product/inverex-inverter-ups-xp-pro-1200-55-720-watts-modified-sine-wave/", "publisher": "Shad Enterprises (shadenterprises.pk)", "date": "undated, live 2026-10-15", "quote": "NRE UPS 1000W ₨33,999; NS Pro 1200VA Pure Inverter 12V DC (1000) Watt ₨39,499" }
    ]
   },
   {

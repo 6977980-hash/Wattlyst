@@ -51,7 +51,7 @@ function words(content) {
 export function report({ today = new Date().toISOString().slice(0, 10), gscCsv = null } = {}) {
   const cfg = readJson('data/maintenance.json');
   const site = readJson('data/site.json');
-  const out = { today, stale_data: [], stale_points: [], bill_index: null, buyback: null, pages_to_review: [], thin_pages: [], refresh_candidates: null, owner: [] };
+  const out = { today, stale_data: [], stale_points: [], bill_index: null, buyback: null, fuel: null, pages_to_review: [], thin_pages: [], refresh_candidates: null, owner: [] };
 
   for (const f of readdirSync(join(root, 'data')).filter((x) => x.endsWith('.json')).sort()) {
     const all = dates(readJson(`data/${f}`));
@@ -64,6 +64,11 @@ export function report({ today = new Date().toISOString().slice(0, 10), gscCsv =
   // Bill Index: one release per calendar month, so the newest month should be this month.
   const latest = readJson('data/bill-index.json').months[0]?.month;
   out.bill_index = { latest, due: !latest || latest < today.slice(0, 7) };
+
+  // Fuel prices change every few days: flag the price once its effective date is older than the limit (WL-159).
+  const fp = readJson('data/generator-fuel.json').prices;
+  const fuelDay = [fp.petrol.effective, fp.diesel.effective].sort()[0];
+  out.fuel = { effective: fuelDay, days: age(fuelDay, today), due: age(fuelDay, today) > cfg.fuel_price_max_age_days };
 
   const nb = readJson('data/tariff-pk-2026.json').net_billing || {};
   out.buyback = { verified: Boolean(nb.buyback_verified), checked: nb.buyback_checked || null };
@@ -108,6 +113,7 @@ export function markdown(r, cfg) {
   L.push(...(stale.length ? stale : ['- none']), '');
   L.push('## Monthly releases', '');
   L.push(`- Bill Index newest month: ${r.bill_index.latest}${r.bill_index.due ? ' (DUE: add the new month at the top of data/bill-index.json)' : ' (up to date)'}`);
+  if (r.fuel) L.push(`- Fuel prices (data/generator-fuel.json): in force from ${r.fuel.effective}, ${r.fuel.days} days${r.fuel.due ? ` (DUE: older than ${cfg.fuel_price_max_age_days} days, refresh from the latest OGRA / Petroleum Division notification)` : ' (up to date)'}`);
   L.push(`- Net-billing buyback: ${r.buyback.verified ? 'verified' : `not verified on a NEPRA page (last checked ${r.buyback.checked})`}`, '');
   L.push(`## Pages not reviewed for ${cfg.page_review_days} days`, '');
   L.push(...(r.pages_to_review.length ? r.pages_to_review.map((p) => `- ${p.id} ${p.url}: ${p.reviewed} (${p.days} days)`) : ['- none']), '');
