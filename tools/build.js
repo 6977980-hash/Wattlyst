@@ -31,6 +31,20 @@ const CALC_DATA = { generator_fuel: ['generator_fuel'], quote_checker: ['compone
 // code (<input>_required ...) for an input name that chain reads. A superset is harmless; a missing text would fall
 // back to the generic message, which tests/messages.test.js rules out for every error the calculators produce.
 const GENERIC_CODE = /^(\w+?)_(required|invalid|must_be_positive|too_small|too_large|out_of_range)$/;
+/** The legal note under a bill result: { t, l: [{ t, u }] } with outside https links, each anchor in the text in order. */
+function billNoteOf(ctx, fail) {
+  const n = ctx.billNote;
+  for (const calc of n.calcs) if (!findModule(ctx.modules, calc)) fail(`content/bill-note.json: unknown calc ${calc}`);
+  let at = 0;
+  for (const l of n.links) {
+    if (!/^https:\/\//.test(l.u || '')) fail(`content/bill-note.json: link ${l.t} must be an https URL`);
+    const pos = n.text.indexOf(l.t, at);
+    if (!l.t || pos < 0) fail(`content/bill-note.json: link text "${l.t}" is not in the text (in order)`);
+    at = pos + l.t.length;
+  }
+  return { t: n.text, l: n.links.map(({ t, u }) => ({ t, u })) };
+}
+
 /** Credit line for a page with a live data feed: content `credit` {by, by_url, licence, licence_url} (WL-240). */
 function creditOf(c, fail) {
   const k = c.credit || {};
@@ -92,7 +106,8 @@ export async function loadInputs() {
   }
   const affiliates = readJson('data/affiliates.json');
   const leadForm = readJson('content/lead-form.json');
-  return { site, data, citiesMeta, appliances, cables, solarPrices, inverterCodes, labelsUr, modules, keywordRows, siteRows, content, trustHtml, affiliates, leadForm };
+  const billNote = readJson('content/bill-note.json');
+  return { site, data, citiesMeta, appliances, cables, solarPrices, inverterCodes, labelsUr, modules, keywordRows, siteRows, content, trustHtml, affiliates, leadForm, billNote };
 }
 
 // Page dates (audit WL-206): generated/page-dates.json keeps, per page, a hash of what the page shows and the day
@@ -307,6 +322,8 @@ function buildContent(c, ctx) {
       ...(c.live ? { live: c.live } : {}),
       // A live data feed under an attribution licence prints its credit next to the result (Open-Meteo CC BY 4.0, WL-240).
       ...(c.live ? { credit: creditOf(c, fail) } : {}),
+      // Bill calculators: estimate, not an official bill or evidence, and where to complain (content/bill-note.json).
+      ...(ctx.billNote.calcs.includes(c.calc) ? { legal: billNoteOf(ctx, fail) } : {}),
       notice: noticeCode(result) ? errorMessage(noticeCode(result)) : '',
       msg: pageTexts(module),
       data_checked: dataChecked(module, { ...ctx, usesAppliances: fields.some((f) => f.type === 'appliance' || f.type === 'loads') }),
@@ -760,7 +777,7 @@ export async function build() {
   const inp = await loadInputs();
   const { site, keywordRows, siteRows, content } = inp;
   const pluginUrl = `${site.url}wp-content/plugins/wattlyst-tools/`;
-  const ctxBase = { site, data: inp.data, modules: inp.modules, appliances: inp.appliances, cables: inp.cables, solarPrices: inp.solarPrices, inverterCodes: inp.inverterCodes, labelsUr: inp.labelsUr, citiesMeta: inp.citiesMeta, pluginUrl };
+  const ctxBase = { site, data: inp.data, modules: inp.modules, appliances: inp.appliances, cables: inp.cables, solarPrices: inp.solarPrices, inverterCodes: inp.inverterCodes, labelsUr: inp.labelsUr, billNote: inp.billNote, citiesMeta: inp.citiesMeta, pluginUrl };
 
   const rows = [
     ...keywordRows.map((r) => ({ id: r.id, type: typeOf(r), silo: r.silo, url: r.url, h1: '', title: r.title, meta: r.meta_description, primary_keyword: r.primary_keyword, wave: Number(r.wave), status: 'planned' })),
