@@ -51,7 +51,7 @@
     "h2": "How does the sanctioned load change a FESCO bill?",
     "p": [
      "Two homes using the same 350 units can get different bills because of the kW printed in their connection details. On 2 kW the fixed charge is Rs 800 and the bill comes to Rs 18,401; on 4 kW the fixed charge is Rs 1,600 and the bill Rs 19,345. The fixed charge is also inside the GST base, so the gap grows a little further after tax.",
-     "A sanctioned load of 5 kW or more moves the connection to the time-of-use tariff with peak and off-peak rates and a fixed charge on the higher of half the sanctioned load or the recorded maximum demand, which this calculator does not model. If the bill was raised after a load extension for an AC or a motor, check the kW it now prints."
+     "A sanctioned load of 5 kW or more moves the connection to the time-of-use tariff with peak and off-peak rates and a fixed charge on the higher of half the sanctioned load or the recorded maximum demand; this calculator then prices the bill on those rates, with the peak units and MDI from the bill under Advanced (blank peak units use our estimate). If the bill was raised after a load extension for an AC or a motor, check the kW it now prints."
     ]
    },
    {
@@ -150,7 +150,7 @@
    "Looking for a FESCO tariff of its own. FESCO bills the uniform NEPRA domestic slabs; only the monthly FPA is specific to the month.",
    "Entering one kW when the bill prints more. After a load extension for an AC or a motor the fixed charge is per kW of the new sanctioned load, every month.",
    "Ticking protected after the first summer month. One bill over 200 units moves the home to unprotected rates for the next 6 months.",
-   "Using this calculator for a connection of 5 kW or more. Those are billed on ToU peak and off-peak rates with a different fixed charge."
+   "Leaving the peak units blank on a ToU connection of 5 kW or more. The bill then uses our estimate of the peak share; the peak and off-peak units printed on the ToU bill give the real figure."
   ],
   "sources": [
    {

@@ -54,5 +54,5 @@ export const ac_bill_impact = calculator((i, d) => {
 export const home_load_bill = calculator((i, d) => {
   const out = home_load.raw(i, d);
   const b = bill_total.raw({ units: out.monthly_units, sanctioned_kw: i.sanctioned_kw, protected: false }, d);
-  return { ...out, bill_kw: b.sanctioned_kw, bill_rate: b.rate, bill_energy_rs: b.energy_rs, bill_calc: b.energy_calc, monthly_rs: b.total_rs, tou: b.category === 'tou', tou_share_estimate: b.category === 'tou' };
+  return { ...out, bill_kw: b.sanctioned_kw, bill_rate: b.rate, bill_energy_rs: b.energy_rs, bill_calc: b.energy_calc, bill_fixed: b.fixed_basis, bill_tariff: b.category === 'tou' ? 'ToU tariff' : 'unprotected', monthly_rs: b.total_rs, tou: b.category === 'tou', tou_share_estimate: b.category === 'tou' };
 });

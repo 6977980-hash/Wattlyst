@@ -176,7 +176,7 @@
    "h2": "How does the sanctioned load change a FESCO bill?",
    "p": [
     "Two homes using the same {{ex.0.out.units|int}} units can get different bills because of the kW printed in their connection details. On {{ex.0.out.sanctioned_kw|int}} kW the fixed charge is {{ex.0.out.fixed_rs|rs}} and the bill comes to {{ex.0.out.total_rs|rs}}; on {{ex.1.out.sanctioned_kw|int}} kW the fixed charge is {{ex.1.out.fixed_rs|rs}} and the bill {{ex.1.out.total_rs|rs}}. The fixed charge is also inside the GST base, so the gap grows a little further after tax.",
-    "A sanctioned load of {{d.tou_threshold_kw|int}} kW or more moves the connection to the time-of-use tariff with peak and off-peak rates and a fixed charge on the higher of half the sanctioned load or the recorded maximum demand, which this calculator does not model. If the bill was raised after a load extension for an AC or a motor, check the kW it now prints."
+    "A sanctioned load of {{d.tou_threshold_kw|int}} kW or more moves the connection to the time-of-use tariff with peak and off-peak rates and a fixed charge on the higher of half the sanctioned load or the recorded maximum demand; this calculator then prices the bill on those rates, with the peak units and MDI from the bill under Advanced (blank peak units use our estimate). If the bill was raised after a load extension for an AC or a motor, check the kW it now prints."
    ]
   },
   {
@@ -298,7 +298,7 @@
   "Looking for a FESCO tariff of its own. FESCO bills the uniform NEPRA domestic slabs; only the monthly FPA is specific to the month.",
   "Entering one kW when the bill prints more. After a load extension for an AC or a motor the fixed charge is per kW of the new sanctioned load, every month.",
   "Ticking protected after the first summer month. One bill over {{d.protected_max_units|int}} units moves the home to unprotected rates for the next {{d.protected_months|int}} months.",
-  "Using this calculator for a connection of {{d.tou_threshold_kw|int}} kW or more. Those are billed on ToU peak and off-peak rates with a different fixed charge."
+  "Leaving the peak units blank on a ToU connection of {{d.tou_threshold_kw|int}} kW or more. The bill then uses our estimate of the peak share; the peak and off-peak units printed on the ToU bill give the real figure."
  ],
  "faq": [
   {
