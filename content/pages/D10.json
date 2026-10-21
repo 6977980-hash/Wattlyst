@@ -35,14 +35,21 @@
    "label": "Sanctioned load",
    "unit": "kW",
    "default": 4,
-   "hint": "From your bill. A connection of {{d.tou_threshold_kw|int}} kW or more is billed on peak and off-peak (ToU) rates, which this tool does not cover: price its imports with the [[F13|ToU bill calculator]]."
+   "hint": "From your bill. At {{d.tou_threshold_kw|int}} kW or more the import is billed on Time-of-Use (peak and off-peak) rates: enter the peak units below. For the whole ToU bill with fixed charge, surcharges and GST use the [[F13|ToU bill calculator]]."
+  },
+  {
+   "name": "peak_units",
+   "label": "Units imported in peak hours (ToU)",
+   "unit": "units",
+   "placeholder": "Our estimate",
+   "hint": "Only for a sanctioned load of {{d.tou_threshold_kw|int}} kW or more: the peak import units on your ToU bill. Blank uses our estimate of {{d.tou_peak_share|pct}} of the import."
   },
   {
    "name": "protected",
    "label": "Protected consumer (all of the last six months under the protected limit)",
    "type": "checkbox",
    "default": false,
-   "hint": "Tick only if every one of your last six bills was within the protected unit limit."
+   "hint": "Tick only if every one of your last six bills was within the protected unit limit. Not at {{d.tou_threshold_kw|int}} kW or more."
   }
  ],
  "outputs": [
@@ -68,7 +75,7 @@
   }
  ],
  "answer": "A home that imports {{in.import_units|int}} units and exports {{in.export_units|int}} units pays about {{out.net_energy_rs|rs}} in energy charges under net billing, against {{out.net_metering_rs|rs}} under old net metering, so net billing costs {{out.extra_vs_net_metering_rs|rs}} more that month. Net bill = imported units × slab rate − exported units × buyback rate of {{out.buyback_rs|rs2}}.",
- "how": "Import: {{out.import_units}} units at the slab rate of {{out.import_rate|rs2}} = {{out.import_energy_rs|rs}}. Export credit: {{out.export_units}} units × {{out.buyback_rs|rs2}} = {{out.export_credit_rs|rs}}. Net billing energy charge = {{out.import_energy_rs|rs}} − {{out.export_credit_rs|rs}} = {{out.net_energy_rs|rs}}; any credit above the import bill carries forward ({{out.carry_forward_rs|rs}} here). Old net metering: {{out.import_units}} − {{out.export_units}} = {{out.net_metering_units|int}} net units billed at {{out.net_metering_rate|rs2}} = {{out.net_metering_rs|rs}}. Difference = {{out.extra_vs_net_metering_rs|rs}}. Fixed charges, FC surcharge, QTA, FPA and GST are added on top; use the bill calculator for the full bill.",
+ "how": "Import: {{out.import_calc}} = {{out.import_energy_rs|rs}}. Export credit: {{out.export_units}} units × {{out.buyback_rs|rs2}} = {{out.export_credit_rs|rs}}. Net billing energy charge = {{out.import_energy_rs|rs}} − {{out.export_credit_rs|rs}} = {{out.net_energy_rs|rs}}; any credit above the import bill carries forward ({{out.carry_forward_rs|rs}} here). Old net metering: {{out.nm_calc}} = {{out.net_metering_rs|rs}}. Difference = {{out.extra_vs_net_metering_rs|rs}}. Fixed charges, FC surcharge, QTA, FPA and GST are added on top; use the bill calculator for the full bill.",
  "key_facts": [
   "Under net billing the imported units are billed at the normal slab rate ({{out.import_rate|rs2}} per unit for {{out.import_units|int}} units) and exported units are bought back at a flat rate, {{out.buyback_rs|rs2}} per unit, NEPRA's national average energy purchase price for {{data.tariff.net_billing.buyback_period}}.",
   "Under old net metering exported units cancelled imported units one for one, so a home importing {{out.import_units|int}} and exporting {{out.export_units|int}} units paid for only {{out.net_metering_units|int}} units, at the lower slab those units reach ({{out.net_metering_rate|rs2}}).",
@@ -140,20 +147,22 @@
   },
   {
    "inputs": {
-    "import_units": 600,
-    "export_units": 100
-   },
-   "title": "Heavy user: {{in.import_units|int}} in, {{in.export_units|int}} out",
-   "text": "Import bill {{out.import_units|int}} × {{out.import_rate|rs2}} = {{out.import_energy_rs|rs}}; export credit {{out.export_credit_rs|rs}}; net billing charge {{out.net_energy_rs|rs}}. Old net metering billed {{out.net_metering_units|int}} units at {{out.net_metering_rate|rs2}} = {{out.net_metering_rs|rs}}. The extra is {{out.extra_vs_net_metering_rs|rs}}, smaller than in the first example because the exports were small."
-  },
-  {
-   "inputs": {
     "import_units": 150,
     "export_units": 100,
     "protected": true
    },
    "title": "Protected consumer: {{in.import_units|int}} in, {{in.export_units|int}} out",
    "text": "A protected home is billed slab-wise at the protected rates, so the import bill is {{out.import_energy_rs|rs}}. The export credit is {{out.export_credit_rs|rs}} and the net billing charge {{out.net_energy_rs|rs}}, against {{out.net_metering_rs|rs}} for {{out.net_metering_units|int}} net units under old net metering: {{out.extra_vs_net_metering_rs|rs}} more. The gap is small because protected rates are close to the buyback rate."
+  },
+  {
+   "inputs": {
+    "import_units": 500,
+    "export_units": 300,
+    "sanctioned_kw": 8,
+    "peak_units": 150
+   },
+   "title": "ToU meter, {{in.sanctioned_kw|int}} kW: {{in.import_units|int}} in ({{in.peak_units|int}} in peak hours), {{in.export_units|int}} out",
+   "text": "At {{d.tou_threshold_kw|int}} kW or more the import is billed on peak and off-peak rates: {{out.import_calc}} = {{out.import_energy_rs|rs}}; export credit {{out.export_credit_rs|rs}}; net billing charge {{out.net_energy_rs|rs}}. Solar exports happen in daylight, which is off-peak, so old net metering netted them against the off-peak import only: {{out.nm_calc}} = {{out.net_metering_rs|rs}}. Net billing costs {{out.extra_vs_net_metering_rs|rs}} more. Without the peak units from your bill, the tool assumes {{d.tou_peak_share|pct}} of the import falls in peak hours, an estimate."
   }
  ],
  "table": {

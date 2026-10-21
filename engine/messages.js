@@ -34,7 +34,7 @@ const lim = (c) => c.limit.toLocaleString('en-US');
 const eg = (c, key) => { const d = fld(c, key).default; return d != null && typeof d != 'object' && !fld(c, key).options ? `, for example ${d}` : ''; };
 
 /** Warning flags on a valid result and the notice each prints (the flag name is the notice code unless mapped). */
-export const NOTICES = { solar_above_sanctioned: 1, low_confidence: 'price_low_confidence', over_cable_rating: 'cable_over_current_rating', ampacity_checked: 'ampacity_not_checked_aluminium', protected_lost: 'ac_protected_lost', ac_above_sanctioned: 1, usage_both: 1, typical_used: 1, per_unit_hidden: 1, battery_unknown: 1, high_c_rate: 1, string_below_bus: 1 };
+export const NOTICES = { solar_above_sanctioned: 1, tou_estimate: 1, tou_peak_estimate: 1, low_confidence: 'price_low_confidence', over_cable_rating: 'cable_over_current_rating', ampacity_checked: 'ampacity_not_checked_aluminium', protected_lost: 'ac_protected_lost', ac_above_sanctioned: 1, usage_both: 1, typical_used: 1, per_unit_hidden: 1, battery_unknown: 1, high_c_rate: 1, string_below_bus: 1 };
 
 /** Notice for a valid result that carries a warning flag (shown above the results, same text in build and browser). */
 export function noticeCode(out) {

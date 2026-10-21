@@ -182,27 +182,43 @@ export const protected_check = calculator((i, d) => {
 /**
  * Net billing: import billed at the slab tariff (energy only), export credited at the buyback rate.
  * Buyback is an editable input; its default is NEPRA's national average energy purchase price. A credit larger than the import
- * bill is shown as carry_forward_rs, never as a negative bill.
+ * bill is shown as carry_forward_rs, never as a negative bill. At tou_threshold_kw and above the import is billed on ToU
+ * rates (WL-162 c): peak units from the bill, blank = the default peak share of the import (an estimate); solar exports
+ * fall in off-peak hours, so old net metering netted them against the off-peak import only.
  */
 export const net_billing = calculator((i, d) => {
   const t = tariffOf(d);
   const import_units = nonneg(i, 'import_units');
   const export_units = nonneg(i, 'export_units');
   const buyback_rs = nonneg(i, 'buyback_rs', t.net_billing?.buyback_rs_per_unit_default);
-  const sanctioned_kw = flatSanctioned(i, d);
-  const imp = energyCharge(t, import_units, categoryOf(i), sanctioned_kw);
   const export_credit_rs = export_units * buyback_rs;
-  const diff = imp.energy_rs - export_credit_rs;
-  // Old net metering for comparison: units offset one-for-one, only the net import is billed (energy only).
-  const net_metering_units = Math.max(0, import_units - export_units);
-  const old = energyCharge(t, net_metering_units, categoryOf(i), sanctioned_kw);
+  const kw = pos(i, 'sanctioned_kw', dflt(d, 'default_sanctioned_kw'));
+  let r;
+  if (kw >= dflt(d, 'tou_threshold_kw')) {
+    if (bool(i.protected) || bool(i.lifeline)) throw new CalcError('protected_at_tou', 'protected');
+    const T = t.tou, rs = (v) => fmt(v, 'rs2');
+    const peak = num(i, 'peak_units', { def: import_units * dflt(d, 'tou_peak_share'), min: 0, max: import_units });
+    const off = import_units - peak;
+    const left = Math.max(0, off - export_units);
+    const e = peak * T.peak + off * T.offpeak;
+    r = { import_energy_rs: e, import_rate: import_units ? e / import_units : T.offpeak, import_calc: `${fmt(peak)} peak units × ${rs(T.peak)} + ${fmt(off)} off-peak × ${rs(T.offpeak)}`,
+      net_metering_units: peak + left, net_metering_rs: peak * T.peak + left * T.offpeak, net_metering_carry_units: Math.max(0, export_units - off),
+      nm_calc: `${fmt(peak)} peak units × ${rs(T.peak)} + ${fmt(left)} off-peak units left after the export × ${rs(T.offpeak)}`, peak_units: peak, tou: true, tou_peak_estimate: !has(i, 'peak_units') };
+  } else {
+    const imp = energyCharge(t, import_units, categoryOf(i), kw);
+    // Old net metering for comparison: units offset one-for-one, only the net import is billed (energy only).
+    const units = Math.max(0, import_units - export_units);
+    const old = energyCharge(t, units, categoryOf(i), kw);
+    r = { import_energy_rs: imp.energy_rs, import_rate: imp.rate, import_calc: `${fmt(import_units)} units at the slab rate of ${fmt(imp.rate, 'rs2')}`,
+      net_metering_units: units, net_metering_rate: old.rate, net_metering_rs: old.energy_rs, net_metering_carry_units: Math.max(0, export_units - import_units),
+      nm_calc: `${fmt(import_units)} − ${fmt(export_units)} = ${fmt(units)} net units at ${fmt(old.rate, 'rs2')}`, tou: false };
+  }
+  const diff = r.import_energy_rs - export_credit_rs;
   const net_energy_rs = Math.max(0, diff);
   return {
-    import_units, export_units, buyback_rs, import_rate: imp.rate,
-    import_energy_rs: imp.energy_rs, export_credit_rs,
+    import_units, export_units, buyback_rs, sanctioned_kw: kw, ...r, export_credit_rs,
     net_energy_rs, carry_forward_rs: Math.max(0, -diff),
-    net_metering_units, net_metering_rate: old.rate, net_metering_rs: old.energy_rs, net_metering_carry_units: Math.max(0, export_units - import_units),
-    extra_vs_net_metering_rs: Math.max(0, net_energy_rs - old.energy_rs),
+    extra_vs_net_metering_rs: Math.max(0, net_energy_rs - r.net_metering_rs),
   };
 });
 
