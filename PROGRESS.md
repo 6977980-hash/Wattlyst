@@ -1,6 +1,28 @@
 # Progress
 
-## Handoff for next phase (after 21 Oct audit fix Phase 8: trust and AdSense readiness) — written by the audit Phase 8 thread, 2026-10-21
+## Handoff for next phase (after 21 Oct audit fix Phase 9: ToU bill path for 5 kW and above) — written by the audit Phase 9 thread, 2026-10-21
+
+Owner: every fix phase runs in its own new thread, only after the owner says to start it. All rows of `/mnt/project-files/electricity-tool-hub/audit/2026-10-21/handoff/status.md` are now ticked (Phases 1 to 8 and row 9). Open owner decision: WL-199 (Calculators menu, mockups in `mockups/calculators-nav/`). Plugin v0.8.31. Phase 9 changed one engine area (ToU path in the planner and net billing), one data default, three pages' fields and text.
+
+**What is where**
+- Default peak share: `data/defaults.json` `tou_peak_share` with its reasoning in `tou_peak_share_source` (a Wattlyst estimate, in `_meta.engineer_confirm`). Rule: `specs/formulas.md` section F bullet "ToU path at 5 kW and above"; spec cases tagged "Phase 9" in `specs/calculator-test-cases.json`.
+- Planner + decision engine (H1): `home_plan` bill step and `wholeBill()` in `engine/planner.js` (every whole bill, also `netSaving` for the four setups, goes through it; flat slab bill below the threshold, `bill_tou` at or above). Optional input `peak_share` (advanced field in `content/pages/H1.json`); outputs `tou`, `peak_share`, `tou_estimate` (notice flag), `tariff_text` (engine-built phrase used in the H1 how text and how_ur). H1 FAQ "Does the planner work for a sanctioned load of 5 kW or more?".
+- Net billing (D10, D11): ToU branch of `net_billing` in `engine/bill.js`; optional input `peak_units` (field on both pages); outputs `tou`, `peak_units`, `tou_peak_estimate` (notice flag), `import_calc`, `nm_calc` (engine-built sums; both pages' how text now prints these for flat and ToU alike); error `protected_at_tou`. D10 has a ToU worked example.
+- Notice/error texts: `engine/message-text.js` (`tou_estimate`, `tou_peak_estimate`, `protected_at_tou`); flags in `NOTICES` in `engine/messages.js` (placed before `low_confidence`, so the ToU notice wins on H1).
+- Tests: `tests/tou-path.test.js`.
+
+**Do not touch / watch**
+- The flat bill pages (F1 to F12, F14), E1 and N16 still stop at 5 kW with `tou_required_at_5kw` (link to F13 under Sanctioned load); only H1, D10, D11 got the ToU path. Do not remove that error from `flatSanctioned()`.
+- The peak share must stay at most 1 minus the day share (evening peak vs daylight use); the planner caps a blank share and errors on an entered one.
+- The homepage JS chain grew by about 2 KB raw in this phase; it is still under the 72 KB raw / 30 KB gzip test, but plan bytes before adding more to `planner.js`, `bill.js` or `decision.js`.
+
+**Open to-dos**
+- [ENGINEER] confirm the default peak share and the off-peak-only netting of exports under old ToU net metering (formulas.md open question (10)); a real ToU bill (peak/off-peak units) or PRECON smart-meter data would replace the estimate.
+- The ToU fixed charge uses the minimum basis (half the sanctioned load, MDI blank) on H1; an MDI input could be added later. Engineer Reviewer PASS (2026-10-21); its non-blocking notes: only one notice shows at a time, so `solar_above_sanctioned` or a size notice can hide `tou_estimate` (the estimate still shows in the how text and hint); the ToU peak hours in `data/tariff-pk-2026.json` are from 2023 and unverified.
+- A ToU mode on the flat bill pages and N4/N16 comparison "this month on a 5 kW ToU meter" (bills expert F-6) is not built; owner's call.
+- Everything open from the earlier handoffs below still stands.
+
+## Earlier handoff (after 21 Oct audit fix Phase 8: trust and AdSense readiness) — written by the audit Phase 8 thread, 2026-10-21
 
 Owner: every fix phase of the 21 Oct 2026 audit runs in its own new thread, only after the owner says to start it. Shared rules and phase notes: `/mnt/project-files/electricity-tool-hub/audit/2026-10-21/handoff/` (README, `phase-N-*.md`, `status.md`; Phases 1 to 8 ticked). All eight audit phases are done. Next is row 9 of status.md (**H1/D10 ToU path for 5 kW and above**, WL-162 c), only with the owner's yes; WL-199 (Calculators menu) still waits for the owner's decision on the mockups. Plugin v0.8.30. Phase 8 changed one bill rule (FPA units), bill data, appliance and error-code data, trust pages, the author bio and the ads gate.
 
@@ -750,6 +772,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | 2026-10-21 | Audit 2026-10-21 fix Phase 6: phone layout and navigation (WL-198 Next step under the result, WL-238 embed result first + taller list iframe, WL-202 error-code count/jump/phone cards, WL-204 list calculators in two columns on desktop, WL-200 hub task groups, WL-239 table row labels, WL-205 small fixes: counts, 404, touch sizes, scroll cue, picker groups, select labels), plugin v0.8.28 | done: tests green | #45 |
 | 2026-10-21 | Audit 2026-10-21 fix Phase 7: technical SEO plumbing (WL-208 one-hop lowercase redirect, WL-209 Person url + Organization areaServed, WL-210 short error-code H2s, WL-211 varied Related anchors, WL-212 outbound-link check in the upkeep report + redirecting source links replaced, WL-213 warm-up cron cleared fully), plugin v0.8.29 | done: tests green | #46 |
 | 2026-10-21 | Audit 2026-10-21 fix Phase 8: trust and AdSense readiness (WL-243 protected FC surcharge 0, WL-244 FPA on the FPA month's units, WL-217 ads need a CMP, WL-240 N6 no ads + Open-Meteo credit, WL-215 author bio, WL-219 operator/governing law/short tax FAQ, WL-216 error codes in own words, WL-218 appliance sources), plugin v0.8.30 | done: tests green | #47 |
+| 2026-10-21 | Audit 2026-10-21 fix Phase 9: ToU bill path for 5 kW and above (WL-162 c): H1 planner + decision engine and net billing D10/D11 price the bill on ToU rates with a default peak share from data (estimate notice), plugin v0.8.31 | done: tests green | #48 |
 
 ## Owner to do
 - Audit Phase 4: one Hostinger redirect so http and www go straight to https://wattlyst.com (WL-40); HTML browser cache time of a few hours in LiteSpeed/Hostinger (WL-36); after deploy, open wp-admin once so the new build syncs and the cache is purged; before switching on the quote form, ask Hostinger which header carries the visitor IP and put it in data/site.json leads.client_ip_header (WL-64); 2FA for wp-admin.
