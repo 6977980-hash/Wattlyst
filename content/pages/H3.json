@@ -108,7 +108,7 @@
  "key_facts": [
   "A normal AC ceiling fan draws about {{appliance.running_w|int}} W at full speed ({{appliance.running_w_range.0|int}} to {{appliance.running_w_range.1|int}} W depending on make and age), which is {{out.running_kw|3}} units per hour; units per hour = watts ÷ one thousand.",
   "A DC inverter (BLDC) ceiling fan draws about {{a.ceiling-fan-dc-inverter.running_w|int}} W at full speed ({{a.ceiling-fan-dc-inverter.running_w_range.0|int}} to {{a.ceiling-fan-dc-inverter.running_w_range.1|int}} W), less than half of an AC fan, so it uses about {{ex.0.out.running_kw|3}} units per hour.",
-  "One AC ceiling fan running {{appliance.typical_hours_per_day|int}} hours a day uses about {{out.monthly_units|1}} units in a {{out.days|int}}-day month, about {{out.monthly_rs|rs}} of energy charge at the Pakistan unprotected rate of {{out.tariff|rs2}} per unit; a DC fan on the same schedule uses about {{ex.0.out.monthly_units|1}} units, about {{ex.0.out.monthly_rs|rs}}.",
+  "One AC ceiling fan running {{appliance.typical_hours_per_day|int}} hours a day uses about {{out.monthly_units|1}} units in a {{out.days|2}}-day month, about {{out.monthly_rs|rs}} of energy charge at the 301 to 400 unit slab rate of {{out.tariff|rs2}} per unit (unprotected); a DC fan on the same schedule uses about {{ex.0.out.monthly_units|1}} units, about {{ex.0.out.monthly_rs|rs}}.",
   "Four AC ceiling fans for {{appliance.typical_hours_per_day|int}} hours a day add about {{ex.1.out.monthly_units|1}} units a month to the bill; four DC inverter fans add about {{ex.2.out.monthly_units|1}} units.",
   "On a UPS the fan's watts set the backup time: a DC fan at {{ex.0.out.running_w|int}} W runs more than twice as long as an AC fan at {{out.running_w|int}} W on the same battery."
  ],
@@ -125,7 +125,7 @@
   {
    "h2": "How many watts does a ceiling fan use?",
    "p": [
-    "A normal AC ceiling fan of the usual size sold in Pakistan draws about {{appliance.running_w|int}} W at full speed, with real fans ranging from about {{appliance.running_w_range.0|int}} W to {{appliance.running_w_range.1|int}} W. Older fans with worn bearings and copper-wound motors run at the top of that range; new energy-saver models from makes such as GFC, Pak Fan or Royal sit near the bottom. The number on the fan's label or box is the one to enter in the calculator.",
+    "A normal AC ceiling fan of the usual size sold in Pakistan draws about {{appliance.running_w|int}} W at full speed, with real fans ranging from about {{appliance.running_w_range.0|int}} W to {{appliance.running_w_range.1|int}} W. Older fans with worn bearings, and cheap fans with aluminium-wound motors, run at the top of that range (copper windings waste less power); new energy-saver models from makes such as GFC, Pak Fan or Royal sit near the bottom. The number on the fan's label or box is the one to enter in the calculator.",
     "The {{appliance.running_w|int}} W figure is the running draw. A ceiling fan is a small motor, so it also has a brief starting surge of about {{appliance.starting_w|int}} W, which matters only when you size a UPS or inverter, not for the bill."
    ]
   },
@@ -169,7 +169,7 @@
     ]
    },
    "title": "One DC inverter fan, twelve hours a day",
-   "text": "{{out.running_w|int}} W ÷ one thousand = {{out.running_kw|3}} units per hour. Over twelve hours that is {{out.daily_kwh|2}} units a day and {{out.monthly_units|1}} units in {{out.days|int}} days, about {{out.monthly_rs|rs}} at {{out.tariff|rs2}} per unit."
+   "text": "{{out.running_w|int}} W ÷ one thousand = {{out.running_kw|3}} units per hour. Over twelve hours that is {{out.daily_kwh|2}} units a day and {{out.monthly_units|1}} units in {{out.days|2}} days, about {{out.monthly_rs|rs}} at {{out.tariff|rs2}} per unit."
   },
   {
    "inputs": {
@@ -224,7 +224,7 @@
   }
  ],
  "table": {
-  "caption": "Units and cost of AC and DC ceiling fans running {{appliance.typical_hours_per_day|int}} hours a day for {{out.days|int}} days at {{out.tariff|rs2}} per unit (energy charge only)",
+  "caption": "Units and cost of AC and DC ceiling fans running {{appliance.typical_hours_per_day|int}} hours a day for {{out.days|2}} days at {{out.tariff|rs2}} per unit (energy charge only)",
   "rows": [
    {
     "loads": [
@@ -349,7 +349,8 @@
  ],
  "next": "B1",
  "literal_numbers": [
-  "thirty watt"
+  "thirty watt",
+  "301 to 400"
  ],
  "sources": [
   {

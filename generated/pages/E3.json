@@ -5,7 +5,7 @@
  "url": "/load/single-phase-load-calculator/",
  "h1": "Single Phase Load Calculator",
  "title": "Single Phase Load Calculator (230V, kW to Amps) | Wattlyst",
- "meta": "Check if your single-phase 230V connection can handle your load. Total kW, amps, diversity factor and sanctioned load check.",
+ "meta": "Check if your single-phase 230V connection can handle your load. Enter what runs at the same time to see total kW, amps and the sanctioned load share.",
  "primary_keyword": "single phase load calculator",
  "wave": 1,
  "status": "publish",
@@ -35,7 +35,7 @@
    "url": "/load/single-phase-load-calculator/"
   }
  ],
- "modified": "2026-10-13",
+ "modified": "2026-10-21",
  "content": {
   "intro": "",
   "sections": [
@@ -152,7 +152,7 @@
    "fields": [
     {
      "name": "total_w",
-     "label": "Total load",
+     "label": "Load running at the same time",
      "unit": "W",
      "default": 3000,
      "hint": "Everything that runs at the same time, in watts. Take it from the home load calculator or add up your appliance labels."
@@ -202,10 +202,10 @@
     },
     {
      "key": "total_kw",
-     "label": "Total load",
+     "label": "Load running at the same time",
      "spec": "2",
      "unit": "kW",
-     "label_ur": "Kul load",
+     "label_ur": "Ek waqt mein chalne wala load",
      "value": "3"
     },
     {
@@ -353,7 +353,7 @@
     "@id": "https://wattlyst.com/load/single-phase-load-calculator/#webpage",
     "url": "https://wattlyst.com/load/single-phase-load-calculator/",
     "name": "Single Phase Load Calculator (230V, kW to Amps) | Wattlyst",
-    "description": "Check if your single-phase 230V connection can handle your load. Total kW, amps, diversity factor and sanctioned load check.",
+    "description": "Check if your single-phase 230V connection can handle your load. Enter what runs at the same time to see total kW, amps and the sanctioned load share.",
     "inLanguage": "en",
     "isPartOf": {
      "@id": "https://wattlyst.com/#website"
@@ -361,7 +361,7 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/load/single-phase-load-calculator/#breadcrumb"
     },
-    "dateModified": "2026-10-13",
+    "dateModified": "2026-10-21",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }
@@ -371,7 +371,7 @@
     "@id": "https://wattlyst.com/load/single-phase-load-calculator/#app",
     "name": "Single Phase Load Calculator",
     "url": "https://wattlyst.com/load/single-phase-load-calculator/",
-    "description": "Check if your single-phase 230V connection can handle your load. Total kW, amps, diversity factor and sanctioned load check.",
+    "description": "Check if your single-phase 230V connection can handle your load. Enter what runs at the same time to see total kW, amps and the sanctioned load share.",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Any",
     "browserRequirements": "Requires JavaScript for live results",

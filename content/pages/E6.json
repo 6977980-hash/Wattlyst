@@ -119,12 +119,12 @@
    "spec": "rs"
   }
  ],
- "answer": "One electricity unit is one kilowatt hour (kWh): a {{out.watts|int}} W appliance running for one hour uses exactly one unit, so {{out.hours|int}} hour a day for {{out.days|int}} days is {{out.units|2}} units. Units = watts × hours ÷ 1,000, or from amps: volts × amps × power factor × hours ÷ 1,000. Enter your appliance's watts or amps and hours to get its units.",
+ "answer": "One electricity unit is one kilowatt hour (kWh): a {{out.watts|int}} W appliance running for one hour uses exactly one unit, so {{out.hours|int}} hour a day for an average month of {{out.days|2}} days is {{out.units|2}} units. Units = watts × hours ÷ 1,000, or from amps: volts × amps × power factor × hours ÷ 1,000. Enter your appliance's watts or amps and hours to get its units.",
  "how": "{{out.watts}} W × {{out.hours|2}} h a day × {{out.days}} days ÷ 1,000 = {{out.units|2}} units (kWh). In Amps mode the watts come first from volts × amps × power factor (× the square root of three for three phase), then the same step.",
  "key_facts": [
   "One electricity unit = one kilowatt hour (kWh) = 1,000 watts used for one hour; a {{out.watts|int}} W appliance uses one unit every hour it runs, and a hundred-watt bulb takes ten hours to use one unit.",
-  "Units = watts × hours ÷ 1,000: an {{ex.0.out.watts|int}} W fan for {{ex.0.out.hours|int}} hours a day uses {{ex.0.out.units|2}} units in {{ex.0.out.days|int}} days.",
-  "Units from amps = volts × amps × power factor × hours ÷ 1,000: an appliance drawing {{ex.1.out.amps|int}} A at {{ex.1.out.volts|int}} V with a {{ex.1.out.pf|1}} power factor is {{ex.1.out.watts|int}} W and uses {{ex.1.out.units|1}} units in {{ex.1.out.days|int}} days at {{ex.1.out.hours|int}} hours a day.",
+  "Units = watts × hours ÷ 1,000: an {{ex.0.out.watts|int}} W fan for {{ex.0.out.hours|int}} hours a day uses {{ex.0.out.units|2}} units in {{ex.0.out.days|2}} days.",
+  "Units from amps = volts × amps × power factor × hours ÷ 1,000: an appliance drawing {{ex.1.out.amps|int}} A at {{ex.1.out.volts|int}} V with a {{ex.1.out.pf|1}} power factor is {{ex.1.out.watts|int}} W and uses {{ex.1.out.units|1}} units in {{ex.1.out.days|2}} days at {{ex.1.out.hours|int}} hours a day.",
   "On DC the power factor is one: {{ex.2.out.amps|int}} A from a {{ex.2.out.volts|int}} V battery is {{ex.2.out.watts|int}} W, which is {{ex.2.out.units|2}} units over {{ex.2.out.hours|int}} hours."
  ],
  "formula": {
@@ -147,14 +147,14 @@
   {
    "h2": "How to calculate electricity units from watts",
    "p": [
-    "Take the watts from the appliance label, multiply by the hours it runs in a day, and divide by one thousand. That is the units a day; multiply by the days in the month for the monthly figure. An {{ex.0.out.watts|int}} W ceiling fan for {{ex.0.out.hours|int}} hours a day is {{ex.0.out.units|2}} units over {{ex.0.out.days|int}} days.",
+    "Take the watts from the appliance label, multiply by the hours it runs in a day, and divide by one thousand. That is the units a day; multiply by the days in the month for the monthly figure. An {{ex.0.out.watts|int}} W ceiling fan for {{ex.0.out.hours|int}} hours a day is {{ex.0.out.units|2}} units over {{ex.0.out.days|2}} days.",
     "Use the real running hours, not the hours the appliance is switched on. A fridge compressor runs about a third of the time, and an inverter AC draws far less than its rated watts for most of the hour; the appliance load calculator and the AC units calculator use planning averages for those."
    ]
   },
   {
    "h2": "Amps to kWh: units from a current reading",
    "p": [
-    "Some labels give amps instead of watts, and a clamp meter always reads amps. Switch to Amps mode: the calculator first converts to watts with volts × amps × power factor, then applies the same hours and days. At {{ex.1.out.volts|int}} V and a {{ex.1.out.pf|1}} power factor, {{ex.1.out.amps|int}} A is {{ex.1.out.watts|int}} W, which over {{ex.1.out.hours|int}} hours a day comes to {{ex.1.out.units|1}} units in {{ex.1.out.days|int}} days.",
+    "Some labels give amps instead of watts, and a clamp meter always reads amps. Switch to Amps mode: the calculator first converts to watts with volts × amps × power factor, then applies the same hours and days. At {{ex.1.out.volts|int}} V and a {{ex.1.out.pf|1}} power factor, {{ex.1.out.amps|int}} A is {{ex.1.out.watts|int}} W, which over {{ex.1.out.hours|int}} hours a day comes to {{ex.1.out.units|1}} units in {{ex.1.out.days|2}} days.",
     "Set the power factor to one for a heater, iron or geyser and about {{d.pf_mixed|1}} for a motor, fan or compressor. For a three-phase motor the volts are the line-to-line {{d.v_3ph|int}} V and the calculator multiplies by the square root of three."
    ]
   },
@@ -171,22 +171,20 @@
    "inputs": {
     "input": "watts",
     "watts": 80,
-    "hours": 10,
-    "days": 30
+    "hours": 10
    },
    "title": "Ceiling fan: {{out.watts|int}} W for {{out.hours|int}} hours a day",
-   "text": "{{out.watts|int}} W × {{out.hours|int}} h × {{out.days|int}} days ÷ 1,000 = {{out.units|2}} units a month. One fan running most of the day is about one unit a day."
+   "text": "{{out.watts|int}} W × {{out.hours|int}} h × {{out.days|2}} days ÷ 1,000 = {{out.units|2}} units a month. One fan running most of the day is about one unit a day."
   },
   {
    "inputs": {
     "input": "amps",
     "amps": 5,
     "hours": 4,
-    "days": 30,
     "mode": "ac1"
    },
    "title": "Amps mode: a {{out.amps|int}} A appliance at {{out.volts|int}} V",
-   "text": "{{out.volts|int}} V × {{out.amps|int}} A × {{out.pf|1}} power factor = {{out.watts|int}} W. {{out.watts|int}} W × {{out.hours|int}} h × {{out.days|int}} days ÷ 1,000 = {{out.units|1}} units a month."
+   "text": "{{out.volts|int}} V × {{out.amps|int}} A × {{out.pf|1}} power factor = {{out.watts|int}} W. {{out.watts|int}} W × {{out.hours|int}} h × {{out.days|2}} days ÷ 1,000 = {{out.units|1}} units a month."
   },
   {
    "inputs": {
@@ -204,11 +202,10 @@
    "inputs": {
     "input": "watts",
     "watts": 1000,
-    "hours": 8,
-    "days": 30
+    "hours": 8
    },
    "title": "Inverter AC at its {{out.watts|int}} W average for {{out.hours|int}} hours a day",
-   "text": "{{out.watts|int}} W × {{out.hours|int}} h × {{out.days|int}} days ÷ 1,000 = {{out.units|int}} units a month at an average draw of about one kilowatt. Rated watts would overstate this; the AC units calculator explains the average."
+   "text": "{{out.watts|int}} W × {{out.hours|int}} h × {{out.days|2}} days ÷ 1,000 = {{out.units|int}} units a month at an average draw of about one kilowatt. Rated watts would overstate this; the AC units calculator explains the average."
   },
   {
    "inputs": {
@@ -221,7 +218,7 @@
   }
  ],
  "table": {
-  "caption": "Units a month for common appliance wattages at typical daily hours ({{out.days|int}} days)",
+  "caption": "Units a month for common appliance wattages at typical daily hours ({{out.days|2}} days)",
   "rows": [
    {
     "watts": 12,
@@ -293,7 +290,7 @@
   },
   {
    "q": "How do I convert amps to kWh?",
-   "a": "Multiply amps by volts and power factor to get watts, then by hours and divide by 1,000. {{ex.1.out.amps|int}} A at {{ex.1.out.volts|int}} V and {{ex.1.out.pf|1}} power factor is {{ex.1.out.watts|int}} W, or {{ex.1.out.units|1}} units over {{ex.1.out.days|int}} days at {{ex.1.out.hours|int}} hours a day."
+   "a": "Multiply amps by volts and power factor to get watts, then by hours and divide by 1,000. {{ex.1.out.amps|int}} A at {{ex.1.out.volts|int}} V and {{ex.1.out.pf|1}} power factor is {{ex.1.out.watts|int}} W, or {{ex.1.out.units|1}} units over {{ex.1.out.days|2}} days at {{ex.1.out.hours|int}} hours a day."
   },
   {
    "q": "How many units does a 1.5 ton AC use per hour?",

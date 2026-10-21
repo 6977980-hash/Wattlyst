@@ -67,7 +67,7 @@ Rules marked [TEST] are enforced by `npm test`; the rest are checked in review b
   + `WebSite` on home, `FAQPage` only for FAQs visible on the page. Never fake `aggregateRating`
   or reviews. Note: Google shows FAQ rich results only for a few authoritative sites and has removed
   HowTo rich results; markup is still fine for meaning, but never rely on it for traffic.
-- `lang="en"`, mobile viewport, no intrusive interstitials, 404 page with search + top tools,
+- `lang="en"`, mobile viewport, no intrusive interstitials, 404 page with hub links + top tools (no search form, WL-77),
   no redirect chains, no mixed content, no broken links (checked before each wave).
 
 ## 5. AEO (answer engines: featured snippets, AI Overviews, voice)

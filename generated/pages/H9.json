@@ -38,7 +38,7 @@
    "url": "/guides/inverter-vs-ups/"
   }
  ],
- "modified": "2026-10-13",
+ "modified": "2026-10-21",
  "content": {
   "intro": "",
   "sections": [
@@ -46,7 +46,7 @@
     "h2": "What is a UPS?",
     "p": [
      "UPS stands for uninterruptible power supply. In the strict sense it is a unit built to keep sensitive equipment, mainly computers, servers and network gear, running through a cut without a flicker. It has a charger, a battery and an inverter in one box, and a transfer switch that moves the load to battery within a few milliseconds, faster than a computer power supply can notice.",
-     "There are two main kinds. A line-interactive (offline or standby) UPS passes mains power straight through and only switches to the inverter when the mains fails; it is cheap and common for PCs. An online (double-conversion) UPS runs the load from the inverter all the time, so there is no switch at all; it costs more, wastes more power as heat and is used where even a few milliseconds matter.",
+     "The IEC 62040-3 standard sorts UPS units into three classes. A standby (offline) UPS passes mains power straight through and switches to its inverter only when the mains fails; it is the cheapest kind. A line-interactive UPS also passes mains through, but adds a voltage regulator (AVR) that corrects low or high mains without using the battery, and switches to the inverter on a cut; most home and computer UPS units sold in Pakistan are this kind. An online (double-conversion) UPS runs the load from the inverter all the time, so there is no switch at all; it costs more, wastes more power as heat and is used where even a few milliseconds matter.",
      "In Pakistan the word UPS is also used for the ordinary home backup unit that runs fans and lights from a tubular battery. Technically that is an inverter with a charger, and the sections below treat it that way."
     ]
    },
@@ -91,7 +91,7 @@
     "h2": "Which loads can each one run?",
     "p": [
      "A small computer UPS with its built-in battery runs a PC, monitor, router and a CCTV recorder for minutes, long enough to save work and shut down. It cannot run fans and lights for an evening; its battery is a few Ah.",
-     "A home UPS or inverter with an external tubular or lithium battery runs fans, LED lights, a TV, a laptop charger and a router for hours; a bigger pure sine wave unit with a 24 V bank adds a fridge or a small inverter AC. Line-interactive UPS units deliver only about 0.6 W per VA, so check watts, not VA, before adding a load.",
+     "A home UPS or inverter with an external tubular or lithium battery runs fans, LED lights, a TV, a laptop charger and a router for hours; a bigger pure sine wave unit with a 24 V bank adds a fridge or a small inverter AC. Cheap line-interactive UPS units deliver only about 0.6 W per VA, so check the watts on the label, not the VA, before adding a load.",
      "A hybrid solar inverter in the right size runs the whole house, including ACs and the water motor, from solar by day and from the battery at night. Use the inverter size calculator to add up your appliances with their starting surge before you buy any of the three."
     ],
     "l": [
@@ -132,7 +132,7 @@
    },
    {
     "q": "Online UPS vs offline UPS: what is the difference?",
-    "a": "An offline (line-interactive or standby) UPS passes mains power through and switches to its inverter only on a cut, so it is cheap and efficient. An online UPS runs the load from the inverter all the time, so there is no switch and the output is always clean, at the cost of price and a few percent of power lost as heat."
+    "a": "An offline (standby) UPS passes mains power through and switches to its inverter only on a cut, so it is cheap and efficient; a line-interactive UPS works the same way but also corrects low or high mains voltage with a regulator, without the battery. An online UPS runs the load from the inverter all the time, so there is no switch and the output is always clean, at the cost of price and a few percent of power lost as heat."
    },
    {
     "q": "How long will a UPS or inverter give backup?",
@@ -142,17 +142,29 @@
   "key_facts": [
    "A UPS and an inverter do the same job on backup, turning DC battery power into AC; the difference is switching speed, size, waveform and whether it charges from solar.",
    "A basic home UPS or inverter converts battery energy to AC at about 85% efficiency; a good hybrid solar inverter reaches about 90%, so it gives more backup from the same battery.",
-   "A line-interactive home UPS is rated for a power factor of about 0.6, so its usable watts are about six tenths of its VA rating; inverters are usually sold in watts or kVA with a power factor closer to one.",
+   "A cheap line-interactive home UPS is often rated for a power factor of about 0.6, so its usable watts are about six tenths of its VA rating (many newer units are rated higher, so read the W figure on the label); inverters are usually sold in watts or kVA with a power factor closer to one.",
    "Tubular batteries should be used to about 50% of their capacity and lithium (LiFePO4) batteries to about 90%; the battery, not the UPS or inverter, decides how long the backup lasts.",
    "Any unit that keeps charging a battery all day draws standby power; a lithium battery with a hybrid inverter wastes the least, a tubular battery on a cheap charger the most."
   ],
   "mistakes": [
-   "Buying by VA instead of watts. A line-interactive UPS delivers only about 0.6 W per VA, so a unit that looks big enough on the label may trip on the real load.",
+   "Buying by VA instead of watts. A cheap line-interactive UPS delivers only about 0.6 W per VA, so a unit that looks big enough on the label may trip on the real load.",
    "Running a fridge or PC on a square wave UPS. Motors hum and run hot, and electronics can fail early; a pure sine wave unit is the right choice for anything beyond fans and lights.",
    "Expecting the UPS to decide backup time. The battery Ah, its usable depth of discharge and the load in watts set the hours; a bigger UPS with the same battery gives no more backup.",
    "Buying a basic UPS now and a hybrid inverter a year later. If solar is planned, one hybrid unit does both jobs and the UPS becomes dead money."
   ],
   "sources": [
+   {
+    "label": "Schneider Electric White Paper 1: The Different Types of UPS Systems (IEC 62040-3 classes: standby, line-interactive, double conversion)",
+    "url": "https://www.se.com/ww/en/download/document/SPD_SADE-5TNM3Y_EN/"
+   },
+   {
+    "label": "IEC 62040-3:2021: uninterruptible power systems (UPS), method of specifying the performance and test requirements",
+    "url": "https://webstore.iec.ch/en/publication/60140"
+   },
+   {
+    "label": "Schneider Electric white paper, Watts and Volt-Amps: Powerful Confusion",
+    "url": "https://www.se.com/ww/en/download/document/SPD_SADE-5TNQYF_EN/"
+   },
    {
     "label": "Wattlyst methodology and default values",
     "url": "/methodology/"
@@ -202,7 +214,7 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/guides/inverter-vs-ups/#breadcrumb"
     },
-    "dateModified": "2026-10-13",
+    "dateModified": "2026-10-21",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }
@@ -222,7 +234,7 @@
      "@id": "https://wattlyst.com/#organization"
     },
     "datePublished": "2026-10-13",
-    "dateModified": "2026-10-13"
+    "dateModified": "2026-10-21"
    },
    {
     "@type": "Person",
@@ -277,7 +289,7 @@
       "name": "Online UPS vs offline UPS: what is the difference?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "An offline (line-interactive or standby) UPS passes mains power through and switches to its inverter only on a cut, so it is cheap and efficient. An online UPS runs the load from the inverter all the time, so there is no switch and the output is always clean, at the cost of price and a few percent of power lost as heat."
+       "text": "An offline (standby) UPS passes mains power through and switches to its inverter only on a cut, so it is cheap and efficient; a line-interactive UPS works the same way but also corrects low or high mains voltage with a regulator, without the battery. An online UPS runs the load from the inverter all the time, so there is no switch and the output is always clean, at the cost of price and a few percent of power lost as heat."
       }
      },
      {

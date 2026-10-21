@@ -6,7 +6,7 @@
  "author": "ali-ahmad",
  "published": "2026-10-13",
  "reviewed": "2026-10-15",
- "answer": "The Home Power Planner sizes everything from one appliance list. A home running {{out.running_w|int}} W needs an inverter of {{out.inverter_buy}}, about {{out.battery_kwh|1}} kWh of battery for {{in.backup_hours|1}} hours of backup and a {{out.installed_kw|2}} kW solar system saving about {{out.ongrid_saving_rs|rs}} a month. The best fit is {{out.decision}}.",
+ "answer": "The Home Power Planner sizes a home running {{out.running_w|int}} W from one appliance list: an inverter of {{out.inverter_buy}}, about {{out.battery_kwh|1}} kWh of battery for {{in.backup_hours|1}} hours and {{out.installed_kw|2}} kW of solar. The best fit is {{out.decision}}, saving about {{out.decision_saving_rs|rs}} a month with your power cuts.",
  "key_facts": [
   "The planner carries one appliance list through the whole chain: running load, inverter, battery, solar, net billing and generator, each with the formula of its own calculator, so the sizes never contradict each other.",
   "The decision step compares on-grid solar, hybrid solar with a battery, a UPS or petrol generator, and on-grid solar with that UPS or generator, for the same home: price range, backup time, bill saving and running cost a month, and the net cost over the years you choose. It recommends the setup with the lowest net cost that gives the backup you asked for and fits your budget.",
@@ -51,7 +51,7 @@
   },
   {
    "q": "How does the planner work out the saving on the whole bill?",
-   "a": "It prices {{out.monthly_units|int}} units the way the bill calculator does: energy charge, fixed charge for your sanctioned load, FC surcharge and GST, for {{out.full_before_rs|rs}}. With solar you import {{out.import_units|int}} units, billed the same way at {{out.full_import_rs|rs}}, and the {{out.export_units|int}} exported units earn {{out.export_credit_rs|rs}}, set against that bill, leaving {{out.full_after_rs|rs}}. The whole-bill saving is {{out.full_saving_rs|rs}}, of which {{out.saving_rs|rs}} is energy charge; the rest is the lower fixed charge band, surcharge and GST. QTA and FPA change month to month and are left at zero here, and the planner assumes GST is charged on the imported units before the export credit, the cautious reading. The buyback rate is NEPRA's national average energy purchase price for {{data.tariff.net_billing.buyback_period}}; it stays editable because NEPRA sets it again each year. Agreements signed before {{data.tariff.net_billing.existing_cutoff}} stay on the old net-metering terms until they expire, unless the system is enlarged, which moves it to net billing."
+   "a": "It prices {{out.monthly_units|int}} units the way the bill calculator does: energy charge, fixed charge for your sanctioned load, FC surcharge and GST, for {{out.full_before_rs|rs}}. With solar you import {{out.import_units|int}} units, billed the same way at {{out.full_import_rs|rs}}, and the {{out.export_units|int}} exported units earn {{out.export_credit_rs|rs}}, set against that bill, leaving {{out.full_after_rs|rs}}. The whole-bill saving, with no power cuts, is {{out.full_saving_rs|rs}}, of which {{out.saving_rs|rs}} is energy charge; the rest is the lower fixed charge band, surcharge and GST. QTA and FPA change month to month and are left at zero here, and the planner assumes GST is charged on the imported units before the export credit, the cautious reading. The buyback rate is NEPRA's national average energy purchase price for {{data.tariff.net_billing.buyback_period}}; it stays editable because NEPRA sets it again each year. Agreements signed before {{data.tariff.net_billing.existing_cutoff}} stay on the old net-metering terms until they expire, unless the system is enlarged, which moves it to net billing."
   },
   {
    "q": "Are the calculators free?",
@@ -261,8 +261,8 @@
   },
   {
    "key": "decision_saving_rs",
-   "label": "Bill saving a month",
-   "label_ur": "Mahana bill ki bachat",
+   "label": "Bill saving a month, best fit (with power cuts)",
+   "label_ur": "Behtareen setup se mahana bill ki bachat (load shedding ke saath)",
    "spec": "rs"
   },
   {
@@ -339,8 +339,8 @@
   },
   {
    "key": "full_saving_rs",
-   "label": "Monthly saving with net billing (whole bill)",
-   "label_ur": "Net billing se mahana bachat (poora bill)",
+   "label": "Solar saving with net billing, no power cuts (whole bill)",
+   "label_ur": "Net billing se solar ki mahana bachat, baghair load shedding (poora bill)",
    "spec": "rs"
   },
   {

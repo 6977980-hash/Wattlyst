@@ -1,6 +1,31 @@
 # Progress
 
-## Handoff for next phase (after 21 Oct audit fix Phase 4: solar, battery and wiring engine) — written by the audit Phase 4 thread, 2026-10-21
+## Handoff for next phase (after 21 Oct audit fix Phase 5: page text) — written by the audit Phase 5 thread, 2026-10-21
+
+Owner: every fix phase of the 21 Oct 2026 audit runs in its own new thread, only after the owner says to start it. Shared rules and phase notes: `/mnt/project-files/electricity-tool-hub/audit/2026-10-21/handoff/` (README, `phase-N-*.md`, `status.md`; Phases 1 to 5 ticked). Next is **Phase 6 (phone layout)**: read README, then only `phase-6-phone-layout.md` and its rows in `audit/fix-list-2026-10-21.md`. Plugin v0.8.27. Phase 5 changed page text, metas and two build helpers only; no engine formula moved. The text formats live in `specs/formulas.md` bullet "Market prices and rough times".
+
+**What is where**
+- Build-only text formats: `engine/approx.js` (`marketRs` = `rsm`, `lakhRs` = `lakh`, `roughHours` = `hm5`, now rounded down to the half hour, WL-183/190); registered in `tools/build.js` `APPROX`/`APPROX_RE`. Never in live how text or result captions (the build fails).
+- Month length in text: pages print the engine's `out.days` / `d.days_per_month` with two decimals; only N1 (typed reading cycle), N8 (one charge a day), N12 and N14 print whole days (WL-184; test lists them).
+- Home answer and saving labels: `content/pages/H1.json` (answer names the recommended setup's saving; `decision_saving_rs` and `full_saving_rs` labels say which setup and whether cuts are counted, WL-185).
+- Sources: every live tool, guide, hub and data page has at least one outside source (test in `tests/page-text.test.js`, WL-234). Datasheet figures quoted in H8 are listed in its `literal_numbers` (WL-233).
+- Titles and metas: `specs/keyword-map.csv` (D14 lakh title, H1 home title, F13, D16, N1, E3, E4, A10, N2) and `specs/site-pages.csv` (tracker title from `ds.month`, built in `tools/lib/datasets.js` `solarTracker`). Bill Index FAQ date is `ds.checked` from `billIndex` (WL-193).
+- llms.txt: `llmsTxt` in `tools/build.js` appends each page's built answer after its meta (WL-195).
+- Installer term: "AEDB-certified installer" everywhere, defined once on D11 (WL-196). Error-code DC safety line lives in `data/inverter-codes.json` actions (WL-236).
+- Tests: `tests/page-text.test.js` (one test per row group).
+
+**Do not touch / watch**
+- Never type a datasheet number into page text without listing the exact phrase in that page's `literal_numbers`, and keep it word for word with the cited source.
+- Answers on the long pages must stay within the word limit (`seo-content.test.js` WL-153); the home answer is at the limit.
+- Titles with a placeholder are length-checked on the rendered text; a larger price can push the D14 title over the limit.
+
+**Open to-dos**
+- H8 still uses the default lithium depth of discharge for backup while the guide now says daily use deeper than the datasheet's rated point shortens life; whether the default should move is an [ENGINEER] call (data, not text).
+- Tubular cycle figures: only Exide's inverter-battery page is cited; other makers differ.
+- The F13 schedule is still the 2023 IESCO one; when a 2026 DISCO schedule is sourced, update the data and drop the determination year from the F13 H1.
+- Everything open from the earlier handoffs below still stands.
+
+## Earlier handoff (after 21 Oct audit fix Phase 4: solar, battery and wiring engine) — written by the audit Phase 4 thread, 2026-10-21
 
 Owner: every fix phase of the 21 Oct 2026 audit runs in its own new thread, only after the owner says to start it. Shared rules and phase notes: `/mnt/project-files/electricity-tool-hub/audit/2026-10-21/handoff/` (README, `phase-N-*.md`, `status.md`; Phases 1 to 4 ticked). Next is **Phase 5 (page text)**: read README, then only `phase-5-page-text.md` and its rows in `audit/fix-list-2026-10-21.md`. Plugin v0.8.26. Every rule of this phase lives only in `specs/formulas.md` (bullets "Inverter: on-grid or load-carrying", "Panel voltages", "Hybrid inverter starting string", "Solar pump string and drive", "Hybrid quote with its battery", "Solar PV cable", "Battery current and C-rate", W "Design current", E "Home load", C "Water motor 1 hp") and in the spec cases noted "21 Oct 2026 audit Phase 4". Phase 4 was done in one thread as two commits groups (4a solar, 4b battery/wiring).
 
@@ -646,6 +671,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | 2026-10-21 | Audit 2026-10-21 fix Phase 2: bill engine and bill pages (WL-157 protected homes pay the FPA, exempt list in data, WL-229 FPA pre-filled on F1-F12, WL-161 lifeline example matches, WL-164 slab-by-slab how text + CSV avg rate, WL-163 N1 spike row, WL-162 full ToU bill on F13 + 5 kW link, WL-165 next slab cliff, WL-167/168/166 DISCO, F13 and Bill Index text), plugin v0.8.24 | done: tests green, Engineer Reviewer, local WordPress checked | #41 |
 | 2026-10-21 | Audit 2026-10-21 fix Phase 3: input and error fixes (WL-197 error under the field + red focus, WL-226 messages with unit/example/limit and per-page texts, WL-221 typical-values notice + D9 panels required, WL-222 D7 monthly default, WL-223 ignored boxes checked, WL-224 bounds in data + C8 per unit, WL-225 Roman Urdu labels, WL-227 whole counts, WL-241/242 FC/GST per category in data, partial), plugin v0.8.25 | done: tests green, Engineer Reviewer (2 C8 defects fixed), local WordPress checked at 375 px | #42 |
 | 2026-10-21 | Audit 2026-10-21 fix Phase 4: solar, battery and wiring engine (WL-169 to 182, 230 to 232: on-grid vs hybrid inverter, sizes to buy, battery cards, build-time prices, hybrid starting string, pump string and drive, hybrid quote battery, roof area, cables to 120 mm² + DC message, PV cable EN 50618, DC current at cut-off, C-rate notice, 1 hp motor, appliance PF), plugin v0.8.26 | done: tests green, Engineer Reviewer PASS (second round), local WordPress browser check on 19 pages | #43 |
+| 2026-10-21 | Audit 2026-10-21 fix Phase 5: page text (WL-183 rough runtimes, WL-184 average month in text, WL-185 home saving labels, WL-233 lithium guide vs datasheet and fire safety, WL-234 outside sources on every page, WL-235 honest metas, WL-189 internal links, WL-188 tracker title, WL-190 lakh prices, WL-236 wrong statements, WL-192 slab rate, WL-193 index date, WL-194 peak-hours title, WL-195 llms.txt answers + home title, WL-196 installer term + MCB margin + N2 meta, WL-220 E3 label, WL-237 404 rule), plugin v0.8.27 | done: tests green | #44 |
 
 ## Owner to do
 - Audit Phase 4: one Hostinger redirect so http and www go straight to https://wattlyst.com (WL-40); HTML browser cache time of a few hours in LiteSpeed/Hostinger (WL-36); after deploy, open wp-admin once so the new build syncs and the cache is purged; before switching on the quote form, ask Hostinger which header carries the visitor IP and put it in data/site.json leads.client_ip_header (WL-64); 2FA for wp-admin.

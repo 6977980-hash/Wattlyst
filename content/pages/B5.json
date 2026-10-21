@@ -165,7 +165,7 @@
    "h2": "UPS backup time for a PC",
    "p": [
     "A desktop PC with a monitor is about {{in.load_w|int}} W when working and more when gaming, so on a {{in.va|int}} VA UPS with a {{in.ah|int}} Ah tubular battery you get about {{out.hours|hm}}, enough to ride through a normal loadshedding slot or to save and shut down. A small office UPS with its built-in sealed battery of a few Ah gives only minutes; enter its Ah to see how few. For long cuts, [[N7|compare UPS, generator and solar backup cost]] before buying a bigger battery.",
-    "A gaming PC at {{ex.2.in.load_w|int}} W needs a bigger UPS, not just a bigger battery: a {{in.va|int}} VA line-interactive unit can only deliver about {{out.max_w|int}} W. A {{ex.2.in.va|int}} VA UPS delivers about {{ex.2.out.max_w|int}} W, and on two {{ex.2.in.ah|int}} Ah batteries at {{ex.2.in.volts|int}} V it runs the gaming PC for about {{ex.2.out.hours|hm}}."
+    "A gaming PC at {{ex.2.in.load_w|int}} W needs a bigger UPS, not just a bigger battery: a {{in.va|int}} VA line-interactive unit can only deliver about {{out.max_w|int}} W. A {{ex.2.in.va|int}} VA home UPS, the kind that takes external batteries, delivers about {{ex.2.out.max_w|int}} W, and on two {{ex.2.in.ah|int}} Ah batteries at {{ex.2.in.volts|int}} V it runs the gaming PC for about {{ex.2.out.hours|hm}}."
    ]
   },
   {
@@ -204,7 +204,7 @@
     "volts": 24,
     "load_w": 600
    },
-   "title": "Gaming PC ({{in.load_w|int}} W) on a {{in.va|int}} VA UPS with two {{in.ah|int}} Ah batteries",
+   "title": "Gaming PC ({{in.load_w|int}} W) on a {{in.va|int}} VA home UPS with two {{in.ah|int}} Ah batteries",
    "text": "{{in.va|int}} VA × {{out.pf|2}} = {{out.max_w|int}} W, so the gaming PC is {{out.load_pct|int}}% of the UPS. Two {{in.ah|int}} Ah batteries in series make a {{in.volts|int}} V bank: {{in.ah|int}} Ah × {{in.volts|int}} V × {{out.dod|pct}} = {{out.stored_wh|int}} Wh, ÷ {{out.battery_w|int}} W from the battery = about {{out.hours|hm}}."
   },
   {
@@ -296,7 +296,7 @@
   },
   {
    "q": "Which UPS is right for a gaming PC?",
-   "a": "A gaming PC can draw {{ex.2.in.load_w|int}} W or more, which is beyond a {{in.va|int}} VA line-interactive UPS. A {{ex.2.in.va|int}} VA unit delivers about {{ex.2.out.max_w|int}} W, and with two {{ex.2.in.ah|int}} Ah batteries at {{ex.2.in.volts|int}} V it gives about {{ex.2.out.hours|hm}}. Choose a pure sine wave model for a PC power supply."
+   "a": "A gaming PC can draw {{ex.2.in.load_w|int}} W or more, which is beyond a {{in.va|int}} VA line-interactive UPS. A {{ex.2.in.va|int}} VA home UPS with external batteries delivers about {{ex.2.out.max_w|int}} W, and with two {{ex.2.in.ah|int}} Ah batteries at {{ex.2.in.volts|int}} V it gives about {{ex.2.out.hours|hm}}. Choose a pure sine wave model for a PC power supply."
   }
  ],
  "related": [
@@ -313,6 +313,18 @@
   "LiFePO4"
  ],
  "sources": [
+  {
+   "label": "Schneider Electric white paper, Watts and Volt-Amps: Powerful Confusion (UPS watt and VA ratings)",
+   "url": "https://www.se.com/ww/en/download/document/SPD_SADE-5TNQYF_EN/"
+  },
+  {
+   "label": "Schneider Electric White Paper 1: The Different Types of UPS Systems",
+   "url": "https://www.se.com/ww/en/download/document/SPD_SADE-5TNM3Y_EN/"
+  },
+  {
+   "label": "Exide Industries: Inva Tubular inverter battery (rated cycle life)",
+   "url": "https://www.exideindustries.com/products/inverter-batteries/exide-inva-tubular.aspx"
+  },
   {
    "label": "Wattlyst methodology and default values",
    "url": "/methodology/"

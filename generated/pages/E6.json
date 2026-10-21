@@ -37,7 +37,7 @@
    "url": "/load/unit-calculator/"
   }
  ],
- "modified": "2026-10-13",
+ "modified": "2026-10-21",
  "content": {
   "intro": "",
   "sections": [
@@ -45,20 +45,20 @@
     "h2": "How many units in 1 kWh?",
     "p": [
      "Exactly one. The unit on a Pakistani electricity bill, and on most bills worldwide, is the kilowatt hour: one thousand watts used for one hour. A 1,000 W appliance running for one hour, an 80 W fan running for about twelve and a half hours, and a ten-watt LED bulb running for a hundred hours all use one unit. The meter counts these units and the bill multiplies them by the rate of your slab.",
-     "So 1 unit in watts is not a fixed number of watts; it is watts times hours. Watts say how fast an appliance uses electricity, units say how much it has used. That is why a 1,000 W AC for 8 hours a day (240 units a month) costs far more than a 1,000 W iron for one hour a day, even though the watts are the same."
+     "So 1 unit in watts is not a fixed number of watts; it is watts times hours. Watts say how fast an appliance uses electricity, units say how much it has used. That is why a 1,000 W AC for 8 hours a day (243 units a month) costs far more than a 1,000 W iron for one hour a day, even though the watts are the same."
     ]
    },
    {
     "h2": "How to calculate electricity units from watts",
     "p": [
-     "Take the watts from the appliance label, multiply by the hours it runs in a day, and divide by one thousand. That is the units a day; multiply by the days in the month for the monthly figure. An 80 W ceiling fan for 10 hours a day is 24 units over 30 days.",
+     "Take the watts from the appliance label, multiply by the hours it runs in a day, and divide by one thousand. That is the units a day; multiply by the days in the month for the monthly figure. An 80 W ceiling fan for 10 hours a day is 24.34 units over 30.42 days.",
      "Use the real running hours, not the hours the appliance is switched on. A fridge compressor runs about a third of the time, and an inverter AC draws far less than its rated watts for most of the hour; the appliance load calculator and the AC units calculator use planning averages for those."
     ]
    },
    {
     "h2": "Amps to kWh: units from a current reading",
     "p": [
-     "Some labels give amps instead of watts, and a clamp meter always reads amps. Switch to Amps mode: the calculator first converts to watts with volts × amps × power factor, then applies the same hours and days. At 230 V and a 0.8 power factor, 5 A is 920 W, which over 4 hours a day comes to 110.4 units in 30 days.",
+     "Some labels give amps instead of watts, and a clamp meter always reads amps. Switch to Amps mode: the calculator first converts to watts with volts × amps × power factor, then applies the same hours and days. At 230 V and a 0.8 power factor, 5 A is 920 W, which over 4 hours a day comes to 111.9 units in 30.42 days.",
      "Set the power factor to one for a heater, iron or geyser and about 0.8 for a motor, fan or compressor. For a three-phase motor the volts are the line-to-line 400 V and the calculator multiplies by the square root of three."
     ]
    },
@@ -81,11 +81,11 @@
    },
    {
     "q": "How do I calculate electricity units per day?",
-    "a": "Watts × hours a day ÷ 1,000. An 80 W fan for 10 hours is 80 × 10 ÷ 1,000, under one unit a day and 24 units a month."
+    "a": "Watts × hours a day ÷ 1,000. An 80 W fan for 10 hours is 80 × 10 ÷ 1,000, under one unit a day and 24.34 units a month."
    },
    {
     "q": "How do I convert amps to kWh?",
-    "a": "Multiply amps by volts and power factor to get watts, then by hours and divide by 1,000. 5 A at 230 V and 0.8 power factor is 920 W, or 110.4 units over 30 days at 4 hours a day."
+    "a": "Multiply amps by volts and power factor to get watts, then by hours and divide by 1,000. 5 A at 230 V and 0.8 power factor is 920 W, or 111.9 units over 30.42 days at 4 hours a day."
    },
    {
     "q": "How many units does a 1.5 ton AC use per hour?",
@@ -106,8 +106,8 @@
   ],
   "key_facts": [
    "One electricity unit = one kilowatt hour (kWh) = 1,000 watts used for one hour; a 1,000 W appliance uses one unit every hour it runs, and a hundred-watt bulb takes ten hours to use one unit.",
-   "Units = watts × hours ÷ 1,000: an 80 W fan for 10 hours a day uses 24 units in 30 days.",
-   "Units from amps = volts × amps × power factor × hours ÷ 1,000: an appliance drawing 5 A at 230 V with a 0.8 power factor is 920 W and uses 110.4 units in 30 days at 4 hours a day.",
+   "Units = watts × hours ÷ 1,000: an 80 W fan for 10 hours a day uses 24.34 units in 30.42 days.",
+   "Units from amps = volts × amps × power factor × hours ÷ 1,000: an appliance drawing 5 A at 230 V with a 0.8 power factor is 920 W and uses 111.9 units in 30.42 days at 4 hours a day.",
    "On DC the power factor is one: 10 A from a 12 V battery is 120 W, which is 0.6 units over 5 hours."
   ],
   "mistakes": [
@@ -269,11 +269,11 @@
   "examples": [
    {
     "title": "Ceiling fan: 80 W for 10 hours a day",
-    "text": "80 W × 10 h × 30 days ÷ 1,000 = 24 units a month. One fan running most of the day is about one unit a day."
+    "text": "80 W × 10 h × 30.42 days ÷ 1,000 = 24.34 units a month. One fan running most of the day is about one unit a day."
    },
    {
     "title": "Amps mode: a 5 A appliance at 230 V",
-    "text": "230 V × 5 A × 0.8 power factor = 920 W. 920 W × 4 h × 30 days ÷ 1,000 = 110.4 units a month."
+    "text": "230 V × 5 A × 0.8 power factor = 920 W. 920 W × 4 h × 30.42 days ÷ 1,000 = 111.9 units a month."
    },
    {
     "title": "DC load: 10 A from a 12 V battery",
@@ -281,7 +281,7 @@
    },
    {
     "title": "Inverter AC at its 1,000 W average for 8 hours a day",
-    "text": "1,000 W × 8 h × 30 days ÷ 1,000 = 240 units a month at an average draw of about one kilowatt. Rated watts would overstate this; the AC units calculator explains the average."
+    "text": "1,000 W × 8 h × 30.42 days ÷ 1,000 = 243 units a month at an average draw of about one kilowatt. Rated watts would overstate this; the AC units calculator explains the average."
    },
    {
     "title": "Amp hours: a 200 Ah, 12 V battery",
@@ -289,7 +289,7 @@
    }
   ],
   "table": {
-   "caption": "Units a month for common appliance wattages at typical daily hours (30 days)",
+   "caption": "Units a month for common appliance wattages at typical daily hours (30.42 days)",
    "head": [
     "Power",
     "Hours a day",
@@ -338,7 +338,7 @@
     ]
    ]
   },
-  "answer": "One electricity unit is one kilowatt hour (kWh): a 1,000 W appliance running for one hour uses exactly one unit, so 1 hour a day for 30 days is 30.42 units. Units = watts × hours ÷ 1,000, or from amps: volts × amps × power factor × hours ÷ 1,000. Enter your appliance's watts or amps and hours to get its units.",
+  "answer": "One electricity unit is one kilowatt hour (kWh): a 1,000 W appliance running for one hour uses exactly one unit, so 1 hour a day for an average month of 30.42 days is 30.42 units. Units = watts × hours ÷ 1,000, or from amps: volts × amps × power factor × hours ÷ 1,000. Enter your appliance's watts or amps and hours to get its units.",
   "formula": {
    "text": "units (kWh) = W × h × days ÷ 1000; W = V × A × PF (DC: PF = 1; three phase: × √3)",
    "lines": [
@@ -390,7 +390,7 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/load/unit-calculator/#breadcrumb"
     },
-    "dateModified": "2026-10-13",
+    "dateModified": "2026-10-21",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }
@@ -451,7 +451,7 @@
       "name": "How do I calculate electricity units per day?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Watts × hours a day ÷ 1,000. An 80 W fan for 10 hours is 80 × 10 ÷ 1,000, under one unit a day and 24 units a month."
+       "text": "Watts × hours a day ÷ 1,000. An 80 W fan for 10 hours is 80 × 10 ÷ 1,000, under one unit a day and 24.34 units a month."
       }
      },
      {
@@ -459,7 +459,7 @@
       "name": "How do I convert amps to kWh?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Multiply amps by volts and power factor to get watts, then by hours and divide by 1,000. 5 A at 230 V and 0.8 power factor is 920 W, or 110.4 units over 30 days at 4 hours a day."
+       "text": "Multiply amps by volts and power factor to get watts, then by hours and divide by 1,000. 5 A at 230 V and 0.8 power factor is 920 W, or 111.9 units over 30.42 days at 4 hours a day."
       }
      },
      {

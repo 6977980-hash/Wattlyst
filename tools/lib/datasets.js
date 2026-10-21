@@ -49,6 +49,8 @@ export function billIndex(ctx, fail) {
       ke_note: cur.fpa_ke ? 'That is why every company in the table above shows the same bill for the same units.' : 'Its source does not cover K-Electric, so the K-Electric row leaves the FPA out; every other company shows the same bill for the same units.' },
     prev: { label: prev.label, fpa: prev.fpa_per_unit, fpa_for: prev.fpa_for, status: status(prev) },
     sanctioned_kw: ix.sanctioned_kw,
+    // the day the index data was last checked, printed in the FAQ (21 Oct audit WL-193)
+    checked: new Date(`${ix._meta.checked}T00:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }),
     discos: ix.discos.length,
     months: ix.months.length,
   };
@@ -138,6 +140,8 @@ export function solarTracker(ctx) {
   const sys = (type, kw) => systems.find((r) => r.type === type && r.kw === kw);
   const scope = {
     checked: sp._meta.checked,
+    // the month the prices were checked, for the title (21 Oct audit WL-188: the tracker is the dated price page, D9 the per-watt one)
+    month: new Date(`${sp._meta.checked}T00:00:00Z`).toLocaleString('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' }),
     panel: { low: sp.panel_rs_per_w.low, high: sp.panel_rs_per_w.high, w: panelW, each_low: panelW * sp.panel_rs_per_w.low, each_high: panelW * sp.panel_rs_per_w.high, sources: sp.panel_rs_per_w.n_sources },
     sizes: systems.length,
     components: cp.items.length,

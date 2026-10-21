@@ -109,7 +109,7 @@
  "key_facts": [
   "Electric geysers sold for homes are rated from about {{appliance.running_w_range.0|int}} W to {{appliance.running_w_range.1|int}} W; a {{out.running_w|int}} W geyser uses {{out.running_kw|1}} units (kWh) per hour while its element heats, since units per hour = watts ÷ one thousand.",
   "A storage geyser's thermostat switches the element off once the tank is hot, so the hours that count are heating hours, not the hours it is switched on; about {{appliance.typical_hours_per_day|int}} heating hours a day is the typical figure we use for a family in winter.",
-  "At {{appliance.typical_hours_per_day|int}} heating hours a day a {{out.running_w|int}} W geyser uses about {{out.monthly_units|int}} units in a {{out.days|int}}-day month, about {{out.monthly_rs|rs}} of energy charge at {{out.tariff|rs2}} per unit, enough on its own to push a bill into a higher slab.",
+  "At {{appliance.typical_hours_per_day|int}} heating hours a day a {{out.running_w|int}} W geyser uses about {{out.monthly_units|int}} units in a {{out.days|2}}-day month, about {{out.monthly_rs|rs}} of energy charge at {{out.tariff|rs2}} per unit, enough on its own to push a bill into a higher slab.",
   "A {{out.running_w|int}} W geyser draws {{out.amps|1}} A at {{out.volts|int}} V and a {{ex.2.out.running_w|int}} W instant water heater {{ex.2.out.amps|1}} A, so each needs its own circuit and breaker, not a socket shared with other loads.",
   "An instant electric water heater draws more power than a storage geyser but only while water flows: about {{ex.2.out.running_kw|1}} units per hour, {{ex.2.out.monthly_units|int}} units a month at {{a.instant-water-heater.typical_hours_per_day|int}} hour a day of use."
  ],
@@ -133,7 +133,7 @@
   {
    "h2": "Electric geyser bill per month",
    "p": [
-    "A {{out.running_w|int}} W storage geyser heating {{appliance.typical_hours_per_day|int}} hours a day uses about {{out.daily_kwh|1}} units a day and {{out.monthly_units|int}} units in a {{out.days|int}}-day month, about {{out.monthly_rs|rs}} at {{out.tariff|rs2}} per unit. A geyser used only for morning showers, about an hour of heating, uses about {{ex.1.out.monthly_units|int}} units, about {{ex.1.out.monthly_rs|rs}}.",
+    "A {{out.running_w|int}} W storage geyser heating {{appliance.typical_hours_per_day|int}} hours a day uses about {{out.daily_kwh|1}} units a day and {{out.monthly_units|int}} units in a {{out.days|2}}-day month, about {{out.monthly_rs|rs}} at {{out.tariff|rs2}} per unit. A geyser used only for morning showers, about an hour of heating, uses about {{ex.1.out.monthly_units|int}} units, about {{ex.1.out.monthly_rs|rs}}.",
     "That is the energy charge at one slab rate. Units from a geyser come on top of everything else in a winter month, so they can move the whole bill into a higher slab, where every unit costs more; the bill calculator shows the full bill for your total units."
    ]
   },
@@ -212,7 +212,7 @@
   }
  ],
  "table": {
-  "caption": "Units and cost of an electric geyser by element size, {{appliance.typical_hours_per_day|int}} heating hours a day for {{out.days|int}} days at {{out.tariff|rs2}} per unit (energy charge only)",
+  "caption": "Units and cost of an electric geyser by element size, {{appliance.typical_hours_per_day|int}} heating hours a day for {{out.days|2}} days at {{out.tariff|rs2}} per unit (energy charge only)",
   "rows": [
    { "loads": [ { "id": "electric-geyser-storage", "qty": 1, "watts": 1500 } ] },
    { "loads": [ { "id": "electric-geyser-storage", "qty": 1, "watts": 2000 } ] },

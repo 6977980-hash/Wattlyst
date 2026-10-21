@@ -41,7 +41,8 @@
     "h2": "Which battery calculator do I need?",
     "p": [
      "To see how long the battery you have will last, use the battery backup time calculator, or the UPS backup time calculator when the load must also fit the UPS's VA rating. For a single twelve-volt battery use the battery runtime calculator, and for the most common tubular battery the 200 Ah battery backup calculator.",
-     "To choose a battery for the hours you want, start from your appliances with the battery capacity calculator. Then pick the chemistry with the guide to lithium vs tubular batteries, and wire the bank with the battery series and parallel calculator."
+     "To choose a battery for the hours you want, start from your appliances with the battery capacity calculator. Then pick the chemistry with the guide to lithium vs tubular batteries, and wire the bank with the battery series and parallel calculator.",
+     "To decide between a UPS, solar and a generator for loadshedding, compare their cost over the years with the UPS vs solar vs generator cost calculator, and read inverter vs UPS before you buy."
     ],
     "l": [
      [
@@ -75,20 +76,30 @@
        "t": "battery series and parallel calculator",
        "u": "/troubleshoot/battery-series-parallel-calculator/"
       }
+     ],
+     [
+      {
+       "t": "UPS vs solar vs generator cost calculator",
+       "u": "/load/ups-vs-solar-vs-generator-cost/"
+      },
+      {
+       "t": "inverter vs UPS",
+       "u": "/guides/inverter-vs-ups/"
+      }
      ]
     ]
    },
    {
     "h2": "What the Ah on a battery does and does not tell you",
     "p": [
-     "The amp hours on the label times the battery voltage is the energy the battery stores, but not all of it reaches your fans and lights. A tubular battery should only be used to about 50% of its rating and lithium to about 90%, a home UPS turns about 85% of the battery energy into AC, and the UPS draws a little power of its own the whole time it runs. With a 200 Ah battery and a 300 W load that leaves about 3 h 5 min of backup."
+     "The amp hours on the label times the battery voltage is the energy the battery stores, but not all of it reaches your fans and lights. A tubular battery should only be used to about 50% of its rating and lithium to about 90%, a home UPS turns about 85% of the battery energy into AC, and the UPS draws a little power of its own the whole time it runs. With a 200 Ah battery and a 300 W load that leaves about 3 hours of backup."
     ]
    }
   ],
   "faq": [
    {
     "q": "How long will my UPS battery last?",
-    "a": "It depends on the battery and the load: about 3 h 5 min for a 200 Ah, 12 V tubular battery with a 300 W load. Enter your own battery and load in the battery backup time calculator.",
+    "a": "It depends on the battery and the load: about 3 hours for a 200 Ah, 12 V tubular battery with a 300 W load. Enter your own battery and load in the battery backup time calculator.",
     "l": [
      {
       "t": "battery backup time calculator",
@@ -134,6 +145,18 @@
   ],
   "mistakes": [],
   "sources": [
+   {
+    "label": "Victron Energy: Lithium Battery Smart 12,8 V datasheet (usable capacity and cycle life by depth of discharge)",
+    "url": "https://www.victronenergy.de/upload/documents/Datasheet-12,8-Volt-lithium-iron-phosphate-batteries-Smart-EN.pdf"
+   },
+   {
+    "label": "Exide Industries: Inva Tubular inverter battery (rated cycle life)",
+    "url": "https://www.exideindustries.com/products/inverter-batteries/exide-inva-tubular.aspx"
+   },
+   {
+    "label": "Schneider Electric White Paper 1: The Different Types of UPS Systems",
+    "url": "https://www.se.com/ww/en/download/document/SPD_SADE-5TNM3Y_EN/"
+   },
    {
     "label": "How Wattlyst calculates: formulas, default values and data sources",
     "url": "/methodology/"
@@ -203,7 +226,7 @@
       "name": "How long will my UPS battery last?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "It depends on the battery and the load: about 3 h 5 min for a 200 Ah, 12 V tubular battery with a 300 W load. Enter your own battery and load in the battery backup time calculator."
+       "text": "It depends on the battery and the load: about 3 hours for a 200 Ah, 12 V tubular battery with a 300 W load. Enter your own battery and load in the battery backup time calculator."
       }
      },
      {

@@ -25,14 +25,14 @@
   {
    "h2": "Usable backup: {{d.dod_lifepo4|pct}} against {{d.dod_lead_acid|pct}}",
    "p": [
-    "A tubular battery is rated at its full capacity but should only be run down to about {{d.dod_lead_acid|pct}} of it; deeper discharges every day shorten its life sharply. A LiFePO4 pack can be run down to about {{d.dod_lifepo4|pct}} with no such penalty. So a lithium pack of the same Ah and volts gives nearly twice the backup time of the tubular battery, and a lithium pack of about half the rated Ah gives the same backup.",
+    "A tubular battery is rated at its full capacity but should only be run down to about {{d.dod_lead_acid|pct}} of it; deeper discharges every day shorten its life sharply. A LiFePO4 pack can be run down to about {{d.dod_lifepo4|pct}}, and deep discharge costs it far less life than it costs a tubular battery, but not nothing: Victron's 12.8 V Smart LiFePO4 datasheet rates 2,500 cycles at 80% depth of discharge, 3,000 at 70% and 5,000 at 50%, and gives no rating at 90%. Our calculators use {{d.dod_lifepo4|pct}} for the backup you can get; using less of it every day gives a longer life. So a lithium pack of the same Ah and volts gives nearly twice the backup time of the tubular battery, and a lithium pack of about half the rated Ah gives the same backup.",
     "That changes the shopping list. Where a home needs two tubular batteries in series on a {{d.battery_v_default|int}} V inverter, one lithium pack of about the same volts and half the Ah does the same job, takes less floor space and weighs less than one of the tubular batteries. Run both through the battery backup time calculator with your load to see the hours side by side."
    ]
   },
   {
    "h2": "Lithium battery life vs tubular battery life",
    "p": [
-    "Battery life is counted in cycles, one cycle being one discharge and recharge. A good tubular battery is rated by its makers for roughly a thousand to fifteen hundred cycles at half discharge, which at one cycle a day of loadshedding is two to three years, less in a hot room or when it is often run flat. LiFePO4 cells are rated for several thousand cycles at the deeper discharge above, which is eight years or more at a cycle a day, and the warranties reflect that.",
+    "Battery life is counted in cycles, one cycle being one discharge and recharge. A good tubular battery is rated by its makers for roughly a thousand to fifteen hundred cycles (Exide rates its Inva Tubular range at 1,200 cycles at 80% depth of discharge), which at one cycle a day of loadshedding is two to three years, less in a hot room or when it is often run flat. LiFePO4 cells are rated for several thousand cycles, and the count depends on how deep you go: Victron's figures above are about seven years at a cycle a day to 80%, and well over ten years at half discharge. The warranties reflect that.",
     "Heat matters for both. Lead-acid life falls quickly above room temperature, which is why a tubular battery in a Pakistani summer rarely reaches its rated cycles; lithium tolerates heat better but still prefers a shaded, ventilated spot. Keeping either battery topped up and never leaving a tubular battery flat for days is the cheapest way to reach the rated life."
    ]
   },
@@ -46,7 +46,7 @@
   {
    "h2": "LiFePO4 vs lead acid: safety, weight and the UPS you own",
    "p": [
-    "LiFePO4 is the safe lithium chemistry: it does not catch fire the way the lithium cells in phones and e-bikes can, and the BMS cuts it off on over-charge, over-discharge, over-current and high temperature. A flooded tubular battery gives off hydrogen while charging and holds acid, so it belongs in a ventilated spot away from living areas; a sealed lithium pack can sit in a cupboard.",
+    "LiFePO4 is the most stable lithium chemistry and far less likely to catch fire than the lithium cells in phones and e-bikes, and the BMS cuts it off on over-charge, over-discharge, over-current and high temperature. It is lower risk, not risk free: a damaged or overcharged cell can still vent flammable, toxic gas. A flooded tubular battery gives off hydrogen while charging and holds acid, so it belongs in a ventilated spot away from living areas; install a lithium pack where its maker's manual says, in a ventilated spot away from anything that burns and away from bedrooms, never in a closed cupboard.",
     "The catch is the charger. An ordinary home UPS built for lead-acid uses charge voltages and a float stage that a lithium BMS may refuse or that may shorten the pack's life, so a lithium pack needs a UPS or hybrid inverter with a lithium setting, ideally one that communicates with the BMS. If you keep your old UPS, a tubular battery is the drop-in choice; if you are buying a hybrid inverter anyway, lithium fits naturally."
    ]
   },
@@ -79,7 +79,7 @@
   },
   {
    "q": "How long does a lithium battery last compared with a tubular battery?",
-   "a": "LiFePO4 packs are rated for several thousand cycles, which at a cycle a day of loadshedding is eight years or more; a tubular battery is rated for roughly a thousand to fifteen hundred cycles at half discharge, about two to three years, and less in heat."
+   "a": "LiFePO4 packs are rated for several thousand cycles, fewer the deeper you discharge them; at a cycle a day to 80% that is about seven years, and longer at shallower use; a tubular battery is rated for roughly a thousand to fifteen hundred cycles at half discharge, about two to three years, and less in heat."
   },
   {
    "q": "Does a lithium battery give more backup than a tubular battery of the same Ah?",
@@ -111,9 +111,32 @@
  ],
  "next": "B1",
  "literal_numbers": [
-  "LiFePO4"
+  "LiFePO4",
+  "12.8 V",
+  "2,500 cycles at 80%",
+  "3,000 at 70%",
+  "5,000 at 50%",
+  "at 90%",
+  "1,200 cycles at 80%",
+  "to 80%"
  ],
  "sources": [
+  {
+   "label": "Victron Energy: Lithium Battery Smart 12,8 V datasheet (cycle life at 80%, 70% and 50% depth of discharge)",
+   "url": "https://www.victronenergy.de/upload/documents/Datasheet-12,8-Volt-lithium-iron-phosphate-batteries-Smart-EN.pdf"
+  },
+  {
+   "label": "Exide Industries: Inva Tubular inverter battery (rated cycle life)",
+   "url": "https://www.exideindustries.com/products/inverter-batteries/exide-inva-tubular.aspx"
+  },
+  {
+   "label": "Battery University BU-403: charging lead acid (slow final charge, hydrogen while charging)",
+   "url": "https://batteryuniversity.com/article/bu-403-charging-lead-acid"
+  },
+  {
+   "label": "Peer-reviewed study (PubMed Central): thermal runaway and flammable gas from lithium iron phosphate cells",
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12114410/"
+  },
   {
    "label": "Wattlyst methodology and default values",
    "url": "/methodology/"
