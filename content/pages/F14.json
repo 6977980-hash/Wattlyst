@@ -28,14 +28,14 @@
    "label": "Sanctioned load",
    "unit": "kW",
    "default": "@default_sanctioned_kw",
-   "hint": "The kW printed on the bill. It sets the fixed charge, not the FPA."
+   "hint": "The kW printed on the bill. It sets the fixed charge, not the FPA. At {{d.tou_threshold_kw|int}} kW or more use the [[F13|ToU bill calculator]]."
   },
   {
    "name": "protected",
    "label": "Protected consumer",
    "type": "checkbox",
    "default": false,
-   "hint": "NEPRA exempts protected and lifeline consumers from the monthly FPA; if your bill shows protected, set the FPA rate to zero."
+   "hint": "Tick if your bill shows the protected category. Protected homes pay the FPA too: NEPRA's fuel adjustment orders spare only lifeline, EV charging station and prepaid consumers."
   },
   {
    "name": "lifeline",
@@ -104,7 +104,7 @@
   "FPA, the fuel price adjustment (printed as FCA, fuel charges adjustment, on K-Electric and NEPRA documents), is a monthly per-unit figure that NEPRA determines after a public hearing and notifies in the Gazette; the DISCOs apply it to a later month's bills.",
   "The FPA is positive when the actual fuel cost of generation was above the reference cost built into the tariff and negative when it was below: a negative FPA is a credit that lowers the bill.",
   "FPA line = FPA rate × units: at NEPRA's {{data.fpa_latest.fpa_for}} rate, a {{out.units|int}} unit bill carries {{out.fpa_rs|rs}} of FPA, and GST at {{out.gst_pct|int}}% is charged on it as well.",
-  "NEPRA's review decision for the March 2026 adjustment (SRO 852(I)/2026) states that the monthly FPA applies to all consumer categories except lifeline consumers, protected consumers, electric vehicle charging stations and prepaid consumers.",
+  "NEPRA's fuel adjustment orders charge the monthly FPA to every consumer category except lifeline consumers, electric vehicle charging stations and prepaid consumers (July 2026 decision, SRO 1499(I)/2026, para 21(a)), so protected homes pay it; the review decision for March 2026 (SRO 852(I)/2026) spared protected consumers for that one month only.",
   "QTA is different: the quarterly tariff adjustment covers capacity and other non-fuel costs over a three-month period; the FPA covers fuel only and changes every month.",
   "Income tax is not in this estimate: under section 235 of the Income Tax Ordinance 2001, a home not on FBR's Active Taxpayers List pays advance income tax of {{data.tariff.addons_secondary.income_tax_235.rate_pct_non_atl|1}}% on a monthly bill of {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}} or more; consumers on the list pay none."
  ],
@@ -113,7 +113,7 @@
   "lines": [
    "FPA rate = actual fuel cost per kWh of the month's generation − reference fuel cost per kWh in the tariff",
    "positive rate = extra charge; negative rate = credit",
-   "not applied to lifeline, protected, EV charging station and prepaid consumers (NEPRA)",
+   "not applied to lifeline, EV charging station and prepaid consumers (NEPRA); protected homes pay it",
    "bill = energy + fixed + FC surcharge + QTA + FPA, then + GST"
   ]
  },
@@ -129,7 +129,7 @@
    "h2": "How is the FPA calculated and who decides it?",
    "p": [
     "The Central Power Purchasing Agency (CPPA-G) files a request with NEPRA after each month closes, showing the actual fuel cost of the generation bought that month against the reference. NEPRA advertises a public hearing, hears the request and objections, and issues a decision with a notification in the official Gazette. The decision names the month the adjustment belongs to and the month in which the DISCOs are to recover it, which is why the FPA on a September bill can refer to July's fuel.",
-    "The arithmetic is a subtraction: actual fuel cost per kWh minus reference fuel cost per kWh. If more expensive fuel ran in a month with poor hydro flows, the rate comes out positive; a month with cheap hydro and low oil prices gives a negative rate. The same rate applies to all ex-WAPDA DISCOs; for K-Electric, check that the month's NEPRA decision covers it, because in some months its adjustment is decided separately."
+    "The arithmetic is a subtraction: actual fuel cost per kWh minus reference fuel cost per kWh. If more expensive fuel ran in a month with poor hydro flows, the rate comes out positive; a month with cheap hydro and low oil prices gives a negative rate. The same rate applies to all ex-WAPDA DISCOs, and NEPRA applies it to K-Electric consumers too, under the Federal Government's policy guidelines for a uniform FCA, so a unit costs the same FPA in every company."
    ]
   },
   {
@@ -155,8 +155,8 @@
   {
    "h2": "Why is my bill high because of FPA, and who is exempt?",
    "p": [
-    "When a month with heavy AC use lands on a bill carrying a large positive FPA, the line can be the biggest surprise on the page: at the pre-filled rate a {{ex.2.in.units|int}} unit month carries {{ex.2.out.fpa_rs|rs}} of FPA before GST. NEPRA's review decision for the March 2026 adjustment (SRO 852(I)/2026) confirms that the FPA is not charged to lifeline consumers, protected consumers, electric vehicle charging stations or prepaid consumers; everyone else pays it.",
-    "If the FPA on your bill does not match the notified rate for that month times your units, or if a protected bill carries an FPA line, that is a billing error worth raising with the DISCO. The [[N1|overbilling check]] walks through the other common errors."
+    "When a month with heavy AC use lands on a bill carrying a large positive FPA, the line can be the biggest surprise on the page: at the pre-filled rate a {{ex.2.in.units|int}} unit month carries {{ex.2.out.fpa_rs|rs}} of FPA before GST. NEPRA's decision for the July 2026 adjustment (SRO 1499(I)/2026) charges the FPA to every consumer category except lifeline consumers, electric vehicle charging stations and prepaid consumers, so a protected home pays it too; check the next month's decision for any change to the list. Only the review decision for March 2026, a month with a small negative adjustment, also left out protected consumers.",
+    "If the FPA on your bill does not match the notified rate for that month times your units, or if a lifeline bill carries an FPA line, that is a billing error worth raising with the DISCO. An FPA line on a protected bill is normal. The [[N1|overbilling check]] walks through the other common errors."
    ]
   }
  ],
@@ -187,11 +187,10 @@
   {
    "inputs": {
     "units": 180,
-    "protected": true,
-    "fpa_per_unit": 0
+    "protected": true
    },
-   "title": "{{in.units|int}} units, protected consumer, exempt from FPA",
-   "text": "FPA line {{out.fpa_rs|rs}} because NEPRA does not apply the adjustment to protected consumers. Energy charge {{out.energy_rs|rs}} slab-wise, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}."
+   "title": "{{in.units|int}} units, protected consumer, FPA included",
+   "text": "FPA line {{out.fpa_rs|rs}}: protected homes pay the adjustment like other consumers. Energy charge {{out.energy_calc}} = {{out.energy_rs|rs}} slab by slab, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}."
   }
  ],
  "table": {
@@ -247,7 +246,7 @@
   "Treating the FPA as a fixed tax. It is a different number every month and can be a credit; copy the rate from each bill rather than carrying one over.",
   "Forgetting GST on the FPA. GST at {{out.gst_pct|int}}% is charged on the subtotal including the FPA line, so {{out.fpa_rs|rs}} of FPA costs more than that.",
   "Confusing FPA with QTA. The FPA is monthly and about fuel; the QTA is quarterly and about capacity and other costs. Both can appear on the same bill.",
-  "Accepting an FPA line on a protected or lifeline bill. NEPRA exempts both categories; an FPA charge there should be queried with the DISCO."
+  "Disputing the FPA line on a protected bill. Protected homes pay the FPA; NEPRA spares only lifeline, EV charging station and prepaid consumers, so an FPA charge on a lifeline bill is the one to query with the DISCO."
  ],
  "faq": [
   {
@@ -260,7 +259,7 @@
   },
   {
    "q": "What is FCA in an electricity bill?",
-   "a": "The same thing as FPA: fuel charges adjustment is NEPRA's and K-Electric's name for the monthly fuel price adjustment. Check that the month's decision covers K-Electric: in some months its rate is decided separately from the ex-WAPDA DISCOs."
+   "a": "The same thing as FPA: fuel charges adjustment is NEPRA's and K-Electric's name for the monthly fuel price adjustment. NEPRA applies the same rate to K-Electric consumers as to the ex-WAPDA DISCOs, under the Federal Government's policy guidelines for a uniform FCA."
   },
   {
    "q": "Can the FPA be negative?",
@@ -268,7 +267,7 @@
   },
   {
    "q": "Who does not pay FPA?",
-   "a": "Under NEPRA's review decision for the March 2026 adjustment, the monthly FPA is not applied to lifeline consumers, protected consumers, electric vehicle charging stations or prepaid consumers. All other consumer categories pay it."
+   "a": "Lifeline consumers, electric vehicle charging stations and prepaid consumers. NEPRA's July 2026 decision (para 21(a)) charges every other category, protected homes included; check each month's decision for any change to the list. The review decision for March 2026 also spared protected consumers, but only for that month."
   },
   {
    "q": "What is QTA in the electricity bill?",
@@ -298,15 +297,17 @@
   "CPPA-G",
   "section 235",
   "Ordinance 2001",
-  "Rs 25,000"
+  "Rs 25,000",
+  "para 21(a)",
+  "paras 20 and 21"
  ],
  "sources": [
   {
-   "label": "NEPRA decision on the fuel charges adjustment for July 2026 for ex-WAPDA DISCOs, SRO 1499(I)/2026 (PDF)",
+   "label": "NEPRA decision on the fuel charges adjustment for July 2026 for ex-WAPDA DISCOs, also applied to K-Electric (paras 20 and 21), SRO 1499(I)/2026 (PDF)",
    "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20MFPA%20FOR%20THE%20MONTH%20OF%20JULY%202026%20EX-WAPDA%20DISCOS%2004-09-2026%2018342-60.PDF"
   },
   {
-   "label": "NEPRA review decision on the March 2026 fuel charges adjustment: exempt consumer categories, SRO 852(I)/2026 (PDF)",
+   "label": "NEPRA review decision on the March 2026 fuel charges adjustment: protected consumers spared for that month only, SRO 852(I)/2026 (PDF)",
    "url": "https://ke.com.pk/wp-content/uploads/2026/05/Review-Decision-of-FCA-for-XWDISCOs-March-2026.pdf"
   },
   {

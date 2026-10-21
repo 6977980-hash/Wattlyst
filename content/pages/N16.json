@@ -57,7 +57,7 @@
    "label": "Sanctioned load",
    "unit": "kW",
    "default": 2,
-   "hint": "The kW printed on the bill; most homes are one to five, and a home with an AC needs more than {{d.default_sanctioned_kw|int}} kW. It sets the fixed charge."
+   "hint": "The kW printed on the bill; a home with an AC needs more than {{d.default_sanctioned_kw|int}} kW. It sets the fixed charge. At {{d.tou_threshold_kw|int}} kW or more the bill is on ToU rates: use the [[F13|ToU bill calculator]]."
   },
   {
    "name": "days",
@@ -90,7 +90,7 @@
    "unit": "Rs per unit",
    "placeholder": "From your bill (FPA / FCA)",
    "advanced": true,
-   "hint": "Monthly fuel price adjustment, positive or negative, from the bill. Leave blank if you do not know it. Protected consumers do not pay it."
+   "hint": "Monthly fuel price adjustment, positive or negative, from the bill. Leave blank if you do not know it. Protected homes pay it too; only lifeline bills carry none."
   },
   {
    "name": "gst_pct",
@@ -294,7 +294,7 @@
   },
   {
    "q": "Does it work for LESCO, IESCO, MEPCO and other DISCOs?",
-   "a": "Yes. Every DISCO uses the same national domestic tariff; only the FPA differs, and you can enter it from your own bill under Advanced settings."
+   "a": "Yes. Every DISCO uses the same national domestic tariff, and NEPRA sets one FPA for all of them; enter the month's FPA from your own bill under Advanced settings."
   }
  ],
  "related": [

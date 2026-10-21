@@ -45,7 +45,7 @@
     "h2": "How the bill changed from September 2026 to October 2026",
     "p": [
      "The base tariff (energy rates and fixed charges) has not changed since NEPRA's February notification, so the monthly movement comes from the add-ons. The fuel price adjustment (FPA) charged in October 2026 bills is Rs 1.11 per unit for August 2026, against Rs 2.06 per unit for July 2026 in September 2026 bills. The quarterly adjustment for 2026-09 to 2026-11 is the same in both months.",
-     "For an unprotected home the FPA is charged on every unit and GST is added on top, so a 300 unit bill is down Rs 335 (2.3%) and a 500 unit bill is down Rs 560 (2%). Protected homes are exempt from the FPA, so their bills did not move."
+     "For an unprotected home the FPA is charged on every unit and GST is added on top, so a 300 unit bill is down Rs 335 (2.3%) and a 500 unit bill is down Rs 560 (2%). Protected homes pay the FPA as well (only lifeline bills carry none), so a protected 200 unit bill is down Rs 224 (4.6%)."
     ]
    },
    {
@@ -58,29 +58,29 @@
    {
     "h2": "Method",
     "p": [
-     "Each bill = energy charge (protected: slab by slab with the benefit of one previous slab; unprotected: all units at the rate of the slab reached) + fixed charge for a 2 kW sanctioned load + FC surcharge + quarterly adjustment + fuel price adjustment (not for protected consumers) + GST on the subtotal. Rates come from the NEPRA tariff file Wattlyst keeps with its source and checked date; the monthly FPA comes from the NEPRA decision or, until it is published on nepra.org.pk, a dated news report of the notification (marked in the CSV).",
+     "Each bill = energy charge (protected: slab by slab with the benefit of one previous slab; unprotected: all units at the rate of the slab reached) + fixed charge for a 2 kW sanctioned load + FC surcharge + quarterly adjustment + fuel price adjustment (charged to protected and unprotected homes; NEPRA spares lifeline, EV charging station and prepaid consumers) + GST on the subtotal. Rates come from the NEPRA tariff file Wattlyst keeps with its source and checked date; the monthly FPA comes from the NEPRA decision or, until it is published on nepra.org.pk, a dated news report of the notification (marked in the CSV). The bills leave out the advance income tax that a home not on FBR's Active Taxpayers List pays on a monthly bill of Rs 25,000 or more (7.5% under section 235 of the Income Tax Ordinance 2001), because it depends on the consumer's tax status; every per unit figure here is before that tax.",
      "The index is rebuilt every month: the new month is added at the top and earlier months are kept, so the CSV is a running history. Corrections go to the contact page; a corrected figure is noted on this page."
     ]
    },
    {
     "h2": "Summary for journalists and researchers",
     "p": [
-     "Wattlyst's Pakistan Electricity Bill Index for October 2026: a household using 300 units pays about Rs 14,264 (down Rs 335 (2.3%) from September 2026); 200 units cost Rs 8,678 unprotected and Rs 4,372 protected; 500 units cost Rs 27,027. The fuel adjustment in October 2026 bills is Rs 1.11 per unit. Source: Wattlyst Pakistan Electricity Bill Index, computed from NEPRA tariff data; free to quote with a link."
+     "Wattlyst's Pakistan Electricity Bill Index for October 2026: a household using 300 units pays about Rs 14,264 (down Rs 335 (2.3%) from September 2026); 200 units cost Rs 8,678 unprotected and Rs 4,634 protected; 500 units cost Rs 27,027. All figures are before the advance income tax a non-filer pays on large bills. The fuel adjustment in October 2026 bills is Rs 1.11 per unit. Source: Wattlyst Pakistan Electricity Bill Index, computed from NEPRA tariff data; free to quote with a link."
     ]
    }
   ],
   "faq": [
    {
     "q": "What is the electricity bill for 300 units in October 2026?",
-    "a": "About Rs 14,264 for an unprotected home with a 2 kW connection, including the fixed charge, surcharges, FPA and GST. That is Rs 47.55 per unit all-in."
+    "a": "About Rs 14,264 for an unprotected home with a 2 kW connection, including the fixed charge, surcharges, FPA and GST. That is Rs 47.55 per unit all-in, before the advance income tax a home not on FBR's Active Taxpayers List pays on a bill of Rs 25,000 or more."
    },
    {
     "q": "What is the bill for 200 units for a protected consumer?",
-    "a": "About Rs 4,372 in October 2026 bills. Protected consumers pay lower slab rates and no fuel price adjustment; an unprotected home using the same units pays Rs 8,678."
+    "a": "About Rs 4,634 in October 2026 bills. Protected consumers pay lower slab rates, plus the same fuel price adjustment as other homes; an unprotected home using the same units pays Rs 8,678."
    },
    {
     "q": "What is the bill for 1,000 units?",
-    "a": "About Rs 63,021 in October 2026 bills for an unprotected home with a 2 kW connection, Rs 63.02 per unit all-in. The units table on this page gives the bill at every 50 units from 50 to 1,000."
+    "a": "About Rs 63,021 in October 2026 bills for an unprotected home with a 2 kW connection, Rs 63.02 per unit all-in, before the advance income tax a non-filer pays on bills this size. The units table on this page gives the bill at every 50 units from 50 to 1,000."
    },
    {
     "q": "Why did my bill change this month if the tariff did not?",
@@ -100,10 +100,10 @@
    }
   ],
   "key_facts": [
-   "October 2026: 100 units cost an unprotected home Rs 3,870 and a protected home Rs 2,158; 200 units cost Rs 8,678 unprotected and Rs 4,372 protected.",
-   "300 units cost Rs 14,264 (Rs 47.55 per unit all-in) and 500 units cost Rs 27,027 (Rs 54.05 per unit) in October 2026 bills.",
+   "October 2026: 100 units cost an unprotected home Rs 3,870 and a protected home Rs 2,289; 200 units cost Rs 8,678 unprotected and Rs 4,634 protected.",
+   "300 units cost Rs 14,264 (Rs 47.55 per unit all-in, before income tax) and 500 units cost Rs 27,027 (Rs 54.05 per unit) in October 2026 bills.",
    "The units table gives the October 2026 bill at every 50 units from 50 to 1,000: 1,000 units cost Rs 63,021 (Rs 63.02 per unit), and protected rates stop at 200 units. A lifeline home using 50 units pays only about Rs 198: the lifeline rate of Rs 3.95 per unit, no fixed charge and no fuel adjustment; tick lifeline in the bill calculator to check yours.",
-   "The fuel price adjustment in October 2026 bills is Rs 1.11 per unit for the fuel used in August 2026 (reported in the news; the NEPRA decision is not yet published); protected consumers do not pay it, so their bills are unchanged from September 2026.",
+   "The fuel price adjustment in October 2026 bills is Rs 1.11 per unit for the fuel used in August 2026 (reported in the news; the NEPRA decision is not yet published); protected homes pay it too, so a protected 200 unit bill is down Rs 224 (4.6%) from September 2026; only lifeline bills carry none.",
    "Every figure is computed by the Wattlyst bill engine from the NEPRA A-1 domestic tariff, for a 2 kW sanctioned load, and can be reproduced with the bill calculator.",
    "The index is published monthly and is free to reuse with a link (CC BY 4.0); the CSV download carries every line of every bill."
   ],
@@ -132,7 +132,7 @@
     "head": [
      "Units a month",
      "Unprotected bill",
-     "Per unit (unprotected)",
+     "Per unit (unprotected, before income tax)",
      "Protected bill"
     ],
     "rows": [
@@ -140,25 +140,25 @@
       "50",
       "Rs 2,260",
       "Rs 45.20",
-      "Rs 1,316"
+      "Rs 1,381"
      ],
      [
       "100",
       "Rs 3,870",
       "Rs 38.70",
-      "Rs 2,158"
+      "Rs 2,289"
      ],
      [
       "150",
       "Rs 6,686",
       "Rs 44.57",
-      "Rs 3,384"
+      "Rs 3,580"
      ],
      [
       "200",
       "Rs 8,678",
       "Rs 43.39",
-      "Rs 4,372"
+      "Rs 4,634"
      ],
      [
       "250",
@@ -272,10 +272,10 @@
      [
       "100",
       "Protected",
-      "Rs 2,158",
-      "Rs 2,158",
-      "unchanged",
-      "Rs 21.58"
+      "Rs 2,289",
+      "Rs 2,401",
+      "down Rs 112 (4.7%)",
+      "Rs 22.89"
      ],
      [
       "100",
@@ -288,10 +288,10 @@
      [
       "200",
       "Protected",
-      "Rs 4,372",
-      "Rs 4,372",
-      "unchanged",
-      "Rs 21.86"
+      "Rs 4,634",
+      "Rs 4,858",
+      "down Rs 224 (4.6%)",
+      "Rs 23.17"
      ],
      [
       "200",
@@ -340,9 +340,9 @@
       "Rs 400",
       "Rs 323",
       "Rs 52",
-      "Rs 0",
-      "Rs 329",
-      "Rs 2,158"
+      "Rs 111",
+      "Rs 349",
+      "Rs 2,289"
      ],
      [
       "100",
@@ -362,9 +362,9 @@
       "Rs 600",
       "Rs 646",
       "Rs 104",
-      "Rs 0",
-      "Rs 667",
-      "Rs 4,372"
+      "Rs 222",
+      "Rs 707",
+      "Rs 4,634"
      ],
      [
       "200",
@@ -500,13 +500,13 @@
      "bars": [
       {
        "name": "September 2026",
-       "text": "Rs 2,158",
-       "pct": 7.8
+       "text": "Rs 2,401",
+       "pct": 8.7
       },
       {
        "name": "October 2026 (FPA reported)",
-       "text": "Rs 2,158",
-       "pct": 7.8
+       "text": "Rs 2,289",
+       "pct": 8.3
       }
      ]
     },
@@ -530,13 +530,13 @@
      "bars": [
       {
        "name": "September 2026",
-       "text": "Rs 4,372",
-       "pct": 15.8
+       "text": "Rs 4,858",
+       "pct": 17.6
       },
       {
        "name": "October 2026 (FPA reported)",
-       "text": "Rs 4,372",
-       "pct": 15.8
+       "text": "Rs 4,634",
+       "pct": 16.8
       }
      ]
     },
@@ -699,7 +699,7 @@
       "name": "What is the electricity bill for 300 units in October 2026?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "About Rs 14,264 for an unprotected home with a 2 kW connection, including the fixed charge, surcharges, FPA and GST. That is Rs 47.55 per unit all-in."
+       "text": "About Rs 14,264 for an unprotected home with a 2 kW connection, including the fixed charge, surcharges, FPA and GST. That is Rs 47.55 per unit all-in, before the advance income tax a home not on FBR's Active Taxpayers List pays on a bill of Rs 25,000 or more."
       }
      },
      {
@@ -707,7 +707,7 @@
       "name": "What is the bill for 200 units for a protected consumer?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "About Rs 4,372 in October 2026 bills. Protected consumers pay lower slab rates and no fuel price adjustment; an unprotected home using the same units pays Rs 8,678."
+       "text": "About Rs 4,634 in October 2026 bills. Protected consumers pay lower slab rates, plus the same fuel price adjustment as other homes; an unprotected home using the same units pays Rs 8,678."
       }
      },
      {
@@ -715,7 +715,7 @@
       "name": "What is the bill for 1,000 units?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "About Rs 63,021 in October 2026 bills for an unprotected home with a 2 kW connection, Rs 63.02 per unit all-in. The units table on this page gives the bill at every 50 units from 50 to 1,000."
+       "text": "About Rs 63,021 in October 2026 bills for an unprotected home with a 2 kW connection, Rs 63.02 per unit all-in, before the advance income tax a non-filer pays on bills this size. The units table on this page gives the bill at every 50 units from 50 to 1,000."
       }
      },
      {

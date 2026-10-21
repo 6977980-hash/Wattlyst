@@ -20,7 +20,7 @@
    "label": "Sanctioned load",
    "unit": "kW",
    "default": "@default_sanctioned_kw",
-   "hint": "The kW printed in the connection details of the GEPCO bill. It sets the fixed charge; 5 kW and above is billed on ToU rates instead."
+   "hint": "The kW printed in the connection details of the GEPCO bill. It sets the fixed charge. A connection of {{d.tou_threshold_kw|int}} kW or more is billed on peak and off-peak (ToU) rates instead: use the [[F13|ToU bill calculator]]."
   },
   {
    "name": "protected",
@@ -50,25 +50,25 @@
    "name": "fc_surcharge_per_unit",
    "label": "FC surcharge",
    "unit": "Rs per unit",
-   "default": "@data.tariff.addons_secondary.fc_surcharge_per_unit.value",
    "advanced": true,
-   "hint": "Financing cost surcharge per unit, from the bill. Secondary-source default."
+   "hint": "Financing cost surcharge per unit, from the bill. Secondary-source default.",
+   "placeholder": "Blank = {{data.tariff.addons_secondary.fc_surcharge_per_unit.value|rs2}} per unit (none on lifeline)"
   },
   {
    "name": "fpa_per_unit",
    "label": "FPA",
    "unit": "Rs per unit",
-   "placeholder": "From your bill (FPA / FCA)",
    "advanced": true,
-   "hint": "Monthly fuel price adjustment printed on the GEPCO bill, positive or negative. Leave blank if unknown."
+   "hint": "Pre-filled with the latest NEPRA-verified fuel adjustment, the one for {{data.fpa_latest.fpa_for}} charged on {{data.fpa_latest.label}} bills. {{data.fpa_newest.note}} Replace it with the FPA rate printed on your bill (negative is a credit). Protected homes pay it too; lifeline bills carry none.",
+   "default": "@data.fpa_latest.fpa_per_unit"
   },
   {
    "name": "gst_pct",
    "label": "GST",
    "unit": "%",
-   "default": "@data.tariff.addons_secondary.gst_pct.value",
    "advanced": true,
-   "hint": "Sales tax applied to the bill subtotal."
+   "hint": "Sales tax applied to the bill subtotal.",
+   "placeholder": "Blank = {{data.tariff.addons_secondary.gst_pct.value|int}}% (none on lifeline)"
   }
  ],
  "outputs": [
@@ -98,13 +98,30 @@
    "spec": "rs"
   },
   {
+   "key": "fpa_rs",
+   "label": "FPA (fuel price adjustment)",
+   "spec": "rs"
+  },
+  {
    "key": "gst_rs",
    "label": "GST",
    "spec": "rs"
+  },
+  {
+   "key": "next_units",
+   "label": "This slab ends at (units)",
+   "spec": "int",
+   "optional": true
+  },
+  {
+   "key": "next_rs",
+   "label": "One unit past that limit adds",
+   "spec": "rs",
+   "optional": true
   }
  ],
- "answer": "A GEPCO home in Gujranwala, Sialkot or Gujrat using {{in.units|int}} units in a month as an unprotected consumer on a {{in.sanctioned_kw|int}} kW connection pays about {{out.total_rs|rs}}: {{out.energy_rs|rs}} energy charge at {{out.rate|rs2}} per unit, plus fixed charge, FC surcharge, QTA and GST, before the month's FPA. GEPCO bill = units × slab rate + fixed charge + surcharges, then GST on the subtotal.",
- "how": "{{out.units}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
+ "answer": "A GEPCO home in Gujranwala, Sialkot or Gujrat using {{in.units|int}} units in a month as an unprotected consumer on a {{in.sanctioned_kw|int}} kW connection pays about {{out.total_rs|rs}}: {{out.energy_rs|rs}} energy charge at {{out.rate|rs2}} per unit, plus fixed charge, FC surcharge, QTA, the {{data.fpa_latest.fpa_for}} FPA and GST. GEPCO bill = units × slab rate + fixed charge + surcharges, then GST on the subtotal.",
+ "how": "Energy ({{out.category}}): {{out.energy_calc}} = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
  "key_facts": [
   "GEPCO, the Gujranwala Electric Power Company, supplies Gujranwala, Gujrat, Sialkot, Narowal, Hafizabad, Mandi Bahauddin and Wazirabad from its head office in Gujranwala and bills the uniform NEPRA A-1 domestic tariff for 2026, not a tariff of its own.",
   "An unprotected GEPCO consumer using {{out.units|int}} units pays {{out.rate|rs2}} on every unit, which is {{out.energy_rs|rs}} of energy charge before the fixed charge, FC surcharge, QTA and GST.",
@@ -149,7 +166,8 @@
    "h2": "GEPCO bill estimate vs the official bill check",
    "p": [
     "This GEPCO bill estimate works from the figures you type and does not fetch your account. The official bill, with the reference number, due date, arrears and the exact FPA, is on the GEPCO website, which links the duplicate bill on the PITC portal; enter the reference number from the top of an earlier bill, digits only, without the spaces printed between groups.",
-    "Use the estimate to understand what each printed line should be, to plan the next month, or to see whether a bill that looks high is explained by the slab it reached. Every bill also carries an FPA line; see [[F14|what the FPA line on your bill means]]. A home on a time-of-use meter can check the [[F13|peak hours for GEPCO]]."
+    "Use the estimate to understand what each printed line should be, to plan the next month, or to see whether a bill that looks high is explained by the slab it reached. Every bill also carries an FPA line; see [[F14|what the FPA line on your bill means]]. A home on a time-of-use meter can check the [[F13|peak hours for GEPCO]].",
+    "Gujranwala, Gujrat, Sialkot, Narowal, Hafizabad, Mandi Bahauddin and Wazirabad, from its head office in Gujranwala. If your bill carries another company's name, use that company's calculator instead."
    ]
   }
  ],
@@ -160,21 +178,21 @@
     "protected": true
    },
    "title": "{{in.units|int}} units, protected consumer just under the limit",
-   "text": "Energy charge {{out.energy_rs|rs}} slab-wise at the two protected rates, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated GEPCO bill {{out.total_rs|rs}} before FPA."
+   "text": "Energy charge {{out.energy_rs|rs}} slab-wise at the two protected rates, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, FPA {{out.fpa_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated GEPCO bill {{out.total_rs|rs}}."
   },
   {
    "inputs": {
     "units": 210
    },
    "title": "{{in.units|int}} units, the month that ends protection",
-   "text": "A few units over the limit and the whole month is unprotected: {{out.units|int}} × {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated GEPCO bill {{out.total_rs|rs}} before FPA, and the next bills stay unprotected too."
+   "text": "A few units over the limit and the whole month is unprotected: {{out.units|int}} × {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, FPA {{out.fpa_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated GEPCO bill {{out.total_rs|rs}}, and the next bills stay unprotected too."
   },
   {
    "inputs": {
     "units": 250
    },
    "title": "{{in.units|int}} units, unprotected, a typical month without an AC",
-   "text": "{{out.units|int}} × {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated GEPCO bill {{out.total_rs|rs}} before FPA."
+   "text": "{{out.units|int}} × {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, FPA {{out.fpa_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated GEPCO bill {{out.total_rs|rs}}."
   },
   {
    "inputs": {
@@ -182,11 +200,11 @@
     "sanctioned_kw": 2
    },
    "title": "{{in.units|int}} units, summer with an AC on a {{in.sanctioned_kw|int}} kW connection",
-   "text": "{{out.units|int}} × {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated GEPCO bill {{out.total_rs|rs}} before FPA."
+   "text": "{{out.units|int}} × {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, FPA {{out.fpa_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated GEPCO bill {{out.total_rs|rs}}."
   }
  ],
  "table": {
-  "caption": "Estimated GEPCO bill at the slab edges on a {{in.sanctioned_kw|int}} kW connection with the default surcharges and GST, before FPA; unprotected unless marked",
+  "caption": "Estimated GEPCO bill at the slab edges on a {{in.sanctioned_kw|int}} kW connection with the default surcharges and GST, with the {{data.fpa_latest.fpa_for}} FPA; unprotected unless marked",
   "rows": [
    {
     "units": 100
@@ -246,7 +264,7 @@
  "faq": [
   {
    "q": "How do I get a GEPCO bill estimate from my units?",
-   "a": "Enter the units and the sanctioned load from the bill, tick protected only if the bill prints that category, and add the FPA from the bill under advanced settings. For {{out.units|int}} units the estimate is {{out.total_rs|rs}} before FPA."
+   "a": "Enter the units and the sanctioned load from the bill, tick protected only if the bill prints that category, and replace the pre-filled FPA with the one on your bill under advanced settings. For {{out.units|int}} units the estimate is {{out.total_rs|rs}}, FPA included."
   },
   {
    "q": "What is the GEPCO per unit rate for a home?",
@@ -254,15 +272,15 @@
   },
   {
    "q": "Is the GEPCO tariff different from LESCO or IESCO?",
-   "a": "No. The 2026 tariff notified as SRO 279(I)/2026 is uniform for all ex-WAPDA DISCOs and K-Electric. For the same units a GEPCO bill differs from a LESCO bill only by the month's FPA."
-  },
-  {
-   "q": "Which districts does GEPCO cover?",
-   "a": "Gujranwala, Gujrat, Sialkot, Narowal, Hafizabad, Mandi Bahauddin and Wazirabad, from its head office in Gujranwala. If your bill carries another company's name, use that company's calculator instead."
+   "a": "No. The 2026 tariff notified as SRO 279(I)/2026 is uniform for all ex-WAPDA DISCOs and K-Electric. NEPRA sets one FPA for every DISCO too, so a GEPCO bill for the same units equals a LESCO bill; real bills differ only by billing days, arrears and local items."
   },
   {
    "q": "How do I check my GEPCO bill online?",
    "a": "The GEPCO website links a duplicate bill page on the PITC portal; enter the reference number printed at the top of an earlier bill, digits only, to see the current bill and due date. This calculator estimates the bill from units; it does not fetch your account."
+  },
+  {
+   "q": "Which districts does GEPCO serve?",
+   "a": "GEPCO supplies Gujranwala, Sialkot, Gujrat, Narowal, Hafizabad and Mandi Bahauddin. Faults and billing complaints go to the national electricity helpline 118 (call, or SMS 8118); the official bill, with its reference number, is on the GEPCO website."
   },
   {
    "q": "What happens when a GEPCO bill goes one unit over the slab?",
@@ -270,7 +288,7 @@
   },
   {
    "q": "Why does my GEPCO bill differ from this estimate?",
-   "a": "The estimate leaves out the FPA unless you enter it, and it cannot see arrears, late payment surcharge or meter rent. If the reading dates cover more than a month, the units may have crossed a slab because of the long cycle; run the bill audit tool."
+   "a": "The estimate uses the pre-filled FPA unless you enter your bill's, and it cannot see arrears, late payment surcharge or meter rent. If the reading dates cover more than a month, the units may have crossed a slab because of the long cycle; run the bill audit tool."
   },
   {
    "q": "Why is my real bill higher than this estimate when it is over {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}}?",
@@ -291,7 +309,9 @@
   "A-1",
   "section 235",
   "Ordinance 2001",
-  "Rs 25,000"
+  "Rs 25,000",
+  "SMS 8118",
+  "118"
  ],
  "sources": [
   {
@@ -313,6 +333,14 @@
   {
    "label": "PkRevenue: income tax on domestic electricity bills of Rs 25,000 or more (section 235, FBR withholding rates)",
    "url": "https://pkrevenue.com/domestic-electricity-consumers-to-pay-tax-on-monthly-bill-above-rs25000/"
+  },
+  {
+   "label": "Privatisation Commission: invitation for expressions of interest, Batch I DISCOs, 19 May 2026 (GEPCO service area)",
+   "url": "https://privatisation.gov.pk/SiteImage/Misc/files/EOI_BatchI_DISCO19052026.pdf"
+  },
+  {
+   "label": "Profit: IESCO launches 118 digital services (call 118 or SMS 8118)",
+   "url": "https://profit.pakistantoday.com.pk/?p=219880"
   }
  ]
 }

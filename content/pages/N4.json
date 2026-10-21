@@ -52,7 +52,7 @@
    "unit": "kW"
   }
  ],
- "answer": "A home with {{out.connected_kw|1}} kW of connected load needs a sanctioned load of about {{out.recommended_kw|int}} kW: connected kW × {{out.diversity|1}} diversity factor = {{out.demand_kw|1}} kW of expected demand, rounded up to the next whole kW. Stay below {{d.tou_threshold_kw|int}} kW to keep a normal meter, and note that net billing caps your solar system at the sanctioned kW.",
+ "answer": "A home with {{out.connected_kw|1}} kW of connected load needs a sanctioned load of about {{out.recommended_kw|int}} kW: connected kW × {{out.diversity|1}} diversity factor = {{out.demand_kw|1}} kW of expected demand, rounded up to the next whole kW. Below {{d.tou_threshold_kw|int}} kW keeps a flat meter and protected eligibility, though a heavy user with most units off-peak can pay less on ToU; net billing caps solar at the sanctioned kW.",
  "how": "{{out.connected_kw|1}} kW connected × {{out.diversity|2}} diversity = {{out.demand_kw|2}} kW expected at the same time. Rounded up to a whole kW, and never below {{d.min_sanctioned_kw|int}} kW: {{out.recommended_kw|int}} kW. A connection of {{d.tou_threshold_kw|int}} kW or more must have a time-of-use meter and loses protected-slab eligibility. Under net billing the largest solar system you may connect equals the sanctioned load, {{out.net_billing_cap_kw|int}} kW here. A motor's starting surge lasts seconds and does not raise the sanctioned load; it matters for inverter and generator sizing.",
  "key_facts": [
   "Sanctioned load (kW) = connected load × diversity factor, rounded up to the next whole kW; with the planning diversity of {{d.diversity_home|1}}, a {{out.connected_kw|1}} kW home needs {{out.recommended_kw|int}} kW and a {{ex.2.out.connected_kw|1}} kW home with two inverter ACs needs {{ex.2.out.recommended_kw|int}} kW.",
@@ -88,8 +88,8 @@
   {
    "h2": "The 5 kW rule: time-of-use meter and protected slabs",
    "p": [
-    "NEPRA's domestic tariff puts every connection with a sanctioned load of {{d.tou_threshold_kw|int}} kW or more on a time-of-use meter. Units in the evening peak hours cost more than off-peak units, and the fixed charge is higher. Such a connection also cannot be a protected consumer, whatever its monthly units. Many homes with two or three ACs sit right at this line: the {{ex.3.out.connected_kw|1}} kW home needs {{ex.3.out.recommended_kw|int}} kW and goes to ToU, while the {{ex.2.out.connected_kw|1}} kW home stays at {{ex.2.out.recommended_kw|int}} kW on a normal meter.",
-    "If the result is {{d.tou_threshold_kw|int}} kW or more, check whether it is really needed: inverter ACs instead of non-inverter, a gas or solar geyser instead of an electric one, or simply not running the pump during AC hours can keep the demand under the line. The ToU calculator on the bill pages shows what the peak rate would cost you."
+    "NEPRA's domestic tariff puts every connection with a sanctioned load of {{d.tou_threshold_kw|int}} kW or more on a time-of-use meter. Units in the evening peak hours cost more than off-peak units, and the fixed charge is billed per kW on the higher of half the sanctioned load and the maximum demand. Such a connection also cannot be a protected consumer, whatever its monthly units. Many homes with two or three ACs sit right at this line: the {{ex.3.out.connected_kw|1}} kW home needs {{ex.3.out.recommended_kw|int}} kW and goes to ToU, while the {{ex.2.out.connected_kw|1}} kW home stays at {{ex.2.out.recommended_kw|int}} kW on a normal meter.",
+    "If the result is {{d.tou_threshold_kw|int}} kW or more, check whether it is really needed: inverter ACs instead of non-inverter, a gas or solar geyser instead of an electric one, or simply not running the pump during AC hours can keep the demand under the line. The [[F13|ToU bill calculator on the peak hours page]] works out the whole bill on peak and off-peak rates. For a heavy user the line is not always worth staying under: the off-peak rate of {{data.tariff.tou.offpeak|rs2}} is below every unprotected slab rate above {{data.tariff.unprotected.2.upto|int}} units and has no top-slab jump, so a home using several hundred units a month, mostly off-peak, can pay less on ToU than on the flat slabs. Price both before you decide."
    ]
   },
   {
@@ -195,7 +195,7 @@
  "mistakes": [
   "Applying for the connected load itself. Not everything runs together; the diversity factor is what keeps a {{out.connected_kw|1}} kW home at {{out.recommended_kw|int}} kW instead of {{out.connected_kw|int}} kW.",
   "Forgetting the monthly fixed charge. It is billed per sanctioned kW whether or not you use the power, so extra kW cost every month.",
-  "Crossing {{d.tou_threshold_kw|int}} kW without noticing. At that point the meter must be ToU, evening units cost more and the protected slabs are gone.",
+  "Crossing {{d.tou_threshold_kw|int}} kW without noticing, or staying under it at any cost. At that line the meter must be ToU and the protected slabs are gone, but for a heavy, mostly off-peak home the ToU bill can be the lower one; price both first.",
   "Sizing the solar system first. Net billing caps the system at the sanctioned load, so a {{out.recommended_kw|int}} kW connection cannot take a bigger array until the load is raised.",
   "Adding the starting surge of a pump or non-inverter AC. It lasts seconds and does not register as demand; size the UPS or generator for it instead."
  ],
@@ -211,7 +211,7 @@
   },
   {
    "q": "What happens at {{d.tou_threshold_kw|int}} kW sanctioned load?",
-   "a": "At {{d.tou_threshold_kw|int}} kW or more the connection must have a time-of-use meter, with a higher rate for evening peak units and a higher fixed charge, and it cannot be a protected consumer."
+   "a": "At {{d.tou_threshold_kw|int}} kW or more the connection must have a time-of-use meter: evening peak units cost {{data.tariff.tou.peak|rs2}}, off-peak units {{data.tariff.tou.offpeak|rs2}}, and the fixed charge is billed on the higher of half the sanctioned load and the MDI. It cannot be a protected consumer. The [[F13|ToU bill calculator]] prices the whole bill."
   },
   {
    "q": "Can I install a solar system bigger than my sanctioned load?",

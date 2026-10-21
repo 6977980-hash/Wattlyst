@@ -20,7 +20,7 @@
    "label": "Sanctioned load",
    "unit": "kW",
    "default": "@default_sanctioned_kw",
-   "hint": "The kW printed on the bill; most homes in Hyderabad and the smaller towns are one to three. It sets the fixed charge."
+   "hint": "The kW printed on the bill; most homes in Hyderabad and the smaller towns are one to three. It sets the fixed charge. A connection of {{d.tou_threshold_kw|int}} kW or more is billed on peak and off-peak (ToU) rates instead: use the [[F13|ToU bill calculator]]."
   },
   {
    "name": "protected",
@@ -50,25 +50,25 @@
    "name": "fc_surcharge_per_unit",
    "label": "FC surcharge",
    "unit": "Rs per unit",
-   "default": "@data.tariff.addons_secondary.fc_surcharge_per_unit.value",
    "advanced": true,
-   "hint": "Financing cost surcharge per unit, from the bill. Secondary-source default."
+   "hint": "Financing cost surcharge per unit, from the bill. Secondary-source default.",
+   "placeholder": "Blank = {{data.tariff.addons_secondary.fc_surcharge_per_unit.value|rs2}} per unit (none on lifeline)"
   },
   {
    "name": "fpa_per_unit",
    "label": "FPA",
    "unit": "Rs per unit",
-   "placeholder": "From your bill (FPA / FCA)",
    "advanced": true,
-   "hint": "Monthly fuel price adjustment from the bill, positive or negative. Leave blank if unknown."
+   "hint": "Pre-filled with the latest NEPRA-verified fuel adjustment, the one for {{data.fpa_latest.fpa_for}} charged on {{data.fpa_latest.label}} bills. {{data.fpa_newest.note}} Replace it with the FPA rate printed on your bill (negative is a credit). Protected homes pay it too; lifeline bills carry none.",
+   "default": "@data.fpa_latest.fpa_per_unit"
   },
   {
    "name": "gst_pct",
    "label": "GST",
    "unit": "%",
-   "default": "@data.tariff.addons_secondary.gst_pct.value",
    "advanced": true,
-   "hint": "Sales tax applied to the bill subtotal."
+   "hint": "Sales tax applied to the bill subtotal.",
+   "placeholder": "Blank = {{data.tariff.addons_secondary.gst_pct.value|int}}% (none on lifeline)"
   }
  ],
  "outputs": [
@@ -98,13 +98,30 @@
    "spec": "rs"
   },
   {
+   "key": "fpa_rs",
+   "label": "FPA (fuel price adjustment)",
+   "spec": "rs"
+  },
+  {
    "key": "gst_rs",
    "label": "GST",
    "spec": "rs"
+  },
+  {
+   "key": "next_units",
+   "label": "This slab ends at (units)",
+   "spec": "int",
+   "optional": true
+  },
+  {
+   "key": "next_rs",
+   "label": "One unit past that limit adds",
+   "spec": "rs",
+   "optional": true
   }
  ],
- "answer": "A HESCO home in Hyderabad or lower Sindh using {{in.units|int}} units a month as an unprotected consumer on a {{in.sanctioned_kw|int}} kW connection pays about {{out.total_rs|rs}}: {{out.energy_rs|rs}} energy charge at {{out.rate|rs2}} per unit plus fixed charge, FC surcharge, QTA and GST. HESCO bill = units × slab rate + fixed charge + surcharges + GST, with the month's FPA added from your bill.",
- "how": "{{out.units}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
+ "answer": "A HESCO home in Hyderabad or lower Sindh using {{in.units|int}} units a month as an unprotected consumer on a {{in.sanctioned_kw|int}} kW connection pays about {{out.total_rs|rs}}: {{out.energy_rs|rs}} energy charge at {{out.rate|rs2}} per unit plus fixed charge, FC surcharge, QTA, the {{data.fpa_latest.fpa_for}} FPA and GST. HESCO bill = units × slab rate + fixed charge + surcharges + GST, with the month's FPA added from your bill.",
+ "how": "Energy ({{out.category}}): {{out.energy_calc}} = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}} + QTA {{out.qta_rs|rs}} + FPA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}} + GST {{out.gst_pct}}% ({{out.gst_rs|rs}}) = {{out.total_rs|rs}}.",
  "key_facts": [
   "HESCO, the Hyderabad Electric Supply Company Limited, bills the uniform NEPRA A-1 domestic tariff for 2026; it has no rates of its own, so a HESCO bill for a given number of units equals a LESCO or IESCO bill apart from the monthly FPA line.",
   "The HESCO per unit rate for an unprotected home using {{out.units|int}} units is {{out.rate|rs2}} on every unit, which gives {{out.energy_rs|rs}} before the fixed charge, surcharges and GST.",
@@ -127,7 +144,7 @@
    "h2": "What is the HESCO per unit rate in 2026?",
    "p": [
     "HESCO is the Hyderabad Electric Supply Company Limited, the ex-WAPDA distribution company with its head office at the WAPDA Offices Complex in Hussainabad, Hyderabad. It does not set its own prices. Like every other DISCO it bills the uniform A-1 domestic tariff that NEPRA determined and the Government notified for 2026. For an unprotected home the rate of the slab the month's units reach applies to every unit: {{out.units|int}} units are all billed at {{out.rate|rs2}}, which is why a few extra units at the top of a slab can cost far more than they look.",
-    "The worked examples and the table below print the rate for the protected, the mid-range, the summer-AC and the lifeline cases. Add the FPA from your own bill for the month's exact figure; it is the only line that is not in the uniform tariff."
+    "The worked examples and the table below print the rate for the protected, the mid-range, the summer-AC and the lifeline cases. The FPA, the one line not in the uniform tariff, is pre-filled with the latest NEPRA-verified month; replace it with your own bill's for the exact figure."
    ]
   },
   {
@@ -159,14 +176,14 @@
     "protected": true
    },
    "title": "{{in.units|int}} units, protected home in a small town",
-   "text": "Energy charge {{out.energy_rs|rs}} slab-wise at protected rates, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated HESCO bill {{out.total_rs|rs}}."
+   "text": "Energy charge {{out.energy_rs|rs}} slab-wise at protected rates, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, FPA {{out.fpa_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated HESCO bill {{out.total_rs|rs}}."
   },
   {
    "inputs": {
     "units": 350
    },
    "title": "{{in.units|int}} units, unprotected, fans and a fridge",
-   "text": "{{out.units|int}} × {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated HESCO bill {{out.total_rs|rs}}."
+   "text": "{{out.units|int}} × {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, FPA {{out.fpa_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated HESCO bill {{out.total_rs|rs}}."
   },
   {
    "inputs": {
@@ -174,7 +191,7 @@
     "sanctioned_kw": 2
    },
    "title": "{{in.units|int}} units in a Hyderabad summer with an AC, {{in.sanctioned_kw|int}} kW connection",
-   "text": "{{out.units|int}} × {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated HESCO bill {{out.total_rs|rs}} before FPA."
+   "text": "{{out.units|int}} × {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, FPA {{out.fpa_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated HESCO bill {{out.total_rs|rs}}."
   },
   {
    "inputs": {
@@ -184,11 +201,11 @@
     "gst_pct": ""
    },
    "title": "{{in.units|int}} units, lifeline consumer",
-   "text": "{{out.units|int}} units at the lifeline rate of {{out.rate|rs2}} = {{out.energy_rs|rs}}, no fixed charge and no QTA. With the FC surcharge and GST fields blank the estimate assumes neither applies to lifeline bills (still being verified): {{out.total_rs|rs}}."
+   "text": "{{out.units|int}} units at the lifeline rate of {{out.rate|rs2}} = {{out.energy_rs|rs}}, no fixed charge, no QTA and no FPA. With the FC surcharge and GST fields blank the estimate assumes neither applies to lifeline bills (still being verified): {{out.total_rs|rs}}."
   }
  ],
  "table": {
-  "caption": "Estimated HESCO bill by units on a {{in.sanctioned_kw|int}} kW connection with the default surcharges and GST, before FPA; unprotected unless marked",
+  "caption": "Estimated HESCO bill by units on a {{in.sanctioned_kw|int}} kW connection with the default surcharges and GST, with the {{data.fpa_latest.fpa_for}} FPA; unprotected unless marked",
   "rows": [
    {
     "units": 100
@@ -239,13 +256,13 @@
  "mistakes": [
   "Looking for a HESCO-only tariff. HESCO bills the uniform NEPRA domestic tariff; the slab rates are the same in Hyderabad, Lahore and Peshawar.",
   "Ticking protected because the winter bills were small. Protection needs all of the last {{d.protected_months|int}} months under {{d.protected_max_units|int}} units, and one AC month in lower Sindh usually breaks the run.",
-  "Leaving the FPA blank when the bill shows one. The fuel adjustment is set every month by NEPRA and can swing the total either way; copy it into the advanced field.",
+  "Keeping the pre-filled FPA when the bill shows a different one. The fuel adjustment is set every month by NEPRA and can swing the total either way; copy your bill's rate into the advanced field.",
   "Entering a bill that covers more than a month as if it were a normal month. A long reading cycle can push the units into a higher slab; use the overbilling check for those bills."
  ],
  "faq": [
   {
    "q": "How do I get a HESCO bill estimate from my units?",
-   "a": "Enter the units and the sanctioned load from your bill, tick protected only if the bill says so, and the estimate shows energy, fixed charge, FC surcharge, QTA and GST. For {{out.units|int}} units the estimate is {{out.total_rs|rs}} before FPA."
+   "a": "Enter the units and the sanctioned load from your bill, tick protected only if the bill says so, and the estimate shows energy, fixed charge, FC surcharge, QTA and GST. For {{out.units|int}} units the estimate is {{out.total_rs|rs}}, FPA included."
   },
   {
    "q": "What is the HESCO per unit rate for a home?",

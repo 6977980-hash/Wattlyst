@@ -36,7 +36,7 @@
    "url": "/bill/bill-audit-overbilling-checker/"
   }
  ],
- "modified": "2026-10-15",
+ "modified": "2026-10-21",
  "content": {
   "intro": "",
   "sections": [
@@ -58,7 +58,7 @@
     "h2": "Signs of a wrong electricity bill",
     "p": [
      "Readings: the present reading on the bill should match the meter; photograph the meter on the reading date. A reading far above the meter is a plain error. Cycle: more than 31 days between readings is a long cycle; the check above shows what it cost. Slab: compare the rate on the bill with the slab the units should reach. Protected status: if your last 6 bills were all at or under 200 units and the category has changed, ask why.",
-     "FPA and QTA: both lines should equal the notified per-unit rate for the month times your units; protected and lifeline consumers should see no FPA at all. Spike: if the units are more than half above the same month last year with no new appliance, ask for a meter accuracy test. Enter last year's units under advanced settings and the check flags the spike. Total: compare it with the typical bill for your units in the monthly Bill Index."
+     "FPA and QTA: both lines should equal the notified per-unit rate for the month times your units; protected homes pay the FPA too, and only a lifeline bill should carry none. Spike: if the units are more than half above the same month last year with no new appliance, ask for a meter accuracy test. Enter last year's units under advanced settings and the check flags the spike. Total: compare it with the typical bill for your units in the monthly Bill Index, which assumes a 2 kW sanctioned load."
     ],
     "l": [
      [],
@@ -167,7 +167,7 @@
      "unit": "units",
      "placeholder": "Optional, from last year's bill",
      "advanced": true,
-     "hint": "If you have last year's bill for the same month, enter its units; a jump of more than half is worth a meter check."
+     "hint": "If you have last year's bill for the same month, enter its units; a jump of more than 50% shows as a spike in the results and is worth a meter check."
     }
    ],
    "fixed_inputs": {},
@@ -213,6 +213,13 @@
      "spec": "rs",
      "label_ur": "Energy + fixed aam mahine ki slab par",
      "value": "Rs 10,942"
+    },
+    {
+     "key": "spike",
+     "label": "Units far above the same month last year?",
+     "spec": "yesno",
+     "optional": true,
+     "value": ""
     }
    ],
    "how": {
@@ -225,7 +232,7 @@
     {
      "label": "Pakistan electricity tariff (NEPRA notification)",
      "url": "https://nepra.org.pk/tariff/Tariff/Ex-WAPDA%20DISCOS/2026/TRF-100%20XWDISCOS%20AND%20KE%20RATIONALIZATION%20OF%20TARIFF%2011-02-2026%202935-57.pdf",
-     "checked": "2026-10-13"
+     "checked": "2026-10-21"
     }
    ]
   },
@@ -368,7 +375,7 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/bill/bill-audit-overbilling-checker/#breadcrumb"
     },
-    "dateModified": "2026-10-15",
+    "dateModified": "2026-10-21",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }

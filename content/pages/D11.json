@@ -35,7 +35,7 @@
    "label": "Sanctioned load",
    "unit": "kW",
    "default": 4,
-   "hint": "From your bill. A sanctioned load of five kilowatts or more is billed on a time-of-use meter, which this comparison does not cover."
+   "hint": "From your bill. A sanctioned load of {{d.tou_threshold_kw|int}} kW or more is billed on a time-of-use meter, which this comparison does not cover: price its imports with the [[F13|ToU bill calculator]]."
   },
   {
    "name": "protected",

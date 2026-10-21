@@ -20,7 +20,7 @@
    "label": "Sanctioned load",
    "unit": "kW",
    "default": "@default_sanctioned_kw",
-   "hint": "The kW printed on the bill; most Karachi homes are one to five. It sets the fixed charge."
+   "hint": "The kW printed on the bill; most Karachi homes are one to five. It sets the fixed charge. A connection of {{d.tou_threshold_kw|int}} kW or more is billed on peak and off-peak (ToU) rates instead: use the [[F13|ToU bill calculator]]."
   },
   {
    "name": "protected",
@@ -50,25 +50,25 @@
    "name": "fc_surcharge_per_unit",
    "label": "FC surcharge",
    "unit": "Rs per unit",
-   "default": "@data.tariff.addons_secondary.fc_surcharge_per_unit.value",
    "advanced": true,
-   "hint": "Financing cost surcharge per unit, from the bill. Secondary-source default."
+   "hint": "Financing cost surcharge per unit, from the bill. Secondary-source default.",
+   "placeholder": "Blank = {{data.tariff.addons_secondary.fc_surcharge_per_unit.value|rs2}} per unit (none on lifeline)"
   },
   {
    "name": "fpa_per_unit",
    "label": "FCA (fuel charge adjustment)",
    "unit": "Rs per unit",
-   "placeholder": "From your bill (FPA / FCA)",
    "advanced": true,
-   "hint": "K-Electric's monthly fuel charge adjustment, positive or negative, from the bill. Leave blank if unknown."
+   "hint": "Pre-filled with the latest NEPRA-verified fuel adjustment, the one for {{data.fpa_latest.fpa_for}} charged on {{data.fpa_latest.label}} bills. {{data.fpa_newest.note}} Replace it with the FCA rate printed on your bill (negative is a credit). Protected homes pay it too; lifeline bills carry none.",
+   "default": "@data.fpa_latest.fpa_per_unit"
   },
   {
    "name": "gst_pct",
    "label": "GST",
    "unit": "%",
-   "default": "@data.tariff.addons_secondary.gst_pct.value",
    "advanced": true,
-   "hint": "Sales tax applied to the bill subtotal."
+   "hint": "Sales tax applied to the bill subtotal.",
+   "placeholder": "Blank = {{data.tariff.addons_secondary.gst_pct.value|int}}% (none on lifeline)"
   }
  ],
  "outputs": [
@@ -98,15 +98,32 @@
    "spec": "rs"
   },
   {
+   "key": "fpa_rs",
+   "label": "FCA (fuel charge adjustment)",
+   "spec": "rs"
+  },
+  {
    "key": "gst_rs",
    "label": "GST",
    "spec": "rs"
+  },
+  {
+   "key": "next_units",
+   "label": "This slab ends at (units)",
+   "spec": "int",
+   "optional": true
+  },
+  {
+   "key": "next_rs",
+   "label": "One unit past that limit adds",
+   "spec": "rs",
+   "optional": true
   }
  ],
- "answer": "A Karachi home on K-Electric using {{in.units|int}} units a month as an unprotected consumer with a {{in.sanctioned_kw|int}} kW connection pays about {{out.total_rs|rs}}: {{out.energy_rs|rs}} energy charge at {{out.rate|rs2}} per unit, plus fixed charge, FC surcharge, QTA and GST, before the month's FCA. K-Electric bill = units × slab rate + fixed charge + adjustments + GST.",
- "how": "{{out.units}} units × {{out.rate|rs2}} ({{out.category}} slab rate) = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, FCA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}}; GST {{out.gst_pct}}% = {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}.",
+ "answer": "A Karachi home on K-Electric using {{in.units|int}} units a month as an unprotected consumer with a {{in.sanctioned_kw|int}} kW connection pays about {{out.total_rs|rs}}: {{out.energy_rs|rs}} energy charge at {{out.rate|rs2}} per unit, plus fixed charge, FC surcharge, QTA, the {{data.fpa_latest.fpa_for}} FCA and GST. K-Electric bill = units × slab rate + fixed charge + adjustments + GST.",
+ "how": "Energy ({{out.category}}): {{out.energy_calc}} = {{out.energy_rs|rs}}. Fixed charge for {{out.sanctioned_kw}} kW = {{out.fixed_rs|rs}}. FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, FCA {{out.fpa_rs|rs}}. Subtotal {{out.subtotal_rs|rs}}; GST {{out.gst_pct}}% = {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}.",
  "key_facts": [
-  "K-Electric's domestic tariff was rationalised to the same uniform NEPRA A-1 rates as the ex-WAPDA DISCOs in the 2026 determination, so a Karachi bill for a given number of units matches a Lahore or Islamabad bill apart from the monthly fuel adjustment.",
+  "K-Electric's domestic tariff was rationalised to the same uniform NEPRA A-1 rates as the ex-WAPDA DISCOs in the 2026 determination, so a Karachi bill for a given number of units matches a Lahore or Islamabad bill, fuel charge adjustment included: NEPRA applies the same FCA to K-Electric.",
   "The K-Electric per unit rate for an unprotected home using {{out.units|int}} units is {{out.rate|rs2}} on every unit, giving {{out.energy_rs|rs}} in energy charges before the fixed charge, surcharges, FCA and GST.",
   "FCA is K-Electric's name for the monthly fuel charge adjustment that other DISCOs print as FPA; it changes every month, can be a credit, and is the field to copy from your bill.",
   "A K-Electric protected consumer is one whose last {{d.protected_months|int}} bills were all at or under {{d.protected_max_units|int}} units on a connection below {{d.tou_threshold_kw|int}} kW; such bills are worked out slab-wise at the low protected rates.",
@@ -127,7 +144,7 @@
    "h2": "What is the K-Electric per unit rate?",
    "p": [
     "K-Electric used to have its own tariff schedule, but NEPRA's 2026 determination rationalised it to the uniform A-1 domestic rates charged across Pakistan. An unprotected Karachi home is billed the rate of the slab its monthly units reach on every unit: {{out.units|int}} units at {{out.rate|rs2}} here, less for the lower slabs and most for the open-ended top slab. Protected and lifeline consumers have their own low rates.",
-    "The examples and table below print the rate for each slab from the tariff file. The month's FCA, which K-Electric adds or subtracts per unit, is the one line that is not in the uniform tariff; take it from your bill."
+    "The examples and table below print the rate for each slab from the tariff file. The month's FCA, which K-Electric adds or subtracts per unit, is the one line that is not in the uniform tariff; it is the same national figure NEPRA sets for the other DISCOs, pre-filled here with the latest NEPRA-verified month, so replace it with your bill's."
    ]
   },
   {
@@ -152,14 +169,14 @@
     "protected": true
    },
    "title": "{{in.units|int}} units, K-Electric protected consumer",
-   "text": "Energy charge {{out.energy_rs|rs}} slab-wise at protected rates, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}} before FCA."
+   "text": "Energy charge {{out.energy_rs|rs}} slab-wise at protected rates, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, FCA {{out.fpa_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}."
   },
   {
    "inputs": {
     "units": 350
    },
    "title": "{{in.units|int}} units, unprotected",
-   "text": "{{out.units|int}} units all at {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}} before FCA."
+   "text": "{{out.units|int}} units all at {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}}, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, FCA {{out.fpa_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}."
   },
   {
    "inputs": {
@@ -167,7 +184,7 @@
     "sanctioned_kw": 3
    },
    "title": "{{in.units|int}} units in a Karachi summer, {{in.sanctioned_kw|int}} kW connection",
-   "text": "Two ACs running most of the day: {{out.units|int}} units × {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}} before FCA."
+   "text": "Two ACs running most of the day: {{out.units|int}} units × {{out.rate|rs2}} = {{out.energy_rs|rs}}, fixed charge {{out.fixed_rs|rs}} for {{out.sanctioned_kw|int}} kW, FC surcharge {{out.fc_rs|rs}}, QTA {{out.qta_rs|rs}}, FCA {{out.fpa_rs|rs}}, GST {{out.gst_rs|rs}}. Estimated bill {{out.total_rs|rs}}."
   },
   {
    "inputs": {
@@ -177,11 +194,11 @@
     "gst_pct": ""
    },
    "title": "{{in.units|int}} units, lifeline consumer",
-   "text": "{{out.units|int}} units at the lifeline rate of {{out.rate|rs2}} = {{out.energy_rs|rs}}, with no fixed charge and no QTA. With the FC surcharge and GST fields blank the estimate assumes neither applies to lifeline bills (still being verified): {{out.total_rs|rs}}."
+   "text": "{{out.units|int}} units at the lifeline rate of {{out.rate|rs2}} = {{out.energy_rs|rs}}, with no fixed charge, no QTA and no FPA. With the FC surcharge and GST fields blank the estimate assumes neither applies to lifeline bills (still being verified): {{out.total_rs|rs}}."
   }
  ],
  "table": {
-  "caption": "Estimated K-Electric bill by units on a {{in.sanctioned_kw|int}} kW connection with the default surcharges and GST, before FCA; unprotected unless marked",
+  "caption": "Estimated K-Electric bill by units on a {{in.sanctioned_kw|int}} kW connection with the default surcharges and GST, with the {{data.fpa_latest.fpa_for}} FCA; unprotected unless marked",
   "rows": [
    {
     "units": 100
@@ -230,15 +247,15 @@
   ]
  },
  "mistakes": [
-  "Expecting a separate K-Electric rate. Since the 2026 rationalisation the slab rates are the uniform NEPRA domestic rates; only the FCA is K-Electric's own monthly figure.",
-  "Ignoring the FCA. In Karachi the fuel charge adjustment is often the line that makes two months with the same units cost different amounts; enter it from the bill.",
+  "Expecting a separate K-Electric rate. Since the 2026 rationalisation the slab rates are the uniform NEPRA domestic rates; the FCA is the same national figure too, which NEPRA applies to K-Electric under the Federal Government's policy guidelines for a uniform FCA.",
+  "Keeping the pre-filled FCA when your bill shows a different one. The fuel charge adjustment is often the line that makes two months with the same units cost different amounts; enter your bill's rate.",
   "Ticking protected on a low month. Protection needs all of the last six months under the limit, and a Karachi summer bill with an AC usually breaks the run.",
   "Dividing the bill total by units to find the rate. Fixed charge, surcharges and GST are inside the total; the slab rate is the energy line divided by units."
  ],
  "faq": [
   {
    "q": "How do I get a K-Electric bill estimate from my units?",
-   "a": "Enter the units and sanctioned load from the bill, tick protected only if the bill says so, and add the FCA from the bill in the advanced fields. For {{out.units|int}} units the estimate is {{out.total_rs|rs}} before FCA."
+   "a": "Enter the units and sanctioned load from the bill, tick protected only if the bill says so, and replace the pre-filled FCA with the one on your bill in the advanced fields. For {{out.units|int}} units the estimate is {{out.total_rs|rs}}, FCA included."
   },
   {
    "q": "What is the K-Electric per unit rate for a home?",
@@ -246,15 +263,19 @@
   },
   {
    "q": "Is the K-Electric tariff for 2026 higher than other DISCOs?",
-   "a": "No. The 2026 determination rationalised K-Electric's domestic tariff to the same uniform rates as the ex-WAPDA DISCOs. The monthly FCA can differ from the FPA other DISCOs charge, which is why a Karachi bill is not always identical."
+   "a": "No. The 2026 determination rationalised K-Electric's domestic tariff to the same uniform rates as the ex-WAPDA DISCOs. NEPRA applies the same monthly FCA to K-Electric consumers as the FPA on other DISCOs' bills, so the same units give the same bill; real bills differ only by billing days, arrears and local items."
   },
   {
    "q": "Does this KE bill calculator include the FCA?",
-   "a": "Yes, as an input. The FCA changes every month and can be a credit, so there is no fixed default; copy the per-unit figure from your bill into the FCA field under advanced settings and the estimate includes it."
+   "a": "Yes. It is pre-filled with the latest NEPRA-verified FCA, the one for {{data.fpa_latest.fpa_for}}. The FCA changes every month and can be a credit, so copy the per-unit figure from your bill into the FCA field under advanced settings and the estimate uses it."
   },
   {
    "q": "How many units keep a K-Electric consumer protected?",
    "a": "At or under {{d.protected_max_units|int}} units in every one of the last {{d.protected_months|int}} months on a connection below {{d.tou_threshold_kw|int}} kW. One month over the limit moves the home to unprotected rates on every unit."
+  },
+  {
+   "q": "Which areas does K-Electric serve?",
+   "a": "Karachi and the nearby areas of Sindh and Balochistan it supplies, such as Hub and Uthal in Lasbela; the rest of Balochistan is QESCO's. K-Electric's own call centre is also 118, open around the clock, and the duplicate bill is on the K-Electric website."
   },
   {
    "q": "Where do I see my official K-Electric bill?",
@@ -277,7 +298,9 @@
   "A-1",
   "section 235",
   "Ordinance 2001",
-  "Rs 25,000"
+  "Rs 25,000",
+  "SMS 8118",
+  "118"
  ],
  "sources": [
   {
@@ -295,6 +318,10 @@
   {
    "label": "PkRevenue: income tax on domestic electricity bills of Rs 25,000 or more (section 235, FBR withholding rates)",
    "url": "https://pkrevenue.com/domestic-electricity-consumers-to-pay-tax-on-monthly-bill-above-rs25000/"
+  },
+  {
+   "label": "K-Electric: 118 Response Centre",
+   "url": "https://ke.com.pk/?p=280"
   }
  ]
 }

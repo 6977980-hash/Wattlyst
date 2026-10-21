@@ -38,7 +38,7 @@
    "url": "/bill/sanctioned-load-calculator/"
   }
  ],
- "modified": "2026-10-13",
+ "modified": "2026-10-21",
  "content": {
   "intro": "",
   "sections": [
@@ -59,8 +59,17 @@
    {
     "h2": "The 5 kW rule: time-of-use meter and protected slabs",
     "p": [
-     "NEPRA's domestic tariff puts every connection with a sanctioned load of 5 kW or more on a time-of-use meter. Units in the evening peak hours cost more than off-peak units, and the fixed charge is higher. Such a connection also cannot be a protected consumer, whatever its monthly units. Many homes with two or three ACs sit right at this line: the 10 kW home needs 6 kW and goes to ToU, while the 5.5 kW home stays at 4 kW on a normal meter.",
-     "If the result is 5 kW or more, check whether it is really needed: inverter ACs instead of non-inverter, a gas or solar geyser instead of an electric one, or simply not running the pump during AC hours can keep the demand under the line. The ToU calculator on the bill pages shows what the peak rate would cost you."
+     "NEPRA's domestic tariff puts every connection with a sanctioned load of 5 kW or more on a time-of-use meter. Units in the evening peak hours cost more than off-peak units, and the fixed charge is billed per kW on the higher of half the sanctioned load and the maximum demand. Such a connection also cannot be a protected consumer, whatever its monthly units. Many homes with two or three ACs sit right at this line: the 10 kW home needs 6 kW and goes to ToU, while the 5.5 kW home stays at 4 kW on a normal meter.",
+     "If the result is 5 kW or more, check whether it is really needed: inverter ACs instead of non-inverter, a gas or solar geyser instead of an electric one, or simply not running the pump during AC hours can keep the demand under the line. The ToU bill calculator on the peak hours page works out the whole bill on peak and off-peak rates. For a heavy user the line is not always worth staying under: the off-peak rate of Rs 34.53 is below every unprotected slab rate above 300 units and has no top-slab jump, so a home using several hundred units a month, mostly off-peak, can pay less on ToU than on the flat slabs. Price both before you decide."
+    ],
+    "l": [
+     [],
+     [
+      {
+       "t": "ToU bill calculator on the peak hours page",
+       "u": "/guides/peak-hours-pakistan/"
+      }
+     ]
     ]
    },
    {
@@ -89,7 +98,13 @@
    },
    {
     "q": "What happens at 5 kW sanctioned load?",
-    "a": "At 5 kW or more the connection must have a time-of-use meter, with a higher rate for evening peak units and a higher fixed charge, and it cannot be a protected consumer."
+    "a": "At 5 kW or more the connection must have a time-of-use meter: evening peak units cost Rs 46.85, off-peak units Rs 34.53, and the fixed charge is billed on the higher of half the sanctioned load and the MDI. It cannot be a protected consumer. The ToU bill calculator prices the whole bill.",
+    "l": [
+     {
+      "t": "ToU bill calculator",
+      "u": "/guides/peak-hours-pakistan/"
+     }
+    ]
    },
    {
     "q": "Can I install a solar system bigger than my sanctioned load?",
@@ -117,7 +132,7 @@
   "mistakes": [
    "Applying for the connected load itself. Not everything runs together; the diversity factor is what keeps a 6 kW home at 4 kW instead of 6 kW.",
    "Forgetting the monthly fixed charge. It is billed per sanctioned kW whether or not you use the power, so extra kW cost every month.",
-   "Crossing 5 kW without noticing. At that point the meter must be ToU, evening units cost more and the protected slabs are gone.",
+   "Crossing 5 kW without noticing, or staying under it at any cost. At that line the meter must be ToU and the protected slabs are gone, but for a heavy, mostly off-peak home the ToU bill can be the lower one; price both first.",
    "Sizing the solar system first. Net billing caps the system at the sanctioned load, so a 4 kW connection cannot take a bigger array until the load is raised.",
    "Adding the starting surge of a pump or non-inverter AC. It lasts seconds and does not register as demand; size the UPS or generator for it instead."
   ],
@@ -279,7 +294,7 @@
     ]
    ]
   },
-  "answer": "A home with 6 kW of connected load needs a sanctioned load of about 4 kW: connected kW × 0.6 diversity factor = 3.6 kW of expected demand, rounded up to the next whole kW. Stay below 5 kW to keep a normal meter, and note that net billing caps your solar system at the sanctioned kW.",
+  "answer": "A home with 6 kW of connected load needs a sanctioned load of about 4 kW: connected kW × 0.6 diversity factor = 3.6 kW of expected demand, rounded up to the next whole kW. Below 5 kW keeps a flat meter and protected eligibility, though a heavy user with most units off-peak can pay less on ToU; net billing caps solar at the sanctioned kW.",
   "formula": {
    "text": "demand kW = connected kW × diversity; sanctioned kW = max(1, ceil(demand kW))",
    "lines": [
@@ -332,7 +347,7 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/bill/sanctioned-load-calculator/#breadcrumb"
     },
-    "dateModified": "2026-10-13",
+    "dateModified": "2026-10-21",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }
@@ -393,7 +408,7 @@
       "name": "What happens at 5 kW sanctioned load?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "At 5 kW or more the connection must have a time-of-use meter, with a higher rate for evening peak units and a higher fixed charge, and it cannot be a protected consumer."
+       "text": "At 5 kW or more the connection must have a time-of-use meter: evening peak units cost Rs 46.85, off-peak units Rs 34.53, and the fixed charge is billed on the higher of half the sanctioned load and the MDI. It cannot be a protected consumer. The ToU bill calculator prices the whole bill."
       }
      },
      {

@@ -5047,22 +5047,22 @@
   },
   {
     "calc": "bill_total",
-    "name": "protected consumer: FPA not charged (NEPRA exemption)",
+    "name": "protected consumer: FPA charged per unit (NEPRA FCA orders exempt only lifeline, EVCS and prepaid)",
     "inputs": {
       "units": 150,
       "protected": true,
-      "fpa_per_unit": 2.5182,
+      "fpa_per_unit": 2.0581,
       "fc_surcharge_per_unit": 0,
       "qta_per_unit": 0,
       "gst_pct": 0
     },
     "expected": {
-      "fpa_rs": 0,
-      "fpa_exempt": true,
-      "fpa_per_unit": 2.5182
+      "fpa_rs": 309,
+      "fpa_exempt": false,
+      "fpa_per_unit": 2.0581
     },
     "tolerance": 0.001,
-    "note": "SRO 852(I)/2026: lifeline, protected, EVCS and prepaid exempt from the monthly FPA"
+    "note": "21 Oct 2026 audit WL-157: July 2026 FCA order (SRO 1499(I)/2026) para 21(a) and the March 2026 notification para 4(a) exempt only lifeline, EV charging stations and prepaid; 150 × 2.0581 = 308.7 → Rs 309. Replaces the earlier case that exempted protected homes from a one-month review decision (SRO 852(I)/2026)."
   },
   {
     "calc": "bill_total",
@@ -9834,5 +9834,181 @@
     },
     "tolerance": 0.01,
     "note": "full audit 2026-10-15 WL-155: third spec case, worked by hand"
+  },
+  {
+    "calc": "bill_total",
+    "name": "lifeline consumer: FPA not charged (tariff file exempt list)",
+    "inputs": {
+      "units": 40,
+      "lifeline": true,
+      "fpa_per_unit": 2.0581
+    },
+    "expected": {
+      "fpa_rs": 0,
+      "fpa_exempt": true,
+      "total_rs": 158
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit WL-157: data/tariff-pk-2026.json addons_secondary.fpa_per_unit.exempt = lifeline; energy 40 × 3.95 = 158, no fixed charge, FC/GST default 0 for lifeline."
+  },
+  {
+    "calc": "bill_total",
+    "name": "a month's own exempt list (March 2026 review: protected spared that month)",
+    "inputs": {
+      "units": 150,
+      "protected": true,
+      "fpa_per_unit": -0.0102,
+      "fpa_exempt": [
+        "lifeline",
+        "protected"
+      ],
+      "fc_surcharge_per_unit": 0,
+      "qta_per_unit": 0,
+      "gst_pct": 0
+    },
+    "expected": {
+      "fpa_rs": 0,
+      "fpa_exempt": true,
+      "total_rs": 2005
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit WL-157: input fpa_exempt (a data/bill-index.json month) overrides the tariff file list; SRO 852(I)/2026 added protected consumers for March 2026 only. 1,705 energy + 300 fixed."
+  },
+  {
+    "calc": "bill_total",
+    "name": "protected 150 units: printed energy sum is slab by slab",
+    "inputs": {
+      "units": 150,
+      "protected": true,
+      "sanctioned_kw": 1
+    },
+    "expected": {
+      "energy_calc": "100 × Rs 10.54 + 50 × Rs 13.01",
+      "energy_rs": 1705
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit WL-164: 100 × 10.54 + 50 × 13.01 = 1,704.50 → Rs 1,705; the how text prints this sum, not 150 × the top rate."
+  },
+  {
+    "calc": "bill_total",
+    "name": "unprotected 300 units: printed energy sum is one part",
+    "inputs": {
+      "units": 300,
+      "sanctioned_kw": 1
+    },
+    "expected": {
+      "energy_calc": "300 × Rs 33.10",
+      "energy_rs": 9930
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit WL-164: unprotected bills charge every unit at the band reached."
+  },
+  {
+    "calc": "bill_total",
+    "name": "next slab cliff: 200 to 201 units unprotected, 1 kW, Sep-Nov quarter",
+    "inputs": {
+      "units": 200,
+      "sanctioned_kw": 1,
+      "period": "2026-09..2026-11"
+    },
+    "expected": {
+      "next_units": 200,
+      "next_rs": 1090
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit WL-165: 200 u = 5,782 + 300 + 646 + 104 = 6,832, GST 1,230, total 8,062; 201 u = 6,653 + 350 + 649 + 104 = 7,756, GST 1,396, total 9,152; 9,152 − 8,062 = 1,090."
+  },
+  {
+    "calc": "bill_total",
+    "name": "next slab cliff: 250 units names the 300 limit and the 300 to 301 jump",
+    "inputs": {
+      "units": 250,
+      "sanctioned_kw": 1,
+      "period": "2026-09..2026-11"
+    },
+    "expected": {
+      "next_units": 300,
+      "next_rs": 1294
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit WL-165: 300 u total 13,458 (spec case above); 301 u = 10,974 + 400 + 972 + 156 = 12,502, GST 2,250, total 14,752; 14,752 − 13,458 = 1,294."
+  },
+  {
+    "calc": "bill_total",
+    "name": "next slab cliff: protected 150 units, one unit past the protected limit is an unprotected bill",
+    "inputs": {
+      "units": 150,
+      "protected": true,
+      "sanctioned_kw": 1,
+      "period": "2026-09..2026-11"
+    },
+    "expected": {
+      "next_units": 200,
+      "next_rs": 5134
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit WL-165: protected 200 u = 2,355 + 300 + 646 + 104 = 3,405, GST 613, total 4,018; unprotected 201 u total 9,152; 9,152 − 4,018 = 5,134."
+  },
+  {
+    "calc": "bill_tou",
+    "name": "ToU full bill: 100 peak + 600 off-peak, 6 kW, MDI 4, FPA 1.1086, Sep-Nov quarter",
+    "inputs": {
+      "peak_units": 100,
+      "offpeak_units": 600,
+      "sanctioned_kw": 6,
+      "mdi_kw": 4,
+      "fpa_per_unit": 1.1086,
+      "period": "2026-09..2026-11"
+    },
+    "expected": {
+      "energy_rs": 25403,
+      "fixed_rs": 2700,
+      "fc_rs": 2261,
+      "qta_rs": 364,
+      "fpa_rs": 776,
+      "subtotal_rs": 31504,
+      "gst_rs": 5671,
+      "total_rs": 37175
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit WL-162(b), bills expert T6: 4,685 + 20,718 energy, 675 × max(3, 4) fixed, FC 700 × 3.23, QTA 700 × 0.5194, FPA 700 × 1.1086, GST 18% on the subtotal."
+  },
+  {
+    "calc": "bill_tou",
+    "name": "ToU bill: blank add-ons use the tariff file (FC 3.23, GST 18, FPA 0)",
+    "inputs": {
+      "peak_units": 50,
+      "offpeak_units": 200,
+      "sanctioned_kw": 10,
+      "mdi_kw": 3
+    },
+    "expected": {
+      "energy_rs": 9249,
+      "fixed_rs": 3375,
+      "fc_rs": 808,
+      "qta_rs": 0,
+      "fpa_rs": 0,
+      "subtotal_rs": 13432,
+      "gst_rs": 2418,
+      "total_rs": 15850
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit WL-162(b): 50 × 46.85 + 200 × 34.53 = 9,248.50 → 9,249; fixed 675 × 5 = 3,375; FC 250 × 3.23 = 807.5 → 808; 13,432 × 18% = 2,417.76 → 2,418."
+  },
+  {
+    "calc": "bill_total",
+    "name": "next slab cliff: protected 80 units, one unit past the first protected slab",
+    "inputs": {
+      "units": 80,
+      "protected": true,
+      "sanctioned_kw": 1,
+      "period": "2026-09..2026-11"
+    },
+    "expected": {
+      "next_units": 100,
+      "next_rs": 137
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit WL-165 (Engineer Reviewer): protected 100 u = 1,054 + 200 + 323 + 52 = 1,629, GST 293, total 1,922; protected 101 u = 1,067 + 300 + 326 + 52 = 1,745, GST 314, total 2,059; 2,059 − 1,922 = 137 (the fixed charge steps up with the slab)."
   }
 ]

@@ -10,9 +10,9 @@
  "answer": "In {{ds.cur.label}} bills, an unprotected home using {{ds.u300.units|int}} units pays about {{ds.u300.total_rs|rs}}, {{ds.u300.change}} from {{ds.prev.label}}, mainly because the fuel price adjustment moved from {{ds.prev.fpa|rs2}} to {{ds.cur.fpa|rs2}} per unit. The same uniform tariff applies in LESCO, IESCO, MEPCO, K-Electric and every other DISCO. Bill = energy + fixed charge + surcharges + GST.",
  "key_facts": [
   "{{ds.cur.label}}: {{ds.u100.units|int}} units cost an unprotected home {{ds.u100.total_rs|rs}} and a protected home {{ds.p100.total_rs|rs}}; {{ds.u200.units|int}} units cost {{ds.u200.total_rs|rs}} unprotected and {{ds.p200.total_rs|rs}} protected.",
-  "{{ds.u300.units|int}} units cost {{ds.u300.total_rs|rs}} ({{ds.u300.per_unit_rs|rs2}} per unit all-in) and {{ds.u500.units|int}} units cost {{ds.u500.total_rs|rs}} ({{ds.u500.per_unit_rs|rs2}} per unit) in {{ds.cur.label}} bills.",
+  "{{ds.u300.units|int}} units cost {{ds.u300.total_rs|rs}} ({{ds.u300.per_unit_rs|rs2}} per unit all-in, before income tax) and {{ds.u500.units|int}} units cost {{ds.u500.total_rs|rs}} ({{ds.u500.per_unit_rs|rs2}} per unit) in {{ds.cur.label}} bills.",
   "The units table gives the {{ds.cur.label}} bill at every {{ds.ladder.step|int}} units from {{ds.ladder.from|int}} to {{ds.ladder.to|int}}: {{ds.ladder.top_units|int}} units cost {{ds.ladder.top_rs|rs}} ({{ds.ladder.top_per_unit_rs|rs2}} per unit), and protected rates stop at {{ds.ladder.limit|int}} units. A lifeline home using {{ds.ladder.from|int}} units pays only about {{ds.ladder.lifeline_rs|rs}}: the lifeline rate of {{ds.ladder.lifeline_rate|rs2}} per unit, no fixed charge and no fuel adjustment; tick lifeline in the bill calculator to check yours.",
-  "The fuel price adjustment in {{ds.cur.label}} bills is {{ds.cur.fpa|rs2}} per unit for the fuel used in {{ds.cur.fpa_for}} ({{ds.cur.status}}); protected consumers do not pay it, so their bills are {{ds.p200.change}} from {{ds.prev.label}}.",
+  "The fuel price adjustment in {{ds.cur.label}} bills is {{ds.cur.fpa|rs2}} per unit for the fuel used in {{ds.cur.fpa_for}} ({{ds.cur.status}}); protected homes pay it too, so a protected {{ds.p200.units|int}} unit bill is {{ds.p200.change}} from {{ds.prev.label}}; only lifeline bills carry none.",
   "Every figure is computed by the Wattlyst bill engine from the NEPRA A-1 domestic tariff, for a {{ds.sanctioned_kw|int}} kW sanctioned load, and can be reproduced with the bill calculator.",
   "The index is published monthly and is free to reuse with a link (CC BY 4.0); the CSV download carries every line of every bill."
  ],
@@ -21,7 +21,7 @@
    "h2": "How the bill changed from {{ds.prev.label}} to {{ds.cur.label}}",
    "p": [
     "The base tariff (energy rates and fixed charges) has not changed since NEPRA's February notification, so the monthly movement comes from the add-ons. The fuel price adjustment (FPA) charged in {{ds.cur.label}} bills is {{ds.cur.fpa|rs2}} per unit for {{ds.cur.fpa_for}}, against {{ds.prev.fpa|rs2}} per unit for {{ds.prev.fpa_for}} in {{ds.prev.label}} bills. The quarterly adjustment for {{ds.cur.qta_period}} is the same in both months.",
-    "For an unprotected home the FPA is charged on every unit and GST is added on top, so a {{ds.u300.units|int}} unit bill is {{ds.u300.change}} and a {{ds.u500.units|int}} unit bill is {{ds.u500.change}}. Protected homes are exempt from the FPA, so their bills did not move."
+    "For an unprotected home the FPA is charged on every unit and GST is added on top, so a {{ds.u300.units|int}} unit bill is {{ds.u300.change}} and a {{ds.u500.units|int}} unit bill is {{ds.u500.change}}. Protected homes pay the FPA as well (only lifeline bills carry none), so a protected {{ds.p200.units|int}} unit bill is {{ds.p200.change}}."
    ]
   },
   {
@@ -34,29 +34,29 @@
   {
    "h2": "Method",
    "p": [
-    "Each bill = energy charge (protected: slab by slab with the benefit of one previous slab; unprotected: all units at the rate of the slab reached) + fixed charge for a {{ds.sanctioned_kw|int}} kW sanctioned load + FC surcharge + quarterly adjustment + fuel price adjustment (not for protected consumers) + GST on the subtotal. Rates come from the NEPRA tariff file Wattlyst keeps with its source and checked date; the monthly FPA comes from the NEPRA decision or, until it is published on nepra.org.pk, a dated news report of the notification (marked in the CSV).",
+    "Each bill = energy charge (protected: slab by slab with the benefit of one previous slab; unprotected: all units at the rate of the slab reached) + fixed charge for a {{ds.sanctioned_kw|int}} kW sanctioned load + FC surcharge + quarterly adjustment + fuel price adjustment (charged to protected and unprotected homes; NEPRA spares lifeline, EV charging station and prepaid consumers) + GST on the subtotal. Rates come from the NEPRA tariff file Wattlyst keeps with its source and checked date; the monthly FPA comes from the NEPRA decision or, until it is published on nepra.org.pk, a dated news report of the notification (marked in the CSV). The bills leave out the advance income tax that a home not on FBR's Active Taxpayers List pays on a monthly bill of {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}} or more ({{data.tariff.addons_secondary.income_tax_235.rate_pct_non_atl|1}}% under section 235 of the Income Tax Ordinance 2001), because it depends on the consumer's tax status; every per unit figure here is before that tax.",
     "The index is rebuilt every month: the new month is added at the top and earlier months are kept, so the CSV is a running history. Corrections go to the contact page; a corrected figure is noted on this page."
    ]
   },
   {
    "h2": "Summary for journalists and researchers",
    "p": [
-    "Wattlyst's Pakistan Electricity Bill Index for {{ds.cur.label}}: a household using {{ds.u300.units|int}} units pays about {{ds.u300.total_rs|rs}} ({{ds.u300.change}} from {{ds.prev.label}}); {{ds.u200.units|int}} units cost {{ds.u200.total_rs|rs}} unprotected and {{ds.p200.total_rs|rs}} protected; {{ds.u500.units|int}} units cost {{ds.u500.total_rs|rs}}. The fuel adjustment in {{ds.cur.label}} bills is {{ds.cur.fpa|rs2}} per unit. Source: Wattlyst Pakistan Electricity Bill Index, computed from NEPRA tariff data; free to quote with a link."
+    "Wattlyst's Pakistan Electricity Bill Index for {{ds.cur.label}}: a household using {{ds.u300.units|int}} units pays about {{ds.u300.total_rs|rs}} ({{ds.u300.change}} from {{ds.prev.label}}); {{ds.u200.units|int}} units cost {{ds.u200.total_rs|rs}} unprotected and {{ds.p200.total_rs|rs}} protected; {{ds.u500.units|int}} units cost {{ds.u500.total_rs|rs}}. All figures are before the advance income tax a non-filer pays on large bills. The fuel adjustment in {{ds.cur.label}} bills is {{ds.cur.fpa|rs2}} per unit. Source: Wattlyst Pakistan Electricity Bill Index, computed from NEPRA tariff data; free to quote with a link."
    ]
   }
  ],
  "faq": [
   {
    "q": "What is the electricity bill for {{ds.u300.units|int}} units in {{ds.cur.label}}?",
-   "a": "About {{ds.u300.total_rs|rs}} for an unprotected home with a {{ds.sanctioned_kw|int}} kW connection, including the fixed charge, surcharges, FPA and GST. That is {{ds.u300.per_unit_rs|rs2}} per unit all-in."
+   "a": "About {{ds.u300.total_rs|rs}} for an unprotected home with a {{ds.sanctioned_kw|int}} kW connection, including the fixed charge, surcharges, FPA and GST. That is {{ds.u300.per_unit_rs|rs2}} per unit all-in, before the advance income tax a home not on FBR's Active Taxpayers List pays on a bill of {{data.tariff.addons_secondary.income_tax_235.threshold_rs|rs}} or more."
   },
   {
    "q": "What is the bill for {{ds.u200.units|int}} units for a protected consumer?",
-   "a": "About {{ds.p200.total_rs|rs}} in {{ds.cur.label}} bills. Protected consumers pay lower slab rates and no fuel price adjustment; an unprotected home using the same units pays {{ds.u200.total_rs|rs}}."
+   "a": "About {{ds.p200.total_rs|rs}} in {{ds.cur.label}} bills. Protected consumers pay lower slab rates, plus the same fuel price adjustment as other homes; an unprotected home using the same units pays {{ds.u200.total_rs|rs}}."
   },
   {
    "q": "What is the bill for {{ds.ladder.top_units|int}} units?",
-   "a": "About {{ds.ladder.top_rs|rs}} in {{ds.cur.label}} bills for an unprotected home with a {{ds.sanctioned_kw|int}} kW connection, {{ds.ladder.top_per_unit_rs|rs2}} per unit all-in. The units table on this page gives the bill at every {{ds.ladder.step|int}} units from {{ds.ladder.from|int}} to {{ds.ladder.to|int}}."
+   "a": "About {{ds.ladder.top_rs|rs}} in {{ds.cur.label}} bills for an unprotected home with a {{ds.sanctioned_kw|int}} kW connection, {{ds.ladder.top_per_unit_rs|rs2}} per unit all-in, before the advance income tax a non-filer pays on bills this size. The units table on this page gives the bill at every {{ds.ladder.step|int}} units from {{ds.ladder.from|int}} to {{ds.ladder.to|int}}."
   },
   {
    "q": "Why did my bill change this month if the tariff did not?",
@@ -87,6 +87,8 @@
  "sources": [],
  "literal_numbers": [
   "A-1",
-  "CC BY 4.0"
+  "CC BY 4.0",
+  "section 235",
+  "Ordinance 2001"
  ]
 }

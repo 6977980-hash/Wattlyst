@@ -146,7 +146,7 @@
    "label": "Sanctioned load",
    "unit": "kW",
    "default": 4,
-   "hint": "The kW printed on your electricity bill. Below five keeps the flat tariff; it also caps net billing."
+   "hint": "The kW printed on your electricity bill. Below {{d.tou_threshold_kw|int}} keeps the flat tariff and caps net billing; at {{d.tou_threshold_kw|int}} kW or more use the [[F13|ToU bill calculator]]."
   },
   {
    "name": "backup_w",

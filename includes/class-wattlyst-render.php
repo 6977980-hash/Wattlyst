@@ -294,7 +294,8 @@ final class Wattlyst_Render {
 			$ur       = isset( $o['label_ur'] ) ? ' data-ur="' . esc_attr( $o['label_ur'] ) . '" data-en="' . esc_attr( $o['label'] ) . '"' : '';
 			$has_ur   = $has_ur || '' !== $ur;
 			$results .= sprintf(
-				'<div class="wl-result"><span class="wl-result-label"%s>%s</span> <output data-out="%s"><span class="wl-val">%s</span>%s</output></div>',
+				'<div class="wl-result"%s><span class="wl-result-label"%s>%s</span> <output data-out="%s"><span class="wl-val">%s</span>%s</output></div>',
+				'' === (string) $o['value'] ? ' hidden' : '',
 				$ur,
 				esc_html( $o['label'] ),
 				esc_attr( $o['key'] ),
@@ -504,7 +505,7 @@ final class Wattlyst_Render {
 		}
 		$fid   = $prefix . '-' . $f['name'];
 		$unit  = isset( $f['unit'] ) ? ' <span class="wl-unit">(' . esc_html( $f['unit'] ) . ')</span>' : '';
-		$hint  = isset( $f['hint'] ) ? '<p class="wl-hint" id="' . esc_attr( $fid ) . '-hint">' . esc_html( $f['hint'] ) . '</p>' : '';
+		$hint  = isset( $f['hint'] ) ? '<p class="wl-hint" id="' . esc_attr( $fid ) . '-hint">' . self::linked( $f['hint'], $f['l'] ?? array() ) . '</p>' : '';
 		$descr = isset( $f['hint'] ) ? ' aria-describedby="' . esc_attr( $fid ) . '-hint"' : '';
 		$label = '<label for="' . esc_attr( $fid ) . '">' . esc_html( $f['label'] ?? $f['name'] ) . $unit . '</label>';
 		$value = isset( $f['default'] ) ? (string) $f['default'] : '';

@@ -29,7 +29,7 @@ export function billIndex(ctx, fail) {
   const [cur, prev] = ix.months;
   if (!cur || !prev) fail('bill-index: data/bill-index.json needs at least two months');
   const run = (m, l) => {
-    const r = bill({ units: l.units, sanctioned_kw: ix.sanctioned_kw, protected: l.category === 'protected', fpa_per_unit: m.fpa_per_unit, period: m.qta_period }, ctx.data);
+    const r = bill({ units: l.units, sanctioned_kw: ix.sanctioned_kw, protected: l.category === 'protected', fpa_per_unit: m.fpa_per_unit, period: m.qta_period, ...(Array.isArray(m.fpa_exempt) ? { fpa_exempt: m.fpa_exempt } : {}) }, ctx.data);
     if (!r.ok) fail(`bill-index: ${m.month} ${l.units} ${l.category} gives ${r.error}`);
     return r;
   };
@@ -74,7 +74,7 @@ export function billIndex(ctx, fail) {
   const tables = [
     {
       caption: `Electricity bill for every ${fmt(lad.step, 'int')} units, ${fmt(lad.from, 'int')} to ${fmt(lad.to, 'int')}, ${lab(cur)} (${fmt(ix.sanctioned_kw, 'int')} kW sanctioned load)`,
-      head: ['Units a month', 'Unprotected bill', 'Per unit (unprotected)', 'Protected bill'],
+      head: ['Units a month', 'Unprotected bill', 'Per unit (unprotected, before income tax)', 'Protected bill'],
       rows: ladder.map((r) => [fmt(r.units, 'int'), fmt(r.u.total_rs, 'rs'), fmt(r.u.total_rs / r.units, 'rs2'), r.p ? fmt(r.p.total_rs, 'rs') : `Not protected above ${fmt(limit, 'int')} units`]),
     },
     {
@@ -111,10 +111,10 @@ export function billIndex(ctx, fail) {
   for (const m of ix.months) {
     for (const l of csvLevels) {
       const r = run(m, l);
-      csvRows.push([m.month, l.units, l.category, ix.sanctioned_kw, round(r.rate), round(r.energy_rs), round(r.fixed_rs), round(r.fc_rs), round(r.qta_rs), round(r.fpa_rs), round(r.gst_rs), round(r.total_rs), m.fpa_per_unit, m.fpa_for, m.fpa_verified ? 'notified (NEPRA)' : 'news report']);
+      csvRows.push([m.month, l.units, l.category, ix.sanctioned_kw, round(r.rate), round(r.avg_rate), round(r.energy_rs), round(r.fixed_rs), round(r.fc_rs), round(r.qta_rs), round(r.fpa_rs), round(r.gst_rs), round(r.total_rs), m.fpa_per_unit, m.fpa_for, m.fpa_verified ? 'notified (NEPRA)' : 'news report']);
     }
   }
-  const csv = toCsv(['billing_month', 'units', 'consumer', 'sanctioned_kw', 'rate_rs_per_unit', 'energy_rs', 'fixed_rs', 'fc_surcharge_rs', 'qta_rs', 'fpa_rs', 'gst_rs', 'total_rs', 'fpa_rs_per_unit', 'fpa_fuel_month', 'fpa_source_type'], csvRows);
+  const csv = toCsv(['billing_month', 'units', 'consumer', 'sanctioned_kw', 'top_slab_rate_rs_per_unit', 'avg_rate_rs_per_unit', 'energy_rs', 'fixed_rs', 'fc_surcharge_rs', 'qta_rs', 'fpa_rs', 'gst_rs', 'total_rs', 'fpa_rs_per_unit', 'fpa_fuel_month', 'fpa_source_type'], csvRows);
   const sources = [
     { label: 'NEPRA tariff decision and SRO 279(I)/2026 for A-1 domestic consumers (tariff PDF)', url: ctx.data.tariff._meta.source_url },
     ...ix.months.map((m) => ({ label: `${m.label} bills: ${m.fpa_source}`, url: m.fpa_url })),
