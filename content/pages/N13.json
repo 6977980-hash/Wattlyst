@@ -88,8 +88,13 @@
    "spec": "int"
   },
   {
+   "key": "inverter_buy",
+   "label": "Inverter to buy",
+   "spec": "raw"
+  },
+  {
    "key": "inverter_kw",
-   "label": "Inverter size",
+   "label": "Inverter, at least",
    "spec": "up2",
    "unit": "kW"
   },
@@ -103,14 +108,28 @@
    "key": "monthly_kwh_estimate",
    "label": "Units the system makes a month",
    "spec": "int"
+  },
+  {
+   "key": "battery_ah",
+   "label": "Battery",
+   "spec": "up",
+   "unit": "Ah",
+   "optional": true
+  },
+  {
+   "key": "battery_kwh",
+   "label": "Battery energy",
+   "spec": "1",
+   "unit": "kWh",
+   "optional": true
   }
  ],
- "answer": "A small one-hall mosque with ceiling fans, tube lights, 1.5 ton inverter ACs, a water pump, a dispenser and a sound system needs about {{out.installed_kw|2}} kW of solar ({{out.panels|int}} panels of {{out.panel_w|int}} W) with a {{out.inverter_kw|up2}} kW inverter in Lahore. The panels are sized from the daily units ÷ the city's sun yield; the grid covers the moments when everything runs at once.",
- "how": "Energy: each appliance's watts × quantity × hours a day (inverter ACs at their average draw), added up = {{out.daily_kwh|1}} units a day; ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW of panels a day for your city = {{out.kw_energy|2}} kW. A grid-tied system is sized by energy: when the {{out.running_w|int}} W running load at Zuhr or at the shop's midday peak is more than the panels give, the grid supplies the rest. {{out.kw|2}} kW needs {{out.panels|int}} panels of {{out.panel_w}} W = {{out.installed_kw|2}} kW, about {{out.monthly_kwh_estimate|int}} units a month. Inverter: the larger of {{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_kw_load|2}} kW for the load and {{out.installed_kw|2}} kW of panels ÷ {{out.dc_ac_ratio_max|1}} = {{out.inverter_kw_array|2}} kW, so the panels are never more than {{out.dc_ac_ratio_max|1}} times the inverter: {{out.inverter_kw|up2}} kW continuous, with a surge rating of at least {{out.inverter_surge_w|int}} W.",
+ "answer": "A small one-hall mosque with ceiling fans, tube lights, 1.5 ton inverter ACs, a water pump, a dispenser and a sound system needs about {{out.installed_kw|2}} kW of solar ({{out.panels|int}} panels of {{out.panel_w|int}} W) with an on-grid inverter of {{out.inverter_buy}} in Lahore. The panels are sized from the daily units ÷ the city's sun yield; the grid covers the moments when everything runs at once.",
+ "how": "Energy: each appliance's watts × quantity × hours a day (inverter ACs at their average draw), added up = {{out.daily_kwh|1}} units a day; ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW of panels a day for your city = {{out.kw_energy|2}} kW. A grid-tied system is sized by energy: when the {{out.running_w|int}} W running load at Zuhr or at the shop's midday peak is more than the panels give, the grid supplies the rest. {{out.kw|2}} kW needs {{out.panels|int}} panels of {{out.panel_w}} W = {{out.installed_kw|2}} kW, about {{out.monthly_kwh_estimate|int}} units a month. {{out.inverter_text}}",
  "key_facts": [
-  "A small one-hall mosque in Lahore with fans, lights, 1.5 ton inverter ACs, a water pump, a dispenser and a sound system runs about {{out.running_w|int}} W and uses about {{out.daily_kwh|1}} units a day, so it needs about {{out.installed_kw|2}} kW of solar and a {{out.inverter_kw|up2}} kW inverter.",
-  "A small shop open all day with lights, fans, a deep freezer, a computer, CCTV and Wi-Fi uses about {{ex.2.out.daily_kwh|1}} units a day and needs about {{ex.2.out.installed_kw|2}} kW of solar with a {{ex.2.out.inverter_kw|up2}} kW inverter.",
-  "Adding a 1.5 ton inverter AC for most of the opening hours to that shop raises the need to about {{ex.3.out.installed_kw|2}} kW of solar and a {{ex.3.out.inverter_kw|up2}} kW inverter.",
+  "A small one-hall mosque in Lahore with fans, lights, 1.5 ton inverter ACs, a water pump, a dispenser and a sound system runs about {{out.running_w|int}} W and uses about {{out.daily_kwh|1}} units a day, so it needs about {{out.installed_kw|2}} kW of solar and an inverter of {{out.inverter_buy}}.",
+  "A small shop open all day with lights, fans, a deep freezer, a computer, CCTV and Wi-Fi uses about {{ex.2.out.daily_kwh|1}} units a day and needs about {{ex.2.out.installed_kw|2}} kW of solar with an inverter of {{ex.2.out.inverter_buy}}.",
+  "Adding a 1.5 ton inverter AC for most of the opening hours to that shop raises the need to about {{ex.3.out.installed_kw|2}} kW of solar and an inverter of {{ex.3.out.inverter_buy}}.",
   "The mosque and shop load lists on this page are Wattlyst estimates from typical fit-outs, not measurements of any one building; change every row to match yours before you ask for quotes."
  ],
  "formula": {
@@ -120,7 +139,7 @@
    "yield = units one kW of panels makes a day in your city",
    "P_run = total running watts, PR = performance ratio",
    "W_panel = watts of one panel",
-   "Inverter W = max(P_run × margin, kW × 1000 ÷ r_max), r_max = largest panel-to-inverter (DC/AC) ratio; surge ≥ largest starting load",
+   "On-grid inverter W = kW × 1000 ÷ r_max, r_max = largest panel-to-inverter (DC/AC) ratio; hybrid (backup hours set): max(P_run × margin, kW × 1000 ÷ r_max), surge ≥ largest starting load; then the next size sold",
    "Battery Ah = P_run × night hours ÷ (V × DoD × η)"
   ]
  },
@@ -129,13 +148,14 @@
    "h2": "Solar system for mosque: sized around prayer times",
    "p": [
     "A mosque's load comes in blocks: fans and lights through each congregation, ACs mainly for Zuhr, Asr and Isha in summer, the water pump for wudu, and a longer, fuller Jummah once a week. The default list averages those hours over the week. It is a Wattlyst estimate for a small one-hall mosque, not a survey of mosques, so change the counts and hours to match yours.",
-    "Zuhr and Asr fall in full sun, so the panels serve those prayers directly. Fajr, Maghrib and Isha are in the dark, so their load comes from the grid or a battery. The panels are sized to make the week's average units a day ({{out.kw_energy|2}} kW); panels big enough to carry the whole {{out.running_w|int}} W at Zuhr would need {{out.kw_power|2}} kW and make far more units than the mosque uses, sold back at the low buyback rate."
+    "Zuhr and Asr fall in full sun, so the panels serve those prayers directly. Fajr, Maghrib and Isha are in the dark, so their load comes from the grid or a battery. The panels are sized to make the week's average units a day ({{out.kw_energy|2}} kW); panels big enough to carry the whole {{out.running_w|int}} W at Zuhr would need {{out.kw_power|2}} kW and make far more units than the mosque uses, sold back at the low buyback rate.",
+    "Do not put every panel in one string. On a cold morning each {{out.panel_w|int}} W panel gives about {{out.panel_voc_cold_v|int}} V open-circuit, so {{out.panels|int}} panels in series would be about {{out.array_voc_cold_v|int}} V; split them into strings that each stay below the inverter's maximum DC input voltage on its datasheet."
    ]
   },
   {
    "h2": "Solar system for shop",
    "p": [
-    "A shop's load follows its opening hours, and most of them are in daylight, which suits solar well. The small-shop list (lights, fans, a deep freezer, a computer, CCTV and Wi-Fi through the opening hours) needs {{ex.2.out.installed_kw|2}} kW with a {{ex.2.out.inverter_kw|up2}} kW inverter. With an inverter AC the need rises to {{ex.3.out.installed_kw|2}} kW and {{ex.3.out.inverter_kw|up2}} kW.",
+    "A shop's load follows its opening hours, and most of them are in daylight, which suits solar well. The small-shop list (lights, fans, a deep freezer, a computer, CCTV and Wi-Fi through the opening hours) needs {{ex.2.out.installed_kw|2}} kW with an inverter of {{ex.2.out.inverter_buy}}. With an inverter AC the need rises to {{ex.3.out.installed_kw|2}} kW and {{ex.3.out.inverter_buy}}.",
     "A freezer or a cold drinks fridge runs day and night. If the shop is closed at night and the grid is off, the freezer needs a battery or it warms up; add backup hours above, but list only the freezer, CCTV and router for that battery."
    ]
   },
@@ -149,7 +169,7 @@
   {
    "h2": "What does a solar system for a mosque or shop cost?",
    "p": [
-    "We do not print a price on this page because panel and inverter prices move with the dollar rate. The solar price estimator gives the current range for a {{out.installed_kw|2}} kW system from dated price lists, and the quote checker compares a quote you have against that range.",
+    "An on-grid system for the small mosque ({{out.installed_kw|2}} kW of panels, no battery) costs about {{px.out.price_low_rs|rsm}} to {{px.out.price_high_rs|rsm}} installed, from the installer price lists and reports checked on {{px.checked}}. Prices move with the dollar rate, so check today's range for your size with the [[D14|solar system price calculator]] and compare a quote you have with the [[N3|solar quote checker]].",
     "A complete quote includes the panels, the inverter, mounting structure, DC and AC cables, breakers, surge protection, earthing and installation, and for a grid-tied system the net-billing application. Mosque committees often collect donations against a quote: ask for an itemised quote so donors can see what each part costs."
    ]
   }
@@ -158,28 +178,28 @@
   {
    "inputs": {},
    "title": "Small mosque, one hall",
-   "text": "{{out.appliances|int}} kinds of load, {{out.running_w|int}} W running, {{out.daily_kwh|1}} units a day: {{out.installed_kw|2}} kW of solar ({{out.panels|int}} panels), a {{out.inverter_kw|up2}} kW inverter, about {{out.monthly_kwh_estimate|int}} units a month."
+   "text": "{{out.appliances|int}} kinds of load, {{out.running_w|int}} W running, {{out.daily_kwh|1}} units a day: {{out.installed_kw|2}} kW of solar ({{out.panels|int}} panels), an inverter of {{out.inverter_buy}}, about {{out.monthly_kwh_estimate|int}} units a month."
   },
   {
    "inputs": {
     "loads": "@data.load_profiles.mosque_large.loads"
    },
    "title": "Larger mosque with main hall and veranda",
-   "text": "More fans and lights, 2 ton inverter ACs, a bigger pump, extra dispensers and the sound system: {{out.running_w|int}} W running, {{out.daily_kwh|1}} units a day. Solar {{out.installed_kw|2}} kW ({{out.panels|int}} panels), inverter {{out.inverter_kw|up2}} kW, which installers may split across two inverters."
+   "text": "More fans and lights, 2 ton inverter ACs, a bigger pump, extra dispensers and the sound system: {{out.running_w|int}} W running, {{out.daily_kwh|1}} units a day. Solar {{out.installed_kw|2}} kW ({{out.panels|int}} panels), inverter {{out.inverter_buy}}, which installers may split across two inverters."
   },
   {
    "inputs": {
     "loads": "@data.load_profiles.shop_small.loads"
    },
    "title": "Small shop open all day",
-   "text": "Lights, fans, a deep freezer, a computer, CCTV and Wi-Fi: {{out.running_w|int}} W running, {{out.daily_kwh|1}} units a day. Solar {{out.installed_kw|2}} kW ({{out.panels|int}} panels) with a {{out.inverter_kw|up2}} kW inverter, about {{out.monthly_kwh_estimate|int}} units a month."
+   "text": "Lights, fans, a deep freezer, a computer, CCTV and Wi-Fi: {{out.running_w|int}} W running, {{out.daily_kwh|1}} units a day. Solar {{out.installed_kw|2}} kW ({{out.panels|int}} panels) with an inverter of {{out.inverter_buy}}, about {{out.monthly_kwh_estimate|int}} units a month."
   },
   {
    "inputs": {
     "loads": "@data.load_profiles.shop_ac.loads"
    },
    "title": "Shop with a 1.5 ton inverter AC",
-   "text": "The same shop with more lights and an inverter AC for most of the day: {{out.running_w|int}} W running, {{out.daily_kwh|1}} units a day. Solar {{out.installed_kw|2}} kW ({{out.panels|int}} panels), inverter {{out.inverter_kw|up2}} kW."
+   "text": "The same shop with more lights and an inverter AC for most of the day: {{out.running_w|int}} W running, {{out.daily_kwh|1}} units a day. Solar {{out.installed_kw|2}} kW ({{out.panels|int}} panels), inverter {{out.inverter_buy}}."
   },
   {
    "inputs": {
@@ -187,7 +207,7 @@
     "battery_v": 48
    },
    "title": "Small mosque with {{out.night_hours|int}} hours of battery for Maghrib and Isha",
-   "text": "Panels and inverter stay at {{out.installed_kw|2}} kW and {{out.inverter_kw|up2}} kW; the battery must hold {{out.night_kwh|1}} units, about {{out.battery_ah|up}} Ah at {{out.battery_v|int}} V. That assumes the whole list runs after dark; with fans and lights only, the battery is far smaller."
+   "text": "The panels stay at {{out.installed_kw|2}} kW; the inverter becomes a hybrid of {{out.inverter_buy}} with a surge rating of at least {{out.inverter_surge_w|int}} W, because it carries the mosque in a power cut; the battery must hold {{out.night_kwh|1}} units, about {{out.battery_ah|up}} Ah at {{out.battery_v|int}} V. That assumes the whole list runs after dark; with fans and lights only, the battery is far smaller."
   }
  ],
  "table": {
@@ -230,7 +250,7 @@
    },
    {
     "label": "Inverter",
-    "tpl": "{{out.inverter_kw|up2}} kW"
+    "tpl": "{{out.inverter_buy}}"
    },
    {
     "label": "Units a month",
@@ -241,7 +261,7 @@
  "mistakes": [
   "Sizing a mosque from its yearly bill. The winter bill is small and the summer Zuhr load with ACs is large; size from the summer list of loads and hours, as this page does.",
   "Using the default list without checking. The mosque and shop lists are estimates; count your own fans, lights and ACs and the hours they run.",
-  "Forgetting the water pump for wudu. It runs for a short time but its starting surge sets the inverter's surge rating.",
+  "Forgetting the water pump for wudu. It runs for a short time but its starting surge sets a hybrid inverter's surge rating.",
   "Sizing a battery for every load. Night prayers usually need fans and lights only; list those alone for a battery you can afford.",
   "Assuming a domestic tariff for a shop. Shops are billed on the commercial tariff; use the rate on your own bill for the saving."
  ],
@@ -249,7 +269,7 @@
  "faq": [
   {
    "q": "How many kW of solar does a mosque need?",
-   "a": "The small one-hall mosque here needs about {{out.installed_kw|2}} kW with a {{out.inverter_kw|up2}} kW inverter; the larger mosque with 2 ton ACs about {{ex.1.out.installed_kw|2}} kW. Enter your own fans, lights, ACs and hours for your figure."
+   "a": "The small one-hall mosque here needs about {{out.installed_kw|2}} kW with an inverter of {{out.inverter_buy}}; the larger mosque with 2 ton ACs about {{ex.1.out.installed_kw|2}} kW. Enter your own fans, lights, ACs and hours for your figure."
   },
   {
    "q": "Can a mosque run its ACs on solar?",
@@ -257,7 +277,7 @@
   },
   {
    "q": "What size solar system does a small shop need?",
-   "a": "About {{ex.2.out.installed_kw|2}} kW with a {{ex.2.out.inverter_kw|up2}} kW inverter for lights, fans, a deep freezer, a computer, CCTV and Wi-Fi through the day, and about {{ex.3.out.installed_kw|2}} kW with one inverter AC."
+   "a": "About {{ex.2.out.installed_kw|2}} kW with an inverter of {{ex.2.out.inverter_buy}} for lights, fans, a deep freezer, a computer, CCTV and Wi-Fi through the day, and about {{ex.3.out.installed_kw|2}} kW with one inverter AC."
   },
   {
    "q": "Does a mosque need a battery with solar?",
@@ -265,7 +285,7 @@
   },
   {
    "q": "How much does a solar system for a mosque cost?",
-   "a": "Prices change with the dollar rate, so we do not print one here. Use the solar price estimator for the current range for {{out.installed_kw|2}} kW, and ask installers for an itemised quote."
+   "a": "About {{px.out.price_low_rs|rsm}} to {{px.out.price_high_rs|rsm}} installed for the small mosque's {{out.installed_kw|2}} kW on-grid system with no battery, from price lists checked on {{px.checked}}. Use the [[D14|solar system price calculator]] for your own size and ask installers for an itemised quote."
   },
   {
    "q": "Where do the mosque and shop load lists come from?",
@@ -294,5 +314,9 @@
    "label": "Wattlyst methodology and default values",
    "url": "/methodology/"
   }
- ]
+ ],
+ "price_of": {
+  "kwp": "installed_kw",
+  "type": "on-grid"
+ }
 }

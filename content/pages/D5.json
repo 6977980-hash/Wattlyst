@@ -106,8 +106,13 @@
    "unit": "kW"
   },
   {
+   "key": "inverter_buy",
+   "label": "Inverter to buy",
+   "spec": "raw"
+  },
+  {
    "key": "inverter_kw",
-   "label": "Inverter size",
+   "label": "Inverter, at least",
    "spec": "up2",
    "unit": "kW"
   },
@@ -119,7 +124,7 @@
   }
  ],
  "answer": "A 1.5 ton inverter AC running {{in.hours|int}} hours a day in Lahore needs {{out.panels|int}} solar panels of {{out.panel_w|int}} W ({{out.installed_kw|2}} kW installed) and a {{out.inverter_kw|up2}} kW inverter, with no battery for daytime use. It uses about {{out.daily_kwh|1}} units a day, and each kW of panels in Lahore makes about {{out.yield_kwh_per_kwp_day|1}} units a day.",
- "how": "{{out.ac_name}} draws about {{out.ac_avg_w|int}} W on average, so {{in.hours}} hours a day = {{out.daily_kwh|1}} units. Energy: {{out.daily_kwh|1}} units ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW per day in your city = {{out.kw_energy|2}} kW. Power: the panels must also carry the AC's running {{out.running_w|int}} W at midday, {{out.running_w|int}} W ÷ {{out.pr|2}} performance ratio = {{out.kw_power|2}} kW. The larger, {{out.kw|2}} kW, ÷ {{out.panel_w}} W per panel, rounded up = {{out.panels|int}} panels, {{out.installed_kw|2}} kW installed (about {{out.roof_m2|1}} m² of roof). Inverter: the larger of {{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_kw_load|2}} kW for the load and {{out.installed_kw|2}} kW of panels ÷ {{out.dc_ac_ratio_max|1}} = {{out.inverter_kw_array|2}} kW, so the panels are never more than {{out.dc_ac_ratio_max|1}} times the inverter: {{out.inverter_kw|up2}} kW continuous, with a surge rating of at least {{out.inverter_surge_w|int}} W.",
+ "how": "{{out.ac_name}} draws about {{out.ac_avg_w|int}} W on average, so {{in.hours}} hours a day = {{out.daily_kwh|1}} units. Energy: {{out.daily_kwh|1}} units ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW per day in your city = {{out.kw_energy|2}} kW. Power: the panels must also carry the AC's running {{out.running_w|int}} W at midday, {{out.running_w|int}} W ÷ {{out.pr|2}} performance ratio = {{out.kw_power|2}} kW. The larger, {{out.kw|2}} kW, ÷ {{out.panel_w}} W per panel, rounded up = {{out.panels|int}} panels, {{out.installed_kw|2}} kW installed (about {{out.roof_m2|1}} m² of roof). Inverter: the larger of {{out.running_w|int}} W × {{out.margin|2}} = {{out.inverter_kw_load|2}} kW for the load and {{out.installed_kw|2}} kW of panels ÷ {{out.dc_ac_ratio_max|1}} = {{out.inverter_kw_array|2}} kW, so the panels are never more than {{out.dc_ac_ratio_max|1}} times the inverter: {{out.inverter_kw|up2}} kW continuous (the size to buy: {{out.inverter_buy}}), with a surge rating of at least {{out.inverter_surge_w|int}} W.",
  "key_facts": [
   "A 1.5 ton inverter AC uses about {{out.daily_kwh|1}} units in {{in.hours|int}} hours (about {{out.ac_avg_w|int}} W average), which in Lahore needs {{out.panels|int}} panels of {{out.panel_w|int}} W, or {{out.installed_kw|2}} kW of solar.",
   "Solar panels for an AC are sized two ways and the larger wins: energy (daily units ÷ the city's units per kW per day) and power (the AC's running watts ÷ the performance ratio of {{d.pr|2}}, so the array can carry the AC at midday without a battery).",

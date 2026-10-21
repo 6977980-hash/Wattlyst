@@ -3788,11 +3788,12 @@
       "installed_kw": 1.17,
       "inverter_kw_load": 0.625,
       "inverter_w": 900,
-      "inverter_surge_w": 500,
-      "limited_by": "energy"
+      "limited_by": "energy",
+      "grid_tied": true,
+      "inverter_pick_kw": 1
     },
     "tolerance": 0.01,
-    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): yield input overrides city. Inverter raised 2026-10-14 to keep the array within dc_ac_ratio_max (formulas.md D5/D8); inverter_kw_load is the old P_run x margin figure."
+    "note": "Engineer Reviewer edge case 13 Oct 2026 (Phase 3): yield input overrides city. Inverter raised 2026-10-14 to keep the array within dc_ac_ratio_max (formulas.md D5/D8); inverter_kw_load is the old P_run x margin figure. 21 Oct 2026 audit Phase 4 WL-171/174: no battery = an on-grid inverter, sized by the array alone (1.17 kW ÷ 1.3 = 900 W), no surge rating; next size sold 1 kW."
   },
   {
     "calc": "solar_from_loads",
@@ -4526,13 +4527,18 @@
       "daily_kwh": 55.928,
       "kw_energy": 12.857,
       "kw_power": 11.95,
-      "panels": 22,
-      "installed_kw": 12.87,
+      "panels": 30,
+      "installed_kw": 17.55,
       "drive_kw": 11.652,
-      "limited_by": "energy"
+      "limited_by": "energy",
+      "panels_energy": 22,
+      "series": 15,
+      "strings": 2,
+      "drive_pick_kw": 15,
+      "string_voc_cold_v": 830.561
     },
     "tolerance": 0.001,
-    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/. 21 Oct 2026 audit Phase 4 WL-172/174: string = ceil(1.35 × 400 V ÷ (44.21 V × (1 − 0.35% × 45))) = ceil(540 ÷ 37.247) = 15 panels; 22 panels by energy → 2 strings = 30; drive max(11.652, 7.457) kW → 15 kW VFD; cold Voc 15 × 52.36 × (1 + 0.23% × 25) = 830.56 V."
   },
   {
     "calc": "solar_for_pump",
@@ -4546,11 +4552,14 @@
       "pump_w": 4660.625,
       "kw_power": 5.975,
       "kw_energy": 4.666,
-      "panels": 11,
-      "limited_by": "power"
+      "panels": 15,
+      "limited_by": "power",
+      "panels_energy": 11,
+      "series": 15,
+      "strings": 1
     },
     "tolerance": 0.001,
-    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/. 21 Oct 2026 audit Phase 4 WL-172: 11 panels by the power rule, one whole string of 15 for the drive voltage."
   },
   {
     "calc": "solar_for_pump",
@@ -6905,7 +6914,7 @@
   },
   {
     "calc": "backup_compare",
-    "name": "600 W through 4 h a day for 5 years: hybrid solar cheapest",
+    "name": "600 W through 4 h a day for 5 years: UPS cheapest once the hybrid has the panels to start",
     "inputs": {
       "load_w": 600,
       "hours": 4,
@@ -6923,12 +6932,14 @@
       "gen_total": 1622690.461,
       "inverter_kw": 6,
       "lithium_packs": 1,
-      "panels": 2,
-      "solar_total": 559767.5,
-      "cheapest": "hybrid solar"
+      "panels": 4,
+      "solar_total": 609785,
+      "cheapest": "UPS",
+      "panels_energy": 2,
+      "string_min": 4
     },
     "tolerance": 0.001,
-    "note": "Full audit 2026-10-15 Phase 2b: UPS rows labelled by their real VA (WL-97), the hybrid inverter must take the 51.2 V pack, so the 6 kW 48 V row (WL-98), 30.42-day months (WL-106); recomputed from data/. Re-derived 2026-10-21 for the data refresh (WL-159 fuel price, WL-160 1.2 kVA UPS high price)."
+    "note": "Full audit 2026-10-15 Phase 2b: UPS rows labelled by their real VA (WL-97), the hybrid inverter must take the 51.2 V pack, so the 6 kW 48 V row (WL-98), 30.42-day months (WL-106); recomputed from data/. Re-derived 2026-10-21 for the data refresh (WL-159 fuel price, WL-160 1.2 kVA UPS high price). 21 Oct 2026 audit Phase 4 WL-230: a 48 V hybrid inverter needs hot Voc ≥ 150 V and hot Vmp ≥ 120 V: max(ceil(150 ÷ 46.941), ceil(120 ÷ 37.247)) = 4 panels, 2 more than the refill needs: + 2 × 585 W × Rs 42.75 = Rs 50,017.5."
   },
   {
     "calc": "backup_compare",
@@ -6943,11 +6954,11 @@
       "batteries": 1,
       "ups_total": 208633.272,
       "gen_total": 678508.514,
-      "solar_total": 534758.75,
+      "solar_total": 609785,
       "cheapest": "UPS"
     },
     "tolerance": 0.001,
-    "note": "Full audit 2026-10-15 Phase 2b: UPS rows labelled by their real VA (WL-97), the hybrid inverter must take the 51.2 V pack, so the 6 kW 48 V row (WL-98), 30.42-day months (WL-106); recomputed from data/. Re-derived 2026-10-21 for the data refresh (WL-159 fuel price, WL-160 1.2 kVA UPS high price)."
+    "note": "Full audit 2026-10-15 Phase 2b: UPS rows labelled by their real VA (WL-97), the hybrid inverter must take the 51.2 V pack, so the 6 kW 48 V row (WL-98), 30.42-day months (WL-106); recomputed from data/. Re-derived 2026-10-21 for the data refresh (WL-159 fuel price, WL-160 1.2 kVA UPS high price). 21 Oct 2026 audit Phase 4 WL-230: 4 panels (string minimum) instead of 1: + 3 × 585 W × Rs 42.75."
   },
   {
     "calc": "backup_compare",
@@ -6985,10 +6996,10 @@
       "solar_repl": 1,
       "ups_total": 1161079.675,
       "gen_total": 3109430.921,
-      "solar_total": 822267.5
+      "solar_total": 872285
     },
     "tolerance": 0.001,
-    "note": "Full audit 2026-10-15 Phase 2b: UPS rows labelled by their real VA (WL-97), the hybrid inverter must take the 51.2 V pack, so the 6 kW 48 V row (WL-98), 30.42-day months (WL-106); recomputed from data/. Re-derived 2026-10-21 for the data refresh (WL-159 fuel price, WL-160 1.2 kVA UPS high price)."
+    "note": "Full audit 2026-10-15 Phase 2b: UPS rows labelled by their real VA (WL-97), the hybrid inverter must take the 51.2 V pack, so the 6 kW 48 V row (WL-98), 30.42-day months (WL-106); recomputed from data/. Re-derived 2026-10-21 for the data refresh (WL-159 fuel price, WL-160 1.2 kVA UPS high price). 21 Oct 2026 audit Phase 4 WL-230: 4 panels instead of 2."
   },
   {
     "calc": "backup_compare",
@@ -7924,10 +7935,12 @@
       "panels": 3,
       "installed_kw": 1.755,
       "limited_by": "energy",
-      "inverter_w": 5512.5
+      "inverter_w": 1350,
+      "grid_tied": true,
+      "inverter_pick_kw": 1.5
     },
     "tolerance": 0.001,
-    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/."
+    "note": "Full audit 2026-10-15 Phase 2b, WL-106: a month is 365 ÷ 12 = 30.42 days and the city yield is the sum of the monthly PVOUT ÷ 365 (three decimals); recomputed from data/. 21 Oct 2026 audit Phase 4 WL-171: on-grid (no backup hours): inverter = 1.755 kW ÷ 1.3 = 1,350 W, next size 1.5 kW; the 5,512.5 W load rule is for a hybrid."
   },
   {
     "calc": "solar_from_loads",
@@ -10209,5 +10222,299 @@
     },
     "tolerance": 0.01,
     "note": "21 Oct 2026 audit Phase 3 WL-223."
+  },
+  {
+    "calc": "solar_from_loads",
+    "name": "Hybrid list (backup hours): the inverter carries the load and the battery is sized",
+    "inputs": {
+      "loads": [
+        {
+          "watts": 4000,
+          "hours": 1
+        }
+      ],
+      "yield_kwh_per_kwp_day": 5,
+      "night_hours": 2,
+      "battery_v": 48
+    },
+    "expected": {
+      "grid_tied": false,
+      "inverter_w": 5000,
+      "inverter_surge_w": 4000,
+      "inverter_pick_kw": 5,
+      "night_kwh": 8,
+      "battery_ah": 205.761,
+      "battery_kwh": 9.877,
+      "panels": 2
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit Phase 4 WL-169/171/174: 4,000 W × 1.25 = 5,000 W (the array 1.17 kW ÷ 1.3 is smaller); battery 8 kWh ÷ (48 V × 0.9 × 0.9) = 205.76 Ah."
+  },
+  {
+    "calc": "solar_from_loads",
+    "name": "Same list with no backup hours: an on-grid inverter from the panels, no surge rating",
+    "inputs": {
+      "loads": [
+        {
+          "watts": 4000,
+          "hours": 1
+        }
+      ],
+      "yield_kwh_per_kwp_day": 5
+    },
+    "expected": {
+      "grid_tied": true,
+      "inverter_w": 900,
+      "inverter_pick_kw": 1,
+      "array_voc_cold_v": 110.741
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit Phase 4 WL-171/175: 2 × 585 W = 1.17 kW ÷ 1.3 = 900 W; cold string Voc 2 × 55.371 V."
+  },
+  {
+    "calc": "solar_from_loads",
+    "name": "Inverter above the listed sizes: the minimum is shown with the flag",
+    "inputs": {
+      "loads": [
+        {
+          "watts": 40000,
+          "hours": 1
+        }
+      ],
+      "yield_kwh_per_kwp_day": 5,
+      "night_hours": 1
+    },
+    "expected": {
+      "inverter_w": 50000,
+      "inverter_above_standard_sizes": true
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit Phase 4 WL-174: 40 kW × 1.25 = 50 kW, above the largest listed 30 kW."
+  },
+  {
+    "calc": "solar_size",
+    "name": "Roof area follows the panel size: 330 W and 500 W panels",
+    "inputs": {
+      "daily_kwh": 10,
+      "yield_kwh_per_kwp_day": 5,
+      "panel_w": 330
+    },
+    "expected": {
+      "panels": 7,
+      "panel_area_m2": 1.63,
+      "roof_m2": 11.41
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit Phase 4 WL-232: 2 kW ÷ 330 W = 7 panels × 1.63 m² (330 W row of panel_area_m2_by_w)."
+  },
+  {
+    "calc": "solar_size",
+    "name": "Roof area of a panel size between two rows takes the row below",
+    "inputs": {
+      "daily_kwh": 10,
+      "yield_kwh_per_kwp_day": 5,
+      "panel_w": 500
+    },
+    "expected": {
+      "panels": 4,
+      "panel_area_m2": 2.4111,
+      "roof_m2": 9.6444
+    },
+    "tolerance": 0.001,
+    "note": "21 Oct 2026 audit Phase 4 WL-232: 500 W × 2.17 m² ÷ 450 W = 2.411 m² per panel (the less efficient 450 W class)."
+  },
+  {
+    "calc": "solar_for_pump",
+    "name": "1 hp, 220 V motor: one string of 8 panels for the drive voltage",
+    "inputs": {
+      "hp": 1,
+      "hours": 6,
+      "yield_kwh_per_kwp_day": 5,
+      "motor_v": 220
+    },
+    "expected": {
+      "pump_w": 932.125,
+      "panels_energy": 3,
+      "series": 8,
+      "strings": 1,
+      "panels": 8,
+      "drive_kw": 1.1652,
+      "drive_pick_kw": 1.5,
+      "string_vmp_hot_v": 297.975
+    },
+    "tolerance": 0.001,
+    "note": "21 Oct 2026 audit Phase 4 WL-172/179: 1.35 × 220 = 297 V ÷ 37.247 V = 7.97 → 8 in series; power rule 0.932 ÷ 0.78 = 1.195 kW = 3 panels; drive max(1.165, 0.746) → 1.5 kW."
+  },
+  {
+    "calc": "backup_compare",
+    "name": "Hybrid row never has fewer panels than the starting string",
+    "inputs": {
+      "load_w": 300,
+      "hours": 2,
+      "years": 5,
+      "tariff": 36.46
+    },
+    "expected": {
+      "panels_energy": 1,
+      "string_min": 4,
+      "panels": 4
+    },
+    "tolerance": 0,
+    "note": "21 Oct 2026 audit Phase 4 WL-230."
+  },
+  {
+    "calc": "home_decision",
+    "name": "1 kW sanctioned: one panel cannot start a hybrid inverter, so the hybrid is not counted",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ceiling-fan-ac",
+          "qty": 4
+        },
+        {
+          "id": "led-bulb",
+          "qty": 10
+        },
+        {
+          "id": "ac-split-1-5ton-inverter",
+          "qty": 1,
+          "hours": 7
+        },
+        {
+          "id": "refrigerator-inverter",
+          "qty": 1
+        },
+        {
+          "id": "led-tv-43",
+          "qty": 1
+        }
+      ],
+      "city": "lahore",
+      "sanctioned_kw": 1,
+      "backup_w": 500,
+      "backup_hours": 4
+    },
+    "expected": {
+      "net_billing_panels": 1,
+      "hybrid_available": false
+    },
+    "tolerance": 0,
+    "note": "21 Oct 2026 audit Phase 4 WL-230: 1 panel < the 4-panel starting string."
+  },
+  {
+    "calc": "home_plan",
+    "name": "Inverter to buy: the next listed size above the planner's minimum",
+    "inputs": {
+      "loads": [
+        {
+          "id": "ceiling-fan-ac",
+          "qty": 4
+        },
+        {
+          "id": "ac-split-1-5ton-inverter",
+          "hours": 8
+        },
+        {
+          "id": "refrigerator-inverter"
+        }
+      ],
+      "backup_w": 500,
+      "backup_hours": 4,
+      "city": "lahore",
+      "sanctioned_kw": 4
+    },
+    "expected": {
+      "inverter_w": 2700,
+      "inverter_buy": "3 kW"
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit Phase 4 WL-174: 2.7 kW → 3 kW from standard_inverter_kw."
+  },
+  {
+    "calc": "solar_for_ac",
+    "name": "Inverter to buy for a 1.5 ton inverter AC",
+    "inputs": {
+      "ac": "ac-split-1-5ton-inverter",
+      "city": "lahore",
+      "hours": 8
+    },
+    "expected": {
+      "inverter_w": 1812.5,
+      "inverter_pick_kw": 2,
+      "inverter_buy": "2 kW",
+      "grid_tied": false
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit Phase 4 WL-174: D5 runs the AC on sun, so the inverter carries it: 1,450 × 1.25 = 1,812.5 W → 2 kW."
+  },
+  {
+    "calc": "quote_checker",
+    "name": "Hybrid quote with its battery: on-grid range + battery + hybrid inverter extra",
+    "inputs": {
+      "kwp": 10,
+      "type": "hybrid",
+      "price": 1500000,
+      "battery_kwh": 5.12
+    },
+    "expected": {
+      "range_low_rs": 1392500,
+      "range_high_rs": 1737500,
+      "battery_low_rs": 215000,
+      "battery_high_rs": 310000,
+      "inverter_premium_rs": 227500,
+      "verdict": "within"
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit Phase 4 WL-173: on-grid 10 kW Rs 950,000 to 1,200,000 + one 5.12 kWh pack Rs 215,000 to 310,000 + hybrid 10 kW mid Rs 462,500 − on-grid inverter 10 kW mid Rs 235,000."
+  },
+  {
+    "calc": "quote_checker",
+    "name": "Hybrid quote with a big lithium bank is below the range a battery that size needs",
+    "inputs": {
+      "kwp": 10,
+      "type": "hybrid",
+      "price": 1500000,
+      "battery_kwh": 15.36
+    },
+    "expected": {
+      "range_low_rs": 1822500,
+      "verdict": "below"
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit Phase 4 WL-173: three packs Rs 645,000 low."
+  },
+  {
+    "calc": "quote_checker",
+    "name": "Hybrid quote with tubular batteries",
+    "inputs": {
+      "kwp": 10,
+      "type": "hybrid",
+      "price": 1500000,
+      "battery_kwh": 9.6,
+      "chemistry": "tubular"
+    },
+    "expected": {
+      "battery_low_rs": 162480,
+      "battery_high_rs": 290000,
+      "range_low_rs": 1339980
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit Phase 4 WL-173: 9.6 kWh ÷ (12 V × 200 Ah) = 4 batteries × Rs 40,620 to 72,500."
+  },
+  {
+    "calc": "quote_checker",
+    "name": "Hybrid quote without the battery: hybrid range, flagged",
+    "inputs": {
+      "kwp": 10,
+      "type": "hybrid",
+      "price": 1500000
+    },
+    "expected": {
+      "range_low_rs": 1400000,
+      "battery_unknown": true,
+      "verdict": "within"
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit Phase 4 WL-173."
   }
 ]

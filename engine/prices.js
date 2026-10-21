@@ -1,5 +1,6 @@
 // Solar prices (formulas.md Phase 4 N3/D14, Phase 5 D9): every figure comes from data/solar-prices.json.
 import { calculator, CalcError, has, pos, num, pick, dflt } from './core.js';
+import { fmt } from './format.js';
 
 /**
  * Typical installed price range (Rs per W) for a system type and size from data/solar-prices.json:
@@ -67,8 +68,9 @@ export function rank(xs) {
 }
 
 /**
- * N3: Rs/W = price / (kWp × 1000), compared with the typical range for the type (priceRange) or an
- * explicit range_low/range_high in Rs per W. Verdict: below / within / above. Never names an installer as cheating.
+ * N3: Rs/W = price / (kWp × 1000), compared with the typical range for the type (priceRange; a hybrid with its battery
+ * kWh: on-grid range + battery + hybrid inverter premium) or an explicit range_low/range_high in Rs per W.
+ * Verdict: below / within / above. Never names an installer as cheating.
  */
 export const quote_checker = calculator((i, d) => {
   const kwp = pos(i, 'kwp');
@@ -81,11 +83,34 @@ export const quote_checker = calculator((i, d) => {
     lo = pos(i, 'range_low');
     hi = pos(i, 'range_high');
     out.range_source = 'input';
+    out.range_basis = 'your own range';
   } else if (has(i, 'type')) {
     const type = pick(i, 'type', ['on-grid', 'hybrid']);
-    const r = priceRange(d, type, kwp);
+    // A hybrid quote with its battery stated (WL-173): the on-grid range for the kW + the battery at its dated price range
+    // + the hybrid inverter premium (as the decision engine); without the battery, the hybrid range (any battery), flagged.
+    const bat = type === 'hybrid' && has(i, 'battery_kwh');
+    const r = priceRange(d, bat ? 'on-grid' : type, kwp);
     ({ lo, hi } = r);
     Object.assign(out, { type, range_source: 'data', low_confidence: r.low_confidence }, r.range_kw_used !== undefined ? { range_kw_used: r.range_kw_used } : { range_between_kw: r.range_between_kw });
+    if (bat) {
+      const battery_kwh = pos(i, 'battery_kwh');
+      const items = d?.component_prices?.items || [];
+      const pack = d?.backup_prices?.lithium_pack;
+      const tub = d?.backup_prices?.tubular_unit;
+      const li = pick(i, 'chemistry', ['lifepo4', 'tubular'], 'lifepo4') === 'lifepo4';
+      const item = items.find((x) => (li ? x.category === 'lithium_battery' && x.size === pack?.size : x.category === 'tubular_battery'));
+      if (!item || !pack || !tub) throw new CalcError('price_data_missing', 'battery_kwh');
+      const unit_kwh = li ? pack.kwh : (tub.v * tub.ah) / 1000;
+      const [premium] = hybridPremium(items, kwp, 0, pack.bank_v);
+      const w = kwp * 1000;
+      const battery_low_rs = (battery_kwh / unit_kwh) * item.low;
+      const battery_high_rs = (battery_kwh / unit_kwh) * item.high;
+      lo += (battery_low_rs + premium) / w;
+      hi += (battery_high_rs + premium) / w;
+      Object.assign(out, { battery_kwh, chemistry: li ? 'lifepo4' : 'tubular', battery_low_rs, battery_high_rs, inverter_premium_rs: premium, low_confidence: out.low_confidence || (item.n_sources ?? 0) < 2,
+        range_basis: `on-grid range + ${fmt(battery_kwh, '2')} kWh ${li ? 'lithium' : 'tubular'} battery at ${fmt(battery_low_rs, 'rs')} to ${fmt(battery_high_rs, 'rs')} + ${fmt(premium, 'rs')} hybrid inverter extra` });
+    } else if (type === 'hybrid') Object.assign(out, { range_basis: 'hybrid with any battery', battery_unknown: true });
+    else out.range_basis = 'on-grid';
   }
   if (lo !== undefined) {
     if (lo > hi) throw new CalcError('range_invalid', 'range_low');

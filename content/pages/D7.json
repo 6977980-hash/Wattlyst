@@ -69,7 +69,7 @@
   "Solar system size in kW = units used a day ÷ the units one kW of solar makes a day in the city; {{out.daily_kwh|1}} units a day in Lahore needs {{out.kw|2}} kW, installed as {{out.panels|int}} panels of {{out.panel_w|int}} W.",
   "In Lahore one kW of solar makes about {{out.yield_kwh_per_kwp_day|1}} units a day over the year, in Quetta about {{ex.3.out.yield_kwh_per_kwp_day|1}}, so the same {{ex.3.out.daily_kwh|1}} units a day needs {{out.installed_kw|2}} kW in Lahore but {{ex.3.out.installed_kw|2}} kW in Quetta (Global Solar Atlas).",
   "A bill of five hundred units a month is {{ex.1.out.daily_kwh|1}} units a day and needs a {{ex.1.out.installed_kw|2}} kW system ({{ex.1.out.panels|int}} panels) in Lahore; three hundred units a month needs {{ex.2.out.installed_kw|2}} kW ({{ex.2.out.panels|int}} panels).",
-  "Each {{out.panel_w|int}} W panel needs about {{d.panel_area_m2|1}} m² of roof, so a {{out.installed_kw|2}} kW system takes about {{out.roof_m2|1}} m² and a {{ex.4.out.installed_kw|2}} kW system about {{ex.4.out.roof_m2|1}} m²."
+  "Each {{out.panel_w|int}} W panel needs about {{out.panel_area_m2|1}} m² of roof, so a {{out.installed_kw|2}} kW system takes about {{out.roof_m2|1}} m² and a {{ex.4.out.installed_kw|2}} kW system about {{ex.4.out.roof_m2|1}} m²."
  ],
  "formula": {
   "text": "kW = E_day ÷ yield; panels = ceil(kW × 1000 ÷ W_panel); kW_installed = panels × W_panel ÷ 1000; units_month = kW_installed × yield × {{d.days_per_month|2}}",
@@ -112,7 +112,7 @@
   {
    "h2": "How much roof does the solar system need?",
    "p": [
-    "Each {{out.panel_w|int}} W panel needs about {{d.panel_area_m2|1}} m², so {{out.panels|int}} panels take about {{out.roof_m2|1}} m² of unshaded roof, plus walkways. A large house using {{ex.4.out.daily_kwh|1}} units a day needs {{ex.4.out.panels|int}} panels on about {{ex.4.out.roof_m2|1}} m². Water tanks, stairs and a parapet shadow all cost panels, so measure the clear area before you fix the size."
+    "Each {{out.panel_w|int}} W panel needs about {{out.panel_area_m2|1}} m², so {{out.panels|int}} panels take about {{out.roof_m2|1}} m² of unshaded roof, plus walkways. A large house using {{ex.4.out.daily_kwh|1}} units a day needs {{ex.4.out.panels|int}} panels on about {{ex.4.out.roof_m2|1}} m². Water tanks, stairs and a parapet shadow all cost panels, so measure the clear area before you fix the size."
    ]
   }
  ],

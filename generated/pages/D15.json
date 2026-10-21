@@ -35,7 +35,7 @@
    "url": "/solar/tubewell-solar-calculator/"
   }
  ],
- "modified": "2026-10-13",
+ "modified": "2026-10-21",
  "content": {
   "intro": "",
   "sections": [
@@ -43,20 +43,21 @@
     "h2": "How do I convert tubewell HP to solar kW?",
     "p": [
      "Start from the motor, not the pump. One horsepower is 745.7 W of mechanical output, and a pump motor turns electricity into that output at about 80% efficiency, so a 10 hp motor pulls about 9,321 W (9.32 kW) from the drive. That is the power the panels must deliver at midday, after their own losses.",
-     "Panels are rated at standard test conditions and rarely deliver that in a hot, dusty field; the performance ratio of 0.78 allows for heat, dust, cable loss and mismatch. So the array for the midday power rule alone is 9,321 W ÷ 0.78 = 11.95 kW, and the energy rule for 6 hours of pumping asks for 12.86 kW. The calculator takes the larger of the two, 12.86 kW, and rounds up to whole panels: 22 × 585 W = 12.87 kW."
+     "Panels are rated at standard test conditions and rarely deliver that in a hot, dusty field; the performance ratio of 0.78 allows for heat, dust, cable loss and mismatch. So the array for the midday power rule alone is 9,321 W ÷ 0.78 = 11.95 kW, and the energy rule for 6 hours of pumping asks for 12.86 kW. The calculator takes the larger of the two, 12.86 kW, and rounds up to whole panels: 30 × 585 W = 17.55 kW."
     ]
    },
    {
     "h2": "Solar water pump calculator: what pumping hours mean",
     "p": [
      "A solar pump without a battery runs on whatever the sun gives. Early and late in the day the drive runs the motor slowly and the flow is small; around midday the array reaches full power and the pump gives its rated flow. The pumping hours field is the number of full-speed hours you need on an average day; the sun yield for your city already converts that into the morning and evening part-speed running.",
-     "Fewer hours shrink the array only down to the midday power rule. The fourth worked example shows the 10 hp pump at 4 hours a day: the energy rule falls to 8.57 kW but the power rule stays at 11.95 kW, so the array only drops to 12.29 kW, one panel fewer. For more water, run more hours, use a larger tank or channel the field at midday rather than oversizing the motor."
+     "Fewer hours shrink the array only down to the midday power rule. The fourth worked example shows the 10 hp pump at 4 hours a day: the energy rule falls to 8.57 kW but the power rule stays at 11.95 kW, so the array stays at 17.55 kW, bought in whole strings of 15 panels. For more water, run more hours, use a larger tank or channel the field at midday rather than oversizing the motor."
     ]
    },
    {
     "h2": "VFD solar pump drive: why no battery and no starting surge",
     "p": [
-     "A solar tubewell uses a solar pump drive, a variable-frequency drive (VFD) built for DC input from the panels. It converts the array DC into three-phase AC at a frequency that follows the available sunlight, tracking the array's maximum power point, and it ramps the motor up over several seconds. Because of that soft start, the starting surge that forces a generator for the same pump to be several times the running watts does not apply; choose a drive rated for the motor's 7.46 kW and its nameplate full-load current, and not below the larger of 9,321 W × 1.25 and the panel kW ÷ 1.3, 11.66 kW; the array's cold open-circuit voltage must also stay inside the drive's maximum DC input.",
+     "A solar tubewell uses a solar pump drive, a variable-frequency drive (VFD) built for DC input from the panels. It converts the array DC into three-phase AC at a frequency that follows the available sunlight, tracking the array's maximum power point, and it ramps the motor up over several seconds. Because of that soft start, the starting surge that forces a generator for the same pump to be several times the running watts does not apply; choose a drive rated for the motor's 7.46 kW and its nameplate full-load current, and not below 9,321 W × 1.25, so at least 11.66 kW: the drive to buy is 15 kW. The string's cold open-circuit voltage, about 831 V here, must stay inside the drive's maximum DC input.",
+     "The drive also needs enough voltage. It makes the motor's AC from the string's DC, so a 400 V motor runs at full speed only from about 540 V of DC, which on a hot afternoon takes 15 panels of 585 W in series. The panels are therefore bought in whole strings, and a small pump can need more panels than its daily units alone ask for, because a shorter string leaves the motor slow all day. Pick the lower voltage in the motor voltage box for a single-phase or low-voltage motor: its string is shorter.",
      "The drive also makes a battery unnecessary. Storing water is far cheaper than storing electricity: a pond, an overhead tank or simply irrigating in daylight does the job of the battery at a fraction of the cost. A battery is worth considering only where the pump must run at night, for example for livestock drinking water, and then it is sized for the night hours only."
     ]
    },
@@ -77,7 +78,7 @@
    {
     "h2": "Solar tubewell price: how to compare quotes",
     "p": [
-     "We do not print a solar tubewell or solar water pump price here because panel, drive and structure prices in Pakistan change with the exchange rate from month to month. Ask suppliers for a complete quote for a 12.87 kW array with a 11.66 kW drive for your 10 hp pump, and compare quotes in Rs per watt of panels plus the drive as a separate line.",
+     "We do not print a solar tubewell or solar water pump price here because panel, drive and structure prices in Pakistan change with the exchange rate from month to month. Ask suppliers for a complete quote for a 17.55 kW array with a drive of 15 kW for your 10 hp pump, and compare quotes in Rs per watt of panels plus the drive as a separate line.",
      "A complete quote includes the panels, the solar pump drive, the galvanised structure with foundations, DC cables and combiner box, DC isolator and surge protection, earthing, the motor cable to the bore, installation and commissioning. Ask whether the drive has a grid input, a dry-run (low water) protection and a sun-tracking (MPPT) function, and what the warranty years are on panels and drive. Before buying, check with your provincial agriculture department whether a solar tubewell scheme is open for your district."
     ]
    }
@@ -85,11 +86,11 @@
   "faq": [
    {
     "q": "How many solar panels does a 10 hp tubewell need?",
-    "a": "A 10 hp tubewell pumping 6 hours a day near Multan needs about 12.87 kW of panels, which is 22 panels of 585 W on about 57 square metres of ground, with a solar pump drive of about 11.66 kW."
+    "a": "A 10 hp tubewell pumping 6 hours a day near Multan needs about 17.55 kW of panels, which is 30 panels of 585 W on about 77 square metres of ground, with a solar pump drive of 15 kW."
    },
    {
     "q": "How many kW of solar does a 20 hp tubewell need?",
-    "a": "A 20 hp tubewell pumping 7 hours a day near Multan draws about 18,643 W and needs about 30.42 kW of panels (52 panels) with a drive of about 23.4 kW. Pick the pump size at the top of the page for other motors."
+    "a": "A 20 hp tubewell pumping 7 hours a day near Multan draws about 18,643 W and needs about 35.1 kW of panels (60 panels) with a drive of 30 kW. Pick the pump size at the top of the page for other motors."
    },
    {
     "q": "How many watts is a 1 hp pump motor?",
@@ -101,7 +102,7 @@
    },
    {
     "q": "What is a VFD solar pump drive and why is it used?",
-    "a": "It is a variable-frequency drive that takes DC from the panels, tracks their maximum power point and outputs three-phase AC at a frequency that follows the sun. It soft-starts the motor, so no starting surge is added, and it is chosen by the motor's rated kW and nameplate current (7.46 kW for the default 10 hp pump), not below the pump input watts times the 1.25 margin, 11.66 kW. Its maximum DC input voltage must be above the array string's cold open-circuit voltage."
+    "a": "It is a variable-frequency drive that takes DC from the panels, tracks their maximum power point and outputs three-phase AC at a frequency that follows the sun. It soft-starts the motor, so no starting surge is added, and it is chosen by the motor's rated kW and nameplate current (7.46 kW for the default 10 hp pump), not below the pump input watts times the 1.25 margin: at least 11.66 kW, so 15 kW. Its maximum DC input voltage must be above the string's cold open-circuit voltage, about 831 V here."
    },
    {
     "q": "Can I use my existing three-phase tubewell motor with solar?",
@@ -109,7 +110,7 @@
    },
    {
     "q": "What is the price of a 10 hp solar tubewell?",
-    "a": "Prices change with the exchange rate, so we do not print one. Ask for a complete quote for a 12.87 kW array with a 11.66 kW drive, including structure, DC cables, protection, earthing and installation, and compare quotes in Rs per watt of panels plus the drive as a separate line."
+    "a": "Prices change with the exchange rate, so we do not print one. Ask for a complete quote for a 17.55 kW array with a drive of 15 kW, including structure, DC cables, protection, earthing and installation, and compare quotes in Rs per watt of panels plus the drive as a separate line."
    },
    {
     "q": "How much water will the solar tubewell give?",
@@ -118,13 +119,13 @@
   ],
   "key_facts": [
    "A 10 hp tubewell motor draws about 9,321 W of electrical input (10 hp × 745.7 W ÷ 80% typical motor efficiency) and uses about 55.9 units in 6 hours of full-speed pumping.",
-   "A 10 hp solar tubewell near Multan needs an array of about 12.87 kW (22 panels) and a solar pump drive of about 11.66 kW; the array is sized larger than the motor because the panels deliver only about 78% of their rated watts in the field and must also cover the day's energy.",
-   "A 20 hp tubewell pumping 7 hours a day needs about 30.42 kW of panels (52 panels) and a drive of about 23.4 kW; a 5 hp pump in Lahore sun needs about 7.02 kW.",
+   "A 10 hp solar tubewell near Multan needs an array of about 17.55 kW (30 panels) and a solar pump drive of 15 kW; the array is sized larger than the motor because the panels deliver only about 78% of their rated watts in the field and must also cover the day's energy.",
+   "A 20 hp tubewell pumping 7 hours a day needs about 35.1 kW of panels (60 panels) and a drive of 30 kW; a 5 hp pump in Lahore sun needs about 8.78 kW.",
    "A solar tubewell has no battery: the drive runs the motor at whatever speed the sunlight allows, and the water is stored in a tank, pond or the field itself instead of storing electricity.",
-   "The solar pump drive (VFD) ramps the motor up slowly, so the starting surge that sets the generator size for the same pump does not apply; the drive is sized at the pump input watts times a 1.25 margin, and at least the panel kW ÷ 1.3."
+   "The solar pump drive (VFD) ramps the motor up slowly, so the starting surge that sets the generator size for the same pump does not apply; the drive is sized at the pump input watts times a 1.25 margin and at least the motor's rated kW, then the next drive size sold."
   ],
   "mistakes": [
-   "Sizing the array equal to the motor kW. Panels deliver only about 78% of their rating in the field, so a 10 hp motor of 9.32 kW needs 12.87 kW of panels, not 9.32 kW.",
+   "Sizing the array equal to the motor kW. Panels deliver only about 78% of their rating in the field, so a 10 hp motor of 9.32 kW needs 17.55 kW of panels, not 9.32 kW.",
    "Buying a bigger motor to make up for short hours. A bigger motor raises the midday power rule and the whole array; more pumping hours or a larger tank is the cheaper way to more water.",
    "Adding a battery to run the pump at night as a matter of course. Store water, not electricity; a battery for a 10 hp pump costs more than the array and is only worth it for a real night-time need.",
    "Skipping the dry-run protection. A bore that runs low lets the pump run dry and burns the motor; make sure the drive has a low-water or dry-run cut-out and that it is wired.",
@@ -159,6 +160,18 @@
      "type": "select",
      "default": 10,
      "options": [
+      [
+       1,
+       "1 hp"
+      ],
+      [
+       1.5,
+       "1.5 hp"
+      ],
+      [
+       2,
+       "2 hp"
+      ],
       [
        3,
        "3 hp"
@@ -204,6 +217,24 @@
      "unit": "hours",
      "default": 6,
      "hint": "Hours of full-speed pumping you need on an average day. A solar pump gives about this many full-speed hours around midday; it runs slower in the morning and evening."
+    },
+    {
+     "name": "motor_v",
+     "label": "Motor voltage",
+     "unit": "V",
+     "type": "select",
+     "default": 400,
+     "options": [
+      [
+       220,
+       "220 V (single-phase or 220 V motor)"
+      ],
+      [
+       400,
+       "400 V three-phase"
+      ]
+     ],
+     "hint": "From the motor nameplate. It sets how many panels go in series: the drive needs a string voltage of about 1.35 times the motor voltage."
     },
     {
      "name": "city",
@@ -280,14 +311,35 @@
      "spec": "2",
      "unit": "kW",
      "label_ur": "Solar array ka size",
-     "value": "12.87"
+     "value": "17.55"
     },
     {
      "key": "panels",
      "label": "Panels",
      "spec": "int",
      "label_ur": "Panels",
-     "value": "22"
+     "value": "30"
+    },
+    {
+     "key": "series",
+     "label": "Panels in series (one string)",
+     "spec": "int",
+     "label_ur": "Series mein panels (ek string)",
+     "value": "15"
+    },
+    {
+     "key": "strings",
+     "label": "Strings",
+     "spec": "int",
+     "label_ur": "Strings",
+     "value": "2"
+    },
+    {
+     "key": "drive_buy",
+     "label": "Solar pump drive (VFD) to buy",
+     "spec": "raw",
+     "label_ur": "Lene wali solar pump drive (VFD)",
+     "value": "15 kW"
     },
     {
      "key": "drive_kw",
@@ -319,12 +371,12 @@
      "spec": "int",
      "unit": "square metres",
      "label_ur": "Panels ke liye zameen",
-     "value": "57"
+     "value": "77"
     }
    ],
    "how": {
-    "tpl": "{{in.hp|1}} hp × {{d.w_per_hp|1}} W per hp ÷ {{out.motor_eff|pct}} motor efficiency = {{out.pump_w|int}} W of electrical input. Energy: {{out.pump_w|int}} W × {{in.hours}} hours = {{out.daily_kwh|1}} units a day; ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW of panels a day for your city = {{out.kw_energy|2}} kW. Power: {{out.pump_w|int}} W ÷ {{out.pr|2}} performance ratio = {{out.kw_power|2}} kW so the array can run the pump at full speed around midday. The larger of the two, {{out.kw|2}} kW, needs {{out.panels|int}} panels of {{out.panel_w}} W = {{out.installed_kw|2}} kW on about {{out.roof_m2|int}} square metres of ground. Drive: the larger of {{out.pump_w|int}} W × {{out.margin|2}} = {{out.inverter_kw_load|2}} kW and {{out.installed_kw|2}} kW of panels ÷ {{out.dc_ac_ratio_max|1}} = {{out.inverter_kw_array|2}} kW, so {{out.drive_kw|up2}} kW; the drive soft-starts the motor, so no starting surge is added.",
-    "text": "10 hp × 745.7 W per hp ÷ 80% motor efficiency = 9,321 W of electrical input. Energy: 9,321 W × 6 hours = 55.9 units a day; ÷ 4.4 units per kW of panels a day for your city = 12.86 kW. Power: 9,321 W ÷ 0.78 performance ratio = 11.95 kW so the array can run the pump at full speed around midday. The larger of the two, 12.86 kW, needs 22 panels of 585 W = 12.87 kW on about 57 square metres of ground. Drive: the larger of 9,321 W × 1.25 = 11.65 kW and 12.87 kW of panels ÷ 1.3 = 9.9 kW, so 11.66 kW; the drive soft-starts the motor, so no starting surge is added."
+    "tpl": "{{in.hp|1}} hp × {{d.w_per_hp|1}} W per hp ÷ {{out.motor_eff|pct}} motor efficiency = {{out.pump_w|int}} W of electrical input. Energy: {{out.pump_w|int}} W × {{in.hours}} hours = {{out.daily_kwh|1}} units a day; ÷ {{out.yield_kwh_per_kwp_day|1}} units per kW of panels a day for your city = {{out.kw_energy|2}} kW. Power: {{out.pump_w|int}} W ÷ {{out.pr|2}} performance ratio = {{out.kw_power|2}} kW so the array can run the pump at full speed around midday. The larger of the two, {{out.kw|2}} kW, is {{out.panels_energy|int}} panels of {{out.panel_w}} W. String voltage: the drive gives the {{out.motor_v}} V motor its full voltage only when the string reaches {{d.pump_dc_bus_factor|2}} × {{out.motor_v}} V = {{out.bus_v|int}} V, and one panel gives about {{out.panel_vmp_hot_v|1}} V on a hot afternoon, so a string is {{out.series|int}} panels in series and the array is {{out.strings|int}} × {{out.series|int}} = {{out.panels|int}} panels, {{out.installed_kw|2}} kW on about {{out.roof_m2|int}} square metres of ground. On a cold morning the string's open-circuit voltage rises to about {{out.string_voc_cold_v|int}} V, so the drive's maximum DC input must be above that. Drive: the larger of {{out.pump_w|int}} W × {{out.margin|2}} = {{out.inverter_kw_load|up2}} kW and the motor's rated {{out.motor_kw|2}} kW, so at least {{out.drive_kw|up2}} kW and the drive to buy is {{out.drive_buy}}; it soft-starts the motor, so no starting surge is added, and at midday it limits the power when the array gives more than the motor takes.",
+    "text": "10 hp × 745.7 W per hp ÷ 80% motor efficiency = 9,321 W of electrical input. Energy: 9,321 W × 6 hours = 55.9 units a day; ÷ 4.4 units per kW of panels a day for your city = 12.86 kW. Power: 9,321 W ÷ 0.78 performance ratio = 11.95 kW so the array can run the pump at full speed around midday. The larger of the two, 12.86 kW, is 22 panels of 585 W. String voltage: the drive gives the 400 V motor its full voltage only when the string reaches 1.35 × 400 V = 540 V, and one panel gives about 37.2 V on a hot afternoon, so a string is 15 panels in series and the array is 2 × 15 = 30 panels, 17.55 kW on about 77 square metres of ground. On a cold morning the string's open-circuit voltage rises to about 831 V, so the drive's maximum DC input must be above that. Drive: the larger of 9,321 W × 1.25 = 11.66 kW and the motor's rated 7.46 kW, so at least 11.66 kW and the drive to buy is 15 kW; it soft-starts the motor, so no starting surge is added, and at midday it limits the power when the array gives more than the motor takes."
    },
    "submit": "Calculate",
    "notice": "",
@@ -355,19 +407,19 @@
   "examples": [
    {
     "title": "10 hp tubewell, 6 hours a day near Multan",
-    "text": "10 hp × 745.7 W ÷ 80% = 9,321 W input; × 6 hours = 55.9 units a day. Energy rule 12.86 kW, power rule 11.95 kW, so the array is 12.87 kW (22 panels of 585 W) and the drive 11.66 kW. The energy rule wins here because six hours of pumping is more than the midday rule alone can give."
+    "text": "10 hp × 745.7 W ÷ 80% = 9,321 W input; × 6 hours = 55.9 units a day. Energy rule 12.86 kW, power rule 11.95 kW, so the array is 17.55 kW (2 strings of 15 panels of 585 W, so the string voltage suits the drive) and the drive 15 kW. The energy rule wins here because six hours of pumping is more than the midday rule alone can give."
    },
    {
     "title": "5 hp pump, 6 hours a day in Lahore sun",
-    "text": "A 5 hp pump draws 4,661 W and uses 28 units in 6 hours. With 4 units per kW a day in Lahore the energy rule gives 7 kW against 5.98 kW for the power rule, so the array is 7.02 kW (12 panels) with a 5.83 kW drive."
+    "text": "A 5 hp pump draws 4,661 W and uses 28 units in 6 hours. With 4 units per kW a day in Lahore the energy rule gives 7 kW against 5.98 kW for the power rule, so the array is 8.78 kW (15 panels) with a drive of 7.5 kW."
    },
    {
     "title": "20 hp tubewell, 7 hours a day near Multan",
-    "text": "A 20 hp motor draws 18,643 W and uses 130.5 units in 7 hours. The array is 30.42 kW (52 panels on about 135 square metres of ground) and the drive 23.4 kW. At this size the array is split into several strings and the drive is a three-phase unit with a grid input for cloudy days."
+    "text": "A 20 hp motor draws 18,643 W and uses 130.5 units in 7 hours. The array is 35.1 kW (60 panels on about 155 square metres of ground) and the drive 30 kW. At this size the array is split into several strings and the drive is a three-phase unit with a grid input for cloudy days."
    },
    {
     "title": "10 hp tubewell, only 4 hours a day",
-    "text": "The same 10 hp pump run for 4 hours uses 37.3 units a day, so the energy rule falls to 8.57 kW. The power rule is still 11.95 kW because the panels must run the motor at full speed at midday, so the array only drops to 12.29 kW (21 panels), one panel fewer than at six hours. Fewer pumping hours never shrink the array below the midday rule."
+    "text": "The same 10 hp pump run for 4 hours uses 37.3 units a day, so the energy rule falls to 8.57 kW. The power rule is still 11.95 kW because the panels must run the motor at full speed at midday, so the array stays at 17.55 kW (30 panels in whole strings of 15). Fewer pumping hours never shrink the array below the midday rule or a whole string."
    }
   ],
   "table": {
@@ -385,78 +437,79 @@
      "3 hp",
      "2,796 W",
      "16.8",
-     "4.1 kW (7 × 585 W)",
-     "3.5 kW",
-     "18 m²"
+     "8.78 kW (1 × 15 × 585 W)",
+     "4 kW",
+     "39 m²"
     ],
     [
      "5 hp",
      "4,661 W",
      "28",
-     "6.44 kW (11 × 585 W)",
-     "5.83 kW",
-     "29 m²"
+     "8.78 kW (1 × 15 × 585 W)",
+     "7.5 kW",
+     "39 m²"
     ],
     [
      "7.5 hp",
      "6,991 W",
      "41.9",
-     "9.95 kW (17 × 585 W)",
-     "8.74 kW",
-     "44 m²"
+     "17.55 kW (2 × 15 × 585 W)",
+     "11 kW",
+     "77 m²"
     ],
     [
      "10 hp",
      "9,321 W",
      "55.9",
-     "12.87 kW (22 × 585 W)",
-     "11.66 kW",
-     "57 m²"
+     "17.55 kW (2 × 15 × 585 W)",
+     "15 kW",
+     "77 m²"
     ],
     [
      "12.5 hp",
      "11,652 W",
      "69.9",
-     "16.38 kW (28 × 585 W)",
-     "14.57 kW",
-     "73 m²"
+     "17.55 kW (2 × 15 × 585 W)",
+     "15 kW",
+     "77 m²"
     ],
     [
      "15 hp",
      "13,982 W",
      "83.9",
-     "19.31 kW (33 × 585 W)",
-     "17.48 kW",
-     "86 m²"
+     "26.33 kW (3 × 15 × 585 W)",
+     "18.5 kW",
+     "116 m²"
     ],
     [
      "20 hp",
      "18,643 W",
      "111.9",
-     "25.74 kW (44 × 585 W)",
-     "23.31 kW",
-     "114 m²"
+     "26.33 kW (3 × 15 × 585 W)",
+     "30 kW",
+     "116 m²"
     ],
     [
      "30 hp",
      "27,964 W",
      "167.8",
-     "38.61 kW (66 × 585 W)",
-     "34.96 kW",
-     "172 m²"
+     "43.88 kW (5 × 15 × 585 W)",
+     "37 kW",
+     "193 m²"
     ]
    ]
   },
-  "answer": "A 10 hp tubewell pumping 6 hours a day near Multan needs a solar array of about 12.87 kW (22 panels of 585 W) and a solar pump drive of about 11.66 kW, with no battery. Pump watts = hp × 745.7 ÷ motor efficiency; the array is the larger of daily units ÷ sun yield and pump watts ÷ performance ratio.",
+  "answer": "A 10 hp tubewell pumping 6 hours a day near Multan needs a solar array of about 17.55 kW (30 panels of 585 W) and a solar pump drive of 15 kW, with no battery. Pump watts = hp × 745.7 ÷ motor efficiency; the array is the larger of daily units ÷ sun yield and pump watts ÷ performance ratio.",
   "formula": {
-   "text": "P = hp × 745.7 ÷ η_motor; E_day = P × hours ÷ 1000; kW = max(E_day ÷ yield, P ÷ 1000 ÷ PR); panels = ceil(kW × 1000 ÷ W_panel); drive kW ≥ max(P × margin, kW × 1000 ÷ r_max) ÷ 1000",
+   "text": "P = hp × 745.7 ÷ η_motor; E_day = P × hours ÷ 1000; kW = max(E_day ÷ yield, P ÷ 1000 ÷ PR); panels = ceil(kW × 1000 ÷ W_panel); panels in whole strings of n = ceil(k_bus × V_motor ÷ Vmp_hot); drive kW ≥ max(P × margin ÷ 1000, motor kW), then the next drive size sold",
    "lines": [
     "P = electrical input of the pump motor in watts; hp from the nameplate",
     "η_motor = motor efficiency (typical value, editable)",
     "E_day = units used in a day of full-speed pumping",
     "yield = units one kW of panels makes a day near your city",
     "PR = performance ratio, the share of rated panel watts that reaches the drive",
-    "Drive = solar pump drive (VFD); surge = running because it soft-starts the motor"
+    "Drive = solar pump drive (VFD); surge = running because it soft-starts the motor",
+    "k_bus = string DC volts per motor volt (the default is in the methodology), V_motor = motor nameplate volts, Vmp_hot = one panel's voltage at maximum power on a hot afternoon"
    ]
   },
   "safety": "A solar tubewell array runs at several hundred volts DC, and the drive outputs three-phase 400 V to a motor at the bottom of a bore; have a licensed electrician and a trained solar pump installer do the DC wiring, the earthing of the structure and the motor cable, fit a DC isolator and surge protection, and set the drive parameters. Never open the drive or disconnect the array under load."
@@ -502,7 +555,7 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/solar/tubewell-solar-calculator/#breadcrumb"
     },
-    "dateModified": "2026-10-13",
+    "dateModified": "2026-10-21",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }
@@ -547,7 +600,7 @@
       "name": "How many solar panels does a 10 hp tubewell need?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "A 10 hp tubewell pumping 6 hours a day near Multan needs about 12.87 kW of panels, which is 22 panels of 585 W on about 57 square metres of ground, with a solar pump drive of about 11.66 kW."
+       "text": "A 10 hp tubewell pumping 6 hours a day near Multan needs about 17.55 kW of panels, which is 30 panels of 585 W on about 77 square metres of ground, with a solar pump drive of 15 kW."
       }
      },
      {
@@ -555,7 +608,7 @@
       "name": "How many kW of solar does a 20 hp tubewell need?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "A 20 hp tubewell pumping 7 hours a day near Multan draws about 18,643 W and needs about 30.42 kW of panels (52 panels) with a drive of about 23.4 kW. Pick the pump size at the top of the page for other motors."
+       "text": "A 20 hp tubewell pumping 7 hours a day near Multan draws about 18,643 W and needs about 35.1 kW of panels (60 panels) with a drive of 30 kW. Pick the pump size at the top of the page for other motors."
       }
      },
      {
@@ -579,7 +632,7 @@
       "name": "What is a VFD solar pump drive and why is it used?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "It is a variable-frequency drive that takes DC from the panels, tracks their maximum power point and outputs three-phase AC at a frequency that follows the sun. It soft-starts the motor, so no starting surge is added, and it is chosen by the motor's rated kW and nameplate current (7.46 kW for the default 10 hp pump), not below the pump input watts times the 1.25 margin, 11.66 kW. Its maximum DC input voltage must be above the array string's cold open-circuit voltage."
+       "text": "It is a variable-frequency drive that takes DC from the panels, tracks their maximum power point and outputs three-phase AC at a frequency that follows the sun. It soft-starts the motor, so no starting surge is added, and it is chosen by the motor's rated kW and nameplate current (7.46 kW for the default 10 hp pump), not below the pump input watts times the 1.25 margin: at least 11.66 kW, so 15 kW. Its maximum DC input voltage must be above the string's cold open-circuit voltage, about 831 V here."
       }
      },
      {
@@ -595,7 +648,7 @@
       "name": "What is the price of a 10 hp solar tubewell?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Prices change with the exchange rate, so we do not print one. Ask for a complete quote for a 12.87 kW array with a 11.66 kW drive, including structure, DC cables, protection, earthing and installation, and compare quotes in Rs per watt of panels plus the drive as a separate line."
+       "text": "Prices change with the exchange rate, so we do not print one. Ask for a complete quote for a 17.55 kW array with a drive of 15 kW, including structure, DC cables, protection, earthing and installation, and compare quotes in Rs per watt of panels plus the drive as a separate line."
       }
      },
      {

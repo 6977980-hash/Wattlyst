@@ -58,6 +58,7 @@ export const EXACT = {
   backup_above_home: 'Backup cannot be more than your list\'s running watts or daily units.',
   usage_both: 'Both boxes are filled, so the units a day are used and the monthly units are left out. Clear the daily box to size from your bill.',
   per_unit_hidden: 'At this small load the cost per unit is not shown: the generator\'s idle fuel would make it look huge. The litres and rupees an hour above still apply.',
+  battery_unknown: 'A hybrid price depends on the battery in it. Enter the battery size from the quote in kWh for a fair check; without it the range is for hybrid quotes with any battery, small or large.',
   typical_used: 'Blank boxes in your list use the typical value for that appliance (its listed watts and hours a day, quantity 1). Type your own numbers for an exact result.',
   internal_non_finite: 'These numbers are outside a realistic range. Please check your inputs.',
 };

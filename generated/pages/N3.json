@@ -5,7 +5,7 @@
  "url": "/solar/solar-quote-checker/",
  "h1": "Solar Quotation Checker: Is the Price Fair?",
  "title": "Solar Quotation Checker: Is the Price Fair? | Wattlyst",
- "meta": "Enter your solar quotation (kW, panels, inverter, price) to see the cost per watt, what is missing and whether the price fits today's market.",
+ "meta": "Enter your solar quote (kW, on-grid or hybrid, battery kWh, price) to see the cost per watt and whether it fits today's market price range.",
  "primary_keyword": "solar quotation checker",
  "wave": 2,
  "status": "publish",
@@ -38,7 +38,7 @@
    "url": "/solar/solar-quote-checker/"
   }
  ],
- "modified": "2026-10-14",
+ "modified": "2026-10-21",
  "content": {
   "intro": "",
   "sections": [
@@ -190,7 +190,9 @@
    "calc": "quote_checker",
    "module": "prices.js",
    "data_keys": [
-    "solar_prices"
+    "solar_prices",
+    "component_prices",
+    "backup_prices"
    ],
    "appliances": {},
    "fields": [
@@ -224,6 +226,30 @@
      "unit": "Rs",
      "default": 1100000,
      "hint": "Everything on the quote: panels, inverter, structure, wiring, installation. Add GST if the quote shows it separately."
+    },
+    {
+     "name": "battery_kwh",
+     "label": "Battery in the quote (hybrid)",
+     "unit": "kWh",
+     "placeholder": "Hybrid only",
+     "hint": "From the quote, in kWh: one lithium pack of the usual home size is 5.12 kWh; for tubular batteries multiply their number × volts × Ah and divide by one thousand. The checker then adds that battery at today's price to the on-grid range, instead of a hybrid range that covers any battery."
+    },
+    {
+     "name": "chemistry",
+     "label": "Battery type (hybrid)",
+     "type": "select",
+     "default": "lifepo4",
+     "options": [
+      [
+       "lifepo4",
+       "Lithium (LiFePO4)"
+      ],
+      [
+       "tubular",
+       "Tubular / lead-acid"
+      ]
+     ],
+     "hint": "Used only with the battery size above."
     },
     {
      "name": "range_low",
@@ -291,8 +317,8 @@
     }
    ],
    "how": {
-    "tpl": "{{in.price|rs}} ÷ ({{in.kwp}} kW × 1,000) = {{out.rs_per_w|rs2}} per watt. Typical {{in.type}} range for {{in.kwp}} kW: {{out.range_low|rs2}} to {{out.range_high|rs2}} per watt, that is {{out.range_low_rs|rs}} to {{out.range_high_rs|rs}}. Against the low end your quote differs by {{out.vs_low_pct|int}}%, against the high end by {{out.vs_high_pct|int}}% (a minus sign means below it), so it is {{out.verdict}} the range.",
-    "text": "Rs 1,100,000 ÷ (10 kW × 1,000) = Rs 110.00 per watt. Typical on-grid range for 10 kW: Rs 95.00 to Rs 120.00 per watt, that is Rs 950,000 to Rs 1,200,000. Against the low end your quote differs by 16%, against the high end by -8% (a minus sign means below it), so it is within the range."
+    "tpl": "{{in.price|rs}} ÷ ({{in.kwp}} kW × 1,000) = {{out.rs_per_w|rs2}} per watt. Typical range for {{in.kwp}} kW ({{out.range_basis}}): {{out.range_low|rs2}} to {{out.range_high|rs2}} per watt, that is {{out.range_low_rs|rs}} to {{out.range_high_rs|rs}}. Against the low end your quote differs by {{out.vs_low_pct|int}}%, against the high end by {{out.vs_high_pct|int}}% (a minus sign means below it), so it is {{out.verdict}} the range.",
+    "text": "Rs 1,100,000 ÷ (10 kW × 1,000) = Rs 110.00 per watt. Typical range for 10 kW (on-grid): Rs 95.00 to Rs 120.00 per watt, that is Rs 950,000 to Rs 1,200,000. Against the low end your quote differs by 16%, against the high end by -8% (a minus sign means below it), so it is within the range."
    },
    "submit": "Check my quote",
    "notice": "",
@@ -305,6 +331,7 @@
     "price_data_missing": "Price data could not be loaded. Enter the typical price range yourself or refresh the page.",
     "panels_must_be_whole": "Number of panels must be a whole number.",
     "forecast_unavailable": "The live forecast is not available right now, so a typical day is shown. Try again later.",
+    "battery_unknown": "A hybrid price depends on the battery in it. Enter the battery size from the quote in kWh for a fair check; without it the range is for hybrid quotes with any battery, small or large.",
     "typical_used": "Blank boxes in your list use the typical value for that appliance (its listed watts and hours a day, quantity 1). Type your own numbers for an exact result.",
     "internal_non_finite": "These numbers are outside a realistic range. Please check your inputs."
    },
@@ -418,7 +445,7 @@
     "@id": "https://wattlyst.com/solar/solar-quote-checker/#webpage",
     "url": "https://wattlyst.com/solar/solar-quote-checker/",
     "name": "Solar Quotation Checker: Is the Price Fair? | Wattlyst",
-    "description": "Enter your solar quotation (kW, panels, inverter, price) to see the cost per watt, what is missing and whether the price fits today's market.",
+    "description": "Enter your solar quote (kW, on-grid or hybrid, battery kWh, price) to see the cost per watt and whether it fits today's market price range.",
     "inLanguage": "en",
     "isPartOf": {
      "@id": "https://wattlyst.com/#website"
@@ -426,7 +453,7 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/solar/solar-quote-checker/#breadcrumb"
     },
-    "dateModified": "2026-10-14",
+    "dateModified": "2026-10-21",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }
@@ -436,7 +463,7 @@
     "@id": "https://wattlyst.com/solar/solar-quote-checker/#app",
     "name": "Solar Quotation Checker: Is the Price Fair?",
     "url": "https://wattlyst.com/solar/solar-quote-checker/",
-    "description": "Enter your solar quotation (kW, panels, inverter, price) to see the cost per watt, what is missing and whether the price fits today's market.",
+    "description": "Enter your solar quote (kW, on-grid or hybrid, battery kWh, price) to see the cost per watt and whether it fits today's market price range.",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Any",
     "browserRequirements": "Requires JavaScript for live results",
