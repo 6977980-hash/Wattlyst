@@ -13,8 +13,12 @@ function fill(text, site, where, fail) {
   return s;
 }
 
-/** ads block for the manifest: validated pub id and slot numbers. */
-export function adsConfig(site, fail) {
+/**
+ * ads block for the manifest: validated pub id, slot numbers and the pages that never show ads. Ads cannot be
+ * switched on without a Google-certified consent tool named in consent.cmp (WL-217), and every page with a live
+ * data feed must be in no_ads_pages: N6's free Open-Meteo forecast is licensed for sites without ads (WL-240).
+ */
+export function adsConfig(site, fail, rows = [], content = {}) {
   const a = site.ads || {};
   if (a.adsense_pub_id !== null && !/^pub-\d{10,20}$/.test(String(a.adsense_pub_id))) fail('data/site.json ads.adsense_pub_id must be null or pub-<digits>');
   const slots = a.slots || {};
@@ -22,7 +26,12 @@ export function adsConfig(site, fail) {
   if (keys.join() !== AD_SLOTS.join()) fail(`data/site.json ads.slots must have exactly ${AD_SLOTS.join(', ')}`);
   for (const k of keys) if (slots[k] !== null && !/^\d{6,20}$/.test(String(slots[k]))) fail(`data/site.json ads.slots.${k} must be null or the AdSense ad unit number`);
   if (a.enabled && !a.adsense_pub_id) fail('data/site.json ads.enabled needs adsense_pub_id');
-  return { enabled: Boolean(a.enabled), adsense_pub_id: a.adsense_pub_id, slots };
+  if (a.enabled && !(typeof site.consent?.cmp === 'string' && site.consent.cmp.trim())) fail('data/site.json ads.enabled needs consent.cmp (a Google-certified consent tool, seo-rules.md 8)');
+  const none = a.no_ads_pages || [];
+  if (!Array.isArray(none)) fail('data/site.json ads.no_ads_pages must be a list of page ids');
+  for (const id of none) if (rows.length && !rows.some((r) => r.id === id)) fail(`data/site.json ads.no_ads_pages: unknown page ${id}`);
+  for (const [id, c] of Object.entries(content)) if (c?.live && !none.includes(id)) fail(`data/site.json ads.no_ads_pages must list ${id}: its live data feed's free licence does not allow ads`);
+  return { enabled: Boolean(a.enabled), adsense_pub_id: a.adsense_pub_id, slots, no_ads_pages: none, cmp: site.consent?.cmp || null };
 }
 
 /** leads block for the manifest: settings, the page ids that show the form, city options and rendered text. */

@@ -387,7 +387,7 @@ final class Wattlyst_Render {
 			: '<p class="wl-error wl-notice" id="' . esc_attr( $id ) . '-error" role="status">' . esc_html( $notice ) . '</p>';
 		// Split: the result table goes under the inputs, the result column is too narrow for it. The compact Next step
 		// follows the share bar, so it sits right under the result on a phone (WL-198).
-		$out    .= '<div class="wl-results" aria-live="polite">' . $results . '</div>' . ( $split ? '' : $this->rtable( $id, $t ) ) . $this->diagram( $t ) . $share . ( $home ? '' : $this->next_inline() );
+		$out    .= '<div class="wl-results" aria-live="polite">' . $results . '</div>' . $this->credit( $t ) . ( $split ? '' : $this->rtable( $id, $t ) ) . $this->diagram( $t ) . $share . ( $home ? '' : $this->next_inline() );
 		$class   = $split ? ( $home ? ' wl-tool-split' : ' wl-tool-list' ) : '';
 		$form    = '<form class="wl-tool' . $class . '" id="' . esc_attr( $id ) . '" data-wl-tool novalidate onsubmit="return false">';
 		if ( $split ) {
@@ -824,6 +824,21 @@ final class Wattlyst_Render {
 				: '<h3>' . esc_html( $f['q'] ) . '</h3><p>' . self::linked( $f['a'], $f['l'] ?? array() ) . '</p>';
 		}
 		return $out . '</section>';
+	}
+
+	/** Data licence credit under a live-data result (N6 Open-Meteo, CC BY 4.0, WL-240). */
+	private function credit( array $t ): string {
+		$c = $t['credit'] ?? null;
+		if ( ! $c ) {
+			return '';
+		}
+		return sprintf(
+			'<p class="wl-hint wl-credit">Weather data by <a href="%1$s">%2$s</a>, licensed under <a href="%3$s" rel="license">%4$s</a>.</p>',
+			esc_url( $c['by_url'] ),
+			esc_html( $c['by'] ),
+			esc_url( $c['licence_url'] ),
+			esc_html( $c['licence'] )
+		);
 	}
 
 	/** A manifest row by id, only when its page is live, so a page never links to a URL that does not exist yet. */

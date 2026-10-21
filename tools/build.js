@@ -31,6 +31,14 @@ const CALC_DATA = { generator_fuel: ['generator_fuel'], quote_checker: ['compone
 // code (<input>_required ...) for an input name that chain reads. A superset is harmless; a missing text would fall
 // back to the generic message, which tests/messages.test.js rules out for every error the calculators produce.
 const GENERIC_CODE = /^(\w+?)_(required|invalid|must_be_positive|too_small|too_large|out_of_range)$/;
+/** Credit line for a page with a live data feed: content `credit` {by, by_url, licence, licence_url} (WL-240). */
+function creditOf(c, fail) {
+  const k = c.credit || {};
+  for (const f of ['by', 'licence']) if (!k[f]) fail(`${c.id}: live data needs credit.${f} (data licence attribution)`);
+  for (const f of ['by_url', 'licence_url']) if (!/^https:\/\//.test(k[f] || '')) fail(`${c.id}: credit.${f} must be an https URL`);
+  return { by: k.by, by_url: k.by_url, licence: k.licence, licence_url: k.licence_url };
+}
+
 function pageTexts(module) {
   const seen = new Set();
   const walk = (f) => { if (seen.has(f)) return; seen.add(f); for (const d of staticImports(read(`engine/${f}`))) walk(d.replace('./', '')); };
@@ -297,6 +305,8 @@ function buildContent(c, ctx) {
       ...(c.diagram ? { diagram: c.diagram } : {}),
       ...(c.result_table ? { rtable: resultTable(ctx, c, result, scope) } : {}),
       ...(c.live ? { live: c.live } : {}),
+      // A live data feed under an attribution licence prints its credit next to the result (Open-Meteo CC BY 4.0, WL-240).
+      ...(c.live ? { credit: creditOf(c, fail) } : {}),
       notice: noticeCode(result) ? errorMessage(noticeCode(result)) : '',
       msg: pageTexts(module),
       data_checked: dataChecked(module, { ...ctx, usesAppliances: fields.some((f) => f.type === 'appliance' || f.type === 'loads') }),
@@ -797,7 +807,7 @@ export async function build() {
     r.cards = rows.filter((x) => x.type === 'pillar' && x.live).sort((a, b) => (a.nav_order ?? 99) - (b.nav_order ?? 99)).map((p) => ({ id: p.id, url: p.url, h1: p.h1, label: p.nav_label || (p.primary_keyword ? title(p.primary_keyword) : p.h1), meta: p.meta, children: p.children.map((cid) => ({ id: cid, url: byId.get(cid).url, h1: byId.get(cid).h1 })) }));
   }
   const files = {};
-  const ads = adsConfig(site, fail);
+  const ads = adsConfig(site, fail, rows, content);
   const leads = leadsConfig(site, inp.leadForm, rows, inp.data.cities, fail);
   const affiliates = affiliatesByPage(inp.affiliates, site, rows, fail);
   for (const r of rows) {

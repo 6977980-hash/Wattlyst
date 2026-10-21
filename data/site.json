@@ -57,6 +57,12 @@
    "content-2": null,
    "content-3": null
   },
+  "no_ads_pages": [
+   "N6"
+  ],
+  "no_ads_note": "Pages that never show ads, whatever enabled says (audit 2026-10-21 Phase 8). N6: its live solar forecast uses the free Open-Meteo API, whose free tier is for non-commercial use (no ads); owner decision 21 Oct 2026: keep the free forecast and no ads on N6 rather than buy the commercial plan. The build fails if a page with a live data feed is missing here.",
+  "no_ads_source": "Open-Meteo terms and pricing (free API: non-commercial use; data CC BY 4.0, credit required): https://open-meteo.com/en/terms",
+  "no_ads_checked": "2026-10-21",
   "note": "Stays false until AdSense approves the site (seo-rules.md 8). When approved: set adsense_pub_id (pub-...) so /ads.txt is served, create three display ad units in AdSense and put their data-ad-slot numbers in slots, then enabled true. A slot with no number prints nothing. Ads show only on tool, appliance, guide and lookup pages (max three, never near inputs or the Calculate button), never on the home page, data, embed, trust or thank-you pages."
  },
  "consent": {
