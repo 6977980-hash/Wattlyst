@@ -1324,8 +1324,9 @@
    }
   ],
   "table": {
-   "caption": "Inverter size for typical appliance sets, from the top: two fans and four bulbs; four fans, ten bulbs, a TV and a router; the same with a non-inverter fridge; three fans, eight bulbs, a TV, an inverter fridge and a 1 ton inverter AC; four fans, ten bulbs, an inverter fridge and a 1.5 ton inverter AC; six fans, twelve bulbs, a TV, an inverter fridge and two 1.5 ton inverter ACs",
+   "caption": "Inverter size for typical appliance sets",
    "head": [
+    "Appliances running together",
     "Running load",
     "Continuous rating",
     "Inverter rating",
@@ -1333,42 +1334,49 @@
    ],
    "rows": [
     [
+     "Two fans and four bulbs",
      "208 W",
      "260 W",
      "0.33 kVA",
      "248 W"
     ],
     [
+     "Four fans, ten bulbs, a TV and a router",
      "525 W",
      "656 W",
      "0.83 kVA",
      "565 W"
     ],
     [
+     "The same with a non-inverter fridge",
      "715 W",
      "894 W",
      "1.12 kVA",
      "1,715 W"
     ],
     [
+     "Three fans, eight bulbs, a TV, an inverter fridge and a 1 ton inverter AC",
      "1,431 W",
      "1,789 W",
      "2.24 kVA",
      "1,731 W"
     ],
     [
+     "Four fans, ten bulbs, an inverter fridge and a 1.5 ton inverter AC",
      "2,010 W",
      "2,513 W",
      "3.15 kVA",
      "2,460 W"
     ],
     [
+     "Six fans, twelve bulbs, a TV, an inverter fridge and two 1.5 ton inverter ACs",
      "3,719 W",
      "4,649 W",
      "5.82 kVA",
      "4,169 W"
     ]
-   ]
+   ],
+   "row_head": true
   },
   "answer": "Three fans, eight LED bulbs, a TV, an inverter fridge and a 1 ton inverter AC draw 1,431 W together, so the inverter needs a continuous rating of at least 1,789 W, about 2.24 kVA, with a surge rating of 1,731 W for the AC's step up to full speed, the largest in the list. Inverter watts = running load × margin; kVA = watts ÷ power factor ÷ 1,000.",
   "formula": {

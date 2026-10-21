@@ -79,5 +79,10 @@
   "token_max_age_days": 14,
   "client_ip_header": null,
   "note": "Solar quote request form (build-plan Phase 6). Turn on only when someone answers the requests: each one is saved privately in WordPress (Solar leads menu, admins only) and emailed to contact_email. Text lives in content/lead-form.json; the privacy policy section appears only while enabled is true. Requests older than retention_days are deleted automatically. Before switching on: ask Hostinger which header carries the visitor's real IP behind their CDN and put its name in client_ip_header (null = REMOTE_ADDR), otherwise all visitors may share one hourly limit. Keep the page cache time (LiteSpeed/CDN) shorter than token_max_age_days, or cached forms carry expired tokens and real requests are refused as spam."
+ },
+ "embed": {
+  "iframe_height": 720,
+  "iframe_height_list": 1400,
+  "note": "Height in px of the iframe embed code on /embed-calculators/ (tools/lib/datasets.js embedList). The embed prints the result first; a calculator with an appliance list gets the taller frame so its result and first rows show without scrolling inside the frame (audit WL-238, 21 Oct 2026, measured at 390 px). The script embed resizes itself and ignores these."
  }
 }

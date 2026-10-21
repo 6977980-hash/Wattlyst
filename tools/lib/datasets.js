@@ -195,8 +195,12 @@ export function solarTracker(ctx) {
 }
 
 /** Embed codes for every live calculator: an iframe snippet and a script snippet, both with a visible credit link. */
-export function embedList(rows, site, pluginUrl) {
+export function embedList(rows, site, pluginUrl, fail) {
   const abs = (u) => site.url.replace(/\/$/, '') + u;
+  // Iframe height: a list calculator gets the taller frame, so its result (printed first in the embed) and the first
+  // rows show without scrolling inside the frame (WL-238). Heights live in data/site.json embed.
+  const h = site.embed || {};
+  if (!(h.iframe_height > 0 && h.iframe_height_list > h.iframe_height)) fail('data/site.json embed needs iframe_height and a larger iframe_height_list');
   return rows.filter((r) => r.live && r.hasTool).map((r) => {
     const slug = r.id.toLowerCase();
     const src = abs(`/embed/${slug}/`);
@@ -205,7 +209,7 @@ export function embedList(rows, site, pluginUrl) {
       id: r.id,
       h1: r.h1,
       url: r.url,
-      iframe: `<iframe src="${src}" title="${r.h1.replace(/"/g, '&quot;')} (${site.brand})" width="100%" height="720" style="border:0;max-width:720px" loading="lazy"></iframe>\n<p>${credit}</p>`,
+      iframe: `<iframe src="${src}" title="${r.h1.replace(/"/g, '&quot;')} (${site.brand})" width="100%" height="${r.hasList ? h.iframe_height_list : h.iframe_height}" style="border:0;max-width:720px" loading="lazy"></iframe>\n<p>${credit}</p>`,
       script: `<div class="wattlyst-embed" data-tool="${slug}">${credit}</div>\n<script async src="${pluginUrl}assets/js/wattlyst-embed.js"></script>`,
     };
   });

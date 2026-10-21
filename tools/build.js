@@ -261,7 +261,8 @@ function buildContent(c, ctx) {
       return { in: r, out: r };
     });
     // Table rows run once; captions and page text can name a row's inputs as {{table.N.in.x}} (audit WL-23).
-    scope.table = (c.table?.rows || []).map((r, n) => {
+    // A row's `label` names it in the table's first column (WL-239); it is page text, not an input.
+    scope.table = (c.table?.rows || []).map(({ label, ...r }, n) => {
       const res = runCalc(ctx, { ...inputs, ...Object.fromEntries(Object.entries(r).map(([k, v]) => [k, resolveDefault(v, ctx)])) }, `table row ${n + 1}`);
       return { in: res, out: res };
     });
@@ -307,6 +308,10 @@ function buildContent(c, ctx) {
     if (c.table) {
       const rows = scope.table.map((res, n) => c.table.columns.map((col) => text(ctx, col.tpl, { ...scope, ...res }, `table row ${n + 1}`)));
       out.table = { caption: text(ctx, c.table.caption, scope, 'table caption'), head: c.table.columns.map((col) => col.label), rows };
+      if (c.table.row_head) {
+        if (c.table.rows.some((r) => typeof r.label !== 'string' || !r.label)) fail(`${c.id}: table has row_head, so every row needs a label`);
+        Object.assign(out.table, { head: [c.table.row_head, ...out.table.head], rows: rows.map((r, n) => [c.table.rows[n].label, ...r]), row_head: true });
+      }
     }
   }
   if (c.appliance_table) out.tables = applianceTables(ctx);
@@ -321,7 +326,7 @@ function buildContent(c, ctx) {
     out.sources = [...out.sources, ...ds.sources];
     ctx.dataset = { csv: ds.csv, csv_name: ds.csv_name, temporal: ds.temporal, measured: ds.measured, license: ds.license, checked: ds.checked };
   }
-  if (c.embeds) out.embeds = embedList(ctx.allRows, ctx.site, ctx.pluginUrl);
+  if (c.embeds) out.embeds = embedList(ctx.allRows, ctx.site, ctx.pluginUrl, fail);
   if (c.codes_table) Object.assign(out, codeTables(ctx, out.sources));
   if (c.calc === 'quote_checker' || c.calc === 'solar_price_estimate' || c.price_of) out.sources = [...out.sources, ...priceSources(ctx)];
   if (c.calc === 'panel_price') out.sources = [...out.sources, ...priceSources(ctx, { panelsOnly: true })];
@@ -781,7 +786,10 @@ export async function build() {
   const ads = adsConfig(site, fail);
   const leads = leadsConfig(site, inp.leadForm, rows, inp.data.cities, fail);
   const affiliates = affiliatesByPage(inp.affiliates, site, rows, fail);
-  for (const r of rows) r.hasTool = Boolean(content[r.id]?.calc) && r.type !== 'home';
+  for (const r of rows) {
+    r.hasTool = Boolean(content[r.id]?.calc) && r.type !== 'home';
+    r.hasList = (content[r.id]?.fields || []).some((f) => f.type === 'loads'); // embed iframe height (WL-238)
+  }
   // Hubs last: their text can repeat a key fact or a default result of their pages (WL-142).
   const builtById = {};
   const results = {};
@@ -821,6 +829,7 @@ export async function build() {
     if (built && affiliates[r.id]) page.affiliates = affiliates[r.id];
     page.schema = schemaFor(r, built, pageCtx);
     delete page.hasTool;
+    delete page.hasList;
     files[`generated/pages/${r.id}.json`] = JSON.stringify(page, null, 1) + '\n';
   }
   const dist = distFiles();

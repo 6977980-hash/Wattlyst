@@ -1,6 +1,32 @@
 # Progress
 
-## Handoff for next phase (after 21 Oct audit fix Phase 5: page text) — written by the audit Phase 5 thread, 2026-10-21
+## Handoff for next phase (after 21 Oct audit fix Phase 6: phone layout and navigation) — written by the audit Phase 6 thread, 2026-10-21
+
+Owner: every fix phase of the 21 Oct 2026 audit runs in its own new thread, only after the owner says to start it. Shared rules and phase notes: `/mnt/project-files/electricity-tool-hub/audit/2026-10-21/handoff/` (README, `phase-N-*.md`, `status.md`; Phases 1 to 6 ticked). Next is **Phase 7 (technical SEO)**: read README, then only `phase-7-technical-seo.md` and its rows in `audit/fix-list-2026-10-21.md`. Plugin v0.8.28. Phase 6 changed layout only (render PHP, CSS, two small browser files, table row labels in content); no engine formula or data value moved. WL-199 (Calculators menu) was not built: it still waits for the owner's yes on the mockups.
+
+**What is where**
+- WL-198 Next step under the result: `next_inline()` in `includes/class-wattlyst-render.php` (the page's `next` + first two `related`, live rows only via `live_row()`); printed by `tool()` after the share bar, and by `lookup()`. Not on the home planner or in an embed. Styles `.wl-next-inline` in `assets/css/wattlyst.css`. The full Related list (`related()`) stays at the bottom.
+- WL-238 embeds: `tool()` prints the result block before the inputs when `$this->embed` (set in `embed_html()`). Iframe heights in `data/site.json` `embed` (list calculators get the taller one; `r.hasList` set in `tools/build.js`, read by `embedList` in `tools/lib/datasets.js`). The embed page lists the script code first (`embeds()`); text in `content/pages/embed.json`.
+- WL-202 error codes: `lookup()` has a `data-wl-count` status (count + jump link), filled by `assets/js/wattlyst-page.js`; brand tables are printed stacked (`ref_table(..., true)`: `data-l` on cells, section class `wl-stack`, phone card CSS in the max-width 768 block).
+- WL-204 list calculators: tool pages with an appliance list call `tool( true )`; on those the form gets class `wl-tool-list` (home keeps `wl-tool-split`). Two-column CSS at 1100 px and wider; the result column is sticky only on tall screens (min-height query), because a sticky column taller than the screen would hide its share bar and Next step. `.wl-out-title` style moved from the home CSS to the main CSS.
+- WL-200 hubs: `groups()` + `children()` in the render; a hub section that links the hub's pages becomes a task group (its H2, its text, then its cards); pages no section links go under one "More ..." heading; `sections( false, true )` skips the grouped sections. Hub routing text is in `content/pages/P-*.json` sections, so moving a link there moves the card.
+- WL-239 row labels: content `table.row_head` + a `label` per row (C1 to C4, D4, E2); `tools/build.js` puts them in the first column and sets `row_head`, the render prints `<th scope="row">`. Labels are page text (typed-number tests read them).
+- WL-205: home counts by page type (`kinds()`, `tools_label()`, `count_label()` in the render: calculators, guides, datasets); picker groups one per category (`catalog_groups()`); 404 heading CSS (`body.error404 .entry-title`); footer links and checkboxes at touch size; table scroll cue (edge shadow on `.wl-table-wrap`) and tighter cells at 400 px; units never break from figures in reference tables (`ref_table`); A1/A2 short supply option labels; C1 per-row label "Starting watts"; BROWSE BY TASK colour in the home CSS.
+- Tests: `tests/phone-layout.test.js`. CI browser check (`tools/browser-check.js`) now fails a tool page whose Next step is missing or far below the result at phone width, and an embed that prints the inputs above the result.
+
+**Do not touch / watch**
+- Home CSS has about 650 bytes left; main CSS about 4.5 KB under its limit. No browser JS was added to the homepage chain.
+- Do not make the list-calculator result column sticky on short screens again (see above).
+- A section link in a hub's content now decides which card group a page sits in; check the hub page after editing hub text.
+
+**Open to-dos**
+- WL-199 Calculators menu and /calculators/ page: owner decision on the mockups (`mockups/calculators-nav/`). The home chip strip on phones (2 of 11 visible) belongs to it.
+- Long appliance names (data/appliances.json) are cut in the phone picker; shorter display names would be a data change.
+- Reference tables on bill pages still scroll sideways on a phone (now with an edge shadow as the cue); a card layout like the error codes is possible later.
+- Error-code table headings are very long (WL-210, Phase 7).
+- Everything open from the earlier handoffs below still stands.
+
+## Earlier handoff (after 21 Oct audit fix Phase 5: page text) — written by the audit Phase 5 thread, 2026-10-21
 
 Owner: every fix phase of the 21 Oct 2026 audit runs in its own new thread, only after the owner says to start it. Shared rules and phase notes: `/mnt/project-files/electricity-tool-hub/audit/2026-10-21/handoff/` (README, `phase-N-*.md`, `status.md`; Phases 1 to 5 ticked). Next is **Phase 6 (phone layout)**: read README, then only `phase-6-phone-layout.md` and its rows in `audit/fix-list-2026-10-21.md`. Plugin v0.8.27. Phase 5 changed page text, metas and two build helpers only; no engine formula moved. The text formats live in `specs/formulas.md` bullet "Market prices and rough times".
 
@@ -672,6 +698,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | 2026-10-21 | Audit 2026-10-21 fix Phase 3: input and error fixes (WL-197 error under the field + red focus, WL-226 messages with unit/example/limit and per-page texts, WL-221 typical-values notice + D9 panels required, WL-222 D7 monthly default, WL-223 ignored boxes checked, WL-224 bounds in data + C8 per unit, WL-225 Roman Urdu labels, WL-227 whole counts, WL-241/242 FC/GST per category in data, partial), plugin v0.8.25 | done: tests green, Engineer Reviewer (2 C8 defects fixed), local WordPress checked at 375 px | #42 |
 | 2026-10-21 | Audit 2026-10-21 fix Phase 4: solar, battery and wiring engine (WL-169 to 182, 230 to 232: on-grid vs hybrid inverter, sizes to buy, battery cards, build-time prices, hybrid starting string, pump string and drive, hybrid quote battery, roof area, cables to 120 mm² + DC message, PV cable EN 50618, DC current at cut-off, C-rate notice, 1 hp motor, appliance PF), plugin v0.8.26 | done: tests green, Engineer Reviewer PASS (second round), local WordPress browser check on 19 pages | #43 |
 | 2026-10-21 | Audit 2026-10-21 fix Phase 5: page text (WL-183 rough runtimes, WL-184 average month in text, WL-185 home saving labels, WL-233 lithium guide vs datasheet and fire safety, WL-234 outside sources on every page, WL-235 honest metas, WL-189 internal links, WL-188 tracker title, WL-190 lakh prices, WL-236 wrong statements, WL-192 slab rate, WL-193 index date, WL-194 peak-hours title, WL-195 llms.txt answers + home title, WL-196 installer term + MCB margin + N2 meta, WL-220 E3 label, WL-237 404 rule), plugin v0.8.27 | done: tests green | #44 |
+| 2026-10-21 | Audit 2026-10-21 fix Phase 6: phone layout and navigation (WL-198 Next step under the result, WL-238 embed result first + taller list iframe, WL-202 error-code count/jump/phone cards, WL-204 list calculators in two columns on desktop, WL-200 hub task groups, WL-239 table row labels, WL-205 small fixes: counts, 404, touch sizes, scroll cue, picker groups, select labels), plugin v0.8.28 | done: tests green | #45 |
 
 ## Owner to do
 - Audit Phase 4: one Hostinger redirect so http and www go straight to https://wattlyst.com (WL-40); HTML browser cache time of a few hours in LiteSpeed/Hostinger (WL-36); after deploy, open wp-admin once so the new build syncs and the cache is purged; before switching on the quote form, ask Hostinger which header carries the visitor IP and put it in data/site.json leads.client_ip_header (WL-64); 2FA for wp-admin.

@@ -17,9 +17,12 @@ document.querySelectorAll('form[data-wl-lookup]').forEach((form) => {
   const select = form.querySelector('[data-wl-group-select]');
   const box = form.querySelector('[data-wl-filter]');
   const nomatch = form.querySelector('[data-wl-nomatch]');
+  // While a filter is on: the count and a jump to the first matching brand table, far below the box on a phone (WL-202).
+  const count = form.querySelector('[data-wl-count]');
   const apply = () => {
     const q = box.value.trim().toLowerCase();
     let shown = 0;
+    let first = null;
     for (const g of groups) {
       const on = !select.value || g.dataset.wlGroup === select.value;
       let rows = 0;
@@ -29,9 +32,15 @@ document.querySelectorAll('form[data-wl-lookup]').forEach((form) => {
         if (hit) rows += 1;
       }
       g.hidden = !on || rows === 0;
+      if (!g.hidden && !first) first = g.querySelector('h2');
       shown += rows;
     }
     nomatch.hidden = shown > 0;
+    count.hidden = !first || !(q || select.value);
+    if (first) {
+      count.firstChild.textContent = `${shown} ${shown === 1 ? 'code matches' : 'codes match'}.`;
+      count.lastChild.href = `#${first.id}`;
+    }
   };
   select.addEventListener('change', apply);
   box.addEventListener('input', apply);
