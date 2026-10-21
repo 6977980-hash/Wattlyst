@@ -10897,5 +10897,22 @@
     },
     "tolerance": 0.01,
     "note": "21 Oct 2026 audit Phase 8 WL-244: the ToU bill uses the same add-on lines: FPA 650 × 2.0581 = 1,338 (not 500 × 2.0581 = 1,029)."
+  },
+  {
+    "calc": "bill_total",
+    "name": "next slab cliff with FPA-month units entered: the FPA cancels out",
+    "inputs": {
+      "units": 150,
+      "protected": true,
+      "sanctioned_kw": 2,
+      "fpa_per_unit": 2.0581,
+      "fpa_units": 185
+    },
+    "expected": {
+      "next_units": 200,
+      "next_rs": 5956
+    },
+    "tolerance": 0.01,
+    "note": "21 Oct 2026 audit Phase 8 WL-244 (Engineer Reviewer): both bills carry the same FPA (185 × 2.0581 = 381), so next_rs differs from the no-FPA figure only by GST rounding."
   }
 ]

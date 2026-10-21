@@ -20,6 +20,7 @@ Owner: every fix phase of the 21 Oct 2026 audit runs in its own new thread, only
 
 **Open to-dos**
 - AdSense owner steps (OW-1, OW-2): Search Console indexing first; then set `adsense_pub_id` with `enabled` false (meta tag + ads.txt prove ownership), apply, install a Google-certified CMP and set `consent.cmp`, then slots and `enabled` true.
+- The 1.5 ton inverter AC row still cites Gree's figures through a retailer page (Japan Electronics); gree.com.pk was unreachable from here: swap to a maker page when reachable.
 - Fans and chest freezer need a maker datasheet, NEECA label or a Wattlyst meter reading (owner can photograph nameplates).
 - Lifeline GST default (WL-241) still [VERIFY]: needs a real lifeline bill.
 - Everything open from the earlier handoffs below still stands.
