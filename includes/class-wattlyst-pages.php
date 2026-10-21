@@ -163,7 +163,9 @@ final class Wattlyst_Pages {
 			}
 		}
 		update_option( self::OPT_WARM, array_values( array_unique( array_merge( $first, $rest ) ) ), false );
-		wp_clear_scheduled_hook( self::WARM );
+		// Later batches carry an argument (the queue length), which wp_clear_scheduled_hook() without args leaves
+		// in place, so a new sync would start a second chain next to the old one (WL-213): drop every WARM event.
+		wp_unschedule_hook( self::WARM );
 		wp_schedule_single_event( time() + 15, self::WARM );
 	}
 

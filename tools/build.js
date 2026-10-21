@@ -391,7 +391,9 @@ function codeTables(ctx, sources) {
   const tables = brands.map((b) => ({
     key: b.id,
     label: b.name,
-    caption: `${b.name} error codes (${b.models})`,
+    // Short H2; the full name and the model scope go in the line under it (WL-210).
+    caption: `${b.heading} error codes`,
+    note: `${b.name}. Models: ${b.models}`,
     head: ['Code', 'Meaning', 'Likely cause', 'What to do', 'Call installer?'],
     rows: b.codes.map((x) => [x.code, x.meaning, x.causes, x.action, x.call_installer ? 'Yes' : 'Usually not']),
   }));
@@ -473,7 +475,7 @@ function dataChecked(module, ctx) {
     out.push({ label: 'Pakistan electricity tariff (NEPRA notification)', url: ctx.data.tariff._meta.source_url || null, checked: ctx.data.tariff._meta.checked });
     const g = ctx.data.tariff.gas_domestic;
     out.push({ label: `Domestic gas slab prices (${g.source}; not yet matched to the OGRA notification)`, url: g.source_url, checked: g.checked });
-  } else if (module === 'wiring' || module === 'load' || module === 'circuits') out.push({ label: 'Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)', url: 'https://webstore.iec.ch/publication/1878', checked: ctx.cables._meta.checked });
+  } else if (module === 'wiring' || module === 'load' || module === 'circuits') out.push({ label: 'Cable ampacity table (IEC 60364-5-52 Table B.52.4, PVC copper)', url: 'https://webstore.iec.ch/en/publication/1878', checked: ctx.cables._meta.checked });
   if (module === 'decision') {
     // The home page has no Sources list: each price set links to the page that lists its sources.
     const at = (id) => `${ctx.site.url.replace(/\/$/, '')}${ctx.allRows.find((r) => r.id === id).url}`;
@@ -506,7 +508,12 @@ function dataChecked(module, ctx) {
 
 function person(site, id) {
   const p = site.people.find((x) => x.id === id) || site.people[0];
-  return { '@type': 'Person', '@id': `${site.url}#/person/${p.id}`, name: p.name, jobTitle: p.roles.join(', '), sameAs: p.same_as, worksFor: { '@id': `${site.url}#organization` } };
+  // url = the person's entry on the About page (WL-209); the About people block prints the same id.
+  return { '@type': 'Person', '@id': `${site.url}#/person/${p.id}`, name: p.name, url: personUrl(site, p.id), jobTitle: p.roles.join(', '), sameAs: p.same_as, worksFor: { '@id': `${site.url}#organization` } };
+}
+
+export function personUrl(site, id) {
+  return `${site.url}about/#${id}`;
 }
 
 export function organizationSchema(site, pluginUrl) {
@@ -522,6 +529,8 @@ export function organizationSchema(site, pluginUrl) {
     foundingDate: String(site.founded),
     ...(founder ? { founder: { '@id': `${site.url}#/person/${founder.id}` } } : {}),
     ...(site.organization_same_as.length ? { sameAs: site.organization_same_as } : {}),
+    ...(site.area_served ? { areaServed: { '@type': 'Country', name: site.area_served } } : {}),
+    ...(site.languages ? { knowsLanguage: site.languages } : {}),
     contactPoint: { '@type': 'ContactPoint', contactType: 'customer support', email: site.contact_email, availableLanguage: ['en'] },
   };
 }
@@ -639,7 +648,7 @@ function renderTrust(id, html, ctx) {
   const blocks = {
     'defaults-table': () => defaultsTable(data.defaults),
     'data-sources': () => dataSources(ctx),
-    'people': () => site.people.map((p) => `<li><strong>${esc(p.name)}</strong>, ${esc(p.roles.join(' and '))}${p.same_as.length ? ` (<a href="${esc(p.same_as[0])}" rel="me noopener">LinkedIn</a>)` : ''}</li>`).join(''),
+    'people': () => site.people.map((p) => `<li id="${esc(p.id)}"><strong>${esc(p.name)}</strong>, ${esc(p.roles.join(' and '))}${p.same_as.length ? ` (<a href="${esc(p.same_as[0])}" rel="me noopener">LinkedIn</a>)` : ''}</li>`).join(''),
     'reviewer': () => site.reviewer.status === 'signed_off'
       ? `<p>Technical review: <strong>${esc(site.reviewer.name)}</strong>, ${esc(site.reviewer.credential)}.</p>`
       : '<p>Technical review by a PEC-registered electrical engineer is in progress. Until it is complete, no page claims an engineer sign-off.</p>',
@@ -754,6 +763,11 @@ export async function build() {
       r.author = c.author || site.people[0].id;
       r.related = c.related || [];
       r.next = c.next || null;
+      // Anchor for this page in other pages' Related lists, so not every inbound link repeats the H1 (WL-211).
+      if (c.anchor !== undefined) {
+        if (typeof c.anchor !== 'string' || !c.anchor.trim() || c.anchor.length > 60 || c.anchor.toLowerCase() === r.h1.toLowerCase()) fail(`${r.id}: anchor must be a short phrase (up to 60 characters) that differs from the H1`);
+        r.anchor = c.anchor;
+      }
       if (c.appliance && !inp.appliances.items.find((a) => a.id === c.appliance)) fail(`${r.id}: appliance ${c.appliance} not in data/appliances.json`);
     } else {
       r.author = site.people[0].id;
@@ -849,7 +863,7 @@ export async function build() {
       component_prices: { items: inp.data.component_prices.items.map(({ category, size, low, high, n_sources, export_capable, bank_v }) => ({ category, size, low, high, n_sources, ...(export_capable === false ? { export_capable } : {}), ...(bank_v ? { bank_v } : {}) })) },
       backup_prices: browserBackup(inp.data.backup_prices) },
     // lastmod: the same date as the page's schema dateModified, used for the sitemap <lastmod> (WL-84, WL-206).
-    pages: rows.map(({ id, type, url, h1, title, meta, status, live, parent, children, related, next, wave, modified }) => ({ id, type, url, h1, title, meta, status, live, parent, children, related, next, wave, lastmod: modified })),
+    pages: rows.map(({ id, type, url, h1, anchor, title, meta, status, live, parent, children, related, next, wave, modified }) => ({ id, type, url, h1, anchor, title, meta, status, live, parent, children, related, next, wave, lastmod: modified })),
     nav: rows.filter((r) => r.nav_label).sort((a, b) => a.nav_order - b.nav_order).map((r) => ({ id: r.id, label: r.nav_label, url: r.url })),
     website_schema: websiteSchema(site, pluginUrl),
   };

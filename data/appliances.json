@@ -1,6 +1,6 @@
 {
  "_meta": {
-  "source": "Virginia Tech Extension 2901-9014 (DOE appliance wattage table) https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html; Murdoch's generator wattage chart https://www.murdochs.com/learning-center/power-equipment/how-to-choose-a-generator/; Gree GS-18PITH11G datasheet (Japan Electronics PK) https://japanelectronics.com.pk/products/gree-ac-split-inverter-1-5-ton-gs-18pith11g-aaa; PowerHouse Express PK: AC watts https://powerhouseexpress.com.pk/blogs/news/how-many-watts-does-an-air-conditioner-use; PowerHouse Express PK: 6kW solar load guide https://powerhouseexpress.com.pk/blogs/news/how-many-ac-can-run-on-6kw-solar-system; ARY News: inverter fan watts https://arynews.tv/do-inverter-fans-really-consume-only-30-watts-unveiling-the-truth/; Haier HSU-18 non-inverter listing (Star Tech) https://startech.com.bd/haier-1-5-ton-non-inverter-ac",
+  "source": "Virginia Tech Extension 2901-9014 (DOE appliance wattage table) https://pubs.ext.vt.edu/2901/2901-9014/2901-9014.html; Murdoch's generator wattage chart https://www.murdochs.com/the-dirt/power-equipment/how-to-choose-a-generator/; Gree GS-18PITH11G datasheet (Japan Electronics PK) https://japanelectronics.com.pk/products/gree-ac-split-inverter-1-5-ton-gs-18pith11g-aaa; PowerHouse Express PK: AC watts https://powerhouseexpress.com.pk/blogs/news/how-many-watts-does-an-air-conditioner-use; PowerHouse Express PK: 6kW solar load guide https://powerhouseexpress.com.pk/blogs/news/how-many-ac-can-run-on-6kw-solar-system; ARY News: inverter fan watts https://arynews.tv/do-inverter-fans-really-consume-only-30-watts-unveiling-the-truth; Haier HSU-18 non-inverter listing (Star Tech) https://www.startech.com.bd/haier-1-5-ton-non-inverter-ac",
   "checked": "2026-10-13",
   "status": "Typical values for planning; real appliances vary, the calculators let users enter their own label watts. Starting watts marked as estimates need PEC engineer confirmation.",
   "fields": "running_w typical rated input power W; starting_w surge W; typical_hours_per_day planning default; starting_w_basis 'source' when the surge figure comes from the cited source, 'estimate' otherwise (rule of thumb: ~3x running for compressors/motors, equal to running for resistive/electronic/lighting, max rated input for inverter compressors); source 'Wattlyst estimate, engineer to confirm' with source_url null marks engineering estimates; note optional caveat shown on the page. Pump/motor running watts are never below hp x 745.7 / motor efficiency (formulas.md A). avg_w (air conditioners only): average electrical draw over an hour of normal use for unit-consumption estimates: inverter ACs from formulas.md E (1.0 kW for 1.5 ton, scaled by size), non-inverter = running_w x compressor duty 0.8 (defaults.json ac_noninverter_duty); engineer to confirm. avg_w_range (optional): [low, high] planning range of that average, printed next to it (E5).",
@@ -28,7 +28,7 @@
     "Super Asia"
    ],
    "source": "ARY News: inverter fan watts",
-   "source_url": "https://arynews.tv/do-inverter-fans-really-consume-only-30-watts-unveiling-the-truth/"
+   "source_url": "https://arynews.tv/do-inverter-fans-really-consume-only-30-watts-unveiling-the-truth"
   },
   {
    "id": "ceiling-fan-dc-inverter",
@@ -51,7 +51,7 @@
     "Super Asia"
    ],
    "source": "ARY News: inverter fan watts",
-   "source_url": "https://arynews.tv/do-inverter-fans-really-consume-only-30-watts-unveiling-the-truth/"
+   "source_url": "https://arynews.tv/do-inverter-fans-really-consume-only-30-watts-unveiling-the-truth"
   },
   {
    "id": "pedestal-fan",
@@ -97,7 +97,7 @@
     "Super Asia"
    ],
    "source": "ARY News: inverter fan watts",
-   "source_url": "https://arynews.tv/do-inverter-fans-really-consume-only-30-watts-unveiling-the-truth/"
+   "source_url": "https://arynews.tv/do-inverter-fans-really-consume-only-30-watts-unveiling-the-truth"
   },
   {
    "id": "bracket-fan",
@@ -264,7 +264,7 @@
     "Kenwood"
    ],
    "source": "Haier HSU-18 non-inverter listing (Star Tech)",
-   "source_url": "https://startech.com.bd/haier-1-5-ton-non-inverter-ac",
+   "source_url": "https://www.startech.com.bd/haier-1-5-ton-non-inverter-ac",
    "avg_w": 1440
   },
   {
@@ -671,7 +671,7 @@
     "Super Asia"
    ],
    "source": "Murdoch's generator wattage chart",
-   "source_url": "https://www.murdochs.com/learning-center/power-equipment/how-to-choose-a-generator/"
+   "source_url": "https://www.murdochs.com/the-dirt/power-equipment/how-to-choose-a-generator/"
   },
   {
    "id": "clothes-dryer",
@@ -845,7 +845,7 @@
     "West Point"
    ],
    "source": "Murdoch's generator wattage chart",
-   "source_url": "https://www.murdochs.com/learning-center/power-equipment/how-to-choose-a-generator/"
+   "source_url": "https://www.murdochs.com/the-dirt/power-equipment/how-to-choose-a-generator/"
   },
   {
    "id": "food-processor",
@@ -905,7 +905,7 @@
    "load_type": "resistive",
    "pk_brands": [],
    "source": "Murdoch's generator wattage chart",
-   "source_url": "https://www.murdochs.com/learning-center/power-equipment/how-to-choose-a-generator/"
+   "source_url": "https://www.murdochs.com/the-dirt/power-equipment/how-to-choose-a-generator/"
   },
   {
    "id": "coffee-maker",
@@ -988,7 +988,7 @@
     "West Point"
    ],
    "source": "Murdoch's generator wattage chart",
-   "source_url": "https://www.murdochs.com/learning-center/power-equipment/how-to-choose-a-generator/"
+   "source_url": "https://www.murdochs.com/the-dirt/power-equipment/how-to-choose-a-generator/"
   },
   {
    "id": "dishwasher",
@@ -1055,7 +1055,7 @@
     "Shahzad"
    ],
    "source": "Murdoch's generator wattage chart",
-   "source_url": "https://www.murdochs.com/learning-center/power-equipment/how-to-choose-a-generator/"
+   "source_url": "https://www.murdochs.com/the-dirt/power-equipment/how-to-choose-a-generator/"
   },
   {
    "id": "water-motor-1-5hp",
@@ -1399,7 +1399,7 @@
     "ZTE"
    ],
    "source": "Murdoch's generator wattage chart",
-   "source_url": "https://www.murdochs.com/learning-center/power-equipment/how-to-choose-a-generator/"
+   "source_url": "https://www.murdochs.com/the-dirt/power-equipment/how-to-choose-a-generator/"
   },
   {
    "id": "phone-charger",
@@ -1725,7 +1725,7 @@
     "Ingco"
    ],
    "source": "Murdoch's generator wattage chart",
-   "source_url": "https://www.murdochs.com/learning-center/power-equipment/how-to-choose-a-generator/"
+   "source_url": "https://www.murdochs.com/the-dirt/power-equipment/how-to-choose-a-generator/"
   },
   {
    "id": "angle-grinder",
@@ -1768,7 +1768,7 @@
     "Total"
    ],
    "source": "Murdoch's generator wattage chart",
-   "source_url": "https://www.murdochs.com/learning-center/power-equipment/how-to-choose-a-generator/"
+   "source_url": "https://www.murdochs.com/the-dirt/power-equipment/how-to-choose-a-generator/"
   },
   {
    "id": "air-compressor-1hp",
@@ -1809,7 +1809,7 @@
     "Karcher"
    ],
    "source": "Murdoch's generator wattage chart",
-   "source_url": "https://www.murdochs.com/learning-center/power-equipment/how-to-choose-a-generator/"
+   "source_url": "https://www.murdochs.com/the-dirt/power-equipment/how-to-choose-a-generator/"
   },
   {
    "id": "welding-machine-small",

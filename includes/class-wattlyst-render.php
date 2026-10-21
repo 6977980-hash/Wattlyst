@@ -682,8 +682,11 @@ final class Wattlyst_Render {
 			}
 			$rows .= '<tr>' . $cells . '</tr>';
 		}
-		return '<section class="wl-ref' . ( $stack ? ' wl-stack' : '' ) . '"' . $attrs . '><h2 id="' . esc_attr( $id ) . '">' . esc_html( $t['caption'] ) . '</h2>' .
-			'<div class="wl-table-wrap" role="region" tabindex="0" aria-labelledby="' . esc_attr( $id ) . '"><table class="wl-table" aria-labelledby="' . esc_attr( $id ) . '"><thead><tr>' . $head . '</tr></thead><tbody>' . $rows . '</tbody></table></div></section>';
+		// A table's scope note (error codes: models covered) sits under the short H2 and describes the table (WL-210).
+		$note = empty( $t['note'] ) ? '' : '<p class="wl-hint" id="' . esc_attr( $id ) . '-n">' . esc_html( $t['note'] ) . '</p>';
+		$desc = $note ? ' aria-describedby="' . esc_attr( $id ) . '-n"' : '';
+		return '<section class="wl-ref' . ( $stack ? ' wl-stack' : '' ) . '"' . $attrs . '><h2 id="' . esc_attr( $id ) . '">' . esc_html( $t['caption'] ) . '</h2>' . $note .
+			'<div class="wl-table-wrap" role="region" tabindex="0" aria-labelledby="' . esc_attr( $id ) . '"><table class="wl-table" aria-labelledby="' . esc_attr( $id ) . '"' . $desc . '><thead><tr>' . $head . '</tr></thead><tbody>' . $rows . '</tbody></table></div></section>';
 	}
 
 	/** Lookup page (error codes): brand select + text filter over the tables below; the tables are complete without JavaScript. */
@@ -829,8 +832,8 @@ final class Wattlyst_Render {
 		return $r && ! empty( $r['live'] ) ? $r : null;
 	}
 
-	private static function link_to( array $r ): string {
-		return '<a href="' . esc_url( Wattlyst_Tools::link( $r['url'] ) ) . '">' . esc_html( $r['h1'] ) . '</a>';
+	private static function link_to( array $r, bool $anchor = false ): string {
+		return '<a href="' . esc_url( Wattlyst_Tools::link( $r['url'] ) ) . '">' . esc_html( $anchor && ! empty( $r['anchor'] ) ? ucfirst( $r['anchor'] ) : $r['h1'] ) . '</a>';
 	}
 
 	/**
@@ -860,12 +863,13 @@ final class Wattlyst_Render {
 		$links = array();
 		$next  = $this->live_row( $this->page['next'] ?? '' );
 		if ( $next ) {
-			$links[] = '<li class="wl-next"><strong>Next step:</strong> ' . self::link_to( $next ) . '</li>';
+			$links[] = '<li class="wl-next"><strong>Next step:</strong> ' . self::link_to( $next, true ) . '</li>';
 		}
 		foreach ( $this->page['related'] ?? array() as $rid ) {
 			$r = $this->live_row( $rid );
 			if ( $r ) {
-				$links[] = '<li>' . self::link_to( $r ) . '</li>';
+				// The Next step box above already links these pages by their H1, so this list uses the page's own anchor (WL-211).
+				$links[] = '<li>' . self::link_to( $r, true ) . '</li>';
 			}
 		}
 		$parent = ! empty( $this->page['parent'] ) ? $this->plugin->row( $this->page['parent'] ) : null;

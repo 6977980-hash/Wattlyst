@@ -3,12 +3,14 @@
   "source": "manufacturer manuals listed per brand (PDF or manufacturer support page), all fetched 2026-10-13/14",
   "checked": "2026-10-15",
   "notes": "Inverex Nitrox on-grid (12-25 kW) added 2026-10-15 from Inverex's own manual as hosted on ManualsLib. Still skipped: Inverex Veyron/Aerox hybrids (the 'APT Veyron' manuals on ManualsLib do not name Inverex, so they cannot be attributed); Knox - no official site or manual found (retailer w11stop lists datasheets only). Growatt MOD/MID and Growatt SPH hybrids not read (MIN TL-X and SPF ES Plus only). GoodWe F41-F163 not extracted. Huawei alarm IDs come from the L1 (2-6 kW single-phase) manual Issue 10; newer issues exist. Fronius Symo/Primo Class 1-5 STATE codes were read from the Symo Hybrid online manual and GEN24 codes from the GEN24 PDF. 'causes' and 'action' fields quote the manual where quoted; sentences starting 'Owner:' are plain-English guidance derived from the quoted manual text, not additional manufacturer statements. call_installer=true where the manual says to contact dealer/service/repair center or the fix needs DC/AC wiring work.",
-  "installer_flags": "call_installer set to true on 2026-10-14 (engineer review) wherever the manual's remedy needs wiring, terminal, protection-setting or part replacement work."
+  "installer_flags": "call_installer set to true on 2026-10-14 (engineer review) wherever the manual's remedy needs wiring, terminal, protection-setting or part replacement work.",
+  "heading_note": "heading = the short brand and series name used in the page H2 \"<heading> error codes\" (audit WL-210, 21 Oct 2026); name and models are printed in the line under it."
  },
  "brands": [
   {
    "id": "growatt-spf",
    "name": "Growatt SPF (off-grid / hybrid 'ES' series)",
+   "heading": "Growatt SPF off-grid and hybrid",
    "models": "SPF 3000-6000 ES / ES PLUS (codes table from SPF 6000 ES PLUS manual; same numbering family as other SPF units but verify per model)",
    "manual_url": "https://b2b.offgridtec.com/media/product_attachements/Growatt_SPF_6000_ES_Plus_User_Manual_EN.pdf",
    "manual_note": "Growatt's own manual hosted by distributor Offgridtec (b2b.offgridtec.com); fetched and read 2026-10-13/14.",
@@ -315,6 +317,7 @@
   {
    "id": "growatt-min",
    "name": "Growatt MIN / MOD on-grid (TL-X family)",
+   "heading": "Growatt MIN and MOD on-grid",
    "models": "MIN 2500-6000TL-X (manual read); MOD/MID share the Error 2xx/4xx numbering family per Growatt but only MIN TL-X was verified",
    "manual_url": "https://b2b.offgridtec.com/media/product_attachements/MIN 2500-6000 TL-X User Manual General EN 202206.pdf",
    "manual_note": "Growatt manual GR-UM-155-A-04 (2022-06) hosted by distributor Offgridtec; the local copy read was the same revision (header 'GR-UM-155-A-04'). Grid-side codes (grid voltage/frequency 'Error 300-series') were not in the extracted table slice; only the entries above are verified.",
@@ -513,6 +516,7 @@
   {
    "id": "huawei",
    "name": "Huawei SUN2000 (L1 single-phase residential)",
+   "heading": "Huawei SUN2000 L1",
    "models": "SUN2000-2KTL-L1 to 6KTL-L1 (alarm IDs are shared across SUN2000 families per Huawei, but only the L1 manual was read)",
    "manual_url": "https://res.cloudinary.com/gpceurope/image/upload/v1690811120/eau10ickazhrwervcftj.pdf",
    "manual_note": "English Issue 10 (2022-10-27) PDF copy; Huawei's official download area is solar.huawei.com (hosts other-language editions, e.g. https://solar.huawei.com/-/media/Solar/attachment/pdf/eu/service/download/SUN2000-2-6KTL-L1-UserManual-GR.pdf). Newer editions exist (Issue 20, 2024-05-30; Edition 24 ES, 2026-01-30) and were not read.",
@@ -747,6 +751,7 @@
   {
    "id": "solis",
    "name": "Solis (Ginlong) on-grid and hybrid",
+   "heading": "Solis on-grid and hybrid",
    "models": "Solis 1P/3P string inverters and RHI/S5/S6 hybrids (article is Solis' complete display-message list; hybrid battery codes not extracted)",
    "manual_url": "https://usservice.solisinverters.com/support/solutions/articles/73000560423-solis-inverter-alarm-codes-complete-list-",
    "manual_note": "Manufacturer support article (Solis North America / Ginlong), fetched 2026-10-13; it links the PDF 'Alarm Codes for Solis 1P _ 3P.pdf'.",
@@ -1008,6 +1013,7 @@
   {
    "id": "goodwe",
    "name": "GoodWe (ES Uniq hybrid; F-codes are shared across GoodWe residential inverters)",
+   "heading": "GoodWe ES Uniq hybrid",
    "models": "GW ES Uniq 8-12K with LX A/U batteries (manual read); on-grid DNS/MS/SDT and other hybrids (ET/EH) use the same F01-F163 numbering per this manual's 'all PV inverters' wording - verify per model",
    "manual_url": "https://en.goodwe.com/Ftp/EN/Downloads/User%20Manual/GW_Residential-Smart-Inverter-Solutions_User-Manual-ES-Uniq8-12K-LXA-LXU-EN.pdf",
    "manual_note": "Official GoodWe manual from en.goodwe.com, V2.9 dated 2026-10-10. Only F01-F39 extracted; F41-F163 (battery, BMS, backup) not extracted in the time box.",
@@ -1269,6 +1275,7 @@
   {
    "id": "sungrow",
    "name": "Sungrow SG RS single-phase on-grid",
+   "heading": "Sungrow SG RS on-grid",
    "models": "SG2.0RS-S / 2.5RS-S / 3.0RS-S / 3.0RS / 3.6RS / 4.0RS / 5.0RS / 6.0RS (manual says the code table covers 'all PV inverters' but only some apply per model)",
    "manual_url": "https://info-support.sungrowpower.com/application/pdf/2024/01/12/SG2.0-6.0RS-UEN-Ver21-202312%20.pdf",
    "manual_note": "Official Sungrow manual from info-support.sungrowpower.com, Ver21 (2023-12).",
@@ -1494,8 +1501,9 @@
   {
    "id": "fronius",
    "name": "Fronius (Symo / Primo SnapINverter STATE codes; GEN24 1xxx codes)",
+   "heading": "Fronius Symo, Primo and GEN24",
    "models": "Symo Hybrid (online manual read; Class 1-5 codes are shared with Symo/Primo/Galvo SnapINverters per Fronius numbering) and Primo GEN24 7.7/10.0 (GEN24 lists only 1030/1173/1191 in its manual)",
-   "manual_url": "http://manuals.fronius.com/html/4204260222/en.html",
+   "manual_url": "https://manuals.fronius.com/html/4204260222/en.html",
    "manual_note": "Official Fronius online manual manuals.fronius.com (Symo Hybrid, doc 42,0426,0222) read via page fetch; some rows were merged in the HTML table so 406-408 and 459-461 remedies are table-layout inferences. GEN24 PDF is Fronius' own manual hosted by a US distributor.",
    "codes": [
     {
@@ -1504,7 +1512,7 @@
      "causes": "Manual: 'AC voltage too high' (102); the row covers 103-112 grid voltage/frequency/islanding conditions.",
      "action": "Manual: inverter resumes 'Following careful testing and when the grid conditions are within the permissible range again'. Remedy: check grid connections; contact the system fitter if the code keeps recurring.",
      "call_installer": false,
-     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_url": "https://manuals.fronius.com/html/4204260222/en.html",
      "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
     },
     {
@@ -1513,7 +1521,7 @@
      "causes": "Manual: 'Overcurrent (AC)'",
      "action": "Manual: short-term interruption to feed-in, after which the inverter repeats its start-up routine; 'if the code is displayed permanently, notify a Fronius-trained service technician'.",
      "call_installer": true,
-     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_url": "https://manuals.fronius.com/html/4204260222/en.html",
      "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
     },
     {
@@ -1522,7 +1530,7 @@
      "causes": "Manual: 'Overcurrent DC or battery not detected'",
      "action": "Same as 301.",
      "call_installer": true,
-     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_url": "https://manuals.fronius.com/html/4204260222/en.html",
      "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
     },
     {
@@ -1531,7 +1539,7 @@
      "causes": "Manual: 'DC module overtemperature PV' / 'AC module overtemperature'",
      "action": "Manual: 'purge the cooling air openings and heat sink'; the fault is rectified automatically; if the code recurs contact the system fitter.",
      "call_installer": false,
-     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_url": "https://manuals.fronius.com/html/4204260222/en.html",
      "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
     },
     {
@@ -1540,7 +1548,7 @@
      "causes": "Manual: 'No power being fed in, despite closed relays'",
      "action": "Manual: fault is rectified automatically; contact the system fitter if it recurs.",
      "call_installer": false,
-     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_url": "https://manuals.fronius.com/html/4204260222/en.html",
      "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
     },
     {
@@ -1549,7 +1557,7 @@
      "causes": "Manual: 'There is not enough PV power available for feeding energy into the grid and no power has been requested from the battery.' and 'the status codes STATE 306 (Power low) and STATE 307 (DC low) are displayed routinely at these times of day' and 'do not indicate any kind of fault'.",
      "action": "Manual: wait for sufficient insolation.",
      "call_installer": false,
-     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_url": "https://manuals.fronius.com/html/4204260222/en.html",
      "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
     },
     {
@@ -1558,7 +1566,7 @@
      "causes": "Manual: 'DC input voltage too low for feeding energy into the grid'",
      "action": "Manual: wait for sufficient insolation.",
      "call_installer": false,
-     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_url": "https://manuals.fronius.com/html/4204260222/en.html",
      "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
     },
     {
@@ -1567,7 +1575,7 @@
      "causes": "Manual: 'Intermediate circuit voltage too high'",
      "action": "Manual: fault is rectified automatically; contact the system fitter if it recurs.",
      "call_installer": false,
-     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_url": "https://manuals.fronius.com/html/4204260222/en.html",
      "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
     },
     {
@@ -1576,7 +1584,7 @@
      "causes": "Manual: 'Unable to communicate with the power stage set'",
      "action": "Manual: 'The inverter will automatically attempt to connect again and, if possible, will resume feeding energy into the grid.' If displayed permanently, notify a Fronius-trained service engineer.",
      "call_installer": true,
-     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_url": "https://manuals.fronius.com/html/4204260222/en.html",
      "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
     },
     {
@@ -1585,7 +1593,7 @@
      "causes": "Manual descriptions as listed.",
      "action": "Manual: contact the system engineer if the code keeps recurring.",
      "call_installer": true,
-     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_url": "https://manuals.fronius.com/html/4204260222/en.html",
      "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
     },
     {
@@ -1594,7 +1602,7 @@
      "causes": "Manual: 'Fixed voltage mode has been selected instead of MPP voltage mode, and the fixed voltage has been set to too low or too high a value.'",
      "action": "Manual: contact the system engineer if the code keeps recurring (settings change).",
      "call_installer": true,
-     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_url": "https://manuals.fronius.com/html/4204260222/en.html",
      "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
     },
     {
@@ -1603,7 +1611,7 @@
      "causes": "Manual: 'No communication between power stage set and control system'",
      "action": "Same as 401.",
      "call_installer": true,
-     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_url": "https://manuals.fronius.com/html/4204260222/en.html",
      "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
     },
     {
@@ -1612,7 +1620,7 @@
      "causes": "Manual: 'Grid relay sticking or neutral conductor ground voltage too high'; 'The inverter is not feeding any energy into the grid.'",
      "action": "Manual: 'check the grounding, so that the neutral conductor ground voltage is below 30 V.' Installer task.",
      "call_installer": true,
-     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_url": "https://manuals.fronius.com/html/4204260222/en.html",
      "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
     },
     {
@@ -1621,7 +1629,7 @@
      "causes": "Manual descriptions as listed; inverter not feeding in.",
      "action": "Notify a service engineer if the code is permanent (table layout inference, see notes).",
      "call_installer": true,
-     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_url": "https://manuals.fronius.com/html/4204260222/en.html",
      "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
     },
     {
@@ -1630,7 +1638,7 @@
      "causes": "Manual: 'Insulation fault on solar modules or on the battery'; warning shown on display.",
      "action": "Manual: contact the system engineer if the code keeps recurring.",
      "call_installer": true,
-     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_url": "https://manuals.fronius.com/html/4204260222/en.html",
      "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
     },
     {
@@ -1639,7 +1647,7 @@
      "causes": "Manual: 'No energy fed into the grid in the past 24 hours'",
      "action": "Manual: acknowledge the code and 'check whether all conditions for feed-in are met, for example whether the modules are covered in snow'. Owner: check DC switch, shading/soiling, then installer.",
      "call_installer": false,
-     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_url": "https://manuals.fronius.com/html/4204260222/en.html",
      "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
     },
     {
@@ -1648,7 +1656,7 @@
      "causes": "Manual: 'this message appears overnight if no photovoltaics are connected to the Fronius Symo Hybrid' or when the inverter is in standby mode.",
      "action": "No action at night; if during the day, check DC switch / call installer.",
      "call_installer": false,
-     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_url": "https://manuals.fronius.com/html/4204260222/en.html",
      "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
     },
     {
@@ -1657,7 +1665,7 @@
      "causes": "Manual: 'Functional incompatibility (one or more PC boards in the inverter are not compatible with each other...'",
      "action": "Manual: update the inverter firmware (installer/service).",
      "call_installer": true,
-     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_url": "https://manuals.fronius.com/html/4204260222/en.html",
      "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
     },
     {
@@ -1666,7 +1674,7 @@
      "causes": "Manual: power is reduced when grid voltage is excessively high.",
      "action": "Manual: 'As soon as the grid voltage is back within the permissible range' the fault is rectified automatically; contact the system engineer if it recurs.",
      "call_installer": false,
-     "source_url": "http://manuals.fronius.com/html/4204260222/en.html",
+     "source_url": "https://manuals.fronius.com/html/4204260222/en.html",
      "source_ref": "Fronius Symo Hybrid Operating Instructions (online manual 42,0426,0222), Troubleshooting: 'Status codes - Class 1/3/4/5'"
     },
     {
@@ -1701,6 +1709,7 @@
   {
    "id": "inverex-nitrox",
    "name": "Inverex Nitrox (on-grid, three-phase)",
+   "heading": "Inverex Nitrox on-grid",
    "models": "NITROX-12KW, 15KW, 20KW, 25KW and the -3Ph-5G versions (the manual lists all of them)",
    "manual_url": "https://www.manualslib.com/manual/2505242/Inverex-Nitrox-12kw.html",
    "manual_note": "Inverex's own NITROX-12KW user manual, read as hosted on ManualsLib (inverex.com had no manual download when checked, 2026-10-15). F13 is 'Reserved' and is left out. The manual gives causes for some codes only (table 10.2) and one general action for all.",
@@ -2277,6 +2286,7 @@
   {
    "id": "voltronic-axpert",
    "name": "Voltronic Power Axpert (base design of many Pakistani rebrands)",
+   "heading": "Voltronic Axpert",
    "models": "Axpert VM III 1.5/3/5 kW (manual read). Other Axpert families (VM IV, MKS IV, MAX, MAX II, King) use the same 01-09 / 51-59 numbering with model-specific additions (MAX II adds 11 PV over voltage, 12 DC/DC over current, 13 battery discharge over current, per voltronicpower.com manual listing - not read). Pakistani brands sold as 'Axpert'-type units (e.g. Inverex Axpert, Ziewnic Axpert) are widely reported to be Voltronic OEM units, but no Inverex/Knox manual was fetched to confirm their code tables.",
    "manual_url": "https://voltronicpower.com/content/download/Manual/Axpert%20VM%20III_manual-20200904.pdf",
    "manual_note": "Official Voltronic manual from voltronicpower.com (v1.8, 2020-09-04). Other official Axpert manuals: https://voltronicpower.com/content/download/Manual/Axpert%20VM%20IV-4K6K-TWIN-Off-grid-manual-20220629.pdf , https://voltronicpower.com/content/download/Manual/Axpert%20MAX%20II-manual-20210811.pdf",
