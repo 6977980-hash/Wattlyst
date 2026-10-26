@@ -22,6 +22,7 @@ final class Wattlyst_Head {
 		add_action( 'wp_head', array( $this, 'head' ), 1 );
 		add_action( 'wp_head', array( $this, 'icons' ), 2 );
 		add_action( 'wp_head', array( $this, 'verification' ), 2 );
+		add_action( 'wp_head', array( $this, 'analytics' ), 3 );
 		add_filter( 'rank_math/json_ld', array( $this, 'rank_math_front_schema' ), 99 );
 		add_filter( 'wp_robots', array( $this, 'robots' ), 99 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'drop_block_styles' ), 100 );
@@ -231,6 +232,38 @@ final class Wattlyst_Head {
 		if ( '' !== $pub && is_front_page() ) {
 			printf( '<meta name="google-adsense-account" content="%s">' . "\n", esc_attr( 'ca-' . $pub ) );
 		}
+	}
+
+	/**
+	 * Google Analytics 4 from data/site.json `analytics` (owner, 26 Oct 2026). Every front-end page (the
+	 * /embed/<id>/ document has its own head and no tag); not for logged-in editors, so the owner's own
+	 * visits are not counted. gtag.js is fetched after the page: on the first tap, scroll or key, or
+	 * load_delay_ms after load, so it never competes with the calculator (Lighthouse gate). Consent Mode
+	 * default: storage denied in consent_regions (EEA, UK, Switzerland) until a consent tool grants it.
+	 */
+	public function analytics(): void {
+		$a = $this->plugin->site()['analytics'] ?? array();
+		if ( empty( $a['enabled'] ) || empty( $a['ga4_id'] ) || is_preview() || current_user_can( 'edit_posts' ) ) {
+			return;
+		}
+		$id      = (string) $a['ga4_id'];
+		$denied  = array(
+			'ad_storage'         => 'denied',
+			'ad_user_data'       => 'denied',
+			'ad_personalization' => 'denied',
+			'analytics_storage'  => 'denied',
+			'region'             => array_values( $a['consent_regions'] ?? array() ),
+		);
+		$src     = 'https://www.googletagmanager.com/gtag/js?id=' . rawurlencode( $id );
+		$js      = 'window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}'
+			. 'gtag("consent","default",' . wp_json_encode( $denied ) . ');'
+			. 'gtag("js",new Date());gtag("config",' . wp_json_encode( $id ) . ',{allow_google_signals:false});'
+			. '(function(){var e=["pointerdown","keydown","scroll","touchstart"],d=0;function l(){if(d)return;d=1;'
+			. 'e.forEach(function(n){removeEventListener(n,l)});var s=document.createElement("script");s.async=true;'
+			. 's.src=' . wp_json_encode( $src ) . ';document.head.appendChild(s)}'
+			. 'e.forEach(function(n){addEventListener(n,l,{passive:true,once:true})});'
+			. 'addEventListener("load",function(){setTimeout(l,' . (int) $a['load_delay_ms'] . ')})})();';
+		echo '<script>' . $js . "</script>\n"; // phpcs:ignore WordPress.Security.EscapeOutput -- values JSON-encoded above.
 	}
 
 	/** On the front page our Organization + WebSite graph replaces Rank Math's, so the entity is defined once. */

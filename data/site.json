@@ -64,9 +64,13 @@
  "logo": "assets/brand/logo-512.png",
  "og_image": "assets/brand/og-default.png",
  "analytics": {
-  "enabled": false,
+  "enabled": true,
   "provider": "Google Analytics 4",
-  "note": "Off (owner, 16 Oct 2026, audit WL-154): no GA tag is live, so the privacy policy prints no Analytics section. Set enabled true only once GA4 is actually installed (Google Site Kit); the privacy policy text follows this flag."
+  "ga4_id": "G-LSWB51DMTG",
+  "load_delay_ms": 3000,
+  "consent_regions": ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "IS", "LI", "NO", "GB", "CH"],
+  "checked": "2026-10-26",
+  "note": "On (owner pasted the GA4 tag, 26 Oct 2026). Wattlyst_Head::analytics prints it on every front-end page except /embed/<id>/ and for logged-in editors; gtag.js loads after the page (first tap/scroll/key or shortly after load) so it never competes with the calculator. Consent Mode default: analytics and ad storage denied in consent_regions (EEA, UK, Switzerland) until a CMP grants it; Google signals off. The privacy policy Analytics section follows enabled."
  },
  "verification": {
   "google": "SJiDot7lHMlPK0Q_Tjar99I3jUBrg0LZaDUE3fPADpo",
