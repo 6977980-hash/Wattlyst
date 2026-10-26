@@ -1,6 +1,24 @@
 # Progress
 
-## Handoff for next phase (after 21 Oct audit fix Phase 9b: ToU on the bill pages) — written by the audit Phase 9 thread, 2026-10-21
+## Handoff for next phase (after GA4 sitewide, v0.8.34) — written by the "Add Google Analytics tag sitewide" thread, 2026-10-26
+
+Owner pasted the GA4 gtag snippet (26 Oct 2026), so analytics is back on (reverses WL-154 of 16 Oct). Not an audit phase; the Phase 9b handoff below and those under it still hold.
+
+**What is where**
+- Settings: `data/site.json` `analytics` (`enabled`, `ga4_id`, `load_delay_ms`, `consent_regions`, note). `analyticsConfig()` in `tools/build.js` validates them and copies them into manifest `site.analytics`.
+- Tag: `Wattlyst_Head::analytics()` in `includes/class-wattlyst-head.php` (wp_head priority 3). Inline dataLayer + Consent Mode default (denied in `consent_regions`) + config; gtag.js itself is injected on the first tap/scroll/key or `load_delay_ms` after load. Skipped for logged-in editors and previews; the /embed/<id>/ document has its own head and no tag.
+- Privacy policy Analytics section: `content/trust/privacy-policy.html` inside `<!--if:analytics.enabled-->`.
+- Tests: `tests/speed-hygiene.test.js` (two GA4 tests replace the old WL-154 test).
+
+**Do not touch / watch**
+- Keep gtag.js deferred (never a plain `<script async src>` in the head): the Lighthouse gate and the homepage budget.
+- When AdSense goes on, the CMP must update consent for the EEA/UK/CH regions; the default here only denies there and leaves the rest of the world at Google's default.
+- The owner's own visits are not counted while logged in; test the tag in a private window (GA4 Realtime / Tag Assistant).
+
+**Open to-dos**
+- Owner: in GA4 Admin, set data retention and link Search Console if wanted (optional).
+
+## Earlier handoff (after 21 Oct audit fix Phase 9b: ToU on the bill pages) — written by the audit Phase 9 thread, 2026-10-21
 
 Owner said yes (21 Oct 2026) to the same ToU path on the remaining bill pages. Plugin v0.8.33. No page stops at 5 kW any more. The Phase 9 note below still holds for H1, D10 and D11.
 
@@ -811,6 +829,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | 2026-10-21 | Audit 2026-10-21 fix Phase 8: trust and AdSense readiness (WL-243 protected FC surcharge 0, WL-244 FPA on the FPA month's units, WL-217 ads need a CMP, WL-240 N6 no ads + Open-Meteo credit, WL-215 author bio, WL-219 operator/governing law/short tax FAQ, WL-216 error codes in own words, WL-218 appliance sources), plugin v0.8.30 | done: tests green | #47 |
 | 2026-10-21 | Audit 2026-10-21 fix Phase 9: ToU bill path for 5 kW and above (WL-162 c): H1 planner + decision engine and net billing D10/D11 price the bill on ToU rates with a default peak share from data (estimate notice), plugin v0.8.31 | done: tests green | #48 |
 | 2026-10-21 | Audit 2026-10-21 fix Phase 9b (owner yes): ToU bill path on the bill pages F1-F12, F14, E1 and N16 for 5 kW and above (peak units + MDI fields, default share estimate notice), plugin v0.8.33 | done: tests green | #50 |
+| 2026-10-26 | GA4 sitewide (owner pasted tag G-LSWB51DMTG): deferred gtag.js, Consent Mode denied in EEA/UK/CH, not on embeds or for editors, privacy policy Analytics section back on, plugin v0.8.34 | done: tests green | #51 |
 
 ## Owner to do
 - Audit Phase 4: one Hostinger redirect so http and www go straight to https://wattlyst.com (WL-40); HTML browser cache time of a few hours in LiteSpeed/Hostinger (WL-36); after deploy, open wp-admin once so the new build syncs and the cache is purged; before switching on the quote form, ask Hostinger which header carries the visitor IP and put it in data/site.json leads.client_ip_header (WL-64); 2FA for wp-admin.

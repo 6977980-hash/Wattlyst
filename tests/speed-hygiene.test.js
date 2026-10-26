@@ -39,11 +39,30 @@ test('WL-138 versioned dist/ files are cached for a year; the embed script and H
   // Every dist/ import carries ?ver=<hash>, so a long cache never serves an old build: tests/deploy.test.js checks it.
 });
 
-test('WL-154 analytics is off while no GA4 tag is live, so the privacy policy has no Analytics section', () => {
+test('GA4 on (owner, 26 Oct 2026): tag settings in the manifest, privacy policy names Google Analytics', () => {
   const site = JSON.parse(read('data/site.json'));
-  assert.equal(site.analytics.enabled, false);
+  assert.equal(site.analytics.enabled, true);
+  const m = JSON.parse(files['generated/manifest.json']).site.analytics;
+  assert.equal(m.ga4_id, site.analytics.ga4_id);
+  assert.match(m.ga4_id, /^G-[A-Z0-9]+$/);
+  for (const r of ['DE', 'FR', 'GB', 'CH', 'NO']) assert.ok(m.consent_regions.includes(r), r);
+  assert.ok(m.load_delay_ms > 0);
   const html = page('privacy-policy').content.html;
-  assert.doesNotMatch(html, /Google Analytics opt-out|We use Google Analytics/);
+  assert.match(html, /<h2>Analytics<\/h2>/);
+  assert.match(html, /Google Analytics opt-out/);
+  assert.match(html, /embeds\) carry no analytics/);
+});
+
+test('GA4 tag: deferred gtag.js, consent default before config, not on embeds or for editors', () => {
+  const php = read('includes/class-wattlyst-head.php');
+  const fn = php.slice(php.indexOf('public function analytics()'), php.indexOf('On the front page our Organization'));
+  assert.match(php, /add_action\( 'wp_head', array\( \$this, 'analytics' \)/);
+  assert.match(fn, /current_user_can\( 'edit_posts' \)/);
+  assert.ok(fn.indexOf('"consent","default"') < fn.indexOf('"config"'), 'consent default must come before config');
+  assert.match(fn, /allow_google_signals:false/);
+  assert.match(fn, /addEventListener\("load"/);
+  assert.doesNotMatch(fn, /<script async src/, 'gtag.js must not load in the head before the page');
+  assert.doesNotMatch(read('includes/class-wattlyst-endpoints.php'), /googletagmanager|wp_head\(/);
 });
 
 test('WL-155 every calculator has at least three spec cases', () => {
