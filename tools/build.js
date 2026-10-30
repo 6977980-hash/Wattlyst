@@ -688,7 +688,7 @@ function renderTrust(id, html, ctx) {
     'people': () => site.people.map((p) => `<li id="${esc(p.id)}"><strong>${esc(p.name)}</strong>, ${esc(p.roles.join(' and '))}${p.same_as.length ? ` (<a href="${esc(p.same_as[0])}" rel="me noopener">LinkedIn</a>)` : ''}${(p.bio || []).map((x) => `<p>${esc(x)}</p>`).join('')}</li>`).join(''),
     'reviewer': () => site.reviewer.status === 'signed_off'
       ? `<p>Technical review: <strong>${esc(site.reviewer.name)}</strong>, ${esc(site.reviewer.credential)}.</p>`
-      : '<p>Technical review by a PEC-registered electrical engineer is in progress. Until it is complete, no page claims an engineer sign-off.</p>',
+      : '<p>Every formula is written out on the methodology page and checked against the official sources listed on each calculator page (NEPRA, FBR, IEC and maker data). An independent review by a PEC-registered electrical engineer is not complete yet, so no page claims an engineer sign-off.</p>',
   };
   let out = html.replace(/<!--\s*block:([\w-]+)\s*-->/g, (_, b) => {
     if (!blocks[b]) fail(`${id}: unknown block ${b}`);
