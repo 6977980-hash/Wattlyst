@@ -988,7 +988,7 @@ final class Wattlyst_Render {
 			}
 			$review = 'Technically reviewed by ' . $rname . ', ' . esc_html( $rev['credential'] ?? '' ) . '.';
 		} else {
-			$review = 'Technical review by a PEC-registered electrical engineer is in progress.';
+			$review = 'Every formula is written out on the methodology page and checked against the official sources listed on this page. An independent review by a PEC-registered electrical engineer is not complete yet.';
 		}
 		return '<aside class="wl-author" aria-label="About this page"><p><strong>Written by</strong> ' . $name . ', ' . esc_html( implode( ' and ', $author['roles'] ) ) . ' of ' . esc_html( $site['brand'] ?? '' ) . '.' . ( empty( $author['short_bio'] ) ? '' : ' ' . esc_html( $author['short_bio'] ) ) . '</p><p>' . $review . ' <a href="' . esc_url( Wattlyst_Tools::link( '/methodology/' ) ) . '">How we calculate</a>.</p></aside>';
 	}
