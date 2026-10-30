@@ -36,6 +36,7 @@ html[dir=rtl] .wl-related li a::after,html[dir=rtl] .wl-children a::after,html[d
 html[dir=rtl] .wl-advanced:not([open]) summary::before{transform:rotate(135deg)}
 html[dir=rtl] .wl-author{padding:1.1rem 4.6rem 1.1rem 1.25rem}html[dir=rtl] .wl-author::before,html[dir=rtl] .wl-author::after{left:auto;right:1.15rem}
 html[dir=rtl] .wl-sources ul{margin-left:0;margin-right:1.1rem}
-html[dir=rtl] .wl-footer,html[dir=rtl] body .site-info .copyright-bar{text-align:right}
+/* Header, menu and footer stay as on the English site (owner, 30 Oct 2026): left to right, theme font and line height */
+html[dir=rtl] .site-header,html[dir=rtl] #site-navigation,html[dir=rtl] #mobile-header,html[dir=rtl] .site-footer,html[dir=rtl] .wl-footer{direction:ltr;text-align:left;font-family:-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";line-height:1.5;word-spacing:normal}
 html[dir=rtl] .wl-lookup-count a{margin-left:0;margin-right:.25rem}
 html[dir=rtl] .wl-sources a,html[dir=rtl] .wl-legal a{unicode-bidi:isolate}

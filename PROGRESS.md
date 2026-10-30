@@ -25,7 +25,7 @@ Owner approved the Urdu version (OW-8) and Phase U1 on 30 Oct 2026. Plan (phases
 - Owner reads the live Urdu pages and sends text corrections (fix them in `content/ur/`). Check Search Console for the hreflang pairs after indexing.
 - Run Lighthouse mobile on the Urdu pages on the live site after the first publish (local check done in U1, see the PR).
 - U2 (bills: F3-F13, N4, Bill Index, FPA guide F14 with an Urdu guides hub, Privacy/Terms/Disclaimer in Urdu), U3 (solar Pakistan), U4 (load/backup, the Urdu planner) need the owner's go-ahead one at a time.
-- The header menu and footer stay English on Urdu pages (U2 can add Urdu hub links once more hubs exist). WordPress core sitemap lists Urdu pages once live; hreflang is in the head only.
+- The header menu and footer stay English and left to right on Urdu pages (owner, 30 Oct 2026: `wattlyst-ur.css` header/footer rule; `footer()` lists English trust pages only) (U2 can add Urdu hub links once more hubs exist). WordPress core sitemap lists Urdu pages once live; hreflang is in the head only.
 
 ## Earlier handoff (after bill sources fix, v0.8.38) — written by the "LESCO bill vs NEPRA check" thread, 2026-10-30
 
