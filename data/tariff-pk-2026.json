@@ -100,17 +100,23 @@
    "source": "Profit 15 Jan 2026",
    "verified": false,
    "by_category": {"lifeline": 0, "protected": 0},
-   "by_category_note": "Default per consumer category when the page field is blank (engine/bill.js addOns, audit 2026-10-21 WL-241, WL-243). Lifeline: no FC surcharge, from NEPRA's category table. Protected: no FC surcharge, from a real LESCO protected bill (September 2026, itemised PITC duplicate bill): it prints no FC surcharge line and its total reconciles only with FC 0 (WL-243, settles the protected half of WL-242).",
-   "by_category_source": "NEPRA decision on the Financing Cost (FC) surcharge for ex-WAPDA DISCOs, TRF-100, 6 March 2023: consumer category table, lifeline row without the surcharge (primary). Protected: the owner's LESCO protected domestic bill for September 2026 (itemised duplicate bill from bill.pitc.com.pk, checked 21 October 2026; primary for one DISCO and month).",
-   "by_category_checked": "2026-10-21",
-   "by_category_verified": {"lifeline": true, "protected": true}
+   "by_category_note": "Default per consumer category when the page field is blank (engine/bill.js addOns, audit 2026-10-21 WL-241, WL-243). Lifeline: no FC surcharge, from NEPRA's category table. Protected: 0 by default [VERIFY, WL-242/243]: no NEPRA or Power Division notification found that sets the protected rate for 2026. NEPRA's 2023 decision raised the surcharge to Rs 3.23 for every category except protected domestic consumers (news reports only; the protected rate was then reported as lower, Rs 0.43 or Rs 1.43). A LESCO protected bill (September 2026) is evidence only, not the source (owner rule 21 Oct 2026: a bill can carry over-billing): its total reconciles with FC 0 and with no other rate. Replace with the primary notification when found.",
+   "by_category_source": "NEPRA decision on the Financing Cost (FC) surcharge for ex-WAPDA DISCOs, TRF-100, 6 March 2023: consumer category table, lifeline row without the surcharge (primary). Protected: no primary source yet; Business Recorder 40230809 and Dawn 1741521 (2023, secondary) on the Rs 3.23 surcharge excluding protected consumers; a LESCO protected bill for September 2026 as evidence (checked 30 October 2026).",
+   "by_category_checked": "2026-10-30",
+   "by_category_verified": {"lifeline": true, "protected": false}
   },
   "qta_per_unit": {
    "2026-03..2026-05": 0.3504,
    "2026-06..2026-08": -1.9857,
    "2026-09..2026-11": 0.5194,
    "excludes": "lifeline, prepaid",
-   "verified": false
+   "verified": false,
+   "verified_note": "Per quarter in sources: 2026-03..2026-05 and 2026-09..2026-11 from NEPRA's notifications (primary, protected homes included); 2026-06..2026-08 still from news reports.",
+   "sources": {
+    "2026-03..2026-05": {"source": "NEPRA notification SRO 459(I)/2026, quarterly adjustment for the 2nd quarter FY 2025-26: uniform Rs 0.3504/kWh, March to May 2026, all consumer categories except lifeline, incremental package units and prepaid", "url": "https://nepra.org.pk/tariff/Tariff/Notifications/2026/03%20Mar/SRO%20459%20XWDISCOs%202nd%20QTR%20FY%202025-26%2006-03-2026.PDF", "checked": "2026-10-30", "verified": true},
+    "2026-06..2026-08": {"source": "news reports of NEPRA's quarterly adjustment (Rs 1.98 to 1.99 per unit cut, June 2026); NEPRA notification not found", "url": "https://www.geo.tv/latest/667315-nepra-cuts-electricity-tariff-by-rs198-per-unit-under-quarterly-adjustment", "checked": "2026-10-30", "verified": false},
+    "2026-09..2026-11": {"source": "NEPRA notification SRO 1501(I)/2026 (7 September 2026), quarterly adjustment for the 2nd quarter CY 2026: uniform Rs 0.5194/kWh, September to November 2026, all consumer categories except lifeline, incremental package units and prepaid (also K-Electric)", "url": "https://nepra.org.pk/tariff/Tariff/Notifications/2026/09%20Sep/SRO%201501(I)-2026%20Dated%2007-09-2026.pdf", "checked": "2026-10-30", "verified": true}
+   }
   },
   "fpa_per_unit": {
    "value": null,
@@ -141,7 +147,7 @@
    "value": 18,
    "verified": false,
    "by_category": {"lifeline": 0},
-   "by_category_note": "Lifeline GST stays 0 by default, as before, until the owner's expert or a real lifeline bill confirms it [VERIFY, WL-241]. No FBR exemption for lifeline was found; secondary sources say lifeline bills pay GST (a 2012 ministry statement put the GST exemption at 1 to 50 units only). The user can still enter GST on the page. Protected: the full value, confirmed by the owner's LESCO protected bill for September 2026 (18% on the whole subtotal including the FPA, WL-244).",
+   "by_category_note": "Lifeline GST stays 0 by default, as before, until the owner's expert or a real lifeline bill confirms it [VERIFY, WL-241]. No FBR exemption for lifeline was found; secondary sources say lifeline bills pay GST (a 2012 ministry statement put the GST exemption at 1 to 50 units only). The user can still enter GST on the page. Protected: the full value. Source: the Sales Tax Act 1990, section 3(1) standard rate of 18% on the value of supply, which includes the FPA; no exemption for protected domestic consumers was found. A LESCO protected bill (September 2026) is consistent with it (evidence only, not the source).",
    "by_category_source": "Business Recorder report 3974034 and a FESCO consumer guide (secondary); no primary FBR source found.",
    "by_category_checked": "2026-10-21",
    "by_category_verified": false
