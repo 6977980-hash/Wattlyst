@@ -23,7 +23,12 @@ const graph = (id) => {
 test('WL-243: protected bills carry no FC surcharge by default (data), lifeline none either', () => {
   const fc = readJson('data/tariff-pk-2026.json').addons_secondary.fc_surcharge_per_unit;
   assert.equal(fc.by_category.protected, 0);
-  assert.equal(fc.by_category_verified.protected, true);
+  // A bill is evidence, not the source (owner rule 21 Oct 2026): protected stays [VERIFY] until NEPRA's rate is found.
+  assert.equal(fc.by_category_verified.protected, false);
+  assert.match(fc.by_category_note, /VERIFY/);
+  const q = readJson('data/tariff-pk-2026.json').addons_secondary.qta_per_unit;
+  for (const k of Object.keys(q).filter((x) => /^\d{4}-\d{2}\.\.\d{4}-\d{2}$/.test(x))) assert.ok(q.sources?.[k]?.source, `QTA ${k} has a source`);
+  assert.equal(q.sources['2026-09..2026-11'].verified, true);
   const r = calculators.bill_total({ units: 150, protected: true, sanctioned_kw: 2 }, data);
   assert.equal(r.fc_rs, 0);
   assert.ok(calculators.bill_total({ units: 150, sanctioned_kw: 2 }, data).fc_rs > 0, 'unprotected still pays it');

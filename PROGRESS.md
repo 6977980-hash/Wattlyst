@@ -1,6 +1,22 @@
 # Progress
 
-## Handoff for next phase (after net billing Phase B, v0.8.37) — written by the "Add payback and DISCO select to net billing" thread, 2026-10-30
+## Handoff for next phase (after bill sources fix, v0.8.38) — written by the "LESCO bill vs NEPRA check" thread, 2026-10-30
+
+Owner rule (21 Oct 2026): a utility bill is evidence or a test case, never the source of a rate; sources must be NEPRA/FBR/government notifications. Check report `/mnt/project-files/electricity-tool-hub/audit/2026-10-21/lesco-protected-bill-check.md` (owner said "Krdo" to its proposals on 30 Oct 2026). No number changed; only sources and verified flags. The handoffs below still hold.
+
+**What is where**
+- `data/tariff-pk-2026.json` `addons_secondary.fc_surcharge_per_unit`: protected default stays 0 but `by_category_verified.protected` is false and the note carries [VERIFY, WL-242/243] (no 2026 primary for the protected rate found).
+- `addons_secondary.qta_per_unit.sources`: one source object per quarter key (`verified` per quarter; March-May and Sep-Nov 2026 are NEPRA SROs, June-August still news). Keys other than the `YYYY-MM..YYYY-MM` quarters are ignored by `engine/bill.js` and the build's `qta_periods` options.
+- `addons_secondary.gst_pct.by_category_note`: protected GST source is the Sales Tax Act 1990 s.3(1), the bill only evidence.
+- `specs/formulas.md` section F ("FPA units" and "Bill total" bullets) and the F1 data note in `content/pages/F1.json` say the same; the owner's bill spec case note says "test case only".
+- Test: `tests/trust-adsense.test.js` WL-243 now checks protected FC is [VERIFY] (not verified) and every QTA quarter has a source.
+
+**Open to-dos**
+- Find NEPRA's or the Power Division's 2026 notification on the FC surcharge for protected consumers; then set the rate and `verified: true`.
+- The bill's split (taxes about Rs 11 higher, charges about Rs 11 lower than the rules; same total) needs the itemised bill.pitc.com.pk copy, which our server cannot open.
+- Electricity duty: still only news sources (0 by default).
+
+## Earlier handoff (after net billing Phase B, v0.8.37) — written by the "Add payback and DISCO select to net billing" thread, 2026-10-30
 
 Owner said yes to Phase B (30 Oct 2026, "Yes phase b kro shuru"). Evidence `/mnt/project-files/electricity-tool-hub/audit/net-billing-review-2026-10-30.md`, phase note `audit/2026-10-21/handoff/phase-nb-b-payback-disco.md`. D10 only; D11 and every other page unchanged. The Phase A handoff below and those under it still hold.
 
@@ -869,6 +885,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | 2026-10-26 | GA4 sitewide (owner pasted tag G-LSWB51DMTG): deferred gtag.js, Consent Mode denied in EEA/UK/CH, not on embeds or for editors, privacy policy Analytics section back on, plugin v0.8.34 | done: tests green | #51 |
 | 2026-10-30 | Net billing Phase A (D10, D11): WhatsApp link follows every result (WL-245), whole-rupee net billing lines 1,705 − 813 = 892 (WL-246), rate + slab in examples (WL-247), news Rs 11 vs NEPRA Rs 8.13 hint, FAQ and source (WL-248), plugin v0.8.36 | done: tests green | #53 |
 | 2026-10-30 | Net billing Phase B (D10): payback from units before solar + system price (WL-250), DISCO select naming the company in the result and share text, hint links to all eleven DISCO bill pages (WL-251), F8 anchor, plugin v0.8.37 | done: tests green | #54 |
+| 2026-10-30 | Bill sources (owner rule: a bill is evidence, not the source): protected FC surcharge back to [VERIFY], QTA sources per quarter (NEPRA SROs 459 and 1501 of 2026), GST/FPA sources from the Sales Tax Act and NEPRA, F1 note, plugin v0.8.38 | done: tests green | PR pending |
 
 ## Owner to do
 - Audit Phase 4: one Hostinger redirect so http and www go straight to https://wattlyst.com (WL-40); HTML browser cache time of a few hours in LiteSpeed/Hostinger (WL-36); after deploy, open wp-admin once so the new build syncs and the cache is purged; before switching on the quote form, ask Hostinger which header carries the visitor IP and put it in data/site.json leads.client_ip_header (WL-64); 2FA for wp-admin.
