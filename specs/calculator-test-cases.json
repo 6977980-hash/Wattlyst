@@ -2413,17 +2413,17 @@
     },
     "expected": {
       "tou": true,
-      "import_energy_rs": 15290.4,
+      "import_energy_rs": 15290,
       "export_credit_rs": 3300,
-      "net_energy_rs": 11990.4,
+      "net_energy_rs": 11990,
       "net_metering_units": 120,
       "net_metering_rs": 5622,
       "net_metering_carry_units": 20,
-      "extra_vs_net_metering_rs": 6368.4,
+      "extra_vs_net_metering_rs": 6368,
       "tou_peak_estimate": false
     },
     "tolerance": 0.01,
-    "note": "audit 2026-10-21 Phase 9 (WL-162 c): ToU path for 5 kW and above, hand-checked: 120 × 46.85 + 280 × 34.53 = 15,290.40; credit 300 × 11; old net metering nets the 300 exported against the 280 off-peak units only (20 carried), leaving 120 peak units × 46.85. Was the 5 kW error before."
+    "note": "audit 2026-10-21 Phase 9 (WL-162 c): ToU path for 5 kW and above, hand-checked: 120 × 46.85 + 280 × 34.53 = 15,290.40; credit 300 × 11; old net metering nets the 300 exported against the 280 off-peak units only (20 carried), leaving 120 peak units × 46.85. Was the 5 kW error before. WL-246 (30 Oct 2026): whole-rupee lines, import 15,290.40 → 15,290, net 15,290 − 3,300 = 11,990, extra 11,990 − 5,622 = 6,368."
   },
   {
     "calc": "net_billing",
@@ -2445,6 +2445,25 @@
     },
     "tolerance": 0.01,
     "note": "audit 2026-10-21 Phase 9 (WL-162 c): ToU path for 5 kW and above, hand-checked: 25% of 400 = 100 peak × 46.85 + 300 × 34.53 = 15,044; credit 100 × 8.13 = 813; old net metering: 100 × 46.85 + (300 − 100) × 34.53 = 11,591."
+  },
+  {
+    "calc": "net_billing",
+    "name": "protected home: whole-rupee lines add up (1,705 − 813 = 892)",
+    "inputs": {
+      "import_units": 150,
+      "export_units": 100,
+      "protected": true
+    },
+    "expected": {
+      "import_energy_rs": 1705,
+      "export_credit_rs": 813,
+      "net_energy_rs": 892,
+      "carry_forward_rs": 0,
+      "net_metering_rs": 527,
+      "extra_vs_net_metering_rs": 365
+    },
+    "tolerance": 0,
+    "note": "audit WL-246 (owner review 30 Oct 2026), hand-checked: protected 100 × 10.54 + 50 × 13.01 = 1,704.50 → Rs 1,705; credit 100 × 8.13 = Rs 813; net 1,705 − 813 = Rs 892 (was 891.4999… printed as 891); old net metering 50 × 10.54 = Rs 527; extra 892 − 527 = Rs 365."
   },
   {
     "calc": "net_billing",

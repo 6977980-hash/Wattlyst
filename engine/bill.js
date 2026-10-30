@@ -201,13 +201,14 @@ export const protected_check = calculator((i, d) => {
  * bill is shown as carry_forward_rs, never as a negative bill. At tou_threshold_kw and above the import is billed on ToU
  * rates (WL-162 c): peak units from the bill, blank = the default peak share of the import (an estimate); solar exports
  * fall in off-peak hours, so old net metering netted them against the off-peak import only.
+ * netLines keeps the exact sums (the H1 planner's chain uses them); net_billing passes R to round the lines (WL-246).
  */
-export const net_billing = calculator((i, d) => {
+export function netLines(i, d, R = (v) => v) {
   const t = tariffOf(d);
   const import_units = nonneg(i, 'import_units');
   const export_units = nonneg(i, 'export_units');
   const buyback_rs = nonneg(i, 'buyback_rs', t.net_billing?.buyback_rs_per_unit_default);
-  const export_credit_rs = export_units * buyback_rs;
+  const export_credit_rs = R(export_units * buyback_rs);
   const kw = pos(i, 'sanctioned_kw', dflt(d, 'default_sanctioned_kw'));
   let r;
   if (kw >= dflt(d, 'tou_threshold_kw')) {
@@ -225,10 +226,14 @@ export const net_billing = calculator((i, d) => {
     // Old net metering for comparison: units offset one-for-one, only the net import is billed (energy only).
     const units = Math.max(0, import_units - export_units);
     const old = energyCharge(t, units, categoryOf(i), kw);
-    r = { import_energy_rs: imp.energy_rs, import_rate: imp.rate, import_calc: `${fmt(import_units)} units at the slab rate of ${fmt(imp.rate, 'rs2')}`,
+    // The slab the imported units reach, as the bill's tariff table names it ("201–300 units"), for the page examples (WL-247).
+    const bands = t[categoryOf(i)], lo = imp.band_index ? bands[imp.band_index - 1].upto : 0;
+    r = { import_energy_rs: imp.energy_rs, import_rate: imp.rate, import_band: imp.band_open_ended ? `above ${fmt(lo)} units` : `${fmt(lo + 1)}–${fmt(imp.band_upto)} units`, import_calc: `${fmt(import_units)} units at the slab rate of ${fmt(imp.rate, 'rs2')}`,
       net_metering_units: units, net_metering_rate: old.rate, net_metering_rs: old.energy_rs, net_metering_carry_units: Math.max(0, export_units - import_units),
       nm_calc: `${fmt(import_units)} − ${fmt(export_units)} = ${fmt(units)} net units at ${fmt(old.rate, 'rs2')}`, tou: false };
   }
+  r.import_energy_rs = R(r.import_energy_rs);
+  r.net_metering_rs = R(r.net_metering_rs);
   const diff = r.import_energy_rs - export_credit_rs;
   const net_energy_rs = Math.max(0, diff);
   return {
@@ -236,7 +241,12 @@ export const net_billing = calculator((i, d) => {
     net_energy_rs, carry_forward_rs: Math.max(0, -diff),
     extra_vs_net_metering_rs: Math.max(0, net_energy_rs - r.net_metering_rs),
   };
-});
+}
+
+// Whole-rupee lines, as on the bill pages (WL-109): import, credit and the net metering bill are rounded first (to
+// 6 decimals, then to rupees, so a float error like 891.4999… cannot move a half), and the net, the carry-forward and
+// the comparison come from the rounded lines, so the printed lines add up (WL-246).
+export const net_billing = calculator((i, d) => netLines(i, d, (v) => Math.round(+v.toFixed(6))));
 
 /** Protected energy + fixed with every slab limit scaled by `scale` (a reading cycle longer or shorter than the billing month). */
 function proratedProtected(t, units, scale, kw) {

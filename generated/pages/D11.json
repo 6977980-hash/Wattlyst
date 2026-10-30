@@ -38,7 +38,7 @@
    "url": "/guides/net-billing-pakistan/"
   }
  ],
- "modified": "2026-10-21",
+ "modified": "2026-10-30",
  "content": {
   "intro": "",
   "sections": [
@@ -114,6 +114,10 @@
     "a": "Rs 8.13 per unit for CY 2026. The regulations credit exports at the national average energy purchase price, and NEPRA's power purchase price decision puts it at that figure. NEPRA may revise it, so check your bill."
    },
    {
+    "q": "Why do some sites say Rs 11 a unit for exported solar units?",
+    "a": "News reports in February 2026 quoted a buyback of about Rs 11 a unit that was under discussion; NEPRA did not notify it (Express Tribune report in Sources), and some sites still quote it. NEPRA's power purchase price decision for CY 2026 sets the national average energy purchase price at Rs 8.13, and that is the rate the Prosumer Regulations use for exported units. If your agreement or DISCO credits a different rate, type it in the buyback box and compare both results."
+   },
+   {
     "q": "Is net metering ending in Pakistan?",
     "a": "For new connections, yes: they get net billing. Agreements signed before 9 February 2026 keep the rate and rules of the old net-metering regulations until they expire, unless the system is enlarged, which moves it to net billing; renewals move to net billing."
    },
@@ -151,6 +155,10 @@
    {
     "label": "NEPRA decision on the power purchase price forecast for CY 2026 (national average energy purchase price)",
     "url": "https://nepra.org.pk/tariff/Tariff/DISCOs/Rebasing%20Decisions/TRF-100%20CPPAG%20FOR%20APPROVAL%20OF%20POWER%20PURCHASE%20PRICE%20FORECAST%2007-01-2026%20437-76.PDF"
+   },
+   {
+    "label": "Express Tribune, 10 Feb 2026: buyback of about Rs 11 a unit reported as under discussion (news report, not a NEPRA notification)",
+    "url": "https://tribune.com.pk/story/2591628/1"
    },
    {
     "label": "NEPRA regulations page: Prosumer Regulations 2026 and amendments (existing agreements)",
@@ -192,7 +200,7 @@
      "label": "Buyback rate",
      "unit": "Rs per unit",
      "default": 8.13,
-     "hint": "Rs per exported unit: NEPRA's national average energy purchase price for CY 2026. Change it only if your DISCO bills a revised rate."
+     "hint": "Rs per exported unit: NEPRA's national average energy purchase price for CY 2026, the rate the Prosumer Regulations use. News in February 2026 quoted about Rs 11 a unit, a figure under discussion that NEPRA did not notify. If your agreement or DISCO credits another rate, type it here; you can try both."
     },
     {
      "name": "sanctioned_kw",
@@ -297,19 +305,19 @@
   "examples": [
    {
     "title": "Import 400, export 300",
-    "text": "Import bill Rs 14,584 at Rs 36.46 a unit, export credit Rs 2,439: net billing charge Rs 12,145. Old net metering: Rs 2,244. Extra under net billing: Rs 9,901."
+    "text": "Import bill Rs 14,584 at Rs 36.46 a unit (301–400 units slab), export credit Rs 2,439: net billing charge Rs 12,145. Old net metering: Rs 2,244. Extra under net billing: Rs 9,901."
    },
    {
     "title": "Export more than you import: 250 in, 450 out",
-    "text": "Import bill Rs 8,275; export credit Rs 3,659. Net billing still charges Rs 4,617, because an exported unit earns less than an imported unit costs. Old net metering charged Rs 0 and carried 200 units forward."
+    "text": "Import bill 250 × Rs 33.10 (201–300 units slab) = Rs 8,275; export credit Rs 3,659. Net billing still charges Rs 4,616, because an exported unit earns less than an imported unit costs. Old net metering charged Rs 0 and carried 200 units forward."
    },
    {
     "title": "Same month at a lower buyback of Rs 8.00",
-    "text": "Export credit falls to Rs 2,400 and the net billing charge rises to Rs 12,184, Rs 9,940 more than old net metering. The buyback rate is the number to watch."
+    "text": "Import bill Rs 14,584 at Rs 36.46 (301–400 units slab) as before; export credit falls to Rs 2,400 and the net billing charge rises to Rs 12,184, Rs 9,940 more than old net metering. The buyback rate is the number to watch."
    },
    {
     "title": "Most solar used at home: 350 in, 100 out",
-    "text": "With little export the two regimes are closer: net billing Rs 11,948, old net metering Rs 8,275, a gap of Rs 3,673. Self-use is what protects the saving."
+    "text": "Import bill 350 × Rs 36.46 (301–400 units slab) = Rs 12,761. With little export the two regimes are closer: net billing Rs 11,948, old net metering Rs 8,275, a gap of Rs 3,673. Self-use is what protects the saving."
    }
   ],
   "table": {
@@ -418,7 +426,7 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/guides/net-billing-pakistan/#breadcrumb"
     },
-    "dateModified": "2026-10-21",
+    "dateModified": "2026-10-30",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }
@@ -438,7 +446,7 @@
      "@id": "https://wattlyst.com/#organization"
     },
     "datePublished": "2026-10-14",
-    "dateModified": "2026-10-21"
+    "dateModified": "2026-10-30"
    },
    {
     "@type": "Person",
@@ -495,6 +503,14 @@
       "acceptedAnswer": {
        "@type": "Answer",
        "text": "Rs 8.13 per unit for CY 2026. The regulations credit exports at the national average energy purchase price, and NEPRA's power purchase price decision puts it at that figure. NEPRA may revise it, so check your bill."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Why do some sites say Rs 11 a unit for exported solar units?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "News reports in February 2026 quoted a buyback of about Rs 11 a unit that was under discussion; NEPRA did not notify it (Express Tribune report in Sources), and some sites still quote it. NEPRA's power purchase price decision for CY 2026 sets the national average energy purchase price at Rs 8.13, and that is the rate the Prosumer Regulations use for exported units. If your agreement or DISCO credits a different rate, type it in the buyback box and compare both results."
       }
      },
      {

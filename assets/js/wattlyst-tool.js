@@ -23,7 +23,7 @@ async function init(form) {
   const howEl = form.parentElement.querySelector('[data-wl-how]');
   const el = (name) => form.elements.namedItem(name);
   const lists = {};
-  let show;
+  let show, setWa;
   for (const f of cfg.fields) if (f.type === 'loads') lists[f.name] = list.loadsField(form, f, cfg, (focus) => show && show(focus));
 
   let live = null;
@@ -118,6 +118,8 @@ async function init(form) {
     }
     if (cfg.rtable) extra().then((e) => e.drawTable(diagram, out, cfg.rtable, fmt, render));
     if (pushState) history.replaceState(null, '', shareUrl(window.location.href));
+    // The WhatsApp link's address follows every printed result, not only a tap, so a long-press copy or a new tab sends it too (WL-245).
+    setWa?.();
   };
 
   // The ?load= link that reproduces the current inputs (only filled fields; the canonical stays clean). Inside an
@@ -144,9 +146,7 @@ async function init(form) {
     const summary = () => [...results.querySelectorAll('.wl-result:not([hidden])')].map((r) => `${r.querySelector('.wl-result-label').textContent}: ${r.querySelector('output').textContent.trim()}`).join('\n');
     share.querySelector('[data-wl-share="print"]').addEventListener('click', () => { show(true); window.print(); });
     const wa = share.querySelector('[data-wl-share="whatsapp"]');
-    const setWa = () => { wa.href = `https://wa.me/?text=${encodeURIComponent(`${cfg.h1} (Wattlyst)\n${summary()}\n${shareUrl()}`)}`; };
-    wa.addEventListener('pointerdown', setWa);
-    wa.addEventListener('focus', setWa);
+    setWa = () => { wa.href = `https://wa.me/?text=${encodeURIComponent(`${cfg.h1} (Wattlyst)\n${summary()}\n${shareUrl()}`)}`; };
     setWa();
     share.querySelector('[data-wl-share="copy"]').addEventListener('click', async () => {
       show(true);

@@ -4,7 +4,7 @@
 import { calculator, CalcError, frac, nonneg, num, pos, dflt, has } from './core.js';
 import { inverter_size, generator_size, loadRows } from './sizing.js';
 import { solar_from_loads, solar_battery, stdSize, buyKw } from './solar.js';
-import { bill_energy, bill_total, bill_tou, net_billing } from './bill.js';
+import { bill_energy, bill_total, bill_tou, netLines } from './bill.js';
 import { fmt } from './format.js';
 
 /**
@@ -68,7 +68,7 @@ export const home_plan = calculator((i, d) => {
   const self_used = Math.min(nb_solar_kwh, monthly_units * day_share);
   const export_units = nb_solar_kwh - self_used;
   const import_units = monthly_units - self_used;
-  const nb = net_billing.raw({ ...bill, import_units, export_units, peak_units: Math.min(monthly_units * peak_share, import_units), buyback_rs: has(i, 'buyback_rs') ? i.buyback_rs : undefined }, d);
+  const nb = netLines({ ...bill, import_units, export_units, peak_units: Math.min(monthly_units * peak_share, import_units), buyback_rs: has(i, 'buyback_rs') ? i.buyback_rs : undefined }, d);
   const T = d.tariff.tou;
   Object.assign(out, {
     net_billing_panels: nb_panels, net_billing_kw: nb_kw, net_billing_solar_kwh: nb_solar_kwh,
