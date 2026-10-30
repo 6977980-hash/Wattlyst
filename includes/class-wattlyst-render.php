@@ -1009,7 +1009,7 @@ final class Wattlyst_Render {
 			}
 			$review = esc_html( $this->t( 'Technically reviewed by' ) ) . ' ' . $rname . ', ' . esc_html( $rev['credential'] ?? '' ) . '.';
 		} else {
-			$review = esc_html( $this->t( 'Technical review by a PEC-registered electrical engineer is in progress.' ) );
+			$review = esc_html( $this->t( 'Every formula is written out on the methodology page and checked against the official sources listed on this page. An independent review by a PEC-registered electrical engineer is not complete yet.' ) );
 		}
 		// Urdu page: the Urdu role names and bio line of content/ur/ui.json (author_roles, author_bio), the person's own facts.
 		$roles = $this->ur ? $this->t( 'author_roles' ) : implode( ' and ', $author['roles'] ) . ' of ' . ( $site['brand'] ?? '' );
