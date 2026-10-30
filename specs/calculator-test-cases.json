@@ -11333,5 +11333,79 @@
     },
     "tolerance": 0,
     "note": "net billing review 30 Oct 2026, Phase B (WL-250 payback, WL-251 DISCO), hand-checked: only the DISCOs in data/tariff-pk-2026.json discos."
+  },
+  {
+    "calc": "net_billing_payback",
+    "name": "Edge: zero units before and after, no price",
+    "inputs": {
+      "import_units": 0,
+      "export_units": 0,
+      "sanctioned_kw": 4,
+      "before_units": 0
+    },
+    "expected": {
+      "net_energy_rs": 0,
+      "before_energy_rs": 0,
+      "monthly_saving_rs": 0,
+      "yearly_saving_rs": 0
+    },
+    "tolerance": 0,
+    "note": "Engineer Reviewer 30 Oct 2026 (D10 payback), hand-checked: 0 units cost Rs 0 before and after; saving 0, no payback asked, no error."
+  },
+  {
+    "calc": "net_billing_payback",
+    "name": "Edge: very large home, 5,000 units before solar",
+    "inputs": {
+      "import_units": 3000,
+      "export_units": 2000,
+      "sanctioned_kw": 4,
+      "before_units": 5000,
+      "system_rs": 5000000
+    },
+    "expected": {
+      "net_energy_rs": 125340,
+      "before_energy_rs": 236000,
+      "monthly_saving_rs": 110660,
+      "yearly_saving_rs": 1327920,
+      "payback_years": 3.7653
+    },
+    "tolerance": 0.001,
+    "note": "Engineer Reviewer 30 Oct 2026 (D10 payback), hand-checked: import 3,000 x 47.20 = 141,600 - 2,000 x 8.13 = 16,260 = 125,340; before 5,000 x 47.20 = 236,000; 110,660 x 12 = 1,327,920; 5,000,000 / 1,327,920 = 3.765."
+  },
+  {
+    "calc": "net_billing_payback",
+    "name": "Edge: switch to ToU at exactly 5 kW, peak units blank (default share)",
+    "inputs": {
+      "import_units": 400,
+      "export_units": 300,
+      "sanctioned_kw": 5,
+      "before_units": 600,
+      "system_rs": 600000
+    },
+    "expected": {
+      "net_energy_rs": 12605,
+      "before_energy_rs": 21950,
+      "monthly_saving_rs": 9345,
+      "payback_years": 5.3505
+    },
+    "tolerance": 0.001,
+    "note": "Engineer Reviewer 30 Oct 2026 (D10 payback), hand-checked: peak 400 x 0.25 = 100; import 100 x 46.85 + 300 x 34.53 = 15,044 - 2,439 = 12,605; before 100 x 46.85 + 500 x 34.53 = 21,950; 9,345 x 12 = 112,140; 600,000 / 112,140 = 5.35."
+  },
+  {
+    "calc": "net_billing_payback",
+    "name": "Edge: protected, units before solar exactly at the protected limit",
+    "inputs": {
+      "import_units": 150,
+      "export_units": 100,
+      "sanctioned_kw": 1,
+      "protected": true,
+      "before_units": 200
+    },
+    "expected": {
+      "before_energy_rs": 2355,
+      "monthly_saving_rs": 1463
+    },
+    "tolerance": 0,
+    "note": "Engineer Reviewer 30 Oct 2026 (D10 payback), hand-checked: 200 is within the protected limit: 100 x 10.54 + 100 x 13.01 = 2,355; 2,355 - 892 = 1,463."
   }
 ]
