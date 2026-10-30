@@ -86,7 +86,10 @@ test('link graph: every live page has 3+ inbound links and tool pages link out t
 test('home page lists every live hub and every live tool is under a live hub', () => {
   const home = live.find((p) => p.type === 'home');
   assert.ok(home, 'home page live');
-  const hubs = live.filter((p) => p.type === 'pillar').map((p) => p.id).sort();
+  // The English home lists the English hubs; the Urdu home (a pillar at /ur/) lists the Urdu hubs.
+  const hubs = live.filter((p) => p.type === 'pillar' && !p.lang).map((p) => p.id).sort();
   assert.deepEqual(home.cards.map((c) => c.id).sort(), hubs);
+  const urHome = live.find((p) => p.url === '/ur/');
+  for (const h of live.filter((p) => p.type === 'pillar' && p.lang === 'ur' && p !== urHome)) assert.ok(urHome?.children.includes(h.id), `${h.id} on the Urdu home`);
   for (const p of live.filter((x) => ['tool', 'guide', 'appliance', 'lookup'].includes(x.type))) assert.ok(p.parent && byId.get(p.parent).live, `${p.id} under a live hub`);
 });
