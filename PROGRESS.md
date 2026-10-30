@@ -1,6 +1,6 @@
 # Progress
 
-## Handoff for next phase (after Urdu version Phase U1, v0.9.0) — written by the "Add Urdu version of the site" thread, 2026-10-30
+## Handoff for next phase (after Urdu version Phase U1, v0.9.0) — written by the "Add Urdu version of the site" thread, 2026-10-30 (PR #57, merged 30 Oct 2026)
 
 Owner approved the Urdu version (OW-8) and Phase U1 on 30 Oct 2026. Plan (phases U1-U4, owner questions): `/mnt/project-files/electricity-tool-hub/urdu/urdu-version-plan.md`. Each next phase needs the owner's go-ahead. Every Urdu page is built but stays **draft** (not on the live site) until an Urdu reader has checked it; the owner then flips its `status` in `specs/keyword-map-ur.csv` to `publish`.
 
