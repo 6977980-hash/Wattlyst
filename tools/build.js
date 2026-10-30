@@ -20,9 +20,9 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => readFileSync(join(root, p), 'utf8');
 const readJson = (p) => JSON.parse(read(p));
 
-const ENGINE_MODULES = ['conversions', 'battery', 'sizing', 'solar', 'bill', 'load', 'wiring', 'planner', 'prices', 'forecast', 'fuel', 'solartools', 'acbill', 'sanction', 'seasonal', 'circuits', 'backup', 'decision', 'offgrid'];
+const ENGINE_MODULES = ['conversions', 'battery', 'sizing', 'solar', 'bill', 'load', 'wiring', 'planner', 'prices', 'forecast', 'fuel', 'solartools', 'acbill', 'sanction', 'seasonal', 'circuits', 'backup', 'decision', 'offgrid', 'payback'];
 /** Data each engine module needs in the browser (keeps page weight down). Appliances are added per page, only the ones its fields use. */
-const MODULE_DATA = { bill: ['tariff'], solar: ['cities'], wiring: ['cables'], planner: ['tariff', 'cities'], prices: ['solar_prices'], forecast: ['cities'], acbill: ['tariff'], sanction: ['cables'], seasonal: ['cities'], offgrid: ['cities'], circuits: ['cables'], backup: ['cities', 'solar_prices', 'generator_fuel', 'component_prices', 'backup_prices'], decision: ['tariff', 'cities', 'solar_prices', 'generator_fuel', 'component_prices', 'backup_prices'] };
+const MODULE_DATA = { bill: ['tariff'], solar: ['cities'], wiring: ['cables'], planner: ['tariff', 'cities'], prices: ['solar_prices'], forecast: ['cities'], acbill: ['tariff'], sanction: ['cables'], seasonal: ['cities'], offgrid: ['cities'], payback: ['tariff'], circuits: ['cables'], backup: ['cities', 'solar_prices', 'generator_fuel', 'component_prices', 'backup_prices'], decision: ['tariff', 'cities', 'solar_prices', 'generator_fuel', 'component_prices', 'backup_prices'] };
 /** Extra data a single calculator needs (shipped only on its page). */
 const CALC_DATA = { generator_fuel: ['generator_fuel'], quote_checker: ['component_prices', 'backup_prices'] };
 
@@ -158,6 +158,8 @@ function fieldOptions(f, ctx) {
   if (f.options_from === 'qta_periods') {
     return Object.keys(ctx.data.tariff.addons_secondary?.qta_per_unit || {}).filter((k) => /^\d{4}-\d{2}\.\.\d{4}-\d{2}$/.test(k)).map((k) => [k, `${k.replace('..', ' to ')}`]);
   }
+  // D10 DISCO select (WL-251): blank first, so nothing is named until the user picks one.
+  if (f.options_from === 'discos') return [['', 'Not chosen'], ...Object.entries(ctx.data.tariff.discos).map(([k, city]) => [k, `${k} (${city})`])];
   if (f.type === 'appliance') {
     const ids = f.options || [];
     const opts = ids.map((id) => {
@@ -494,7 +496,7 @@ function fuelSources(ctx) {
 /** "Last checked" lines for the data a tool depends on, so a data refresh re-dates the page. */
 function dataChecked(module, ctx) {
   const out = [];
-  if (module === 'bill' || module === 'acbill') out.push({ label: 'Pakistan electricity tariff (NEPRA notification)', url: ctx.data.tariff._meta.source_url || null, checked: ctx.data.tariff._meta.checked });
+  if (module === 'bill' || module === 'acbill' || module === 'payback') out.push({ label: 'Pakistan electricity tariff (NEPRA notification)', url: ctx.data.tariff._meta.source_url || null, checked: ctx.data.tariff._meta.checked });
   const prices = module === 'prices';
   if (module === 'solar' || module === 'solartools' || module === 'forecast') out.push({ label: 'Peak sun hours by city (Global Solar Atlas)', url: 'https://globalsolaratlas.info/', checked: ctx.citiesMeta.checked });
   if (module === 'seasonal') out.push({ label: 'Monthly solar output by city (Global Solar Atlas PVOUT)', url: 'https://globalsolaratlas.info/', checked: ctx.citiesMeta.pvout_month_checked });

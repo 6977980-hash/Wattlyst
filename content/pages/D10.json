@@ -7,8 +7,15 @@
  "author": "ali-ahmad",
  "published": "2026-10-13",
  "reviewed": "2026-10-13",
- "calc": "net_billing",
+ "calc": "net_billing_payback",
  "fields": [
+  {
+   "name": "disco",
+   "label": "Your DISCO",
+   "type": "select",
+   "options_from": "discos",
+   "hint": "Optional. Every DISCO bills on the same NEPRA slab rates, so your choice names the company in the result and the shared text. Your DISCO's full bill with fixed charge, taxes and FPA: [[F2|LESCO]], [[F3|IESCO]], [[F4|MEPCO]], [[F5|GEPCO]], [[F6|FESCO]], [[F7|PESCO]], [[F8|HESCO]], [[F9|SEPCO]], [[F10|QESCO]], [[F11|TESCO]], [[F12|K-Electric]]."
+  },
   {
    "name": "import_units",
    "label": "Units imported from the grid",
@@ -50,6 +57,20 @@
    "type": "checkbox",
    "default": false,
    "hint": "Tick only if every one of your last six bills was within the protected unit limit. Not at {{d.tou_threshold_kw|int}} kW or more."
+  },
+  {
+   "name": "before_units",
+   "label": "Units a month before solar",
+   "unit": "units",
+   "placeholder": "Optional",
+   "hint": "For the saving and the payback: the units of an average month before you had solar (a year's units divided by twelve is best). It cannot be less than the units you import now."
+  },
+  {
+   "name": "system_rs",
+   "label": "Solar system price",
+   "unit": "Rs",
+   "placeholder": "Optional",
+   "hint": "The installed price on your quote. No quote yet? The [[D14|solar system price estimate]] gives a typical price for your size."
   }
  ],
  "outputs": [
@@ -72,10 +93,28 @@
    "key": "extra_vs_net_metering_rs",
    "label": "Extra you pay under net billing",
    "spec": "rs"
+  },
+  {
+   "key": "monthly_saving_rs",
+   "label": "Saving a month against no solar",
+   "spec": "rs",
+   "optional": true
+  },
+  {
+   "key": "payback_years",
+   "label": "Payback",
+   "spec": "1",
+   "unit": "years",
+   "optional": true
+  },
+  {
+   "key": "disco",
+   "label": "DISCO",
+   "optional": true
   }
  ],
  "answer": "A home that imports {{in.import_units|int}} units and exports {{in.export_units|int}} units pays about {{out.net_energy_rs|rs}} in energy charges under net billing, against {{out.net_metering_rs|rs}} under old net metering, so net billing costs {{out.extra_vs_net_metering_rs|rs}} more that month. Net bill = imported units × slab rate − exported units × buyback rate of {{out.buyback_rs|rs2}}.",
- "how": "Import: {{out.import_calc}} = {{out.import_energy_rs|rs}}. Export credit: {{out.export_units}} units × {{out.buyback_rs|rs2}} = {{out.export_credit_rs|rs}}. Net billing energy charge = {{out.import_energy_rs|rs}} − {{out.export_credit_rs|rs}} = {{out.net_energy_rs|rs}}; any credit above the import bill carries forward ({{out.carry_forward_rs|rs}} here). Old net metering: {{out.nm_calc}} = {{out.net_metering_rs|rs}}. Difference = {{out.extra_vs_net_metering_rs|rs}}. Fixed charges, FC surcharge, QTA, FPA and GST are added on top; use the bill calculator for the full bill (the ToU bill calculator at {{d.tou_threshold_kw|int}} kW or more).",
+ "how": "Import: {{out.import_calc}} = {{out.import_energy_rs|rs}}. Export credit: {{out.export_units}} units × {{out.buyback_rs|rs2}} = {{out.export_credit_rs|rs}}. Net billing energy charge = {{out.import_energy_rs|rs}} − {{out.export_credit_rs|rs}} = {{out.net_energy_rs|rs}}; any credit above the import bill carries forward ({{out.carry_forward_rs|rs}} here). Old net metering: {{out.nm_calc}} = {{out.net_metering_rs|rs}}. Difference = {{out.extra_vs_net_metering_rs|rs}}. Fixed charges, FC surcharge, QTA, FPA and GST are added on top; use the bill calculator for the full bill (the ToU bill calculator at {{d.tou_threshold_kw|int}} kW or more). {{out.payback_calc}}",
  "key_facts": [
   "Under net billing the imported units are billed at the normal slab rate ({{out.import_rate|rs2}} per unit for {{out.import_units|int}} units) and exported units are bought back at a flat rate, {{out.buyback_rs|rs2}} per unit, NEPRA's national average energy purchase price for {{data.tariff.net_billing.buyback_period}}.",
   "Under old net metering exported units cancelled imported units one for one, so a home importing {{out.import_units|int}} and exporting {{out.export_units|int}} units paid for only {{out.net_metering_units|int}} units, at the lower slab those units reach ({{out.net_metering_rate|rs2}}).",
@@ -125,9 +164,12 @@
  ],
  "examples": [
   {
-   "inputs": {},
-   "title": "Import {{in.import_units|int}} units, export {{in.export_units|int}} units",
-   "text": "Import bill {{out.import_units|int}} × {{out.import_rate|rs2}} ({{out.import_band}} slab) = {{out.import_energy_rs|rs}}; export credit {{out.export_units|int}} × {{out.buyback_rs|rs2}} = {{out.export_credit_rs|rs}}; net billing charge {{out.net_energy_rs|rs}}. Old net metering billed {{out.net_metering_units|int}} net units at {{out.net_metering_rate|rs2}} = {{out.net_metering_rs|rs}}, so net billing costs {{out.extra_vs_net_metering_rs|rs}} more."
+   "inputs": {
+    "before_units": 600,
+    "system_rs": 600000
+   },
+   "title": "Import {{in.import_units|int}} units, export {{in.export_units|int}} units, and the payback",
+   "text": "Import bill {{out.import_units|int}} × {{out.import_rate|rs2}} ({{out.import_band}} slab) = {{out.import_energy_rs|rs}}; export credit {{out.export_units|int}} × {{out.buyback_rs|rs2}} = {{out.export_credit_rs|rs}}; net billing charge {{out.net_energy_rs|rs}}. Old net metering billed {{out.net_metering_units|int}} net units at {{out.net_metering_rate|rs2}} = {{out.net_metering_rs|rs}}, so net billing costs {{out.extra_vs_net_metering_rs|rs}} more. Before solar the home used {{in.before_units|int}} units, an energy charge of {{out.before_energy_rs|rs}}; net billing saves {{out.monthly_saving_rs|rs}} a month, {{out.yearly_saving_rs|rs}} a year, so a {{in.system_rs|rs}} system pays back in {{out.payback_years|1}} years on energy charges alone, before any change in tariff or panel output."
   },
   {
    "inputs": {
@@ -246,7 +288,7 @@
   },
   {
    "q": "Is there a solar payback calculator for Pakistan?",
-   "a": "Payback in years is the system price divided by the yearly saving. The saving is the bill you would have paid without solar minus the net billing bill, over twelve months. A payback tool that combines your quote with this calculator is planned; until then use this page for the monthly saving and your installer's quote for the price."
+   "a": "Yes, on this page. Enter your monthly units before solar and the system price: the saving is the energy charge of those units without solar minus the net billing charge, and payback in years is the price divided by twelve months of that saving. A home that used {{ex.0.in.before_units|int}} units a month before solar and now imports {{ex.0.in.import_units|int}} and exports {{ex.0.in.export_units|int}} saves {{ex.0.out.monthly_saving_rs|rs}} a month, so a {{ex.0.in.system_rs|rs}} system pays back in {{ex.0.out.payback_years|1}} years. The saving counts energy charges only; GST and the other per-unit lines on the units you no longer buy make the real payback shorter."
   },
   {
    "q": "Does the buyback rate for solar change?",
