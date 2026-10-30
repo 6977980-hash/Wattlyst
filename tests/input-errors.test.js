@@ -35,7 +35,11 @@ test('WL-226 every page ships the message text for every error its calculator gi
     if (!byCalc.has(t.calc)) byCalc.set(t.calc, codesOf(t.calc));
     for (const [code, r] of byCalc.get(t.calc)) {
       const c = { fields: t.fields, limit: r.limit };
-      assert.equal(pageMessage(code, { ...c, texts: t.msg }), errorMessage(code, c), `${p.id}: ${code}`);
+      // An Urdu page carries an Urdu text for every code, so nothing falls back to an English pattern (content/ur/messages.json).
+      // A generic code of an input the page has no field for cannot reach its form (spec cases fuzz every input).
+      const g = /^(\w+?)_(required|invalid|must_be_positive|too_small|too_large)$/.exec(code);
+      if (p.lang === 'ur') assert.ok(t.msg[code] || (g && !t.fields.some((f) => f.name === g[1])), `${p.id}: no Urdu text for ${code}`);
+      else assert.equal(pageMessage(code, { ...c, texts: t.msg }), errorMessage(code, c), `${p.id}: ${code}`);
     }
   }
 });
@@ -115,7 +119,7 @@ test('WL-224 C8 gives no per-unit figure near zero load', () => {
 });
 
 test('WL-225 every result on a page with the Roman Urdu toggle has a Roman Urdu label', () => {
-  for (const p of tools) {
+  for (const p of tools.filter((x) => x.lang !== 'ur')) { // an Urdu page has Urdu labels and no toggle
     const outs = p.content.tool.outputs;
     if (!outs.some((o) => o.label_ur)) continue;
     for (const o of outs) assert.ok(o.label_ur, `${p.id}: ${o.label}`);

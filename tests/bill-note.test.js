@@ -15,11 +15,18 @@ const note = JSON.parse(read('content/bill-note.json'));
 test('every bill calculator prints the legal note with its outside complaint links', () => {
   const bill = pages.filter((p) => note.calcs.includes(p.content.tool?.calc));
   for (const id of ['F1', 'F2', 'F12', 'F13', 'F14', 'N1', 'N16', 'E1', 'D10', 'N4']) assert.ok(bill.some((p) => p.id === id), `${id} is a bill calculator`);
+  // An Urdu page prints the Urdu note (content/ur/bill-note.json): the same two outside links.
+  const ur = JSON.parse(read('content/ur/bill-note.json'));
   for (const p of bill) {
     const l = p.content.tool.legal;
     assert.ok(l, `${p.id} has the note`);
-    assert.match(l.t, /not an official bill/);
-    assert.match(l.t, /evidence/);
+    if (p.lang === 'ur') {
+      assert.equal(l.t, ur.text);
+      assert.deepEqual(l.l.map((k) => k.u), note.links.map((k) => k.u), `${p.id}: same complaint links as the English note`);
+    } else {
+      assert.match(l.t, /not an official bill/);
+      assert.match(l.t, /evidence/);
+    }
     for (const k of l.l) assert.ok(l.t.includes(k.t) && /^https:\/\//.test(k.u), `${p.id}: ${k.t}`);
   }
   for (const p of pages.filter((x) => x.content.tool && !note.calcs.includes(x.content.tool.calc))) assert.equal(p.content.tool.legal, undefined, `${p.id} is not a bill page`);

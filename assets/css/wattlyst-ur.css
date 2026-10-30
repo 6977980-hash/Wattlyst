@@ -1,0 +1,41 @@
+/* Urdu pages only (html lang="ur" dir="rtl"), inlined after wattlyst.css by Wattlyst_Head::styles (Urdu plan section 3).
+   Noto Nastaliq Urdu (SIL Open Font License, assets/fonts/OFL.txt), subset to the Urdu letters: unicode-range keeps
+   digits, "Rs", units and every Latin word in the theme font, so results and tables read as on the English page.
+   %FONT% is replaced with the versioned font URL by the PHP. A fixed line-height keeps the line boxes the same
+   before and after the font arrives (no layout shift). */
+@font-face{font-family:"Noto Nastaliq Urdu";font-style:normal;font-weight:400;font-display:swap;src:url(%FONT%) format("woff2");unicode-range:U+060C,U+061B,U+061F,U+0621-063A,U+0640-0652,U+0670,U+0679,U+067E,U+0686,U+0688,U+0691,U+0698,U+06A9,U+06AF,U+06BA,U+06BE,U+06C0-06C3,U+06CC,U+06D2-06D4,U+200C-200F}
+html[dir=rtl] body{font-family:"Noto Nastaliq Urdu",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:2.2;word-spacing:.05em}
+html[dir=rtl] .wl-page{line-height:2.2}
+html[dir=rtl] .wl-page h1,html[dir=rtl] .wl-page h2,html[dir=rtl] .wl-page h3{line-height:1.9;letter-spacing:0;font-weight:700}
+html[dir=rtl] .wl-h1{line-height:1.8}
+html[dir=rtl] .wl-answer{line-height:2.2}
+html[dir=rtl] .wl-hint,html[dir=rtl] .wl-byline,html[dir=rtl] .wl-dates{line-height:2}
+html[dir=rtl] .wl-btn,html[dir=rtl] .wl-btn-secondary{line-height:1.9;font-weight:700}
+html[dir=rtl] .wl-children a,html[dir=rtl] .wl-related li a{line-height:1.9}html[dir=rtl] .wl-children p{line-height:2}
+/* Numbers and inputs left to right inside the right-to-left page */
+html[dir=rtl] .wl-page input[type=text],html[dir=rtl] .wl-page output,html[dir=rtl] .wl-val,html[dir=rtl] .wl-eq code{direction:ltr;unicode-bidi:isolate}
+html[dir=rtl] .wl-page input[type=text]{text-align:right}
+html[dir=rtl] .wl-page select{direction:rtl}
+html[dir=rtl] .wl-eq{direction:ltr;text-align:right}
+/* Mirrored sides: the English file uses left/right; here the same values on the other side */
+html[dir=rtl] .wl-breadcrumb li+li::before{margin-right:0;margin-left:.3rem}
+html[dir=rtl] .wl-error,html[dir=rtl] .wl-how,html[dir=rtl] .wl-facts,html[dir=rtl] .wl-safety{border-left:0;border-right-width:4px;border-right-style:solid}
+html[dir=rtl] .wl-error{border-right-color:#b00020}
+html[dir=rtl] .wl-error.wl-notice{border-right-color:#b25e00}
+html[dir=rtl] .wl-how{border-right-color:var(--wl-accent-2)}
+html[dir=rtl] .wl-facts{border-right-color:var(--wl-spark)}
+html[dir=rtl] .wl-safety{border-right-color:#b25e00}
+html[dir=rtl] .wl-facts ul,html[dir=rtl] .wl-mistakes ul{margin-right:0;padding-right:0}
+html[dir=rtl] .wl-facts li,html[dir=rtl] .wl-mistakes li{padding-left:0;padding-right:1.75rem}
+html[dir=rtl] .wl-facts li::before{left:auto;right:.2rem}
+html[dir=rtl] .wl-mistakes li::before,html[dir=rtl] .wl-mistakes li::after{left:auto;right:.15rem}
+html[dir=rtl] .wl-examples h3,html[dir=rtl] .wl-examples h3+p{padding-left:0;padding-right:2.4rem}
+html[dir=rtl] .wl-examples h3::before{left:auto;right:0}
+html[dir=rtl] .wl-table caption,html[dir=rtl] .wl-table th,html[dir=rtl] .wl-table td{text-align:right}
+html[dir=rtl] .wl-related li a::after,html[dir=rtl] .wl-children a::after,html[dir=rtl] .wl-next a::after{transform:rotate(-135deg)}
+html[dir=rtl] .wl-advanced:not([open]) summary::before{transform:rotate(135deg)}
+html[dir=rtl] .wl-author{padding:1.1rem 4.6rem 1.1rem 1.25rem}html[dir=rtl] .wl-author::before,html[dir=rtl] .wl-author::after{left:auto;right:1.15rem}
+html[dir=rtl] .wl-sources ul{margin-left:0;margin-right:1.1rem}
+html[dir=rtl] .wl-footer,html[dir=rtl] body .site-info .copyright-bar{text-align:right}
+html[dir=rtl] .wl-lookup-count a{margin-left:0;margin-right:.25rem}
+html[dir=rtl] .wl-sources a,html[dir=rtl] .wl-legal a{unicode-bidi:isolate}
