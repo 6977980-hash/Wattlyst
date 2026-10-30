@@ -2,7 +2,7 @@
 
 ## Handoff for next phase (after Urdu version Phase U1, v0.9.0) — written by the "Add Urdu version of the site" thread, 2026-10-30 (PR #57, merged 30 Oct 2026)
 
-Owner approved the Urdu version (OW-8) and Phase U1 on 30 Oct 2026. Plan (phases U1-U4, owner questions): `/mnt/project-files/electricity-tool-hub/urdu/urdu-version-plan.md`. Each next phase needs the owner's go-ahead. Every Urdu page is built but stays **draft** (not on the live site) until an Urdu reader has checked it; the owner then flips its `status` in `specs/keyword-map-ur.csv` to `publish`.
+Owner approved the Urdu version (OW-8) and Phase U1 on 30 Oct 2026. Plan (phases U1-U4, owner questions): `/mnt/project-files/electricity-tool-hub/urdu/urdu-version-plan.md`. Each next phase needs the owner's go-ahead. All seven U1 Urdu pages went **live** on 30 Oct 2026 (owner: "urdu live krdo"; the owner reads the Urdu text after launch and sends corrections; Latin digits stay). New Urdu pages start as draft; `status` in `specs/keyword-map-ur.csv` is the switch.
 
 **What is where**
 - `specs/keyword-map-ur.csv`: one row per Urdu page: `id` = `ur-<en_id>`, `en_id` (the English twin), `type` (blank = the twin's type), `url` = `/ur` + the English URL (the Urdu home is `/ur/`), `status` (the one switch), Urdu `h1` (trust and hub rows), title, meta.
@@ -11,9 +11,10 @@ Owner approved the Urdu version (OW-8) and Phase U1 on 30 Oct 2026. Plan (phases
 - `tools/lib/urdu.js`: `urRows`, `urContent`, `urMessages`, `urTarget` (links, Related and Next go to the Urdu twin when it is live or both are drafts), `pairUp` (manifest `alt` = hreflang pair, only when both pages are live). `tools/build.js` wires it in (`build({ urLive })`, CLI `--ur-preview` for a local WordPress check; never commit a preview build).
 - PHP: `Wattlyst_Head::lang` (`lang="ur" dir="rtl"`), hreflang en / ur-PK / x-default in `head()`, font preload + `assets/css/wattlyst-ur.css` only on Urdu pages (`styles( $home, $ur )`, `%FONT%` replaced with the versioned font URL). `Wattlyst_Render`: `$ur`, `t()`, `lang_link()` (switch under the answer, also on the English twin), Urdu dates.
 - Font: `assets/fonts/noto-nastaliq-urdu.woff2` (Noto Nastaliq Urdu, SIL OFL `assets/fonts/OFL.txt`, subset to Urdu letters, about 97 KB), `assets/fonts/.htaccess` (one-year cache; URL carries `?v=<file time>`). `unicode-range` leaves digits and Latin to the theme font, so numbers and tables look as on the English page.
+- Related on a live Urdu page also lists the other live Urdu pages of its hub (`build()`, after `urTarget`), so every Urdu page has 3+ inbound links.
 - Tests: `tests/urdu.test.js` (rows, typed digits, same engine numbers as the twin, drafts invisible, hreflang pairs, links to twins, CSS/font budget, ui.json covers every `t()` phrase).
 
-**Built in U1 (all draft):** Urdu home `/ur/` (a hub of Urdu hubs; the English planner is linked, not translated: its result sentences are built by the engine in English), bills hub `/ur/bill/`, F1, F2 (LESCO), N1 (overbilling check), About, Contact.
+**Built in U1 (live 30 Oct 2026):** Urdu home `/ur/` (a hub of Urdu hubs; the English planner is linked, not translated: its result sentences are built by the engine in English), bills hub `/ur/bill/`, F1, F2 (LESCO), N1 (overbilling check), About, Contact.
 
 **Do not touch / watch out**
 - English pages must not change when Urdu work lands (schema `inLanguage` on Article only for Urdu pages, so English page dates do not move).
@@ -21,7 +22,7 @@ Owner approved the Urdu version (OW-8) and Phase U1 on 30 Oct 2026. Plan (phases
 - Engine strings inside "how" text (`energy_calc` on a ToU bill says "peak units", `category`) are English; Urdu templates avoid `category` and `fixed_basis`.
 
 **Open to-dos**
-- Owner: who checks the Urdu text; OK to keep Latin digits (recommended). Then flip `status` to publish per page and check Search Console for the hreflang pairs.
+- Owner reads the live Urdu pages and sends text corrections (fix them in `content/ur/`). Check Search Console for the hreflang pairs after indexing.
 - Run Lighthouse mobile on the Urdu pages on the live site after the first publish (local check done in U1, see the PR).
 - U2 (bills: F3-F13, N4, Bill Index, FPA guide F14 with an Urdu guides hub, Privacy/Terms/Disclaimer in Urdu), U3 (solar Pakistan), U4 (load/backup, the Urdu planner) need the owner's go-ahead one at a time.
 - The header menu and footer stay English on Urdu pages (U2 can add Urdu hub links once more hubs exist). WordPress core sitemap lists Urdu pages once live; hreflang is in the head only.

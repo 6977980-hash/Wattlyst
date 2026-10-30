@@ -892,6 +892,8 @@ export async function build(opts = {}) {
       const to = (id) => urTarget(rows, id, r.live)?.id || id;
       r.related = (r.related || []).map(to);
       if (r.next) r.next = to(r.next);
+      // The other live Urdu pages of the same hub join Related, so an Urdu reader finds them.
+      if (r.live && r.parent) for (const s of rows) if (s.lang === 'ur' && s.live && s.id !== r.id && s.parent === r.parent && s.type !== 'trust' && !r.related.includes(s.id)) r.related.push(s.id);
     }
   }
   pairUp(rows);
