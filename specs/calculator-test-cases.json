@@ -11172,5 +11172,166 @@
     },
     "tolerance": 0,
     "note": "audit 2026-10-21 Phase 9b (WL-162 c, owner 21 Oct 2026): ToU path on the bill pages, hand-checked: a ToU connection cannot be protected or lifeline."
+  },
+  {
+    "calc": "net_billing_payback",
+    "name": "Payback: 400 in, 300 out, 600 units before solar, Rs 600,000 system, LESCO",
+    "inputs": {
+      "import_units": 400,
+      "export_units": 300,
+      "sanctioned_kw": 4,
+      "before_units": 600,
+      "system_rs": 600000,
+      "disco": "LESCO"
+    },
+    "expected": {
+      "net_energy_rs": 12145,
+      "before_energy_rs": 24132,
+      "monthly_saving_rs": 11987,
+      "yearly_saving_rs": 143844,
+      "payback_years": 4.1712,
+      "disco": "LESCO"
+    },
+    "tolerance": 0.001,
+    "note": "net billing review 30 Oct 2026, Phase B (WL-250 payback, WL-251 DISCO), hand-checked: 600 units unprotected, all at the slab rate they reach, Rs 40.22 = 24,132; saving 24,132 - 12,145 = 11,987 a month, x 12 = 143,844; 600,000 / 143,844 = 4.171 years. The DISCO changes no number."
+  },
+  {
+    "calc": "net_billing_payback",
+    "name": "Payback: protected home, units before solar within the protected slabs",
+    "inputs": {
+      "import_units": 150,
+      "export_units": 100,
+      "sanctioned_kw": 1,
+      "protected": true,
+      "before_units": 180,
+      "system_rs": 300000
+    },
+    "expected": {
+      "net_energy_rs": 892,
+      "before_energy_rs": 2095,
+      "monthly_saving_rs": 1203,
+      "yearly_saving_rs": 14436,
+      "payback_years": 20.7814
+    },
+    "tolerance": 0.001,
+    "note": "net billing review 30 Oct 2026, Phase B (WL-250 payback, WL-251 DISCO), hand-checked: protected slab-wise 100 x 10.54 + 80 x 13.01 = 2,094.8, whole rupees 2,095; 2,095 - 892 = 1,203; 300,000 / 14,436 = 20.78 years."
+  },
+  {
+    "calc": "net_billing_payback",
+    "name": "Payback: protected now, but the units before solar are above the protected limit",
+    "inputs": {
+      "import_units": 150,
+      "export_units": 100,
+      "sanctioned_kw": 1,
+      "protected": true,
+      "before_units": 250
+    },
+    "expected": {
+      "before_energy_rs": 8275,
+      "monthly_saving_rs": 7383,
+      "yearly_saving_rs": 88596
+    },
+    "tolerance": 0.001,
+    "note": "net billing review 30 Oct 2026, Phase B (WL-250 payback, WL-251 DISCO), hand-checked: 250 units before solar cannot be protected, so the bill without solar is unprotected 250 x 33.10 = 8,275; no price, so no payback."
+  },
+  {
+    "calc": "net_billing_payback",
+    "name": "Payback: ToU meter 8 kW, 150 peak units, 700 units before solar",
+    "inputs": {
+      "import_units": 500,
+      "export_units": 300,
+      "sanctioned_kw": 8,
+      "peak_units": 150,
+      "before_units": 700,
+      "system_rs": 1000000
+    },
+    "expected": {
+      "net_energy_rs": 16674,
+      "before_energy_rs": 26019,
+      "monthly_saving_rs": 9345,
+      "payback_years": 8.9174
+    },
+    "tolerance": 0.001,
+    "note": "net billing review 30 Oct 2026, Phase B (WL-250 payback, WL-251 DISCO), hand-checked: before solar the same 150 peak units x 46.85 + 550 off-peak x 34.53 = 7,027.5 + 18,991.5 = 26,019; 26,019 - 16,674 = 9,345; 1,000,000 / 112,140 = 8.917 years."
+  },
+  {
+    "calc": "net_billing_payback",
+    "name": "Payback: credit above the import bill, carry-forward not counted",
+    "inputs": {
+      "import_units": 100,
+      "export_units": 300,
+      "sanctioned_kw": 4,
+      "before_units": 300,
+      "system_rs": 500000
+    },
+    "expected": {
+      "net_energy_rs": 0,
+      "carry_forward_rs": 195,
+      "before_energy_rs": 9930,
+      "monthly_saving_rs": 9930,
+      "payback_years": 4.196
+    },
+    "tolerance": 0.001,
+    "note": "net billing review 30 Oct 2026, Phase B (WL-250 payback, WL-251 DISCO), hand-checked: 300 x 33.10 = 9,930; import 100 x 22.44 = 2,244 against a credit of 2,439, so the charge is 0 and the 195 carried forward is not counted in the saving; 500,000 / 119,160 = 4.196 years."
+  },
+  {
+    "calc": "net_billing_payback",
+    "name": "Units before solar below the import is an error",
+    "inputs": {
+      "import_units": 400,
+      "export_units": 300,
+      "sanctioned_kw": 4,
+      "before_units": 300
+    },
+    "expected": {
+      "error": "before_below_import"
+    },
+    "tolerance": 0,
+    "note": "net billing review 30 Oct 2026, Phase B (WL-250 payback, WL-251 DISCO), hand-checked: solar cannot raise the units bought from the grid."
+  },
+  {
+    "calc": "net_billing_payback",
+    "name": "A price without the units before solar is an error",
+    "inputs": {
+      "import_units": 400,
+      "export_units": 300,
+      "sanctioned_kw": 4,
+      "system_rs": 600000
+    },
+    "expected": {
+      "error": "payback_needs_before_units"
+    },
+    "tolerance": 0,
+    "note": "net billing review 30 Oct 2026, Phase B (WL-250 payback, WL-251 DISCO), hand-checked: no saving without the bill before solar."
+  },
+  {
+    "calc": "net_billing_payback",
+    "name": "No saving means no payback",
+    "inputs": {
+      "import_units": 400,
+      "export_units": 0,
+      "sanctioned_kw": 4,
+      "before_units": 400,
+      "system_rs": 600000
+    },
+    "expected": {
+      "error": "payback_no_saving"
+    },
+    "tolerance": 0,
+    "note": "net billing review 30 Oct 2026, Phase B (WL-250 payback, WL-251 DISCO), hand-checked: same units before and after, nothing exported: saving 0, a payback would divide by zero."
+  },
+  {
+    "calc": "net_billing_payback",
+    "name": "An unknown DISCO is an error",
+    "inputs": {
+      "import_units": 400,
+      "export_units": 300,
+      "disco": "XYZ"
+    },
+    "expected": {
+      "error": "disco_invalid"
+    },
+    "tolerance": 0,
+    "note": "net billing review 30 Oct 2026, Phase B (WL-250 payback, WL-251 DISCO), hand-checked: only the DISCOs in data/tariff-pk-2026.json discos."
   }
 ]

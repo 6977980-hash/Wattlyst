@@ -1,6 +1,25 @@
 # Progress
 
-## Handoff for next phase (after net billing Phase A, v0.8.36) — written by the "Fix net billing calculator Phase A" thread, 2026-10-30
+## Handoff for next phase (after net billing Phase B, v0.8.37) — written by the "Add payback and DISCO select to net billing" thread, 2026-10-30
+
+Owner said yes to Phase B (30 Oct 2026, "Yes phase b kro shuru"). Evidence `/mnt/project-files/electricity-tool-hub/audit/net-billing-review-2026-10-30.md`, phase note `audit/2026-10-21/handoff/phase-nb-b-payback-disco.md`. D10 only; D11 and every other page unchanged. The Phase A handoff below and those under it still hold.
+
+**What is where**
+- Calculator: `net_billing_payback` in `engine/payback.js` (own module, registered in `engine/index.js`, `ENGINE_MODULES`/`MODULE_DATA` in `tools/build.js`). It calls `netLines` with whole-rupee rounding (so every net billing number is the same as `net_billing`), then adds the DISCO name and the payback. Rule: `specs/formulas.md` section F bullet "Payback and DISCO on the net billing calculator (D10…)"; spec cases `net_billing_payback` at the end of `specs/calculator-test-cases.json`; tests `tests/net-billing-phase-b.test.js`.
+- D10 (`content/pages/D10.json`): `calc` is now `net_billing_payback`; new fields `disco` (first, `options_from: discos`, blank first option), `before_units`, `system_rs` (both optional, last); new optional outputs `monthly_saving_rs`, `payback_years`, `disco` (hidden until filled); the how text ends with the engine-built `{{out.payback_calc}}` (always present, so the live how text never goes blank); the first worked example and the FAQ "Is there a solar payback calculator for Pakistan?" print the payback from example 1's inputs (`{{ex.0.*}}`).
+- DISCO list: `data/tariff-pk-2026.json` `discos` (name on the bill → head office city) with `discos_note`/`discos_source`/`discos_checked`; `fieldOptions` in `tools/build.js` (`options_from === 'discos'`). The links to each DISCO's bill page are `[[F2|LESCO]]`… tokens in the `disco` field hint (no browser code). F8 got an `anchor` because the new links tipped its inbound H1-anchor share (WL-211 test).
+- Error texts `disco_invalid`, `payback_needs_before_units`, `before_below_import`, `payback_no_saving` in `engine/message-text.js`; Roman Urdu labels for the three new outputs in `content/labels-ur.json`; `net_billing_payback` added to `content/bill-note.json` `calcs` so D10 keeps the legal note.
+
+**Do not touch / watch**
+- Keep the payback out of `engine/bill.js`, `planner.js` and `wattlyst-tool.js`: the H1 import chain has only a few hundred raw bytes left. Phase B added no browser bytes outside `payback.js`.
+- The DISCO changes no number (one uniform A-1 schedule). If a DISCO ever gets its own rates, that is an engine change with spec cases, not a label change.
+- The saving is energy charges only and leaves out the carry-forward credit (cautious); say so if anyone asks why it differs from H1's whole-bill saving.
+
+**Open to-dos**
+- WL-249 (b) review line and OW-8 (Urdu-script version) still wait for the owner.
+- A "years of saving" or panel-life view was not added (it would need a lifetime and degradation figure in data/ first).
+
+## Earlier handoff (after net billing Phase A, v0.8.36) — written by the "Fix net billing calculator Phase A" thread, 2026-10-30
 
 Owner's review of D10 /solar/net-billing-calculator/ and D11 /guides/net-billing-pakistan/ (30 Oct 2026); evidence `/mnt/project-files/electricity-tool-hub/audit/net-billing-review-2026-10-30.md`, phase note `audit/2026-10-21/handoff/phase-nb-a-net-billing-fixes.md`. Phase A only (WL-245 to WL-248). Phase B (WL-250 payback, WL-251 DISCO select) waits for the owner's go-ahead; the bio wording (WL-249) was done in the audit thread (PR #52, v0.8.35). The GA4 handoff below and those under it still hold.
 
@@ -849,6 +868,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | 2026-10-21 | Audit 2026-10-21 fix Phase 9b (owner yes): ToU bill path on the bill pages F1-F12, F14, E1 and N16 for 5 kW and above (peak units + MDI fields, default share estimate notice), plugin v0.8.33 | done: tests green | #50 |
 | 2026-10-26 | GA4 sitewide (owner pasted tag G-LSWB51DMTG): deferred gtag.js, Consent Mode denied in EEA/UK/CH, not on embeds or for editors, privacy policy Analytics section back on, plugin v0.8.34 | done: tests green | #51 |
 | 2026-10-30 | Net billing Phase A (D10, D11): WhatsApp link follows every result (WL-245), whole-rupee net billing lines 1,705 − 813 = 892 (WL-246), rate + slab in examples (WL-247), news Rs 11 vs NEPRA Rs 8.13 hint, FAQ and source (WL-248), plugin v0.8.36 | done: tests green | #53 |
+| 2026-10-30 | Net billing Phase B (D10): payback from units before solar + system price (WL-250), DISCO select naming the company in the result and share text, hint links to all eleven DISCO bill pages (WL-251), F8 anchor, plugin v0.8.37 | done: tests green | #54 |
 
 ## Owner to do
 - Audit Phase 4: one Hostinger redirect so http and www go straight to https://wattlyst.com (WL-40); HTML browser cache time of a few hours in LiteSpeed/Hostinger (WL-36); after deploy, open wp-admin once so the new build syncs and the cache is purged; before switching on the quote form, ask Hostinger which header carries the visitor IP and put it in data/site.json leads.client_ip_header (WL-64); 2FA for wp-admin.

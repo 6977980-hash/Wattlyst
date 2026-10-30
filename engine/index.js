@@ -20,8 +20,9 @@ import * as circuits from './circuits.js';
 import * as backup from './backup.js';
 import * as decision from './decision.js';
 import * as offgrid from './offgrid.js';
+import * as payback from './payback.js';
 
-const modules = { conversions, battery, sizing, solar, bill, load, wiring, planner, prices, forecast, fuel, solartools, acbill, sanction, seasonal, circuits, backup, decision, offgrid };
+const modules = { conversions, battery, sizing, solar, bill, load, wiring, planner, prices, forecast, fuel, solartools, acbill, sanction, seasonal, circuits, backup, decision, offgrid, payback };
 
 export const calculators = {};
 for (const mod of Object.values(modules)) {

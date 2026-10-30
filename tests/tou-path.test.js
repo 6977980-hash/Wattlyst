@@ -69,7 +69,7 @@ test('D10 and D11 at 5 kW and above bill the import on ToU rates, with the peak 
     assert.ok(p.content.tool.fields.some((f) => f.name === 'peak_units'), `${id} has the peak units field`);
     for (const k of ['tou_peak_estimate', 'protected_at_tou']) assert.ok(p.content.tool.msg[k], `${id} ships ${k}`);
     const inp = { ...Object.fromEntries(p.content.tool.fields.map((f) => [f.name, f.default])), sanctioned_kw: kwT + 3 };
-    const r = C.net_billing(inp, data);
+    const r = C[p.content.tool.calc](inp, data);
     assert.equal(r.ok, true, r.error);
     assert.equal(noticeCode(r), 'tou_peak_estimate');
     const how = render(p.content.tool.how.tpl, { in: r, out: r, d: data.defaults });
