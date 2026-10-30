@@ -28,7 +28,7 @@
    "label": "Buyback rate",
    "unit": "Rs per unit",
    "default": "@data.tariff.net_billing.buyback_rs_per_unit_default",
-   "hint": "Rs per exported unit: NEPRA's national average energy purchase price for {{data.tariff.net_billing.buyback_period}}. Change it only if your DISCO bills a revised rate."
+   "hint": "Rs per exported unit: NEPRA's national average energy purchase price for {{data.tariff.net_billing.buyback_period}}, the rate the Prosumer Regulations use. News in {{data.tariff.net_billing.reported_when}} quoted about {{data.tariff.net_billing.reported_rs_per_unit|rs}} a unit, a figure under discussion that NEPRA did not notify. If your agreement or DISCO credits another rate, type it here; you can try both."
   },
   {
    "name": "sanctioned_kw",
@@ -147,7 +147,7 @@
   {
    "inputs": {},
    "title": "Import {{in.import_units|int}}, export {{in.export_units|int}}",
-   "text": "Import bill {{out.import_energy_rs|rs}} at {{out.import_rate|rs2}} a unit, export credit {{out.export_credit_rs|rs}}: net billing charge {{out.net_energy_rs|rs}}. Old net metering: {{out.net_metering_rs|rs}}. Extra under net billing: {{out.extra_vs_net_metering_rs|rs}}."
+   "text": "Import bill {{out.import_energy_rs|rs}} at {{out.import_rate|rs2}} a unit ({{out.import_band}} slab), export credit {{out.export_credit_rs|rs}}: net billing charge {{out.net_energy_rs|rs}}. Old net metering: {{out.net_metering_rs|rs}}. Extra under net billing: {{out.extra_vs_net_metering_rs|rs}}."
   },
   {
    "inputs": {
@@ -155,7 +155,7 @@
     "export_units": 450
    },
    "title": "Export more than you import: {{in.import_units|int}} in, {{in.export_units|int}} out",
-   "text": "Import bill {{out.import_energy_rs|rs}}; export credit {{out.export_credit_rs|rs}}. Net billing still charges {{out.net_energy_rs|rs}}, because an exported unit earns less than an imported unit costs. Old net metering charged {{out.net_metering_rs|rs}} and carried {{out.net_metering_carry_units|int}} units forward."
+   "text": "Import bill {{out.import_units|int}} × {{out.import_rate|rs2}} ({{out.import_band}} slab) = {{out.import_energy_rs|rs}}; export credit {{out.export_credit_rs|rs}}. Net billing still charges {{out.net_energy_rs|rs}}, because an exported unit earns less than an imported unit costs. Old net metering charged {{out.net_metering_rs|rs}} and carried {{out.net_metering_carry_units|int}} units forward."
   },
   {
    "inputs": {
@@ -164,7 +164,7 @@
     "buyback_rs": 8
    },
    "title": "Same month at a lower buyback of {{in.buyback_rs|rs2}}",
-   "text": "Export credit falls to {{out.export_credit_rs|rs}} and the net billing charge rises to {{out.net_energy_rs|rs}}, {{out.extra_vs_net_metering_rs|rs}} more than old net metering. The buyback rate is the number to watch."
+   "text": "Import bill {{out.import_energy_rs|rs}} at {{out.import_rate|rs2}} ({{out.import_band}} slab) as before; export credit falls to {{out.export_credit_rs|rs}} and the net billing charge rises to {{out.net_energy_rs|rs}}, {{out.extra_vs_net_metering_rs|rs}} more than old net metering. The buyback rate is the number to watch."
   },
   {
    "inputs": {
@@ -172,7 +172,7 @@
     "export_units": 100
    },
    "title": "Most solar used at home: {{in.import_units|int}} in, {{in.export_units|int}} out",
-   "text": "With little export the two regimes are closer: net billing {{out.net_energy_rs|rs}}, old net metering {{out.net_metering_rs|rs}}, a gap of {{out.extra_vs_net_metering_rs|rs}}. Self-use is what protects the saving."
+   "text": "Import bill {{out.import_units|int}} × {{out.import_rate|rs2}} ({{out.import_band}} slab) = {{out.import_energy_rs|rs}}. With little export the two regimes are closer: net billing {{out.net_energy_rs|rs}}, old net metering {{out.net_metering_rs|rs}}, a gap of {{out.extra_vs_net_metering_rs|rs}}. Self-use is what protects the saving."
   }
  ],
  "table": {
@@ -241,6 +241,10 @@
    "a": "{{out.buyback_rs|rs2}} per unit for {{data.tariff.net_billing.buyback_period}}. The regulations credit exports at the national average energy purchase price, and NEPRA's power purchase price decision puts it at that figure. NEPRA may revise it, so check your bill."
   },
   {
+   "q": "Why do some sites say {{data.tariff.net_billing.reported_rs_per_unit|rs}} a unit for exported solar units?",
+   "a": "News reports in {{data.tariff.net_billing.reported_when}} quoted a buyback of about {{data.tariff.net_billing.reported_rs_per_unit|rs}} a unit that was under discussion; NEPRA did not notify it (Express Tribune report in Sources), and some sites still quote it. NEPRA's power purchase price decision for {{data.tariff.net_billing.buyback_period}} sets the national average energy purchase price at {{out.buyback_rs|rs2}}, and that is the rate the Prosumer Regulations use for exported units. If your agreement or DISCO credits a different rate, type it in the buyback box and compare both results."
+  },
+  {
    "q": "Is net metering ending in Pakistan?",
    "a": "For new connections, yes: they get net billing. Agreements signed before {{data.tariff.net_billing.existing_cutoff}} keep the rate and rules of the old net-metering regulations until they expire, unless the system is enlarged, which moves it to net billing; renewals move to net billing."
   },
@@ -279,6 +283,10 @@
   {
    "label": "NEPRA decision on the power purchase price forecast for CY 2026 (national average energy purchase price)",
    "url": "https://nepra.org.pk/tariff/Tariff/DISCOs/Rebasing%20Decisions/TRF-100%20CPPAG%20FOR%20APPROVAL%20OF%20POWER%20PURCHASE%20PRICE%20FORECAST%2007-01-2026%20437-76.PDF"
+  },
+  {
+   "label": "Express Tribune, 10 Feb 2026: buyback of about Rs 11 a unit reported as under discussion (news report, not a NEPRA notification)",
+   "url": "https://tribune.com.pk/story/2591628/1"
   },
   {
    "label": "NEPRA regulations page: Prosumer Regulations 2026 and amendments (existing agreements)",

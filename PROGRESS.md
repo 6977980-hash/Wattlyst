@@ -1,6 +1,24 @@
 # Progress
 
-## Handoff for next phase (after GA4 sitewide, v0.8.34) — written by the "Add Google Analytics tag sitewide" thread, 2026-10-26
+## Handoff for next phase (after net billing Phase A, v0.8.36) — written by the "Fix net billing calculator Phase A" thread, 2026-10-30
+
+Owner's review of D10 /solar/net-billing-calculator/ and D11 /guides/net-billing-pakistan/ (30 Oct 2026); evidence `/mnt/project-files/electricity-tool-hub/audit/net-billing-review-2026-10-30.md`, phase note `audit/2026-10-21/handoff/phase-nb-a-net-billing-fixes.md`. Phase A only (WL-245 to WL-248). Phase B (WL-250 payback, WL-251 DISCO select) waits for the owner's go-ahead; the bio wording (WL-249) was done in the audit thread (PR #52, v0.8.35). The GA4 handoff below and those under it still hold.
+
+**What is where**
+- WL-245: `setWa` in `assets/js/wattlyst-tool.js` is declared next to `show` and called at the end of every printed result (`setWa?.()`), so the WhatsApp link's address always carries the current result and `?load=` (every page with a share bar). The old pointerdown/focus listeners are gone (they paid the bytes).
+- WL-246: `netLines(i, d, R)` in `engine/bill.js` holds the net billing sums; `net_billing` passes a whole-rupee `R`, so import, credit and the net metering bill are rounded before the net, carry-forward and "extra" are taken. The H1 planner (`engine/planner.js`) calls `netLines` without `R` (exact sums, as before; its spec cases unchanged). Rule: `specs/formulas.md` section F, net billing bullet ("Whole-rupee lines"); spec case "protected home: whole-rupee lines add up"; the 10 kW ToU spec case moved to whole rupees.
+- WL-247: engine output `import_band` (flat path only; the slab the imported units reach, e.g. "201–300 units"); D10/D11 examples print `{{out.import_rate|rs2}} ({{out.import_band}} slab)`. Do not use `import_band` in ToU examples (it is absent there; `import_calc` names the parts).
+- WL-248: `data/tariff-pk-2026.json` `net_billing.reported_*` (news figure, month, `reported_verified: false`, Tribune source). Used in the buyback field hint and the FAQ "Why do some sites say … a unit" on D10 and D11; Tribune in both pages' Sources. The default stays `buyback_rs_per_unit_default` (NEPRA NAEPP).
+
+**Do not touch / watch**
+- H1 import chain: only a few hundred raw bytes left under the raw ceiling (`tests/site.test.js` WL-136); `engine/bill.js` is in it.
+- Never make the reported figure the default or call it verified; it is there to explain what news and other sites quote.
+
+**Open to-dos**
+- Phase B (payback on D10, DISCO select) only after the owner says so; D10 FAQ still says a payback tool is planned.
+- Tribune page returned 403 to our fetcher on 30 Oct 2026 (the audit read it earlier); the quarterly `maintenance.js --links` pass will flag it if it moves.
+
+## Earlier handoff (after GA4 sitewide, v0.8.34) — written by the "Add Google Analytics tag sitewide" thread, 2026-10-26
 
 Owner pasted the GA4 gtag snippet (26 Oct 2026), so analytics is back on (reverses WL-154 of 16 Oct). Not an audit phase; the Phase 9b handoff below and those under it still hold.
 
@@ -830,6 +848,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | 2026-10-21 | Audit 2026-10-21 fix Phase 9: ToU bill path for 5 kW and above (WL-162 c): H1 planner + decision engine and net billing D10/D11 price the bill on ToU rates with a default peak share from data (estimate notice), plugin v0.8.31 | done: tests green | #48 |
 | 2026-10-21 | Audit 2026-10-21 fix Phase 9b (owner yes): ToU bill path on the bill pages F1-F12, F14, E1 and N16 for 5 kW and above (peak units + MDI fields, default share estimate notice), plugin v0.8.33 | done: tests green | #50 |
 | 2026-10-26 | GA4 sitewide (owner pasted tag G-LSWB51DMTG): deferred gtag.js, Consent Mode denied in EEA/UK/CH, not on embeds or for editors, privacy policy Analytics section back on, plugin v0.8.34 | done: tests green | #51 |
+| 2026-10-30 | Net billing Phase A (D10, D11): WhatsApp link follows every result (WL-245), whole-rupee net billing lines 1,705 − 813 = 892 (WL-246), rate + slab in examples (WL-247), news Rs 11 vs NEPRA Rs 8.13 hint, FAQ and source (WL-248), plugin v0.8.36 | done: tests green | #53 |
 
 ## Owner to do
 - Audit Phase 4: one Hostinger redirect so http and www go straight to https://wattlyst.com (WL-40); HTML browser cache time of a few hours in LiteSpeed/Hostinger (WL-36); after deploy, open wp-admin once so the new build syncs and the cache is purged; before switching on the quote form, ask Hostinger which header carries the visitor IP and put it in data/site.json leads.client_ip_header (WL-64); 2FA for wp-admin.
