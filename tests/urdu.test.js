@@ -135,6 +135,9 @@ test('Urdu font and right-to-left styles: small, subset, only on Urdu pages', ()
   assert.match(head, /if \( \$ur \) \{\s*\$files\['wattlyst-ur-css'\][\s\S]*?rel="preload"[^\n]*as="font"/, 'font preload and Urdu CSS only when the page is Urdu');
   assert.match(head, /'ur' === \( \$page\['lang'\] \?\? '' \) \? 'lang="ur" dir="rtl"'/);
   assert.match(head, /hreflang="%s"/);
+  // Header, menu and footer stay English and left to right on Urdu pages (owner, 30 Oct 2026); the footer lists English trust pages only.
+  assert.match(css, /\.site-header,[^{]*\.site-footer,[^{]*\.wl-footer\{direction:ltr;text-align:left/);
+  assert.match(read('includes/class-wattlyst-pages.php'), /'trust', 'embed' \), true \) && ! empty\( \$row\['live'\] \) && empty\( \$row\['lang'\] \)/);
 });
 
 test('every phrase the PHP translates on an Urdu page has its Urdu words in content/ur/ui.json', () => {

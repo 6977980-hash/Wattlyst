@@ -318,7 +318,7 @@ final class Wattlyst_Pages {
 	public function footer( $html ): string {
 		$links = array();
 		foreach ( $this->plugin->manifest()['pages'] as $row ) {
-			if ( in_array( $row['type'], array( 'trust', 'embed' ), true ) && ! empty( $row['live'] ) ) {
+			if ( in_array( $row['type'], array( 'trust', 'embed' ), true ) && ! empty( $row['live'] ) && empty( $row['lang'] ) ) { // English trust pages only: the footer is the same English footer on every page
 				$links[] = sprintf( '<li><a href="%s">%s</a></li>', esc_url( Wattlyst_Tools::link( $row['url'] ) ), esc_html( $row['h1'] ) );
 			}
 		}
