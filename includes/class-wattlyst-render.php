@@ -17,11 +17,32 @@ final class Wattlyst_Render {
 	private array $c;
 	private int $tables = 0; // numbers the reference table headings on this page (unique ids)
 	private bool $embed = false; // /embed/<id>/: result first, no links out but the credit (WL-238)
+	private bool $ur    = false; // an Urdu page (/ur/...): the words around the content come from content/ur/ui.json
 
 	public function __construct( Wattlyst_Tools $plugin, array $page ) {
 		$this->plugin = $plugin;
 		$this->page   = $page;
 		$this->c      = is_array( $page['content'] ?? null ) ? $page['content'] : array();
+		$this->ur     = 'ur' === ( $page['lang'] ?? '' );
+	}
+
+	/** The Urdu words for a fixed English phrase on an Urdu page (manifest ui_ur), the phrase itself elsewhere. */
+	private function t( string $s ): string {
+		return $this->ur ? (string) ( $this->plugin->manifest()['ui_ur'][ $s ] ?? $s ) : $s;
+	}
+
+	/**
+	 * Link to the same page in the other language, only when both are live (build `alt`). The link text is in the
+	 * language it opens, with lang and hreflang, so a screen reader reads it right.
+	 */
+	private function lang_link(): string {
+		$alt = $this->page['alt'] ?? null;
+		if ( ! $alt || $this->embed ) {
+			return '';
+		}
+		$to   = $this->ur ? 'en' : 'ur';
+		$text = $this->ur ? 'Read in English' : (string) ( $this->plugin->manifest()['ui_ur']['Read in Urdu'] ?? 'Urdu' );
+		return '<p class="wl-lang-link"><a href="' . esc_url( Wattlyst_Tools::link( (string) $alt[ $to ] ) ) . '" hreflang="' . $to . '" lang="' . $to . '">' . esc_html( $text ) . '</a></p>';
 	}
 
 	public function html(): string {
@@ -192,7 +213,7 @@ final class Wattlyst_Render {
 				? '<li aria-current="page">' . esc_html( $b['name'] ) . '</li>'
 				: '<li><a href="' . esc_url( Wattlyst_Tools::link( $b['url'] ) ) . '">' . esc_html( $b['name'] ) . '</a></li>';
 		}
-		return '<nav class="wl-breadcrumb" aria-label="Breadcrumb"><ol>' . implode( '', $items ) . '</ol></nav>';
+		return '<nav class="wl-breadcrumb" aria-label="' . esc_attr( $this->t( 'Breadcrumb' ) ) . '"><ol>' . implode( '', $items ) . '</ol></nav>';
 	}
 
 	/** Page header (design Phase 7): breadcrumb, H1, the one-sentence answer and, on content pages, who wrote it and when it was reviewed. */
@@ -212,7 +233,7 @@ final class Wattlyst_Render {
 		if ( 'home' === $type ) {
 			return $this->home_hero( (string) $answer );
 		}
-		return '<header class="wl-hero">' . $crumb . '<h1 class="wl-h1">' . esc_html( $this->page['h1'] ) . '</h1>' . $this->answer( (string) $answer ) . $byline . '</header>';
+		return '<header class="wl-hero">' . $crumb . '<h1 class="wl-h1">' . esc_html( $this->page['h1'] ) . '</h1>' . $this->answer( (string) $answer ) . $byline . $this->lang_link() . '</header>';
 	}
 
 	/**
@@ -234,7 +255,7 @@ final class Wattlyst_Render {
 		$pills = ( $kinds['calculator'] ? '<li>' . esc_html( $kinds['calculator'] . ' free calculators' ) . '</li>' : '' ) .
 			( $kinds['guide'] ? '<li>' . esc_html( self::count_label( $kinds['guide'], 'guide' ) ) . '</li>' : '' ) . '<li>No sign-up</li><li>Formulas shown</li><li>Works on your phone</li>';
 		$text  = '<div class="wl-hero-text"><h1 class="wl-h1">' . esc_html( $this->page['h1'] ) . '</h1>' . $this->answer( $answer ) .
-			( $cta ? '<p class="wl-ctas">' . $cta . '</p>' : '' ) . '<ul class="wl-pills">' . $pills . '</ul></div>';
+			( $cta ? '<p class="wl-ctas">' . $cta . '</p>' : '' ) . '<ul class="wl-pills">' . $pills . '</ul>' . $this->lang_link() . '</div>';
 		$nav   = $chips ? '<nav class="wl-hero-cats" aria-label="Calculator categories"><p class="wl-hero-cats-title">Browse by task</p><ul>' . $chips . '</ul></nav>' : '';
 		return '<header class="wl-hero wl-hero-home">' . $text . $nav . '</header>';
 	}
@@ -275,7 +296,7 @@ final class Wattlyst_Render {
 		if ( ! $author || ! $when || empty( $this->page['reviewed'] ) ) {
 			return '';
 		}
-		return '<p class="wl-byline">By <span>' . esc_html( $author['name'] ) . '</span> <span aria-hidden="true">&middot;</span> ' . $when[0] . ' <time datetime="' . esc_attr( $when[1] ) . '">' . esc_html( self::date( $when[1] ) ) . '</time></p>';
+		return '<p class="wl-byline">' . esc_html( $this->t( 'By' ) ) . ' <span>' . esc_html( $author['name'] ) . '</span> <span aria-hidden="true">&middot;</span> ' . esc_html( $this->t( $when[0] ) ) . ' <time datetime="' . esc_attr( $when[1] ) . '">' . esc_html( $this->date( $when[1] ) ) . '</time></p>';
 	}
 
 	/** Label and date for the byline and "Last ...": the review date once signed off, else the last change (build `modified`, WL-206). */
@@ -336,11 +357,11 @@ final class Wattlyst_Render {
 		// Share bar (build-plan Phase 4: PDF export + WhatsApp share) and the Roman Urdu result toggle; the buttons
 		// only work with JavaScript, so they are hidden until the script runs.
 		$share = '<div class="wl-share" hidden>' .
-			'<button type="button" class="wl-btn-secondary" data-wl-share="print">Save as PDF</button> ' .
-			'<a class="wl-btn-secondary" data-wl-share="whatsapp" href="https://wa.me/" target="_blank" rel="noopener">Share on WhatsApp</a> ' .
-			'<button type="button" class="wl-btn-secondary" data-wl-share="copy">Copy link</button>' .
+			'<button type="button" class="wl-btn-secondary" data-wl-share="print">' . esc_html( $this->t( 'Save as PDF' ) ) . '</button> ' .
+			'<a class="wl-btn-secondary" data-wl-share="whatsapp" href="https://wa.me/" target="_blank" rel="noopener">' . esc_html( $this->t( 'Share on WhatsApp' ) ) . '</a> ' .
+			'<button type="button" class="wl-btn-secondary" data-wl-share="copy">' . esc_html( $this->t( 'Copy link' ) ) . '</button>' .
 			( $has_ur ? ' <button type="button" class="wl-btn-secondary wl-lang" data-wl-lang aria-pressed="false">Roman Urdu</button>' : '' ) .
-			'<span class="wl-share-note" role="status" aria-live="polite"></span></div>';
+			'<span class="wl-share-note" role="status" aria-live="polite"' . ( $this->ur ? ' data-ok="' . esc_attr( $this->t( 'Link copied.' ) ) . '"' : '' ) . '></span></div>';
 		$config = array(
 			'calc'    => $t['calc'],
 			'module'  => $t['module'],
@@ -363,7 +384,7 @@ final class Wattlyst_Render {
 			),
 			'fixed'   => (object) ( $t['fixed_inputs'] ?? array() ),
 			'msg'     => (object) ( $t['msg'] ?? array() ),
-			'outputs' => array_map( static fn( $o ) => array( 'key' => $o['key'], 'spec' => $o['spec'] ?? '2' ), $t['outputs'] ),
+			'outputs' => array_map( static fn( $o ) => array_filter( array( 'key' => $o['key'], 'spec' => $o['spec'] ?? '2', 'yn' => $o['yn'] ?? null ) ), $t['outputs'] ),
 			'how'     => $t['how']['tpl'] ?? '',
 			'how_ur'  => $t['how']['tpl_ur'] ?? '',
 			'h1'      => $this->page['h1'],
@@ -375,11 +396,11 @@ final class Wattlyst_Render {
 		$split = $split && ! $this->embed;
 		$inputs = '<div class="wl-fields">' . $main . '</div>';
 		if ( '' !== $adv ) {
-			$inputs .= '<details class="wl-advanced"><summary>Advanced settings</summary><div class="wl-fields">' . $adv . '</div></details>';
+			$inputs .= '<details class="wl-advanced"><summary>' . esc_html( $this->t( 'Advanced settings' ) ) . '</summary><div class="wl-fields">' . $adv . '</div></details>';
 		}
 		$inputs .= '<button type="submit" class="wl-btn">' . esc_html( $t['submit'] ?? 'Calculate' ) . '</button>';
 		// Without JavaScript the button does nothing (onsubmit), instead of reloading the page with the defaults (audit WL-27).
-		$inputs .= '<noscript><p class="wl-hint">Turn on JavaScript to calculate with your own numbers. The result ' . ( $this->embed ? 'above' : 'below' ) . ' uses the default inputs.</p></noscript>';
+		$inputs .= '<noscript><p class="wl-hint">' . esc_html( $this->ur ? $this->t( 'noscript' ) : 'Turn on JavaScript to calculate with your own numbers. The result ' . ( $this->embed ? 'above' : 'below' ) . ' uses the default inputs.' ) . '</p></noscript>';
 		$notice  = (string) ( $t['notice'] ?? '' ); // a warning on the default result, same text the browser prints
 		// An empty box waits for errors (role=alert); a notice on the default result is amber and polite (audit WL-54, WL-61).
 		$out     = '' === $notice
@@ -391,7 +412,7 @@ final class Wattlyst_Render {
 		$class   = $split ? ( $home ? ' wl-tool-split' : ' wl-tool-list' ) : '';
 		$form    = '<form class="wl-tool' . $class . '" id="' . esc_attr( $id ) . '" data-wl-tool novalidate onsubmit="return false">';
 		if ( $split ) {
-			$form .= '<div class="wl-in">' . $inputs . '</div><div class="wl-out"><p class="wl-out-title">' . ( $home ? 'Your plan' : 'Your result' ) . '</p>' . $out . '</div>' . $this->rtable( $id, $t );
+			$form .= '<div class="wl-in">' . $inputs . '</div><div class="wl-out"><p class="wl-out-title">' . esc_html( $home ? 'Your plan' : $this->t( 'Your result' ) ) . '</p>' . $out . '</div>' . $this->rtable( $id, $t );
 		} else {
 			$form .= $this->embed ? $out . $inputs : $inputs . $out;
 		}
@@ -566,7 +587,7 @@ final class Wattlyst_Render {
 		}
 		if ( ! $steps ) {
 			// No Roman Urdu text yet: the heading says "(English)" while the Roman Urdu toggle is on (CSS, WL-225).
-			return '<section class="wl-how' . ( empty( $how['tpl_ur'] ) ? ' wl-how-en' : '' ) . '"><h2>How this result was calculated</h2><p data-wl-how>' . esc_html( $how['text'] ) . '</p></section>';
+			return '<section class="wl-how' . ( empty( $how['tpl_ur'] ) && ! $this->ur ? ' wl-how-en' : '' ) . '"><h2>' . esc_html( $this->t( 'How this result was calculated' ) ) . '</h2><p data-wl-how>' . esc_html( $how['text'] ) . '</p></section>';
 		}
 		// Home: one sentence per step, the first three shown and the rest behind a toggle (all of it stays in the HTML);
 		// the browser splits its live text the same way (wattlyst-extra.js drawTable).
@@ -579,7 +600,7 @@ final class Wattlyst_Render {
 	private function data_used(): string {
 		$items = '';
 		foreach ( $this->c['tool']['data_checked'] ?? array() as $d ) {
-			$items .= '<li>' . ( $d['url'] ? '<a href="' . esc_url( $d['url'] ) . '" rel="noopener">' . esc_html( $d['label'] ) . '</a>' : esc_html( $d['label'] ) ) . ' <span class="wl-du-d">checked <time datetime="' . esc_attr( $d['checked'] ) . '">' . esc_html( self::date( $d['checked'] ) ) . '</time></span></li>';
+			$items .= '<li>' . ( $d['url'] ? '<a href="' . esc_url( $d['url'] ) . '" rel="noopener">' . esc_html( $d['label'] ) . '</a>' : esc_html( $d['label'] ) ) . ' <span class="wl-du-d">checked <time datetime="' . esc_attr( $d['checked'] ) . '">' . esc_html( $this->date( $d['checked'] ) ) . '</time></span></li>';
 		}
 		return $items ? '<section class="wl-data-used"><h2>Data and prices used</h2><ul>' . $items . '</ul></section>' : '';
 	}
@@ -593,7 +614,7 @@ final class Wattlyst_Render {
 		$all  = $this->c['key_facts'];
 		$more = $show && count( $all ) > $show ? array_slice( $all, $show ) : array();
 		$fold = $more ? '<details class="wl-more"><summary>Show all ' . count( $all ) . ' key facts</summary><ul>' . $li( $more ) . '</ul></details>' : '';
-		return '<section class="wl-facts"><h2>Key facts</h2><ul>' . $li( $more ? array_slice( $all, 0, $show ) : $all ) . '</ul>' . $fold . '</section>';
+		return '<section class="wl-facts"><h2>' . esc_html( $this->t( 'Key facts' ) ) . '</h2><ul>' . $li( $more ? array_slice( $all, 0, $show ) : $all ) . '</ul>' . $fold . '</section>';
 	}
 
 	private function formula(): string {
@@ -602,7 +623,7 @@ final class Wattlyst_Render {
 			return '';
 		}
 		$lines = implode( '', array_map( static fn( $l ) => '<li>' . esc_html( $l ) . '</li>', $f['lines'] ) );
-		return '<section class="wl-formula"><h2>Formula</h2><p class="wl-eq"><code>' . esc_html( $f['text'] ) . '</code></p>' . ( $lines ? '<ul>' . $lines . '</ul>' : '' ) . '</section>';
+		return '<section class="wl-formula"><h2>' . esc_html( $this->t( 'Formula' ) ) . '</h2><p class="wl-eq"><code>' . esc_html( $f['text'] ) . '</code></p>' . ( $lines ? '<ul>' . $lines . '</ul>' : '' ) . '</section>';
 	}
 
 	/**
@@ -649,7 +670,7 @@ final class Wattlyst_Render {
 		if ( empty( $this->c['examples'] ) ) {
 			return '';
 		}
-		$out = '<section class="wl-examples"><h2>Worked examples</h2>';
+		$out = '<section class="wl-examples"><h2>' . esc_html( $this->t( 'Worked examples' ) ) . '</h2>';
 		foreach ( $this->c['examples'] as $ex ) {
 			$out .= '<h3>' . esc_html( $ex['title'] ) . '</h3><p>' . self::linked( $ex['text'], $ex['l'] ?? array() ) . '</p>';
 		}
@@ -702,7 +723,7 @@ final class Wattlyst_Render {
 		}
 		return '<form class="wl-tool wl-lookup" data-wl-lookup onsubmit="return false"><div class="wl-fields">' .
 			'<div class="wl-field"><label for="' . esc_attr( $id ) . '-brand">' . esc_html( $l['label'] ) . '</label><select id="' . esc_attr( $id ) . '-brand" data-wl-group-select>' . $opts . '</select></div>' .
-			'<div class="wl-field"><label for="' . esc_attr( $id ) . '-q">' . esc_html( $l['text_label'] ) . '</label><input type="search" id="' . esc_attr( $id ) . '-q" data-wl-filter autocomplete="off" placeholder="For example 02, 1010, F03, grid"><p class="wl-hint">Type the code as the display shows it, or a word such as battery, fan or grid. ' . esc_html( (string) $l['count'] ) . ' codes from manufacturer manuals, last checked <time datetime="' . esc_attr( $l['checked'] ) . '">' . esc_html( self::date( $l['checked'] ) ) . '</time>.</p></div>' .
+			'<div class="wl-field"><label for="' . esc_attr( $id ) . '-q">' . esc_html( $l['text_label'] ) . '</label><input type="search" id="' . esc_attr( $id ) . '-q" data-wl-filter autocomplete="off" placeholder="For example 02, 1010, F03, grid"><p class="wl-hint">Type the code as the display shows it, or a word such as battery, fan or grid. ' . esc_html( (string) $l['count'] ) . ' codes from manufacturer manuals, last checked <time datetime="' . esc_attr( $l['checked'] ) . '">' . esc_html( $this->date( $l['checked'] ) ) . '</time>.</p></div>' .
 			'</div><p class="wl-error wl-notice" data-wl-nomatch role="status" hidden>No code matches. Check the brand, or try a shorter text such as the code alone.</p>' .
 			// While a filter is on: how many codes match and a jump to the first one, which sits below the page text (WL-202).
 			'<p class="wl-lookup-count" data-wl-count role="status" hidden><span></span> <a href="#">Show the matches</a></p>' . $this->next_inline() . '</form>';
@@ -721,7 +742,7 @@ final class Wattlyst_Render {
 		if ( ! $d ) {
 			return '';
 		}
-		return '<p class="wl-download"><a class="wl-btn-secondary" href="' . esc_url( Wattlyst_Tools::link( $d['url'] ) ) . '" download>' . esc_html( $d['label'] ) . '</a> <span>Data checked <time datetime="' . esc_attr( $d['checked'] ) . '">' . esc_html( self::date( $d['checked'] ) ) . '</time>. ' . esc_html( $d['license'] ) . '.</span></p>';
+		return '<p class="wl-download"><a class="wl-btn-secondary" href="' . esc_url( Wattlyst_Tools::link( $d['url'] ) ) . '" download>' . esc_html( $d['label'] ) . '</a> <span>Data checked <time datetime="' . esc_attr( $d['checked'] ) . '">' . esc_html( $this->date( $d['checked'] ) ) . '</time>. ' . esc_html( $d['license'] ) . '.</span></p>';
 	}
 
 	/** Horizontal bar chart in plain HTML and CSS (no image, no script): each bar's width is its share of the largest value. */
@@ -802,12 +823,12 @@ final class Wattlyst_Render {
 		if ( ! $m && ! $s ) {
 			return '';
 		}
-		$out = '<section class="wl-mistakes"><h2>Common mistakes</h2>';
+		$out = '<section class="wl-mistakes"><h2>' . esc_html( $this->t( 'Common mistakes' ) ) . '</h2>';
 		if ( $m ) {
 			$out .= '<ul>' . implode( '', array_map( static fn( $x ) => '<li>' . esc_html( $x ) . '</li>', $m ) ) . '</ul>';
 		}
 		if ( $s ) {
-			$out .= '<p class="wl-safety"><strong>Safety:</strong> ' . esc_html( $s ) . '</p>';
+			$out .= '<p class="wl-safety"><strong>' . esc_html( $this->t( 'Safety:' ) ) . '</strong> ' . esc_html( $s ) . '</p>';
 		}
 		return $out . '</section>';
 	}
@@ -817,7 +838,7 @@ final class Wattlyst_Render {
 		if ( empty( $this->c['faq'] ) ) {
 			return '';
 		}
-		$out = '<section class="wl-faq' . ( $fold ? ' wl-faq-fold' : '' ) . '"><h2>Frequently asked questions</h2>';
+		$out = '<section class="wl-faq' . ( $fold ? ' wl-faq-fold' : '' ) . '"><h2>' . esc_html( $this->t( 'Frequently asked questions' ) ) . '</h2>';
 		foreach ( $this->c['faq'] as $i => $f ) {
 			$out .= $fold
 				? '<details class="wl-qa"' . ( 0 === $i ? ' open' : '' ) . '><summary><h3>' . esc_html( $f['q'] ) . '</h3></summary><p>' . self::linked( $f['a'], $f['l'] ?? array() ) . '</p></details>'
@@ -891,7 +912,7 @@ final class Wattlyst_Render {
 		if ( ! $next && ! $more ) {
 			return '';
 		}
-		return '<nav class="wl-next-inline" aria-label="Next step">' . ( $next ? '<p><strong>Next step:</strong> ' . self::link_to( $next ) . '</p>' : '' ) .
+		return '<nav class="wl-next-inline" aria-label="' . esc_attr( $this->t( 'Next step' ) ) . '">' . ( $next ? '<p><strong>' . esc_html( $this->t( 'Next step:' ) ) . '</strong> ' . self::link_to( $next ) . '</p>' : '' ) .
 			( $more ? '<ul>' . implode( '', $more ) . '</ul>' : '' ) . '</nav>';
 	}
 
@@ -899,7 +920,7 @@ final class Wattlyst_Render {
 		$links = array();
 		$next  = $this->live_row( $this->page['next'] ?? '' );
 		if ( $next ) {
-			$links[] = '<li class="wl-next"><strong>Next step:</strong> ' . self::link_to( $next, true ) . '</li>';
+			$links[] = '<li class="wl-next"><strong>' . esc_html( $this->t( 'Next step:' ) ) . '</strong> ' . self::link_to( $next, true ) . '</li>';
 		}
 		foreach ( $this->page['related'] ?? array() as $rid ) {
 			$r = $this->live_row( $rid );
@@ -911,10 +932,10 @@ final class Wattlyst_Render {
 		$parent = ! empty( $this->page['parent'] ) ? $this->plugin->row( $this->page['parent'] ) : null;
 		if ( $parent && ! empty( $parent['live'] ) ) {
 			// "All battery and UPS calculators": lower-case the words, keep abbreviations such as UPS and DISCO.
-			$name    = preg_replace_callback( '/\b[A-Z][a-z]+\b/', static fn( $m ) => strtolower( $m[0] ), (string) $parent['h1'] );
-			$links[] = '<li><a href="' . esc_url( Wattlyst_Tools::link( $parent['url'] ) ) . '">All ' . esc_html( $name ) . '</a></li>';
+			$name    = $this->ur ? str_replace( '{h}', (string) $parent['h1'], $this->t( 'All {h}' ) ) : 'All ' . preg_replace_callback( '/\b[A-Z][a-z]+\b/', static fn( $m ) => strtolower( $m[0] ), (string) $parent['h1'] );
+			$links[] = '<li><a href="' . esc_url( Wattlyst_Tools::link( $parent['url'] ) ) . '">' . esc_html( $name ) . '</a></li>';
 		}
-		return $links ? '<section class="wl-related"><h2>Related calculators</h2><ul>' . implode( '', $links ) . '</ul></section>' : '';
+		return $links ? '<section class="wl-related"><h2>' . esc_html( $this->t( 'Related calculators' ) ) . '</h2><ul>' . implode( '', $links ) . '</ul></section>' : '';
 	}
 
 	/**
@@ -965,7 +986,7 @@ final class Wattlyst_Render {
 			$out .= $cards( $rows ) . '</section>';
 		}
 		if ( $rest ) {
-			$out .= '<section class="wl-group"><h2>' . esc_html( ( $groups ? 'More ' : 'All ' ) . $this->page['h1'] ) . '</h2>' . $cards( $rest ) . '</section>';
+			$out .= '<section class="wl-group"><h2>' . esc_html( $this->ur ? str_replace( '{h}', $this->page['h1'], $this->t( $groups ? 'More {h}' : 'All {h}' ) ) : ( $groups ? 'More ' : 'All ' ) . $this->page['h1'] ) . '</h2>' . $cards( $rest ) . '</section>';
 		}
 		return $out;
 	}
@@ -986,11 +1007,14 @@ final class Wattlyst_Render {
 			if ( ! empty( $rev['same_as'][0] ) ) {
 				$rname = '<a href="' . esc_url( $rev['same_as'][0] ) . '" rel="noopener">' . $rname . '</a>';
 			}
-			$review = 'Technically reviewed by ' . $rname . ', ' . esc_html( $rev['credential'] ?? '' ) . '.';
+			$review = esc_html( $this->t( 'Technically reviewed by' ) ) . ' ' . $rname . ', ' . esc_html( $rev['credential'] ?? '' ) . '.';
 		} else {
-			$review = 'Every formula is written out on the methodology page and checked against the official sources listed on this page. An independent review by a PEC-registered electrical engineer is not complete yet.';
+			$review = esc_html( $this->t( 'Every formula is written out on the methodology page and checked against the official sources listed on this page. An independent review by a PEC-registered electrical engineer is not complete yet.' ) );
 		}
-		return '<aside class="wl-author" aria-label="About this page"><p><strong>Written by</strong> ' . $name . ', ' . esc_html( implode( ' and ', $author['roles'] ) ) . ' of ' . esc_html( $site['brand'] ?? '' ) . '.' . ( empty( $author['short_bio'] ) ? '' : ' ' . esc_html( $author['short_bio'] ) ) . '</p><p>' . $review . ' <a href="' . esc_url( Wattlyst_Tools::link( '/methodology/' ) ) . '">How we calculate</a>.</p></aside>';
+		// Urdu page: the Urdu role names and bio line of content/ur/ui.json (author_roles, author_bio), the person's own facts.
+		$roles = $this->ur ? $this->t( 'author_roles' ) : implode( ' and ', $author['roles'] ) . ' of ' . ( $site['brand'] ?? '' );
+		$bio   = $this->ur ? $this->t( 'author_bio' ) : (string) ( $author['short_bio'] ?? '' );
+		return '<aside class="wl-author" aria-label="' . esc_attr( $this->t( 'About this page' ) ) . '"><p><strong>' . esc_html( $this->t( 'Written by' ) ) . '</strong> ' . $name . ', ' . esc_html( $roles ) . '.' . ( '' === $bio ? '' : ' ' . esc_html( $bio ) ) . '</p><p>' . $review . ' <a href="' . esc_url( Wattlyst_Tools::link( '/methodology/' ) ) . '">' . esc_html( $this->t( 'How we calculate' ) ) . '</a>.</p></aside>';
 	}
 
 	private function sources(): string {
@@ -1000,9 +1024,9 @@ final class Wattlyst_Render {
 			$items .= '<li><a href="' . esc_url( $url ) . '"' . ( str_starts_with( $s['url'], '/' ) ? '' : ' rel="noopener"' ) . '>' . esc_html( $s['label'] ) . '</a></li>';
 		}
 		foreach ( $this->c['tool']['data_checked'] ?? array() as $d ) {
-			$items .= '<li>' . ( $d['url'] ? '<a href="' . esc_url( $d['url'] ) . '" rel="noopener">' . esc_html( $d['label'] ) . '</a>' : esc_html( $d['label'] ) ) . ', last checked <time datetime="' . esc_attr( $d['checked'] ) . '">' . esc_html( self::date( $d['checked'] ) ) . '</time></li>';
+			$items .= '<li>' . ( $d['url'] ? '<a href="' . esc_url( $d['url'] ) . '" rel="noopener">' . esc_html( $d['label'] ) . '</a>' : esc_html( $d['label'] ) ) . ', ' . esc_html( $this->t( 'last checked' ) ) . ' <time datetime="' . esc_attr( $d['checked'] ) . '">' . esc_html( $this->date( $d['checked'] ) ) . '</time></li>';
 		}
-		$out = $items ? '<section class="wl-sources"><h2>Sources</h2><ul>' . $items . '</ul></section>' : '';
+		$out = $items ? '<section class="wl-sources"><h2>' . esc_html( $this->t( 'Sources' ) ) . '</h2><ul>' . $items . '</ul></section>' : '';
 		return $out . $this->dates();
 	}
 
@@ -1012,11 +1036,15 @@ final class Wattlyst_Render {
 		if ( ! $when ) {
 			return '';
 		}
-		return '<p class="wl-dates">Last ' . strtolower( $when[0] ) . ': <time datetime="' . esc_attr( $when[1] ) . '">' . esc_html( self::date( $when[1] ) ) . '</time></p>';
+		return '<p class="wl-dates">' . esc_html( $this->t( 'Last ' . strtolower( $when[0] ) ) ) . ': <time datetime="' . esc_attr( $when[1] ) . '">' . esc_html( $this->date( $when[1] ) ) . '</time></p>';
 	}
 
-	private static function date( string $ymd ): string {
+	/** "21 October 2026"; on an Urdu page the month in Urdu (content/ur/ui.json), the digits as they are. */
+	private function date( string $ymd ): string {
 		$ts = strtotime( $ymd . ' 12:00:00 UTC' );
-		return $ts ? gmdate( 'j F Y', $ts ) : $ymd;
+		if ( ! $ts ) {
+			return $ymd;
+		}
+		return $this->ur ? gmdate( 'j', $ts ) . ' ' . $this->t( gmdate( 'F', $ts ) ) . ' ' . gmdate( 'Y', $ts ) : gmdate( 'j F Y', $ts );
 	}
 }

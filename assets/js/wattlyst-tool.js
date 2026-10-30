@@ -107,7 +107,8 @@ async function init(form) {
       const node = results.querySelector(`[data-out="${o.key}"] .wl-val`);
       if (!node) continue;
       // An optional result the inputs leave out (N6 value with no tariff) hides its card instead of printing n/a (WL-31).
-      node.textContent = fmt(out[o.key], o.spec);
+      // An Urdu page prints a yes/no flag in Urdu (o.yn from the build).
+      node.textContent = o.yn && typeof out[o.key] == 'boolean' ? o.yn[out[o.key] ? 0 : 1] : fmt(out[o.key], o.spec);
       node.closest('.wl-result').hidden = !node.textContent;
     }
     if (diagram && cfg.diagram === 'battery_grid') extra().then((e) => e.drawGrid(diagram, Math.round(out.n_series), Math.round(out.n_parallel)));
@@ -150,7 +151,7 @@ async function init(form) {
     setWa();
     share.querySelector('[data-wl-share="copy"]').addEventListener('click', async () => {
       show(true);
-      try { await navigator.clipboard.writeText(shareUrl()); note.textContent = 'Link copied.'; } catch { note.textContent = shareUrl(); }
+      try { await navigator.clipboard.writeText(shareUrl()); note.textContent = note.dataset.ok || 'Link copied.'; } catch { note.textContent = shareUrl(); }
     });
     // Roman Urdu result labels (and the "how" text when the page has one); the choice is remembered on this device.
     const lang = share.querySelector('[data-wl-lang]');

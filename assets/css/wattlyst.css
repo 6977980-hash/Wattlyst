@@ -326,3 +326,4 @@ body .wl-404-links a:hover{border-color:var(--wl-accent-2);background:var(--wl-b
 /* Fields in one row line up: labels sit at the bottom of a shared label row, so the inputs share one line
    even when one label wraps, and the hints start under them (subgrid; older browsers keep the plain grid). */
 @supports (grid-template-rows:subgrid){.wl-fields{row-gap:0}.wl-fields>.wl-field{padding-bottom:1rem}.wl-fields>.wl-check{grid-row:span 3;align-self:start}.wl-fields>.wl-field:not(.wl-check):not(.wl-field-loads){grid-row:span 3;display:grid;grid-template-rows:subgrid;row-gap:0}.wl-fields>.wl-field:not(.wl-check):not(.wl-field-loads):has(>.wl-error){grid-row:span 4}.wl-fields>.wl-field>label{align-self:end}.wl-fields>.wl-field>.wl-hint{align-self:start}}
+.wl-lang-link{margin:.4rem 0 0;font-size:.95rem}.wl-lang-link a{font-weight:600}

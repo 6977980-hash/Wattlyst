@@ -28,7 +28,7 @@ test('restyle keeps the audit fixes: focus ring, notice colours, touch targets, 
 test('page header, byline and footer hub links come from the same data as the rest of the page', () => {
   const render = read('includes/class-wattlyst-render.php');
   assert.match(render, /<header class="wl-hero">/);
-  assert.match(render, /function byline\(\)[\s\S]*?\$this->page\['reviewed'\][\s\S]*?self::date\(/, 'byline date = Last reviewed date');
+  assert.match(render, /function byline\(\)[\s\S]*?\$this->page\['reviewed'\][\s\S]*?\$this->date\(/, 'byline date = Last reviewed date');
   assert.match(render, /function author_box\(\)[\s\S]*?\$this->author\(\)/, 'author box and byline share one lookup');
   const pages = read('includes/class-wattlyst-pages.php');
   assert.match(pages, /function footer\([\s\S]*?manifest\(\)\['nav'\][\s\S]*?! empty\( \$row\['live'\] \)/, 'footer hub links: live nav hubs only');
@@ -57,7 +57,7 @@ test('home redesign (15 Oct 2026): own stylesheet on the home page only, hubs in
   assert.match(home, /prefers-reduced-motion/);
   assert.ok(!/\.wl-card/.test(css.replace(/\.wl-cards/g, '')), 'task card styles live in the home stylesheet only');
   const head = read('includes/class-wattlyst-head.php');
-  assert.match(head, /\$this->styles\( 'home' === \$page\['type'\] \)/, 'home stylesheet only on the home page');
+  assert.match(head, /\$this->styles\( 'home' === \$page\['type'\], \$ur \)/, 'home stylesheet only on the home page');
   assert.match(read('tools/build.js'), /shown\.update\(read\('assets\/css\/wattlyst-home\.css'\)\)/, 'a home CSS deploy purges the page cache');
   const render = read('includes/class-wattlyst-render.php');
   assert.match(render, /function home_hero\([\s\S]*?\$this->page\['cards'\]/, 'hero chips: the same live hubs as the task cards');

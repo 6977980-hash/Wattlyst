@@ -118,7 +118,7 @@ test('"how" templates print what the engine used, not a default or a rounded inp
   for (const p of tools) {
     const t = p.content.tool;
     const names = new Set(t.fields.map((f) => f.name));
-    const src = JSON.parse(readFileSync(join(root, `content/pages/${p.id}.json`), 'utf8'));
+    const src = JSON.parse(readFileSync(join(root, `content/pages/${p.en || p.id}.json`), 'utf8')); // an Urdu page runs its English page's calculator
     const editable = new Set(src.fields.flatMap((f) => [f.name, typeof f.default === 'string' && f.default.startsWith('@') ? f.default.slice(1) : null]).filter(Boolean));
     for (const tpl of [t.how.tpl, t.how.tpl_ur].filter(Boolean)) {
       for (const [, path, spec] of tpl.matchAll(/\{\{\s*([\w.-]+)\s*(?:\|\s*(\w+))?\s*\}\}/g)) {

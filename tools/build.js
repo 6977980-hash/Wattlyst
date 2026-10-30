@@ -4,6 +4,8 @@
 //
 //   node tools/build.js          write generated/
 //   node tools/build.js --check  exit 1 if generated/ is out of date (CI and npm test)
+//   node tools/build.js --ur-preview  every Urdu draft live, for a local WordPress check only (never commit it;
+//                                     run node tools/build.js again afterwards, --check fails until you do)
 import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync, rmSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -15,6 +17,7 @@ import { adsConfig, leadsConfig, affiliatesByPage } from './lib/monetize.js';
 import { render, fmt, placeholders, isSpec, lookup } from '../engine/format.js';
 import { errorMessage, noticeCode, EXACT, NOTICES } from '../engine/message-text.js';
 import { lakhRs, marketRs, roughHours } from '../engine/approx.js';
+import { loadUr, urRows, urContent, urMessages, urTarget, pairUp, UR_PREFIX, UR_HOME } from './lib/urdu.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => readFileSync(join(root, p), 'utf8');
@@ -107,7 +110,8 @@ export async function loadInputs() {
   const affiliates = readJson('data/affiliates.json');
   const leadForm = readJson('content/lead-form.json');
   const billNote = readJson('content/bill-note.json');
-  return { site, data, citiesMeta, appliances, cables, solarPrices, inverterCodes, labelsUr, modules, keywordRows, siteRows, content, trustHtml, affiliates, leadForm, billNote };
+  const ur = loadUr(root);
+  return { site, data, citiesMeta, appliances, cables, solarPrices, inverterCodes, labelsUr, modules, keywordRows, siteRows, content, trustHtml, affiliates, leadForm, billNote, ur };
 }
 
 // Page dates (audit WL-206): generated/page-dates.json keeps, per page, a hash of what the page shows and the day
@@ -120,6 +124,7 @@ export function changedOn(prev, hash, baseline, today) {
   return prev ? today : baseline || today;
 }
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const MONTH_RE = new RegExp(`\\b(${MONTHS.join('|')})\\b`, 'g');
 const longDate = (ymd) => { const [y, m, d] = ymd.split('-').map(Number); return `${d} ${MONTHS[m - 1]} ${y}`; };
 const buildDay = () => process.env.WATTLYST_TODAY || new Date().toISOString().slice(0, 10);
 const newest = (...d) => d.filter(Boolean).sort().at(-1);
@@ -213,7 +218,8 @@ function text(ctx, tpl, scope, what, { links = false } = {}) {
   for (const p of placeholders(tpl)) if (!isSpec(p.spec)) fail(`${ctx.id}: ${what} uses unknown format "${p.spec}" in {{${p.path}|${p.spec}}}`);
   const s = render(tpl, scope);
   if (s === null) fail(`${ctx.id}: ${what} has a placeholder with no value: ${tpl}`);
-  return s;
+  // Urdu page: a month name from data/ ("July 2026" FPA month) reads in Urdu, the year stays in digits.
+  return ctx.lang === 'ur' ? s.replace(MONTH_RE, (m) => ctx.ur.ui[m]) : s;
 }
 
 const LINK = /\[\[([\w-]+)\|([^\]|]+)\]\]/g;
@@ -227,10 +233,13 @@ const LINK = /\[\[([\w-]+)\|([^\]|]+)\]\]/g;
 function linked(ctx, s, what) {
   const l = [];
   const t = s.replace(LINK, (_, id, anchor) => {
-    const row = ctx.allRows.find((r) => r.id === id);
+    // An Urdu page links the Urdu twin of a page when there is one (live, or both still drafts), else the English page.
+    // The Urdu home links the English planner (H1), whose Urdu twin is the home itself.
+    const twin = ctx.lang === 'ur' && urTarget(ctx.allRows, id, ctx.row.live);
+    const row = (twin && twin.id !== ctx.id ? twin : null) || ctx.allRows.find((r) => r.id === id);
     if (!row) fail(`${ctx.id}: ${what} links to unknown page ${id}`);
-    if (!row.live) fail(`${ctx.id}: ${what} links to ${id}, which is not live`);
-    if (id === ctx.id) fail(`${ctx.id}: ${what} links to itself`);
+    if (!row.live && !(row.lang === 'ur' && !ctx.row.live)) fail(`${ctx.id}: ${what} links to ${id}, which is not live`);
+    if (row.id === ctx.id) fail(`${ctx.id}: ${what} links to itself`);
     l.push({ t: anchor, u: row.url });
     return anchor;
   });
@@ -242,6 +251,15 @@ function linked(ctx, s, what) {
 function withLinks(ctx, tpl, scope, what, key) {
   const { t, l } = linked(ctx, text(ctx, tpl, scope, what, { links: true }), what);
   return { [key]: t, ...(l.length ? { l } : {}) };
+}
+
+/** The notice on the default result and the page's message texts (tool notice and msg); Urdu on an Urdu page. */
+function urTexts(ctx, result, module, fields) {
+  const code = noticeCode(result);
+  if (ctx.lang !== 'ur') return { notice: code ? errorMessage(code) : '', msg: pageTexts(module) };
+  const msg = urMessages(Object.keys(pageTexts(module)), fields, ctx.ur, ctx.id, fail, ctx.data.tariff);
+  if (code && !msg[code]) fail(`${ctx.id}: content/ur/messages.json has no Urdu text for the notice ${code}`);
+  return { notice: code ? msg[code] : '', msg };
 }
 
 /** Build the rendered content of one page. Every number comes from the engine or data/. */
@@ -269,6 +287,8 @@ function buildContent(c, ctx) {
         for (const row of out.default || []) if (row.id && row.id !== 'custom' && !ctx.data.appliances[row.id]) fail(`${ctx.id}: default row uses unknown appliance ${row.id}`);
       }
       if (out.options && out.default !== undefined && !out.options.some(([v]) => String(v) === String(out.default))) fail(`${ctx.id}: field ${f.name} default ${out.default} is not one of its options`);
+      // Urdu page: option labels the build makes from data ("2026-09 to 2026-11") take the Urdu words of content/ur/ui.json.
+      if (ctx.lang === 'ur' && f.options_from) out.options = out.options.map(([v, l]) => [v, Object.entries(ctx.ur.ui.option_words).reduce((s, [en, u]) => s.split(en).join(u), l)]);
       return out;
     });
     // The live templates are rendered again in the browser, which has no build-only format.
@@ -315,6 +335,8 @@ function buildContent(c, ctx) {
         if (o.optional && v === undefined) return { ...o, ...ur, value: '' };
         if (typeof v !== 'number' && typeof v !== 'string' && typeof v !== 'boolean') fail(`${c.id}: output ${o.key} missing from ${c.calc}`);
         if (typeof v === 'boolean' && o.spec !== 'yesno') fail(`${c.id}: output ${o.key} is a flag and needs the yesno format`);
+        // Urdu page: a flag prints the Urdu yes/no, here and in the browser (tool output yn).
+        if (ctx.lang === 'ur' && o.spec === 'yesno') { const yn = [ctx.ur.ui.yes, ctx.ur.ui.no]; return { ...o, yn, value: yn[v ? 0 : 1] }; }
         return { ...o, ...ur, value: fmt(v, o.spec || '2') };
       }),
       how: c.how ? { tpl: c.how, text: text(ctx, c.how, scope, 'how'), ...(c.how_ur ? { tpl_ur: c.how_ur, text_ur: text(ctx, c.how_ur, scope, 'how_ur') } : {}) } : null,
@@ -325,9 +347,8 @@ function buildContent(c, ctx) {
       // A live data feed under an attribution licence prints its credit next to the result (Open-Meteo CC BY 4.0, WL-240).
       ...(c.live ? { credit: creditOf(c, fail) } : {}),
       // Bill calculators: estimate, not an official bill or evidence, and where to complain (content/bill-note.json).
-      ...(ctx.billNote.calcs.includes(c.calc) ? { legal: billNoteOf(ctx, fail) } : {}),
-      notice: noticeCode(result) ? errorMessage(noticeCode(result)) : '',
-      msg: pageTexts(module),
+      ...(ctx.billNote.calcs.includes(c.calc) ? { legal: billNoteOf(ctx.lang === 'ur' ? { ...ctx, billNote: { ...ctx.billNote, ...ctx.ur.billNote } } : ctx, fail) } : {}),
+      ...urTexts(ctx, result, module, fields),
       data_checked: dataChecked(module, { ...ctx, usesAppliances: fields.some((f) => f.type === 'appliance' || f.type === 'loads') }),
     };
     out.examples = (c.examples || []).map((ex, n) => ({
@@ -366,7 +387,7 @@ function buildContent(c, ctx) {
   // A hub may repeat a key fact of one of its pages ({ "from": "B1", "n": 0 }), so the number is that page's engine result (WL-142).
   out.key_facts = (c.key_facts || []).map((k, n) => {
     if (typeof k === 'string') return text(ctx, k, scope, `key fact ${n + 1}`);
-    const src = ctx.built?.[k.from]?.key_facts?.[k.n];
+    const src = ctx.built?.[ctx.lang === 'ur' ? UR_PREFIX + k.from : k.from]?.key_facts?.[k.n];
     if (!src) fail(`${c.id}: key fact ${n + 1} takes key fact ${k.n} of ${k.from}, which has none (pages are built before hubs)`);
     return src;
   });
@@ -590,7 +611,7 @@ function schemaFor(page, built, ctx) {
     url: abs(page.url),
     name: page.title,
     description: page.meta,
-    inLanguage: 'en',
+    inLanguage: page.lang || 'en',
     isPartOf: { '@id': `${site.url}#website` },
     ...(crumbs ? { breadcrumb: { '@id': `${abs(page.url)}#breadcrumb` } } : {}),
     // lastReviewed only once the engineer has signed off (WL-214); until then the page was updated, not reviewed.
@@ -623,6 +644,7 @@ function schemaFor(page, built, ctx) {
       '@id': `${abs(page.url)}#article`,
       headline: page.h1,
       description: page.meta,
+      ...(page.lang ? { inLanguage: page.lang } : {}),
       mainEntityOfPage: { '@id': `${abs(page.url)}#webpage` },
       author: { '@id': `${site.url}#/person/${page.author}` },
       publisher: { '@id': `${site.url}#organization` },
@@ -759,7 +781,8 @@ function dataSources(ctx) {
 function llmsTxt(pages, ctx) {
   const { site } = ctx;
   const abs = (u) => site.url.replace(/\/$/, '') + u;
-  const live = pages.filter((p) => p.live);
+  const live = pages.filter((p) => p.live && !p.lang);
+  const urdu = pages.filter((p) => p.live && p.lang === 'ur');
   // The engine-built answer of each page follows its meta, so an assistant can quote a number with its page (21 Oct audit WL-195).
   const answer = (p) => { const a = ctx.built?.[p.id]?.answer; return a && p.type !== 'trust' ? ` Answer: ${a}` : ''; };
   const line = (p) => `- [${p.h1}](${abs(p.url)}): ${p.meta}${answer(p)}`;
@@ -778,6 +801,8 @@ function llmsTxt(pages, ctx) {
   if (embed.length) out.push('## For publishers', '', ...embed.map(line), '');
   const trust = live.filter((p) => p.type === 'trust');
   out.push('## Method, data and policies', '', ...trust.map(line), '');
+  // Urdu pages: the same calculators and numbers in Urdu, each next to its English page.
+  if (urdu.length) out.push('## Urdu (اردو)', '', ...urdu.map(line), '');
   out.push('## Notes for AI assistants', '');
   out.push(`- Results are planning estimates, not official bills or engineering sign-off. Defaults are listed at ${abs('/methodology/')}.`);
   out.push(`- Pakistan defaults: ${fmt(ctx.data.defaults.v_1ph)} V single phase, ${fmt(ctx.data.defaults.v_3ph)} V three phase, 50 Hz, prices in PKR. Tariff data last checked ${ctx.data.tariff._meta?.checked}.`);
@@ -785,16 +810,35 @@ function llmsTxt(pages, ctx) {
   return out.join('\n') + '\n';
 }
 
-export async function build() {
+/**
+ * opts.urLive: build every Urdu page as live (local WordPress preview and tests of the drafts); never for a commit,
+ * so generated/ always follows the status column of specs/keyword-map-ur.csv.
+ */
+export async function build(opts = {}) {
   const inp = await loadInputs();
-  const { site, keywordRows, siteRows, content } = inp;
+  const { site, keywordRows, siteRows } = inp;
+  const content = { ...inp.content };
   const pluginUrl = `${site.url}wp-content/plugins/wattlyst-tools/`;
-  const ctxBase = { site, data: inp.data, modules: inp.modules, appliances: inp.appliances, cables: inp.cables, solarPrices: inp.solarPrices, inverterCodes: inp.inverterCodes, labelsUr: inp.labelsUr, billNote: inp.billNote, citiesMeta: inp.citiesMeta, pluginUrl };
+  const ctxBase = { site, data: inp.data, modules: inp.modules, appliances: inp.appliances, cables: inp.cables, solarPrices: inp.solarPrices, inverterCodes: inp.inverterCodes, labelsUr: inp.labelsUr, billNote: inp.billNote, citiesMeta: inp.citiesMeta, ur: inp.ur, pluginUrl };
 
   const rows = [
     ...keywordRows.map((r) => ({ id: r.id, type: typeOf(r), silo: r.silo, url: r.url, h1: '', title: r.title, meta: r.meta_description, primary_keyword: r.primary_keyword, wave: Number(r.wave), status: 'planned' })),
     ...siteRows.map((r) => ({ id: r.id, type: r.type, silo: r.silo, url: r.url, h1: r.h1, title: r.title, meta: r.meta_description, primary_keyword: '', wave: 0, status: r.status, reviewed: r.reviewed || undefined, nav_label: r.nav_label || undefined, nav_order: r.nav_order ? Number(r.nav_order) : undefined })),
   ];
+  // Urdu pages (specs/keyword-map-ur.csv): the English page's calculator with the words of content/ur/pages/<ID>.json;
+  // a page of its own type (the Urdu home, a hub of Urdu pages) takes that file as its whole content.
+  const enRows = rows.slice();
+  for (const u of urRows(inp.ur, enRows, fail)) {
+    if (opts.urLive) u.status = 'publish';
+    const en = enRows.find((r) => r.id === u.en);
+    const words = inp.ur.pages[u.en];
+    if (u.type !== 'trust') {
+      if (!words) fail(`${u.id}: no content/ur/pages/${u.en}.json`);
+      content[u.id] = urContent(u.type === en.type || (en.type === 'tool' && u.type === 'lookup') ? content[u.en] : null, words, u.id, fail);
+    } else if (!inp.ur.trust[u.en]) fail(`${u.id}: no content/ur/trust/${u.en}.html`);
+    rows.push(u);
+  }
+  for (const f of Object.keys(inp.ur.pages)) if (!rows.some((r) => r.id === UR_PREFIX + f)) fail(`content/ur/pages/${f}.json has no row in specs/keyword-map-ur.csv`);
   const byUrl = new Map(rows.map((r) => [r.url, r]));
   for (const id of Object.keys(content)) if (!rows.some((r) => r.id === id)) fail(`content/pages/${id}.json has no row in keyword-map.csv or site-pages.csv`);
 
@@ -802,7 +846,7 @@ export async function build() {
     const c = content[r.id];
     if (c) {
       if (!['draft', 'publish'].includes(c.status)) fail(`${r.id}: status must be draft or publish`);
-      r.status = c.status;
+      if (r.lang !== 'ur') r.status = c.status; // an Urdu page's status is its csv row
       if (c.template === 'lookup') r.type = 'lookup'; // data lookup (N2 error codes): tables + filter, no calculator
       r.h1 = c.h1 || r.h1;
       r.reviewed = c.reviewed || r.reviewed;
@@ -820,28 +864,40 @@ export async function build() {
       r.author = site.people[0].id;
     }
     if (!r.h1) r.h1 = r.primary_keyword ? r.primary_keyword.replace(/\b\w/g, (m) => m.toUpperCase()) : r.title.replace(/ \| .*$/, '');
-    // Parent = the pillar at the first path segment (e.g. /battery/ for /battery/x/).
+    // Parent = the pillar at the first path segment (e.g. /battery/ for /battery/x/). An Urdu page's parent is the
+    // Urdu hub (/ur/bill/), else the Urdu home, so WordPress can nest every Urdu page under /ur/.
     const seg = r.url.split('/').filter(Boolean);
-    r.parent = seg.length > 1 && byUrl.has(`/${seg[0]}/`) ? byUrl.get(`/${seg[0]}/`).id : null;
+    if (r.lang === 'ur') r.parent = r.url === UR_HOME ? null : seg.length > 2 && byUrl.has(`/ur/${seg[1]}/`) ? byUrl.get(`/ur/${seg[1]}/`).id : byUrl.get(UR_HOME)?.id || null;
+    else r.parent = seg.length > 1 && byUrl.has(`/${seg[0]}/`) ? byUrl.get(`/${seg[0]}/`).id : null;
   }
   const byId = new Map(rows.map((r) => [r.id, r]));
   for (const r of rows) {
     if (r.type === 'trust') r.live = r.status === 'publish';
     else if (r.type !== 'pillar') r.live = r.status === 'publish';
   }
-  for (const r of rows.filter((x) => x.type === 'pillar')) {
-    const children = rows.filter((x) => x.parent === r.id && x.live);
+  // Hubs nested deepest first: the Urdu home's children are Urdu hubs. Trust pages sit under the Urdu home in
+  // WordPress but are not its cards.
+  for (const r of rows.filter((x) => x.type === 'pillar').sort((a, b) => b.url.length - a.url.length)) {
+    const children = rows.filter((x) => x.parent === r.id && x.live && x.type !== 'trust');
     r.children = children.map((x) => x.id);
-    r.live = r.status === 'publish' || (r.status === 'auto' && children.length > 0) || (content[r.id]?.status === 'publish');
+    r.live = r.lang === 'ur' ? r.status === 'publish' && children.length > 0 : r.status === 'publish' || (r.status === 'auto' && children.length > 0) || (content[r.id]?.status === 'publish');
   }
   for (const r of rows) {
-    r.breadcrumb = [{ name: 'Home', url: '/' }];
-    if (r.parent && byId.get(r.parent).live) r.breadcrumb.push({ name: byId.get(r.parent).h1, url: byId.get(r.parent).url });
-    if (r.url !== '/') r.breadcrumb.push({ name: r.h1, url: r.url });
+    const home = r.lang === 'ur' ? { name: inp.ur.ui.Home, url: UR_HOME } : { name: 'Home', url: '/' };
+    r.breadcrumb = [home];
+    if (r.parent && byId.get(r.parent).live && byId.get(r.parent).url !== home.url) r.breadcrumb.push({ name: byId.get(r.parent).h1, url: byId.get(r.parent).url });
+    if (r.url !== home.url) r.breadcrumb.push({ name: r.h1, url: r.url });
+    // Next step and Related on an Urdu page go to the Urdu twin when it is live (or both are drafts), else the English page.
+    if (r.lang === 'ur') {
+      const to = (id) => urTarget(rows, id, r.live)?.id || id;
+      r.related = (r.related || []).map(to);
+      if (r.next) r.next = to(r.next);
+    }
   }
+  pairUp(rows);
 
   for (const r of rows.filter((x) => x.type === 'home')) {
-    r.cards = rows.filter((x) => x.type === 'pillar' && x.live).sort((a, b) => (a.nav_order ?? 99) - (b.nav_order ?? 99)).map((p) => ({ id: p.id, url: p.url, h1: p.h1, label: p.nav_label || (p.primary_keyword ? title(p.primary_keyword) : p.h1), meta: p.meta, children: p.children.map((cid) => ({ id: cid, url: byId.get(cid).url, h1: byId.get(cid).h1 })) }));
+    r.cards = rows.filter((x) => x.type === 'pillar' && x.live && !x.lang).sort((a, b) => (a.nav_order ?? 99) - (b.nav_order ?? 99)).map((p) => ({ id: p.id, url: p.url, h1: p.h1, label: p.nav_label || (p.primary_keyword ? title(p.primary_keyword) : p.h1), meta: p.meta, children: p.children.map((cid) => ({ id: cid, url: byId.get(cid).url, h1: byId.get(cid).h1 })) }));
   }
   const files = {};
   const ads = adsConfig(site, fail, rows, content);
@@ -863,7 +919,7 @@ export async function build() {
     let pageCtx = ctxBase;
     if (c) {
       const appliance = c.appliance ? inp.appliances.items.find((a) => a.id === c.appliance) : null;
-      pageCtx = { ...ctxBase, id: r.id, appliance, allRows: rows, built: builtById, results };
+      pageCtx = { ...ctxBase, id: r.id, row: r, lang: r.lang || 'en', appliance, allRows: rows, built: builtById, results };
       built = buildContent(c, pageCtx);
       builtById[r.id] = built;
       // Title or meta with an engine number (seo-rules.md 2): rendered from the page's own default result or dataset.
@@ -872,8 +928,9 @@ export async function build() {
       if (pageCtx.dataset) files[`generated/data/${pageCtx.dataset.csv_name}`] = pageCtx.dataset.csv;
     }
     if (r.type === 'trust') {
-      if (!inp.trustHtml[r.id]) fail(`trust page ${r.id} has no content/trust/${r.id}.html`);
-      built = { html: renderTrust(r.id, inp.trustHtml[r.id], { ...ctxBase, flags: { affiliates: Object.keys(affiliates).length > 0 } }) };
+      const html = r.lang === 'ur' ? inp.ur.trust[r.en] : inp.trustHtml[r.id];
+      if (!html) fail(`trust page ${r.id} has no content/trust/${r.id}.html`);
+      built = { html: renderTrust(r.id, html, { ...ctxBase, flags: { affiliates: Object.keys(affiliates).length > 0 } }) };
     }
     // modified = newest of the review date and the day the shown page last changed (WL-206); a hub also
     // changes when a page in it changes (WL-42). Sitemap lastmod, schema dateModified and IndexNow follow it.
@@ -881,7 +938,8 @@ export async function build() {
     // The error texts a page ships (tool.msg) are not page content, so new wording does not move every page's date.
     const sig = createHash('sha256').update(JSON.stringify({ ...shown, content: built?.tool ? { ...built, tool: { ...built.tool, msg: undefined } } : built, csv: pageCtx.dataset?.csv })).digest('hex').slice(0, 16);
     const kids = r.type === 'pillar' ? newest(...r.children.map((cid) => byId.get(cid).modified)) : undefined;
-    const changed = changedOn(prevDates[r.id], sig, r.reviewed || kids, today);
+    // A new Urdu page starts from the day it is written, not from its English page's review day.
+    const changed = changedOn(prevDates[r.id], sig, r.lang ? undefined : r.reviewed || kids, today);
     pageDates[r.id] = { hash: sig, date: changed };
     r.modified = newest(r.reviewed, changed, kids);
     const page = { ...r, content: built };
@@ -910,11 +968,14 @@ export async function build() {
       component_prices: { items: inp.data.component_prices.items.map(({ category, size, low, high, n_sources, export_capable, bank_v }) => ({ category, size, low, high, n_sources, ...(export_capable === false ? { export_capable } : {}), ...(bank_v ? { bank_v } : {}) })) },
       backup_prices: browserBackup(inp.data.backup_prices) },
     // lastmod: the same date as the page's schema dateModified, used for the sitemap <lastmod> (WL-84, WL-206).
-    pages: rows.map(({ id, type, url, h1, anchor, title, meta, status, live, parent, children, related, next, wave, modified }) => ({ id, type, url, h1, anchor, title, meta, status, live, parent, children, related, next, wave, lastmod: modified })),
+    pages: rows.map(({ id, type, url, h1, anchor, title, meta, status, live, parent, children, related, next, wave, modified, lang, alt }) => ({ id, type, url, h1, anchor, title, meta, status, live, parent, children, related, next, wave, lastmod: modified, ...(lang ? { lang } : {}), ...(alt ? { alt } : {}) })),
+    // Words the PHP prints around Urdu pages (headings, buttons, dates), from content/ur/ui.json.
+    ui_ur: inp.ur.ui,
     nav: rows.filter((r) => r.nav_label).sort((a, b) => a.nav_order - b.nav_order).map((r) => ({ id: r.id, label: r.nav_label, url: r.url })),
     website_schema: websiteSchema(site, pluginUrl),
   };
-  files[PAGE_DATES] = JSON.stringify(pageDates, null, 1) + '\n';
+  // A preview build keeps the stored page dates, so it cannot move the live pages' dates.
+  if (!opts.urLive) files[PAGE_DATES] = JSON.stringify(pageDates, null, 1) + '\n';
   files['generated/manifest.json'] = JSON.stringify(manifest, null, 1) + '\n';
   files['generated/llms.txt'] = llmsTxt(rows, { ...ctxBase, built: builtById });
   Object.assign(files, dist.files);
@@ -968,7 +1029,7 @@ function distFiles() {
 }
 
 async function main() {
-  const files = await build();
+  const files = await build({ urLive: process.argv.includes('--ur-preview') });
   const check = process.argv.includes('--check');
   const stale = [];
   for (const [p, body] of Object.entries(files)) {

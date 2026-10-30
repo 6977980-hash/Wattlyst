@@ -120,14 +120,14 @@ final class Wattlyst_Tools {
 	}
 
 	/**
-	 * Brand images (logo, icons, OG/Twitter) carry their file time, so a refreshed image reaches browsers and the
+	 * Brand images (logo, icons, OG/Twitter) and the Urdu font carry their file time, so a refreshed image reaches browsers and the
 	 * CDN at once instead of after the long image cache (audit WL-87). Other paths are returned as they are.
 	 */
 	public static function asset( string $rel ): string {
 		$rel  = ltrim( $rel, '/' );
 		$url  = WATTLYST_TOOLS_URL . $rel;
 		$file = WATTLYST_TOOLS_DIR . $rel;
-		return 0 === strpos( $rel, 'assets/brand/' ) && is_readable( $file ) ? $url . '?v=' . filemtime( $file ) : $url;
+		return ( 0 === strpos( $rel, 'assets/brand/' ) || 0 === strpos( $rel, 'assets/fonts/' ) ) && is_readable( $file ) ? $url . '?v=' . filemtime( $file ) : $url;
 	}
 
 	private static function read_json( string $rel ): ?array {

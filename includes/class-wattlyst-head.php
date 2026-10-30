@@ -29,6 +29,13 @@ final class Wattlyst_Head {
 		add_filter( 'generate_logo', array( $this, 'logo' ) );
 		add_filter( 'generate_logo_attributes', array( $this, 'logo_attributes' ) );
 		add_filter( 'generate_site_title_output', array( $this, 'site_title' ) );
+		add_filter( 'language_attributes', array( $this, 'lang' ) );
+	}
+
+	/** An Urdu page (/ur/...) is lang="ur" dir="rtl"; every other page keeps WordPress's own attributes. */
+	public function lang( $attrs ) {
+		$page = $this->current();
+		return $page && 'ur' === ( $page['lang'] ?? '' ) ? 'lang="ur" dir="rtl"' : $attrs;
 	}
 
 	/** Brand logo in the GeneratePress header until the owner sets a Custom Logo (the SVG holds the wordmark). */
@@ -117,8 +124,15 @@ final class Wattlyst_Head {
 		echo "\n<!-- Wattlyst SEO -->\n";
 		printf( '<meta name="description" content="%s">' . "\n", esc_attr( $page['meta'] ) );
 		printf( '<link rel="canonical" href="%s">' . "\n", esc_url( $url ) );
+		// hreflang (Urdu plan section 2): only when both pages are live (build `alt`), both ways, English as x-default.
+		if ( ! empty( $page['alt'] ) ) {
+			foreach ( array( 'en' => $page['alt']['en'], 'ur-PK' => $page['alt']['ur'], 'x-default' => $page['alt']['en'] ) as $lang => $path ) {
+				printf( '<link rel="alternate" hreflang="%s" href="%s">' . "\n", esc_attr( $lang ), esc_url( Wattlyst_Tools::link( (string) $path ) ) );
+			}
+		}
+		$ur = 'ur' === ( $page['lang'] ?? '' );
 		$og = array(
-			'og:locale'       => 'en_US',
+			'og:locale'       => $ur ? 'ur_PK' : 'en_US',
 			'og:type'         => $type,
 			'og:site_name'    => $site['brand'] ?? '',
 			'og:title'        => $page['title'],
@@ -147,7 +161,7 @@ final class Wattlyst_Head {
 			printf( '<meta name="%s" content="%s">' . "\n", esc_attr( $k ), esc_attr( $v ) );
 		}
 		$this->json_ld( $page['schema'] ?? null );
-		$this->styles( 'home' === $page['type'] );
+		$this->styles( 'home' === $page['type'], $ur );
 		echo Wattlyst_Ads::loader( $site, $page ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in loader()
 		if ( ! empty( $page['content']['tool'] ) ) {
 			$this->preload( $page['content']['tool'] );
@@ -164,15 +178,22 @@ final class Wattlyst_Head {
 
 	/** Small stylesheet inlined in the head of every front-end page (no extra render-blocking request). */
 	/** Inlined styles; the home page adds its own layout file (hero, planner columns, task cards), so other pages stay light. */
-	private function styles( bool $home = false ): void {
+	private function styles( bool $home = false, bool $ur = false ): void {
 		$files = array( 'wattlyst-css' => 'wattlyst.css' );
 		if ( $home ) {
 			$files['wattlyst-home-css'] = 'wattlyst-home.css';
 		}
+		// Urdu pages: the Nastaliq font and the right-to-left fixes, never on an English page (Urdu plan section 3).
+		$font = Wattlyst_Tools::asset( 'assets/fonts/noto-nastaliq-urdu.woff2' );
+		if ( $ur ) {
+			$files['wattlyst-ur-css'] = 'wattlyst-ur.css';
+			printf( '<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n", esc_url( $font ) );
+		}
 		foreach ( $files as $id => $file ) {
 			$css = WATTLYST_TOOLS_DIR . 'assets/css/' . $file;
 			if ( is_readable( $css ) ) {
-				echo '<style id="' . esc_attr( $id ) . '">' . wp_strip_all_tags( (string) file_get_contents( $css ) ) . "</style>\n";
+				// The font URL is absolute (inline CSS resolves a relative URL against the page), with its file time.
+				echo '<style id="' . esc_attr( $id ) . '">' . str_replace( '%FONT%', esc_url( $font ), wp_strip_all_tags( (string) file_get_contents( $css ) ) ) . "</style>\n";
 			}
 		}
 	}
