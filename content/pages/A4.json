@@ -78,7 +78,7 @@
    "unit": "A"
   }
  ],
- "answer": "A {{in.watts|int}} W load on a {{in.volts|int}} V single-phase supply draws about {{out.amps|2}} A at a power factor of {{out.pf|2}}. Amps = watts ÷ (volts × power factor). A pure heating load has a power factor of one, so a {{ex.1.in.watts|int}} W heater draws {{ex.1.out.amps|2}} A, while an AC or motor of the same watts draws more.",
+ "answer": "A {{in.watts|int}} W load on a {{in.volts|int}} V single-phase supply draws about {{out.amps|2}} A at a power factor of {{out.pf|2}}. Amps = watts ÷ (volts × power factor). A pure heating load has a power factor of one, so a {{table.5.in.watts|int}} W heater draws {{table.5.out.amps|2}} A, while an AC or motor of the same watts draws more.",
  "how": "{{in.watts}} W ÷ ({{in.volts}} V × {{out.pf|2}} power factor) = {{out.amps|2}} A. For three-phase the voltage is also multiplied by the square root of three. The power factor turns the real watts into the apparent power the supply must carry; a heater has a power factor of one, motors and ACs less.",
  "key_facts": [
   "On a {{in.volts|int}} V single-phase supply, amps = watts ÷ ({{in.volts|int}} × power factor); at a power factor of {{out.pf|2}}, {{in.watts|int}} W draws {{out.amps|2}} A.",
@@ -139,7 +139,7 @@
   {
    "inputs": {
     "watts": 2000,
-    "volts": 230,
+    "volts": 220,
     "pf": 1
    },
    "title": "A {{in.watts|int}} W heater or kettle at {{in.volts|int}} V",
@@ -238,8 +238,8 @@
    "a": "{{ex.0.in.watts|int}} W ÷ ({{ex.0.in.volts|int}} V × a power factor of one) = {{ex.0.out.amps|2}} A for a heating load such as an iron. For a motor or AC with a power factor of about {{d.pf_mixed|2}}, the current is about a quarter higher."
   },
   {
-   "q": "How many amps does a {{ex.1.in.watts|int}} W heater draw at {{ex.1.in.volts|int}} V?",
-   "a": "{{ex.1.out.amps|2}} A. A heater is a pure resistive load with a power factor of one, so the current is simply {{ex.1.in.watts|int}} W ÷ {{ex.1.in.volts|int}} V, and it draws that for as long as the element is on."
+   "q": "How many amps is {{ex.1.in.watts|int}} watts at {{ex.1.in.volts|int}} V?",
+   "a": "{{ex.1.out.amps|2}} A for a heating load such as a heater, kettle or steam iron: {{ex.1.in.watts|int}} W ÷ {{ex.1.in.volts|int}} V. On a {{table.5.in.volts|int}} V supply the same {{table.5.in.watts|int}} W draws {{table.5.out.amps|2}} A. A motor or AC of the same watts draws about a quarter more, because its power factor is below one."
   },
   {
    "q": "How many amps does an iron draw at {{in.volts|int}} V?",
@@ -258,8 +258,8 @@
    "a": "Yes. Choose the {{d.v_1ph_us|int}} V option for US and Canadian supplies. The same watts draw roughly twice the amps of a {{in.volts|int}} V supply, which is why appliances there need thicker cable and higher-rated breakers."
   },
   {
-   "q": "How many amps is {{ex.4.in.watts|int}} W on three-phase {{ex.4.in.volts|int}} V?",
-   "a": "{{ex.4.out.amps|2}} A per line at a power factor of {{ex.4.in.pf|2}}. Three-phase divides the load across three wires, so each carries far less than the same load would on a single phase."
+   "q": "{{in.volts|int}} volts is how many amps?",
+   "a": "Volts alone do not give amps: the current depends on the watts of what is switched on. At {{in.volts|int}} V every {{table.2.in.watts|int}} W of heating load draws {{table.2.out.amps|2}} A, and a {{table.4.in.watts|int}} W motor or AC load at a power factor of {{table.4.in.pf|1}} draws {{table.4.out.amps|2}} A. Amps = watts ÷ (volts × power factor)."
   },
   {
    "q": "Which wire and breaker do I need for these amps?",

@@ -415,6 +415,10 @@
    "a": "On its own, {{out.appliance_count|int}} inverter ACs of 1.5 ton ({{out.appliance_run_w|int}} W each running). Add fans, lights and a fridge and one AC is the practical limit, because the running load must stay under about {{out.max_running_w|int}} W."
   },
   {
+   "q": "How many ACs can a {{table.5.out.kva|1}} kVA generator run?",
+   "a": "{{table.5.out.appliance_count|int}} inverter ACs of 1.5 ton on their own: a {{table.5.out.kva|1}} kVA set gives {{table.5.out.capacity_w|int}} W and about {{table.5.out.max_running_w|int}} W of steady load. With fans, lights and a fridge running too fewer fit, so enter your whole list in the calculator. It runs {{ex.3.out.appliance_count|int}} non-inverter AC of 1.5 ton, because each compressor start needs about {{ex.3.out.appliance_start_w|int}} W."
+  },
+  {
    "q": "What is the 5 kVA generator load capacity in watts?",
    "a": "{{out.capacity_w|int}} W at {{out.pf|2}} power factor. Plan on about {{out.max_running_w|int}} W of continuous load and keep any motor start under {{out.max_start_w|int}} W in total."
   },

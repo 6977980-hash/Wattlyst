@@ -156,6 +156,14 @@
     "For one or two fans on grid power the difference per fan is a few hundred rupees a month: {{out.monthly_rs|rs}} against {{ex.0.out.monthly_rs|rs}} on the default schedule. For a house with four or more fans, long summers and loadshedding, DC fans pay back faster: four DC fans use about {{ex.2.out.monthly_units|1}} units a month against {{ex.1.out.monthly_units|1}} for four AC fans, and on a UPS or solar system the lower draw also means a smaller battery and inverter.",
     "Check the label for the full-speed watts before buying; a DC fan is only a saving if its full-speed draw is well below your old fan's."
    ]
+  },
+  {
+   "h2": "Fan kitne watt ka hota hai aur kitni bijli khata hai? (Roman Urdu)",
+   "p": [
+    "Fan kitne watt ka hota hai? Aam AC ceiling fan full speed par takreeban {{appliance.running_w|int}} watt ka hota hai; purane ya sastay fan {{appliance.running_w_range.1|int}} watt tak le lete hain. DC inverter fan takreeban {{a.ceiling-fan-dc-inverter.running_w|int}} watt ka hota hai. Apne fan ke label par likhe watt calculator mein daal dein.",
+    "Ceiling fan kitne unit leta hai? Ek ghante mein takreeban {{out.running_kw|3}} unit (watt ÷ hazaar). Roz {{appliance.typical_hours_per_day|int}} ghante chalne par din mein {{out.daily_kwh|2}} unit aur mahine mein takreeban {{out.monthly_units|1}} unit; DC fan mahine mein takreeban {{ex.0.out.monthly_units|1}} unit leta hai.",
+    "Fan kitni bijli khata hai rupay mein? {{out.tariff|rs2}} fi unit par ek AC fan ka mahine ka kharcha takreeban {{out.monthly_rs|rs}} aur DC fan ka takreeban {{ex.0.out.monthly_rs|rs}} hai. Ye sirf energy charge hai; fixed charge, tax aur slab ka farq bill mein alag aata hai."
+   ]
   }
  ],
  "examples": [
@@ -313,6 +321,10 @@
   {
    "q": "How many units does a ceiling fan use per hour in Pakistan?",
    "a": "About {{out.running_kw|3}} units per hour for a normal {{out.running_w|int}} W AC ceiling fan and about {{ex.0.out.running_kw|3}} units per hour for a {{ex.0.out.running_w|int}} W DC inverter fan. Divide the fan's watts by one thousand for your own fan."
+  },
+  {
+   "q": "How many watts does a ceiling fan use?",
+   "a": "About {{appliance.running_w|int}} W at full speed for a normal AC ceiling fan, with real fans from about {{appliance.running_w_range.0|int}} W to {{appliance.running_w_range.1|int}} W, and about {{a.ceiling-fan-dc-inverter.running_w|int}} W for a DC inverter fan. The watts on your fan's label give your own figure; divide them by one thousand for units per hour."
   },
   {
    "q": "How many units does a DC inverter fan use per hour?",

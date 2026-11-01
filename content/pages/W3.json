@@ -196,8 +196,9 @@
    ]
   },
   {
-   "h2": "What load can a {{ex.4.out.breaker_a|int}} A MCB take?",
+   "h2": "What load can a {{table.2.out.breaker_a|int}}, {{table.3.out.breaker_a|int}} or {{ex.4.out.breaker_a|int}} A MCB take?",
    "p": [
+    "On a {{table.2.out.volts|int}} V socket circuit a {{table.2.out.watts|int}} W load draws {{table.2.out.ib_a|1}} A and takes a {{table.2.out.breaker_a|int}} A MCB; {{table.3.out.watts|int}} W draws {{table.3.out.ib_a|1}} A and takes a {{table.3.out.breaker_a|int}} A MCB. The table below gives the steps in between, and the {{ex.4.out.breaker_a|int}} A case follows. The cable must match the breaker, so a bigger MCB on the same wire is never a way to carry more load.",
     "A socket circuit of {{ex.4.in.watts|int}} W at {{ex.4.out.volts|int}} V draws {{ex.4.out.ib_a|1}} A and takes a {{ex.4.out.breaker_a|int}} A type {{ex.4.out.curve|raw}} MCB; that is close to the most a {{ex.4.out.breaker_a|int}} A breaker should carry continuously. The cable has to be rated {{ex.4.out.min_cable_a|1}} A, so in {{ex.4.out.ambient_c|int}} °C air it needs {{ex.4.out.area_mm2|1}} mm² ({{ex.4.out.pk_size|raw}}), rated {{ex.4.out.ampacity_a|int}} A; any smaller cable loses too much of its rating in the heat. A {{ex.4.out.breaker_a|int}} A MCB is a common choice for a kitchen, a geyser-plus-sockets circuit or a small sub-main."
    ]
   },
@@ -317,6 +318,10 @@
   {
    "q": "What size MCB for a 1.5 ton AC?",
    "a": "{{ex.0.out.breaker_a|int}} A type {{ex.0.out.curve|raw}} on its own circuit with at least {{ex.0.out.area_mm2|1}} mm² ({{ex.0.out.pk_size|raw}}) copper cable, for both inverter and non-inverter 1.5 ton units."
+  },
+  {
+   "q": "How much load can a {{table.3.out.breaker_a|int}} A MCB take?",
+   "a": "About {{table.3.out.watts|int}} W of sockets or heaters on a {{table.3.out.volts|int}} V circuit: that load draws {{table.3.out.ib_a|1}} A and takes a {{table.3.out.breaker_a|int}} A type {{table.3.out.curve|raw}} MCB on {{table.3.out.area_mm2|1}} mm² ({{table.3.out.pk_size|raw}}) cable. A {{table.2.out.breaker_a|int}} A MCB suits about {{table.2.out.watts|int}} W and a {{ex.4.out.breaker_a|int}} A MCB about {{ex.4.in.watts|int}} W."
   },
   {
    "q": "What MCB for a {{ex.1.in.watts|int}} W geyser?",

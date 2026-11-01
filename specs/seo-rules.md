@@ -28,7 +28,8 @@ Rules marked [TEST] are enforced by `npm test`; the rest are checked in review b
   answer in the search result raises clicks). It is rendered at build from the page's default result or
   dataset, so it never disagrees with the page; the length rules apply to the rendered text, and the `_len`
   column is not checked for such a row because the number moves with the data. Use it only where the number
-  is the answer to the primary keyword (E5, D9, Bill Index, Solar Price Tracker).
+  is the answer to the primary keyword (E5, D9, Bill Index, Solar Price Tracker; H3, H4, C6, C7 from the
+  live Search Console queries, 1 Nov 2026).
 - URL: lowercase, hyphens, trailing slash, no dates, no stop-word padding, never changes after
   publish (if it must, 301 redirect and update internal links).
 

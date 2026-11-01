@@ -38,7 +38,7 @@
    "url": "/wiring/breaker-size-calculator/"
   }
  ],
- "modified": "2026-10-21",
+ "modified": "2026-11-01",
  "content": {
   "intro": "",
   "sections": [
@@ -72,8 +72,9 @@
     ]
    },
    {
-    "h2": "What load can a 32 A MCB take?",
+    "h2": "What load can a 16, 20 or 32 A MCB take?",
     "p": [
+     "On a 230 V socket circuit a 2,000 W load draws 10.9 A and takes a 16 A MCB; 3,000 W draws 16.3 A and takes a 20 A MCB. The table below gives the steps in between, and the 32 A case follows. The cable must match the breaker, so a bigger MCB on the same wire is never a way to carry more load.",
      "A socket circuit of 5,500 W at 230 V draws 29.9 A and takes a 32 A type C MCB; that is close to the most a 32 A breaker should carry continuously. The cable has to be rated 37.4 A, so in 45 °C air it needs 10 mm² (7/64, sold as 16 mm²), rated 45 A; any smaller cable loses too much of its rating in the heat. A 32 A MCB is a common choice for a kitchen, a geyser-plus-sockets circuit or a small sub-main."
     ]
    },
@@ -89,6 +90,10 @@
    {
     "q": "What size MCB for a 1.5 ton AC?",
     "a": "16 A type C on its own circuit with at least 2.5 mm² (7/29) copper cable, for both inverter and non-inverter 1.5 ton units."
+   },
+   {
+    "q": "How much load can a 20 A MCB take?",
+    "a": "About 3,000 W of sockets or heaters on a 230 V circuit: that load draws 16.3 A and takes a 20 A type C MCB on 4 mm² (7/36) cable. A 16 A MCB suits about 2,000 W and a 32 A MCB about 5,500 W."
    },
    {
     "q": "What MCB for a 3,000 W geyser?",
@@ -484,7 +489,7 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/wiring/breaker-size-calculator/#breadcrumb"
     },
-    "dateModified": "2026-10-21",
+    "dateModified": "2026-11-01",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }
@@ -547,6 +552,14 @@
       "acceptedAnswer": {
        "@type": "Answer",
        "text": "16 A type C on its own circuit with at least 2.5 mm² (7/29) copper cable, for both inverter and non-inverter 1.5 ton units."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "How much load can a 20 A MCB take?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "About 3,000 W of sockets or heaters on a 230 V circuit: that load draws 16.3 A and takes a 20 A type C MCB on 4 mm² (7/36) cable. A 16 A MCB suits about 2,000 W and a 32 A MCB about 5,500 W."
       }
      },
      {

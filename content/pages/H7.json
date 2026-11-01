@@ -155,6 +155,14 @@
    "p": [
     "An iron is a resistive load: a heating element with a thermostat. Its power factor is {{out.pf|1}}, so its watts equal its VA and the current is just watts divided by volts: {{out.running_w|int}} W ÷ {{out.volts|int}} V = {{out.amps|1}} A, and {{ex.4.out.running_w|int}} W ÷ {{out.volts|int}} V = {{ex.4.out.amps|1}} A. That current flows through the plug, the socket and the extension cord, which is why a thin extension cord gets warm under a large steam iron; plug the iron straight into a wall socket on a power circuit."
    ]
+  },
+  {
+   "h2": "Iron kitne watt ka hota hai aur kitne unit leta hai? (Roman Urdu)",
+   "p": [
+    "Iron kitna watt ka hota hai? Saada dry iron takreeban {{out.running_w|int}} watt ka hota hai aur steam iron {{ex.1.out.running_w|int}} se {{ex.4.out.running_w|int}} watt tak. Asal watt iron ke neeche ya plate par likhe hote hain.",
+    "Iron ek ghante mein kitne unit leta hai? {{out.running_w|int}} watt ka iron ek ghante mein {{out.running_kw|2}} unit aur {{ex.2.out.running_w|int}} watt ka steam iron {{ex.2.out.running_kw|2}} unit leta hai (watt ÷ hazaar). Thermostat element ko beech beech mein band karta hai, is liye asal mein thora kam lagta hai.",
+    "Roz aadha ghanta istri karne par {{out.running_w|int}} watt ka iron mahine mein takreeban {{out.monthly_units|1}} unit leta hai, yaani {{out.tariff|rs2}} fi unit par takreeban {{out.monthly_rs|rs}}. Aam ghar ka UPS iron nahi chala sakta, kyun ke iron ke watt UPS ki rating se zyada hote hain."
+   ]
   }
  ],
  "examples": [
@@ -308,8 +316,12 @@
  "safety": "An iron is a high-current heating appliance: use a socket and cable rated for it, never a damaged cord, and switch it off at the socket after use. Have a licensed electrician check any socket or extension that runs warm and any UPS or inverter connection to the house wiring.",
  "faq": [
   {
-   "q": "How many units does an iron use per hour?",
+   "q": "How many units does an iron consume in one hour?",
    "a": "A {{out.running_w|int}} W iron uses {{out.running_kw|2}} kWh per hour with the element on; a {{ex.1.out.running_w|int}} W iron {{ex.1.out.running_kw|2}} and a {{ex.2.out.running_w|int}} W steam iron {{ex.2.out.running_kw|2}}. The thermostat cuts the element part of the time, so an hour of ironing usually uses a little less."
+  },
+  {
+   "q": "What is the voltage and wattage of an electric iron?",
+   "a": "In Pakistan an iron runs on the normal {{out.volts|int}} V single-phase supply. A basic dry iron is rated about {{out.running_w|int}} W and steam irons {{ex.1.out.running_w|int}} W to {{ex.4.out.running_w|int}} W; the rating is printed on the iron's base or plug. At {{out.volts|int}} V a {{out.running_w|int}} W iron draws {{out.amps|1}} A."
   },
   {
    "q": "How many units does an iron use in a month?",
