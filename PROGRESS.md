@@ -1,6 +1,22 @@
 # Progress
 
-## Handoff for next phase (after Urdu version Phase U1, v0.9.0) — written by the "Add Urdu version of the site" thread, 2026-10-30 (PR #57, merged 30 Oct 2026)
+## Handoff for next phase (after the live GSC query fixes, v0.9.3) — written by the "Improve pages from live GSC queries" thread, 2026-11-01
+
+Owner approved items 1-4 of the live Search Console report (data 14-30 Oct 2026, only 17 days, so a direction and not a result) on 1 Nov 2026. Content and keyword-map only: no engine, data, PHP or JS change. The Urdu U1 handoff below and those under it still hold.
+
+**What is where**
+- Titles/metas (`specs/keyword-map.csv`): H3 ceiling fan, H4 fridge, C6 generator for 1.5 ton AC and C7 kVA generator now carry the page's own engine number as `{{placeholder}}` (seo-rules.md 2 lists them next to E5/D9); H7 iron title adds "Watts". Their `_len` columns hold the rendered length.
+- Content (`content/pages/`): Roman Urdu sections, each the last section and marked "(Roman Urdu)" in its H2, on H3, H4 and H7 (every number a placeholder; H4 lists "24 ghante" in `literal_numbers`). New or reworded FAQs answering the GSC queries: H3 fan watts, H4 non-inverter fridge watts, H7 iron voltage and watts, A4 2,000 W at 220 V and "230 volts is how many amps" (A4 example 2 is now 220 V; the answer takes the 230 V heater from table row 6), C6 1.5 ton AC load in kVA, C7 ACs on a 7.5 kVA set (table row 6), E3 maximum single-phase load, E5 1.5 ton AC units per hour, W3 16/20/32 A MCB load (section 4 H2 + FAQ, from table rows 3-4 and example 5).
+- Item 4 (new pages) needed none: the intents already have owner URLs in keyword-map.csv (E5 AC units, F2/F3/F8/F12 DISCO per unit rate, W3 MCB load), so those pages were extended instead (one intent = one URL).
+
+**Do not touch / watch**
+- FAQ cap is 8 per page (`tests/content.test.js`): A4, C6, C7, H3, H7, W3 and E5 are at 8 now, so a new FAQ there must replace one.
+- Roman Urdu text is not in the FAQ schema (sections only); keep it short and numbers as placeholders.
+
+**Open to-dos**
+- Re-check GSC around 1 Dec 2026 (28+ days of data) for CTR on H3, H4, C6, C7 and position on H7, A4, E3; report items 5 (hub vs tool pages, URL Inspection) and 6 (bill pages, links from the net billing guide) were left out by the owner's scope.
+
+## Earlier handoff (after Urdu version Phase U1, v0.9.0) — written by the "Add Urdu version of the site" thread, 2026-10-30 (PR #57, merged 30 Oct 2026)
 
 Owner approved the Urdu version (OW-8) and Phase U1 on 30 Oct 2026. Plan (phases U1-U4, owner questions): `/mnt/project-files/electricity-tool-hub/urdu/urdu-version-plan.md`. Each next phase needs the owner's go-ahead. All seven U1 Urdu pages went **live** on 30 Oct 2026 (owner: "urdu live krdo"; the owner reads the Urdu text after launch and sends corrections; Latin digits stay). New Urdu pages start as draft; `status` in `specs/keyword-map-ur.csv` is the switch.
 

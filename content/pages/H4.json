@@ -159,6 +159,14 @@
     "A non-inverter fridge compressor needs about {{appliance.starting_w|int}} W for a moment when it starts, about {{out.peak_amps|1}} A at {{out.volts|int}} V. A UPS or inverter must have a surge rating above the fridge's surge plus everything else running, and a generator must be sized for it too. An inverter fridge's soft start avoids most of that problem.",
     "Battery backup depends on the fridge's average draw, not its surge: about {{out.daily_kwh|2}} units over twenty-four hours is a small, steady load. The UPS backup time calculator in the next step works out the hours for your battery."
    ]
+  },
+  {
+   "h2": "Refrigerator 24 ghante mein kitna unit leta hai? (Roman Urdu)",
+   "p": [
+    "Aam non-inverter fridge 24 ghante mein takreeban {{out.daily_kwh|2}} unit leta hai aur inverter fridge takreeban {{ex.0.out.daily_kwh|2}} unit. Compressor poora din nahi chalta, sirf takreeban {{appliance.typical_hours_per_day|int}} ghante, is liye {{out.running_w|int}} watt ka fridge din mein {{out.daily_kwh|2}} unit banata hai.",
+    "Mahine mein non-inverter fridge takreeban {{out.monthly_units|1}} unit ({{out.monthly_rs|rs}}) aur inverter fridge {{ex.0.out.monthly_units|1}} unit ({{ex.0.out.monthly_rs|rs}}) leta hai, {{out.tariff|rs2}} fi unit par. Deep freezer din mein takreeban {{ex.1.out.daily_kwh|2}} unit leta hai.",
+    "Fridge kitne watt ka hota hai? Chalte waqt non-inverter fridge takreeban {{out.running_w|int}} watt aur inverter fridge {{ex.0.out.running_w|int}} watt leta hai. Start hote waqt non-inverter fridge ek lamhe ke liye takreeban {{out.peak_w|int}} watt kheenchta hai, is liye UPS ya generator is surge ke hisaab se lein."
+   ]
   }
  ],
  "examples": [
@@ -275,7 +283,7 @@
    "a": "About {{out.monthly_units|1}} units for a non-inverter fridge and {{ex.0.out.monthly_units|1}} for an inverter fridge in a {{out.days|2}}-day month, about {{out.monthly_rs|rs}} and {{ex.0.out.monthly_rs|rs}} at {{out.tariff|rs2}} per unit."
   },
   {
-   "q": "How many watts does a refrigerator use?",
+   "q": "How many watts does a non-inverter fridge use?",
    "a": "About {{appliance.running_w|int}} W while the compressor runs for a non-inverter fridge ({{appliance.running_w_range.0|int}} to {{appliance.running_w_range.1|int}} W by size and age) and about {{a.refrigerator-inverter.running_w|int}} W for an inverter fridge. Check the rating plate inside the door or on the back."
   },
   {
@@ -303,7 +311,7 @@
   "D8"
  ],
  "next": "B5",
- "literal_numbers": ["twenty-four"],
+ "literal_numbers": ["twenty-four", "24 ghante"],
  "sources": [
   {
    "label": "PowerHouse Express PK: 6kW solar load guide (deep freezer wattage)",

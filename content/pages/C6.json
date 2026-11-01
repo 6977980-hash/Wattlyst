@@ -241,6 +241,10 @@
    "a": "Yes for an inverter AC: it needs {{ex.0.out.standard_kva|1}} kVA alone and {{out.standard_kva|1}} kVA with {{in.other_w|int}} W of fans and lights, so a {{d.standard_generator_kva.3|int}} kVA set has room to spare. No for a 1.5 ton non-inverter AC: its {{ex.1.out.ac_start_w|int}} W compressor surge needs {{ex.1.out.standard_kva|1}} kVA."
   },
   {
+   "q": "What is the load of a 1.5 ton AC in kVA?",
+   "a": "A 1.5 ton inverter AC runs at about {{ex.0.out.ac_run_w|int}} W and draws at most {{ex.0.out.peak_w|int}} W, which at the generator power factor of {{ex.0.out.pf|1}} is {{ex.0.out.recommended_kva|up2}} kVA: a {{ex.0.out.standard_kva|1}} kVA set runs it on its own. A 1.5 ton non-inverter AC starts at {{ex.1.out.ac_start_w|int}} W, so with {{ex.1.in.other_w|int}} W of fans and lights it needs {{ex.1.out.standard_kva|1}} kVA."
+  },
+  {
    "q": "What size generator do I need for a 1 ton AC?",
    "a": "A 1 ton inverter AC with {{in.other_w|int}} W of fans and lights runs from a {{d.standard_generator_kva.0|1}} kVA generator (see the table). A 1 ton non-inverter AC with the same other load starts at {{ex.3.out.ac_start_w|int}} W and needs a {{ex.3.out.standard_kva|1}} kVA generator."
   },
