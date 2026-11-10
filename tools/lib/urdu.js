@@ -48,7 +48,7 @@ export function urTarget(rows, id, fromLive) {
 export function urContent(en, ur, id, fail) {
   const need = (k) => { if (ur[k] === undefined) fail(`content/ur/pages/${id}.json: missing ${k}`); return ur[k]; };
   if (!en) return { ...ur, id, status: 'publish' };
-  const out = { ...en, id, status: 'publish', h1: need('h1'), anchor: ur.anchor, answer: ur.answer ?? '', intro: ur.intro ?? '', key_facts: ur.key_facts || [], formula: ur.formula, sections: ur.sections || [], mistakes: ur.mistakes || [], safety: ur.safety ?? '', faq: ur.faq || [], literal_numbers: [...(en.literal_numbers || []), ...(ur.literal_numbers || [])] };
+  const out = { ...en, id, status: 'publish', h1: need('h1'), anchor: ur.anchor, answer: ur.answer ?? '', quick: ur.quick, intro: ur.intro ?? '', key_facts: ur.key_facts || [], formula: ur.formula, sections: ur.sections || [], mistakes: ur.mistakes || [], safety: ur.safety ?? '', faq: ur.faq || [], literal_numbers: [...(en.literal_numbers || []), ...(ur.literal_numbers || [])] };
   delete out.how_ur; // the Roman Urdu toggle belongs to the English page
   if (en.calc) {
     out.submit = need('submit');

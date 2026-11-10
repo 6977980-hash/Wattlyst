@@ -172,6 +172,7 @@
   }
  ],
  "answer": "A {{out.kva|1}} kVA generator gives {{out.capacity_w|int}} W at {{out.pf|2}} power factor: about {{out.max_running_w|int}} W of continuous running load and {{out.max_start_w|int}} W for the moment a motor starts. That runs {{out.appliance_count|int}} inverter ACs of 1.5 ton on their own, or one 1.5 ton inverter AC with fans, lights, a fridge and a TV ({{out.running_w|int}} W). Usable watts = kVA × 1,000 × power factor.",
+ "quick": "A {{out.kva|1}} kVA generator carries about {{out.max_running_w|int}} W of steady load: {{out.appliance_count|int}} inverter ACs of 1.5 ton on their own, or one inverter AC with fans, lights, a fridge and a TV. A 1.5 ton non-inverter AC needs {{ex.3.out.kva|1}} kVA to start.",
  "how": "{{out.kva|1}} kVA × 1,000 × {{out.pf|2}} power factor = {{out.capacity_w|int}} W. Running load may use {{out.capacity_w|int}} W ÷ {{out.margin|2}} margin = {{out.max_running_w|int}} W; a starting surge may reach the full {{out.max_start_w|int}} W. Your list runs at {{out.running_w|int}} W ({{out.load_pct|int}}% of the running capacity, {{out.spare_running_w|int}} W spare) and peaks at {{out.peak_w|int}} W when its largest motor starts. The {{out.appliance_name|raw}} runs at {{out.appliance_run_w|int}} W and starts at {{out.appliance_start_w|int}} W, so this generator runs {{out.appliance_count|int}} of them: all running and one starting must both fit.",
  "key_facts": [
   "A generator's usable power in watts = nameplate kVA × 1,000 × power factor; at the usual {{d.pf_generator|2}} a {{d.standard_generator_kva.3|1}} kVA set gives {{out.capacity_w|int}} W, a {{d.standard_generator_kva.1|1}} kVA set {{ex.1.out.capacity_w|int}} W and a {{d.standard_generator_kva.5|1}} kVA set {{ex.3.out.capacity_w|int}} W.",
@@ -194,7 +195,8 @@
    "h2": "What can a 5 kVA generator run at the same time?",
    "p": [
     "A {{out.kva|1}} kVA generator has {{out.capacity_w|int}} W to give. Keep the steady load under {{out.max_running_w|int}} W so the engine is not working flat out, and keep the moment of the largest motor start under {{out.max_start_w|int}} W. The default list, four fans, ten LED bulbs, an inverter fridge, a TV and a 1.5 ton inverter AC, runs at {{out.running_w|int}} W and peaks at {{out.peak_w|int}} W, so it fits with {{out.spare_running_w|int}} W of running load to spare.",
-    "That spare room is enough for an iron or a microwave for a few minutes, but not for a second inverter AC with everything else on. On its own the generator runs {{out.appliance_count|int}} inverter ACs of 1.5 ton; with the fans, fridge and lights running as well, one is the practical limit. Edit the list above to test your own home."
+    "That spare room is enough for an iron or a microwave for a few minutes, but not for a second inverter AC with everything else on. On its own the generator runs {{out.appliance_count|int}} inverter ACs of 1.5 ton; with the fans, fridge and lights running as well, one is the practical limit. Edit the list above to test your own home.",
+    "To add up your own list with the starting watts of each appliance, use the [[C2|generator wattage calculator]]."
    ]
   },
   {
@@ -419,10 +421,6 @@
    "a": "{{table.5.out.appliance_count|int}} inverter ACs of 1.5 ton on their own: a {{table.5.out.kva|1}} kVA set gives {{table.5.out.capacity_w|int}} W and about {{table.5.out.max_running_w|int}} W of steady load. With fans, lights and a fridge running too fewer fit, so enter your whole list in the calculator. It runs {{ex.3.out.appliance_count|int}} non-inverter AC of 1.5 ton, because each compressor start needs about {{ex.3.out.appliance_start_w|int}} W."
   },
   {
-   "q": "What is the 5 kVA generator load capacity in watts?",
-   "a": "{{out.capacity_w|int}} W at {{out.pf|2}} power factor. Plan on about {{out.max_running_w|int}} W of continuous load and keep any motor start under {{out.max_start_w|int}} W in total."
-  },
-  {
    "q": "Can a 2.5 kVA generator run an AC?",
    "a": "A 1 ton inverter AC, yes: with two fans and six bulbs the load is {{ex.0.out.running_w|int}} W against a running limit of {{ex.0.out.max_running_w|int}} W. No non-inverter AC fits, because even a 1 ton unit starts at about {{a.ac-split-1ton-non-inverter.starting_w|int}} W, more than the {{ex.0.out.capacity_w|int}} W capacity."
   },
@@ -431,8 +429,12 @@
    "a": "A {{table.4.out.kva|1}} kVA set gives {{table.4.out.capacity_w|int}} W and about {{table.4.out.max_running_w|int}} W of steady load, enough for the running draw of a 1.5 ton non-inverter AC with fans and lights ({{ex.3.out.running_w|int}} W) but not for its start, which peaks at {{ex.3.out.peak_w|int}} W. A {{ex.3.out.kva|1}} kVA set ({{ex.3.out.capacity_w|int}} W) starts it; with a non-inverter fridge also running the peak becomes {{ex.2.out.peak_w|int}} W, so stagger the starts or choose {{ex.4.out.kva|1}} kVA."
   },
   {
-   "q": "Why does my generator trip when the AC starts even though the watts add up?",
-   "a": "Because the start surge, not the running watts, is what the generator must deliver for that second. A non-inverter 1.5 ton AC needs about {{a.ac-split-1-5ton-non-inverter.starting_w|int}} W to start; if that plus everything already running is above the capacity the voltage collapses and the breaker opens. Start the AC first with other loads off, or use an inverter AC."
+   "q": "{{out.kva|1}} kVA generator par kya kya chal sakta hai?",
+   "a": "{{out.kva|1}} kVA generator taqreeban {{out.max_running_w|int}} W ka lagataar load uthata hai: akele {{out.appliance_count|int}} inverter AC (1.5 ton), ya ek inverter AC ke saath pankhe, lights, fridge aur TV ({{out.running_w|int}} W)."
+  },
+  {
+   "q": "Non-inverter AC ke liye kitne kVA ka generator chahiye?",
+   "a": "1.5 ton non-inverter AC start par taqreeban {{a.ac-split-1-5ton-non-inverter.starting_w|int}} W leta hai, is liye pankhon aur lights ke saath {{ex.3.out.kva|1}} kVA ka generator chahiye. {{out.kva|1}} kVA ka set is ka start nahi utha sakta."
   }
  ],
  "related": [

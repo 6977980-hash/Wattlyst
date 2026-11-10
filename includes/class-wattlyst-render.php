@@ -233,7 +233,7 @@ final class Wattlyst_Render {
 		if ( 'home' === $type ) {
 			return $this->home_hero( (string) $answer );
 		}
-		return '<header class="wl-hero">' . $crumb . '<h1 class="wl-h1">' . esc_html( $this->page['h1'] ) . '</h1>' . $this->answer( (string) $answer ) . $byline . $this->lang_link() . '</header>';
+		return '<header class="wl-hero">' . $crumb . '<h1 class="wl-h1">' . esc_html( $this->page['h1'] ) . '</h1>' . $this->quick() . $this->answer( (string) $answer ) . $byline . $this->lang_link() . '</header>';
 	}
 
 	/**
@@ -283,6 +283,12 @@ final class Wattlyst_Render {
 
 	private static function count_label( int $n, string $kind ): string {
 		return $n . ' ' . $kind . ( 1 === $n ? '' : 's' );
+	}
+
+	/** Two-line Quick answer above the long answer (content `quick`, GSC audit 11 Nov 2026 #5); the numbers are the build's engine text. */
+	private function quick(): string {
+		$text = (string) ( $this->c['quick'] ?? '' );
+		return '' === $text ? '' : '<p class="wl-quick"><strong>' . esc_html( $this->t( 'Quick answer:' ) ) . '</strong> ' . esc_html( $text ) . '</p>';
 	}
 
 	private function answer( string $text ): string {

@@ -4,8 +4,8 @@
  "silo": "E",
  "url": "/load/load-before-adding-ac/",
  "h1": "Home Load Calculator Before Adding an AC",
- "title": "Can My Home Handle Another AC? Load Calculator | Wattlyst",
- "meta": "Check your load and meter before adding a 1 or 1.5 ton AC. Shows new total amps, the sanctioned load you need and the MCB for the AC's own circuit.",
+ "title": "Can My Meter Take Another AC? 1.5 Ton: 1,450 W | Wattlyst",
+ "meta": "A 1.5 ton inverter AC adds 1,450 W: a 1,500 W home goes to 16 A and needs 2 kW sanctioned load. Home load calculator before adding an AC.",
  "primary_keyword": "home load calculator before adding ac",
  "wave": 1,
  "status": "publish",
@@ -36,7 +36,7 @@
    "url": "/load/load-before-adding-ac/"
   }
  ],
- "modified": "2026-10-21",
+ "modified": "2026-11-10",
  "content": {
   "intro": "",
   "sections": [
@@ -109,8 +109,8 @@
     "a": "A Split AC 1.5 ton inverter alone is 1,450 W running, already above 1 kW, so no. A Split AC 1 ton inverter at 900 W leaves almost nothing for fans and lights. Apply for a higher sanctioned load first."
    },
    {
-    "q": "What size breaker and wire does the AC circuit need?",
-    "a": "A Split AC 1.5 ton inverter is designed at 1,900 W, its maximum input, which is 9.2 A; with the motor margin that needs a 16 A type C MCB on 2.5 mm² (7/29) copper cable. The AC wire size page uses the same rule and also checks your cable length."
+    "q": "What size breaker and wire does the AC circuit need, and does the main breaker change?",
+    "a": "A Split AC 1.5 ton inverter is designed at 1,900 W, its maximum input, which is 9.2 A; with the motor margin that needs a 16 A type C MCB on 2.5 mm² (7/29) copper cable. The AC wire size page uses the same rule and also checks your cable length. The main breaker only needs to change if the new current is close to its rating: the default home draws 16 A with the AC on and 18.5 A at full speed, which an electrician should check against the main breaker and service cable."
    },
    {
     "q": "Will adding an AC change my tariff slab?",
@@ -123,8 +123,12 @@
     ]
    },
    {
-    "q": "Does the main breaker need to change for the new AC?",
-    "a": "Only if the new current is close to its rating: the default home draws 16 A with the AC on and 18.5 A at full speed. An electrician should confirm the main breaker and service cable rating before the AC is connected."
+    "q": "Kya mera meter ek aur AC utha lega?",
+    "a": "1,500 W wale ghar mein Split AC 1.5 ton inverter lagane se load 2,950 W aur current 16 A ho jata hai, jis ke liye 2 kW sanctioned load chahiye. Bill par likha sanctioned load is se kam ho to pehle DISCO se load barhwayein."
+   },
+   {
+    "q": "Do AC ke liye kitna sanctioned load chahiye?",
+    "a": "Do 1.5 ton inverter AC aur aam ghar ke load ke saath taqreeban 4,400 W connected load aur 2.64 kW expected demand banti hai, is liye kam az kam 3 kW sanctioned load chahiye."
    }
   ],
   "key_facts": [
@@ -468,6 +472,7 @@
    ]
   },
   "answer": "Adding a Split AC 1.5 ton inverter (1,450 W running) to a home with 1,500 W gives a new total of 2,950 W, or 16 A at 230 V. Not everything runs at once, so the expected demand is 2.95 kW × 0.6 = 1.77 kW, which needs a 2 kW sanctioned load: this home on 2 kW is within the sanctioned load. New total = current watts + the AC's running watts.",
+  "quick": "Adding a Split AC 1.5 ton inverter to a home already using 1,500 W takes it to 16 A and needs a 2 kW sanctioned load. The AC's own circuit needs a 16 A MCB.",
   "formula": {
    "text": "P_new = P_now + P_ac; I = P_new ÷ (V × PF); sanctioned kW needed = ceil(P_new ÷ 1000 × diversity)",
    "lines": [
@@ -511,8 +516,8 @@
     "@type": "WebPage",
     "@id": "https://wattlyst.com/load/load-before-adding-ac/#webpage",
     "url": "https://wattlyst.com/load/load-before-adding-ac/",
-    "name": "Can My Home Handle Another AC? Load Calculator | Wattlyst",
-    "description": "Check your load and meter before adding a 1 or 1.5 ton AC. Shows new total amps, the sanctioned load you need and the MCB for the AC's own circuit.",
+    "name": "Can My Meter Take Another AC? 1.5 Ton: 1,450 W | Wattlyst",
+    "description": "A 1.5 ton inverter AC adds 1,450 W: a 1,500 W home goes to 16 A and needs 2 kW sanctioned load. Home load calculator before adding an AC.",
     "inLanguage": "en",
     "isPartOf": {
      "@id": "https://wattlyst.com/#website"
@@ -520,7 +525,7 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/load/load-before-adding-ac/#breadcrumb"
     },
-    "dateModified": "2026-10-21",
+    "dateModified": "2026-11-10",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }
@@ -530,7 +535,7 @@
     "@id": "https://wattlyst.com/load/load-before-adding-ac/#app",
     "name": "Home Load Calculator Before Adding an AC",
     "url": "https://wattlyst.com/load/load-before-adding-ac/",
-    "description": "Check your load and meter before adding a 1 or 1.5 ton AC. Shows new total amps, the sanctioned load you need and the MCB for the AC's own circuit.",
+    "description": "A 1.5 ton inverter AC adds 1,450 W: a 1,500 W home goes to 16 A and needs 2 kW sanctioned load. Home load calculator before adding an AC.",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Any",
     "browserRequirements": "Requires JavaScript for live results",
@@ -611,10 +616,10 @@
      },
      {
       "@type": "Question",
-      "name": "What size breaker and wire does the AC circuit need?",
+      "name": "What size breaker and wire does the AC circuit need, and does the main breaker change?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "A Split AC 1.5 ton inverter is designed at 1,900 W, its maximum input, which is 9.2 A; with the motor margin that needs a 16 A type C MCB on 2.5 mm² (7/29) copper cable. The AC wire size page uses the same rule and also checks your cable length."
+       "text": "A Split AC 1.5 ton inverter is designed at 1,900 W, its maximum input, which is 9.2 A; with the motor margin that needs a 16 A type C MCB on 2.5 mm² (7/29) copper cable. The AC wire size page uses the same rule and also checks your cable length. The main breaker only needs to change if the new current is close to its rating: the default home draws 16 A with the AC on and 18.5 A at full speed, which an electrician should check against the main breaker and service cable."
       }
      },
      {
@@ -627,10 +632,18 @@
      },
      {
       "@type": "Question",
-      "name": "Does the main breaker need to change for the new AC?",
+      "name": "Kya mera meter ek aur AC utha lega?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Only if the new current is close to its rating: the default home draws 16 A with the AC on and 18.5 A at full speed. An electrician should confirm the main breaker and service cable rating before the AC is connected."
+       "text": "1,500 W wale ghar mein Split AC 1.5 ton inverter lagane se load 2,950 W aur current 16 A ho jata hai, jis ke liye 2 kW sanctioned load chahiye. Bill par likha sanctioned load is se kam ho to pehle DISCO se load barhwayein."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Do AC ke liye kitna sanctioned load chahiye?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Do 1.5 ton inverter AC aur aam ghar ke load ke saath taqreeban 4,400 W connected load aur 2.64 kW expected demand banti hai, is liye kam az kam 3 kW sanctioned load chahiye."
       }
      }
     ]

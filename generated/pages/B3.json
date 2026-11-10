@@ -4,8 +4,8 @@
  "silo": "B",
  "url": "/battery/200ah-battery-backup-time-calculator/",
  "h1": "200Ah Battery Backup Time Calculator",
- "title": "200Ah Battery Backup Time Calculator | Wattlyst",
- "meta": "See how many hours a 200Ah battery runs fans, lights, a fridge or a PC. Tubular and lithium, 12V or 24V, with a ready backup time table.",
+ "title": "200Ah Battery Backup Time: 3 h 8 min at 300 W | Wattlyst",
+ "meta": "A 200Ah 12V tubular battery runs a 300 W fan, lights and TV for about 3 h 8 min. Backup time calculator for any load, tubular or lithium, 12V or 24V.",
  "primary_keyword": "200ah battery backup time calculator",
  "wave": 1,
  "status": "publish",
@@ -36,7 +36,7 @@
    "url": "/battery/200ah-battery-backup-time-calculator/"
   }
  ],
- "modified": "2026-10-21",
+ "modified": "2026-11-10",
  "content": {
   "intro": "",
   "sections": [
@@ -51,14 +51,33 @@
     "h2": "150 Ah battery backup time",
     "p": [
      "A 150 Ah tubular battery at 12 V holds about 900 Wh of usable energy through a UPS. That is about 3 h 23 min at 200 W (two fans and lights); at 300 W with a TV added it drops to about three quarters of the 200 Ah figure of 3 h 8 min. The 150 Ah rows in the chart give the exact hours for each load.",
-     "If a 150 Ah battery is not enough, a second battery in series on a 24 V UPS doubles the energy, but you must change the bank voltage to 24 V in the calculator rather than entering the Ah twice."
+     "If a 150 Ah battery is not enough, a second battery in series on a 24 V UPS doubles the energy, but you must change the bank voltage to 24 V in the calculator rather than entering the Ah twice.",
+     "To join batteries safely, the battery series and parallel calculator draws the wiring, and for solar backup through cloudy days the battery autonomy calculator sizes the bank. If the UPS or inverter beeps and shows a code, look it up in the inverter error code list."
+    ],
+    "l": [
+     [],
+     [],
+     [
+      {
+       "t": "battery series and parallel calculator",
+       "u": "/troubleshoot/battery-series-parallel-calculator/"
+      },
+      {
+       "t": "battery autonomy calculator",
+       "u": "/solar/solar-autonomy-calculator/"
+      },
+      {
+       "t": "inverter error code list",
+       "u": "/troubleshoot/inverter-error-codes/"
+      }
+     ]
     ]
    }
   ],
   "faq": [
    {
-    "q": "What is the 200 Ah battery backup time for one fan?",
-    "a": "About 9 h 40 min for one ceiling fan of about 80 W on a 12 V tubular battery through a UPS. An inverter fan or a DC fan draws less and runs longer."
+    "q": "What is the 200 Ah battery backup time for one fan, or two fans and lights?",
+    "a": "About 9 h 40 min for one ceiling fan of about 80 W and about 4 h 31 min for two fans and lights (200 W) on a 12 V tubular battery through a UPS, which covers an evening of loadshedding. An inverter fan or a DC fan draws less and runs longer."
    },
    {
     "q": "A 200 Ah battery gives how many hours?",
@@ -77,16 +96,16 @@
     "a": "Only for about 59 min, and less in practice because of the fast-discharge drop. The UPS must also be rated for 1,000 W or more; a typical home UPS of about a kVA cannot deliver it."
    },
    {
-    "q": "Is there an inverter battery 200 Ah backup chart?",
-    "a": "Yes, the chart above lists one fan, two fans with lights, fan with lights and TV, fridge with fans and a 1,000 W load for 200 Ah and 150 Ah tubular batteries. Change the inputs for any other combination."
-   },
-   {
-    "q": "How long does a 200 Ah battery run two fans and lights?",
-    "a": "About 4 h 31 min for a 200 W load on a 12 V tubular battery, which covers an evening of loadshedding with margin to spare."
-   },
-   {
     "q": "What is the backup time of a 150 Ah battery?",
     "a": "About 3 h 23 min for two fans and lights (200 W), from about 900 Wh usable. For a fan, lights and TV expect three quarters of the 3 h 8 min that a 200 Ah battery gives."
+   },
+   {
+    "q": "200 Ah battery kitne ghante chalti hai?",
+    "a": "12 V ki 200 Ah tubular battery 300 W (pankha, lights aur TV) par taqreeban 3 h 8 min chalti hai, aur sirf ek pankhe (80 W) par taqreeban 9 h 40 min. Load jitna zyada ho, backup utna kam."
+   },
+   {
+    "q": "Lithium 200 Ah battery ka backup kitna hai?",
+    "a": "12.8 V ki LiFePO4 battery 300 W par taqreeban 6 h deti hai, tubular se taqreeban dugna, kyun ke lithium apni capacity ka 90% istemal kar sakti hai."
    }
   ],
   "key_facts": [
@@ -361,6 +380,7 @@
    ]
   },
   "answer": "A 200 Ah, 12 V tubular battery gives about 3 h 8 min of backup for a 300 W load (a fan, lights and a TV) through a home UPS, using the safe 50% of its capacity. Backup hours = Ah × volts × usable depth of discharge ÷ (load watts ÷ inverter efficiency + the inverter's idle draw); the chart below shows common loads.",
+  "quick": "A 200 Ah, 12 V tubular battery runs a 300 W fan, lights and TV for about 3 h 8 min, or one ceiling fan for about 9 h 40 min. Lithium of the same Ah gives about 6 h at 300 W.",
   "formula": {
    "text": "t = (Ah × V × DoD) ÷ (P ÷ η + P_idle)",
    "lines": [
@@ -406,8 +426,8 @@
     "@type": "WebPage",
     "@id": "https://wattlyst.com/battery/200ah-battery-backup-time-calculator/#webpage",
     "url": "https://wattlyst.com/battery/200ah-battery-backup-time-calculator/",
-    "name": "200Ah Battery Backup Time Calculator | Wattlyst",
-    "description": "See how many hours a 200Ah battery runs fans, lights, a fridge or a PC. Tubular and lithium, 12V or 24V, with a ready backup time table.",
+    "name": "200Ah Battery Backup Time: 3 h 8 min at 300 W | Wattlyst",
+    "description": "A 200Ah 12V tubular battery runs a 300 W fan, lights and TV for about 3 h 8 min. Backup time calculator for any load, tubular or lithium, 12V or 24V.",
     "inLanguage": "en",
     "isPartOf": {
      "@id": "https://wattlyst.com/#website"
@@ -415,7 +435,7 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/battery/200ah-battery-backup-time-calculator/#breadcrumb"
     },
-    "dateModified": "2026-10-21",
+    "dateModified": "2026-11-10",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }
@@ -425,7 +445,7 @@
     "@id": "https://wattlyst.com/battery/200ah-battery-backup-time-calculator/#app",
     "name": "200Ah Battery Backup Time Calculator",
     "url": "https://wattlyst.com/battery/200ah-battery-backup-time-calculator/",
-    "description": "See how many hours a 200Ah battery runs fans, lights, a fridge or a PC. Tubular and lithium, 12V or 24V, with a ready backup time table.",
+    "description": "A 200Ah 12V tubular battery runs a 300 W fan, lights and TV for about 3 h 8 min. Backup time calculator for any load, tubular or lithium, 12V or 24V.",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Any",
     "browserRequirements": "Requires JavaScript for live results",
@@ -474,10 +494,10 @@
     "mainEntity": [
      {
       "@type": "Question",
-      "name": "What is the 200 Ah battery backup time for one fan?",
+      "name": "What is the 200 Ah battery backup time for one fan, or two fans and lights?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "About 9 h 40 min for one ceiling fan of about 80 W on a 12 V tubular battery through a UPS. An inverter fan or a DC fan draws less and runs longer."
+       "text": "About 9 h 40 min for one ceiling fan of about 80 W and about 4 h 31 min for two fans and lights (200 W) on a 12 V tubular battery through a UPS, which covers an evening of loadshedding. An inverter fan or a DC fan draws less and runs longer."
       }
      },
      {
@@ -514,26 +534,26 @@
      },
      {
       "@type": "Question",
-      "name": "Is there an inverter battery 200 Ah backup chart?",
-      "acceptedAnswer": {
-       "@type": "Answer",
-       "text": "Yes, the chart above lists one fan, two fans with lights, fan with lights and TV, fridge with fans and a 1,000 W load for 200 Ah and 150 Ah tubular batteries. Change the inputs for any other combination."
-      }
-     },
-     {
-      "@type": "Question",
-      "name": "How long does a 200 Ah battery run two fans and lights?",
-      "acceptedAnswer": {
-       "@type": "Answer",
-       "text": "About 4 h 31 min for a 200 W load on a 12 V tubular battery, which covers an evening of loadshedding with margin to spare."
-      }
-     },
-     {
-      "@type": "Question",
       "name": "What is the backup time of a 150 Ah battery?",
       "acceptedAnswer": {
        "@type": "Answer",
        "text": "About 3 h 23 min for two fans and lights (200 W), from about 900 Wh usable. For a fan, lights and TV expect three quarters of the 3 h 8 min that a 200 Ah battery gives."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "200 Ah battery kitne ghante chalti hai?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "12 V ki 200 Ah tubular battery 300 W (pankha, lights aur TV) par taqreeban 3 h 8 min chalti hai, aur sirf ek pankhe (80 W) par taqreeban 9 h 40 min. Load jitna zyada ho, backup utna kam."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Lithium 200 Ah battery ka backup kitna hai?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "12.8 V ki LiFePO4 battery 300 W par taqreeban 6 h deti hai, tubular se taqreeban dugna, kyun ke lithium apni capacity ka 90% istemal kar sakti hai."
       }
      }
     ]

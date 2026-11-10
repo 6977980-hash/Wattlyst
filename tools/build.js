@@ -383,6 +383,8 @@ function buildContent(c, ctx) {
   if (c.calc === 'generator_fuel') out.sources = [...out.sources, ...fuelSources(ctx)];
   if (c.calc === 'backup_compare') out.sources = [...out.sources, ...backupSources(ctx)];
   out.answer = text(ctx, c.answer, scope, 'answer');
+  // Two-line Quick answer above the long answer on pages that already sit on page 1 (GSC audit 11 Nov 2026 #5).
+  if (c.quick) out.quick = text(ctx, c.quick, scope, 'quick answer'); // only where set, so other pages (and their dates) do not change
   out.intro = text(ctx, c.intro, scope, 'intro');
   // A hub may repeat a key fact of one of its pages ({ "from": "B1", "n": 0 }), so the number is that page's engine result (WL-142).
   out.key_facts = (c.key_facts || []).map((k, n) => {

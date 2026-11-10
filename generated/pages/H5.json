@@ -4,8 +4,8 @@
  "silo": "H",
  "url": "/appliances/water-motor-1hp/",
  "h1": "Water Motor 1 HP: Watts, Units per Hour and Starting Surge",
- "title": "1 HP Water Motor: Watts, Units & Starting Surge | Wattlyst",
- "meta": "Watts, units per hour and starting surge of a 0.5 to 1.5 HP water motor, and whether your UPS, inverter or generator can start it.",
+ "title": "1 HP Water Motor: 932 W, 0.93 Units per Hour | Wattlyst",
+ "meta": "A 1 hp water motor uses about 932 W, 0.93 units an hour, and needs 2,796 W to start. Check if your UPS, inverter or generator can start it.",
  "primary_keyword": "water motor 1 hp units",
  "wave": 2,
  "status": "publish",
@@ -36,7 +36,7 @@
    "url": "/appliances/water-motor-1hp/"
   }
  ],
- "modified": "2026-10-21",
+ "modified": "2026-11-10",
  "content": {
   "intro": "",
   "sections": [
@@ -58,7 +58,8 @@
     "h2": "1 hp motor starting current",
     "p": [
      "A pump motor starting from rest draws a surge of current until it reaches speed. The appliance data used here puts the surge of a 1 hp water motor at about 2,796 W, nearly three times the running watts, for a second or two. At 230 V and a 0.8 power factor that is 15.2 A at start against 5.1 A running. This is the surge in watts turned into amps, the figure a UPS, inverter or generator must supply; for the first fraction of a second the motor's locked-rotor current, printed on its nameplate or datasheet, is higher still, which a type C MCB is made to ride through. A submersible pump of the same size starts harder, at about 3,300 W or 17.9 A.",
-     "This surge is why a pump needs its own circuit with a type C MCB rather than the type B breaker used for lights, and why a long, thin cable to a pump in the lawn drops the voltage at start and makes the motor hum and overheat. The MCB size and wire size calculators pick the breaker, curve and cable for your motor and cable length."
+     "This surge is why a pump needs its own circuit with a type C MCB rather than the type B breaker used for lights, and why a long, thin cable to a pump in the lawn drops the voltage at start and makes the motor hum and overheat. The MCB size and wire size calculators pick the breaker, curve and cable for your motor and cable length.",
+     "The starting watts calculator adds this surge to everything else that is on, so you can check a UPS or generator against the real peak."
     ],
     "l": [
      [],
@@ -70,6 +71,12 @@
       {
        "t": "wire size calculators",
        "u": "/wiring/wire-size-calculator/"
+      }
+     ],
+     [
+      {
+       "t": "starting watts calculator",
+       "u": "/generator/generator-starting-watts-calculator/"
       }
      ]
     ]
@@ -132,7 +139,7 @@
   "faq": [
    {
     "q": "How many units does a 1 hp water motor use per hour?",
-    "a": "About 0.93 kWh per hour, since a typical 1 hp motor draws about 932 W of input while pumping. Pumping one hour a day is about 28.4 units a month; two hours a day about 56.7 units."
+    "a": "About 0.93 kWh per hour, since a typical 1 hp motor draws about 932 W of input while pumping. Pumping one hour a day is about 28.4 units a month, about Rs 1,034 of energy charge at Rs 36.46 per unit; two hours a day about 56.7 units. Your slab decides the real cost, because the pump's units add to everything else on the meter."
    },
    {
     "q": "What is the starting current of a 1 hp motor?",
@@ -155,8 +162,12 @@
     "a": "One hp is 745.7 W of shaft power. Because a small motor is about 80% efficient, a 1 hp water motor draws about 932 W from the supply, with real motors from about 900 W to 1,200 W."
    },
    {
-    "q": "How much does a water motor add to the monthly bill?",
-    "a": "For one hour of pumping a day, about 28.4 units or Rs 1,034 of energy charge at Rs 36.46 per unit. The real cost depends on your slab, because the pump's units add to everything else on the meter."
+    "q": "1 hp motor kitne unit leti hai?",
+    "a": "1 hp pani ki motor chalte waqt taqreeban 932 W leti hai, yani ek ghante mein 0.93 unit. Roz ek ghanta chale to mahine mein taqreeban 28.4 unit aur Rs 1,034 ka energy charge banta hai."
+   },
+   {
+    "q": "Kya UPS par pani ki motor chal sakti hai?",
+    "a": "Aam ghar ka UPS nahi chala sakta, kyun ke motor start hote waqt taqreeban 2,796 W leti hai. Is se zyada surge rating wala hybrid ya sine-wave inverter, ya itna start utha sakne wala generator chahiye."
    }
   ],
   "key_facts": [
@@ -501,6 +512,7 @@
    ]
   },
   "answer": "A 1 hp water motor draws about 932 W while pumping, which is 0.93 kWh per hour (one kWh is one unit): units per hour equal watts divided by one thousand. For a moment at every start it draws about 2,796 W, about 15.2 A at 230 V, which a UPS, inverter or generator must supply. Pumping one hour a day uses about 28.4 units a month.",
+  "quick": "A 1 hp water motor uses about 932 W while pumping, which is 0.93 units per hour. At every start it needs about 2,796 W for a moment, so a UPS, inverter or generator must cover that surge.",
   "formula": {
    "text": "P_in = hp × 745.7 ÷ η_motor; units/h = P_in ÷ 1000; P_start = starting watts from the appliance data (about 3 × P_in for a motor); I = P ÷ (V × PF)",
    "lines": [
@@ -543,8 +555,8 @@
     "@type": "WebPage",
     "@id": "https://wattlyst.com/appliances/water-motor-1hp/#webpage",
     "url": "https://wattlyst.com/appliances/water-motor-1hp/",
-    "name": "1 HP Water Motor: Watts, Units & Starting Surge | Wattlyst",
-    "description": "Watts, units per hour and starting surge of a 0.5 to 1.5 HP water motor, and whether your UPS, inverter or generator can start it.",
+    "name": "1 HP Water Motor: 932 W, 0.93 Units per Hour | Wattlyst",
+    "description": "A 1 hp water motor uses about 932 W, 0.93 units an hour, and needs 2,796 W to start. Check if your UPS, inverter or generator can start it.",
     "inLanguage": "en",
     "isPartOf": {
      "@id": "https://wattlyst.com/#website"
@@ -552,7 +564,7 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/appliances/water-motor-1hp/#breadcrumb"
     },
-    "dateModified": "2026-10-21",
+    "dateModified": "2026-11-10",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }
@@ -562,7 +574,7 @@
     "@id": "https://wattlyst.com/appliances/water-motor-1hp/#app",
     "name": "Water Motor 1 HP: Watts, Units per Hour and Starting Surge",
     "url": "https://wattlyst.com/appliances/water-motor-1hp/",
-    "description": "Watts, units per hour and starting surge of a 0.5 to 1.5 HP water motor, and whether your UPS, inverter or generator can start it.",
+    "description": "A 1 hp water motor uses about 932 W, 0.93 units an hour, and needs 2,796 W to start. Check if your UPS, inverter or generator can start it.",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Any",
     "browserRequirements": "Requires JavaScript for live results",
@@ -614,7 +626,7 @@
       "name": "How many units does a 1 hp water motor use per hour?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "About 0.93 kWh per hour, since a typical 1 hp motor draws about 932 W of input while pumping. Pumping one hour a day is about 28.4 units a month; two hours a day about 56.7 units."
+       "text": "About 0.93 kWh per hour, since a typical 1 hp motor draws about 932 W of input while pumping. Pumping one hour a day is about 28.4 units a month, about Rs 1,034 of energy charge at Rs 36.46 per unit; two hours a day about 56.7 units. Your slab decides the real cost, because the pump's units add to everything else on the meter."
       }
      },
      {
@@ -659,10 +671,18 @@
      },
      {
       "@type": "Question",
-      "name": "How much does a water motor add to the monthly bill?",
+      "name": "1 hp motor kitne unit leti hai?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "For one hour of pumping a day, about 28.4 units or Rs 1,034 of energy charge at Rs 36.46 per unit. The real cost depends on your slab, because the pump's units add to everything else on the meter."
+       "text": "1 hp pani ki motor chalte waqt taqreeban 932 W leti hai, yani ek ghante mein 0.93 unit. Roz ek ghanta chale to mahine mein taqreeban 28.4 unit aur Rs 1,034 ka energy charge banta hai."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Kya UPS par pani ki motor chal sakti hai?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Aam ghar ka UPS nahi chala sakta, kyun ke motor start hote waqt taqreeban 2,796 W leti hai. Is se zyada surge rating wala hybrid ya sine-wave inverter, ya itna start utha sakne wala generator chahiye."
       }
      }
     ]
