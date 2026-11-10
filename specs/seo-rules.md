@@ -29,7 +29,10 @@ Rules marked [TEST] are enforced by `npm test`; the rest are checked in review b
   dataset, so it never disagrees with the page; the length rules apply to the rendered text, and the `_len`
   column is not checked for such a row because the number moves with the data. Use it only where the number
   is the answer to the primary keyword (E5, D9, Bill Index, Solar Price Tracker; H3, H4, C6, C7 from the
-  live Search Console queries, 1 Nov 2026).
+  live Search Console queries, 1 Nov 2026; H5, B3, E4 and the C7 title from the GSC audit, 11 Nov 2026).
+- A hub (pillar) title names its category and says it is a list ("All Tools in One List", "Grouped by Task"); it
+  never repeats a child page's primary keyword, so the hub does not compete with its own calculators (GSC audit
+  11 Nov 2026 #10). The hub lists every live child under task H2s with descriptive in-text anchors.
 - URL: lowercase, hyphens, trailing slash, no dates, no stop-word padding, never changes after
   publish (if it must, 301 redirect and update internal links).
 
@@ -76,6 +79,11 @@ Rules marked [TEST] are enforced by `npm test`; the rest are checked in review b
   unit ("A 1.5 ton inverter AC uses about 1.0 unit per hour on average, 0.5–1.4 depending on ...").
 - Question-shaped H2s from supporting keywords, each followed by a 1–2 sentence direct answer, then
   detail. Use tables for comparisons and numbered steps for procedures.
+- Quick answer (GSC audit 11 Nov 2026 #5): a page that already ranks on page 1 may carry a content `quick`
+  field, at most two sentences with the page's own engine numbers as {{placeholders}}, printed in a box
+  above the long answer. It restates the answer; it never adds a number the page does not compute.
+- Roman Urdu FAQ items (GSC audit 11 Nov 2026 #7): a page with Roman Urdu search demand may carry two or
+  three FAQ items written in Roman Urdu, inside the normal FAQ and FAQPage schema, numbers as placeholders.
 - Define each term once, consistently (unit = kWh, VA vs W, Ah vs Wh); same wording across pages.
 - Google says no special markup is needed for AI Overviews: helpful, crawlable, well-structured
   content with clear facts is what gets cited.

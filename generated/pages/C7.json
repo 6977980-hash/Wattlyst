@@ -4,7 +4,7 @@
  "silo": "C",
  "url": "/generator/what-can-a-kva-generator-run/",
  "h1": "What Can a 5 kVA Generator Run?",
- "title": "What Can a 3, 5 or 7.5 kVA Generator Run? | Wattlyst",
+ "title": "What Can a 5 kVA Generator Run? 4,000 W, 2 ACs | Wattlyst",
  "meta": "A 5 kVA generator gives 4,000 W: 2 inverter ACs of 1.5 ton, or one AC with fans, lights and a fridge. Lists for 3, 7.5 and 10 kVA, or try your own.",
  "primary_keyword": "what can a 5 kva generator run",
  "wave": 2,
@@ -39,7 +39,7 @@
    "url": "/generator/what-can-a-kva-generator-run/"
   }
  ],
- "modified": "2026-11-01",
+ "modified": "2026-11-10",
  "content": {
   "intro": "",
   "sections": [
@@ -47,7 +47,18 @@
     "h2": "What can a 5 kVA generator run at the same time?",
     "p": [
      "A 5 kVA generator has 4,000 W to give. Keep the steady load under 3,200 W so the engine is not working flat out, and keep the moment of the largest motor start under 4,000 W. The default list, four fans, ten LED bulbs, an inverter fridge, a TV and a 1.5 ton inverter AC, runs at 2,085 W and peaks at 2,535 W, so it fits with 1,115 W of running load to spare.",
-     "That spare room is enough for an iron or a microwave for a few minutes, but not for a second inverter AC with everything else on. On its own the generator runs 2 inverter ACs of 1.5 ton; with the fans, fridge and lights running as well, one is the practical limit. Edit the list above to test your own home."
+     "That spare room is enough for an iron or a microwave for a few minutes, but not for a second inverter AC with everything else on. On its own the generator runs 2 inverter ACs of 1.5 ton; with the fans, fridge and lights running as well, one is the practical limit. Edit the list above to test your own home.",
+     "To add up your own list with the starting watts of each appliance, use the generator wattage calculator."
+    ],
+    "l": [
+     [],
+     [],
+     [
+      {
+       "t": "generator wattage calculator",
+       "u": "/generator/generator-wattage-calculator/"
+      }
+     ]
     ]
    },
    {
@@ -97,10 +108,6 @@
     "a": "3 inverter ACs of 1.5 ton on their own: a 7.5 kVA set gives 6,000 W and about 4,800 W of steady load. With fans, lights and a fridge running too fewer fit, so enter your whole list in the calculator. It runs 1 non-inverter AC of 1.5 ton, because each compressor start needs about 5,400 W."
    },
    {
-    "q": "What is the 5 kVA generator load capacity in watts?",
-    "a": "4,000 W at 0.8 power factor. Plan on about 3,200 W of continuous load and keep any motor start under 4,000 W in total."
-   },
-   {
     "q": "Can a 2.5 kVA generator run an AC?",
     "a": "A 1 ton inverter AC, yes: with two fans and six bulbs the load is 1,132 W against a running limit of 1,600 W. No non-inverter AC fits, because even a 1 ton unit starts at about 3,600 W, more than the 2,000 W capacity."
    },
@@ -109,8 +116,12 @@
     "a": "A 7 kVA set gives 5,600 W and about 4,480 W of steady load, enough for the running draw of a 1.5 ton non-inverter AC with fans and lights (2,240 W) but not for its start, which peaks at 5,840 W. A 7.5 kVA set (6,000 W) starts it; with a non-inverter fridge also running the peak becomes 6,040 W, so stagger the starts or choose 10 kVA."
    },
    {
-    "q": "Why does my generator trip when the AC starts even though the watts add up?",
-    "a": "Because the start surge, not the running watts, is what the generator must deliver for that second. A non-inverter 1.5 ton AC needs about 5,400 W to start; if that plus everything already running is above the capacity the voltage collapses and the breaker opens. Start the AC first with other loads off, or use an inverter AC."
+    "q": "5 kVA generator par kya kya chal sakta hai?",
+    "a": "5 kVA generator taqreeban 3,200 W ka lagataar load uthata hai: akele 2 inverter AC (1.5 ton), ya ek inverter AC ke saath pankhe, lights, fridge aur TV (2,085 W)."
+   },
+   {
+    "q": "Non-inverter AC ke liye kitne kVA ka generator chahiye?",
+    "a": "1.5 ton non-inverter AC start par taqreeban 5,400 W leta hai, is liye pankhon aur lights ke saath 7.5 kVA ka generator chahiye. 5 kVA ka set is ka start nahi utha sakta."
    }
   ],
   "key_facts": [
@@ -1528,6 +1539,7 @@
    ]
   },
   "answer": "A 5 kVA generator gives 4,000 W at 0.8 power factor: about 3,200 W of continuous running load and 4,000 W for the moment a motor starts. That runs 2 inverter ACs of 1.5 ton on their own, or one 1.5 ton inverter AC with fans, lights, a fridge and a TV (2,085 W). Usable watts = kVA × 1,000 × power factor.",
+  "quick": "A 5 kVA generator carries about 3,200 W of steady load: 2 inverter ACs of 1.5 ton on their own, or one inverter AC with fans, lights, a fridge and a TV. A 1.5 ton non-inverter AC needs 7.5 kVA to start.",
   "formula": {
    "text": "P_cap = kVA × 1000 × PF; fits if P_run × margin ≤ P_cap and P_run + max(P_start − P_run) ≤ P_cap; n = floor(min(P_cap ÷ (P_run × margin), (P_cap − P_start) ÷ P_run + 1))",
    "lines": [
@@ -1571,7 +1583,7 @@
     "@type": "WebPage",
     "@id": "https://wattlyst.com/generator/what-can-a-kva-generator-run/#webpage",
     "url": "https://wattlyst.com/generator/what-can-a-kva-generator-run/",
-    "name": "What Can a 3, 5 or 7.5 kVA Generator Run? | Wattlyst",
+    "name": "What Can a 5 kVA Generator Run? 4,000 W, 2 ACs | Wattlyst",
     "description": "A 5 kVA generator gives 4,000 W: 2 inverter ACs of 1.5 ton, or one AC with fans, lights and a fridge. Lists for 3, 7.5 and 10 kVA, or try your own.",
     "inLanguage": "en",
     "isPartOf": {
@@ -1580,7 +1592,7 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/generator/what-can-a-kva-generator-run/#breadcrumb"
     },
-    "dateModified": "2026-11-01",
+    "dateModified": "2026-11-10",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }
@@ -1671,14 +1683,6 @@
      },
      {
       "@type": "Question",
-      "name": "What is the 5 kVA generator load capacity in watts?",
-      "acceptedAnswer": {
-       "@type": "Answer",
-       "text": "4,000 W at 0.8 power factor. Plan on about 3,200 W of continuous load and keep any motor start under 4,000 W in total."
-      }
-     },
-     {
-      "@type": "Question",
       "name": "Can a 2.5 kVA generator run an AC?",
       "acceptedAnswer": {
        "@type": "Answer",
@@ -1695,10 +1699,18 @@
      },
      {
       "@type": "Question",
-      "name": "Why does my generator trip when the AC starts even though the watts add up?",
+      "name": "5 kVA generator par kya kya chal sakta hai?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Because the start surge, not the running watts, is what the generator must deliver for that second. A non-inverter 1.5 ton AC needs about 5,400 W to start; if that plus everything already running is above the capacity the voltage collapses and the breaker opens. Start the AC first with other loads off, or use an inverter AC."
+       "text": "5 kVA generator taqreeban 3,200 W ka lagataar load uthata hai: akele 2 inverter AC (1.5 ton), ya ek inverter AC ke saath pankhe, lights, fridge aur TV (2,085 W)."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Non-inverter AC ke liye kitne kVA ka generator chahiye?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "1.5 ton non-inverter AC start par taqreeban 5,400 W leta hai, is liye pankhon aur lights ke saath 7.5 kVA ka generator chahiye. 5 kVA ka set is ka start nahi utha sakta."
       }
      }
     ]

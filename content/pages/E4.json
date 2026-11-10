@@ -114,6 +114,7 @@
   }
  ],
  "answer": "Adding a {{out.ac_name|raw}} ({{out.ac_run_w|int}} W running) to a home with {{in.current_w|int}} W gives a new total of {{out.new_total_w|int}} W, or {{out.amps_after|1}} A at {{out.volts|int}} V. Not everything runs at once, so the expected demand is {{out.new_total_kw|2}} kW × {{out.diversity|1}} = {{out.demand_kw|2}} kW, which needs a {{out.needed_kw|int}} kW sanctioned load: this home on {{out.sanctioned_kw|int}} kW {{out.verdict|raw}}. New total = current watts + the AC's running watts.",
+ "quick": "Adding a {{out.ac_name|raw}} to a home already using {{in.current_w|int}} W takes it to {{out.amps_after|1}} A and needs a {{out.needed_kw|int}} kW sanctioned load. The AC's own circuit needs a {{out.ac_breaker_a|int}} A MCB.",
  "how": "{{in.current_w}} W connected now + {{out.ac_run_w|int}} W for the {{out.ac_name|raw}} = {{out.new_total_w|int}} W. {{out.new_total_w|int}} W ÷ ({{out.volts}} V × {{out.pf|2}} power factor) = {{out.amps_after|1}} A, up from {{out.amps_now|1}} A today. Expected demand = {{out.new_total_kw|2}} kW × {{out.diversity|1}} diversity (not everything runs at once) = {{out.demand_kw|2}} kW, rounded up to a whole kW = {{out.needed_kw|int}} kW of sanctioned load, the same rule as the sanctioned load calculator; on {{out.sanctioned_kw}} kW the home {{out.verdict|raw}} ({{out.load_pct|int}}% of it). For a moment at compressor start or full speed the load is {{in.current_w}} W + {{out.ac_start_w|int}} W = {{out.peak_w|int}} W ({{out.peak_amps|1}} A). The AC's own circuit is designed at the AC's maximum input: {{out.ac_design_w|int}} W ÷ ({{out.volts}} V × {{out.ac_pf|2}}, the AC's own power factor) = {{out.ac_ib_a|1}} A; with the margin a compressor load gets, the next standard MCB is {{out.ac_breaker_a|int}} A type {{out.ac_curve|raw}} on a cable rated at least {{out.ac_cable_a|1}} A: {{out.ac_cable_mm2|1}} mm², rated {{out.ac_cable_rating_a|int}} A in {{out.ambient_c}} °C air, the same as on the AC wire size page.",
  "key_facts": [
   "A {{out.ac_name|raw}} adds about {{out.ac_run_w|int}} W of running load and up to {{out.ac_start_w|int}} W at full speed; a non-inverter AC of the same size adds a starting surge of about three times its running watts for a second or two.",
@@ -288,16 +289,20 @@
    "a": "A {{out.ac_name|raw}} alone is {{out.ac_run_w|int}} W running, already above {{d.default_sanctioned_kw|int}} kW, so no. A {{ex.2.out.ac_name|raw}} at {{ex.2.out.ac_run_w|int}} W leaves almost nothing for fans and lights. Apply for a higher sanctioned load first."
   },
   {
-   "q": "What size breaker and wire does the AC circuit need?",
-   "a": "A {{out.ac_name|raw}} is designed at {{out.ac_design_w|int}} W, its maximum input, which is {{out.ac_ib_a|1}} A; with the motor margin that needs a {{out.ac_breaker_a|int}} A type {{out.ac_curve|raw}} MCB on {{out.ac_cable_mm2|1}} mm² ({{out.ac_pk_size|raw}}) copper cable. The AC wire size page uses the same rule and also checks your cable length."
+   "q": "What size breaker and wire does the AC circuit need, and does the main breaker change?",
+   "a": "A {{out.ac_name|raw}} is designed at {{out.ac_design_w|int}} W, its maximum input, which is {{out.ac_ib_a|1}} A; with the motor margin that needs a {{out.ac_breaker_a|int}} A type {{out.ac_curve|raw}} MCB on {{out.ac_cable_mm2|1}} mm² ({{out.ac_pk_size|raw}}) copper cable. The AC wire size page uses the same rule and also checks your cable length. The main breaker only needs to change if the new current is close to its rating: the default home draws {{out.amps_after|1}} A with the AC on and {{out.peak_amps|1}} A at full speed, which an electrician should check against the main breaker and service cable."
   },
   {
    "q": "Will adding an AC change my tariff slab?",
    "a": "The slab depends on units used, not on load. An AC adds units every month it runs and can push the whole bill into a higher slab; the [[E5|AC units calculator]] shows how many units and rupees to expect."
   },
   {
-   "q": "Does the main breaker need to change for the new AC?",
-   "a": "Only if the new current is close to its rating: the default home draws {{out.amps_after|1}} A with the AC on and {{out.peak_amps|1}} A at full speed. An electrician should confirm the main breaker and service cable rating before the AC is connected."
+   "q": "Kya mera meter ek aur AC utha lega?",
+   "a": "{{in.current_w|int}} W wale ghar mein {{out.ac_name|raw}} lagane se load {{out.new_total_w|int}} W aur current {{out.amps_after|1}} A ho jata hai, jis ke liye {{out.needed_kw|int}} kW sanctioned load chahiye. Bill par likha sanctioned load is se kam ho to pehle DISCO se load barhwayein."
+  },
+  {
+   "q": "Do AC ke liye kitna sanctioned load chahiye?",
+   "a": "Do 1.5 ton inverter AC aur aam ghar ke load ke saath taqreeban {{ex.4.out.new_total_w|int}} W connected load aur {{ex.4.out.demand_kw|2}} kW expected demand banti hai, is liye kam az kam {{ex.4.out.needed_kw|int}} kW sanctioned load chahiye."
   }
  ],
  "related": [

@@ -38,7 +38,7 @@
    "url": "/generator/generator-for-1-5-ton-ac/"
   }
  ],
- "modified": "2026-11-01",
+ "modified": "2026-11-10",
  "content": {
   "intro": "",
   "sections": [
@@ -60,7 +60,22 @@
     "h2": "Non-inverter AC generator size",
     "p": [
      "The compressor of a 1.5 ton non-inverter AC runs at about 1,800 W and starts at about 5,400 W, which is 3 times its running watts. With 500 W of fans and lights the peak is 5,900 W, or 7.38 kVA, so the generator to buy is 7.5 kVA. A 1 ton non-inverter AC with the same other load needs 6.5 kVA and a 2 ton non-inverter AC needs 10 kVA.",
-     "The compressor also restarts every few minutes as the thermostat cycles, so the generator takes that surge all day, not once. A soft starter fitted to the AC lowers the surge, but the calculator assumes a plain direct start, which is what most units have."
+     "The compressor also restarts every few minutes as the thermostat cycles, so the generator takes that surge all day, not once. A soft starter fitted to the AC lowers the surge, but the calculator assumes a plain direct start, which is what most units have.",
+     "The running vs starting watts guide explains why a generator is sized on that start, and the generator fuel consumption calculator shows the litres an hour the set burns at your load."
+    ],
+    "l": [
+     [],
+     [],
+     [
+      {
+       "t": "running vs starting watts",
+       "u": "/generator/running-vs-starting-watts/"
+      },
+      {
+       "t": "generator fuel consumption calculator",
+       "u": "/generator/generator-fuel-consumption-calculator/"
+      }
+     ]
     ]
    },
    {
@@ -89,10 +104,6 @@
     "a": "A 2 ton inverter AC with 500 W of other load needs a 5 kVA generator. A 2 ton non-inverter AC starts at 7,200 W and needs 10 kVA."
    },
    {
-    "q": "Is it safe to run an inverter AC on a generator?",
-    "a": "Yes, on a generator with reasonable voltage and frequency control and enough kVA for the AC's maximum input. Inverter ACs start softly and draw about 1,450 W at full cooling. Avoid very small or worn generators whose voltage sags when load changes; a stabiliser between the generator and the AC helps on a marginal set."
-   },
-   {
     "q": "Why does a non-inverter AC need such a big generator?",
     "a": "Its compressor starts direct-on-line and pulls about 3 times its running watts for a second or two, 5,400 W for a 1.5 ton unit. The generator must deliver that peak or it stalls, so it is sized on the surge, not on the running watts."
    },
@@ -101,8 +112,12 @@
     "a": "With a 1.5 ton inverter AC and about 500 W of other load, 3.5 kVA. With a 1.5 ton non-inverter AC, 7.5 kVA. Add the running watts of each extra AC to the other load to size for more."
    },
    {
-    "q": "How do I work out the generator kVA for an AC myself?",
-    "a": "Take the larger of the running watts × 1.25 or the starting watts of everything running together, divide by the generator power factor of 0.8 and by one thousand, then round up to the next kVA size sold. The calculator does this with the real watts of each AC size."
+    "q": "1.5 ton AC ke liye kitne kVA ka generator chahiye?",
+    "a": "Inverter AC aur 500 W pankhon aur lights ke saath 3.5 kVA ka generator kaafi hai. Non-inverter 1.5 ton AC start hote waqt 5,400 W kheenchta hai, is liye us ke liye 7.5 kVA ka generator chahiye."
+   },
+   {
+    "q": "1 ton aur 2 ton AC ke liye kitna bara generator chahiye?",
+    "a": "500 W doosre load ke saath 1 ton inverter AC 2.5 kVA par aur 1 ton non-inverter AC 6.5 kVA par chalta hai. 2 ton inverter AC ke liye 5 kVA aur 2 ton non-inverter AC ke liye 10 kVA chahiye."
    }
   ],
   "key_facts": [
@@ -407,6 +422,7 @@
    ]
   },
   "answer": "A 1.5 ton inverter AC with 500 W of fans and lights needs a 3.5 kVA generator: 1,950 W running, 2,400 W while the compressor starts, 3.05 kVA calculated. A 1.5 ton non-inverter AC with the same load needs 7.5 kVA because its compressor starts at 5,400 W. Generator kVA = max(running watts × margin, starting watts) ÷ power factor ÷ 1,000.",
+  "quick": "A 1.5 ton inverter AC with 500 W of fans and lights needs a 3.5 kVA generator. A 1.5 ton non-inverter AC needs 7.5 kVA, because its compressor starts at 5,400 W.",
   "formula": {
    "text": "P_run = P_ac + P_other; P_peak = P_run + (P_ac_start − P_ac); kVA = max(P_run × m, P_peak) ÷ PF ÷ 1000",
    "lines": [
@@ -460,7 +476,7 @@
     "breadcrumb": {
      "@id": "https://wattlyst.com/generator/generator-for-1-5-ton-ac/#breadcrumb"
     },
-    "dateModified": "2026-11-01",
+    "dateModified": "2026-11-10",
     "author": {
      "@id": "https://wattlyst.com/#/person/ali-ahmad"
     }
@@ -551,14 +567,6 @@
      },
      {
       "@type": "Question",
-      "name": "Is it safe to run an inverter AC on a generator?",
-      "acceptedAnswer": {
-       "@type": "Answer",
-       "text": "Yes, on a generator with reasonable voltage and frequency control and enough kVA for the AC's maximum input. Inverter ACs start softly and draw about 1,450 W at full cooling. Avoid very small or worn generators whose voltage sags when load changes; a stabiliser between the generator and the AC helps on a marginal set."
-      }
-     },
-     {
-      "@type": "Question",
       "name": "Why does a non-inverter AC need such a big generator?",
       "acceptedAnswer": {
        "@type": "Answer",
@@ -575,10 +583,18 @@
      },
      {
       "@type": "Question",
-      "name": "How do I work out the generator kVA for an AC myself?",
+      "name": "1.5 ton AC ke liye kitne kVA ka generator chahiye?",
       "acceptedAnswer": {
        "@type": "Answer",
-       "text": "Take the larger of the running watts × 1.25 or the starting watts of everything running together, divide by the generator power factor of 0.8 and by one thousand, then round up to the next kVA size sold. The calculator does this with the real watts of each AC size."
+       "text": "Inverter AC aur 500 W pankhon aur lights ke saath 3.5 kVA ka generator kaafi hai. Non-inverter 1.5 ton AC start hote waqt 5,400 W kheenchta hai, is liye us ke liye 7.5 kVA ka generator chahiye."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "1 ton aur 2 ton AC ke liye kitna bara generator chahiye?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "500 W doosre load ke saath 1 ton inverter AC 2.5 kVA par aur 1 ton non-inverter AC 6.5 kVA par chalta hai. 2 ton inverter AC ke liye 5 kVA aur 2 ton non-inverter AC ke liye 10 kVA chahiye."
       }
      }
     ]

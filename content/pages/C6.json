@@ -83,6 +83,7 @@
   }
  ],
  "answer": "A 1.5 ton inverter AC with {{in.other_w|int}} W of fans and lights needs a {{out.standard_kva|1}} kVA generator: {{out.running_w|int}} W running, {{out.peak_w|int}} W while the compressor starts, {{out.recommended_kva|up2}} kVA calculated. A 1.5 ton non-inverter AC with the same load needs {{ex.1.out.standard_kva|1}} kVA because its compressor starts at {{ex.1.out.ac_start_w|int}} W. Generator kVA = max(running watts × margin, starting watts) ÷ power factor ÷ 1,000.",
+ "quick": "A 1.5 ton inverter AC with {{in.other_w|int}} W of fans and lights needs a {{out.standard_kva|1}} kVA generator. A 1.5 ton non-inverter AC needs {{ex.1.out.standard_kva|1}} kVA, because its compressor starts at {{ex.1.out.ac_start_w|int}} W.",
  "how": "{{out.ac_name}}: {{out.ac_run_w|int}} W running, {{out.ac_start_w|int}} W starting (its maximum input). Other load {{out.other_w}} W. Total {{out.running_w|int}} W running and {{out.peak_w|int}} W at the moment the AC starts. The larger of {{out.running_w|int}} W × {{out.margin|2}} margin and {{out.peak_w|int}} W is {{out.sized_w|int}} W; ÷ {{out.pf|2}} power factor ÷ 1,000 = {{out.recommended_kva|up2}} kVA, rounded up to the next standard size, {{out.standard_kva|1}} kVA.",
  "key_facts": [
   "A 1.5 ton inverter AC runs at about {{ex.0.out.ac_run_w|int}} W and needs at most {{ex.0.out.ac_start_w|int}} W, so on its own it runs from a {{ex.0.out.standard_kva|1}} kVA generator.",
@@ -120,7 +121,8 @@
    "h2": "Non-inverter AC generator size",
    "p": [
     "The compressor of a 1.5 ton non-inverter AC runs at about {{ex.1.out.ac_run_w|int}} W and starts at about {{ex.1.out.ac_start_w|int}} W, which is {{d.start_factors.compressor_non_inverter|int}} times its running watts. With {{ex.1.in.other_w|int}} W of fans and lights the peak is {{ex.1.out.peak_w|int}} W, or {{ex.1.out.recommended_kva|up2}} kVA, so the generator to buy is {{ex.1.out.standard_kva|1}} kVA. A 1 ton non-inverter AC with the same other load needs {{ex.3.out.standard_kva|1}} kVA and a 2 ton non-inverter AC needs {{ex.4.out.standard_kva|1}} kVA.",
-    "The compressor also restarts every few minutes as the thermostat cycles, so the generator takes that surge all day, not once. A soft starter fitted to the AC lowers the surge, but the calculator assumes a plain direct start, which is what most units have."
+    "The compressor also restarts every few minutes as the thermostat cycles, so the generator takes that surge all day, not once. A soft starter fitted to the AC lowers the surge, but the calculator assumes a plain direct start, which is what most units have.",
+    "The [[C4|running vs starting watts]] guide explains why a generator is sized on that start, and the [[C8|generator fuel consumption calculator]] shows the litres an hour the set burns at your load."
    ]
   },
   {
@@ -253,10 +255,6 @@
    "a": "A 2 ton inverter AC with {{in.other_w|int}} W of other load needs a {{d.standard_generator_kva.3|int}} kVA generator. A 2 ton non-inverter AC starts at {{ex.4.out.ac_start_w|int}} W and needs {{ex.4.out.standard_kva|1}} kVA."
   },
   {
-   "q": "Is it safe to run an inverter AC on a generator?",
-   "a": "Yes, on a generator with reasonable voltage and frequency control and enough kVA for the AC's maximum input. Inverter ACs start softly and draw about {{ex.0.out.ac_run_w|int}} W at full cooling. Avoid very small or worn generators whose voltage sags when load changes; a stabiliser between the generator and the AC helps on a marginal set."
-  },
-  {
    "q": "Why does a non-inverter AC need such a big generator?",
    "a": "Its compressor starts direct-on-line and pulls about {{d.start_factors.compressor_non_inverter|int}} times its running watts for a second or two, {{ex.1.out.ac_start_w|int}} W for a 1.5 ton unit. The generator must deliver that peak or it stalls, so it is sized on the surge, not on the running watts."
   },
@@ -265,8 +263,12 @@
    "a": "With a 1.5 ton inverter AC and about {{in.other_w|int}} W of other load, {{out.standard_kva|1}} kVA. With a 1.5 ton non-inverter AC, {{ex.1.out.standard_kva|1}} kVA. Add the running watts of each extra AC to the other load to size for more."
   },
   {
-   "q": "How do I work out the generator kVA for an AC myself?",
-   "a": "Take the larger of the running watts × {{d.margin|2}} or the starting watts of everything running together, divide by the generator power factor of {{d.pf_generator|2}} and by one thousand, then round up to the next kVA size sold. The calculator does this with the real watts of each AC size."
+   "q": "1.5 ton AC ke liye kitne kVA ka generator chahiye?",
+   "a": "Inverter AC aur {{in.other_w|int}} W pankhon aur lights ke saath {{out.standard_kva|1}} kVA ka generator kaafi hai. Non-inverter 1.5 ton AC start hote waqt {{ex.1.out.ac_start_w|int}} W kheenchta hai, is liye us ke liye {{ex.1.out.standard_kva|1}} kVA ka generator chahiye."
+  },
+  {
+   "q": "1 ton aur 2 ton AC ke liye kitna bara generator chahiye?",
+   "a": "{{in.other_w|int}} W doosre load ke saath 1 ton inverter AC {{d.standard_generator_kva.0|1}} kVA par aur 1 ton non-inverter AC {{ex.3.out.standard_kva|1}} kVA par chalta hai. 2 ton inverter AC ke liye {{d.standard_generator_kva.3|int}} kVA aur 2 ton non-inverter AC ke liye {{ex.4.out.standard_kva|1}} kVA chahiye."
   }
  ],
  "related": [

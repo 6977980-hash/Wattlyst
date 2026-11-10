@@ -104,6 +104,7 @@
   }
  ],
  "answer": "A normal AC ceiling fan in Pakistan uses about {{out.running_kw|3}} units per hour ({{out.running_w|int}} W); a DC inverter fan uses about {{ex.0.out.running_kw|3}} units per hour ({{ex.0.out.running_w|int}} W). Units per hour equal the fan's watts divided by one thousand. At {{appliance.typical_hours_per_day|int}} hours a day one AC fan uses about {{out.monthly_units|1}} units a month, about {{out.monthly_rs|rs}} at {{out.tariff|rs2}} per unit.",
+ "quick": "A normal AC ceiling fan uses about {{out.running_w|int}} W, which is {{out.running_kw|3}} units per hour; a DC inverter fan uses about {{ex.0.out.running_w|int}} W, {{ex.0.out.running_kw|3}} units per hour. At {{appliance.typical_hours_per_day|int}} hours a day one AC fan uses about {{out.monthly_units|1}} units a month.",
  "how": "{{out.items|int}} fan(s) × {{out.largest_w|int}} W = {{out.running_w|int}} W running. {{out.running_w|int}} W ÷ one thousand = {{out.running_kw|3}} kWh per hour, and one kWh is one unit on the bill. Units per hour × the hours a day you entered = {{out.daily_kwh|2}} units a day; × {{out.days}} days = {{out.monthly_units|1}} units a month; × {{out.tariff|rs2}} per unit = {{out.monthly_rs|rs}} a month for the energy charge, before fixed charges, surcharges and tax.",
  "key_facts": [
   "A normal AC ceiling fan draws about {{appliance.running_w|int}} W at full speed ({{appliance.running_w_range.0|int}} to {{appliance.running_w_range.1|int}} W depending on make and age), which is {{out.running_kw|3}} units per hour; units per hour = watts ÷ one thousand.",
@@ -339,16 +340,16 @@
    "a": "It depends on the battery. A tubular battery gives about {{d.dod_lead_acid|pct}} of its rating as usable energy and a home UPS converts about {{d.inverter_eff_ups|pct}} of that to AC, so the backup equals the usable watt-hours divided by the fan's watts. A {{ex.0.out.running_w|int}} W DC fan runs more than twice as long as an {{out.running_w|int}} W AC fan. The battery backup time calculator gives the hours for your battery."
   },
   {
-   "q": "Does running a fan at low speed save electricity?",
-   "a": "With a DC inverter fan, yes: its draw falls steeply with speed. With an AC fan on a capacitor-type regulator the draw falls somewhat; on an old resistance-type dial regulator much of the difference is wasted as heat in the regulator. Enter your fan's full-speed watts for a safe estimate."
-  },
-  {
    "q": "How many watts does a pedestal fan use?",
    "a": "About {{a.pedestal-fan.running_w|int}} W for an AC pedestal fan and about {{a.pedestal-fan-dc.running_w|int}} W for a DC one; a bracket fan is about {{a.bracket-fan.running_w|int}} W and an exhaust fan about {{a.exhaust-fan.running_w|int}} W. Pick them in the calculator to see units and cost."
   },
   {
-   "q": "Can I run my fans on solar?",
-   "a": "Yes; fans are the easiest solar load. Four AC fans are about {{ex.1.out.running_w|int}} W together and four DC fans about {{ex.2.out.running_w|int}} W, so even a small system carries them in daylight. The solar size from appliances calculator sizes the panels, inverter and night battery from your fan list."
+   "q": "Ceiling fan kitne unit leta hai?",
+   "a": "Aam AC ceiling fan ({{out.running_w|int}} W) ek ghante mein {{out.running_kw|3}} unit leta hai aur DC inverter fan ({{ex.0.out.running_w|int}} W) sirf {{ex.0.out.running_kw|3}} unit. Roz {{appliance.typical_hours_per_day|int}} ghante chalne par ek AC fan mahine mein taqreeban {{out.monthly_units|1}} unit leta hai."
+  },
+  {
+   "q": "Ek fan ka mahine ka bill kitna aata hai?",
+   "a": "Roz {{appliance.typical_hours_per_day|int}} ghante chalne wala ek AC fan {{out.tariff|rs2}} fi unit par mahine mein taqreeban {{out.monthly_rs|rs}} ka energy charge banata hai, aur DC fan taqreeban {{ex.0.out.monthly_rs|rs}}. Aap ka slab, fixed charges aur tax asal bill badal dete hain."
   }
  ],
  "related": [

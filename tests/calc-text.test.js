@@ -34,7 +34,7 @@ export function wordsToNumber(phrase) {
 
 // Small counts (two panels, three-phase, twelve-volt blocks) are ordinary words; figures from twenty up are checked.
 const MIN = 20;
-const TEXT_KEYS = (c) => [c.answer, c.intro, c.how, c.how_ur, c.safety, ...(c.key_facts || []), ...(c.mistakes || []),
+const TEXT_KEYS = (c) => [c.answer, c.quick, c.intro, c.how, c.how_ur, c.safety, ...(c.key_facts || []), ...(c.mistakes || []),
   ...(c.faq || []).flatMap((x) => [x.q, x.a]), ...(c.examples || []).flatMap((x) => [x.title, x.text]),
   c.table?.caption, c.table?.row_head, ...(c.table?.rows || []).map((r) => r.label), ...(c.sections || []).flatMap((s) => [s.h2, ...(s.p || [])])].filter((x) => typeof x === 'string' && x); // a hub's { from, n } key fact is another page's text
 

@@ -1,6 +1,27 @@
 # Progress
 
-## Handoff for next phase (after the live GSC query fixes, v0.9.3) — written by the "Improve pages from live GSC queries" thread, 2026-11-01
+## Handoff for next phase (after GSC audit part 1, v0.9.4) — written by the "Improve page-1 GSC pages for clicks" thread, 2026-11-10
+
+Owner approved part 1 of the GSC audit on 10 Nov 2026 (items #4, #5, #7, #10, #11 of `/mnt/project-files/wattlyst-gsc-audit-2026-11-11.md`). Content, keyword-map/site-pages, one new content field, CSS; no engine, data or JS change. DISCO bill pages (#3) and new pages (#6, #8, #9) were left out by the owner. The handoff below and those under it still hold.
+
+**What is where**
+- Titles/metas (`specs/keyword-map.csv`): H3, H4, C7, H5, B3, E4 titles (and H5, B3, E4 metas) carry the page's own engine number as `{{placeholder}}`; C6 already did. seo-rules.md 2 lists them.
+- Quick answer: optional content field `quick` (two sentences, engine placeholders) on H3, C6, C7, H4, H5, B3, E4. Build: `out.quick` in `buildContent` (`tools/build.js`, only when set, so other pages keep their dates); Urdu overlay takes `ur.quick` only (`tools/lib/urdu.js`). PHP: `Wattlyst_Render::quick()` prints `p.wl-quick` between the H1 and the answer in `hero()`; style `.wl-quick` in `assets/css/wattlyst.css`; Urdu label "Quick answer:" in `content/ur/ui.json`. Rule: seo-rules.md 5.
+- Roman Urdu FAQ items: two per page on the same seven pages, inside the normal FAQ (so in FAQPage schema). To stay at the 8-FAQ cap some English FAQs were merged or dropped (B3 one fan + two fans; H4 per day + per month; H5 units + bill; E4 breaker + main breaker; H3, C6, C7 lost two each).
+- Hubs P-A /converters/, P-E /load/, P-W /wiring/: task H2 sections, each linking its children by descriptive anchors (`groups()` turns them into card groups); broad titles/metas in `specs/site-pages.csv` that never repeat a child's primary keyword (seo-rules.md 2).
+- In-text links to the 20 most weakly linked live pages (A2 A5 A7 C2 C3 C4 C8 D3 D9 H6 N2 N6 N8 N10 N11 N12 N14 N17 P-T P-X): one appended paragraph each in A4, E3, C6, E6, H7, C7, B3, D15, N13, D11, E5, H5, F1, N18. The GSC "Discovered - not indexed" list itself was not available to the build thread; the 20 were picked as the live pages with the fewest inbound links (owner can compare with GSC).
+- Tests: `tests/gsc-ctr.test.js`; `c.quick` added to the typed-digit checks in `tests/site.test.js` and `tests/calc-text.test.js`.
+
+**Do not touch / watch**
+- The seven pages are at 8 FAQs now; a new FAQ must replace one. Roman Urdu FAQ answers keep numbers as placeholders.
+- If you change a hub's routing paragraph, keep every live child linked from a task section (test #10).
+- A rebuild after a half-finished change writes new hashes into `generated/page-dates.json`; restore it from git before the final build or every page's date moves.
+
+**Open to-dos**
+- Owner: GSC URL Inspection "Request indexing" for the seven pages and the 20 linked pages; compare the 20 with GSC's "Discovered - currently not indexed" list and send any that differ.
+- Re-check GSC CTR on the seven pages about 4 weeks after deploy (early Dec 2026). Part 2 (#3 DISCO pages, #6, #8, #9) waits for the owner.
+
+## Earlier handoff (after the live GSC query fixes, v0.9.3) — written by the "Improve pages from live GSC queries" thread, 2026-11-01
 
 Owner approved items 1-4 of the live Search Console report (data 14-30 Oct 2026, only 17 days, so a direction and not a result) on 1 Nov 2026. Content and keyword-map only: no engine, data, PHP or JS change. The Urdu U1 handoff below and those under it still hold.
 
@@ -929,6 +950,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | 2026-10-30 | Net billing Phase A (D10, D11): WhatsApp link follows every result (WL-245), whole-rupee net billing lines 1,705 − 813 = 892 (WL-246), rate + slab in examples (WL-247), news Rs 11 vs NEPRA Rs 8.13 hint, FAQ and source (WL-248), plugin v0.8.36 | done: tests green | #53 |
 | 2026-10-30 | Net billing Phase B (D10): payback from units before solar + system price (WL-250), DISCO select naming the company in the result and share text, hint links to all eleven DISCO bill pages (WL-251), F8 anchor, plugin v0.8.37 | done: tests green | #54 |
 | 2026-10-30 | Bill sources (owner rule: a bill is evidence, not the source): protected FC surcharge back to [VERIFY], QTA sources per quarter (NEPRA SROs 459 and 1501 of 2026), GST/FPA sources from the Sales Tax Act and NEPRA, F1 note, plugin v0.8.38 | done: tests green | PR pending |
+| 2026-11-10 | GSC audit part 1 (#4 #5 #7 #10 #11): answer-number titles/metas and a Quick answer on H3 C6 C7 H4 H5 B3 E4, two Roman Urdu FAQ items each, hubs P-A P-E P-W as task directories with broad titles, in-text links to 20 weakly linked pages, plugin v0.9.4 | done: tests green | PR pending |
 
 ## Owner to do
 - Audit Phase 4: one Hostinger redirect so http and www go straight to https://wattlyst.com (WL-40); HTML browser cache time of a few hours in LiteSpeed/Hostinger (WL-36); after deploy, open wp-admin once so the new build syncs and the cache is purged; before switching on the quote form, ask Hostinger which header carries the visitor IP and put it in data/site.json leads.client_ip_header (WL-64); 2FA for wp-admin.

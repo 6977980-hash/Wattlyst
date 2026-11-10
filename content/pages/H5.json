@@ -115,6 +115,7 @@
   }
  ],
  "answer": "A 1 hp water motor draws about {{out.running_w|int}} W while pumping, which is {{out.running_kw|2}} kWh per hour (one kWh is one unit): units per hour equal watts divided by one thousand. For a moment at every start it draws about {{out.peak_w|int}} W, about {{out.peak_amps|1}} A at {{out.volts|int}} V, which a UPS, inverter or generator must supply. Pumping one hour a day uses about {{out.monthly_units|1}} units a month.",
+ "quick": "A 1 hp water motor uses about {{out.running_w|int}} W while pumping, which is {{out.running_kw|2}} units per hour. At every start it needs about {{out.peak_w|int}} W for a moment, so a UPS, inverter or generator must cover that surge.",
  "how": "The listed motors ({{out.items|int}}, the largest {{out.largest_w|int}} W) run at {{out.running_w|int}} W together, which is {{out.running_w|int}} ÷ one thousand = {{out.running_kw|2}} kWh per hour. Units per hour × the pumping hours a day you entered = {{out.daily_kwh|2}} kWh a day; × {{out.days}} days = {{out.monthly_units|1}} units a month; × {{out.tariff|rs2}} per unit = {{out.monthly_rs|rs}} (energy charge only). Running current = {{out.running_w|int}} W ÷ ({{out.volts}} V × {{out.pf|1}} power factor) = {{out.amps|1}} A. At start the motor draws {{out.peak_w|int}} W, so the starting current is {{out.peak_w|int}} W ÷ ({{out.volts}} V × {{out.pf|1}}) = {{out.peak_amps|1}} A.",
  "key_facts": [
   "A 1 hp single-phase water motor draws about {{appliance.running_w|int}} W of electrical input while pumping ({{appliance.running_w_range.0|int}} to {{appliance.running_w_range.1|int}} W depending on make and efficiency), which is {{out.running_kw|2}} kWh per hour; one hp of shaft power is {{d.w_per_hp|1}} W and a small motor is about {{d.motor_eff|pct}} efficient, so the input watts are higher than the hp suggests.",
@@ -150,7 +151,8 @@
    "h2": "1 hp motor starting current",
    "p": [
     "A pump motor starting from rest draws a surge of current until it reaches speed. The appliance data used here puts the surge of a 1 hp water motor at about {{appliance.starting_w|int}} W, nearly three times the running watts, for a second or two. At {{out.volts|int}} V and a {{out.pf|1}} power factor that is {{out.peak_amps|1}} A at start against {{out.amps|1}} A running. This is the surge in watts turned into amps, the figure a UPS, inverter or generator must supply; for the first fraction of a second the motor's locked-rotor current, printed on its nameplate or datasheet, is higher still, which a type C MCB is made to ride through. A submersible pump of the same size starts harder, at about {{ex.3.out.peak_w|int}} W or {{ex.3.out.peak_amps|1}} A.",
-    "This surge is why a pump needs its own circuit with a type C MCB rather than the type B breaker used for lights, and why a long, thin cable to a pump in the lawn drops the voltage at start and makes the motor hum and overheat. The [[W3|MCB size]] and [[W2|wire size calculators]] pick the breaker, curve and cable for your motor and cable length."
+    "This surge is why a pump needs its own circuit with a type C MCB rather than the type B breaker used for lights, and why a long, thin cable to a pump in the lawn drops the voltage at start and makes the motor hum and overheat. The [[W3|MCB size]] and [[W2|wire size calculators]] pick the breaker, curve and cable for your motor and cable length.",
+    "The [[C3|starting watts calculator]] adds this surge to everything else that is on, so you can check a UPS or generator against the real peak."
    ]
   },
   {
@@ -328,7 +330,7 @@
  "faq": [
   {
    "q": "How many units does a 1 hp water motor use per hour?",
-   "a": "About {{out.running_kw|2}} kWh per hour, since a typical 1 hp motor draws about {{out.running_w|int}} W of input while pumping. Pumping one hour a day is about {{out.monthly_units|1}} units a month; two hours a day about {{ex.1.out.monthly_units|1}} units."
+   "a": "About {{out.running_kw|2}} kWh per hour, since a typical 1 hp motor draws about {{out.running_w|int}} W of input while pumping. Pumping one hour a day is about {{out.monthly_units|1}} units a month, about {{out.monthly_rs|rs}} of energy charge at {{out.tariff|rs2}} per unit; two hours a day about {{ex.1.out.monthly_units|1}} units. Your slab decides the real cost, because the pump's units add to everything else on the meter."
   },
   {
    "q": "What is the starting current of a 1 hp motor?",
@@ -351,8 +353,12 @@
    "a": "One hp is {{d.w_per_hp|1}} W of shaft power. Because a small motor is about {{d.motor_eff|pct}} efficient, a 1 hp water motor draws about {{out.running_w|int}} W from the supply, with real motors from about {{appliance.running_w_range.0|int}} W to {{appliance.running_w_range.1|int}} W."
   },
   {
-   "q": "How much does a water motor add to the monthly bill?",
-   "a": "For one hour of pumping a day, about {{out.monthly_units|1}} units or {{out.monthly_rs|rs}} of energy charge at {{out.tariff|rs2}} per unit. The real cost depends on your slab, because the pump's units add to everything else on the meter."
+   "q": "1 hp motor kitne unit leti hai?",
+   "a": "1 hp pani ki motor chalte waqt taqreeban {{out.running_w|int}} W leti hai, yani ek ghante mein {{out.running_kw|2}} unit. Roz ek ghanta chale to mahine mein taqreeban {{out.monthly_units|1}} unit aur {{out.monthly_rs|rs}} ka energy charge banta hai."
+  },
+  {
+   "q": "Kya UPS par pani ki motor chal sakti hai?",
+   "a": "Aam ghar ka UPS nahi chala sakta, kyun ke motor start hote waqt taqreeban {{out.peak_w|int}} W leti hai. Is se zyada surge rating wala hybrid ya sine-wave inverter, ya itna start utha sakne wala generator chahiye."
   }
  ],
  "related": [

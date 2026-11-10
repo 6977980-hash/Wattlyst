@@ -101,6 +101,7 @@
   }
  ],
  "answer": "A normal non-inverter fridge uses about {{out.daily_kwh|2}} units per day and an inverter fridge about {{ex.0.out.daily_kwh|2}}. Units per day = running watts × compressor hours a day ÷ one thousand: a {{out.running_w|int}} W fridge whose compressor runs about {{appliance.typical_hours_per_day|int}} hours a day uses {{out.daily_kwh|2}} units, {{out.monthly_units|1}} a month, about {{out.monthly_rs|rs}} at {{out.tariff|rs2}} per unit.",
+ "quick": "A normal non-inverter fridge uses about {{out.daily_kwh|2}} units per day ({{out.monthly_units|1}} a month) and an inverter fridge about {{ex.0.out.daily_kwh|2}} units per day. Its compressor runs about {{appliance.typical_hours_per_day|int}} hours a day, not all day.",
  "how": "{{out.items|int}} appliance(s) running {{out.running_w|int}} W together. Running watts × the compressor hours a day you entered ÷ one thousand = {{out.daily_kwh|2}} units a day; × {{out.days}} days = {{out.monthly_units|1}} units a month; × {{out.tariff|rs2}} per unit = {{out.monthly_rs|rs}} for the energy charge, before fixed charges, surcharges and tax. Starting surge of the largest compressor: {{out.peak_w|int}} W in total for a moment, {{out.peak_amps|1}} A.",
  "key_facts": [
   "A non-inverter fridge of the usual Pakistani size (twelve to sixteen cubic feet) draws about {{appliance.running_w|int}} W while the compressor runs ({{appliance.running_w_range.0|int}} to {{appliance.running_w_range.1|int}} W by size and age) and uses about {{out.daily_kwh|2}} units per day; units per day = running watts × compressor hours ÷ one thousand.",
@@ -275,12 +276,8 @@
  "safety": "Plug a fridge into its own earthed socket, not an extension board, and leave a few minutes before restarting it after a power cut; have a licensed electrician check the socket and the UPS or stabilizer connection if the plug or wiring runs warm.",
  "faq": [
   {
-   "q": "How many units does a fridge use per day?",
-   "a": "About {{out.daily_kwh|2}} units per day for a typical {{out.running_w|int}} W non-inverter fridge whose compressor runs about {{appliance.typical_hours_per_day|int}} hours, and about {{ex.0.out.daily_kwh|2}} for an inverter fridge. Old fridges in hot kitchens use more."
-  },
-  {
-   "q": "How many units does a fridge use per month?",
-   "a": "About {{out.monthly_units|1}} units for a non-inverter fridge and {{ex.0.out.monthly_units|1}} for an inverter fridge in a {{out.days|2}}-day month, about {{out.monthly_rs|rs}} and {{ex.0.out.monthly_rs|rs}} at {{out.tariff|rs2}} per unit."
+   "q": "How many units does a fridge use per day and per month?",
+   "a": "About {{out.daily_kwh|2}} units per day for a typical {{out.running_w|int}} W non-inverter fridge whose compressor runs about {{appliance.typical_hours_per_day|int}} hours, and about {{ex.0.out.daily_kwh|2}} for an inverter fridge. In a {{out.days|2}}-day month that is {{out.monthly_units|1}} and {{ex.0.out.monthly_units|1}} units, about {{out.monthly_rs|rs}} and {{ex.0.out.monthly_rs|rs}} at {{out.tariff|rs2}} per unit. Old fridges in hot kitchens use more."
   },
   {
    "q": "How many watts does a non-inverter fridge use?",
@@ -301,6 +298,14 @@
   {
    "q": "Can a fridge run on a UPS or solar?",
    "a": "Yes, if the inverter's surge rating covers the compressor start: an inverter fridge is easy, a non-inverter fridge needs a UPS with real surge headroom. The daily units, about {{out.daily_kwh|2}}, set the battery size; the UPS backup calculator gives the hours."
+  },
+  {
+   "q": "Fridge 24 ghante mein kitna unit leta hai?",
+   "a": "Aam non-inverter fridge din mein taqreeban {{out.daily_kwh|2}} unit leta hai, kyun ke us ka compressor sirf {{appliance.typical_hours_per_day|int}} ghante chalta hai; inverter fridge taqreeban {{ex.0.out.daily_kwh|2}} unit. Mahine mein ye {{out.monthly_units|1}} aur {{ex.0.out.monthly_units|1}} unit bante hain."
+  },
+  {
+   "q": "Fridge ka mahine ka bill kitna aata hai?",
+   "a": "{{out.tariff|rs2}} fi unit par non-inverter fridge mahine mein taqreeban {{out.monthly_rs|rs}} aur inverter fridge {{ex.0.out.monthly_rs|rs}} ka energy charge banata hai. Purana fridge ya garam kitchen ho to bill zyada aata hai."
   }
  ],
  "related": [
