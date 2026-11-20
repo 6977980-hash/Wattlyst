@@ -1,5 +1,20 @@
 # Progress
 
+## Monthly refresh note (November 2026) — written by the monthly refresh thread, 2026-11-20
+
+Data-only change; the GSC part 1 handoff below still holds.
+
+**What is where**
+- Bill Index: new month `2026-11` at the top of `data/bill-index.json` `months` (September FCA, reported, `fpa_verified: false` until NEPRA's decision PDF is found). QTA unchanged (same quarter).
+- Fuel: `data/generator-fuel.json` `prices` (petrol, diesel, `effective`, `source_url`).
+- Spec cases that depend on the default fuel price now pin it: optional case key `data` in `specs/calculator-test-cases.json` (`{"<data.path>": value}`), applied by `caseData()` in `tests/engine.test.js`. A pinned path that does not exist fails the test. Future fuel changes need no spec rewrite.
+- Component prices: `data/component-prices.json` `_meta.recheck_2026_11_20` names which pages were re-read (no figure changed).
+- Solar prices: `data/solar-prices.json` and `data/solar-price-history.json` NOT changed this month (see to-dos).
+
+**Open to-dos**
+- Solar prices need a real refresh before the December check: moving `_meta.checked` past 2026-10-29 drops every July-dated point (Max Power, PriceData, ARY, PhoneWorld) under the 120-day rule, and dropping Toolsfluent (competitor) as well leaves on-grid 5 kW on one publisher. Fresh November pages found on 2026-11-20 (Solar Citizen installed table, Hajvery Solar and SolarRates.pk per-watt, JBMS 17 Nov, GreenOH and SheikhX 20 Nov) are candidates; recompute every size by `_meta.method`, snapshot October into `solar-price-history.json` first, and re-run the price-dependent spec cases (pin them like the fuel cases if their expected values are about the method, not the price).
+- Bill Index November: replace the Business Recorder source with NEPRA's decision PDF and set `fpa_verified: true` once found.
+
 ## Handoff for next phase (after GSC audit part 1, v0.9.4) — written by the "Improve page-1 GSC pages for clicks" thread, 2026-11-10
 
 Owner approved part 1 of the GSC audit on 10 Nov 2026 (items #4, #5, #7, #10, #11 of `/mnt/project-files/wattlyst-gsc-audit-2026-11-11.md`). Content, keyword-map/site-pages, one new content field, CSS; no engine, data or JS change. DISCO bill pages (#3) and new pages (#6, #8, #9) were left out by the owner. The handoff below and those under it still hold.
@@ -872,7 +887,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 **Monthly routine (build-plan Phase 6)**
 1. `node tools/maintenance.js` and work its list.
 2. Bill Index: new month at the top of `data/bill-index.json` (NEPRA FPA decision, QTA); FPA entry in `data/tariff-pk-2026.json` addons; re-check the buyback (`net_billing`).
-3. Prices: `data/solar-prices.json` + `data/component-prices.json` (old month moved into `data/solar-price-history.json`), fuel prices in `data/generator-fuel.json`. Every change gets `source` + `checked`.
+3. Prices: `data/solar-prices.json` + `data/component-prices.json` (old month moved into `data/solar-price-history.json`), fuel prices in `data/generator-fuel.json`. Every change gets `source` + `checked`. Spec cases that depend on a changing price pin it with the case key `data` (see the November 2026 note).
 4. Bump `reviewed` in `content/pages/<ID>.json` only for pages someone actually re-checked; the data pages show the new month automatically.
 5. `node tools/build.js`, `npm test`, local WP check, PR, merge when green; copy changed `specs/` + `data/` to the project folder.
 6. Journalist summary per `specs/offpage-plan.md`; owner checks Search Console + Bing (errors, Core Web Vitals).
@@ -951,6 +966,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | 2026-10-30 | Net billing Phase B (D10): payback from units before solar + system price (WL-250), DISCO select naming the company in the result and share text, hint links to all eleven DISCO bill pages (WL-251), F8 anchor, plugin v0.8.37 | done: tests green | #54 |
 | 2026-10-30 | Bill sources (owner rule: a bill is evidence, not the source): protected FC surcharge back to [VERIFY], QTA sources per quarter (NEPRA SROs 459 and 1501 of 2026), GST/FPA sources from the Sales Tax Act and NEPRA, F1 note, plugin v0.8.38 | done: tests green | PR pending |
 | 2026-11-10 | GSC audit part 1 (#4 #5 #7 #10 #11): answer-number titles/metas and a Quick answer on H3 C6 C7 H4 H5 B3 E4, two Roman Urdu FAQ items each, hubs P-A P-E P-W as task directories with broad titles, in-text links to 20 weakly linked pages, plugin v0.9.4 | done: tests green | PR pending |
+| 2026-11-20 | Monthly refresh November 2026: Bill Index November (September FCA Rs 2.3673, reported), fuel prices from 20 Nov, component prices re-checked (unchanged), fuel-dependent spec cases pin their price; solar prices kept at October (see note) | done: tests green | see git log |
 
 ## Owner to do
 - Audit Phase 4: one Hostinger redirect so http and www go straight to https://wattlyst.com (WL-40); HTML browser cache time of a few hours in LiteSpeed/Hostinger (WL-36); after deploy, open wp-admin once so the new build syncs and the cache is purged; before switching on the quote form, ask Hostinger which header carries the visitor IP and put it in data/site.json leads.client_ip_header (WL-64); 2FA for wp-admin.
