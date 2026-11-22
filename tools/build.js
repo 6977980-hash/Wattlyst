@@ -401,9 +401,41 @@ function buildContent(c, ctx) {
   out.mistakes = (c.mistakes || []).map((m, n) => text(ctx, m, scope, `mistake ${n + 1}`));
   out.safety = text(ctx, c.safety, scope, 'safety');
   out.faq = (c.faq || []).map((f, n) => ({ q: text(ctx, f.q, scope, `faq ${n + 1} q`), ...withLinks(ctx, f.a, scope, `faq ${n + 1} a`, 'a') }));
+  if (c.layout) out.layout = layoutOf(c, out, ctx, scope);
   if (scope.out && ctx.results) ctx.results[c.id] = { out: scope.out };
   ctx.scope = scope; // the page's title/meta may carry the same placeholders (SERP idea 4, seo-rules.md 2)
   return out;
+}
+
+// The shared template's headings; a page with its own layout names every section for its own question instead.
+const SHARED_H2 = ['how this result was calculated', 'key facts', 'formula', 'worked examples', 'common mistakes', 'frequently asked questions', 'related calculators', 'sources'];
+
+/**
+ * Page layout (GSC audit part 2, 22 Nov 2026): a calculator page may set its own block order and H2s instead of the
+ * shared template ("layout": { "order": [...], "h2": {...} }). Blocks: how (the how text and the formula in one
+ * section), facts, sN (text section N), examples, table, tables, mistakes, faq, related; the author box and the
+ * sources (h2.sources) close the page. Every block the page has is listed once, so nothing is dropped by accident.
+ */
+function layoutOf(c, out, ctx, scope) {
+  const where = `${c.id} layout`;
+  const has = {
+    how: !!(out.tool?.how || out.formula), facts: out.key_facts.length > 0, examples: (out.examples || []).length > 0,
+    table: !!out.table, tables: (out.tables || []).length > 0, mistakes: out.mistakes.length > 0 || !!out.safety, faq: out.faq.length > 0, related: true,
+    ...Object.fromEntries(out.sections.map((_, n) => [`s${n}`, true])),
+  };
+  const order = c.layout.order || [];
+  for (const b of order) if (!has[b]) fail(`${where}: block ${b} is unknown or empty on this page`);
+  if (new Set(order).size !== order.length) fail(`${where}: a block is listed twice`);
+  for (const b of Object.keys(has)) if (has[b] && !order.includes(b)) fail(`${where}: block ${b} is missing from the order`);
+  const need = [...order.filter((b) => !/^s\d+$/.test(b) && b !== 'table' && b !== 'tables'), 'sources'];
+  const h2 = {};
+  for (const b of need) {
+    const t = c.layout.h2?.[b];
+    if (typeof t !== 'string' || !t.trim()) fail(`${where}: h2.${b} is missing`);
+    h2[b] = text(ctx, t, scope, `layout h2.${b}`);
+    if (SHARED_H2.includes(h2[b].toLowerCase())) fail(`${where}: h2.${b} "${h2[b]}" is the shared template heading`);
+  }
+  return { order, h2 };
 }
 
 /**

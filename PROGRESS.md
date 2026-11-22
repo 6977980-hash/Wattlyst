@@ -1,6 +1,26 @@
 # Progress
 
-## Handoff for next phase (after GSC audit part 1, v0.9.4) — written by the "Improve page-1 GSC pages for clicks" thread, 2026-11-10
+## Handoff for next phase (after GSC audit part 2 batch 1, v0.9.5) — written by the "Break shared template on 15 pages" thread, 2026-11-22
+
+Owner approved part 2 batch 1 on 22 Nov 2026 ("ok bna do"): 15 calculator pages leave the shared H2 skeleton (How this result was calculated / Key facts / Formula / Worked examples / Common mistakes / FAQ / Related calculators / Sources), the likely scaled-content pattern in `/mnt/project-files/wattlyst-page-quality-compare-2026-11-22.md`. Content + renderer only; no engine, data, URL, title, meta, FAQ or number change. The handoffs below still hold.
+
+**What is where**
+- Pages with their own layout: H3 C6 H4 C7 H5 C5 E4 B3 E3 N4 H7 N8 D15 N9 N18. Each has content field `layout` = `{ order: [...], h2: {...} }` at the end of `content/pages/<ID>.json`.
+- Blocks in `order`: `how` (how text + formula in one section), `facts`, `sN` (text section N of `sections`), `examples`, `table`, `tables`, `mistakes`, `faq`, `related`. The author box and the sources (`h2.sources`) always close the page. `h2` names every non-section block plus `sources`; headings take `{{placeholders}}` and the typed-digit rule (`literal_numbers`).
+- Build: `layoutOf` in `tools/build.js` (called from `buildContent` only when `c.layout` is set) fails the build if a block the page has is missing, listed twice, empty, or if a heading is one of the shared ones (`SHARED_H2`).
+- PHP: `Wattlyst_Render::laid_out()` and `method()` (below the "pieces" marker, so the template branches in `html()` are unchanged); the tool branch returns early for a layout page. `key_facts`, `examples`, `mistakes`, `faq`, `related`, `sources` take an optional heading; `section()` prints one text section (used by `sections()` too). Ads (still off): unit 1 after the block that follows `how`, unit 2 above the mistakes, unit 3 after Related.
+- Tests: `tests/page-layout.test.js` (exactly these 15 have a layout, no shared heading, no two pages with the same H2 sequence or block order, FAQ/FAQPage/Quick answer kept); layout headings added to the typed-digit checks in `tests/site.test.js` and `tests/calc-text.test.js`.
+
+**Do not touch / watch**
+- The other pages keep the shared template on purpose until the owner approves the next batch; to move a page, add a `layout` and add its id to `BATCH1` (or a new batch list) in `tests/page-layout.test.js`. Keep each new page's block order different from the others (the test checks).
+- `method()` keeps `data-wl-how` and the `wl-how`/`wl-how-en` classes: the browser rewrites the how text there and the Roman Urdu "(English)" note depends on them.
+- A new text section on a layout page must also be placed in its `order` (the build fails otherwise).
+
+**Open to-dos**
+- Owner: GSC URL Inspection "Request indexing" for the 15 pages after deploy; compare impressions about 3-4 weeks later before the next batch.
+- Next batches (owner yes needed): the other ~70 template pages in 15-20 page batches, then the merges and DISCO work in section 4/3 of the report.
+
+## Earlier handoff (after GSC audit part 1, v0.9.4) — written by the "Improve page-1 GSC pages for clicks" thread, 2026-11-10
 
 Owner approved part 1 of the GSC audit on 10 Nov 2026 (items #4, #5, #7, #10, #11 of `/mnt/project-files/wattlyst-gsc-audit-2026-11-11.md`). Content, keyword-map/site-pages, one new content field, CSS; no engine, data or JS change. DISCO bill pages (#3) and new pages (#6, #8, #9) were left out by the owner. The handoff below and those under it still hold.
 
@@ -951,6 +971,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | 2026-10-30 | Net billing Phase B (D10): payback from units before solar + system price (WL-250), DISCO select naming the company in the result and share text, hint links to all eleven DISCO bill pages (WL-251), F8 anchor, plugin v0.8.37 | done: tests green | #54 |
 | 2026-10-30 | Bill sources (owner rule: a bill is evidence, not the source): protected FC surcharge back to [VERIFY], QTA sources per quarter (NEPRA SROs 459 and 1501 of 2026), GST/FPA sources from the Sales Tax Act and NEPRA, F1 note, plugin v0.8.38 | done: tests green | PR pending |
 | 2026-11-10 | GSC audit part 1 (#4 #5 #7 #10 #11): answer-number titles/metas and a Quick answer on H3 C6 C7 H4 H5 B3 E4, two Roman Urdu FAQ items each, hubs P-A P-E P-W as task directories with broad titles, in-text links to 20 weakly linked pages, plugin v0.9.4 | done: tests green | PR pending |
+| 2026-11-22 | GSC audit part 2 batch 1 (owner yes): own section order and page-named H2s on H3 C6 H4 C7 H5 C5 E4 B3 E3 N4 H7 N8 D15 N9 N18 (content `layout`, how + formula in one section), shared template kept on the other pages, plugin v0.9.5 | done: tests green | PR pending |
 
 ## Owner to do
 - Audit Phase 4: one Hostinger redirect so http and www go straight to https://wattlyst.com (WL-40); HTML browser cache time of a few hours in LiteSpeed/Hostinger (WL-36); after deploy, open wp-admin once so the new build syncs and the cache is purged; before switching on the quote form, ask Hostinger which header carries the visitor IP and put it in data/site.json leads.client_ip_header (WL-64); 2FA for wp-admin.
