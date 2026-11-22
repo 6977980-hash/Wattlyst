@@ -109,7 +109,10 @@ final class Wattlyst_Render {
 				// List calculators: the list on the left and the result beside it on wide screens (WL-204).
 				$list = in_array( 'loads', array_column( $this->c['tool']['fields'], 'type' ), true );
 				$out .= $this->tool( $list );
-				$out .= $this->how();
+				$out .= empty( $this->c['layout'] ) ? $this->how() : '';
+			}
+			if ( ! empty( $this->c['layout'] ) ) {
+				return $out . $this->laid_out() . '</div>';
 			}
 			$out .= $this->key_facts();
 			$out .= $this->ad( 'content-1' );
@@ -133,6 +136,66 @@ final class Wattlyst_Render {
 	}
 
 	/* ------------------------------------------------------------ pieces */
+
+	/**
+	 * A page with its own section order and headings (content `layout`, GSC audit part 2, 22 Nov 2026): the same blocks
+	 * as the shared template, in the page's order, each H2 named for the page's own question; the how text and the
+	 * formula share one section. The build checks that every block is listed once ("layoutOf" in tools/build.js).
+	 */
+	private function laid_out(): string {
+		$h   = $this->c['layout']['h2'];
+		$out = '';
+		$how = false;
+		$ad1 = false;
+		foreach ( $this->c['layout']['order'] as $b ) {
+			if ( preg_match( '/^s(\d+)$/', $b, $m ) ) {
+				$part = isset( $this->c['sections'][ (int) $m[1] ] ) ? $this->section( $this->c['sections'][ (int) $m[1] ] ) : '';
+			} elseif ( 'how' === $b ) {
+				$part = $this->method( $h['how'] );
+			} elseif ( 'facts' === $b ) {
+				$part = $this->key_facts( 0, $h['facts'] );
+			} elseif ( 'examples' === $b ) {
+				$part = $this->examples( $h['examples'] );
+			} elseif ( 'table' === $b ) {
+				$part = $this->table();
+			} elseif ( 'tables' === $b ) {
+				$part = $this->tables();
+			} elseif ( 'mistakes' === $b ) {
+				$part = $this->mistakes( $h['mistakes'] );
+				$part = '' !== $part ? $this->ad( 'content-2' ) . $part : '';
+			} elseif ( 'faq' === $b ) {
+				$part = $this->where_to_buy() . $this->lead() . $this->faq( false, $h['faq'] );
+			} elseif ( 'related' === $b ) {
+				$part = $this->related( $h['related'] ) . $this->ad( 'content-3' );
+			} else {
+				$part = '';
+			}
+			$out .= $part;
+			// Unit 1 never sits above the result explanation: it follows the first block after the how section.
+			if ( '' !== $part && ! $ad1 && $how ) {
+				$out .= $this->ad( 'content-1' );
+				$ad1  = true;
+			}
+			$how = $how || 'how' === $b;
+		}
+		return $out . $this->author_box() . $this->sources( $h['sources'] );
+	}
+
+	/** The how text and the formula under one page-named heading (layout pages); same live hook and Roman Urdu note as how(). */
+	private function method( string $h2 ): string {
+		$how = $this->c['tool']['how'] ?? null;
+		$f   = $this->c['formula'] ?? null;
+		if ( ! $how && ! $f ) {
+			return '';
+		}
+		$body = $how ? '<p data-wl-how>' . esc_html( $how['text'] ) . '</p>' : '';
+		if ( $f ) {
+			$lines = implode( '', array_map( static fn( $l ) => '<li>' . esc_html( $l ) . '</li>', $f['lines'] ) );
+			$body .= '<p class="wl-eq"><code>' . esc_html( $f['text'] ) . '</code></p>' . ( $lines ? '<ul>' . $lines . '</ul>' : '' );
+		}
+		return '<section class="wl-how wl-method' . ( $how && empty( $how['tpl_ur'] ) && ! $this->ur ? ' wl-how-en' : '' ) . '"><h2>' . esc_html( $h2 ) . '</h2>' . $body . '</section>';
+	}
+
 
 	/** One of the three manual ad units (Wattlyst_Ads decides whether this page and request may show it). */
 	private function ad( string $slot ): string {
@@ -612,7 +675,7 @@ final class Wattlyst_Render {
 	}
 
 	/** Key facts; with $show (home) only the first $show are open and the rest fold under "Show all" (still in the HTML). */
-	private function key_facts( int $show = 0 ): string {
+	private function key_facts( int $show = 0, string $h2 = '' ): string {
 		if ( empty( $this->c['key_facts'] ) ) {
 			return '';
 		}
@@ -620,7 +683,7 @@ final class Wattlyst_Render {
 		$all  = $this->c['key_facts'];
 		$more = $show && count( $all ) > $show ? array_slice( $all, $show ) : array();
 		$fold = $more ? '<details class="wl-more"><summary>Show all ' . count( $all ) . ' key facts</summary><ul>' . $li( $more ) . '</ul></details>' : '';
-		return '<section class="wl-facts"><h2>' . esc_html( $this->t( 'Key facts' ) ) . '</h2><ul>' . $li( $more ? array_slice( $all, 0, $show ) : $all ) . '</ul>' . $fold . '</section>';
+		return '<section class="wl-facts"><h2>' . esc_html( '' !== $h2 ? $h2 : $this->t( 'Key facts' ) ) . '</h2><ul>' . $li( $more ? array_slice( $all, 0, $show ) : $all ) . '</ul>' . $fold . '</section>';
 	}
 
 	private function formula(): string {
@@ -643,13 +706,18 @@ final class Wattlyst_Render {
 			if ( isset( $skip[ $i ] ) ) {
 				continue;
 			}
-			$out .= '<section><h2>' . esc_html( $s['h2'] ) . '</h2>';
-			foreach ( $s['p'] as $n => $p ) {
-				$out .= ( $fold && 1 === $n ? '<details class="wl-more"><summary>Read more</summary>' : '' ) . '<p>' . self::linked( $p, $s['l'][ $n ] ?? array() ) . '</p>';
-			}
-			$out .= ( $fold && count( $s['p'] ) > 1 ? '</details>' : '' ) . '</section>';
+			$out .= $this->section( $s, $fold );
 		}
 		return $out;
+	}
+
+	/** One text section under its own H2. */
+	private function section( array $s, bool $fold = false ): string {
+		$out = '<section><h2>' . esc_html( $s['h2'] ) . '</h2>';
+		foreach ( $s['p'] as $n => $p ) {
+			$out .= ( $fold && 1 === $n ? '<details class="wl-more"><summary>Read more</summary>' : '' ) . '<p>' . self::linked( $p, $s['l'][ $n ] ?? array() ) . '</p>';
+		}
+		return $out . ( $fold && count( $s['p'] ) > 1 ? '</details>' : '' ) . '</section>';
 	}
 
 	/**
@@ -672,11 +740,11 @@ final class Wattlyst_Render {
 		return wp_kses( $out, array( 'a' => array( 'href' => true ) ) );
 	}
 
-	private function examples(): string {
+	private function examples( string $h2 = '' ): string {
 		if ( empty( $this->c['examples'] ) ) {
 			return '';
 		}
-		$out = '<section class="wl-examples"><h2>' . esc_html( $this->t( 'Worked examples' ) ) . '</h2>';
+		$out = '<section class="wl-examples"><h2>' . esc_html( '' !== $h2 ? $h2 : $this->t( 'Worked examples' ) ) . '</h2>';
 		foreach ( $this->c['examples'] as $ex ) {
 			$out .= '<h3>' . esc_html( $ex['title'] ) . '</h3><p>' . self::linked( $ex['text'], $ex['l'] ?? array() ) . '</p>';
 		}
@@ -823,13 +891,13 @@ final class Wattlyst_Render {
 		return $cards ? '<section class="wl-tasks" aria-labelledby="wl-tasks-title"><h2 id="wl-tasks-title">What do you want to do?</h2><p class="wl-tasks-lead">Pick a task to open its calculators, or jump straight to a tool.</p><div class="wl-cards">' . $cards . '</div></section>' : '';
 	}
 
-	private function mistakes(): string {
+	private function mistakes( string $h2 = '' ): string {
 		$m = $this->c['mistakes'] ?? array();
 		$s = $this->c['safety'] ?? '';
 		if ( ! $m && ! $s ) {
 			return '';
 		}
-		$out = '<section class="wl-mistakes"><h2>' . esc_html( $this->t( 'Common mistakes' ) ) . '</h2>';
+		$out = '<section class="wl-mistakes"><h2>' . esc_html( '' !== $h2 ? $h2 : $this->t( 'Common mistakes' ) ) . '</h2>';
 		if ( $m ) {
 			$out .= '<ul>' . implode( '', array_map( static fn( $x ) => '<li>' . esc_html( $x ) . '</li>', $m ) ) . '</ul>';
 		}
@@ -840,11 +908,11 @@ final class Wattlyst_Render {
 	}
 
 	/** FAQ; $fold (home) shows each answer under its question as an open/close row, the first one open. */
-	private function faq( bool $fold = false ): string {
+	private function faq( bool $fold = false, string $h2 = '' ): string {
 		if ( empty( $this->c['faq'] ) ) {
 			return '';
 		}
-		$out = '<section class="wl-faq' . ( $fold ? ' wl-faq-fold' : '' ) . '"><h2>' . esc_html( $this->t( 'Frequently asked questions' ) ) . '</h2>';
+		$out = '<section class="wl-faq' . ( $fold ? ' wl-faq-fold' : '' ) . '"><h2>' . esc_html( '' !== $h2 ? $h2 : $this->t( 'Frequently asked questions' ) ) . '</h2>';
 		foreach ( $this->c['faq'] as $i => $f ) {
 			$out .= $fold
 				? '<details class="wl-qa"' . ( 0 === $i ? ' open' : '' ) . '><summary><h3>' . esc_html( $f['q'] ) . '</h3></summary><p>' . self::linked( $f['a'], $f['l'] ?? array() ) . '</p></details>'
@@ -922,7 +990,7 @@ final class Wattlyst_Render {
 			( $more ? '<ul>' . implode( '', $more ) . '</ul>' : '' ) . '</nav>';
 	}
 
-	private function related(): string {
+	private function related( string $h2 = '' ): string {
 		$links = array();
 		$next  = $this->live_row( $this->page['next'] ?? '' );
 		if ( $next ) {
@@ -941,7 +1009,7 @@ final class Wattlyst_Render {
 			$name    = $this->ur ? str_replace( '{h}', (string) $parent['h1'], $this->t( 'All {h}' ) ) : 'All ' . preg_replace_callback( '/\b[A-Z][a-z]+\b/', static fn( $m ) => strtolower( $m[0] ), (string) $parent['h1'] );
 			$links[] = '<li><a href="' . esc_url( Wattlyst_Tools::link( $parent['url'] ) ) . '">' . esc_html( $name ) . '</a></li>';
 		}
-		return $links ? '<section class="wl-related"><h2>' . esc_html( $this->t( 'Related calculators' ) ) . '</h2><ul>' . implode( '', $links ) . '</ul></section>' : '';
+		return $links ? '<section class="wl-related"><h2>' . esc_html( '' !== $h2 ? $h2 : $this->t( 'Related calculators' ) ) . '</h2><ul>' . implode( '', $links ) . '</ul></section>' : '';
 	}
 
 	/**
@@ -1023,7 +1091,7 @@ final class Wattlyst_Render {
 		return '<aside class="wl-author" aria-label="' . esc_attr( $this->t( 'About this page' ) ) . '"><p><strong>' . esc_html( $this->t( 'Written by' ) ) . '</strong> ' . $name . ', ' . esc_html( $roles ) . '.' . ( '' === $bio ? '' : ' ' . esc_html( $bio ) ) . '</p><p>' . $review . ' <a href="' . esc_url( Wattlyst_Tools::link( '/methodology/' ) ) . '">' . esc_html( $this->t( 'How we calculate' ) ) . '</a>.</p></aside>';
 	}
 
-	private function sources(): string {
+	private function sources( string $h2 = '' ): string {
 		$items = '';
 		foreach ( $this->c['sources'] ?? array() as $s ) {
 			$url    = str_starts_with( $s['url'], '/' ) ? Wattlyst_Tools::link( $s['url'] ) : $s['url'];
@@ -1032,7 +1100,7 @@ final class Wattlyst_Render {
 		foreach ( $this->c['tool']['data_checked'] ?? array() as $d ) {
 			$items .= '<li>' . ( $d['url'] ? '<a href="' . esc_url( $d['url'] ) . '" rel="noopener">' . esc_html( $d['label'] ) . '</a>' : esc_html( $d['label'] ) ) . ', ' . esc_html( $this->t( 'last checked' ) ) . ' <time datetime="' . esc_attr( $d['checked'] ) . '">' . esc_html( $this->date( $d['checked'] ) ) . '</time></li>';
 		}
-		$out = $items ? '<section class="wl-sources"><h2>' . esc_html( $this->t( 'Sources' ) ) . '</h2><ul>' . $items . '</ul></section>' : '';
+		$out = $items ? '<section class="wl-sources"><h2>' . esc_html( '' !== $h2 ? $h2 : $this->t( 'Sources' ) ) . '</h2><ul>' . $items . '</ul></section>' : '';
 		return $out . $this->dates();
 	}
 

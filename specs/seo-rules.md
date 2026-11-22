@@ -46,6 +46,13 @@ Rules marked [TEST] are enforced by `npm test`; the rest are checked in review b
   (with the user's numbers) → formula section → 3–5 worked examples (engine) → reference table
   (engine) → common mistakes / safety → FAQ (5–8 real questions) → related tools → author + reviewer
   box → sources + last reviewed date.
+- Own layout (GSC audit part 2, 22 Nov 2026; batch 1 = H3 C6 H4 C7 H5 C5 E4 B3 E3 N4 H7 N8 D15 N9 N18): a
+  page may replace the shared order and H2 names above with content `layout`. Every H2 is named for the
+  page's own question (never "Key facts", "Formula", "Worked examples", "Common mistakes", "Frequently
+  asked questions", "Related calculators", "Sources" or "How this result was calculated"), the how text
+  and the formula share one section right after the result or a short lead section, every block the page
+  has stays on it (numbers, FAQ/FAQPage, sources unchanged), and no two pages share a block order.
+  [TEST in tests/page-layout.test.js]
 - Internal links: 4–8 per page incl. the silo pillar and the chain "Next step"; at least 3 pages link
   to every page; descriptive anchor text (not "click here"); zero orphans (Phase 3 link-check).
 - Images: WebP/AVIF, width/height set, lazy below the fold, descriptive alt, no text-only images.
