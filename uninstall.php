@@ -9,7 +9,13 @@
 
 defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
 
-foreach ( array( 'wattlyst_sync_hash', 'wattlyst_sync_lock', 'wattlyst_warm_queue', 'wattlyst_indexnow_key', 'wattlyst_indexnow_sent' ) as $opt ) {
+// The root /favicon.ico copy goes only if it is still the plugin's own (same md5 as when written).
+$wattlyst_ico = ABSPATH . 'favicon.ico';
+if ( is_file( $wattlyst_ico ) && md5_file( $wattlyst_ico ) === get_option( 'wattlyst_favicon_md5' ) ) {
+	wp_delete_file( $wattlyst_ico );
+}
+
+foreach ( array( 'wattlyst_favicon_md5', 'wattlyst_sync_hash', 'wattlyst_sync_lock', 'wattlyst_warm_queue', 'wattlyst_indexnow_key', 'wattlyst_indexnow_sent' ) as $opt ) {
 	delete_option( $opt );
 }
 wp_clear_scheduled_hook( 'wattlyst_lead_cleanup' );

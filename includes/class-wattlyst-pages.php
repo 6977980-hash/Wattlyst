@@ -213,6 +213,7 @@ final class Wattlyst_Pages {
 			update_option( 'wp_page_for_privacy_policy', $privacy->ID );
 		}
 		Wattlyst_Site::remove_version_files();
+		Wattlyst_Site::root_favicon();
 	}
 
 	/**

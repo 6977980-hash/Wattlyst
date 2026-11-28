@@ -38,6 +38,17 @@ final class Wattlyst_Endpoints {
 		if ( 'llms.txt' === $file ) {
 			$this->text( (string) @file_get_contents( WATTLYST_TOOLS_DIR . 'generated/llms.txt' ) ); // phpcs:ignore WordPress.PHP.NoSilencedErrors
 		}
+		// Where the request reaches WordPress (no root file yet, other hosts): the brand icon with a 200.
+		if ( 'favicon.ico' === $file ) {
+			$ico = WATTLYST_TOOLS_DIR . 'assets/brand/favicon.ico';
+			if ( is_readable( $ico ) ) {
+				status_header( 200 );
+				header( 'Content-Type: image/x-icon' );
+				header( 'Cache-Control: public, max-age=604800' );
+				readfile( $ico ); // phpcs:ignore WordPress.WP.AlternativeFunctions
+				exit;
+			}
+		}
 		if ( 'ads.txt' === $file ) {
 			$pub = $this->plugin->site()['ads']['adsense_pub_id'] ?? null;
 			if ( is_string( $pub ) && preg_match( '/^pub-\d{10,20}$/', $pub ) ) {
