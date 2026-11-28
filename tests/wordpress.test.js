@@ -153,3 +153,16 @@ test('a shared homepage plan (/?load=a:1,b:2) is served as is, not 301ed to a re
 test('Escape closes the GeneratePress phone menu, added by the plugin without editing the theme (WL-137)', () => {
   assert.match(wpsite, /wp_add_inline_script\( 'generate-menu', "[^"]*Escape[^"]*\.menu-toggle\[aria-expanded=\\"true\\"\][^"]*b\.click\(\);b\.focus\(\)/);
 });
+
+test('/favicon.ico answers 200 with the brand icon: root copy on sync, WordPress fallback, owner file kept (28 Nov 2026)', () => {
+  assert.ok(existsSync(join(root, 'assets/brand/favicon.ico')));
+  assert.match(php('includes/class-wattlyst-pages.php'), /remove_version_files\(\);\s*Wattlyst_Site::root_favicon\(\);/, 'sync writes the root copy');
+  const fn = wpsite.slice(wpsite.indexOf('function root_favicon'));
+  assert.match(fn, /ABSPATH \. 'favicon\.ico'/);
+  assert.match(fn, /\$old !== get_option\( self::OPT_FAVICON \)/, 'a favicon.ico the plugin did not write is never replaced');
+  const ep = php('includes/class-wattlyst-endpoints.php');
+  assert.match(ep, /'favicon\.ico' === \$file[\s\S]{0,200}status_header\( 200 \)[\s\S]{0,80}image\/x-icon/);
+  assert.match(php('uninstall.php'), /md5_file\( \$wattlyst_ico \) === get_option\( 'wattlyst_favicon_md5' \)/);
+  // The <head> link stays on the versioned brand file.
+  assert.match(php('includes/class-wattlyst-head.php'), /<link rel="icon" href="%s" sizes="any">/);
+});

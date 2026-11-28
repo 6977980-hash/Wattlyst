@@ -17,6 +17,8 @@ defined( 'ABSPATH' ) || exit;
 
 final class Wattlyst_Site {
 
+	public const OPT_FAVICON = 'wattlyst_favicon_md5';
+
 	public function __construct() {
 		add_action( 'init', array( $this, 'head_cleanup' ) );
 		add_action( 'template_redirect', array( $this, 'gate' ), 1 );
@@ -178,6 +180,32 @@ final class Wattlyst_Site {
 			if ( is_file( ABSPATH . $f ) && is_writable( ABSPATH . $f ) ) {
 				wp_delete_file( ABSPATH . $f );
 			}
+		}
+	}
+
+	/**
+	 * /favicon.ico as a real file in the WordPress root (Googlebot asks for it). Hostinger answers
+	 * /favicon.ico itself with its own 404 when no file is there, so the request never reaches WordPress.
+	 * Copies assets/brand/favicon.ico there when the root has none, or replaces only a copy this plugin
+	 * wrote before (option holds its md5); an owner's own favicon.ico is never touched.
+	 */
+	public static function root_favicon(): void {
+		$src  = WATTLYST_TOOLS_DIR . 'assets/brand/favicon.ico';
+		$dest = ABSPATH . 'favicon.ico';
+		if ( ! is_readable( $src ) ) {
+			return;
+		}
+		$new = md5_file( $src );
+		if ( is_file( $dest ) ) {
+			$old = md5_file( $dest );
+			if ( $old === $new || $old !== get_option( self::OPT_FAVICON ) || ! is_writable( $dest ) ) {
+				return;
+			}
+		} elseif ( ! is_writable( ABSPATH ) ) {
+			return;
+		}
+		if ( @copy( $src, $dest ) ) { // phpcs:ignore WordPress.PHP.NoSilencedErrors
+			update_option( self::OPT_FAVICON, $new, false );
 		}
 	}
 }

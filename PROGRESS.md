@@ -1,6 +1,23 @@
 # Progress
 
-## Handoff for next phase (after GSC audit part 2 batch 1, v0.9.5) — written by the "Break shared template on 15 pages" thread, 2026-11-22
+## Handoff for next phase (after the /favicon.ico fix, v0.9.6) — written by the "Fix favicon.ico 404" thread, 2026-11-28
+
+Owner approved (28 Nov 2026): https://wattlyst.com/favicon.ico gave 404. Hostinger answers /favicon.ico itself with its own "This Page Does Not Exist" page when no file is in the site root, so the request never reaches WordPress (other missing .ico/.png URLs do reach it). Nothing else changed; the `<head>` icon links are as before. The handoff below (GSC audit part 2 batch 1) still holds for the next phase.
+
+**What is where**
+- `Wattlyst_Site::root_favicon()` (`includes/class-wattlyst-site.php`) copies `assets/brand/favicon.ico` to the WordPress root (`ABSPATH`) when the root has none, and replaces only a copy the plugin wrote before (option `wattlyst_favicon_md5`). Called from `Wattlyst_Pages::sync()` right after `remove_version_files()`, so it runs on the first sync after this deploy (version is part of the sync hash) and after every later change of the icon.
+- Fallback where a request does reach WordPress: `Wattlyst_Endpoints::serve_root_files()` answers `favicon.ico` with the brand file, 200, `image/x-icon`.
+- `uninstall.php` deletes the root copy only while its md5 still matches the option, then the option.
+- Test: last test in `tests/wordpress.test.js`.
+
+**Do not touch / watch**
+- An owner's own `favicon.ico` in the root is never replaced (md5 differs from the option).
+- If the root is not writable the copy is skipped silently; the WordPress fallback then covers hosts that route the request to PHP.
+
+**Open to-dos**
+- Owner: after deploy open wp-admin once (runs the sync); if /favicon.ico still shows 404, purge the Hostinger CDN cache in hPanel.
+
+## Earlier handoff (after GSC audit part 2 batch 1, v0.9.5) — written by the "Break shared template on 15 pages" thread, 2026-11-22
 
 Owner approved part 2 batch 1 on 22 Nov 2026 ("ok bna do"): 15 calculator pages leave the shared H2 skeleton (How this result was calculated / Key facts / Formula / Worked examples / Common mistakes / FAQ / Related calculators / Sources), the likely scaled-content pattern in `/mnt/project-files/wattlyst-page-quality-compare-2026-11-22.md`. Content + renderer only; no engine, data, URL, title, meta, FAQ or number change. The handoffs below still hold.
 
@@ -972,6 +989,7 @@ All six build phases and audit fix Phases 1 to 6 are done (audit file `/mnt/proj
 | 2026-10-30 | Bill sources (owner rule: a bill is evidence, not the source): protected FC surcharge back to [VERIFY], QTA sources per quarter (NEPRA SROs 459 and 1501 of 2026), GST/FPA sources from the Sales Tax Act and NEPRA, F1 note, plugin v0.8.38 | done: tests green | PR pending |
 | 2026-11-10 | GSC audit part 1 (#4 #5 #7 #10 #11): answer-number titles/metas and a Quick answer on H3 C6 C7 H4 H5 B3 E4, two Roman Urdu FAQ items each, hubs P-A P-E P-W as task directories with broad titles, in-text links to 20 weakly linked pages, plugin v0.9.4 | done: tests green | PR pending |
 | 2026-11-22 | GSC audit part 2 batch 1 (owner yes): own section order and page-named H2s on H3 C6 H4 C7 H5 C5 E4 B3 E3 N4 H7 N8 D15 N9 N18 (content `layout`, how + formula in one section), shared template kept on the other pages, plugin v0.9.5 | done: tests green | PR pending |
+| 2026-11-28 | /favicon.ico 404 fix (owner yes): brand icon copied to the site root on sync (owner file kept), WordPress fallback with 200, plugin v0.9.6 | done: tests green, local WordPress checked | PR pending |
 
 ## Owner to do
 - Audit Phase 4: one Hostinger redirect so http and www go straight to https://wattlyst.com (WL-40); HTML browser cache time of a few hours in LiteSpeed/Hostinger (WL-36); after deploy, open wp-admin once so the new build syncs and the cache is purged; before switching on the quote form, ask Hostinger which header carries the visitor IP and put it in data/site.json leads.client_ip_header (WL-64); 2FA for wp-admin.
